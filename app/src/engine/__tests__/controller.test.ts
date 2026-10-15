@@ -1,13 +1,13 @@
 import { loadRules } from '@/config/rules';
 import { gateContent } from '@/content/gating';
-import { demoPack } from '@/content/load';
+import { activePack } from '@/content/load';
 import { SessionController, restoreSnapshot } from '@/engine/controller';
 import { currentStep, startSession } from '@/engine/session';
 import { KvStore, memoryKv } from '@/storage/kvStore';
 import type { Learner, Store } from '@/storage/types';
 
 const rules = loadRules('developer-demo');
-const content = gateContent(demoPack, 'developer-demo');
+const content = gateContent(activePack, 'developer-demo');
 const T0 = new Date('2026-10-15T09:00:00+07:00').getTime();
 
 const learner: Learner = {
@@ -71,13 +71,13 @@ describe('SessionController persistence safeguards', () => {
   it('a rapid double submit produces exactly one answer event', async () => {
     const { c, inner } = await setup();
     const [a, b] = await Promise.all([
-      c.submit({ kind: 'typed', text: 'jujur' }, 1000),
-      c.submit({ kind: 'typed', text: 'jujur' }, 1000),
+      c.submit({ kind: 'choice', option_id: 'k' }, 1000),
+      c.submit({ kind: 'choice', option_id: 'k' }, 1000),
     ]);
     expect([a, b].sort()).toEqual(['ignored', 'saved']);
     expect(await inner.listAnswers()).toHaveLength(1);
     // A third tap while feedback is shown is also ignored
-    expect(await c.submit({ kind: 'typed', text: 'jujur' }, 1000)).toBe('ignored');
+    expect(await c.submit({ kind: 'choice', option_id: 'k' }, 1000)).toBe('ignored');
     expect(await inner.listAnswers()).toHaveLength(1);
   });
 
@@ -85,13 +85,13 @@ describe('SessionController persistence safeguards', () => {
     const { c, inner, failNext } = await setup();
     const before = c.state;
     failNext();
-    expect(await c.submit({ kind: 'typed', text: 'jujur' }, 1000)).toBe('failed');
+    expect(await c.submit({ kind: 'choice', option_id: 'k' }, 1000)).toBe('failed');
     expect(c.state).toBe(before);
     expect(c.error).toMatch(/simulated/);
     expect(c.history).toHaveLength(0);
     expect(await inner.listAnswers()).toHaveLength(0);
 
-    expect(await c.submit({ kind: 'typed', text: 'jujur' }, 1000)).toBe('saved');
+    expect(await c.submit({ kind: 'choice', option_id: 'k' }, 1000)).toBe('saved');
     expect(c.error).toBeNull();
     expect(c.state.phase).toBe('feedback');
     expect(await inner.listAnswers()).toHaveLength(1);
@@ -100,23 +100,23 @@ describe('SessionController persistence safeguards', () => {
 
   it('does not move to the next step when saving the snapshot fails', async () => {
     const { c, inner, failNext } = await setup();
-    await c.submit({ kind: 'typed', text: 'jujur' }, 1000);
+    await c.submit({ kind: 'choice', option_id: 'k' }, 1000);
     const atFeedback = c.state;
     failNext();
     expect(await c.next()).toBe('failed');
     expect(c.state).toBe(atFeedback);
     expect(await inner.loadSnapshot()).toEqual(atFeedback);
     expect(await c.next()).toBe('saved');
-    expect(currentStep(c.state)).toEqual({ kind: 'item', item_id: 'DEMO-F01', role: 'practice' });
+    expect(currentStep(c.state)).toMatchObject({ kind: 'item', item_id: 'A2-F01', role: 'practice' });
   });
 
   it('resumes from the saved snapshot after a restart', async () => {
     const { c, inner } = await setup();
-    await c.submit({ kind: 'typed', text: 'jujur' }, 1000);
+    await c.submit({ kind: 'choice', option_id: 'k' }, 1000);
     await c.next();
     const restored = restoreSnapshot(await inner.loadSnapshot(), content);
     expect(restored).toEqual(c.state);
-    expect(currentStep(restored!)).toEqual({ kind: 'item', item_id: 'DEMO-F01', role: 'practice' });
+    expect(currentStep(restored!)).toMatchObject({ kind: 'item', item_id: 'A2-F01', role: 'practice' });
   });
 
   it('ignores snapshots from another content version or with unknown items', () => {

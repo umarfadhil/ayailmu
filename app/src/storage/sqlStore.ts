@@ -1,8 +1,6 @@
 import type { SqlDb } from './sqlDb';
 import { createSerialQueue } from './serial';
-import type { AnswerRecord, Learner, ReportRecord, Snapshot, Store } from './types';
-
-const SCHEMA_VERSION = 1;
+import { STORAGE_SCHEMA, type AnswerRecord, type ArchivedSnapshot, type Learner, type ReportRecord, type Snapshot, type Store } from './types';
 
 const MIGRATION_1 = `
 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY NOT NULL, value TEXT NOT NULL);
@@ -29,9 +27,19 @@ export class SqlStore implements Store {
   constructor(private db: SqlDb) {}
 
   async init(): Promise<void> {
+    // Refuse data from a newer app version before writing anything.
+    const hasMeta = await this.db.all<{ name: string }>(`SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'meta'`);
+    if (hasMeta.length) {
+      const rows = await this.db.all<{ value: string }>(`SELECT value FROM meta WHERE key = 'schema_version'`);
+      const stored = rows.length ? Number(rows[0].value) : 0;
+      if (!Number.isFinite(stored) || stored > STORAGE_SCHEMA) {
+        throw new Error(`Stored data uses an unsupported schema (${rows[0]?.value}); it was not modified.`);
+      }
+    }
     await this.db.exec('PRAGMA journal_mode = WAL;');
     await this.db.exec(MIGRATION_1);
-    await this.db.run(`INSERT OR REPLACE INTO meta (key, value) VALUES ('schema_version', ?)`, [String(SCHEMA_VERSION)]);
+    // v2 adds no tables: metadata (archive, notices) uses the existing meta table.
+    await this.db.run(`INSERT OR REPLACE INTO meta (key, value) VALUES ('schema_version', ?)`, [String(STORAGE_SCHEMA)]);
   }
 
   async getLearner(): Promise<Learner | null> {
@@ -53,8 +61,10 @@ export class SqlStore implements Store {
   recordAnswer(record: AnswerRecord, snapshot: Snapshot | null): Promise<void> {
     return this.enqueue(() =>
       this.db.transaction(async () => {
+        const existing = await this.db.all<{ one: number }>('SELECT 1 AS one FROM answers WHERE answer_id = ?', [record.answer_id]);
+        if (existing.length) return; // replayed duplicate: no new event, no snapshot rewind
         await this.db.run(
-          `INSERT OR IGNORE INTO answers (answer_id, learner_id, item_id, session_id, timestamp, outcome, json)
+          `INSERT INTO answers (answer_id, learner_id, item_id, session_id, timestamp, outcome, json)
            VALUES (?, ?, ?, ?, ?, ?, ?)`,
           [
             record.answer_id,
@@ -71,6 +81,47 @@ export class SqlStore implements Store {
     );
   }
 
+  async loadSnapshotRaw(): Promise<string | null> {
+    const rows = await this.db.all<{ json: string | null }>('SELECT json FROM snapshot WHERE id = 1');
+    return rows.length ? rows[0].json : null;
+  }
+
+  archiveSnapshot(reason: string, replacement: Snapshot | null, notice?: string): Promise<boolean> {
+    return this.enqueue(async () => {
+      let archived = false;
+      await this.db.transaction(async () => {
+        const raw = await this.loadSnapshotRaw();
+        if (raw !== null) {
+          const prev = await this.metaValue('snapshot_archive');
+          const list: ArchivedSnapshot[] = prev ? JSON.parse(prev) : [];
+          list.push({ archived_at: new Date().toISOString(), reason, raw });
+          await this.db.run('INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)', ['snapshot_archive', JSON.stringify(list)]);
+          archived = true;
+        }
+        if (notice) await this.db.run('INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)', ['pending_notice', notice]);
+        await this.writeSnapshot(replacement);
+      });
+      return archived;
+    });
+  }
+
+  private async metaValue(key: string): Promise<string | null> {
+    const rows = await this.db.all<{ value: string }>('SELECT value FROM meta WHERE key = ?', [key]);
+    return rows.length ? rows[0].value : null;
+  }
+
+  getMeta(key: string): Promise<string | null> {
+    return this.metaValue(key);
+  }
+
+  setMeta(key: string, value: string | null): Promise<void> {
+    return this.enqueue(() =>
+      value === null
+        ? this.db.run('DELETE FROM meta WHERE key = ?', [key])
+        : this.db.run('INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)', [key, value])
+    );
+  }
+
   saveSnapshot(snapshot: Snapshot | null): Promise<void> {
     return this.enqueue(() => this.writeSnapshot(snapshot));
   }
@@ -82,10 +133,10 @@ export class SqlStore implements Store {
   }
 
   async loadSnapshot(): Promise<Snapshot | null> {
-    const rows = await this.db.all<{ json: string | null }>('SELECT json FROM snapshot WHERE id = 1');
-    if (!rows.length || !rows[0].json) return null;
+    const raw = await this.loadSnapshotRaw();
+    if (!raw) return null;
     try {
-      const parsed = JSON.parse(rows[0].json);
+      const parsed = JSON.parse(raw);
       return parsed && typeof parsed === 'object' ? (parsed as Snapshot) : null;
     } catch {
       return null;
@@ -109,6 +160,7 @@ export class SqlStore implements Store {
         for (const table of ['learner', 'answers', 'snapshot', 'reports']) {
           await this.db.run(`DELETE FROM ${table}`);
         }
+        await this.db.run(`DELETE FROM meta WHERE key != 'schema_version'`);
       })
     );
   }

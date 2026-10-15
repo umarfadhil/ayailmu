@@ -1,6 +1,6 @@
 import { loadRules } from '@/config/rules';
 import { gateContent } from '@/content/gating';
-import { demoPack } from '@/content/load';
+import { activePack } from '@/content/load';
 import {
   advance,
   currentStep,
@@ -10,151 +10,107 @@ import {
   unresolvedSerious,
   type SessionState,
 } from '@/engine/session';
+import type { Response } from '@/engine/scoring';
 import type { AnswerRecord } from '@/storage/types';
 
 const rules = loadRules('developer-demo');
-const content = gateContent(demoPack, 'developer-demo');
-const ENV = { content, rules, history: [] as AnswerRecord[] };
+const content = gateContent(activePack, 'developer-demo');
 const T0 = new Date('2026-10-15T09:00:00+07:00').getTime();
+const zero = () => 0;
+const ENV = { content, rules, history: [] as AnswerRecord[], now: T0, timeOnItemMs: 1, rng: zero };
 
 function begin(history: AnswerRecord[] = [], screensSeen: string[] = [], minutes = 15) {
-  return startSession({
-    content,
-    rules,
-    history,
-    learnerId: 'lrn-1',
-    now: T0,
-    budgetMinutes: minutes,
-    screensSeen,
-    appVersion: '0.1.0',
-  });
+  return startSession({ content, rules, history, learnerId: 'lrn-1', now: T0, budgetMinutes: minutes, screensSeen, appVersion: '0.2.0', rng: zero });
 }
-
-/** Skip lesson screens. */
 function skipScreens(s: SessionState): SessionState {
   let st = s;
   while (currentStep(st)?.kind === 'screen') st = advance(st, T0);
   return st;
 }
+const choose = (option_id: string): Response => ({ kind: 'choice', option_id });
+const itemIds = (s: SessionState) => s.queue.filter((q) => q.kind === 'item').map((q) => (q as { item_id: string }).item_id);
 
-describe('session flow', () => {
-  it('starts with the guided lesson screens, then practice items in order', () => {
+describe('session flow (four-choice)', () => {
+  it('starts with the Unit A lesson screens, then Unit A practice items in order', () => {
     const s = begin();
     expect(s.queue.slice(0, 3).map((q) => q.kind === 'screen' && q.screen_id)).toEqual(['DEMO-S1', 'DEMO-S2', 'DEMO-S3']);
-    const items = s.queue.filter((q) => q.kind === 'item').map((q) => q.kind === 'item' && q.item_id);
-    expect(items).toEqual(['DEMO-M01', 'DEMO-F01', 'DEMO-P01', 'DEMO-M02', 'DEMO-F02', 'DEMO-P02', 'DEMO-P03']);
-    // Reserved and check pools are never queued in a first session
-    expect(items.some((id) => /Y01|D7|D30|R0|F03/.test(String(id)))).toBe(false);
+    expect(itemIds(s)).toEqual(['A2-M01', 'A2-F01', 'A2-P01', 'A2-M02', 'A2-F02', 'A2-P02', 'A2-P03']);
+    // READY needs prior practice; REMED/D7/D30/FOCUS are never planned as fresh lesson work; Unit B not open yet
+    expect(s.queue.some((q) => q.kind === 'screen' && q.screen_id.startsWith('DEMO-BS'))).toBe(false);
   });
 
   it('skips lesson screens already seen', () => {
-    const s = begin([], ['DEMO-S1', 'DEMO-S2', 'DEMO-S3']);
-    expect(currentStep(s)?.kind).toBe('item');
+    expect(currentStep(begin([], ['DEMO-S1', 'DEMO-S2', 'DEMO-S3']))?.kind).toBe('item');
   });
 
-  it('records a correct answer with spec §10 fields and shows specific feedback', () => {
+  it('wrong form (non-serious): FA-FORM feedback, then a fresh REMED form item', () => {
     let s = skipScreens(begin());
-    const r = submitAnswer(s, { kind: 'typed', text: 'orang yang jujur' }, { ...ENV, now: T0 + 5000, timeOnItemMs: 5000 });
-    s = r.state;
-    expect(r.record).toMatchObject({
-      item_id: 'DEMO-M01',
-      learner_id: 'lrn-1',
-      content_version: 'demo-synthetic-0.1',
-      rules_version: rules.rules_version,
-      outcome: 'correct',
-      first_attempt: true,
-      fresh_evidence: true,
-      hint_used: false,
-      time_on_item_ms: 5000,
-      review_status: 'draft',
-      synthetic: true,
-      raw_response: JSON.stringify({ kind: 'typed', text: 'orang yang jujur' }),
-    });
-    expect(s.phase).toBe('feedback');
-    expect(s.feedback?.messages[0]).toContain('jujur');
-  });
-
-  it('a second submit on the same item (double tap) yields no second answer event', () => {
-    const s = skipScreens(begin());
-    const first = submitAnswer(s, { kind: 'typed', text: 'jujur' }, { ...ENV, now: T0, timeOnItemMs: 1 });
-    expect(first.record).not.toBeNull();
-    const again = submitAnswer(first.state, { kind: 'typed', text: 'jujur' }, { ...ENV, now: T0, timeOnItemMs: 1 });
-    expect(again.record).toBeNull();
-    expect(again.state).toBe(first.state);
-    // and a screen cannot be "answered"
-    const fresh = begin();
-    expect(submitAnswer(fresh, { kind: 'dont_know' }, { ...ENV, now: T0, timeOnItemMs: 1 }).record).toBeNull();
-  });
-
-  it('after a wrong form choice: FA-FORM, then a fresh REMED item for the same skill', () => {
-    let s = skipScreens(begin());
-    s = advance(submitAnswer(s, { kind: 'typed', text: 'jujur' }, { ...ENV, now: T0, timeOnItemMs: 1 }).state, T0);
-    const r = submitAnswer(s, { kind: 'choice', option_id: 'a' }, { ...ENV, now: T0, timeOnItemMs: 1 });
-    expect(r.state.feedback?.messages).toEqual([content.feedback['FA-FORM']]);
+    s = advance(submitAnswer(s, choose('k'), ENV).state, T0); // A2-M01 correct
+    const r = submitAnswer(s, choose('e'), ENV); // A2-F01: هِيَ نَادِمٌ
+    expect(r.state.feedback?.messages).toEqual([
+      'Untuk perempuan, pakai bentuk dengan ـَةٌ. Untuk laki-laki, tanpa ـَةٌ. Jawaban yang tepat: هِيَ نَادِمَةٌ',
+    ]);
     s = advance(r.state, T0);
-    expect(currentStep(s)).toEqual({ kind: 'item', item_id: 'DEMO-F03', role: 'remed' });
+    expect(currentStep(s)).toMatchObject({ kind: 'item', item_id: 'A2-F03', role: 'remed' });
   });
 
-  it('after a serious he/she mistake: FA-REF, a focused question (not evidence), then a fresh REMED sentence', () => {
+  it('serious he/she mistake: focused question (not evidence), then a fresh REMED; resolved only when both are correct', () => {
     let s = skipScreens(begin());
     const history: AnswerRecord[] = [];
-    const answerWith = (resp: Parameters<typeof submitAnswer>[1]) => {
-      const r = submitAnswer(s, resp, { ...ENV, now: T0, timeOnItemMs: 1 });
+    const answer = (resp: Response) => {
+      const r = submitAnswer(s, resp, ENV);
       history.push(r.record!);
       s = advance(r.state, T0);
       return r;
     };
-    answerWith({ kind: 'typed', text: 'jujur' });
-    answerWith({ kind: 'choice', option_id: 'b' });
-    const wrong = answerWith({ kind: 'typed', text: 'dia beriman', ref: 'laki-laki' });
+    answer(choose('k'));
+    answer(choose('k'));
+    const wrong = answer(choose('r')); // A2-P01: Dia (laki-laki) orang yang beriman
     expect(wrong.record!.serious_tag).toBe('wrong-referent');
     expect(wrong.state.feedback?.messages.join(' ')).toContain('هِيَ menunjuk perempuan');
     expect(unresolvedSerious(history)).toEqual([{ skill: 'NOM-01', tag: 'wrong-referent' }]);
 
-    expect(currentStep(s)).toEqual({ kind: 'item', item_id: 'DEMO-FQ-REF-F', role: 'focus' });
-    const focus = answerWith({ kind: 'choice', option_id: 'f' });
-    expect(focus.record!.fresh_evidence).toBe(false);
-    expect(focus.record!.pool).toBe('FOCUS');
-    expect(unresolvedSerious(history)).toHaveLength(1); // still needs the fresh REMED sentence
+    expect(currentStep(s)).toMatchObject({ kind: 'item', item_id: 'A2-FQ-REF-F', role: 'focus' });
+    const focus = answer(choose('k'));
+    expect(focus.record).toMatchObject({ fresh_evidence: false, pool: 'FOCUS', first_attempt: true });
+    expect(unresolvedSerious(history)).toHaveLength(1);
 
-    expect(currentStep(s)).toEqual({ kind: 'item', item_id: 'DEMO-R01', role: 'remed' });
-    const remed = answerWith({ kind: 'typed', text: 'dia orang yang beribadah', ref: 'perempuan' });
-    expect(remed.record!.outcome).toBe('correct');
-    expect(remed.record!.fresh_evidence).toBe(true);
+    expect(currentStep(s)).toMatchObject({ kind: 'item', item_id: 'A2-R01', role: 'remed' });
+    const remed = answer(choose('k'));
+    expect(remed.record).toMatchObject({ outcome: 'correct', fresh_evidence: true });
     expect(unresolvedSerious(history)).toEqual([]);
   });
 
   it('flags a skill that runs out of fresh REMED items and lets the learner continue', () => {
-    let s = skipScreens(begin());
-    // Mark both REMED sentences as already seen in history
-    const seen = ['DEMO-R01', 'DEMO-R02'].map(
-      (id, n) => ({ item_id: id, pool: 'REMED', unit: 'A', skills: ['NOM-01'], local_date: '2026-10-14', first_attempt: true, hint_used: false, answer_id: `h${n}` }) as unknown as AnswerRecord
+    const seen = ['A2-R01', 'A2-R02'].map(
+      (id, n) =>
+        ({ item_id: id, lineage: content.lineage[id], pool: 'REMED', unit: 'A', skills: ['NOM-01'], local_date: '2026-10-15', timestamp: '2026-10-15T01:00:00.000Z', first_attempt: true, hint_used: false, answer_id: `h${n}`, role: 'remed' }) as unknown as AnswerRecord
     );
-    s = skipScreens(begin(seen));
-    s = advance(submitAnswer(s, { kind: 'typed', text: 'jujur' }, { ...ENV, history: seen, now: T0, timeOnItemMs: 1 }).state, T0);
-    s = advance(submitAnswer(s, { kind: 'choice', option_id: 'b' }, { ...ENV, history: seen, now: T0, timeOnItemMs: 1 }).state, T0);
-    const r = submitAnswer(s, { kind: 'typed', text: 'keimanannya', ref: 'perempuan' }, { ...ENV, history: seen, now: T0, timeOnItemMs: 1 });
+    let s = skipScreens(begin(seen));
+    const env = { ...ENV, history: seen };
+    s = advance(submitAnswer(s, choose('k'), env).state, T0);
+    s = advance(submitAnswer(s, choose('k'), env).state, T0);
+    const r = submitAnswer(s, choose('p'), env); // possession
     expect(r.state.flags).toContain('out-of-fresh:NOM-01');
     s = advance(r.state, T0);
-    expect(currentStep(s)).toEqual({ kind: 'item', item_id: 'DEMO-FQ-POS', role: 'focus' });
-    s = advance(submitAnswer(s, { kind: 'choice', option_id: 'desc' }, { ...ENV, history: seen, now: T0, timeOnItemMs: 1 }).state, T0);
-    expect(currentStep(s)).toEqual({ kind: 'item', item_id: 'DEMO-M02', role: 'practice' });
+    expect(currentStep(s)).toMatchObject({ item_id: 'A2-FQ-POS', role: 'focus' });
+    s = advance(submitAnswer(s, choose('k'), env).state, T0);
+    expect(currentStep(s)).toMatchObject({ item_id: 'A2-M02', role: 'practice' });
   });
 
   it('stops at the time budget, at the end of the current item', () => {
     let s = skipScreens(begin([], [], 10));
     const late = T0 + 11 * 60_000;
-    s = submitAnswer(s, { kind: 'typed', text: 'jujur' }, { ...ENV, now: late, timeOnItemMs: 1 }).state;
-    s = advance(s, late);
-    expect(s.phase).toBe('done');
+    s = submitAnswer(s, choose('k'), { ...ENV, now: late }).state;
+    expect(advance(s, late).phase).toBe('done');
   });
 
-  it('state is plain JSON, so it survives a save/restore round trip', () => {
+  it('state is plain JSON; the saved option order survives a round trip', () => {
     let s = skipScreens(begin());
-    s = submitAnswer(s, { kind: 'typed', text: 'jujur' }, { ...ENV, now: T0, timeOnItemMs: 1 }).state;
+    s = submitAnswer(s, choose('k'), ENV).state;
     const restored = JSON.parse(JSON.stringify(s)) as SessionState;
     expect(restored).toEqual(s);
-    expect(currentStep(advance(restored, T0))).toEqual({ kind: 'item', item_id: 'DEMO-F01', role: 'practice' });
+    expect(currentStep(advance(restored, T0))).toEqual(currentStep(advance(s, T0)));
   });
 
   it('a second session never repeats items as fresh', () => {
@@ -163,26 +119,23 @@ describe('session flow', () => {
     while (s.phase !== 'done') {
       const step = currentStep(s);
       if (!step || step.kind !== 'item') break;
-      const r = submitAnswer(s, { kind: 'dont_know' }, { ...ENV, now: T0, timeOnItemMs: 1 });
+      const r = submitAnswer(s, { kind: 'dont_know' }, ENV);
       history.push(r.record!);
       s = advance(r.state, T0);
     }
     const next = begin(history, ['DEMO-S1', 'DEMO-S2', 'DEMO-S3']);
     const seen = new Set(history.map((h) => h.item_id));
-    expect(next.queue.filter((q) => q.kind === 'item' && seen.has(q.item_id))).toEqual([]);
+    expect(itemIds(next).filter((id) => seen.has(id))).toEqual([]);
   });
 
-  it('summary reports counts and next due day, with no mastery claim', () => {
+  it('summary reports counts only, with no mastery claim', () => {
     let s = skipScreens(begin());
-    s = advance(submitAnswer(s, { kind: 'typed', text: 'jujur' }, { ...ENV, now: T0, timeOnItemMs: 1 }).state, T0);
-    s = advance(submitAnswer(s, { kind: 'choice', option_id: 'a' }, { ...ENV, now: T0, timeOnItemMs: 1 }).state, T0);
-    // the wrong form choice inserted the fresh REMED item DEMO-F03
-    s = advance(submitAnswer(s, { kind: 'choice', option_id: 'a' }, { ...ENV, now: T0, timeOnItemMs: 1 }).state, T0);
-    s = advance(submitAnswer(s, { kind: 'typed', text: 'hmm', ref: 'perempuan' }, { ...ENV, now: T0, timeOnItemMs: 1 }).state, T0);
-    const sum = summarize(s, rules);
-    expect(sum).toMatchObject({ answered: 4, correct: 2, wrong: 1, pending: 1, dont_know: 0, follow_ups: 1 });
-    expect(sum.next_review_date).toBe('2026-10-16');
-    const text = JSON.stringify(sum).toLowerCase();
-    expect(text).not.toMatch(/learned|dipelajari|menguasai|%/);
+    s = advance(submitAnswer(s, choose('k'), ENV).state, T0);
+    s = advance(submitAnswer(s, choose('e'), ENV).state, T0); // wrong form → REMED A2-F03
+    s = advance(submitAnswer(s, choose('k'), ENV).state, T0); // A2-F03 correct
+    s = advance(submitAnswer(s, { kind: 'dont_know' }, ENV).state, T0); // A2-P01
+    const sum = summarize(s);
+    expect(sum).toMatchObject({ answered: 4, correct: 2, wrong: 1, pending: 0, dont_know: 1, follow_ups: 1, reviews: 0, checks: 0 });
+    expect(JSON.stringify(sum).toLowerCase()).not.toMatch(/learned|dipelajari|menguasai|%/);
   });
 });

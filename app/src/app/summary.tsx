@@ -1,20 +1,11 @@
-import { router, useFocusEffect } from 'expo-router';
-import { useCallback, useState } from 'react';
+import { Redirect, router, type Href } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { restoreSnapshot } from '@/engine/controller';
-import { summarize, type SessionSummary } from '@/engine/session';
+import { summarize } from '@/engine/session';
 import { useApp } from '@/ui/AppContext';
 import { Btn, Card, EmptyState, Eyebrow, H1, Muted, Notice, P, Page } from '@/ui/components';
 import { colors } from '@/ui/theme';
-
-const DAYS = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-
-function formatDate(iso: string): string {
-  const d = new Date(`${iso}T00:00:00Z`);
-  return `${DAYS[d.getUTCDay()]}, ${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]}`;
-}
+import { formatDue, useLearning } from '@/ui/useLearning';
 
 function Stat({ value, label, color }: { value: number; label: string; color: string }) {
   return (
@@ -28,41 +19,39 @@ function Stat({ value, label, color }: { value: number; label: string; color: st
 /**
  * Factual counts for the saved session. Reachable from navigation at any time, so an
  * unfinished session is labelled as such (never «Sesi selesai») and offers to resume.
+ * The next date comes from the actual review/check projection, never a fixed "tomorrow".
  * No streaks, percentages or mastery claims.
  */
 export default function Summary() {
-  const { store, rules, content, refreshLearner } = useApp();
-  const [data, setData] = useState<{ sum: SessionSummary; done: boolean } | null | undefined>(undefined);
+  const { content } = useApp();
+  const learning = useLearning();
 
-  useFocusEffect(
-    useCallback(() => {
-      let alive = true;
-      (async () => {
-        if (!store) return;
-        await refreshLearner();
-        const s = restoreSnapshot(await store.loadSnapshot(), content);
-        if (alive) setData(s ? { sum: summarize(s, rules, Date.now()), done: s.phase === 'done' } : null);
-      })();
-      return () => {
-        alive = false;
-      };
-    }, [store, content, rules, refreshLearner])
+  if (content.empty) return <Redirect href="/" />;
+  if (learning === undefined) return null;
+  if (learning === null) return <Redirect href="/" />;
+  const nextDue = learning.progress.next_due;
+  const nextLine = nextDue ? (
+    <P testID="summary-next">Jadwal ulasan atau cek berikutnya: {formatDue(nextDue, learning.today)}.</P>
+  ) : (
+    <P testID="summary-next">Belum ada ulasan atau cek yang terjadwal.</P>
   );
 
-  if (data === undefined) return null;
-  if (!data) {
+  const snap = learning.snapshot;
+  if (snap.kind !== 'ok') {
     return (
       <Page>
         <H1>Ringkasan</H1>
         <EmptyState icon="stats-chart-outline" title="Belum ada sesi">
-          <P style={{ textAlign: 'center' }}>Ringkasan muncul setelah Anda memulai sesi.</P>
+          <P style={{ textAlign: 'center' }}>Ringkasan muncul setelah Anda memulai sesi dengan format soal saat ini.</P>
         </EmptyState>
+        {nextLine}
         <Btn testID="summary-start" label="Mulai sesi" onPress={() => router.navigate('/session')} />
       </Page>
     );
   }
 
-  const { sum, done } = data;
+  const done = snap.state.phase === 'done';
+  const sum = summarize(snap.state, learning.now);
   return (
     <Page>
       <Eyebrow tone={done ? 'mint' : 'indigo'}>{done ? 'Ringkasan sesi' : 'Ringkasan sementara'}</Eyebrow>
@@ -86,17 +75,19 @@ export default function Summary() {
           diperiksa, {sum.dont_know} «belum tahu».
         </Muted>
         {sum.follow_ups ? <Muted>{sum.follow_ups} di antaranya adalah latihan ulang setelah kesalahan.</Muted> : null}
+        {sum.reviews ? <Muted testID="summary-reviews">{sum.reviews} soal adalah ulasan materi sebelumnya.</Muted> : null}
+        {sum.checks ? <Muted testID="summary-checks">{sum.checks} soal adalah cek ulang setelah 7 atau 30 hari.</Muted> : null}
         <Muted>Waktu: sekitar {sum.minutes} menit.</Muted>
       </Card>
 
       <Card>
-        <P>Yang dilatih: memahami kalimat «dia + sifat» (هُوَ / هِيَ), memilih bentuk yang cocok, dan arti kata.</P>
-        {done ? <P testID="summary-next">Ulasan berikutnya: {formatDate(sum.next_review_date)}.</P> : null}
+        {done ? nextLine : null}
+        <Btn kind="secondary" label="Lihat kemajuan" icon="analytics-outline" testID="summary-progress" onPress={() => router.navigate('/progress' as Href)} />
       </Card>
 
       <Notice tone="warn">
-        Prototipe ini belum menilai apakah sebuah keterampilan sudah dikuasai. Jawaban yang disimpan untuk diperiksa tidak
-        dihitung benar atau salah.
+        Prototipe ini belum menilai apakah sebuah keterampilan sudah dikuasai. Jawaban empat pilihan dicatat sebagai
+        pengenalan, bukan jawaban yang ditulis sendiri.
       </Notice>
 
       {done ? (

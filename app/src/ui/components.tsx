@@ -437,10 +437,10 @@ export function ReportButton({ onSubmit }: { onSubmit: (reason: string, text: st
                 <Icon name="close" color={colors.ink} />
               </Pressable>
             </View>
-            {REPORT_REASONS.map((r) => (
-              <Btn key={r} label={r} kind="secondary" selected={reason === r} onPress={() => setReason(r)} />
+            {REPORT_REASONS.map((r, n) => (
+              <Btn key={r} testID={`report-reason-${n}`} label={r} kind="secondary" selected={reason === r} onPress={() => setReason(r)} />
             ))}
-            <Field value={text} onChangeText={setText} placeholder="Keterangan (boleh kosong)" />
+            <Field testID="report-text" value={text} onChangeText={setText} placeholder="Keterangan (boleh kosong)" />
             {error ? <Notice tone="danger">{error}</Notice> : null}
             <View style={styles.modalActions}>
               <View style={{ flex: 1 }}>

@@ -6,21 +6,27 @@ import { useApp } from '@/ui/AppContext';
 import { Btn, Eyebrow, H1, Muted, Page, useIsDesktop } from '@/ui/components';
 import { LessonPanel } from '@/ui/LessonPanel';
 import { colors, radius } from '@/ui/theme';
+import { useLearning } from '@/ui/useLearning';
+import { HydrationGate } from '@/ui/Hydration';
 
 /**
- * Read-only browser for the existing lesson screens (S19–S22 guide anatomy).
+ * Read-only browser for the lesson screens of units already open (S19–S22 guide anatomy).
  * Browsing never writes: it does not mark screens seen, touch the session snapshot
- * or log answers. Practice always goes to the canonical /session.
+ * or log answers. Locked/advanced material (e.g. Unit B speech) is never shown here.
+ * Practice always goes to the canonical /session.
  */
-export default function Guide() {
+function GuideRoute() {
   const { learner, content } = useApp();
   const desktop = useIsDesktop();
   const params = useLocalSearchParams<{ screen?: string }>();
-  const initial = Math.max(0, content.screens.findIndex((s) => s.screen_id === params.screen));
-  const [index, setIndex] = useState(initial);
+  const learning = useLearning();
+  const [chosen, setIndex] = useState<number | null>(null);
 
   if (!learner || content.empty) return <Redirect href="/" />;
-  const screens = content.screens;
+  if (learning === undefined) return null;
+  if (learning === null) return <Redirect href="/" />;
+  const screens = content.screens.filter((s) => learning.open.includes(s.unit));
+  const index = chosen ?? Math.max(0, screens.findIndex((s) => s.screen_id === params.screen));
   const screen = screens[index];
   if (!screen) return <Redirect href="/" />;
 
@@ -39,7 +45,7 @@ export default function Guide() {
             style={[styles.contentsRow, on && styles.contentsRowOn]}
           >
             <Text style={[styles.contentsText, on && styles.contentsTextOn]}>
-              {n + 1}. {s.title}
+              {`${s.unit}${screens.filter((x) => x.unit === s.unit).indexOf(s) + 1}. ${s.title}`}
             </Text>
           </Pressable>
         );
@@ -50,8 +56,8 @@ export default function Guide() {
   return (
     <Page width="wide">
       <View style={styles.band}>
-        <Eyebrow tone="mint">Unit A · Panduan</Eyebrow>
-        <H1>Panduan Unit A</H1>
+        <Eyebrow tone="mint">Panduan</Eyebrow>
+        <H1>{learning.open.length > 1 ? 'Panduan Unit A dan B' : 'Panduan Unit A'}</H1>
         <Muted>
           Bacaan pendukung dari awal sesi. Membuka panduan tidak dihitung sebagai latihan dan tidak mengubah sesi Anda.
         </Muted>
@@ -59,7 +65,7 @@ export default function Guide() {
       <View style={[desktop && styles.split]}>
         {contents}
         <View style={[styles.mainCol, desktop && { flex: 1 }]}>
-          <LessonPanel screen={screen} scale={learner.arabic_scale} eyebrow={`Panduan ${index + 1} dari ${screens.length}`} />
+          <LessonPanel screen={screen} scale={learner.arabic_scale} eyebrow={`Unit ${screen.unit} · Panduan ${index + 1} dari ${screens.length}`} />
           <View style={styles.pager}>
             <View style={{ flex: 1 }}>
               <Btn
@@ -126,3 +132,11 @@ const styles = StyleSheet.create({
     gap: 6,
   },
 });
+
+export default function Guide() {
+  return (
+    <HydrationGate>
+      <GuideRoute />
+    </HydrationGate>
+  );
+}

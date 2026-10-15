@@ -21,9 +21,10 @@ export interface NavItem {
 
 const ITEMS: NavItem[] = [
   { key: 'home', label: 'Sesi hari ini', href: '/', icon: 'book', match: ['/'], group: 'belajar', section: 0 },
-  { key: 'guide', label: 'Panduan Unit A', href: '/guide' as Href, icon: 'document-text', match: ['/guide'], group: 'belajar', section: 0 },
+  { key: 'guide', label: 'Panduan', href: '/guide' as Href, icon: 'document-text', match: ['/guide'], group: 'belajar', section: 0 },
   { key: 'practice', label: 'Latihan', href: '/session', icon: 'help-circle', match: ['/session'], group: 'belajar', section: 0 },
   { key: 'summary', label: 'Ringkasan', href: '/summary', icon: 'stats-chart', match: ['/summary'], section: 0 },
+  { key: 'progress', label: 'Kemajuan', href: '/progress' as Href, icon: 'analytics', match: ['/progress'], section: 0 },
   { key: 'settings', label: 'Pengaturan', href: '/settings', icon: 'settings-sharp', match: ['/settings'], section: 1 },
   { key: 'dev', label: 'Data pengembang', href: '/dev', icon: 'code-slash', match: ['/dev'], section: 2 },
 ];

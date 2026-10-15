@@ -5,6 +5,11 @@ import type { ErrorTag, Item, Pool, Referent } from '@/content/schema';
 
 export interface AttemptLog {
   item_id: string;
+  /** Identity across content versions (legacy IDs map to the same lineage). */
+  lineage?: string;
+  /** Arabic forms displayed by this attempt (VRB-01 freshness, lessons §3.5). */
+  forms?: string[];
+  role?: 'practice' | 'remed' | 'focus' | 'review' | 'check';
   local_date: string;
   pool: Pool;
   skills: string[];
@@ -28,9 +33,12 @@ export function daysBetween(from: string, to: string): number {
   return Math.round(ms / 86_400_000);
 }
 
-function lastPracticeDate(history: AttemptLog[], unit: Item['unit']): string | null {
+/** Date of the unit's latest practice (reviews and timed checks excluded): the D7/D30 anchor. */
+export function lastPracticeDate(history: AttemptLog[], unit: Item['unit']): string | null {
   let last: string | null = null;
   for (const h of history) {
+    // Reviews and timed checks never move the unit's practice anchor (spec: D7/D30 must not be postponed).
+    if (h.role === 'review' || h.role === 'check') continue;
     if (h.unit === unit && PRACTICE_POOLS.includes(h.pool) && (!last || h.local_date > last)) last = h.local_date;
   }
   return last;
@@ -40,6 +48,10 @@ export function isEligibleFresh(item: Item, ctx: FreshContext, allItems: Item[] 
   if (item.pool === 'FOCUS') return false;
   const seen = new Set(ctx.history.map((h) => h.item_id));
   if (seen.has(item.item_id)) return false;
+  const seenLineage = new Set(ctx.history.map((h) => h.lineage).filter(Boolean));
+  if (item.lineage && seenLineage.has(item.lineage)) return false;
+  // A verb form already displayed anywhere is not fresh for VRB-01 (lessons §3.5).
+  if (item.skills.includes('VRB-01') && (item.forms ?? []).some((f) => ctx.history.some((h) => h.forms?.includes(f)))) return false;
 
   // Forms reserved by a later check must not appear anywhere before that check.
   const forms = item.forms ?? [];
@@ -58,7 +70,9 @@ export function isEligibleFresh(item: Item, ctx: FreshContext, allItems: Item[] 
   const onSkill = (h: AttemptLog) => !!primary && h.skills.includes(primary);
 
   if (item.pool === 'READY') {
-    const practice = ctx.history.filter((h) => onSkill(h) && COUNTED_PRACTICE.includes(h.pool)).length;
+    const practice = ctx.history.filter(
+      (h) => onSkill(h) && COUNTED_PRACTICE.includes(h.pool) && h.role !== 'review' && h.role !== 'check'
+    ).length;
     if (practice < ctx.rules.ready_after_practice_attempts) return false;
   }
 
@@ -90,9 +104,9 @@ export function pickFreshItem(
   return candidates[0]?.item ?? null;
 }
 
-/** Focused question after a serious mistake. Not evidence; may be repeated. */
-export function pickFocusItem(items: Item[], tag: ErrorTag, referent?: Referent): Item | null {
-  const focus = items.filter((i) => i.pool === 'FOCUS' && i.focus_for?.tag === tag);
+/** Focused question after a serious mistake, from the same unit. Not evidence; may be repeated. */
+export function pickFocusItem(items: Item[], tag: ErrorTag, referent?: Referent, unit?: Item['unit']): Item | null {
+  const focus = items.filter((i) => i.pool === 'FOCUS' && i.focus_for?.tag === tag && (!unit || i.unit === unit));
   return (
     focus.find((i) => referent && i.focus_for?.referent === referent) ??
     focus.find((i) => !i.focus_for?.referent) ??

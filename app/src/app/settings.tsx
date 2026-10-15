@@ -5,6 +5,7 @@ import { useApp } from '@/ui/AppContext';
 import { BackLink } from '@/ui/BackLink';
 import { ArabicText, H1, Muted, Page, Segmented } from '@/ui/components';
 import { colors, radius } from '@/ui/theme';
+import { HydrationGate } from '@/ui/Hydration';
 
 const SCALES = [
   { label: 'Kecil', value: 0.85 },
@@ -22,8 +23,8 @@ function Row({ title, children }: { title: string; children: React.ReactNode }) 
   );
 }
 
-export default function Settings() {
-  const { learner, rules, updateLearner } = useApp();
+function SettingsRoute() {
+  const { learner, rules, content, updateLearner } = useApp();
   if (!learner) return <Redirect href="/" />;
 
   return (
@@ -47,7 +48,8 @@ export default function Settings() {
           onChange={(v) => updateLearner({ arabic_scale: v })}
           options={SCALES.map((s) => ({ value: s.value, label: s.label }))}
         />
-        <ArabicText scale={learner.arabic_scale}>هِيَ صَابِرَةٌ</ArabicText>
+        {/* Sample sentence only when content may be shown (never in empty tester mode). */}
+        {content.empty ? null : <ArabicText scale={learner.arabic_scale}>هِيَ صَابِرَةٌ</ArabicText>}
       </Row>
 
       <Row title="ID peserta">
@@ -91,3 +93,11 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
 });
+
+export default function Settings() {
+  return (
+    <HydrationGate>
+      <SettingsRoute />
+    </HydrationGate>
+  );
+}

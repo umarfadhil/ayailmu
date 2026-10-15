@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 
 import { validatePack } from '@/content/gating';
-import { demoPack } from '@/content/load';
+import { activePack } from '@/content/load';
 import { findFormClashes } from '@/engine/freshness';
 import { unresolvedSerious } from '@/engine/session';
 import { STORAGE_KIND } from '@/storage/openStore';
@@ -20,7 +20,7 @@ export default function Dev() {
   const [reports, setReports] = useState<ReportRecord[]>([]);
   const [confirm, setConfirm] = useState(false);
   const [showJson, setShowJson] = useState(false);
-  const problems = useMemo(() => [...validatePack(demoPack), ...findFormClashes(demoPack.items).map((c) => JSON.stringify(c))], []);
+  const problems = useMemo(() => [...validatePack(activePack), ...findFormClashes(activePack.items).map((c) => JSON.stringify(c))], []);
 
   useFocusEffect(
     useCallback(() => {

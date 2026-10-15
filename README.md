@@ -1,8 +1,8 @@
 # Ayailmu — Arabic Trial App
 
-A local Expo/React Native prototype for Indonesian-speaking adults learning to understand short Arabic sentences. The UI includes a responsive menu, guided lessons, practice, feedback, settings and session summaries.
+A local Expo/React Native prototype for Indonesian-speaking adults learning to understand short Arabic sentences. It includes a responsive menu, guided lessons, four-choice practice with feedback, spaced reviews, timed checks, factual progress, settings and session summaries.
 
-**Developer prototype only.** The bundled Arabic exercises are synthetic, unreviewed draft examples. Tester mode intentionally displays no lessons until a non-synthetic content pack is approved. The complete pilot is not implemented, and native device testing remains outstanding.
+**Developer prototype only.** The bundled Arabic exercises are synthetic, unreviewed draft examples (see `docs/Four_Choice_Content_Review.md`). Mastery is not assessed while the four-choice "learned" rule is pending. Tester mode intentionally displays no lessons until a non-synthetic content pack is approved. The complete pilot is not implemented, and native device testing remains outstanding.
 
 ## Run locally
 

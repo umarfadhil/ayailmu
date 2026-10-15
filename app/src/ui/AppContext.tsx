@@ -2,12 +2,12 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 
 import { loadRules, type RulesConfig } from '@/config/rules';
 import { gateContent, type GatedContent } from '@/content/gating';
-import { demoPack } from '@/content/load';
+import { activePack } from '@/content/load';
 import { newId } from '@/engine/util';
 import { openStore } from '@/storage/openStore';
 import type { Learner, Store } from '@/storage/types';
 
-export const APP_VERSION = '0.1.0';
+export const APP_VERSION = '0.2.0';
 export const CONSENT_VERSION = 'demo-consent-0.1';
 
 /** In-memory proof that the learner ticked both consent boxes in this app run. Never persisted on its own. */
@@ -38,7 +38,7 @@ const Ctx = createContext<AppState | null>(null);
 
 export function AppProvider({ children, storeFactory = openStore }: { children: ReactNode; storeFactory?: () => Promise<Store> }) {
   const rules = useMemo(() => loadRules(), []);
-  const content = useMemo(() => gateContent(demoPack, rules.mode), [rules.mode]);
+  const content = useMemo(() => gateContent(activePack, rules.mode), [rules.mode]);
   const [store, setStore] = useState<Store | null>(null);
   const [learner, setLearner] = useState<Learner | null>(null);
   const [ready, setReady] = useState(false);

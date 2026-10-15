@@ -136,7 +136,28 @@ function refFeedback(referent: Referent): string {
   return referent === 'perempuan' ? 'FA-REF-HIYA' : 'FA-REF-HUWA';
 }
 
+/**
+ * Four-choice scoring (content v0.2). Each wrong option carries its own misconception(s),
+ * seriousness and feedback. A typed response is refused: there is no typing path.
+ */
+export function scoreMcq4(item: Item, response: Response): ItemScore {
+  if (response.kind === 'dont_know') {
+    return { outcome: 'dont_know', parts: { answer: 'dont_know' }, error_tags: [], serious: null, feedback_ids: [] };
+  }
+  if (response.kind !== 'choice') throw new Error(`${item.item_id}: four-choice item needs a choice response`);
+  const option = (item.options ?? []).find((o) => o.id === response.option_id);
+  if (!option) throw new Error(`${item.item_id}: unknown option ${response.option_id}`);
+  if (option.correct) {
+    const ok = item.feedback_ids.correct;
+    return { outcome: 'correct', parts: { answer: 'correct' }, error_tags: [], serious: null, feedback_ids: ok ? [ok] : [] };
+  }
+  const tags = option.misconceptions ?? [];
+  const serious: ErrorTag | null = option.serious ? (tags.includes('wrong-referent') ? 'wrong-referent' : (tags[0] ?? null)) : null;
+  return { outcome: 'wrong', parts: { answer: 'wrong' }, error_tags: [...tags], serious, feedback_ids: [...(option.feedback_ids ?? [])] };
+}
+
 export function scoreItem(item: Item, response: Response, rules: RulesConfig): ItemScore {
+  if (item.type === 'mcq4') return scoreMcq4(item, response);
   const fb = item.feedback_ids;
 
   if (response.kind === 'dont_know') {

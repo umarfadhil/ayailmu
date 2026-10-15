@@ -1,35 +1,22 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { Redirect, router, useFocusEffect, type Href } from 'expo-router';
-import { useCallback, useState } from 'react';
+import { Redirect, router, type Href } from 'expo-router';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { restoreSnapshot } from '@/engine/controller';
-import type { SessionState } from '@/engine/session';
-import { localDate } from '@/engine/util';
 import { useApp } from '@/ui/AppContext';
+import { MigrationNotice } from '@/ui/notices';
+import { formatDue, useLearning } from '@/ui/useLearning';
 import { Btn, EmptyState, Eyebrow, H1, H2, Icon, Muted, Notice, P, Page, useIsDesktop } from '@/ui/components';
 import { colors, radius } from '@/ui/theme';
 
-// Unit name from Lessons_Unit_A_B_Draft.md Part 2 («Siapa yang dijelaskan?»).
-const UNIT_TITLE = 'Unit A — Siapa yang dijelaskan?';
+// Unit names from Lessons_Unit_A_B_Draft.md Part 2 / Part 3. Unit B in this slice is its basic part only
+// (who did it); the speech part is locked while the learned rule is pending.
+const UNIT_TITLE = { A: 'Unit A — Siapa yang dijelaskan?', B: 'Unit B (dasar) — Siapa yang melakukan?' } as const;
 const OUTLINE_ACCENTS = [colors.topicBar, colors.exampleBar, colors.clueBar];
 
 export default function Home() {
-  const { ready, error, store, rules, content, learner } = useApp();
+  const { ready, error, rules, content, learner } = useApp();
   const desktop = useIsDesktop();
-  const [snap, setSnap] = useState<SessionState | null | undefined>(undefined);
-  const [today, setToday] = useState('');
-
-  useFocusEffect(
-    useCallback(() => {
-      let alive = true;
-      setToday(localDate(Date.now()));
-      if (store) store.loadSnapshot().then((s) => alive && setSnap(restoreSnapshot(s, content)));
-      return () => {
-        alive = false;
-      };
-    }, [store, content])
-  );
+  const learning = useLearning();
 
   if (!ready) {
     return (
@@ -64,13 +51,18 @@ export default function Home() {
 
   if (!learner) return <Redirect href="/consent" />;
 
-  const inProgress = !!snap && snap.phase !== 'done';
-  const doneToday = !!snap && snap.phase === 'done' && snap.local_date === today;
-  const practiceCount = content.items.filter((i) => i.pool === 'PRACT').length;
-  const startLabel = inProgress ? 'Lanjutkan sesi' : doneToday ? 'Mulai sesi tambahan (demo)' : 'Mulai sesi';
+  const unit = learning?.open[learning.open.length - 1] ?? 'A';
+  const unitScreens = content.screens.filter((sc) => sc.unit === unit);
+  const practiceCount = content.items.filter((i) => i.unit === unit && i.pool === 'PRACT').length;
+  const snap = learning?.snapshot;
+  const inProgress = snap?.kind === 'ok' && snap.state.phase !== 'done';
+  const doneToday = snap?.kind === 'ok' && snap.state.phase === 'done' && snap.state.local_date === learning?.today;
+  const oldFormat = snap?.kind === 'legacy' || snap?.kind === 'content-changed';
+  const nextDue = learning?.progress.next_due;
 
   return (
     <Page width="wide">
+      <MigrationNotice />
       <H1>Sesi hari ini</H1>
 
       <View style={styles.unit}>
@@ -81,25 +73,31 @@ export default function Home() {
           style={[StyleSheet.absoluteFill, { borderRadius: radius.md }]}
           pointerEvents="none"
         />
-        <Eyebrow tone="mint">Unit A</Eyebrow>
-        <Text accessibilityRole="header" style={[styles.unitTitle, desktop && styles.unitTitleDesktop]}>
-          {UNIT_TITLE}
+        <Eyebrow tone="mint">{`Unit ${unit}`}</Eyebrow>
+        <Text accessibilityRole="header" testID="unit-title" style={[styles.unitTitle, desktop && styles.unitTitleDesktop]}>
+          {UNIT_TITLE[unit]}
         </Text>
-        <P>{content.screens[0]?.body[0]}</P>
+        <P>{unitScreens[0]?.body[0]}</P>
         <Muted testID="unit-inventory">
-          {content.screens.length} panduan · {practiceCount} soal latihan · {learner.session_minutes} menit per sesi
+          {unitScreens.length} panduan · {practiceCount} soal latihan · {learner.session_minutes} menit per sesi
         </Muted>
         {inProgress ? (
           <Muted testID="session-status">
-            Sesi sebelumnya belum selesai: {snap!.results.length} jawaban tersimpan. Anda bisa melanjutkannya.
+            Sesi sebelumnya belum selesai: {snap.state.results.length} jawaban tersimpan. Anda bisa melanjutkannya.
           </Muted>
         ) : null}
         {doneToday ? <Muted testID="session-status">Sesi hari ini sudah selesai. Terima kasih.</Muted> : null}
-        {snap === undefined ? (
+        {oldFormat ? (
+          <Muted testID="session-status">
+            Sesi lama memakai format soal sebelumnya dan akan diarsipkan saat Anda mulai. Semua jawaban tetap tersimpan.
+          </Muted>
+        ) : null}
+        {nextDue ? <Muted testID="next-due">Jadwal ulasan atau cek berikutnya: {formatDue(nextDue, learning!.today)}.</Muted> : null}
+        {learning === undefined ? (
           <ActivityIndicator color={colors.indigo} />
         ) : (
           <View style={[styles.actions, !desktop && styles.actionsStack]}>
-            <Btn testID="start-session" label={startLabel} onPress={() => router.push('/session')} />
+            <Btn testID="start-session" label={inProgress ? 'Lanjutkan sesi' : 'Mulai sesi'} onPress={() => router.push('/session')} />
             <Btn kind="secondary" label="Lihat panduan" icon="document-text-outline" onPress={() => router.push('/guide' as Href)} />
             {doneToday ? <Btn kind="secondary" label="Lihat ringkasan" onPress={() => router.push('/summary')} /> : null}
           </View>
@@ -110,7 +108,7 @@ export default function Home() {
         <H2>Daftar materi dalam unit ini</H2>
         <Muted>Ikuti panduan secara berurutan, lalu kerjakan latihannya.</Muted>
       </View>
-      {content.screens.map((s, n) => (
+      {unitScreens.map((s, n) => (
         <Pressable
           key={s.screen_id}
           testID={`outline-${s.screen_id}`}
