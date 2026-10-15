@@ -1,0 +1,33 @@
+# Local dependencies, generated output and tooling state
+**/node_modules
+**/.expo/
+**/dist/
+**/web-build/
+**/expo-env.d.ts
+**/*.tsbuildinfo
+**/.DS_Store
+**/.beads/
+**/.claude/
+**/.codex/
+**/.agents/
+**/.design-reference/
+
+# Local secrets, credentials and logs
+**/.env*
+**/.aws/
+**/.ssh/
+*.pem
+*.key
+*.p12
+*.p8
+*.jks
+*.mobileprovision
+*.log
+
+# Source handoffs and reference captures are not project assets
+*.zip
+*.docx
+
+# Generated native folders
+/app/ios/
+/app/android/
