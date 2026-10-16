@@ -1,4 +1,5 @@
 import { createSerialQueue } from './serial';
+import { answerProblem, learnerProblem, reportProblem } from './validate';
 import { STORAGE_SCHEMA, type AnswerRecord, type ArchivedSnapshot, type Learner, type ReportRecord, type Snapshot, type Store } from './types';
 
 export interface KvBackend {
@@ -34,18 +35,15 @@ export function envelopeProblem(v: unknown): string | null {
   if (typeof schema === 'number' && schema > STORAGE_SCHEMA) return `in an unsupported schema (${schema})`;
   if (typeof schema === 'number' && schema < 1) return 'malformed (schema)';
   for (const k of ['learner', 'answers', 'snapshot', 'reports']) if (!(k in v)) return `malformed (missing ${k})`;
-  const l = v.learner;
-  if (l !== null) {
-    if (!isObj(l)) return 'malformed (learner)';
-    if (!isStr(l.learner_id) || !isStr(l.consent_version) || !isStr(l.consent_at) || typeof l.age_confirmed !== 'boolean') {
-      return 'malformed (learner fields)';
-    }
-    if (typeof l.session_minutes !== 'number' || typeof l.arabic_scale !== 'number') return 'malformed (learner settings)';
-    if (!Array.isArray(l.screens_seen) || !l.screens_seen.every(isStr)) return 'malformed (learner screens)';
+  const lp = learnerProblem(v.learner);
+  if (lp) return `malformed (learner ${lp})`;
+  if (!Array.isArray(v.answers)) return 'malformed (answers)';
+  for (const [n, a] of v.answers.entries()) {
+    const p = answerProblem(a);
+    if (p) return `malformed (answer ${n}: ${p})`;
   }
-  if (!Array.isArray(v.answers) || !v.answers.every((a) => isObj(a) && isStr(a.answer_id))) return 'malformed (answers)';
   if (!(v.snapshot === null || isStr(v.snapshot))) return 'malformed (snapshot)';
-  if (!Array.isArray(v.reports) || !v.reports.every((r) => isObj(r) && isStr(r.report_id))) return 'malformed (reports)';
+  if (!Array.isArray(v.reports) || v.reports.some((r) => reportProblem(r))) return 'malformed (reports)';
   if (v.meta !== undefined && (!isObj(v.meta) || !Object.values(v.meta).every(isStr))) return 'malformed (meta)';
   return null;
 }
@@ -71,7 +69,14 @@ export class KvStore implements Store {
   private refused = false;
   private enqueue = createSerialQueue();
 
-  constructor(private kv: KvBackend) {}
+  /**
+   * `readOnly`: the reason this instance may not write (ENG-R01: another tab owns the web
+   * writer lock, or Web Locks is unavailable). Reads work; every write is refused.
+   */
+  constructor(
+    private kv: KvBackend,
+    private readOnly: string | null = null
+  ) {}
 
   async init(): Promise<void> {
     const raw = this.kv.getItem(KvStore.KEY);
@@ -101,11 +106,22 @@ export class KvStore implements Store {
   private commit(update: (current: Blob) => Blob | null): Promise<void> {
     return this.enqueue(async () => {
       if (this.refused) throw new Error('Storage refused: the stored data was not accepted, so nothing is written.');
+      if (this.readOnly) throw new Error(`Storage is read-only: ${this.readOnly}`);
       const next = update(this.blob);
       if (!next) return;
       const stamped = { ...next, schema: STORAGE_SCHEMA };
       this.kv.setItem(KvStore.KEY, JSON.stringify(stamped));
       this.blob = stamped;
+    });
+  }
+
+  /**
+   * ENG-R01: makes this instance read-only from now on. Queued after any write already in
+   * progress, so those land and every later write is refused.
+   */
+  revoke(reason: string): Promise<void> {
+    return this.enqueue(async () => {
+      this.readOnly = reason;
     });
   }
 

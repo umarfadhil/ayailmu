@@ -59,6 +59,14 @@ export interface AnswerRecord {
   selected_option_id?: string | null;
   selected_position?: number | null;
   misconceptions?: ErrorTag[];
+  /** Timed check: correctness/key were not shown after the answer (independent checks). */
+  feedback_deferred?: boolean;
+  /**
+   * Timed check answered after the material it relies on was shown the same day (lesson screen or
+   * Guide): `false`, with `exposure` provenance ("guide:DEMO-S4"). Not counted as retention evidence.
+   */
+  retention_valid?: false;
+  exposure?: string[];
 }
 
 export type StepRole = 'practice' | 'remed' | 'focus' | 'review' | 'check';

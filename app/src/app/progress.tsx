@@ -3,9 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import type { CheckLine, SkillProgress } from '@/engine/progress';
 import { useApp } from '@/ui/AppContext';
-import { ArabicText, Card, Eyebrow, H1, H2, Icon, Muted, Notice, Page } from '@/ui/components';
+import { ArabicText, Card, Eyebrow, H1, H2, Icon, Muted, Notice, Page, StorageRefused } from '@/ui/components';
 import { colors, radius } from '@/ui/theme';
-import { formatDue, useLearning } from '@/ui/useLearning';
+import { formatDue, isLearningError, useLearning } from '@/ui/useLearning';
+import { HydrationGate } from '@/ui/Hydration';
 
 const SKILL_LABEL: Record<string, string> = {
   'NOM-01': 'Memahami kalimat «dia + sifat»',
@@ -17,12 +18,18 @@ const SKILL_LABEL: Record<string, string> = {
 
 function checkText(c: CheckLine, today: string): string {
   const legacy = c.legacy_attempted ? ` · ${c.legacy_attempted} jawaban format lama` : '';
-  const counts = `${c.attempted} dari ${c.available} soal dijawab (${c.correct} benar)${legacy}`;
+  // Outcomes stay hidden until every item of this check is answered (no lookup between dependent checks).
+  const result = c.correct === null ? 'hasilnya ditampilkan setelah semua soal cek ini dijawab' : `${c.correct} benar`;
+  const counts = `${c.attempted} dari ${c.available} soal dijawab (${result})${legacy}`;
   switch (c.status) {
     case 'not-started':
       return 'Belum dimulai.';
     case 'not-due':
-      return `Belum waktunya; mulai ${formatDue(c.due_date!, today)}.`;
+      return c.waiting_new_teaching && c.waiting_until
+        ? `Belum waktunya; mulai ${formatDue(c.waiting_until, today)} (dihitung dari saat materi baru diajarkan).`
+        : c.waiting_new_teaching
+          ? 'Belum waktunya; menunggu materi baru diajarkan lebih dulu.'
+          : `Belum waktunya; mulai ${formatDue(c.due_date!, today)}.`;
     case 'due':
       return `Sudah waktunya. ${counts}.`;
     case 'partial':
@@ -30,6 +37,20 @@ function checkText(c: CheckLine, today: string): string {
     case 'answered':
       return `Semua soal yang tersedia sudah dijawab: ${counts}.`;
   }
+}
+
+/** Honest qualifiers for a check line: not-counted answers, items waiting for new teaching, missing content. */
+function checkNotes(c: CheckLine, today: string): string[] {
+  const notes: string[] = [];
+  if (c.assisted) notes.push(`${c.assisted} soal dijawab setelah materinya dilihat pada hari yang sama; dicatat, tetapi tidak dihitung sebagai bukti ingatan.`);
+  if (c.waiting_new_teaching && c.status !== 'not-due')
+    notes.push(
+      c.waiting_until
+        ? `${c.waiting_new_teaching} soal menunggu sampai ${formatDue(c.waiting_until, today)}, dihitung dari saat materi barunya diajarkan.`
+        : `${c.waiting_new_teaching} soal menunggu materi barunya diajarkan lebih dulu.`
+    );
+  if (c.missing_content) notes.push('Soal cek untuk bagian ini belum lengkap, jadi status ini tetap «sebagian» meskipun semua soal yang ada sudah dijawab.');
+  return notes;
 }
 
 function Line({ title, children, testID }: { title: string; children: React.ReactNode; testID?: string }) {
@@ -57,11 +78,12 @@ function SkillRow({ s }: { s: SkillProgress }) {
 }
 
 /** «Kemajuan»: separate factual lines; mastery, retention and transfer are not judged (rule pending). */
-export default function ProgressScreen() {
+function ProgressRoute() {
   const { content } = useApp();
   const learning = useLearning();
   if (content.empty) return <Redirect href="/" />;
   if (learning === undefined) return null;
+  if (isLearningError(learning)) return <StorageRefused message={learning.error} />;
   if (learning === null) return <Redirect href="/" />;
   const { progress: p, today } = learning;
 
@@ -82,8 +104,14 @@ export default function ProgressScreen() {
                 <Muted>Belum dinilai. {u.learned.reason}</Muted>
               </Line>
               <Line title="Masih ingat setelah 7 / 30 hari" testID={`line-retention-${u.unit}`}>
-                <Muted>7 hari: {checkText(u.retention_d7, today)}</Muted>
-                <Muted>30 hari: {checkText(u.retention_d30, today)}</Muted>
+                <Muted testID={`check-d7-${u.unit}`}>7 hari: {checkText(u.retention_d7, today)}</Muted>
+                {checkNotes(u.retention_d7, today).map((t) => (
+                  <Muted key={`d7-${t}`} testID={`check-d7-note-${u.unit}`}>{`7 hari: ${t}`}</Muted>
+                ))}
+                <Muted testID={`check-d30-${u.unit}`}>30 hari: {checkText(u.retention_d30, today)}</Muted>
+                {checkNotes(u.retention_d30, today).map((t) => (
+                  <Muted key={`d30-${t}`} testID={`check-d30-note-${u.unit}`}>{`30 hari: ${t}`}</Muted>
+                ))}
                 {u.retention_d7.sparse_skills.length || u.retention_d30.sparse_skills.length ? (
                   <Muted>Cakupan soal cek belum lengkap untuk sebagian keterampilan (kurang dari 2 soal); angka di atas tidak dinilai lulus atau gagal.</Muted>
                 ) : (
@@ -114,7 +142,9 @@ export default function ProgressScreen() {
         {p.words.map((w) => (
           <View key={w.word_id} style={styles.word}>
             <View style={{ flex: 1 }}>
-              <Text style={styles.wordMeaning}>{w.meaning}</Text>
+              <Text style={styles.wordMeaning} testID={`word-meaning-${w.word_id}`}>
+                {w.meaning_hidden ? 'Arti disembunyikan sampai cek ulang yang memakai kata ini selesai.' : w.meaning}
+              </Text>
               <Muted>{w.state === 'needs-review' ? 'Perlu diulas' : `Sedang dilatih · ulasan ${formatDue(w.next_due, today)}`}</Muted>
             </View>
             <ArabicText size={26}>{w.display}</ArabicText>
@@ -153,3 +183,11 @@ const styles = StyleSheet.create({
   wordMeaning: { fontSize: 16, color: colors.ink, fontWeight: '600', writingDirection: 'ltr', textAlign: 'left' },
   locked: { flexDirection: 'row', gap: 8, alignItems: 'center', paddingVertical: 4 },
 });
+
+export default function ProgressScreen() {
+  return (
+    <HydrationGate>
+      <ProgressRoute />
+    </HydrationGate>
+  );
+}

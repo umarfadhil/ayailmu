@@ -1,4 +1,5 @@
 import type { SqlDb } from './sqlDb';
+import { answerProblem, learnerProblem } from './validate';
 import { createSerialQueue } from './serial';
 import { STORAGE_SCHEMA, type AnswerRecord, type ArchivedSnapshot, type Learner, type ReportRecord, type Snapshot, type Store } from './types';
 
@@ -34,6 +35,30 @@ export class SqlStore implements Store {
       const stored = rows.length ? Number(rows[0].value) : 0;
       if (!Number.isFinite(stored) || stored > STORAGE_SCHEMA) {
         throw new Error(`Stored data uses an unsupported schema (${rows[0]?.value}); it was not modified.`);
+      }
+    }
+    // ENG-06: refuse stored records the learning projections cannot replay, before any write.
+    const hasAnswers = await this.db.all<{ name: string }>(`SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'answers'`);
+    if (hasAnswers.length) {
+      for (const row of await this.db.all<{ json: string }>('SELECT json FROM answers ORDER BY seq')) {
+        let parsed: unknown;
+        try {
+          parsed = JSON.parse(row.json);
+        } catch {
+          throw new Error('Stored data is malformed (answer JSON); it was not modified.');
+        }
+        const p = answerProblem(parsed);
+        if (p) throw new Error(`Stored data is malformed (answer: ${p}); it was not modified.`);
+      }
+      for (const row of await this.db.all<{ json: string }>('SELECT json FROM learner')) {
+        let parsed: unknown;
+        try {
+          parsed = JSON.parse(row.json);
+        } catch {
+          throw new Error('Stored data is malformed (learner JSON); it was not modified.');
+        }
+        const p = learnerProblem(parsed);
+        if (p) throw new Error(`Stored data is malformed (learner: ${p}); it was not modified.`);
       }
     }
     await this.db.exec('PRAGMA journal_mode = WAL;');

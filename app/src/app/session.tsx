@@ -1,13 +1,15 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Redirect, router } from 'expo-router';
-import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Redirect, router, useFocusEffect } from 'expo-router';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { ActivityIndicator, AppState, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import type { ChoiceOption, Item } from '@/content/schema';
 import { prepareSession, SessionController } from '@/engine/controller';
 import type { Response } from '@/engine/scoring';
 import { currentStep, findItem, type FeedbackView, type ItemStep } from '@/engine/session';
 import { newId } from '@/engine/util';
+import { onCheckpoint } from '@/storage/checkpoints';
+import { moveFocus } from '@/ui/a11y';
 import { APP_VERSION, useApp } from '@/ui/AppContext';
 import {
   ARABIC_FONT,
@@ -16,6 +18,7 @@ import {
   Card,
   ConstructedLabel,
   Eyebrow,
+  MixedText,
   H1,
   HelpLines,
   Muted,
@@ -36,6 +39,8 @@ const OUTCOME_TITLE = {
   pending: 'Jawaban disimpan untuk diperiksa',
   dont_know: 'Tidak apa-apa',
 } as const;
+/** Timed check (F03): one neutral title, tone and icon whatever the outcome, so nothing leaks during the block. */
+const DEFERRED = { title: 'Jawaban tersimpan', tone: 'info', icon: 'save-outline' } as const;
 const OUTCOME_TONE = { correct: 'good', wrong: 'warn', pending: 'info', dont_know: 'info' } as const;
 const OUTCOME_ICON = { correct: 'checkmark-circle', wrong: 'alert-circle', pending: 'time', dont_know: 'information-circle' } as const;
 const TONE_INK = { good: colors.mintInk, warn: colors.clueInk, info: colors.infoInk } as const;
@@ -51,9 +56,12 @@ type Load =
 function SessionScreenRoute() {
   const { store, rules, content, learner } = useApp();
   const [load, setLoad] = useState<Load>({ kind: 'loading' });
-  const [, setTick] = useState(0);
+  const [tick, setTick] = useState(0);
   const [busy, setBusy] = useState(false);
   const shownAt = useRef(0); // set when each step is shown (effect below)
+  // UI-01 focus targets: the heading of each newly shown question/lesson screen, and a save error.
+  const stepHeading = useRef<View>(null);
+  const errorRegion = useRef<View>(null);
 
   // Resume a valid saved session or plan a new one (persisted before display; incompatible saves archived atomically).
   useEffect(() => {
@@ -84,11 +92,37 @@ function SessionScreenRoute() {
   const stepKey = state ? `${state.session_id}:${state.index}:${state.phase}` : '';
   useEffect(() => {
     shownAt.current = Date.now();
-  }, [stepKey]);
+    // A new question or lesson screen takes keyboard/screen-reader focus (after Lanjut the old
+    // button is gone; focus must not fall back to the page body). Feedback focuses its own heading.
+    if (state?.phase === 'step') moveFocus(stepHeading);
+  }, [stepKey, state?.phase]);
+  const saveFailed = ctrl?.error ?? null;
+  useEffect(() => {
+    if (saveFailed) moveFocus(errorRegion);
+  }, [saveFailed, tick]);
 
   useEffect(() => {
     if (state?.phase === 'done') router.replace('/summary');
   }, [state?.phase]);
+
+  // ENG-04 lifecycle checkpoints: active time is saved and the step clock stops when the app goes to
+  // the background / the tab is hidden, when the page is left (pagehide, before the web writer lock
+  // is released) and when the route loses focus; it restarts when visible again. Hidden time is never charged.
+  useEffect(() => {
+    if (!ctrl) return;
+    const sub = AppState.addEventListener('change', (st) => (st === 'active' ? ctrl.resume() : void ctrl.pause()));
+    const off = onCheckpoint(() => ctrl.pause());
+    return () => {
+      sub.remove();
+      off();
+    };
+  }, [ctrl]);
+  useFocusEffect(
+    useCallback(() => {
+      ctrl?.resume();
+      return () => void ctrl?.pause();
+    }, [ctrl])
+  );
 
   if (!learner) return <Redirect href="/" />;
   if (content.empty) return <Redirect href="/" />;
@@ -133,9 +167,11 @@ function SessionScreenRoute() {
   const next = () => run(() => ctrl.next());
 
   const saveError = ctrl.error ? (
-    <Notice tone="danger" testID="save-error">
-      Belum tersimpan. Periksa penyimpanan perangkat lalu coba lagi.
-    </Notice>
+    <View role="alert" accessibilityLiveRegion="assertive" ref={errorRegion} tabIndex={-1} testID="save-error-region">
+      <Notice tone="danger" testID="save-error">
+        Belum tersimpan. Periksa penyimpanan perangkat lalu coba lagi.
+      </Notice>
+    </View>
   ) : null;
 
   const itemCount = state.queue.filter((q) => q.kind === 'item').length;
@@ -150,7 +186,12 @@ function SessionScreenRoute() {
     return (
       <Page width="exercise">
         <MigrationNotice />
-        <LessonPanel screen={screen} scale={learner.arabic_scale} eyebrow={`Unit ${screen.unit} · Pelajaran ${screenIndex} dari ${screenCount}`} />
+        <LessonPanel
+          screen={screen}
+          scale={learner.arabic_scale}
+          eyebrow={`Unit ${screen.unit} · Pelajaran ${screenIndex} dari ${screenCount}`}
+          headingRef={stepHeading}
+        />
         {saveError}
         <Btn testID="next" label="Lanjut" icon="arrow-forward" disabled={busy} onPress={next} />
       </Page>
@@ -158,12 +199,20 @@ function SessionScreenRoute() {
   }
 
   const item = findItem(content, step.item_id);
-  const progress = `Soal ${itemIndex} dari ${itemCount}`;
+  // During a timed check, count check questions only: follow-ups queued after a wrong check answer
+  // would otherwise change the total and reveal the outcome before the check is complete.
+  const inCheck = step.role === 'check';
+  const isCheck = (q: (typeof state.queue)[number]) => q.kind === 'item' && q.role === 'check';
+  const count = inCheck ? state.queue.filter(isCheck).length : itemCount;
+  const position = inCheck ? state.queue.slice(0, state.index + 1).filter(isCheck).length : itemIndex;
+  const progress = `${inCheck ? 'Cek ulang' : 'Soal'} ${position} dari ${count}`;
   const header = (
-    <View style={styles.head}>
+    <View style={styles.head} ref={stepHeading} tabIndex={-1} testID="step-heading">
       <Eyebrow>{`Unit ${item.unit}${ROLE_LABEL[step.role] ? ` · ${ROLE_LABEL[step.role]}` : ''}`}</Eyebrow>
-      <Text style={styles.progressText}>{progress}</Text>
-      <ProgressTrack value={state.phase === 'feedback' ? itemIndex : itemIndex - 1} max={itemCount} label={progress} />
+      <Text style={styles.progressText} testID="step-progress">
+        {progress}
+      </Text>
+      <ProgressTrack value={state.phase === 'feedback' ? position : position - 1} max={count} label={progress} testID="step-progress-track" />
     </View>
   );
   const feedback = state.phase === 'feedback' && state.feedback?.item_id === item.item_id ? state.feedback : null;
@@ -183,22 +232,14 @@ function SessionScreenRoute() {
           scale={learner.arabic_scale}
           onChoose={(id) => submit({ kind: 'choice', option_id: id })}
         />
+        {/* UI-01: persistent polite live region; empty until an answer is saved, so nothing leaks before answering. */}
+        <View accessibilityLiveRegion="polite" role="status" testID="result-live">
+          {feedback ? <Text style={styles.srOnly}>{feedback.deferred ? DEFERRED.title : OUTCOME_TITLE[feedback.outcome]}</Text> : null}
+        </View>
         {feedback ? (
           <>
-            <Card tone={OUTCOME_TONE[feedback.outcome]} style={styles.result}>
-              <View style={styles.resultHead}>
-                <Ionicons name={OUTCOME_ICON[feedback.outcome]} size={22} color={TONE_INK[OUTCOME_TONE[feedback.outcome]]} />
-                <Text accessibilityRole="header" style={[styles.resultTitle, { color: TONE_INK[OUTCOME_TONE[feedback.outcome]] }]}>
-                  {OUTCOME_TITLE[feedback.outcome]}
-                </Text>
-              </View>
-              {feedback.messages.map((m) => (
-                <P key={m} testID="feedback-message">
-                  {m}
-                </P>
-              ))}
-            </Card>
-            <FollowUpHint state={state} />
+            <ResultCard feedback={feedback} scale={learner.arabic_scale} />
+            {inCheck ? null : <FollowUpHint state={state} />}
             {saveError}
             <Btn testID="next" label="Lanjut" icon="arrow-forward" disabled={busy} onPress={next} />
           </>
@@ -207,9 +248,8 @@ function SessionScreenRoute() {
             {item.format !== 'word-meaning' ? <ConstructedLabel /> : null}
             {saveError}
             <View style={styles.quiet}>
-              {item.pool !== 'FOCUS' ? (
-                <Btn testID="dont-know" kind="quiet" label="Saya belum tahu" disabled={busy} onPress={() => submit({ kind: 'dont_know' })} />
-              ) : null}
+              {/* Always available, including guided focus questions (source principle; review F07). */}
+              <Btn testID="dont-know" kind="quiet" label="Saya belum tahu" disabled={busy} onPress={() => submit({ kind: 'dont_know' })} />
               <ReportButton
                 onSubmit={async (reason, text) => {
                   await store!.addReport({
@@ -231,10 +271,38 @@ function SessionScreenRoute() {
   );
 }
 
+/** Feedback after a saved answer. Focus moves to its heading (UI-01). Timed checks stay neutral (F03). */
+function ResultCard({ feedback, scale }: { feedback: FeedbackView; scale: number }) {
+  const heading = useRef<View>(null);
+  useEffect(() => {
+    moveFocus(heading);
+  }, []);
+  const tone = feedback.deferred ? DEFERRED.tone : OUTCOME_TONE[feedback.outcome];
+  const icon = feedback.deferred ? DEFERRED.icon : OUTCOME_ICON[feedback.outcome];
+  const title = feedback.deferred ? DEFERRED.title : OUTCOME_TITLE[feedback.outcome];
+  return (
+    <Card tone={tone} style={styles.result} testID="result-card">
+      <View ref={heading} tabIndex={-1} style={styles.resultHead} testID="result-heading" accessible accessibilityRole="header" accessibilityLabel={title}>
+        <Ionicons name={icon} size={22} color={TONE_INK[tone]} importantForAccessibility="no" accessibilityElementsHidden />
+        <Text style={[styles.resultTitle, { color: TONE_INK[tone] }]} testID="result-title">
+          {title}
+        </Text>
+      </View>
+      {feedback.messages.map((m) => (
+        <MixedText key={m} testID="feedback-message" scale={scale}>
+          {m}
+        </MixedText>
+      ))}
+    </Card>
+  );
+}
+
 function FollowUpHint({ state }: { state: NonNullable<SessionController['state']> }) {
   const nextStep = state.queue[state.index + 1];
   if (!nextStep || nextStep.kind !== 'item' || (nextStep.role !== 'focus' && nextStep.role !== 'remed')) return null;
-  return <Muted>{nextStep.role === 'focus' ? 'Berikutnya: satu pertanyaan singkat.' : 'Berikutnya: soal baru untuk latihan ulang.'}</Muted>;
+  return (
+    <Muted testID="follow-up-hint">{nextStep.role === 'focus' ? 'Berikutnya: satu pertanyaan singkat.' : 'Berikutnya: soal baru untuk latihan ulang.'}</Muted>
+  );
 }
 
 function Question({ item, prompt, scale }: { item: Item; prompt: string; scale: number }) {
@@ -246,13 +314,13 @@ function Question({ item, prompt, scale }: { item: Item; prompt: string; scale: 
         </ArabicText>
       ) : null}
       <HelpLines lines={item.help_lines} scale={scale} />
-      <Text style={styles.prompt} testID="item-prompt">
+      <MixedText scale={scale} style={styles.prompt} testID="item-prompt">
         {prompt}
-      </Text>
+      </MixedText>
       {item.target ? (
-        <Text style={styles.target} testID="item-target">
-          «{item.target}»
-        </Text>
+        <MixedText scale={scale} style={styles.target} testID="item-target">
+          {`«${item.target}»`}
+        </MixedText>
       ) : null}
     </View>
   );
@@ -279,10 +347,18 @@ function OptionTiles({
 }) {
   const byId = new Map((item.options ?? []).map((o) => [o.id, o] as [string, ChoiceOption]));
   const ordered = step.option_order.map((id) => byId.get(id)).filter((o): o is ChoiceOption => !!o);
+  // A deferred (timed-check) answer marks only "your choice", neutrally: no key, no right/wrong colour or icon.
+  const deferred = !!feedback?.deferred;
   return (
-    <View style={styles.tiles} accessibilityRole="radiogroup" testID="answer-tiles">
+    <View
+      style={styles.tiles}
+      role="group"
+      accessibilityLabel="Pilihan jawaban"
+      accessibilityState={{ busy: disabled && !feedback }}
+      testID="answer-tiles"
+    >
       {ordered.map((o, position) => {
-        const isKey = !!feedback && feedback.correct_option_id === o.id;
+        const isKey = !!feedback && !deferred && feedback.correct_option_id === o.id;
         const isPicked = !!feedback && feedback.selected_option_id === o.id;
         const after = feedback ? (isKey ? 'Jawaban tepat. ' : isPicked ? 'Pilihan Anda. ' : '') : '';
         return (
@@ -291,6 +367,7 @@ function OptionTiles({
             testID={`option-${o.id}`}
             accessibilityRole="button"
             accessibilityLabel={`${after}Pilihan ${position + 1}: ${o.text}`}
+            accessibilityLanguage={o.arabic ? 'ar' : undefined}
             accessibilityState={{ disabled, selected: isPicked }}
             disabled={disabled}
             onPress={() => onChoose(o.id)}
@@ -298,10 +375,10 @@ function OptionTiles({
               styles.tile,
               pressed && !disabled && styles.tilePressed,
               isKey && styles.tileKey,
-              isPicked && !isKey && styles.tileWrong,
+              isPicked && !isKey && (deferred ? styles.tileChosen : styles.tileWrong),
             ]}
           >
-            {feedback && (isKey || isPicked) ? (
+            {feedback && !deferred && (isKey || isPicked) ? (
               <Ionicons
                 name={isKey ? 'checkmark-circle' : 'close-circle'}
                 size={20}
@@ -310,6 +387,7 @@ function OptionTiles({
               />
             ) : null}
             <Text
+              lang={o.arabic ? 'ar' : undefined}
               style={[
                 styles.tileText,
                 o.arabic && { fontFamily: ARABIC_FONT, fontSize: Math.round(30 * scale), lineHeight: Math.round(54 * scale), writingDirection: 'rtl' },
@@ -348,6 +426,8 @@ const styles = StyleSheet.create({
   tilePressed: { backgroundColor: colors.indigoSoft, borderColor: colors.indigo },
   tileKey: { backgroundColor: colors.mintBg, borderColor: colors.mintBorder, borderWidth: 2 },
   tileWrong: { backgroundColor: colors.dangerBg, borderColor: colors.dangerBorder, borderWidth: 2 },
+  tileChosen: { backgroundColor: colors.indigoSoft, borderColor: colors.indigo, borderWidth: 2 },
+  srOnly: { position: 'absolute', width: 1, height: 1, overflow: 'hidden', opacity: 0 },
   tileIcon: { position: 'absolute', left: 12 },
   tileText: { fontSize: 17, lineHeight: 24, color: colors.ink, textAlign: 'center', flexShrink: 1 },
   result: { gap: 8 },
@@ -358,7 +438,7 @@ const styles = StyleSheet.create({
 
 export default function SessionScreen() {
   return (
-    <HydrationGate>
+    <HydrationGate write>
       <SessionScreenRoute />
     </HydrationGate>
   );

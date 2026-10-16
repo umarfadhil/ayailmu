@@ -82,7 +82,7 @@ function ConsentRoute() {
 
 export default function Consent() {
   return (
-    <HydrationGate>
+    <HydrationGate write>
       <ConsentRoute />
     </HydrationGate>
   );

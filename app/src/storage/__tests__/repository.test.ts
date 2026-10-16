@@ -69,6 +69,8 @@ type Opened = {
   failNextSnapshotWrite: () => void;
   /** Test-only: mark the stored data as written by a future, unsupported app version. */
   setFutureSchema: () => void;
+  /** Test-only: replace the stored answer with an ID-only record (ENG-06). */
+  corruptAnswer?: () => void;
   /** Test-only: the raw persisted bytes, to prove nothing was overwritten. */
   rawDump: () => string;
   /** Test-only: replace stored data with what the v1 app wrote (no schema marker, v1 snapshot). */
@@ -108,6 +110,7 @@ const factories: Factory[] = [
           failSnapshot = true;
         },
         setFutureSchema: () => handles[0].raw.exec(`UPDATE meta SET value = '99' WHERE key = 'schema_version'`),
+        corruptAnswer: () => handles[0].raw.exec(`UPDATE answers SET json = '{"answer_id":"ans-1"}'`),
         rawDump: () => {
           const r = handles[0].raw;
           const q = (sql: string) => JSON.stringify(r.prepare(sql).all());
@@ -175,6 +178,11 @@ const factories: Factory[] = [
         setFutureSchema: () => {
           const blob = JSON.parse(kv.getItem(KvStore.KEY) ?? '{}');
           blob.schema = 99;
+          kv.setItem(KvStore.KEY, JSON.stringify(blob));
+        },
+        corruptAnswer: () => {
+          const blob = JSON.parse(kv.getItem(KvStore.KEY)!);
+          blob.answers = [{ answer_id: 'ans-1' }];
           kv.setItem(KvStore.KEY, JSON.stringify(blob));
         },
         rawDump: () => kv.getItem(KvStore.KEY) ?? '',
@@ -385,7 +393,7 @@ describe.each(factories)('$name', ({ open }) => {
       reason: 'Lainnya',
       text: 'x',
     };
-    const settings = { ...learner, session_minutes: 20, arabic_scale: 1.3, screens_seen: ['DEMO-S1', 'DEMO-S2', 'DEMO-S3'] };
+    const settings = { ...learner, session_minutes: 20, arabic_scale: 1.3, screens_seen: ['DEMO-S1', 'DEMO-S2', 'DEMO-S4', 'DEMO-S3'] };
     const v1snap = { version: 1, session_id: 'ses-1', content_version: 'demo-synthetic-0.1', index: 4, phase: 'step', queue: [] };
     ctx.seedLegacyV1({ learner: settings, answers: [legacyTyped, legacyPending], snapshot: v1snap, reports: [report] });
     const restarted = await ctx.reopen();
@@ -415,8 +423,8 @@ describe.each(factories)('$name', ({ open }) => {
         evidence_mode: 'recognition-4',
         answer_schema: 2,
       });
-    await ctx.store.recordAnswer(v2(1, 'A2-M01', '2027-01-01', 'practice'), snapshot(1));
-    await ctx.store.recordAnswer(v2(2, 'A2-M01', '2027-01-02', 'review'), snapshot(2));
+    await ctx.store.recordAnswer(v2(1, 'A3-M01', '2027-01-01', 'practice'), snapshot(1));
+    await ctx.store.recordAnswer(v2(2, 'A3-M01', '2027-01-02', 'review'), snapshot(2));
     const before = await ctx.store.listAnswers();
     const restarted = await ctx.reopen();
     const after = await restarted.listAnswers();
@@ -446,5 +454,13 @@ describe.each(factories)('$name', ({ open }) => {
     expect(JSON.parse(archive[0].raw)).toEqual(broken);
     expect(await restarted.loadSnapshot()).toEqual(r.state);
     expect(await restarted.getMeta('pending_notice')).toBe('snapshot-unreadable');
+  });
+
+  it('ENG-06: answer rows missing replay fields are refused at open without changing stored bytes', async () => {
+    await ctx.store.recordAnswer(answer(1), snapshot(1));
+    ctx.corruptAnswer?.();
+    const before = ctx.rawDump();
+    await expect(ctx.reopen()).rejects.toThrow(/malformed/i);
+    expect(ctx.rawDump()).toBe(before);
   });
 });

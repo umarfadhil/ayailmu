@@ -1,5 +1,5 @@
 import { gateContent, validatePack } from '@/content/gating';
-import { activePack, legacyPack, lineageOf } from '@/content/load';
+import { legacyPack, lineageOf, v02Pack as activePack } from '@/content/load';
 import type { ContentPack, Item } from '@/content/schema';
 import { normalize } from '@/engine/scoring';
 

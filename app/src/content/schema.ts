@@ -28,7 +28,14 @@ export type Pool =
 export type ItemType = 'q-mean' | 'q-para' | 'q-form2' | 'q-ref' | 'choose' | 'mcq4';
 
 /** Four-choice question formats (content v0.2). */
-export type McqFormat = 'word-meaning' | 'interpretation' | 'form-grid' | 'verb-identify' | 'verb-interpretation';
+export type McqFormat =
+  | 'word-meaning'
+  | 'interpretation'
+  | 'form-grid'
+  | 'verb-identify'
+  | 'verb-interpretation'
+  // Choose the Arabic verb form for a target meaning (Unit B remediation).
+  | 'verb-form-grid';
 
 export type Referent = 'laki-laki' | 'perempuan';
 
@@ -127,6 +134,11 @@ export interface Item {
   review_key?: string;
   /** Legacy (v0.1) item IDs this item replaces. Raw legacy answers are never re-graded. */
   legacy_item_ids?: string[];
+  /**
+   * Arabic forms whose meaning the learner needs and that must be taught on a lesson screen
+   * before this item is scored (content repair 2026-10-16, CONTENT-F02).
+   */
+  requires_taught?: string[];
   /** Practice only: never counts as evidence for any skill. */
   practice_only?: boolean;
   /** FOCUS items only: which serious mistake (and referent) this question follows up. */

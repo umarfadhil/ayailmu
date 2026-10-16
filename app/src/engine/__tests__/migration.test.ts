@@ -19,7 +19,7 @@ const learner: Learner = {
   age_confirmed: true,
   session_minutes: 20,
   arabic_scale: 1.3,
-  screens_seen: ['DEMO-S1', 'DEMO-S2', 'DEMO-S3'],
+  screens_seen: ['DEMO-S1', 'DEMO-S2', 'DEMO-S4', 'DEMO-S3'],
 };
 const typedAnswer = {
   answer_id: 'ans-v1-1',
@@ -104,7 +104,7 @@ describe('classifySnapshot', () => {
     ['feedback phase without feedback', (s) => (s.phase = 'feedback')],
     ['feedback for a different item', (s) => {
       s.phase = 'feedback';
-      s.feedback = { item_id: 'A2-P02', outcome: 'correct', messages: [], selected_option_id: 'k', correct_option_id: 'k' };
+      s.feedback = { item_id: 'A3-P02', outcome: 'correct', messages: [], selected_option_id: 'k', correct_option_id: 'k' };
     }],
     ['non-numeric budget', (s) => (s.budget_minutes = 'ten')],
     ['missing review time fields', (s) => delete s.review_ms],
@@ -126,7 +126,7 @@ describe('classifySnapshot', () => {
   });
 
   it('a saved option order that is not an exact permutation is set aside, never re-graded', () => {
-    const step = makeItemStep(content, 'A2-P01', 'practice', zero);
+    const step = makeItemStep(content, 'A3-P01', 'practice', zero);
     const bad = { ...fresh, queue: [{ ...step, option_order: ['k', 'r', 'p', 'p'] }], index: 0, phase: 'step' };
     expect(classifySnapshot(JSON.stringify(bad), content).kind).toBe('invalid-order');
     const missing = { ...fresh, queue: [{ ...step, option_order: undefined }], index: 0, phase: 'step' };
@@ -160,10 +160,10 @@ describe('prepareSession: safe migration of a realistic v1 save', () => {
     expect(r.state.queue[0]).toMatchObject({ kind: 'item' });
     const asRole = (role: string) => r.state.queue.filter((q) => q.kind === 'item' && q.role === role).map((q) => (q as { item_id: string }).item_id);
     // never fresh again under the new IDs (was DEMO-P01 / DEMO-M02, the latter still pending)…
-    expect(asRole('practice')).not.toContain('A2-P01');
-    expect(asRole('practice')).not.toContain('A2-M02');
+    expect(asRole('practice')).not.toContain('A3-P01');
+    expect(asRole('practice')).not.toContain('A3-M02');
     // …but due for review two days after the legacy exposure (Oct 14 → due Oct 15, today Oct 16)
-    expect(asRole('review')).toEqual(expect.arrayContaining(['A2-P01', 'A2-M02']));
+    expect(asRole('review')).toEqual(expect.arrayContaining(['A3-P01', 'A3-M02']));
   });
 
   it('a failed archive leaves the v1 save intact and reports the error', async () => {
@@ -225,11 +225,11 @@ describe('prepareSession: safe migration of a realistic v1 save', () => {
     const all = content.items.filter((i) => i.pool === 'PRACT' || i.pool === 'READY');
     const done = { ...learner, screens_seen: content.screens.map((s) => s.screen_id) };
     await store.saveLearner(done);
-    const lastDone = { ...startSession({ content, rules, history: [], learnerId: 'lrn-v1', now: NOW, budgetMinutes: 15, screensSeen: done.screens_seen, appVersion: '0.2.0', rng: zero }), phase: 'done' as const, queue: [], results: [{ item_id: 'A2-M01', outcome: 'correct' as const, role: 'practice' as const }] };
+    const lastDone = { ...startSession({ content, rules, history: [], learnerId: 'lrn-v1', now: NOW, budgetMinutes: 15, screensSeen: done.screens_seen, appVersion: '0.2.0', rng: zero }), phase: 'done' as const, queue: [], results: [{ item_id: 'A3-M01', outcome: 'correct' as const, role: 'practice' as const }] };
     for (const [n, it] of all.entries()) {
       await store.recordAnswer(
         // attempted today, correct, no open serious mistake (so genuinely nothing is outstanding)
-        { ...typedAnswer, answer_id: `x${n}`, item_id: it.item_id, unit: it.unit, skills: it.skills, pool: it.pool, lineage: it.lineage, content_version: 'demo-synthetic-0.2', local_date: '2026-10-16', timestamp: '2026-10-16T01:00:00.000Z', role: 'practice', outcome: 'correct', serious_tag: null, error_tags: [] },
+        { ...typedAnswer, answer_id: `x${n}`, item_id: it.item_id, unit: it.unit, skills: it.skills, pool: it.pool, lineage: it.lineage, content_version: 'demo-synthetic-0.3', local_date: '2026-10-16', timestamp: '2026-10-16T01:00:00.000Z', role: 'practice', outcome: 'correct', serious_tag: null, error_tags: [] },
         lastDone
       );
     }

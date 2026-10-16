@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
 
 export default function Settings() {
   return (
-    <HydrationGate>
+    <HydrationGate write>
       <SettingsRoute />
     </HydrationGate>
   );

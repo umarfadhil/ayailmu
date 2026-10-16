@@ -4,8 +4,8 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-nati
 
 import { useApp } from '@/ui/AppContext';
 import { MigrationNotice } from '@/ui/notices';
-import { formatDue, useLearning } from '@/ui/useLearning';
-import { Btn, EmptyState, Eyebrow, H1, H2, Icon, Muted, Notice, P, Page, useIsDesktop } from '@/ui/components';
+import { formatDue, isLearningError, useLearning } from '@/ui/useLearning';
+import { Btn, EmptyState, Eyebrow, H1, H2, Icon, MixedText, Muted, Notice, P, Page, ReadOnlyNotice, StorageRefused, useIsDesktop } from '@/ui/components';
 import { colors, radius } from '@/ui/theme';
 
 // Unit names from Lessons_Unit_A_B_Draft.md Part 2 / Part 3. Unit B in this slice is its basic part only
@@ -14,7 +14,7 @@ const UNIT_TITLE = { A: 'Unit A — Siapa yang dijelaskan?', B: 'Unit B (dasar) 
 const OUTLINE_ACCENTS = [colors.topicBar, colors.exampleBar, colors.clueBar];
 
 export default function Home() {
-  const { ready, error, rules, content, learner } = useApp();
+  const { ready, error, readOnly, rules, content, learner } = useApp();
   const desktop = useIsDesktop();
   const learning = useLearning();
 
@@ -26,15 +26,8 @@ export default function Home() {
     );
   }
 
-  if (error) {
-    return (
-      <Page>
-        <H1>Penyimpanan tidak dapat dibuka</H1>
-        <Notice tone="danger">{error}</Notice>
-        <P>Data yang ada tidak ditimpa.</P>
-      </Page>
-    );
-  }
+  if (error) return <StorageRefused message={error} />;
+  if (isLearningError(learning)) return <StorageRefused message={learning.error} />;
 
   if (content.empty) {
     return (
@@ -63,6 +56,7 @@ export default function Home() {
   return (
     <Page width="wide">
       <MigrationNotice />
+      {readOnly ? <ReadOnlyNotice reason={readOnly} /> : null}
       <H1>Sesi hari ini</H1>
 
       <View style={styles.unit}>
@@ -77,7 +71,7 @@ export default function Home() {
         <Text accessibilityRole="header" testID="unit-title" style={[styles.unitTitle, desktop && styles.unitTitleDesktop]}>
           {UNIT_TITLE[unit]}
         </Text>
-        <P>{unitScreens[0]?.body[0]}</P>
+        {unitScreens[0] ? <MixedText scale={learner.arabic_scale}>{unitScreens[0].body[0]}</MixedText> : null}
         <Muted testID="unit-inventory">
           {unitScreens.length} panduan · {practiceCount} soal latihan · {learner.session_minutes} menit per sesi
         </Muted>
@@ -97,7 +91,12 @@ export default function Home() {
           <ActivityIndicator color={colors.indigo} />
         ) : (
           <View style={[styles.actions, !desktop && styles.actionsStack]}>
-            <Btn testID="start-session" label={inProgress ? 'Lanjutkan sesi' : 'Mulai sesi'} onPress={() => router.push('/session')} />
+            <Btn
+              testID="start-session"
+              label={inProgress ? 'Lanjutkan sesi' : 'Mulai sesi'}
+              disabled={!!readOnly}
+              onPress={() => router.push('/session')}
+            />
             <Btn kind="secondary" label="Lihat panduan" icon="document-text-outline" onPress={() => router.push('/guide' as Href)} />
             {doneToday ? <Btn kind="secondary" label="Lihat ringkasan" onPress={() => router.push('/summary')} /> : null}
           </View>
@@ -121,10 +120,12 @@ export default function Home() {
             <Text style={styles.numText}>{n + 1}</Text>
           </View>
           <View style={{ flex: 1, gap: 2 }}>
-            <Text style={styles.outlineTitle}>{s.title}</Text>
-            <Text style={styles.outlineBody} numberOfLines={2}>
+            <MixedText scale={learner.arabic_scale} style={styles.outlineTitle}>
+              {s.title}
+            </MixedText>
+            <MixedText scale={learner.arabic_scale} style={styles.outlineBody} numberOfLines={2}>
               {s.body[0]}
-            </Text>
+            </MixedText>
           </View>
           <Icon name="chevron-forward" color={colors.muted} />
         </Pressable>

@@ -31,15 +31,15 @@ function ev(item_id: string, local_date: string, role: StepRole = 'practice', ou
     ...extra,
   } as AnswerRecord;
 }
-const A_SCREENS = ['DEMO-S1', 'DEMO-S2', 'DEMO-S3'];
+const A_SCREENS = ['DEMO-S1', 'DEMO-S2', 'DEMO-S4', 'DEMO-S3'];
 const aCore = () => [
-  ev('A2-M01', '2027-01-01'),
-  ev('A2-F01', '2027-01-01'),
-  ev('A2-P01', '2027-01-01', 'practice', 'wrong', { serious_tag: 'wrong-referent', error_tags: ['wrong-referent'] }),
-  ev('A2-M02', '2027-01-01', 'practice', 'dont_know'),
-  ev('A2-F02', '2027-01-01'),
-  ev('A2-P02', '2027-01-01'),
-  ev('A2-P03', '2027-01-01'),
+  ev('A3-M01', '2027-01-01'),
+  ev('A3-F01', '2027-01-01'),
+  ev('A3-P01', '2027-01-01', 'practice', 'wrong', { serious_tag: 'wrong-referent', error_tags: ['wrong-referent'] }),
+  ev('A3-M02', '2027-01-01', 'practice', 'dont_know'),
+  ev('A3-F02', '2027-01-01'),
+  ev('A3-P02', '2027-01-01'),
+  ev('A3-P03', '2027-01-01'),
 ];
 
 describe('progress projection (factual, learned unassessed)', () => {
@@ -55,7 +55,7 @@ describe('progress projection (factual, learned unassessed)', () => {
       expect(u.transfer.status).toBe('unassessed');
     }
     expect(p.words).toEqual([]);
-    expect(p.rules_version).toBe('pilot-0.2-local');
+    expect(p.rules_version).toBe('pilot-0.3-local');
   });
 
   it('after Unit A practice on Jan 1: hand-checked counts, serious error open, words practising, next due Jan 2', () => {
@@ -66,8 +66,8 @@ describe('progress projection (factual, learned unassessed)', () => {
     expect(skill('LEX-A:W-A5')).toMatchObject({ attempts: 1, correct: 0, dont_know: 1 });
     expect(skill('NOM-01').evidence_answer_ids).toHaveLength(3);
     expect(p.words).toEqual([
-      { word_id: 'W-A3', display: 'صَادِقٌ', meaning: 'orang yang jujur', state: 'practising', level: 0, next_due: '2027-01-02' },
-      { word_id: 'W-A5', display: 'عَالِمٌ', meaning: 'orang yang berilmu / mengetahui', state: 'practising', level: 0, next_due: '2027-01-02' },
+      { word_id: 'W-A3', display: 'صَادِقٌ', meaning: 'orang yang jujur', state: 'practising', meaning_hidden: false, level: 0, next_due: '2027-01-02' },
+      { word_id: 'W-A5', display: 'عَالِمٌ', meaning: 'orang yang berilmu', state: 'practising', meaning_hidden: false, level: 0, next_due: '2027-01-02' },
     ]);
     expect(p.next_due).toBe('2027-01-02');
     const a = p.units[0];
@@ -84,9 +84,10 @@ describe('progress projection (factual, learned unassessed)', () => {
   });
 
   it('timed checks show raw counts only: partial when some of the available items were answered', () => {
-    const log = [...aCore(), ev('A2-D7S1', '2027-01-08', 'check'), ev('A2-D7S2', '2027-01-08', 'check', 'wrong'), ev('A2-D7W1', '2027-01-08', 'check')];
+    const log = [...aCore(), ev('A3-D7S1', '2027-01-08', 'check'), ev('A3-D7S2', '2027-01-08', 'check', 'wrong'), ev('A3-D7W1', '2027-01-08', 'check')];
     const d7 = progress(log, content, rules, '2027-01-08', A_SCREENS).units[0].retention_d7;
-    expect(d7).toMatchObject({ status: 'partial', attempted: 3, correct: 2, available: 8 });
+    // correct stays hidden (null) while 5 of the 8 items are unanswered (whole-branch review: no lookup between checks)
+    expect(d7).toMatchObject({ status: 'partial', attempted: 3, correct: null, available: 8 });
     expect(JSON.stringify(d7)).not.toMatch(/remembered|ingat|pass|lulus/i);
   });
 
@@ -104,12 +105,13 @@ describe('progress projection (factual, learned unassessed)', () => {
     expect(s).toMatchObject({ attempts: 0, correct: 0, wrong: 0, legacy: { attempts: 1, correct: 0, wrong: 0, pending: 1 } });
   });
 
-  it('the word list never shows unintroduced or reserved forms', () => {
-    const b = ['B2-W1', 'B2-W2', 'B2-W3', 'B2-VN1', 'B2-VN2', 'B2-V1', 'B2-V2', 'B2-V3', 'B2-W4'].map((id) => ev(id, '2027-01-10'));
-    const p = progress([...aCore(), ...b], content, rules, '2027-01-10', [...A_SCREENS, 'DEMO-BS1', 'DEMO-BS2', 'DEMO-BS3']);
+  it('the word list shows only taught, actually practised forms and never the D30 holdout', () => {
+    const b = ['B3-W1', 'B3-W2', 'B3-W3', 'B3-W4', 'B3-W5', 'B3-VN1', 'B3-VN2', 'B3-V1', 'B3-V2', 'B3-V3'].map((id) => ev(id, '2027-01-10'));
+    const p = progress([...aCore(), ...b], content, rules, '2027-01-10', [...A_SCREENS, 'DEMO-BS1', 'DEMO-BS2', 'DEMO-BS4', 'DEMO-BS3']);
     const shown = p.words.map((w) => w.display);
-    expect(shown).toEqual(['صَادِقٌ', 'عَالِمٌ', 'ذَهَبَ', 'خَرَجَ', 'دَخَلَتْ', 'رَجَعَتْ']);
-    expect(JSON.stringify(p.words)).not.toMatch(/رَجَعَ"|سَمِعَ|سَمِعَتْ|mendengar/);
+    // v0.3 teaches رَجَعَ and سَمِعَ on the Unit B verb screen before their word cards
+    expect(shown).toEqual(['صَادِقٌ', 'عَالِمٌ', 'ذَهَبَ', 'خَرَجَ', 'دَخَلَتْ', 'رَجَعَ', 'سَمِعَ']);
+    expect(JSON.stringify(p.words)).not.toMatch(/سَمِعَتْ/);
     expect(p.units[1].open).toBe(true);
   });
 
@@ -135,7 +137,7 @@ describe('progress projection (factual, learned unassessed)', () => {
       auto_score: { who: 'correct', description: 'correct', describes: 'correct' },
     });
     const d7 = progress([...aCore(), legacyCheck], content, rules, '2027-01-08', A_SCREENS).units[0].retention_d7;
-    expect(d7).toMatchObject({ status: 'partial', attempted: 0, correct: 0, legacy_attempted: 1, legacy: { correct: 0, wrong: 0, pending: 1, dont_know: 0 } });
+    expect(d7).toMatchObject({ status: 'partial', attempted: 0, correct: null, legacy_attempted: 1, legacy: { correct: 0, wrong: 0, pending: 1, dont_know: 0 } });
     expect(legacyCheck.raw_response).toBe(JSON.stringify({ kind: 'typed', text: 'dia sabar', ref: 'laki-laki' }));
   });
 });

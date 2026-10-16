@@ -21,6 +21,8 @@ import Summary from '@/app/summary';
 let mockKv: KvBackend = memoryKv();
 /** When set, opening the store waits for this promise (simulates slow durable hydration on reload). */
 let mockOpenGate: Promise<void> | null = null;
+/** When set, the store returns these answers without validation (simulates a projection-breaking record). */
+let mockBrokenAnswers: unknown[] | null = null;
 jest.mock('@/storage/openStore', () => ({
   STORAGE_KIND: 'test-memory',
   openStore: async () => {
@@ -28,7 +30,11 @@ jest.mock('@/storage/openStore', () => ({
     const { KvStore: Store } = jest.requireActual('@/storage/kvStore');
     const s = new Store(mockKv);
     await s.init();
-    return s;
+    if (!mockBrokenAnswers) return s;
+    const broken = mockBrokenAnswers;
+    return new Proxy(s, {
+      get: (t, k) => (k === 'listAnswers' ? async () => broken : typeof t[k] === 'function' ? t[k].bind(t) : t[k]),
+    });
   },
 }));
 
@@ -67,7 +73,7 @@ const learner: Learner = {
   age_confirmed: true,
   session_minutes: 20,
   arabic_scale: 1,
-  screens_seen: ['DEMO-S1', 'DEMO-S2', 'DEMO-S3'],
+  screens_seen: ['DEMO-S1', 'DEMO-S2', 'DEMO-S4', 'DEMO-S3'],
 };
 let n = 0;
 function v2(item_id: string, local_date: string, outcome: AnswerRecord['outcome'] = 'correct'): AnswerRecord {
@@ -77,7 +83,7 @@ function v2(item_id: string, local_date: string, outcome: AnswerRecord['outcome'
     answer_id: `seed-${n}`,
     learner_id: learner.learner_id,
     item_id,
-    content_version: 'demo-synthetic-0.2',
+    content_version: 'demo-synthetic-0.3',
     rules_version: 'pilot-0.2-local',
     app_version: '0.2.0',
     timestamp: `${local_date}T02:00:${String(n % 60).padStart(2, '0')}.000Z`,
@@ -106,12 +112,13 @@ function v2(item_id: string, local_date: string, outcome: AnswerRecord['outcome'
     role: 'practice',
   };
 }
-const A_CORE = ['A2-M01', 'A2-F01', 'A2-P01', 'A2-M02', 'A2-F02', 'A2-P02', 'A2-P03'];
+const A_CORE = ['A3-M01', 'A3-F01', 'A3-P01', 'A3-M02', 'A3-F02', 'A3-P02', 'A3-P03'];
 const seed = (data: object) => mockKv.setItem(KvStore.KEY, JSON.stringify({ schema: 2, meta: {}, learner: null, answers: [], snapshot: null, reports: [], ...data }));
 
 beforeEach(() => {
   mockKv = memoryKv();
   mockOpenGate = null;
+  mockBrokenAnswers = null;
   delete process.env.EXPO_PUBLIC_APP_MODE;
 });
 
@@ -146,8 +153,8 @@ describe('four answers everywhere (review, readiness, Unit B, focus)', () => {
     expect([...seenRoles].sort()).toEqual(['focus', 'review', 'unitB']);
     const answers = blob().answers as AnswerRecord[];
     expect(answers.filter((a) => a.role === 'review').length).toBe(7);
-    expect(answers.some((a) => a.item_id === 'A2-Y01')).toBe(true); // Unit A READY reached after B opened
-    expect(answers.find((a) => a.item_id === 'B2-FQ-REF-F')).toMatchObject({ role: 'focus', fresh_evidence: false });
+    expect(answers.some((a) => a.item_id === 'A3-Y01')).toBe(true); // Unit A READY reached after B opened
+    expect(answers.find((a) => a.item_id === 'B3-FQ-REF-F')).toMatchObject({ role: 'focus', fresh_evidence: false });
     expect(answers.filter((a) => a.answer_id.startsWith('ans')).every((a) => a.presented_options?.length === 4)).toBe(true);
   }, 60000);
 });
@@ -192,8 +199,26 @@ describe('reload while the store is still hydrating (regression from rendered QA
   }, 30000);
 });
 
+describe('ENG-06: unreadable saved data gives a recoverable refusal, never an endless loading screen', () => {
+  it.each(['/', '/progress', '/summary', '/session', '/guide'])('malformed stored answers: %s shows the preserved-data refusal; bytes unchanged', async (url) => {
+    const raw = JSON.stringify({ schema: 2, meta: {}, learner, answers: [{ answer_id: 'a' }, { answer_id: 'b' }], snapshot: null, reports: [] });
+    mockKv.setItem(KvStore.KEY, raw);
+    await start(url);
+    expect(await screen.findByTestId('storage-refused')).toBeTruthy();
+    expect(screen.getAllByText(/tidak diubah/).length).toBeGreaterThan(0);
+    expect(mockKv.getItem(KvStore.KEY)).toBe(raw);
+  });
+
+  it.each(['/', '/progress', '/summary'])('a projection error (unvalidated record) on %s is handled, not left loading', async (url) => {
+    seed({ learner, answers: [] });
+    mockBrokenAnswers = [{ answer_id: 'a' }, { answer_id: 'b' }];
+    await start(url);
+    expect(await screen.findByTestId('storage-refused')).toBeTruthy();
+  });
+});
+
 describe('safe migration of a realistic v1 developer save', () => {
-  const typed = { ...v2('A2-P01', daysAgo(3), 'wrong'), answer_id: 'v1-ans', item_id: 'DEMO-P01', content_version: 'demo-synthetic-0.1', answer_schema: undefined, evidence_mode: undefined, lineage: undefined, role: undefined, raw_response: JSON.stringify({ kind: 'typed', text: 'dia beriman', ref: 'laki-laki' }) };
+  const typed = { ...v2('A3-P01', daysAgo(3), 'wrong'), answer_id: 'v1-ans', item_id: 'DEMO-P01', content_version: 'demo-synthetic-0.1', answer_schema: undefined, evidence_mode: undefined, lineage: undefined, role: undefined, raw_response: JSON.stringify({ kind: 'typed', text: 'dia beriman', ref: 'laki-laki' }) };
   const v1snap = { version: 1, session_id: 'ses-v1', content_version: 'demo-synthetic-0.1', index: 4, phase: 'step', queue: [{ kind: 'item', item_id: 'DEMO-M02', role: 'practice' }] };
 
   it('home explains the old session; starting archives it, shows an honest notice and keeps every record', async () => {

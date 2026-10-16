@@ -12,6 +12,8 @@ export interface RulesConfig {
   typo_tolerance: { min_word_length: number; max_edits: number };
   review_spacing_days: number[];
   review_share_max: number;
+  /** Cap on active time charged for one step (answer + feedback); time with the app closed is not charged. */
+  max_step_active_minutes: number;
   binary_streak: number;
   binary_min_days: number;
   tile_counts_as_free: boolean;
@@ -56,6 +58,7 @@ export function validateRules(raw: unknown): RulesConfig {
     'review_spacing_days'
   );
   need(typeof r.review_share_max === 'number' && r.review_share_max >= 0 && r.review_share_max <= 1, 'review_share_max');
+  need(typeof r.max_step_active_minutes === 'number' && r.max_step_active_minutes > 0, 'max_step_active_minutes');
   need(Number.isInteger(r.binary_streak) && (r.binary_streak ?? 0) > 0, 'binary_streak');
   need(Number.isInteger(r.binary_min_days), 'binary_min_days');
   need(typeof r.tile_counts_as_free === 'boolean', 'tile_counts_as_free');

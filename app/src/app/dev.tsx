@@ -15,7 +15,7 @@ import { colors } from '@/ui/theme';
 
 /** Developer-demo only: answer log, config and content checks, local reset. */
 export default function Dev() {
-  const { store, rules, content, resetAll } = useApp();
+  const { store, readOnly, rules, content, resetAll } = useApp();
   const [answers, setAnswers] = useState<AnswerRecord[]>([]);
   const [reports, setReports] = useState<ReportRecord[]>([]);
   const [confirm, setConfirm] = useState(false);
@@ -81,7 +81,7 @@ export default function Dev() {
           <Btn kind="quiet" label="Batal" onPress={() => setConfirm(false)} />
         </Card>
       ) : (
-        <Btn kind="quiet" label="Hapus semua data lokal" onPress={() => setConfirm(true)} />
+        <Btn kind="quiet" label="Hapus semua data lokal" disabled={!!readOnly} testID="reset-open" onPress={() => setConfirm(true)} />
       )}
     </Page>
   );

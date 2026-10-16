@@ -88,6 +88,10 @@ describe('developer-demo flow (four-choice)', () => {
     await tap('next');
     await screen.findByText('dia (laki-laki)');
     await tap('next');
+    // vocabulary table is taught before any scored use (repair F02)
+    await waitFor(() => expect(screen.getByTestId('lesson-title')).toHaveTextContent('Kata untuk menjelaskan orang'));
+    await screen.findByText('orang yang berilmu');
+    await tap('next');
     await screen.findByText('هُوَ صَادِقٌ');
     await tap('next');
 
@@ -96,7 +100,7 @@ describe('developer-demo flow (four-choice)', () => {
     expectFourTiles();
     expect(screen.getByTestId('option-k')).toHaveTextContent('orang yang jujur');
     await tap('option-k');
-    await screen.findByText('Benar');
+    await waitFor(() => expect(screen.getByTestId('result-title')).toHaveTextContent('Benar'));
     await tap('next');
 
     // Form grid: wrong ending → FA-FORM → fresh REMED form item
@@ -108,7 +112,7 @@ describe('developer-demo flow (four-choice)', () => {
     await tap('next');
     await targetShown('Dia (perempuan) orang yang takut');
     await tap('option-k');
-    await screen.findByText('Benar');
+    await waitFor(() => expect(screen.getByTestId('result-title')).toHaveTextContent('Benar'));
     await tap('next');
 
     // Interpretation: he/she swap → serious → focused question → fresh REMED sentence
@@ -117,20 +121,20 @@ describe('developer-demo flow (four-choice)', () => {
     await tap('option-r'); // Dia (laki-laki) orang yang beriman
     await screen.findByText(/هِيَ menunjuk perempuan/);
     await tap('next');
-    await screen.findByText(/Perhatikan kata pertama/);
+    await screen.findByText(/Latihan terbimbing — perhatikan kata pertama/);
     expectFourTiles();
-    expect(screen.queryByTestId('dont-know')).toBeNull(); // focus question: no «belum tahu»
+    expect(screen.getByTestId('dont-know')).toBeTruthy(); // F07: «Saya belum tahu» stays available on guided focus questions
     await tap('option-k');
     await tap('next');
     await arabicShown('هِيَ عَابِدَةٌ');
 
     const before = storedAnswers();
     expect(before.map((a) => [a.item_id, a.outcome])).toEqual([
-      ['A2-M01', 'correct'],
-      ['A2-F01', 'wrong'],
-      ['A2-F03', 'correct'],
-      ['A2-P01', 'wrong'],
-      ['A2-FQ-REF-F', 'correct'],
+      ['A3-M01', 'correct'],
+      ['A3-F01', 'wrong'],
+      ['A3-F03', 'correct'],
+      ['A3-P01', 'wrong'],
+      ['A3-FQ-REF-F', 'correct'],
     ]);
     expect(before[3]).toMatchObject({ serious_tag: 'wrong-referent', evidence_mode: 'recognition-4', selected_option_id: 'r', synthetic: true });
     expect(before[3].raw_response).toBe(JSON.stringify({ kind: 'choice', option_id: 'r' }));
@@ -149,7 +153,7 @@ describe('developer-demo flow (four-choice)', () => {
     expect(storedAnswers()).toHaveLength(5);
 
     await tap('option-k');
-    await screen.findByText('Benar');
+    await waitFor(() => expect(screen.getByTestId('result-title')).toHaveTextContent('Benar'));
     await tap('next');
 
     // Finish the rest with «Saya belum tahu»
@@ -176,13 +180,13 @@ describe('developer-demo flow (four-choice)', () => {
     await tap('consent-continue');
     await tap('setup-continue');
     await tap('start-session');
-    for (let i = 0; i < 3; i++) await tap('next');
+    for (let i = 0; i < 4; i++) await tap('next'); // 4 Unit A lesson screens (incl. the word table)
     await arabicShown('صَادِقٌ');
     // (Concurrent submits are covered in controller.test.ts; here: a second tap right after the first.)
     await fireEvent.press(screen.getByTestId('option-k'));
     await fireEvent.press(screen.getByTestId('option-k'));
     await fireEvent.press(screen.getByTestId('option-d1'));
-    await screen.findByText('Benar');
+    await waitFor(() => expect(screen.getByTestId('result-title')).toHaveTextContent('Benar'));
     expect(storedAnswers()).toHaveLength(1);
     expect(storedAnswers()[0].selected_option_id).toBe('k');
   }, 30000);
@@ -195,7 +199,7 @@ describe('developer-demo flow (four-choice)', () => {
     await tap('consent-continue');
     await tap('setup-continue');
     await tap('start-session');
-    for (let i = 0; i < 3; i++) await tap('next');
+    for (let i = 0; i < 4; i++) await tap('next'); // 4 Unit A lesson screens (incl. the word table)
     await arabicShown('صَادِقٌ');
     await tap('option-k');
     await tap('next');
@@ -308,7 +312,7 @@ describe('navigation (redesign)', () => {
     await screen.findByTestId('learner-id');
   }, 30000);
 
-  it('browsing the guide is read-only: no seen screens, no snapshot, no answers', async () => {
+  it('browsing the guide writes only dated views: no seen screens, no snapshot, no answers', async () => {
     await onboard();
     const before = blob();
     expect(before.snapshot).toBeNull();
@@ -319,16 +323,28 @@ describe('navigation (redesign)', () => {
     await tap('guide-next');
     await waitFor(() => expect(screen.getByTestId('lesson-title')).toHaveTextContent('هُوَ dan هِيَ'));
     await tap('guide-next');
+    await waitFor(() => expect(screen.getByTestId('lesson-title')).toHaveTextContent('Kata untuk menjelaskan orang'));
+    await tap('guide-next');
     await waitFor(() => expect(screen.getByTestId('lesson-title')).toHaveTextContent('Kalimat dan bentuk yang cocok'));
 
-    expect(blob()).toEqual(before);
+    // Only teaching provenance is added: one dated Guide view per screen shown (append-only).
+    const after = blob();
+    const views = JSON.parse(after.meta.screen_views);
+    expect(views.map((v: { screen_id: string; source: string }) => `${v.source}:${v.screen_id}`)).toEqual([
+      'guide:DEMO-S1',
+      'guide:DEMO-S2',
+      'guide:DEMO-S4',
+      'guide:DEMO-S3',
+    ]);
+    const { screen_views: _views, ...metaRest } = after.meta;
+    expect({ ...after, meta: metaRest }).toEqual(before);
 
     // Practice from the guide starts the canonical session, which still shows the lesson screens first
     await tap('guide-practice');
-    await waitFor(() => expect(screen.getByTestId('lesson-panel')).toHaveTextContent(/Pelajaran 1 dari 3/));
+    await waitFor(() => expect(screen.getByTestId('lesson-panel')).toHaveTextContent(/Pelajaran 1 dari 4/));
     await waitFor(() => expect(blob().snapshot).not.toBeNull());
     const snap = JSON.parse(blob().snapshot);
-    expect(snap.queue.slice(0, 3).map((q: { screen_id?: string }) => q.screen_id)).toEqual(['DEMO-S1', 'DEMO-S2', 'DEMO-S3']);
+    expect(snap.queue.slice(0, 4).map((q: { screen_id?: string }) => q.screen_id)).toEqual(['DEMO-S1', 'DEMO-S2', 'DEMO-S4', 'DEMO-S3']);
     expect(snap.index).toBe(0);
   }, 30000);
 
@@ -342,10 +358,10 @@ describe('navigation (redesign)', () => {
   it('Ringkasan during an unfinished session is labelled interim, keeps saved state and resumes', async () => {
     await onboard();
     await tap('start-session');
-    for (let i = 0; i < 3; i++) await tap('next');
+    for (let i = 0; i < 4; i++) await tap('next'); // 4 Unit A lesson screens (incl. the word table)
     await arabicShown('صَادِقٌ');
     await tap('option-k');
-    await screen.findByText('Benar');
+    await waitFor(() => expect(screen.getByTestId('result-title')).toHaveTextContent('Benar'));
     const savedBefore = blob();
 
     await openMenuAndChoose('summary');
@@ -354,8 +370,16 @@ describe('navigation (redesign)', () => {
     expect(screen.getByTestId('summary-interim')).toBeTruthy();
     expect(screen.getByTestId('summary-counts')).toHaveTextContent(/Anda menjawab 1 soal: 1 benar, 0 belum tepat/);
     expect(screen.queryByTestId('summary-next')).toBeNull();
-    // Visiting the summary does not change saved state
-    expect(blob()).toEqual(savedBefore);
+    // Visiting the summary changes no answers, learner or session content; leaving the session route only
+    // checkpoints the step's active time (ENG-04: clock stopped while away, nothing charged for the visit).
+    const savedAfter = blob();
+    const clockless = (raw: string) => {
+      const { step_started_at: _s, pending_step_ms: _p, ...rest } = JSON.parse(raw);
+      return rest;
+    };
+    expect(JSON.parse(savedAfter.snapshot).step_started_at).toBeNull();
+    expect(clockless(savedAfter.snapshot)).toEqual(clockless(savedBefore.snapshot));
+    expect({ ...savedAfter, snapshot: null }).toEqual({ ...savedBefore, snapshot: null });
 
     await tap('summary-resume');
     // Back on the same session, at the same feedback step
@@ -390,7 +414,7 @@ describe('responsive shell (regression from browser QA)', () => {
     await tap('consent-continue');
     await tap('setup-continue');
     await tap('start-session');
-    for (let i = 0; i < 3; i++) await tap('next');
+    for (let i = 0; i < 4; i++) await tap('next'); // 4 Unit A lesson screens (incl. the word table)
     await arabicShown('صَادِقٌ');
     const order = tileIds();
     expect(screen.queryByTestId('sidebar')).toBeNull();
@@ -409,10 +433,10 @@ describe('responsive shell (regression from browser QA)', () => {
     // Answer on desktop; resize back during feedback: same feedback, nothing re-recorded
     await tap('report-send');
     await tap('option-k');
-    await screen.findByText('Benar');
+    await waitFor(() => expect(screen.getByTestId('result-title')).toHaveTextContent('Benar'));
     await setWidth(390);
     await waitFor(() => expect(screen.queryByTestId('sidebar')).toBeNull());
-    expect(screen.getByText('Benar')).toBeTruthy();
+    expect(screen.getByTestId('result-title')).toHaveTextContent('Benar');
     expect(storedAnswers()).toHaveLength(1);
     expect(JSON.parse(mockKv.getItem(KvStore.KEY)!).reports).toHaveLength(1);
   }, 30000);

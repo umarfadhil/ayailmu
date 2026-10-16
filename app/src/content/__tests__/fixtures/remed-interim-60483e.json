@@ -1,0 +1,159 @@
+{
+  "note": "Literal B3-R1/B3-R2 from the interim (uncommitted, pre-correction) v0.3 pack, sha256 prefix 60483e, which the content review rejected. Regression fixture only; never loaded by the app.",
+  "items": [
+    {
+      "item_id": "B3-R1",
+      "unit": "B",
+      "type": "mcq4",
+      "format": "verb-form-grid",
+      "skills": [
+        "VRB-01"
+      ],
+      "pool": "REMED",
+      "arabic": "",
+      "constructed": true,
+      "help_lines": [],
+      "prompt_id": "P-VFORM",
+      "lineage": "B:vform:laki-laki:خَرَجَ",
+      "feedback_ids": {
+        "correct": "FA-OK-FORM"
+      },
+      "review_status": "draft",
+      "content_version": "demo-synthetic-0.3",
+      "review_key": "sentence:خَرَجَ",
+      "requires_taught": [
+        "خَرَجَ",
+        "ذَهَبَ"
+      ],
+      "target": "Dia (laki-laki) keluar",
+      "referent": "laki-laki",
+      "options": [
+        {
+          "id": "k",
+          "text": "خَرَجَ",
+          "arabic": true,
+          "correct": true
+        },
+        {
+          "id": "r",
+          "text": "خَرَجَتْ",
+          "arabic": true,
+          "misconceptions": [
+            "wrong-referent"
+          ],
+          "serious": true,
+          "feedback_ids": [
+            "FB-VF-REF"
+          ],
+          "rationale": "same verb, other doer ending"
+        },
+        {
+          "id": "l",
+          "text": "ذَهَبَ",
+          "arabic": true,
+          "misconceptions": [
+            "lexical"
+          ],
+          "serious": false,
+          "feedback_ids": [
+            "FB-VF-LEX"
+          ],
+          "rationale": "other taught verb, right ending"
+        },
+        {
+          "id": "c",
+          "text": "ذَهَبَتْ",
+          "arabic": true,
+          "misconceptions": [
+            "wrong-referent",
+            "lexical"
+          ],
+          "serious": true,
+          "feedback_ids": [
+            "FB-VF-REF",
+            "FB-VF-LEX"
+          ],
+          "rationale": "compound"
+        }
+      ],
+      "forms": []
+    },
+    {
+      "item_id": "B3-R2",
+      "unit": "B",
+      "type": "mcq4",
+      "format": "verb-form-grid",
+      "skills": [
+        "VRB-01"
+      ],
+      "pool": "REMED",
+      "arabic": "",
+      "constructed": true,
+      "help_lines": [],
+      "prompt_id": "P-VFORM",
+      "lineage": "B:vform:perempuan:ذَهَبَ",
+      "feedback_ids": {
+        "correct": "FA-OK-FORM"
+      },
+      "review_status": "draft",
+      "content_version": "demo-synthetic-0.3",
+      "review_key": "sentence:ذَهَبَتْ",
+      "requires_taught": [
+        "ذَهَبَ",
+        "خَرَجَ"
+      ],
+      "target": "Dia (perempuan) pergi",
+      "referent": "perempuan",
+      "options": [
+        {
+          "id": "k",
+          "text": "ذَهَبَتْ",
+          "arabic": true,
+          "correct": true
+        },
+        {
+          "id": "r",
+          "text": "ذَهَبَ",
+          "arabic": true,
+          "misconceptions": [
+            "wrong-referent"
+          ],
+          "serious": true,
+          "feedback_ids": [
+            "FB-VF-REF"
+          ],
+          "rationale": "same verb, other doer ending"
+        },
+        {
+          "id": "l",
+          "text": "خَرَجَتْ",
+          "arabic": true,
+          "misconceptions": [
+            "lexical"
+          ],
+          "serious": false,
+          "feedback_ids": [
+            "FB-VF-LEX"
+          ],
+          "rationale": "other taught verb, right ending"
+        },
+        {
+          "id": "c",
+          "text": "خَرَجَ",
+          "arabic": true,
+          "misconceptions": [
+            "wrong-referent",
+            "lexical"
+          ],
+          "serious": true,
+          "feedback_ids": [
+            "FB-VF-REF",
+            "FB-VF-LEX"
+          ],
+          "rationale": "compound"
+        }
+      ],
+      "forms": []
+    }
+  ]
+}

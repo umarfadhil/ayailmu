@@ -18,7 +18,7 @@ const learner: Learner = {
   age_confirmed: true,
   session_minutes: 15,
   arabic_scale: 1,
-  screens_seen: ['DEMO-S1', 'DEMO-S2', 'DEMO-S3'],
+  screens_seen: ['DEMO-S1', 'DEMO-S2', 'DEMO-S4', 'DEMO-S3'],
 };
 
 /** Store wrapper whose next write(s) can be made to fail. */
@@ -107,7 +107,7 @@ describe('SessionController persistence safeguards', () => {
     expect(c.state).toBe(atFeedback);
     expect(await inner.loadSnapshot()).toEqual(atFeedback);
     expect(await c.next()).toBe('saved');
-    expect(currentStep(c.state)).toMatchObject({ kind: 'item', item_id: 'A2-F01', role: 'practice' });
+    expect(currentStep(c.state)).toMatchObject({ kind: 'item', item_id: 'A3-F01', role: 'practice' });
   });
 
   it('resumes from the saved snapshot after a restart', async () => {
@@ -116,7 +116,7 @@ describe('SessionController persistence safeguards', () => {
     await c.next();
     const restored = restoreSnapshot(await inner.loadSnapshot(), content);
     expect(restored).toEqual(c.state);
-    expect(currentStep(restored!)).toMatchObject({ kind: 'item', item_id: 'A2-F01', role: 'practice' });
+    expect(currentStep(restored!)).toMatchObject({ kind: 'item', item_id: 'A3-F01', role: 'practice' });
   });
 
   it('ignores snapshots from another content version or with unknown items', () => {

@@ -10,6 +10,8 @@ export const NOTICE_TEXT: Record<string, string> = {
     'Format soal diperbarui: setiap soal kini memiliki empat pilihan jawaban. Sesi lama diakhiri, tetapi semua jawaban, pengaturan, dan laporan Anda tetap tersimpan.',
   'snapshot-unreadable':
     'Sesi tersimpan tidak dapat dibaca, jadi sesi itu diarsipkan tanpa diubah. Semua jawaban Anda tetap tersimpan.',
+  'day-rollover':
+    'Sesi dari hari sebelumnya belum selesai, jadi sesi itu disimpan dan sesi baru disusun untuk hari ini. Latihan ulang yang belum selesai tetap dijadwalkan; semua jawaban Anda tetap tersimpan.',
   'order-invalid':
     'Urutan pilihan pada sesi tersimpan tidak cocok dengan soal saat ini, jadi sesi itu diarsipkan dan tidak dinilai ulang. Semua jawaban Anda tetap tersimpan.',
 };

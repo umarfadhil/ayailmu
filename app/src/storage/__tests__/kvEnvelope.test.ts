@@ -10,7 +10,19 @@ const learner = {
   arabic_scale: 1,
   screens_seen: ['DEMO-S1'],
 };
-const okAnswer = { answer_id: 'a1', item_id: 'DEMO-M01', outcome: 'correct', raw_response: '{}' };
+// A minimal but complete legacy (v1) answer: every field the learning projections replay.
+const okAnswer = {
+  answer_id: 'a1',
+  learner_id: 'lrn-1',
+  item_id: 'DEMO-M01',
+  timestamp: '2026-10-14T02:00:00.000Z',
+  local_date: '2026-10-14',
+  pool: 'PRACT',
+  unit: 'A',
+  skills: ['LEX-A:W-A3'],
+  outcome: 'correct',
+  raw_response: JSON.stringify({ kind: 'typed', text: 'jujur' }),
+};
 
 describe('KvStore outer envelope validation (REV-2)', () => {
   it.each<[string, string]>([
@@ -28,6 +40,12 @@ describe('KvStore outer envelope validation (REV-2)', () => {
     ['meta as an array (v2)', JSON.stringify({ schema: 2, meta: [], learner: null, answers: [], snapshot: null, reports: [] })],
     ['a non-string meta value (v2)', JSON.stringify({ schema: 2, meta: { a: 1 }, learner: null, answers: [], snapshot: null, reports: [] })],
     ['schema 0', JSON.stringify({ schema: 0, learner: null, answers: [], snapshot: null, reports: [] })],
+    // ENG-06: ID-only answers pass an ID check but crash every learning projection
+    ['ID-only answers', JSON.stringify({ schema: 2, meta: {}, learner: null, answers: [{ answer_id: 'a' }, { answer_id: 'b' }], snapshot: null, reports: [] })],
+    ['an answer without a timestamp', JSON.stringify({ learner: null, answers: [{ ...okAnswer, timestamp: undefined }], snapshot: null, reports: [] })],
+    ['an answer with a non-list skills field', JSON.stringify({ learner: null, answers: [{ ...okAnswer, skills: 'NOM-01' }], snapshot: null, reports: [] })],
+    ['an answer with an unknown outcome', JSON.stringify({ learner: null, answers: [{ ...okAnswer, outcome: 'great' }], snapshot: null, reports: [] })],
+    ['an answer with a bad local date', JSON.stringify({ learner: null, answers: [{ ...okAnswer, local_date: 'today' }], snapshot: null, reports: [] })],
   ])('refuses %s without overwriting the stored bytes', async (_name, raw) => {
     const kv = memoryKv();
     kv.setItem(KvStore.KEY, raw);

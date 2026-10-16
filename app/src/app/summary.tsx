@@ -3,9 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { summarize } from '@/engine/session';
 import { useApp } from '@/ui/AppContext';
-import { Btn, Card, EmptyState, Eyebrow, H1, Muted, Notice, P, Page } from '@/ui/components';
+import { Btn, Card, EmptyState, Eyebrow, H1, Muted, Notice, P, Page, StorageRefused } from '@/ui/components';
 import { colors } from '@/ui/theme';
-import { formatDue, useLearning } from '@/ui/useLearning';
+import { formatDue, isLearningError, useLearning } from '@/ui/useLearning';
+import { HydrationGate } from '@/ui/Hydration';
 
 function Stat({ value, label, color }: { value: number; label: string; color: string }) {
   return (
@@ -22,12 +23,13 @@ function Stat({ value, label, color }: { value: number; label: string; color: st
  * The next date comes from the actual review/check projection, never a fixed "tomorrow".
  * No streaks, percentages or mastery claims.
  */
-export default function Summary() {
+function SummaryRoute() {
   const { content } = useApp();
   const learning = useLearning();
 
   if (content.empty) return <Redirect href="/" />;
   if (learning === undefined) return null;
+  if (isLearningError(learning)) return <StorageRefused message={learning.error} />;
   if (learning === null) return <Redirect href="/" />;
   const nextDue = learning.progress.next_due;
   const nextLine = nextDue ? (
@@ -51,7 +53,20 @@ export default function Summary() {
   }
 
   const done = snap.state.phase === 'done';
-  const sum = summarize(snap.state, learning.now);
+  const all = summarize(snap.state, learning.now);
+  // F03: a timed-check outcome stays hidden until every item of its check (unit × D7/D30) is answered,
+  // also after this session ends (a check split by the time budget continues in a later session).
+  const lineFor = (itemId: string) => {
+    const it = content.items.find((i) => i.item_id === itemId);
+    const u = learning.progress.units.find((x) => x.unit === it?.unit);
+    return it?.pool === 'D7' ? u?.retention_d7 : it?.pool === 'D30' ? u?.retention_d30 : undefined;
+  };
+  const hiddenChecks = snap.state.results.filter((r) => r.role === 'check' && (lineFor(r.item_id)?.correct ?? null) === null).length;
+  const sum = {
+    ...summarize({ ...snap.state, results: snap.state.results.filter((r) => r.role !== 'check' || (lineFor(r.item_id)?.correct ?? null) !== null) }, learning.now),
+    checks: all.checks,
+    checks_not_counted: all.checks_not_counted,
+  };
   return (
     <Page>
       <Eyebrow tone={done ? 'mint' : 'indigo'}>{done ? 'Ringkasan sesi' : 'Ringkasan sementara'}</Eyebrow>
@@ -76,8 +91,17 @@ export default function Summary() {
         </Muted>
         {sum.follow_ups ? <Muted>{sum.follow_ups} di antaranya adalah latihan ulang setelah kesalahan.</Muted> : null}
         {sum.reviews ? <Muted testID="summary-reviews">{sum.reviews} soal adalah ulasan materi sebelumnya.</Muted> : null}
-        {sum.checks ? <Muted testID="summary-checks">{sum.checks} soal adalah cek ulang setelah 7 atau 30 hari.</Muted> : null}
-        <Muted>Waktu: sekitar {sum.minutes} menit.</Muted>
+        {sum.checks ? (
+          <Muted testID="summary-checks">
+            {hiddenChecks
+              ? `${sum.checks} soal adalah cek ulang setelah 7 atau 30 hari. ${hiddenChecks} jawaban cek tersimpan; hasilnya ditampilkan setelah semua soal cek itu dijawab dan tidak termasuk dalam angka di atas.`
+              : `${sum.checks} soal adalah cek ulang setelah 7 atau 30 hari.`}
+            {sum.checks_not_counted
+              ? ` ${sum.checks_not_counted} di antaranya dijawab setelah materinya dilihat hari ini, jadi tidak dihitung sebagai cek ingatan.`
+              : ''}
+          </Muted>
+        ) : null}
+        <Muted testID="summary-minutes">{sum.minutes === null ? 'Waktu: tidak tercatat.' : `Waktu: sekitar ${sum.minutes} menit.`}</Muted>
       </Card>
 
       <Card>
@@ -108,3 +132,11 @@ const styles = StyleSheet.create({
   statValue: { fontSize: 30, lineHeight: 36, fontWeight: '800' },
   statLabel: { fontSize: 13, color: colors.muted, writingDirection: 'ltr' },
 });
+
+export default function Summary() {
+  return (
+    <HydrationGate>
+      <SummaryRoute />
+    </HydrationGate>
+  );
+}

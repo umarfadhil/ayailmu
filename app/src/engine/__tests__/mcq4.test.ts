@@ -1,5 +1,5 @@
 import { loadRules } from '@/config/rules';
-import { activePack } from '@/content/load';
+import { v02Pack as activePack } from '@/content/load';
 import type { Item } from '@/content/schema';
 import { scoreItem } from '@/engine/scoring';
 import { isPermutation, optionOrder } from '@/engine/shuffle';

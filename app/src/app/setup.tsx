@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
 
 export default function Setup() {
   return (
-    <HydrationGate>
+    <HydrationGate write>
       <SetupRoute />
     </HydrationGate>
   );
