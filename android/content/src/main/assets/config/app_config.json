@@ -1,0 +1,19 @@
+{
+  "config_version": 1,
+  "schema_version": 1,
+  "remote_override_enabled": false,
+  "session_minutes": {
+    "evidence": [10, 15, 20],
+    "casual": [5, 10, 15]
+  },
+  "kids_defaults": {
+    "session_minutes": 10,
+    "speed_round_enabled": false,
+    "reminder_enabled": false
+  },
+  "review_share_max": {
+    "evidence": 0.5,
+    "casual": 0.4
+  },
+  "notes": "Bundled app-level config (CR-CFG-1). Per-track learning rules live in config/rules.<track>.json from P1."
+}

@@ -1,0 +1,88 @@
+# File Map — AyaIlmu
+
+Budget: ≤ 25 KB. This is the only place that says *where* things are. Update it in the same session a file is created, moved or deleted. Entries carry the stamp of the thing they point to.
+
+## Build identity (P0 COMPILED 2026-10-16 — Studio sync + debug Kotlin compile succeeded on Windows with the pinned versions; tests/lint/APK not yet run; P1 files IN SOURCE)
+
+- `android/app/build.gradle.kts`: `applicationId id.petalytix.ayailmu`, `versionCode 1`, `versionName "0.1.0"`, flavors `demo` (suffix `.demo`, `DEVELOPER_DEMO=true`) / `prod`; `minSdk 26`, `compileSdk/targetSdk 36`.
+- `android/gradle/libs.versions.toml` pins (conservative, chosen without the SDK manager — bump on first sync and update here): AGP 8.12.2 · Kotlin 2.2.20 · KSP 2.2.20-2.0.3 · Compose BOM 2025.08.01 · Hilt 2.57.1 · Room 2.7.2 · Navigation 2.9.3 · Lifecycle 2.9.3 · DataStore 1.1.7 · Serialization 1.9.0 · Coroutines 1.10.2 · Play Billing 8.0.0 · ktlint plugin 12.1.1 · Roborazzi 1.47.0 (P3b). Gradle wrapper 8.14.3. Room schema: v1 generated on Windows 2026-10-16 at `android/core/data/schemas/id.petalytix.ayailmu.core.data.db.AyaDatabase/1.json` (commit it).
+- Gate (CR-REL-2): `./gradlew :core:model:test :core:engine:test :core:content:test :core:content:validatePacks :app:testDemoDebugUnitTest :app:lintDemoDebug :app:assembleDemoDebug ktlintCheck`.
+
+## Repository root — `C:\Users\Umar Fadhil Ramadhan\OneDrive\Documents\ayailmu\` (git: github.com/umarfadhil/ayailmu)
+
+| Path | What | Stamp |
+|---|---|---|
+| `ai-memory/` | This folder. README.md explains reading order and the budget/compaction protocol. | existing 2026-10-16 |
+| `ai-memory/check_budget.py` | Prints each memory file's size against its budget; exit code 1 when over. | existing 2026-10-16 |
+| `ai-memory/archive/` | Compacted SESSION_LEARNINGS quarters (`SESSION_LEARNINGS_2026-Q4.md` …). Created on first compaction. | PLANNED |
+| `docs/Arabic_Course_Current_Plan.md` | Curriculum decisions for the Arabic track (first track). Status words inside: DECIDED/DEFAULT/OPEN. | existing, draft |
+| `docs/Lessons_Unit_A_B_Draft.md` | Entry check + Unit A + Unit B item content, pools, feedback IDs. Source of truth for Arabic item IDs. Not approved for learners yet. | existing, draft |
+| `docs/Trial_App_Spec.md` | Arabic-track behaviour spec: question types, planner, learning rules §7, content format §9, data §10, privacy §11, acceptance §14. Trimmed 2026-10-16: §3, §12, §13, §15, §16 now point to ai-memory. | existing, trimmed |
+| `docs/BUILD_PLAN.md` | Phases P0–P9 with deliverables and gates, where work happens (cloud writes, Windows compiles), parallel tracks (illustrator, reviewers, audio, store prep), gate ritual. | PLANNED 2026-10-16 |
+| `docs/syllabus/00_FRAMEWORK.md` | Levels (kids 7–12 / adults × Pemula–Master), essentials checklist §1a, hidden-gem mechanic §1b, 19-type activity catalog with engine mapping and v1/v2 flags, mode rules, session composition, bilingual content model, item-ID scheme. | DRAFT v2 2026-10-16 |
+| `docs/syllabus/01_BAHASA.md` | Arabic (reviewed course mapped + proposed additions + planned kids track), English kids/adults, Bahasa Indonesia Literasi kids/adults, Indonesian for English speakers, JP/KR/ZH placeholder; gems per level. | DRAFT v2 2026-10-16 |
+| `docs/syllabus/02_MATEMATIKA.md` | Math kids (SD phases, 10–13 units/level) and adults (numeracy → decisions → quantitative thinking → beauty); gems per level. | DRAFT v2 2026-10-16 |
+| `docs/syllabus/03_SAINS.md` | Science kids (IPAS themes) and adults; "Coba di rumah", "Mitos atau fakta", first-aid awareness, reviewer-flagged body unit; gems per level. | DRAFT v2 2026-10-16 |
+| `docs/syllabus/04_SOSIAL_SENI.md` | Social studies + arts, kids and adults; sensitivity rules; child-safety unit (protection-reviewed); personal finance, civic processes, regional histories; gems per level. | DRAFT v2 2026-10-16 |
+| *(deleted 2026-10-16)* `docs/Source_Copy_Manifest.json` | Hand-off hash list; redundant with git history. | DROPPED |
+| `prototype-expo/` | **Expo/React Native prototype** (moved from `app/` with `git mv` on 2026-10-16; SDK 57, RN 0.86, TS, expo-sqlite). Reference for the Kotlin port only; delete after the ported engine suite is green. | reference only |
+| `prototype-expo/src/engine/{scoring,freshness,session,controller,util}.ts` | Engine logic to port into `:core:engine`. | reference |
+| `prototype-expo/src/engine/__tests__/*.test.ts` | 4 suites — the parity baseline for the Kotlin engine (CR-ENG-8). | reference |
+| `prototype-expo/src/content/schema.ts`, `gating.ts`, `fixtures/demo-unit-a.json` | Content schema v0 and synthetic DEMO pack; schema evolves into `:core:content` v1. | reference |
+| `prototype-expo/src/config/rules.json`, `rules.ts` | Pilot rule values and validation — becomes `content/config/rules.arab.json`. | reference |
+| `prototype-expo/src/storage/*` | SQLite/web adapters and storage contracts — inform the Room schema. | reference |
+| `prototype-expo/src/ui/*`, `prototype-expo/src/app/*.tsx` | Screens and components; flows worth keeping: consent, setup, session, summary, guide, settings, dev. | reference |
+| `README.md` | Repo README: what AyaIlmu is, layout, "start at ai-memory/README.md". | existing, rewritten 2026-10-16 |
+| `.gitignore` | Node/Expo output, secrets, archives, Expo native folders, **Android/Gradle section added 2026-10-16**. | existing |
+| `.gitattributes` | `* text=auto eol=lf`, CRLF for `.bat/.cmd/.ps1`, binary list (png/webp/ttf/riv/ogg/jar/keystore). Run `git add --renormalize .` once. | IN SOURCE 2026-10-16 |
+| `.github/workflows/android.yml`, `.github/pull_request_template.md` | CI gate (CR-REL-2 on push/PR touching `android/`) and PR template with stamp + checklists. Moved into the repo from `Claude outputs/` on 2026-10-17 (the empty `Claude outputs/` folder can be deleted). | IN SOURCE (not yet run in CI) |
+
+## `android/` — Kotlin + Compose project (IN SOURCE 2026-10-16; see "Build identity")
+
+| Path | What | Stamp |
+|---|---|---|
+| `android/settings.gradle.kts`, `build.gradle.kts`, `gradle.properties`, `gradle/libs.versions.toml`, `gradlew*`, `gradle/wrapper/*` | Root build, repositories (google/mavenCentral), ktlint on all modules, version catalog, wrapper 8.14.3 (jar generated offline). Root build redirects all `build/` dirs to `%LOCALAPPDATA%\ayailmu-build\<module>` when under OneDrive (CR-REL-7). | COMPILED (P0) |
+| `%LOCALAPPDATA%\ayailmu-build\` (outside the repo) | All Gradle build outputs on Umar's Windows machine: APKs at `app\outputs\apk\demo\debug\`, test reports at `<module>\reports\tests\`. | from 2026-10-17 |
+| `android/app/` | Application module: Hilt `AyaIlmuApp`, `MainActivity` (edge-to-edge, `AyaTheme` + `PaperBackground` + `AyaNavHost`), type-safe `AyaRoute.Home`, `feature/home/{HomeViewModel,HomeScreen}` placeholder with demo banner, strings `values/` (id) + `values-en/`, `themes.xml` (paper window), `colors.xml`, `xml/{locales_config,data_extraction_rules,backup_rules}.xml`, placeholder adaptive icon, `proguard-rules.pro` (serialization keeps), lint: MissingTranslation/ExtraTranslation/HardcodedText are errors, unit test `HomeViewModelTest`. | DEVICE-TESTED (P0, 2026-10-17); P3a rewrite IN SOURCE (row below) |
+| `android/core/model/` | Pure Kotlin: `Lang`, `LocalizedText {id,en}`, `Audience`, `Level`, `Subject`, `TrackMode`, `Pool` (+FOCUS, GEM; `isPractice`/`isCountedPractice`), `ItemType` (19 catalog types → v1 renderer or null, `evidenceCapable`), `ItemId`; **P1:** `Scoring.kt` (`PartScore`, `Outcome` incl. `not_assessed`, `ErrorTag`, `Referent`, `ReviewStatus`, `AudioStatus`, flat serialisable `Response` with factory helpers), `AnswerEvent` (spec §10 fields, snake_case JSON). | IN SOURCE (P1) |
+| `android/core/engine/` | Pure Kotlin, depends on :core:content. `Clock`/`Rng` (P0); **P1:** `Dates` + `IdGenerator`, `RuleConfig` (per-track rules JSON, `problems()`), `Scoring` (`Text.normalize/levenshtein`, `scoreTyped`, `scoreItem` for typed/paraphrase/choice family/number/sequence/pairs/info), `Freshness` (`AttemptLog`, `FreshContext` with audience + renderable filter, `isEligibleFresh`, `pickFreshItem`, `pickFocusItem`, `findFormClashes`), `ReviewScheduler` (spacing ladder, cap), `Session` (`Step`/`SessionState` serialisable, `start` = screens → reviews → PRACT → one gem, `submit`, `advance`, `unresolvedSerious`, `summarize`, `encode`/`restore`), `SkillProjector` (evidence + casual learned rules, binary streak, blocked-by-serious, words), `SessionController` + `SessionStore` (Mutex-guarded, write-before-state). Tests: `EngineFixtures`, `ScoringTest`, `FreshnessTest`, `SessionTest`, `SessionControllerTest`, `ProjectionTest`, `ClockTest`. `PARITY.md` lists divergences from the TS prototype. | IN SOURCE (P1) |
+| `android/core/content/` | Pure Kotlin. `PackMeta` (P0); **P1:** `ContentSchema.kt` (`ContentPack`, `Item` with `type`+`variant`, bilingual `prompts`/`feedback`, `accepted` keyed by lang, `numeric`, `solution`, `solution_pairs`, `gem`+`source`, `LessonScreen`, `Reading`), `Gating` (`demo`/`prod`, `GatedContent.item()`), `PackValidator` (bilingual completeness, ids, refs, type rules, harakat for `ar`, gems), `PackLoader`/`ContentJson`, `PackValidatorCli` → Gradle task `:core:content:validatePacks` (in `check`). Tests: `PackValidatorTest` (ported gating tests + new), `Fixtures` (bundled packs on the test classpath). | IN SOURCE (P1) |
+| `android/core/data/` | **P2.** `db/`: `AyaDatabase` v1 (profiles, answer_events [payload JSON + indexed cols], session_snapshots, item_reports), `Daos.kt`, `RoomSessionStore` (atomic answer+snapshot) + `Mappers`; `settings/Settings.kt` (`AppSettings` typed DataStore, `ActiveProfileStore` + in-memory fake); `repo/`: `ProfileRepository` (Anak only from Adult, audience from kind, language, cascade delete), `AnswerRepository` (history, resumable, reports), `ContentRepository` (+`AssetSource`, `ContentCatalog`, `LoadedTrack`), `DataResetter`; `export/Export.kt` (`ExportBuilder` JSON + CSV with BOM and formula-safe cells, `ExportFiles` via FileProvider); `Models.kt` (`Profile`, `ProfileKind`, `ItemReport`, `AppBuildInfo`); `DataModule` (Hilt). Schemas exported to `core/data/schemas/` (generated on first build — commit them). Tests: `DatabaseTest` (Robolectric), `ContentAndExportTest`, `TestSupport`. | COMPILED (P2, 2026-10-16; tests not yet run) |
+| `android/core/billing/` | Android lib: `Product` enum (Play ids from MONETIZATION_SCHEME), `Entitlements`; Play Billing 8 dep; client in P5. | IN SOURCE |
+| `android/core/design/` | Compose lib: `AyaPalette`/`AyaColorRoles` (light + night paper), `AyaTheme` (M3 mapping, no dynamic colour), `AyaSpacing/AyaRadius/AyaMotion`, `AyaTypography` (system fonts until P3; Arabic placeholder until P1), `PaperBackground` (seeded grain, replaced in P4), `AyaButton` with id/en/dark/fontScale previews. | DEVICE-TESTED (P0); P3a components IN SOURCE |
+| `android/app/` (P2 additions) | `MainActivity` → `AppCompatActivity`, applies the active profile's language (`AppLocale`); `di/AppModule.kt` (`AppBuildInfo`, `HomeDataSource` binding); `feature/home/HomeDataSource.kt` (`DevCheck`, export/delete), Home developer-check card (demo only); manifest: `AppLocalesMetadataHolderService`, `FileProvider` `${applicationId}.exports`, `xml/file_paths.xml`; theme parent `Theme.AppCompat.DayNight.NoActionBar`; `values-night/colors.xml`. | COMPILED (P2) |
+| `android/app/` + `core/design/` (P3a additions) | **Playable loop.** `navigation/`: `AyaNavHost` (root shows first-run onboarding whenever no profile exists, else `NavHost` with `AyaRoute.Home`, `Session(track)`, `AddProfile`), `RootViewModel`. `feature/onboarding/`: `OnboardingViewModel` (+`OnboardingDataSource`, `OnboardingRules.kindFor`) and screen — language (applied at once on first run), neutral birth-year list, nickname; under-13 → guardian message. `feature/home/`: `HomeDataSource.home()` (`HomeData`, `TrackCard` filtered by profile language + audience, Resume), profile switcher dropdown, shelf, dev card. `feature/session/`: `StepMapper` (`SessionContent`, `RenderKind`, `StepUi`), `AnswerDraft` (input → `Response`, number parsing per language), `SessionViewModel` (+`SessionDataSource`, resume same day, save-before-advance, retry on failed save), `SessionScreen` (lesson cards with clue box, 9 v1 renderers, feedback panel, gem card, counts-only summary, leave dialog). `core/design/components/`: `OptionCard`+`ChoiceState`, `TargetText` (RTL, Arabic scale), `AyaSecondaryButton`, `AyaTextField`, `SessionProgressBar`, `PaperCard`, `rememberReduceMotion`. Strings: 103 keys id/en (generated from one table), 2 untranslatable language names. Tests: `SessionViewModelTest` (full math session on the real engine), `StepMapperTest`, `AnswerDraftTest`, `OnboardingViewModelTest`, `HomeViewModelTest`, helpers `TestPacks`/`MemoryStore` (packs read from the classpath). | IN SOURCE (P3a, 2026-10-17) |
+| `android/app/` + `core:data` + `core:design` (P3b additions) | **Settings, progress, consent, reminder, screenshots.** `feature/settings/` (`SettingsViewModel` + `SettingsDataSource`/`LastAdultException`, `SettingsScreen`: language, session length snapped per track, Arabic size slider, daily reminder adult-only with time picker + Android 13 permission, consent withdrawal, export, delete profile (refused for the last adult while children exist), delete all, learner ID, contact, version). `feature/progress/` (`ProgressCalculator` pure: three honest lines for evidence / one bar for casual, words, gems, days; `ProgressScreen`). `feature/consent/` (`Consent` rule + `VERSION` arab-trial-1, `oldEnough` 18+ by birth year; `ConsentScreen`/`ConsentViewModel`/`ConsentDataSource`). `feature/reminder/` (`ReminderTime` pure, `ReminderScheduler` inexact `setWindow` alarm + notification in the setter's language, `ReminderReceiver` fire/boot/time/update). `feature/common/Share.kt`. Home: profile button + Settings, Progress per track, consent routing; dev card lost export/delete. Session: `NeedsConsent`, `answered` (interim count in leave dialog), `SessionContent.budgetMinutes`. `AyaIlmuApp` keeps the alarm in step. Manifest: POST_NOTIFICATIONS, RECEIVE_BOOT_COMPLETED, receiver. `res/drawable/ic_notification.xml` (draft). Strings 181 keys id/en + 5 untranslatable. `core:data`: DAO/repo setters for session minutes, Arabic scale, consent; `ReminderSetting` in `AppSettings` + `ReminderStore`; DataStore corruption → defaults; `DataResetter` resets reminder. `core:design`: `A11y.kt` (`headingSemantics`). Tests: `P3bLogicTest`, `SettingsAndConsentViewModelTest`, `ScreenshotTest` (3 variant classes, 27 shots, baselines in `app/src/test/screenshots/` once recorded), `SettingsSerializerTest`, DatabaseTest +2. | IN SOURCE (P3b, 2026-10-17) |
+| `android/content/` | Assets-only lib: `assets/config/app_config.json`; **P2:** `config/catalog.json` (track → pack + rules); **P1:** `config/rules.arab.json` (evidence, pilot-0.1, typed-rule word lists id+en), `config/rules.mat.json` (casual-0.1), `packs/bahasa/arab/v1.json` (DEMO fixture converted to schema v1, 17 items, id-only instruction, synthetic), `packs/matematika/mat/v1.json` (12-item kids Pemula sample, id+en, one gem). | COMPILED (P1); mat pack 0.2 IN SOURCE (P3a) |
+| `android/.editorconfig` | ktlint style (intellij_idea, 140 cols, several wrapping rules off). ktlint is report-only until the P3 gate (root `build.gradle.kts`). | IN SOURCE (P1) |
+
+## Planned Android layout (PLANNED 2026-10-16 — becomes real at M0; update stamps then)
+
+```
+android/
+  settings.gradle.kts, build.gradle.kts, gradle/libs.versions.toml
+  app/                       # DI wiring, navigation graph, feature screens (split out when > ~40 files)
+    src/main/java/id/petalytix/ayailmu/
+      AyaIlmuApp.kt, MainActivity.kt
+      navigation/            # type-safe routes
+      feature/onboarding/    # welcome, neutral age screen, profile create, consent (adult)
+      feature/home/          # "Sesi hari ini", subject shelf, streak (calm)
+      feature/session/       # item renderers registry, feedback, interim summary
+      feature/progress/      # three honest lines (evidence) / mastery bar (casual), word list
+      feature/store/         # packs, all-access, adult gate, restore
+      feature/settings/      # text size, session length, reminder, export, delete-all, learner_id
+      feature/dev/           # developer-demo only: pack inspector, rule switcher
+  core/model/                # data classes shared by all modules (pure Kotlin)
+  core/engine/               # planner, scoring, freshness, skill projection (pure Kotlin) + PARITY.md
+  core/content/              # pack schema (kotlinx.serialization), validator, loader
+  core/data/                 # Room (AnswerEvent, SkillState, Profile, SessionLog, Report), DataStore protos, repositories, schemas/
+  core/billing/              # BillingClient wrapper, EntitlementRepository, signature check
+  core/design/               # AyaTheme, tokens, typography (incl. Noto Naskh Arabic), illustration & motion components, res/raw/*.riv
+  content/                   # assets: packs/<subject>/<track>/v<N>.json, config/*.json, audio/<track>/*.ogg, stickers/
+art/                         # source files for hand-made assets (not shipped): style-bible/, procreate/, rive/, svg/, briefs/
+```
+
+## Cross-references
+
+- Rules: CODE_RULES.md (cite as CR-xxx-n). Money: MONETIZATION_SCHEME.md. Visual standard: ART_DIRECTION.md. History: SESSION_LEARNINGS.md (grep by feature or date).
+- Sibling product memory for conventions and shared "Aya" character: `C:\Users\Umar Fadhil Ramadhan\OneDrive\Documents\ayakasir\ai-memory\` (read-only from here; do not copy its content in).

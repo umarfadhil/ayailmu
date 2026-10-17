@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- XML copies of two AyaTheme tokens needed before Compose starts (window background, launcher).
+     The source of truth is AyaColors.kt in :core:design; keep these in sync. -->
+<resources>
+    <color name="aya_paper">#F6F1E7</color>
+    <color name="aya_ink">#2B2A28</color>
+</resources>

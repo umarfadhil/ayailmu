@@ -28,6 +28,20 @@
 *.zip
 *.docx
 
-# Generated native folders
-/app/ios/
-/app/android/
+# Generated native folders (Expo prototype)
+/prototype-expo/ios/
+/prototype-expo/android/
+
+# Android (Kotlin/Compose project under android/)
+android/.gradle/
+android/**/build/
+android/.idea/
+android/*.iml
+android/**/*.iml
+android/local.properties
+android/.kotlin/
+android/captures/
+android/**/*.hprof
+android/app/release/
+android/app/debug/
+*.keystore

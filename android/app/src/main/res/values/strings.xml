@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Default locale = Bahasa Indonesia (CR-KT-5, CR-I18N-1). Every key must also exist in values-en/. Generated in P3a from one table, keep parity when editing. -->
+<resources>
+
+    <!-- App -->
+    <string name="app_name">AyaIlmu</string>
+
+    <!-- Shared actions -->
+    <string name="action_continue">Lanjut</string>
+    <string name="action_back">Kembali</string>
+
+    <!-- Onboarding (P3a): language, neutral age screen, nickname -->
+    <string name="onb_step">Langkah %1$d dari %2$d</string>
+    <string name="onb_welcome_title">Selamat datang di AyaIlmu</string>
+    <string name="onb_welcome_body">Belajar sedikit setiap hari: bahasa, matematika, sains, serta sosial dan seni. Semua tersimpan di HP ini saja.</string>
+    <string name="onb_add_title">Tambah profil</string>
+    <string name="onb_lang_question">Pilih bahasa untuk aplikasi dan pelajaran.</string>
+    <string name="onb_age_title">Lahir tahun berapa?</string>
+    <string name="onb_age_body">Kami bertanya supaya isi dan pengaturannya pas. Tahunnya hanya disimpan di HP ini.</string>
+    <string name="onb_guardian_title">Minta bantuan orang tua atau wali</string>
+    <string name="onb_guardian_body">Untuk pelajar di bawah 13 tahun, orang tua atau wali membuat profilnya sendiri dulu, lalu menambahkan profil anak dari menu Ganti profil.</string>
+    <string name="onb_name_title">Mau dipanggil apa?</string>
+    <string name="onb_name_title_child">Nama panggilan anak</string>
+    <string name="onb_child_note">Ini akan menjadi profil anak yang dibuat oleh %1$s.</string>
+    <string name="onb_name_label">Nama panggilan</string>
+    <string name="onb_name_hint">Boleh nama panggilan saja.</string>
+    <string name="onb_create">Mulai belajar</string>
+    <string name="onb_error">Profil belum tersimpan. Coba lagi.</string>
+
+    <!-- Home -->
+    <string name="home_title">Sesi hari ini</string>
+    <string name="home_greeting">Halo! Aya siap belajar bareng kamu.</string>
+    <string name="home_greeting_name">Halo, %1$s! Aya siap belajar bareng kamu.</string>
+    <string name="home_tracks_title">Pilih pelajaran</string>
+    <string name="home_track_items">Soal tersedia: %1$d</string>
+    <string name="home_track_draft">Konten draf</string>
+    <string name="home_track_resume">Lanjutkan</string>
+    <string name="home_start">Mulai</string>
+    <string name="home_no_tracks">Belum ada pelajaran yang cocok untuk profil dan bahasa ini. Contoh: Bahasa Arab untuk profil dewasa berbahasa Indonesia, Matematika untuk profil anak.</string>
+    <string name="home_no_content_prod">Pelajaran sedang ditinjau dan akan segera hadir.</string>
+    <string name="home_load_error">Konten gagal dimuat.</string>
+    <string name="home_profile_switch">Ganti profil</string>
+    <string name="home_profile_add">Tambah profil</string>
+    <string name="home_profile_kind_adult">Dewasa</string>
+    <string name="home_profile_kind_child">Anak</string>
+    <string name="home_track_progress">Kemajuan</string>
+    <string name="home_track_consent_first">Sebelum sesi pertama, baca dan setujui ketentuan uji coba.</string>
+    <string name="home_phase_label">Tahap pembangunan: P3b — pengaturan, kemajuan, persetujuan</string>
+
+    <!-- Session -->
+    <string name="session_loading">Menyiapkan sesi…</string>
+    <string name="session_failed">Sesi belum bisa dibuka.</string>
+    <string name="session_nothing_title">Untuk hari ini sudah cukup</string>
+    <string name="session_nothing_body">Belum ada soal baru atau ulangan yang jatuh tempo. Sampai besok!</string>
+    <string name="session_back_home">Kembali ke beranda</string>
+    <string name="session_close">Keluar</string>
+    <string name="session_close_title">Keluar dari sesi?</string>
+    <string name="session_close_body">Jawabanmu sudah tersimpan (%1$d soal dijawab). Kamu bisa melanjutkan nanti hari ini.</string>
+    <string name="session_consent_title">Persetujuan dulu</string>
+    <string name="session_consent_body">Pelajaran ini bagian dari uji coba. Baca dan setujui ketentuannya sebelum mulai.</string>
+    <string name="session_consent_open">Baca persetujuan</string>
+    <string name="session_close_yes">Keluar</string>
+    <string name="session_close_no">Tetap di sini</string>
+    <string name="session_progress_cd">Kemajuan sesi: langkah %1$d dari %2$d</string>
+    <string name="session_lesson_label">Pelajaran</string>
+    <string name="session_review_label">Ulangan</string>
+    <string name="session_followup_label">Latihan lanjutan</string>
+    <string name="session_gem_label">Permata</string>
+    <string name="session_check">Periksa</string>
+    <string name="session_dont_know">Saya belum tahu</string>
+    <string name="session_type_answer">Jawabanmu</string>
+    <string name="session_number_label">Angka</string>
+    <string name="session_unit">Satuan: %1$s</string>
+    <string name="session_who_question">Siapa yang dijelaskan?</string>
+    <string name="session_who_male">Laki-laki</string>
+    <string name="session_who_female">Perempuan</string>
+    <string name="session_who_unknown">Belum tahu</string>
+    <string name="session_sequence_hint">Ketuk kotak untuk menyusun jawaban. Ketuk lagi untuk mengembalikannya.</string>
+    <string name="session_sequence_empty">Jawabanmu muncul di sini.</string>
+    <string name="session_pairs_hint">Ketuk satu di kiri, lalu pasangannya di kanan.</string>
+    <string name="session_buckets_hint">Ketuk satu di kiri, lalu kelompoknya di kanan.</string>
+    <string name="session_image_placeholder">Gambar: %1$s (draf — gambar tangan menyusul)</string>
+    <string name="session_unsupported">Jenis kegiatan ini hadir di versi berikutnya.</string>
+    <string name="session_save_error">Belum tersimpan. Coba lagi.</string>
+    <string name="session_outcome_correct">Betul</string>
+    <string name="session_outcome_wrong">Belum tepat</string>
+    <string name="session_outcome_pending">Disimpan untuk dicek</string>
+    <string name="session_outcome_dont_know">Tidak apa-apa</string>
+    <string name="session_outcome_seen">Tersimpan</string>
+
+    <!-- Summary: counts only, no mastery claims -->
+    <string name="summary_title">Sesi selesai</string>
+    <string name="summary_answered">Soal dijawab: %1$d</string>
+    <string name="summary_correct">Betul: %1$d</string>
+    <string name="summary_not_yet">Belum tepat: %1$d</string>
+    <string name="summary_pending">Menunggu dicek: %1$d</string>
+    <string name="summary_dont_know">Belum tahu: %1$d</string>
+    <string name="summary_gems">Permata ditemukan: %1$d</string>
+    <string name="summary_minutes">Waktu belajar: sekitar %1$d menit</string>
+    <string name="summary_next_review">Ulangan berikutnya: %1$s</string>
+    <string name="summary_note">Ringkasan ini hanya menghitung jawaban hari ini. Ini bukan nilai.</string>
+
+    <!-- Developer-demo banner (CR-ENG-2) -->
+    <string name="banner_developer_demo">Mode pengembang — konten belum ditinjau</string>
+
+    <!-- Developer check (demo build only) -->
+    <string name="dev_check_title">Cek pengembang</string>
+    <string name="dev_check_packs">Konten: %1$d jalur, %2$d soal, %3$d masalah validasi</string>
+    <string name="dev_check_load_error">Konten gagal dimuat: %1$s</string>
+    <string name="dev_check_storage">Penyimpanan: %1$d profil, %2$d jawaban tersimpan</string>
+    <string name="dev_check_active">Profil aktif: %1$s (bahasa: %2$s)</string>
+    <string name="dev_check_no_active">Belum ada profil aktif — aplikasi mengikuti bahasa HP.</string>
+    <string name="dev_profile_label_id">Profil uji (Indonesia)</string>
+    <string name="dev_profile_label_en">Profil uji (Inggris)</string>
+    <string name="dev_create_profile_id">Buat profil uji berbahasa Indonesia</string>
+    <string name="dev_create_profile_en">Buat profil uji berbahasa Inggris</string>
+    <string name="dev_delete_all">Hapus semua data</string>
+    <string name="dev_delete_confirm_title">Hapus semua data?</string>
+    <string name="dev_delete_confirm_body">Semua profil, jawaban, dan sesi yang tersimpan di HP ini akan dihapus. Tindakan ini tidak bisa dibatalkan.</string>
+    <string name="dev_delete_confirm_yes">Hapus</string>
+    <string name="dev_cancel">Batal</string>
+    <string name="dev_moved_note">Ekspor dan hapus data sekarang ada di Pengaturan.</string>
+    <string name="dev_notice_failed">Tindakan gagal. Coba lagi.</string>
+    <string name="export_chooser_title">Bagikan data belajar</string>
+
+    <!-- Trial consent (Arabic, evidence track). DRAFT: review against UU PDP (UU No. 27/2022) before the closed test. -->
+    <string name="consent_title">Sebelum mulai: persetujuan uji coba</string>
+    <string name="consent_intro">Kursus Bahasa Arab di AyaIlmu sedang diuji coba. Bacalah ini dulu; hanya butuh satu menit.</string>
+    <string name="consent_what_title">Apa yang disimpan</string>
+    <string name="consent_what_body">Jawabanmu, kapan dan berapa lama kamu menjawab, dan hasil latihan, dengan ID pelajar acak. Tidak ada nama asli, email, nomor HP, kontak, atau lokasi.</string>
+    <string name="consent_where_title">Di mana disimpan dan siapa yang melihat</string>
+    <string name="consent_where_body">Semuanya tersimpan di HP ini saja. Tim kursus AyaIlmu (PT Petalytix Teknologi Indonesia) hanya melihat jawabanmu jika kamu sendiri mengirim file ekspor dari Pengaturan.</string>
+    <string name="consent_why_title">Untuk apa</string>
+    <string name="consent_why_body">Untuk memeriksa apakah pelajaran dan soal bekerja, lalu memperbaikinya. Bukan untuk iklan, dan tidak dijual atau dibagikan ke pihak lain.</string>
+    <string name="consent_keep_title">Berapa lama disimpan</string>
+    <string name="consent_keep_body">Di HP ini: sampai kamu menghapusnya. File yang kamu kirim ke tim: dihapus paling lambat 6 bulan setelah uji coba berakhir.</string>
+    <string name="consent_stop_title">Berhenti dan menghapus</string>
+    <string name="consent_stop_body">Kamu boleh berhenti kapan saja tanpa alasan. Hapus data di HP lewat Pengaturan. Untuk menghapus file yang sudah kamu kirim, email %1$s dan sebutkan ID pelajarmu (ada di Pengaturan).</string>
+    <string name="consent_too_young">Uji coba ini khusus untuk usia 18 tahun ke atas, jadi profil ini belum bisa ikut. Pelajaran lain tetap bisa dipakai.</string>
+    <string name="consent_check_adult">Saya berusia 18 tahun atau lebih.</string>
+    <string name="consent_check_agree">Saya setuju jawaban saya disimpan seperti dijelaskan di atas.</string>
+    <string name="consent_accept">Setuju dan lanjut</string>
+    <string name="consent_error">Persetujuan belum tersimpan. Coba lagi.</string>
+    <string name="consent_version_note">Versi teks: %1$s</string>
+
+    <!-- Progress: three honest lines on evidence tracks, one bar on casual tracks (CR-HAB-4) -->
+    <string name="progress_title">Kemajuan</string>
+    <string name="progress_failed">Kemajuan belum bisa dibuka.</string>
+    <string name="progress_empty">Belum ada latihan di sini. Setelah sesi pertama, kemajuanmu muncul di halaman ini.</string>
+    <string name="progress_learned_title">Sudah dipelajari</string>
+    <string name="progress_count_skills">%1$d dari %2$d keterampilan</string>
+    <string name="progress_remembered_title">Masih ingat setelah 7–30 hari</string>
+    <string name="progress_remembered_none">Pemeriksaan ini muncul sendiri di sesi harian, 7 dan 30 hari setelah latihan.</string>
+    <string name="progress_count_checks">%1$d dari %2$d pemeriksaan</string>
+    <string name="progress_new_title">Paham kalimat baru</string>
+    <string name="progress_new_none">Belum ada kalimat baru yang diuji.</string>
+    <string name="progress_count_sentences">%1$d dari %2$d kalimat</string>
+    <string name="progress_words">Kata yang dikuasai: %1$d dari %2$d</string>
+    <string name="progress_practicing">Sedang dilatih: %1$d keterampilan</string>
+    <string name="progress_follow_up">Perlu latihan lanjutan: %1$d</string>
+    <string name="progress_waiting">Jawaban menunggu dicek: %1$d</string>
+    <string name="progress_gems">Kotak Permata: %1$d</string>
+    <string name="progress_days">Hari belajar: %1$d</string>
+    <string name="progress_note">Angka di sini dihitung ulang dari jawabanmu setiap kali dibuka. «Sudah dipelajari» butuh jawaban benar di hari yang berbeda, jadi butuh waktu.</string>
+
+    <!-- Settings (P3b) -->
+    <string name="settings_title">Pengaturan</string>
+    <string name="settings_failed">Pengaturan belum bisa dibuka.</string>
+    <string name="settings_notice_export_failed">Ekspor gagal. Coba lagi.</string>
+    <string name="settings_notice_failed">Perubahan belum tersimpan. Coba lagi.</string>
+    <string name="settings_notice_notifications_blocked">Android tidak mengizinkan notifikasi untuk AyaIlmu. Izinkan di Pengaturan HP jika ingin pengingat.</string>
+    <string name="settings_notice_last_adult">Profil dewasa terakhir tidak bisa dihapus selama masih ada profil anak. Tambahkan profil dewasa lain dulu, atau pakai Hapus semua data.</string>
+    <string name="settings_language">Bahasa</string>
+    <string name="settings_session_length">Lama sesi harian</string>
+    <string name="settings_session_length_body">Sesi berhenti di akhir soal yang sedang dikerjakan, tidak di tengah jalan.</string>
+    <string name="settings_session_auto">Otomatis</string>
+    <string name="settings_minutes">%1$d menit</string>
+    <string name="settings_arabic_size">Ukuran huruf Arab</string>
+    <string name="settings_text_size_note">Ukuran huruf lainnya mengikuti pengaturan ukuran font di HP.</string>
+    <string name="settings_reminder">Pengingat harian</string>
+    <string name="settings_reminder_body">Satu pengingat sehari, pada jam yang kamu pilih. Bisa dimatikan kapan saja.</string>
+    <string name="settings_reminder_on">Aktif, pukul %1$02d.%2$02d</string>
+    <string name="settings_reminder_off">Mati</string>
+    <string name="settings_reminder_change_time">Ubah jam</string>
+    <string name="settings_adult_only">Hanya profil dewasa yang bisa mengubah ini.</string>
+    <string name="settings_save">Simpan</string>
+    <string name="settings_consent">Persetujuan uji coba</string>
+    <string name="settings_consent_given">Kamu sudah menyetujui ketentuan uji coba Bahasa Arab.</string>
+    <string name="settings_consent_withdraw">Tarik persetujuan</string>
+    <string name="settings_consent_withdraw_title">Tarik persetujuan?</string>
+    <string name="settings_consent_withdraw_body">Sesi Bahasa Arab akan meminta persetujuan lagi sebelum dimulai. Jawaban yang sudah ada tetap di HP ini sampai kamu menghapusnya.</string>
+    <string name="settings_data">Data belajar</string>
+    <string name="settings_data_body">Semua data ada di HP ini. Ekspor membuat file JSON dan CSV untuk dikirim lewat aplikasi pilihanmu.</string>
+    <string name="settings_export">Ekspor data belajar</string>
+    <string name="settings_delete_profile">Hapus profil ini</string>
+    <string name="settings_delete_profile_title">Hapus profil ini?</string>
+    <string name="settings_delete_profile_body">Profil ini dan semua jawabannya akan dihapus dari HP ini. Tindakan ini tidak bisa dibatalkan.</string>
+    <string name="settings_about">Tentang</string>
+    <string name="settings_learner_id">ID pelajar (tekan lama untuk menyalin)</string>
+    <string name="settings_contact">Pertanyaan atau permintaan hapus data: %1$s</string>
+    <string name="settings_version">Versi %1$s</string>
+
+    <!-- Daily reminder notification (calm copy, CR-HAB-2/6) -->
+    <string name="reminder_title">Sesi hari ini siap</string>
+    <string name="reminder_body">Mau belajar sebentar? Beberapa menit sudah cukup.</string>
+    <string name="reminder_channel_name">Pengingat harian</string>
+    <string name="reminder_channel_description">Satu pengingat sehari pada jam yang kamu pilih.</string>
+
+    <!-- Accessibility -->
+    <string name="cd_aya_mascot">Aya, maskot AyaIlmu</string>
+
+    <!-- Never translated: language names (in their own language), the contact address, an Arabic sample, a format. -->
+    <string name="lang_name_id" translatable="false">Bahasa Indonesia</string>
+    <string name="lang_name_en" translatable="false">English</string>
+    <string name="contact_email" translatable="false">support@petalytix.id</string>
+    <string name="settings_arabic_sample" translatable="false">هِيَ صَابِرَةٌ</string>
+    <string name="home_profile_button" translatable="false">%1$s · %2$s</string>
+</resources>

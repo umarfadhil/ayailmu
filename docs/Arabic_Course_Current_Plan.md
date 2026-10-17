@@ -1,6 +1,6 @@
 # Arabic Course — Current Plan
 
-**Last updated:** 2026-10-14
+**Last updated:** 2026-10-16 (platform, framework, business-model rows and §10 updated; curriculum content unchanged since 2026-10-14)
 **What this is:** the single current reference for the course. It replaces the working drafts (`Opus_Curriculum_Critique.md`, `Opus_Curriculum_Revision_Proposal_v1.md`, and the v2 cohort revision given in chat). Those stay as history. Your original handoff, text extraction, manifest and images are unchanged.
 
 **Companion files**
@@ -43,18 +43,18 @@ The long-term goal is unchanged from your original handoff: understanding the Qu
 | Explanation language | **DECIDED** 2026-10-14 | Indonesian |
 | Listening | **DECIDED** 2026-10-14 | Not in release 1. Learners are not taught or tested on understanding spoken Arabic |
 | Method | DECIDED in principle 2026-10-14 ("Sounds good") | Guided daily sessions: flashcard-style word review checked by the app, cloze/form choice, sentence-understanding questions, mini readings, review spaced over days. The exact rules are guesses to test (§7) |
-| Platforms | **DECIDED** 2026-10-14 | iOS and Android, on both stores. Store accounts already exist |
+| Platforms | **DECIDED** 2026-10-16 (supersedes 14 Oct) | Android only, inside AyaIlmu; Kotlin + Compose. See `ai-memory/PROJECT_OVERVIEW.md` |
 | Trial inside the app | **DECIDED** 2026-10-14 | The small learner trial runs in the app, not on paper |
-| Trial through test channels before public release | DEFAULT | TestFlight (iOS) and Google Play closed testing first; public listing after the results |
+| Trial through test channels before public release | DEFAULT | Google Play closed testing first; public listing after the results |
 | Reviewers | Candidates exist | An Arabic reviewer and an Indonesian reviewer are in mind. Not named here; Claude does not contact anyone |
 | Vocabulary | DEFAULT | Made-up sentences built from words that will be useful for the Quran later (mukmin, saleh, sabar, jujur …) |
 | Audio | DEFAULT | Audio only in the entry reading check (about 75 short clips, one recording session). No audio anywhere else |
-| Framework, backend | OPEN | Recommendation: one cross-platform codebase for both stores. Decided in the build session |
+| Framework, backend | **DECIDED** 2026-10-16 | Kotlin + Jetpack Compose, no backend (on-device data, export by share sheet). See `ai-memory/PROJECT_OVERVIEW.md`, `CODE_RULES.md` |
 | Pass rules, review timing | OPEN | Pilot settings (§7), adjusted from trial data |
 | Mushaf convention | Deferred | Not needed while release 1 has no Quran text |
 | Grammar terms | DEFAULT | Plain Indonesian; Arabic terms only occasionally, in brackets. Revisit after the trial |
 | Learners who can't really read script yet | OPEN | They get short targeted help for specific gaps only. No beginner/alphabet course is approved |
-| Business model, pricing | OPEN | Not discussed |
+| Business model, pricing | **DECIDED** 2026-10-16 (prices OPEN) | Freemium; Arabic course inside the Bahasa lifetime pack. See `ai-memory/MONETIZATION_SCHEME.md` |
 | How much content goes into the public release | OPEN | Decide after the trial |
 
 ---
@@ -169,12 +169,12 @@ The trial app records every answer, so these rules can be changed and recomputed
 
 ## 10. Files in the review folder
 
+Historical hand-off files (original .docx, critique, proposal v1, v2 chat revision) are **not in this repo** and are no longer needed to work on the course. Current files:
+
 | File | Role |
 |---|---|
-| `Arabic Learning App Complete Discussion Handoff.docx` (+ text, manifest, images) | Original source, unchanged |
-| `Opus_Curriculum_Critique.md` | History: first review |
-| `Opus_Curriculum_Revision_Proposal_v1.md` | History: first full proposal |
-| (v2 cohort revision) | History: given in chat only, not saved |
-| `Arabic_Course_Current_Plan.md` | **Current plan (this file)** |
-| `Lessons_Unit_A_B_Draft.md` | **Lesson content for review** |
-| `Trial_App_Spec.md` | **What the trial app must do** |
+| `docs/Arabic_Course_Current_Plan.md` | **Current plan (this file)** |
+| `docs/Lessons_Unit_A_B_Draft.md` | **Lesson content for review** |
+| `docs/Trial_App_Spec.md` | Trial behaviour spec (trimmed; decided parts point to `ai-memory/`) |
+| `docs/syllabus/01_BAHASA.md` §A | How this course maps onto AyaIlmu's levels, plus proposed additions and gems |
+| `ai-memory/` | Project decisions, rules, file map, monetisation, art direction |

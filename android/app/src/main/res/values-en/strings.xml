@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- English. Must mirror values/strings.xml key for key (lint: MissingTranslation is an error). -->
+<resources>
+
+    <!-- App -->
+    <string name="app_name">AyaIlmu</string>
+
+    <!-- Shared actions -->
+    <string name="action_continue">Continue</string>
+    <string name="action_back">Back</string>
+
+    <!-- Onboarding (P3a): language, neutral age screen, nickname -->
+    <string name="onb_step">Step %1$d of %2$d</string>
+    <string name="onb_welcome_title">Welcome to AyaIlmu</string>
+    <string name="onb_welcome_body">Learn a little every day: languages, maths, science, and social studies and arts. Everything stays on this phone.</string>
+    <string name="onb_add_title">Add a profile</string>
+    <string name="onb_lang_question">Choose the language for the app and the lessons.</string>
+    <string name="onb_age_title">What year were you born?</string>
+    <string name="onb_age_body">We ask so the content and settings fit. The year is kept on this phone only.</string>
+    <string name="onb_guardian_title">Ask a parent or guardian</string>
+    <string name="onb_guardian_body">For learners under 13, a parent or guardian first creates their own profile, then adds a child profile from the Switch profile menu.</string>
+    <string name="onb_name_title">What should we call you?</string>
+    <string name="onb_name_title_child">The child\'s nickname</string>
+    <string name="onb_child_note">This will be a child profile created by %1$s.</string>
+    <string name="onb_name_label">Nickname</string>
+    <string name="onb_name_hint">A nickname is fine.</string>
+    <string name="onb_create">Start learning</string>
+    <string name="onb_error">The profile wasn\'t saved. Please try again.</string>
+
+    <!-- Home -->
+    <string name="home_title">Today\'s session</string>
+    <string name="home_greeting">Hi! Aya is ready to learn with you.</string>
+    <string name="home_greeting_name">Hi, %1$s! Aya is ready to learn with you.</string>
+    <string name="home_tracks_title">Choose a subject</string>
+    <string name="home_track_items">Items available: %1$d</string>
+    <string name="home_track_draft">Draft content</string>
+    <string name="home_track_resume">Resume</string>
+    <string name="home_start">Start</string>
+    <string name="home_no_tracks">No subject fits this profile and language yet. For example: Arabic for adult profiles in Indonesian, Mathematics for child profiles.</string>
+    <string name="home_no_content_prod">Lessons are being reviewed and will arrive soon.</string>
+    <string name="home_load_error">Content failed to load.</string>
+    <string name="home_profile_switch">Switch profile</string>
+    <string name="home_profile_add">Add a profile</string>
+    <string name="home_profile_kind_adult">Adult</string>
+    <string name="home_profile_kind_child">Child</string>
+    <string name="home_track_progress">Progress</string>
+    <string name="home_track_consent_first">Before the first session, read and agree to the trial terms.</string>
+    <string name="home_phase_label">Build phase: P3b — settings, progress, consent</string>
+
+    <!-- Session -->
+    <string name="session_loading">Getting your session ready…</string>
+    <string name="session_failed">The session couldn\'t open.</string>
+    <string name="session_nothing_title">That\'s all for today</string>
+    <string name="session_nothing_body">No new items or reviews are due. See you tomorrow!</string>
+    <string name="session_back_home">Back to home</string>
+    <string name="session_close">Leave</string>
+    <string name="session_close_title">Leave the session?</string>
+    <string name="session_close_body">Your answers are saved (%1$d answered so far). You can resume later today.</string>
+    <string name="session_consent_title">Consent first</string>
+    <string name="session_consent_body">This course is part of a trial. Read and agree to the terms before you start.</string>
+    <string name="session_consent_open">Read the consent</string>
+    <string name="session_close_yes">Leave</string>
+    <string name="session_close_no">Stay</string>
+    <string name="session_progress_cd">Session progress: step %1$d of %2$d</string>
+    <string name="session_lesson_label">Lesson</string>
+    <string name="session_review_label">Review</string>
+    <string name="session_followup_label">Follow-up</string>
+    <string name="session_gem_label">Gem</string>
+    <string name="session_check">Check</string>
+    <string name="session_dont_know">I don\'t know yet</string>
+    <string name="session_type_answer">Your answer</string>
+    <string name="session_number_label">Number</string>
+    <string name="session_unit">Unit: %1$s</string>
+    <string name="session_who_question">Who is described?</string>
+    <string name="session_who_male">A man</string>
+    <string name="session_who_female">A woman</string>
+    <string name="session_who_unknown">Not sure yet</string>
+    <string name="session_sequence_hint">Tap the tiles to build your answer. Tap one again to take it back.</string>
+    <string name="session_sequence_empty">Your answer appears here.</string>
+    <string name="session_pairs_hint">Tap one on the left, then its partner on the right.</string>
+    <string name="session_buckets_hint">Tap one on the left, then its group on the right.</string>
+    <string name="session_image_placeholder">Picture: %1$s (draft — hand-drawn art to come)</string>
+    <string name="session_unsupported">This kind of activity arrives in a later version.</string>
+    <string name="session_save_error">That wasn\'t saved. Please try again.</string>
+    <string name="session_outcome_correct">Correct</string>
+    <string name="session_outcome_wrong">Not yet</string>
+    <string name="session_outcome_pending">Saved for checking</string>
+    <string name="session_outcome_dont_know">That\'s okay</string>
+    <string name="session_outcome_seen">Saved</string>
+
+    <!-- Summary: counts only, no mastery claims -->
+    <string name="summary_title">Session done</string>
+    <string name="summary_answered">Items answered: %1$d</string>
+    <string name="summary_correct">Correct: %1$d</string>
+    <string name="summary_not_yet">Not yet: %1$d</string>
+    <string name="summary_pending">Waiting to be checked: %1$d</string>
+    <string name="summary_dont_know">Not known yet: %1$d</string>
+    <string name="summary_gems">Gems found: %1$d</string>
+    <string name="summary_minutes">Time spent: about %1$d min</string>
+    <string name="summary_next_review">Next review: %1$s</string>
+    <string name="summary_note">This summary only counts today\'s answers. It isn\'t a grade.</string>
+
+    <!-- Developer-demo banner (CR-ENG-2) -->
+    <string name="banner_developer_demo">Developer mode — content not yet reviewed</string>
+
+    <!-- Developer check (demo build only) -->
+    <string name="dev_check_title">Developer check</string>
+    <string name="dev_check_packs">Content: %1$d tracks, %2$d items, %3$d validation problems</string>
+    <string name="dev_check_load_error">Content failed to load: %1$s</string>
+    <string name="dev_check_storage">Storage: %1$d profiles, %2$d saved answers</string>
+    <string name="dev_check_active">Active profile: %1$s (language: %2$s)</string>
+    <string name="dev_check_no_active">No active profile yet — the app follows the phone\'s language.</string>
+    <string name="dev_profile_label_id">Test profile (Indonesian)</string>
+    <string name="dev_profile_label_en">Test profile (English)</string>
+    <string name="dev_create_profile_id">Create an Indonesian test profile</string>
+    <string name="dev_create_profile_en">Create an English test profile</string>
+    <string name="dev_delete_all">Delete all data</string>
+    <string name="dev_delete_confirm_title">Delete all data?</string>
+    <string name="dev_delete_confirm_body">Every profile, answer and saved session on this phone will be deleted. This cannot be undone.</string>
+    <string name="dev_delete_confirm_yes">Delete</string>
+    <string name="dev_cancel">Cancel</string>
+    <string name="dev_moved_note">Export and delete are now in Settings.</string>
+    <string name="dev_notice_failed">That didn\'t work. Please try again.</string>
+    <string name="export_chooser_title">Share learning data</string>
+
+    <!-- Trial consent (Arabic, evidence track). DRAFT: review against UU PDP (UU No. 27/2022) before the closed test. -->
+    <string name="consent_title">Before you start: trial consent</string>
+    <string name="consent_intro">The Arabic course in AyaIlmu is in a trial. Please read this first; it takes a minute.</string>
+    <string name="consent_what_title">What is stored</string>
+    <string name="consent_what_body">Your answers, when and how long you took to answer, and practice results, under a random learner ID. No real name, email, phone number, contacts or location.</string>
+    <string name="consent_where_title">Where it is kept and who sees it</string>
+    <string name="consent_where_body">Everything stays on this phone. The AyaIlmu course team (PT Petalytix Teknologi Indonesia) only sees your answers if you send them the export file from Settings yourself.</string>
+    <string name="consent_why_title">What it is for</string>
+    <string name="consent_why_body">To check whether the lessons and questions work, and to improve them. Never for ads, and never sold or shared with anyone else.</string>
+    <string name="consent_keep_title">How long it is kept</string>
+    <string name="consent_keep_body">On this phone: until you delete it. Files you send to the team: deleted no later than 6 months after the trial ends.</string>
+    <string name="consent_stop_title">Stopping and deleting</string>
+    <string name="consent_stop_body">You can stop at any time, no reason needed. Delete the data on this phone in Settings. To delete files you already sent, email %1$s with your learner ID (shown in Settings).</string>
+    <string name="consent_too_young">This trial is for people aged 18 and over, so this profile can\'t join it. Other subjects are still open.</string>
+    <string name="consent_check_adult">I am 18 or older.</string>
+    <string name="consent_check_agree">I agree to my answers being stored as described above.</string>
+    <string name="consent_accept">Agree and continue</string>
+    <string name="consent_error">The consent wasn\'t saved. Please try again.</string>
+    <string name="consent_version_note">Text version: %1$s</string>
+
+    <!-- Progress: three honest lines on evidence tracks, one bar on casual tracks (CR-HAB-4) -->
+    <string name="progress_title">Progress</string>
+    <string name="progress_failed">Progress couldn\'t open.</string>
+    <string name="progress_empty">No practice here yet. After your first session, your progress shows up on this page.</string>
+    <string name="progress_learned_title">Learned</string>
+    <string name="progress_count_skills">%1$d of %2$d skills</string>
+    <string name="progress_remembered_title">Still remembered after 7–30 days</string>
+    <string name="progress_remembered_none">These checks appear by themselves in daily sessions, 7 and 30 days after practice.</string>
+    <string name="progress_count_checks">%1$d of %2$d checks</string>
+    <string name="progress_new_title">Understands new sentences</string>
+    <string name="progress_new_none">No new sentences tried yet.</string>
+    <string name="progress_count_sentences">%1$d of %2$d sentences</string>
+    <string name="progress_words">Words learned: %1$d of %2$d</string>
+    <string name="progress_practicing">Being practised: %1$d skills</string>
+    <string name="progress_follow_up">Need a follow-up: %1$d</string>
+    <string name="progress_waiting">Answers waiting to be checked: %1$d</string>
+    <string name="progress_gems">Gem box: %1$d</string>
+    <string name="progress_days">Days of practice: %1$d</string>
+    <string name="progress_note">These numbers are recalculated from your answers each time. “Learned” needs correct answers on different days, so it takes time.</string>
+
+    <!-- Settings (P3b) -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_failed">Settings couldn\'t open.</string>
+    <string name="settings_notice_export_failed">Export failed. Please try again.</string>
+    <string name="settings_notice_failed">That change wasn\'t saved. Please try again.</string>
+    <string name="settings_notice_notifications_blocked">Android doesn\'t allow notifications for AyaIlmu. Allow them in the phone\'s settings if you want the reminder.</string>
+    <string name="settings_notice_last_adult">The last adult profile can\'t be deleted while child profiles exist. Add another adult profile first, or use Delete all data.</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_session_length">Daily session length</string>
+    <string name="settings_session_length_body">A session ends after the current question, never in the middle of one.</string>
+    <string name="settings_session_auto">Automatic</string>
+    <string name="settings_minutes">%1$d min</string>
+    <string name="settings_arabic_size">Arabic text size</string>
+    <string name="settings_text_size_note">Other text follows the phone\'s font size setting.</string>
+    <string name="settings_reminder">Daily reminder</string>
+    <string name="settings_reminder_body">One reminder a day, at the time you choose. Turn it off any time.</string>
+    <string name="settings_reminder_on">On, at %1$02d:%2$02d</string>
+    <string name="settings_reminder_off">Off</string>
+    <string name="settings_reminder_change_time">Change time</string>
+    <string name="settings_adult_only">Only an adult profile can change this.</string>
+    <string name="settings_save">Save</string>
+    <string name="settings_consent">Trial consent</string>
+    <string name="settings_consent_given">You have agreed to the Arabic trial terms.</string>
+    <string name="settings_consent_withdraw">Withdraw consent</string>
+    <string name="settings_consent_withdraw_title">Withdraw consent?</string>
+    <string name="settings_consent_withdraw_body">Arabic sessions will ask for consent again before they start. Answers already saved stay on this phone until you delete them.</string>
+    <string name="settings_data">Learning data</string>
+    <string name="settings_data_body">All data lives on this phone. Export makes a JSON and a CSV file to send with an app of your choice.</string>
+    <string name="settings_export">Export learning data</string>
+    <string name="settings_delete_profile">Delete this profile</string>
+    <string name="settings_delete_profile_title">Delete this profile?</string>
+    <string name="settings_delete_profile_body">This profile and all of its answers will be deleted from this phone. This cannot be undone.</string>
+    <string name="settings_about">About</string>
+    <string name="settings_learner_id">Learner ID (long-press to copy)</string>
+    <string name="settings_contact">Questions or deletion requests: %1$s</string>
+    <string name="settings_version">Version %1$s</string>
+
+    <!-- Daily reminder notification (calm copy, CR-HAB-2/6) -->
+    <string name="reminder_title">Today\'s session is ready</string>
+    <string name="reminder_body">Fancy a short practice? A few minutes is plenty.</string>
+    <string name="reminder_channel_name">Daily reminder</string>
+    <string name="reminder_channel_description">One reminder a day at the time you chose.</string>
+
+    <!-- Accessibility -->
+    <string name="cd_aya_mascot">Aya, the AyaIlmu mascot</string>
+</resources>

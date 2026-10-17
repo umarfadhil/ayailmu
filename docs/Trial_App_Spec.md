@@ -1,9 +1,7 @@
-# Trial App Spec
+# Trial App Spec (Arabic track, evidence mode)
 
-**Status:** draft spec for a **trial** app, written 2026-10-14. It describes what the app must do; it is not code. The framework, backend and hosting are chosen in the build session.
-**Inputs:**
-- `Arabic_Course_Current_Plan.md` (decisions)
-- `Lessons_Unit_A_B_Draft.md` (all content, item IDs and pools). **Only reviewer-approved content may be shown to testers.**
+**Status:** behaviour spec for the Arabic trial, written 2026-10-14; **trimmed 2026-10-16** after the project became AyaIlmu. Sections that were decided or superseded now point to `ai-memory/` instead of repeating it. What remains (purpose, scope, learner flow, question types, planner, learning rules, progress screen, content format, data stored, privacy, acceptance checks) is still the authoritative detail for the Arabic track and is referenced by `docs/syllabus/01_BAHASA.md`.
+**Inputs:** `Arabic_Course_Current_Plan.md` (decisions), `Lessons_Unit_A_B_Draft.md` (content). **Only reviewer-approved content may be shown to testers.**
 
 ---
 
@@ -47,12 +45,7 @@ A small app to run the learner trial for the entry check, Unit A and Unit B, wit
 
 ## 3. Platforms and distribution
 
-- **Both stores.** iOS (TestFlight) and Android (Google Play closed testing), using the store accounts Amar already has.
-- **One codebase.** A single cross-platform codebase is recommended (e.g., Flutter or React Native). Final choice in the build session.
-- **Google Play.** Personal developer accounts created after late 2023 may need a closed test with at least **12 testers for 14 continuous days** before production access. Check the current Play Console rules for your account type. Recruit at least 12 testers.
-- **TestFlight.** External testers need Apple's beta review before the first build is available to them.
-- **Trial length.** At least about **5–6 weeks** per tester, so the 30-day checks happen.
-- **No public listing** until the trial results are reviewed. That is a default, not yet confirmed.
+**Decided 2026-10-16 — see `ai-memory/PROJECT_OVERVIEW.md` (Stack, Play policy posture).** Android only, Kotlin + Jetpack Compose; iOS is not planned. Distribution via Google Play closed testing (≥ 12 testers, 14 days) before production; trial length at least 5–6 weeks so D30 checks happen; no public listing of the Arabic track until results are reviewed.
 
 ## 4. Learner flow
 
@@ -229,15 +222,11 @@ Plus a word list, with each word marked learned / still practicing.
 
 ## 12. Offline behavior
 
-- Lessons and items are bundled or cached, so a session works offline.
-- Answers are queued and sent when online. Nothing is lost if the app closes.
-- The entry-check audio is bundled (about 75 short clips).
+**Superseded 2026-10-16 — see `ai-memory/PROJECT_OVERVIEW.md` "Spec deviations" and `ai-memory/CODE_RULES.md` CR-DAT-4.** There is no backend: lessons, items, config and the ~75 entry-check audio clips are bundled; every answer is stored on the device (Room) and nothing is uploaded. Nothing is lost if the app closes.
 
 ## 13. Data export and analysis
 
-- **Export** all answers, states, surveys and reports as CSV (or similar) for analysis.
-- **Human-check screen** (simple admin page or spreadsheet workflow): list all "waiting for human check" typed answers, with the item and model answer, so a reviewer can mark them. These scores feed the recomputation.
-- **Recompute script/tool:** recompute skill states from the stored answers using any rule config. It can be run outside the app.
+**Superseded 2026-10-16 — see `ai-memory/CODE_RULES.md` CR-DAT-4.** Testers export all answers, states, surveys and reports as JSON + CSV from Settings via the Android share sheet. The human-check workflow for "waiting" typed answers runs in a spreadsheet on the exported file; the recompute tool runs on exported files outside the app.
 
 ## 14. Before inviting testers (acceptance checks)
 
@@ -255,14 +244,8 @@ Plus a word list, with each word marked learned / still practicing.
 
 ## 15. Decisions left for the build session (or for Amar)
 
-- Framework (one cross-platform codebase recommended)
-- Backend/database and hosting (any simple managed option)
-- Where the config file lives
-- Analytics. Not needed beyond the answer log; avoid third-party trackers if possible
-- App name and icon for the test listing (Amar)
+All decided 2026-10-16 — framework, backend, config location, analytics (none), app name: see `ai-memory/PROJECT_OVERVIEW.md` and `CODE_RULES.md` §7 (Config). Open items live only in PROJECT_OVERVIEW "Open decisions".
 
 ## 16. How to start the build
 
-Open a **new Claude Code session in a separate project folder** (not this review folder). Give it this file plus `Arabic_Course_Current_Plan.md` and `Lessons_Unit_A_B_Draft.md`, and ask it to plan and build the trial app described here.
-
-The build can start before the reviewers finish. Real lesson content is loaded only once approved.
+Obsolete. Build sessions start from `ai-memory/README.md` in this repo (CODE_RULES CR-SES-1).

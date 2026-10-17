@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "tracks": [
+    { "track": "arab", "pack": "packs/bahasa/arab/v1.json", "rules": "config/rules.arab.json" },
+    { "track": "mat", "pack": "packs/matematika/mat/v1.json", "rules": "config/rules.mat.json" }
+  ]
+}

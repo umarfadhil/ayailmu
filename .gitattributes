@@ -1,0 +1,24 @@
+# Normalise line endings: LF in the repo, native on checkout, except Windows scripts.
+* text=auto eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+*.riv binary
+*.ogg binary
+*.mp3 binary
+*.jar binary
+*.aab binary
+*.apk binary
+*.keystore binary
+*.jks binary

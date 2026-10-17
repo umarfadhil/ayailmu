@@ -1,0 +1,306 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "demo-synthetic-0.1",
+    "subject": "bahasa",
+    "track": "arab",
+    "mode": "evidence",
+    "audiences": ["adults"],
+    "instruction_langs": ["id"],
+    "target_lang": "ar",
+    "title": { "id": "Bahasa Arab — Unit A (contoh pengembang)", "en": "Arabic — Unit A (developer sample)" }
+  },
+  "synthetic": true,
+  "note": "SYNTHETIC DEVELOPER FIXTURE converted from prototype-expo/src/content/fixtures/demo-unit-a.json. Unreviewed constructed sentences modelled on Lessons_Unit_A_B_Draft.md (draft). Not approved. IDs are DEMO-* so they never collide with real item IDs.",
+  "prompts": {
+    "P-QMEAN": { "id": "Apa arti kata ini?", "en": "What does this word mean?" },
+    "P-QPARA": { "id": "Apa arti kalimat ini? Tulis dengan kata-kata Anda sendiri.", "en": "What does this sentence mean? Write it in your own words." },
+    "P-QREF": { "id": "Siapa yang dijelaskan: laki-laki atau perempuan?", "en": "Who is described: a man or a woman?" },
+    "P-FORM-F": { "id": "Untuk perempuan, pilih bentuk yang tepat:", "en": "For a woman, choose the right form:" },
+    "P-FORM-M": { "id": "Untuk laki-laki, pilih bentuk yang tepat:", "en": "For a man, choose the right form:" },
+    "P-FQ-REF": { "id": "Kata ini menunjuk:", "en": "This word refers to:" },
+    "P-FQ-POS": { "id": "Kalimat ini menjelaskan orangnya, atau menyatakan sesuatu miliknya?", "en": "Does this sentence describe the person, or state something they own?" },
+    "P-FQ-ACT": { "id": "Apakah kalimat ini menyebut perbuatan?", "en": "Does this sentence mention an action?" }
+  },
+  "feedback": {
+    "FA-OK": { "id": "Benar. {kalimat} = {model}.", "en": "Correct. {kalimat} = {model}." },
+    "FA-OK-WORD": { "id": "Benar. {kata} artinya \"{makna}\".", "en": "Correct. {kata} means \"{makna}\"." },
+    "FA-REF-HIYA": { "id": "Lihat kata pertama: هِيَ menunjuk perempuan.", "en": "Look at the first word: هِيَ refers to a woman." },
+    "FA-REF-HUWA": { "id": "Lihat kata pertama: هُوَ menunjuk laki-laki.", "en": "Look at the first word: هُوَ refers to a man." },
+    "FA-POS": { "id": "Kalimat ini tidak menyatakan milik (\"…-nya\"). Kalimat ini menjelaskan orangnya: \"{model}\".", "en": "This sentence does not state possession (\"his/her …\"). It describes the person: \"{model}\"." },
+    "FA-ACT": { "id": "Kalimat ini tidak menyebut perbuatan seperti \"berkata\". Kalimat ini hanya menjelaskan sifat orangnya.", "en": "This sentence mentions no action such as \"said\". It only describes the person." },
+    "FA-LEX": { "id": "{kata} artinya \"{makna}\". Kita akan mengulanginya nanti.", "en": "{kata} means \"{makna}\". We will review it later." },
+    "FA-ALIM": { "id": "Dalam bahasa Indonesia, \"alim\" sering berarti taat beragama. Di sini عَالِمٌ berarti orang yang berilmu atau mengetahui.", "en": "In Indonesian, \"alim\" often means pious. Here عَالِمٌ means a knowledgeable person, someone who knows." },
+    "FA-FORM": { "id": "Untuk perempuan, pakai bentuk dengan ـَةٌ. Untuk laki-laki, tanpa ـَةٌ.", "en": "For a woman, use the form with ـَةٌ. For a man, without ـَةٌ." },
+    "FA-PEND": { "id": "Jawaban Anda kami simpan untuk diperiksa. Contoh jawaban yang tepat: \"{model}\".", "en": "We saved your answer for checking. An example of a correct answer: \"{model}\"." },
+    "FA-DONTKNOW": { "id": "Tidak apa-apa. Contoh jawaban yang tepat: \"{model}\".", "en": "That's fine. An example of a correct answer: \"{model}\"." },
+    "FA-FOCUS-OK": { "id": "Benar.", "en": "Correct." },
+    "FA-FOCUS-NO": { "id": "Perhatikan lagi. Jawaban yang tepat: {benar}.", "en": "Look again. The right answer: {benar}." }
+  },
+  "screens": [
+    {
+      "screen_id": "DEMO-S1",
+      "unit": "A",
+      "title": { "id": "Tujuan", "en": "Goal" },
+      "body": [
+        { "id": "Di unit ini Anda belajar memahami kalimat pendek seperti «Dia orang yang sabar».", "en": "In this unit you learn to understand short sentences like \"He is a patient person\"." },
+        { "id": "Semua kalimat Arab di aplikasi ini adalah kalimat latihan buatan, bukan ayat Al-Qur'an.", "en": "All Arabic sentences in this app are constructed practice sentences, not Quran verses." }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "DEMO-S2",
+      "unit": "A",
+      "title": { "id": "هُوَ dan هِيَ", "en": "هُوَ and هِيَ" },
+      "body": [
+        { "id": "هُوَ artinya dia (laki-laki).", "en": "هُوَ means he." },
+        { "id": "هِيَ artinya dia (perempuan).", "en": "هِيَ means she." },
+        { "id": "Dalam bahasa Indonesia keduanya cukup diterjemahkan «dia». Karena itu kami akan sering bertanya terpisah: laki-laki atau perempuan?", "en": "Indonesian translates both as \"dia\", so we will often ask separately: man or woman?" }
+      ],
+      "examples": [
+        { "target_text": "هُوَ", "gloss": { "id": "dia (laki-laki)", "en": "he" } },
+        { "target_text": "هِيَ", "gloss": { "id": "dia (perempuan)", "en": "she" } }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "DEMO-S3",
+      "unit": "A",
+      "title": { "id": "Kalimat dan bentuk yang cocok", "en": "Sentences and matching forms" },
+      "body": [
+        { "id": "Kata pertama menunjukkan orangnya. Kata kedua menjelaskan orang itu. Tidak perlu kata «adalah».", "en": "The first word points to the person. The second describes them. No word for \"is\" is needed." },
+        { "id": "هُوَ dipasangkan dengan bentuk tanpa ـَةٌ. هِيَ dipasangkan dengan bentuk dengan ـَةٌ.", "en": "هُوَ pairs with the form without ـَةٌ. هِيَ pairs with the form with ـَةٌ." },
+        { "id": "Kalimat ini menjelaskan orangnya. Artinya bukan «kejujurannya», dan bukan «dia berkata jujur».", "en": "The sentence describes the person. It does not mean \"his honesty\", nor \"he said honestly\"." }
+      ],
+      "examples": [
+        { "target_text": "هُوَ صَادِقٌ", "gloss": { "id": "Dia (laki-laki) orang yang jujur", "en": "He is an honest person" } },
+        { "target_text": "هِيَ صَادِقَةٌ", "gloss": { "id": "Dia (perempuan) orang yang jujur", "en": "She is an honest person" } }
+      ],
+      "clue_paragraph": 2,
+      "review_status": "draft"
+    }
+  ],
+  "items": [
+    {
+      "item_id": "DEMO-M01", "unit": "A", "type": "type_in", "variant": "meaning", "skills": ["LEX-A:W-A3"], "pool": "PRACT", "order": 1,
+      "target_text": "صَادِقٌ", "help_lines": [], "prompt_id": "P-QMEAN",
+      "word_id": "W-A3",
+      "word_meaning": { "id": "orang yang jujur", "en": "an honest person" },
+      "model_answer": { "id": "orang yang jujur", "en": "an honest person" },
+      "accepted": { "id": { "terms": ["jujur"] } },
+      "feedback_ids": { "correct": "FA-OK-WORD", "wrong": "FA-LEX", "pending": "FA-PEND", "dont_know": "FA-LEX" },
+      "forms": ["صَادِقٌ"], "review_status": "draft", "content_version": "demo-synthetic-0.1"
+    },
+    {
+      "item_id": "DEMO-F01", "unit": "A", "type": "choose", "variant": "form", "skills": ["NOM-02"], "pool": "PRACT", "order": 2,
+      "target_text": "هِيَ ___",
+      "help_lines": [{ "word": "نَادِمٌ", "meaning": { "id": "orang yang menyesal", "en": "a regretful person" } }],
+      "prompt_id": "P-FORM-F", "referent": "perempuan",
+      "model_answer": { "id": "هِيَ نَادِمَةٌ", "en": "هِيَ نَادِمَةٌ" },
+      "options": [
+        { "id": "a", "target_text": "نَادِمٌ", "error_tag": "wrong-form", "feedback_id": "FA-FORM" },
+        { "id": "b", "target_text": "نَادِمَةٌ", "correct": true }
+      ],
+      "feedback_ids": { "correct": "FA-OK", "wrong": "FA-FORM", "dont_know": "FA-FORM" },
+      "forms": ["نَادِمَةٌ"], "review_status": "draft", "content_version": "demo-synthetic-0.1"
+    },
+    {
+      "item_id": "DEMO-P01", "unit": "A", "type": "type_in", "variant": "paraphrase", "skills": ["NOM-01", "LEX-P3"], "pool": "PRACT", "order": 3,
+      "target_text": "هِيَ مُؤْمِنَةٌ", "help_lines": [], "prompt_id": "P-QPARA", "referent": "perempuan",
+      "model_answer": { "id": "Dia (perempuan) orang yang beriman", "en": "She is a believing person" },
+      "accepted": {
+        "id": {
+          "terms": ["beriman", "mukmin", "mukminah", "mumin"],
+          "known_errors": [
+            { "pattern": "keimanannya", "tag": "possession", "feedback_id": "FA-POS", "serious": true },
+            { "pattern": "imannya", "tag": "possession", "feedback_id": "FA-POS", "serious": true },
+            { "pattern": "berkata", "tag": "invented-action", "feedback_id": "FA-ACT", "serious": true }
+          ]
+        }
+      },
+      "feedback_ids": { "correct": "FA-OK", "pending": "FA-PEND", "dont_know": "FA-DONTKNOW" },
+      "forms": ["مُؤْمِنَةٌ"], "review_status": "draft", "content_version": "demo-synthetic-0.1"
+    },
+    {
+      "item_id": "DEMO-M02", "unit": "A", "type": "type_in", "variant": "meaning", "skills": ["LEX-A:W-A5"], "pool": "PRACT", "order": 4,
+      "target_text": "عَالِمٌ", "help_lines": [], "prompt_id": "P-QMEAN",
+      "word_id": "W-A5",
+      "word_meaning": { "id": "orang yang berilmu / mengetahui", "en": "a knowledgeable person / one who knows" },
+      "model_answer": { "id": "orang yang berilmu", "en": "a knowledgeable person" },
+      "accepted": {
+        "id": {
+          "terms": ["berilmu", "berpengetahuan", "mengetahui", "tahu", "ilmuwan"],
+          "pending_terms": [{ "term": "alim", "feedback_id": "FA-ALIM" }]
+        }
+      },
+      "feedback_ids": { "correct": "FA-OK-WORD", "wrong": "FA-LEX", "pending": "FA-PEND", "dont_know": "FA-LEX" },
+      "forms": ["عَالِمٌ"], "review_status": "draft", "content_version": "demo-synthetic-0.1"
+    },
+    {
+      "item_id": "DEMO-F02", "unit": "A", "type": "choose", "variant": "form", "skills": ["NOM-02"], "pool": "PRACT", "order": 5,
+      "target_text": "هُوَ ___",
+      "help_lines": [{ "word": "فَرِحٌ", "meaning": { "id": "orang yang gembira", "en": "a joyful person" } }],
+      "prompt_id": "P-FORM-M", "referent": "laki-laki",
+      "model_answer": { "id": "هُوَ فَرِحٌ", "en": "هُوَ فَرِحٌ" },
+      "options": [
+        { "id": "a", "target_text": "فَرِحٌ", "correct": true },
+        { "id": "b", "target_text": "فَرِحَةٌ", "error_tag": "wrong-form", "feedback_id": "FA-FORM" }
+      ],
+      "feedback_ids": { "correct": "FA-OK", "wrong": "FA-FORM", "dont_know": "FA-FORM" },
+      "forms": ["فَرِحٌ"], "review_status": "draft", "content_version": "demo-synthetic-0.1"
+    },
+    {
+      "item_id": "DEMO-P02", "unit": "A", "type": "type_in", "variant": "paraphrase", "skills": ["NOM-01", "LEX-P3"], "pool": "PRACT", "order": 6,
+      "target_text": "هُوَ صَالِحٌ", "help_lines": [], "prompt_id": "P-QPARA", "referent": "laki-laki",
+      "model_answer": { "id": "Dia (laki-laki) orang yang saleh", "en": "He is a righteous person" },
+      "accepted": {
+        "id": {
+          "terms": ["saleh", "soleh", "salih", "baik", "orang baik"],
+          "known_errors": [
+            { "pattern": "kesalehannya", "tag": "possession", "feedback_id": "FA-POS", "serious": true },
+            { "pattern": "kebaikannya", "tag": "possession", "feedback_id": "FA-POS", "serious": true },
+            { "pattern": "berkata", "tag": "invented-action", "feedback_id": "FA-ACT", "serious": true }
+          ]
+        }
+      },
+      "feedback_ids": { "correct": "FA-OK", "pending": "FA-PEND", "dont_know": "FA-DONTKNOW" },
+      "forms": ["صَالِحٌ"], "review_status": "draft", "content_version": "demo-synthetic-0.1"
+    },
+    {
+      "item_id": "DEMO-P03", "unit": "A", "type": "type_in", "variant": "paraphrase", "skills": ["NOM-01", "LEX-P3"], "pool": "PRACT", "order": 7,
+      "target_text": "هِيَ شَاكِرَةٌ",
+      "help_lines": [{ "word": "شَاكِرٌ", "meaning": { "id": "orang yang bersyukur", "en": "a grateful person" } }],
+      "prompt_id": "P-QPARA", "referent": "perempuan",
+      "model_answer": { "id": "Dia (perempuan) orang yang bersyukur", "en": "She is a grateful person" },
+      "accepted": {
+        "id": {
+          "terms": ["bersyukur", "syukur", "berterima kasih"],
+          "known_errors": [
+            { "pattern": "kesyukurannya", "tag": "possession", "feedback_id": "FA-POS", "serious": true },
+            { "pattern": "syukurnya", "tag": "possession", "feedback_id": "FA-POS", "serious": true },
+            { "pattern": "berkata", "tag": "invented-action", "feedback_id": "FA-ACT", "serious": true }
+          ]
+        }
+      },
+      "feedback_ids": { "correct": "FA-OK", "pending": "FA-PEND", "dont_know": "FA-DONTKNOW" },
+      "forms": ["شَاكِرَةٌ"], "review_status": "draft", "content_version": "demo-synthetic-0.1"
+    },
+    {
+      "item_id": "DEMO-R01", "unit": "A", "type": "type_in", "variant": "paraphrase", "skills": ["NOM-01", "LEX-P3"], "pool": "REMED",
+      "target_text": "هِيَ عَابِدَةٌ",
+      "help_lines": [{ "word": "عَابِدٌ", "meaning": { "id": "orang yang beribadah", "en": "a worshipping person" } }],
+      "prompt_id": "P-QPARA", "referent": "perempuan",
+      "model_answer": { "id": "Dia (perempuan) orang yang beribadah", "en": "She is a devout person" },
+      "accepted": {
+        "id": {
+          "terms": ["beribadah", "ahli ibadah", "rajin ibadah"],
+          "known_errors": [
+            { "pattern": "ibadahnya", "tag": "possession", "feedback_id": "FA-POS", "serious": true },
+            { "pattern": "berkata", "tag": "invented-action", "feedback_id": "FA-ACT", "serious": true }
+          ]
+        }
+      },
+      "feedback_ids": { "correct": "FA-OK", "pending": "FA-PEND", "dont_know": "FA-DONTKNOW" },
+      "forms": ["عَابِدَةٌ"], "review_status": "draft", "content_version": "demo-synthetic-0.1"
+    },
+    {
+      "item_id": "DEMO-R02", "unit": "A", "type": "type_in", "variant": "paraphrase", "skills": ["NOM-01", "LEX-P3"], "pool": "REMED",
+      "target_text": "هُوَ كَاذِبٌ",
+      "help_lines": [{ "word": "كَاذِبٌ", "meaning": { "id": "orang yang berbohong", "en": "a lying person" } }],
+      "prompt_id": "P-QPARA", "referent": "laki-laki",
+      "model_answer": { "id": "Dia (laki-laki) orang yang berbohong", "en": "He is a liar" },
+      "accepted": {
+        "id": {
+          "terms": ["berbohong", "pembohong", "pendusta", "berdusta"],
+          "known_errors": [
+            { "pattern": "kebohongannya", "tag": "possession", "feedback_id": "FA-POS", "serious": true },
+            { "pattern": "berkata", "tag": "invented-action", "feedback_id": "FA-ACT", "serious": true }
+          ]
+        }
+      },
+      "feedback_ids": { "correct": "FA-OK", "pending": "FA-PEND", "dont_know": "FA-DONTKNOW" },
+      "forms": ["كَاذِبٌ"], "review_status": "draft", "content_version": "demo-synthetic-0.1"
+    },
+    {
+      "item_id": "DEMO-F03", "unit": "A", "type": "choose", "variant": "form", "skills": ["NOM-02"], "pool": "REMED",
+      "target_text": "هِيَ ___",
+      "help_lines": [{ "word": "خَائِفٌ", "meaning": { "id": "orang yang takut", "en": "a fearful person" } }],
+      "prompt_id": "P-FORM-F", "referent": "perempuan",
+      "model_answer": { "id": "هِيَ خَائِفَةٌ", "en": "هِيَ خَائِفَةٌ" },
+      "options": [
+        { "id": "a", "target_text": "خَائِفَةٌ", "correct": true },
+        { "id": "b", "target_text": "خَائِفٌ", "error_tag": "wrong-form", "feedback_id": "FA-FORM" }
+      ],
+      "feedback_ids": { "correct": "FA-OK", "wrong": "FA-FORM", "dont_know": "FA-FORM" },
+      "forms": ["خَائِفَةٌ"], "review_status": "draft", "content_version": "demo-synthetic-0.1"
+    },
+    {
+      "item_id": "DEMO-Y01", "unit": "A", "type": "type_in", "variant": "paraphrase", "skills": ["NOM-01", "LEX-P3"], "pool": "READY",
+      "target_text": "هِيَ صَالِحَةٌ", "help_lines": [], "prompt_id": "P-QPARA", "referent": "perempuan",
+      "model_answer": { "id": "Dia (perempuan) orang yang saleh", "en": "She is a righteous person" },
+      "accepted": { "id": { "terms": ["saleh", "solehah", "salehah", "soleh", "baik"] } },
+      "feedback_ids": { "correct": "FA-OK", "pending": "FA-PEND", "dont_know": "FA-DONTKNOW" },
+      "forms": ["صَالِحَةٌ"], "review_status": "draft", "content_version": "demo-synthetic-0.1"
+    },
+    {
+      "item_id": "DEMO-D701", "unit": "A", "type": "type_in", "variant": "paraphrase", "skills": ["NOM-01", "LEX-P3"], "pool": "D7",
+      "target_text": "هُوَ صَابِرٌ", "help_lines": [], "prompt_id": "P-QPARA", "referent": "laki-laki",
+      "model_answer": { "id": "Dia (laki-laki) orang yang sabar", "en": "He is a patient person" },
+      "accepted": { "id": { "terms": ["sabar", "penyabar", "tabah"] } },
+      "feedback_ids": { "correct": "FA-OK", "pending": "FA-PEND", "dont_know": "FA-DONTKNOW" },
+      "forms": ["صَابِرٌ"], "review_status": "draft", "content_version": "demo-synthetic-0.1"
+    },
+    {
+      "item_id": "DEMO-D3001", "unit": "A", "type": "type_in", "variant": "paraphrase", "skills": ["NOM-01", "LEX-P3"], "pool": "D30",
+      "target_text": "هِيَ كَرِيمَةٌ", "help_lines": [], "prompt_id": "P-QPARA", "referent": "perempuan",
+      "model_answer": { "id": "Dia (perempuan) orang yang mulia", "en": "She is a noble person" },
+      "accepted": { "id": { "terms": ["mulia", "terhormat"] } },
+      "feedback_ids": { "correct": "FA-OK", "pending": "FA-PEND", "dont_know": "FA-DONTKNOW" },
+      "forms": ["كَرِيمَةٌ"], "review_status": "draft", "content_version": "demo-synthetic-0.1"
+    },
+    {
+      "item_id": "DEMO-FQ-REF-F", "unit": "A", "type": "choose", "skills": [], "pool": "FOCUS",
+      "focus_for": { "tag": "wrong-referent", "referent": "perempuan" },
+      "target_text": "هِيَ", "help_lines": [], "prompt_id": "P-FQ-REF",
+      "options": [
+        { "id": "m", "text": { "id": "laki-laki", "en": "a man" } },
+        { "id": "f", "text": { "id": "perempuan", "en": "a woman" }, "correct": true }
+      ],
+      "feedback_ids": { "correct": "FA-FOCUS-OK", "wrong": "FA-FOCUS-NO" },
+      "review_status": "draft", "content_version": "demo-synthetic-0.1"
+    },
+    {
+      "item_id": "DEMO-FQ-REF-M", "unit": "A", "type": "choose", "skills": [], "pool": "FOCUS",
+      "focus_for": { "tag": "wrong-referent", "referent": "laki-laki" },
+      "target_text": "هُوَ", "help_lines": [], "prompt_id": "P-FQ-REF",
+      "options": [
+        { "id": "m", "text": { "id": "laki-laki", "en": "a man" }, "correct": true },
+        { "id": "f", "text": { "id": "perempuan", "en": "a woman" } }
+      ],
+      "feedback_ids": { "correct": "FA-FOCUS-OK", "wrong": "FA-FOCUS-NO" },
+      "review_status": "draft", "content_version": "demo-synthetic-0.1"
+    },
+    {
+      "item_id": "DEMO-FQ-POS", "unit": "A", "type": "choose", "skills": [], "pool": "FOCUS",
+      "focus_for": { "tag": "possession" },
+      "target_text": "هُوَ صَادِقٌ", "help_lines": [], "prompt_id": "P-FQ-POS",
+      "options": [
+        { "id": "desc", "text": { "id": "menjelaskan orangnya", "en": "describes the person" }, "correct": true },
+        { "id": "poss", "text": { "id": "menyatakan sesuatu miliknya", "en": "states something they own" } }
+      ],
+      "feedback_ids": { "correct": "FA-FOCUS-OK", "wrong": "FA-FOCUS-NO" },
+      "review_status": "draft", "content_version": "demo-synthetic-0.1"
+    },
+    {
+      "item_id": "DEMO-FQ-ACT", "unit": "A", "type": "choose", "skills": [], "pool": "FOCUS",
+      "focus_for": { "tag": "invented-action" },
+      "target_text": "هُوَ صَادِقٌ", "help_lines": [], "prompt_id": "P-FQ-ACT",
+      "options": [
+        { "id": "yes", "text": { "id": "Ya", "en": "Yes" } },
+        { "id": "no", "text": { "id": "Tidak", "en": "No" }, "correct": true }
+      ],
+      "feedback_ids": { "correct": "FA-FOCUS-OK", "wrong": "FA-FOCUS-NO" },
+      "review_status": "draft", "content_version": "demo-synthetic-0.1"
+    }
+  ]
+}

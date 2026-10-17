@@ -1,35 +1,24 @@
-# Ayailmu — Arabic Trial App
+# AyaIlmu
 
-A local Expo/React Native prototype for Indonesian-speaking adults learning to understand short Arabic sentences. The UI includes a responsive menu, guided lessons, practice, feedback, settings and session summaries.
+Android-native learning app by PT Petalytix Teknologi Indonesia: languages, mathematics, science, social studies & arts, for kids (7–12) and adults, in Bahasa Indonesia and English. Offline-first, no backend, hand-made illustrations, freemium with one-time unlocks.
 
-**Developer prototype only.** The bundled Arabic exercises are synthetic, unreviewed draft examples. Tester mode intentionally displays no lessons until a non-synthetic content pack is approved. The complete pilot is not implemented, and native device testing remains outstanding.
+**Start here:** [`ai-memory/README.md`](ai-memory/README.md) — reading order, decisions, rules, file map. Build phases: [`docs/BUILD_PLAN.md`](docs/BUILD_PLAN.md).
 
-## Run locally
+## Layout
 
-Requires Node.js with the built-in `node:sqlite` module for the storage tests (verified with Node 25), npm, and an Expo-compatible environment.
+| Path | What |
+|---|---|
+| `android/` | The app: Kotlin + Jetpack Compose, Gradle modules `:app`, `:core:{model,engine,content,data,billing,design}`, `:content`. Open this folder in Android Studio |
+| `ai-memory/` | Canonical project memory: overview, code rules, file map, monetisation, art direction, session learnings |
+| `docs/syllabus/` | Learning syllabus: framework + one file per subject, kids and adults, four levels, activity catalog, hidden gems |
+| `docs/Arabic_Course_Current_Plan.md`, `docs/Lessons_Unit_A_B_Draft.md`, `docs/Trial_App_Spec.md` | The reviewed Arabic course (first language track) and its trial behaviour spec |
+| `prototype-expo/` | Expo/React Native **prototype** of the Arabic trial (TypeScript, 93 Jest tests). Reference for the Kotlin port only; see its README to run it |
+
+## Build
 
 ```bash
-cd app
-npm ci
-npm test -- --runInBand
-npm run typecheck
-npm run lint
-npm run web:dev
+cd android
+./gradlew :core:model:test :core:engine:test :core:content:test :app:testDemoDebugUnitTest :app:lintDemoDebug :app:assembleDemoDebug ktlintCheck
 ```
 
-The web preview opens on `http://localhost:8081`. See [app/README.md](app/README.md) for modes, persistence, validation and limitations.
-
-## Repository layout
-
-- `app/`: application source, configuration, required placeholder app icons and tests.
-- `docs/`: draft curriculum/design documents and a relative-path hash manifest.
-
-The reference screenshot collection, original handoff archives, local session transcripts, credentials and generated QA artifacts are excluded. The app uses native components and code; it does not ship the reference screenshots.
-
-## Draft design documents
-
-- [Current course plan](docs/Arabic_Course_Current_Plan.md)
-- [Unit A/B lesson draft](docs/Lessons_Unit_A_B_Draft.md)
-- [Trial app specification](docs/Trial_App_Spec.md)
-
-These describe intended pilot behavior. They do not mean that all pilot features have been implemented or approved.
+Flavors: `demo` (shows unreviewed content behind a banner) and `prod` (approved content only). Status: P0 foundations in source, first gate pending; content in `docs/` is draft until reviewers approve it.

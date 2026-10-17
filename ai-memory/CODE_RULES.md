@@ -1,0 +1,112 @@
+# Code Rules — AyaIlmu
+
+Budget: ≤ 40 KB. Rules are numbered inside sections so SESSION_LEARNINGS can cite them (e.g. "CR-ENG-3"). A learning that becomes a rule moves here and is deleted from SESSION_LEARNINGS. Status stamps: PLANNED · IN SOURCE (not compiled) · COMPILED · DEVICE-TESTED · RELEASED vX · DROPPED.
+
+## 0. Session protocol (how Claude works in this repo)
+
+- CR-SES-1 Start of session: read `ai-memory/README.md`, then PROJECT_OVERVIEW, then only the sections of CODE_RULES / FILE_MAP the task touches. Do not read SESSION_LEARNINGS top to bottom; grep it for the feature name.
+- CR-SES-2 Propose before implementing. Umar approves scope, then code. Never silently widen scope.
+- CR-SES-3 End of session: one SESSION_LEARNINGS entry (≤ 12 lines, dated, status-stamped), FILE_MAP updated for every new/moved file, CODE_RULES only if a durable rule emerged. Run `python ai-memory/check_budget.py`; compact if any file is over budget.
+- CR-SES-4 Code written in a session that could not run Gradle is stamped **IN SOURCE (not compiled)** until a verified build says otherwise. Never claim COMPILED or DEVICE-TESTED without the command output.
+- CR-SES-6 Cloud sessions writing into this OneDrive repo: finish all edits first, then copy to the device in a separate step, then compare sha256 of the session copy and the device copy (`device_bash` view of `$HOME/mnt/ayailmu` is trustworthy — verified 2026-10-17). Sending edits and the copy in one parallel batch has twice copied the pre-edit file.
+- CR-SES-5 Verified local repo work happens in Claude Code Desktop with the real Gradle build; cloud/undocked sessions produce proposals and paste-ready code.
+
+## 1. Architecture (PLANNED 2026-10-16)
+
+- CR-ARC-1 Gradle modules (start small, split only when a module exceeds ~40 files):
+  `:app` (DI wiring, navigation, feature screens) · `:core:model` (pure Kotlin data classes) · `:core:engine` (pure Kotlin/JVM: scoring, freshness, session planner, skill states — **no Android imports**) · `:core:content` (pack schema, loader, validator) · `:core:data` (Room, DataStore, repositories) · `:core:billing` (Play Billing wrapper, entitlements) · `:core:design` (theme, typography, illustration & motion components) · `:content` (bundled packs as assets + audio).
+- CR-ARC-2 Unidirectional data flow: `ViewModel` exposes one `StateFlow<UiState>` + `onEvent(UiEvent)`. No business logic in composables. No `LiveData`.
+- CR-ARC-3 The engine is deterministic: all time comes from an injected `Clock`, all randomness from an injected seeded `Random`. Every rule value comes from `RuleConfig`, never a literal in engine code.
+- CR-ARC-4 Every learner answer is persisted as an immutable `AnswerEvent` before any state is derived. Skill states are a projection that can be recomputed from events + a `RuleConfig` version (keeps Trial_App_Spec §7 "recompute offline later" true).
+- CR-ARC-5 Hilt for DI, constructor injection only, `@Binds` over `@Provides` where possible. One `@Module` per core module.
+- CR-ARC-6 Navigation: type-safe routes (serializable route objects). Profile switch resets the back stack.
+- CR-ARC-7 No network layer in v1 except (a) Play Billing and (b) the optional static config fetch behind `BuildConfig.REMOTE_CONFIG_URL` (empty = disabled). Any other `java.net`/OkHttp import is a review blocker.
+
+## 2. Kotlin & Compose style
+
+- CR-KT-1 Kotlin official style, ktlint/`kotlinter` in CI, warnings as errors in `:core:*`.
+- CR-KT-2 `sealed interface` for UI state/events/results; `data object` for singletons; no nullable booleans.
+- CR-KT-3 Composables: stateless by default, state hoisted, `Modifier` is the first optional param, every public composable has a `@Preview` in light + dark + `fontScale = 1.5f`.
+- CR-KT-4 Remember-and-key correctly: expensive objects in `remember(key)`; lists use stable keys; no lambdas allocating per frame in animations.
+- CR-KT-5 Strings only in `strings.xml` (default `values/` = Indonesian, `values-en/` = English). Plurals via `<plurals>`. No string concatenation for sentences.
+- CR-KT-7 Kotlin block comments nest: never write `/*` inside a `/** … */` or `/* … */` comment (globs like `packs/**.json`, paths like `res/*`). Use line comments or spell it out. A cloud session checks this with the nested-comment scan before handing code over.
+- CR-KT-8 Backtick test names must not contain `: . ; [ ] / < > \` (JVM rejects them; caught in review 2026-10-17). Use " - " instead of ": ".
+- CR-KT-6 Dimensions through the design tokens in `:core:design` (`AyaSpacing`, `AyaRadius`, `AyaType`); raw `dp` literals outside tokens are a review flag.
+
+## 3. Content & engine
+
+- CR-ENG-1 Content pack = one versioned JSON per track (`content/packs/<subject>/<track>/v<N>.json`), schema in `:core:content`. Item IDs are immutable and match the curriculum docs exactly (C04, X01, E-D05 …). Rejected items are marked, never renumbered.
+- CR-ENG-2 `review_status` gate: release builds show only `approved`; `developer-demo` build flavor shows everything with the persistent draft banner ("Kalimat latihan buatan — bukan ayat Al-Qur'an" for Arabic).
+- CR-ENG-3 Fresh evidence rule (from Trial_App_Spec §7) is engine law for evidence-bearing tracks: first attempt, no hint, no help shown, never seen before. Never reuse a seen item as fresh. Pools: INSTR, PRACT, READY, D7, D30, REMED, TRANS, SPARE, MT.
+- CR-ENG-4 Track "mode" in config: `evidence` (Arabic trial rules) or `casual` (streak-friendly drills; "learned" = simpler mastery bands). Both run on the same planner; only `RuleConfig` differs.
+- CR-ENG-5 Item types supported by the renderer registry (v1): `choose` (text or image options → covers `pick_image`, `true_false`), `type_in` (Latin keyboard only), `tiles` (build from parts → covers `fill_blank`), `match_pairs` (→ covers `sort_buckets`), `order`, `audio_match`, `number_input`, `mini_reading`, `info_card`. v2 renderers named in the activity catalog (`docs/syllabus/00_FRAMEWORK.md` §2): `tap_hotspot`, `estimate_slider`, `memory_flip`, `story_choice`, `speed_round`, `daily_puzzle`. New type = schema + renderer + engine scoring + fixture + test, in one PR. Catalog ids are the `type` values in packs; the registry maps them to renderers.
+- CR-ENG-10 Session plan order is fixed (framework §4): unseen screens → due reviews (`ReviewScheduler`, capped by `review_share_max` of the planned slots) → fresh PRACT items (`items_per_minute` × budget) → exactly one unseen GEM item at a random position. Reviews are re-attempts of seen items (role `REVIEW`, never evidence); a wrong review gets the same follow-up as a wrong practice item.
+- CR-ENG-11 Skill states are never stored as truth: `SkillProjector.project(events, rules, content)` recomputes them, and any screen showing "learned" shows the projection for the current `rules_version`.
+- CR-ENG-12 Session UI has single choke points (P3a): renderer = `StepMapper.kindOf` (only info_card/mini_reading gems are "seen" cards), UI input → `Response` only in `AnswerDraft.toResponse` (null = Check disabled), v1 filtering only in `SessionContent.playable` and resume only via `SessionContent.canResume` (same learner, same local date, not DONE), shared by Home and the session so "Lanjutkan" never lies. A new renderer touches these three places plus `SessionScreen`.
+- CR-ENG-9 Practice-only types never produce evidence: `memory_flip`, `speed_round`, hinted items. `speed_round` is opt-in, off by default, unavailable on Anak profiles below Mahir, and shows a soft progress bar, never countdown digits.
+- CR-ENG-6 Arabic text: full harakat always, RTL, Noto Naskh Arabic bundled, text size user-adjustable, never stripped or transliterated by code.
+- CR-ENG-7 Typed answers: normalise (trim, lowercase, collapse spaces, strip punctuation) then match `accepted` list + known-error patterns; anything else = `waiting_human_check`, stored raw, counts as neither right nor wrong.
+- CR-ENG-8 Porting from the TS prototype: port tests first (`prototype-expo/src/engine/__tests__/*`, `content/__tests__`, `storage/__tests__`), then code, until parity. Keep `android/core/engine/PARITY.md` listing intentional divergences.
+
+## 4. Data & privacy (Families-grade by default)
+
+- CR-DAT-1 Room is the only durable store for learner data (events stored as full JSON payload + indexed columns); a typed DataStore with a kotlinx-serialization JSON serializer (not protobuf) for device settings + entitlement cache. Schema versions exported to `schemas/`, every migration has a test. Destructive migration is forbidden in release.
+- CR-DAT-2 No personal data is collected: no names required (profile label is free text and may be a nickname), no email, no contacts, no location, no device identifiers (AAID/IMEI/MAC/serial), no phone number. `learner_id` is a random UUID generated on device.
+- CR-DAT-3 No analytics, crash or attribution SDK in v1. Crashes: Android Vitals. If a crash SDK is ever added it is gated to Adult profiles, PII off, and recorded as a decision in PROJECT_OVERVIEW.
+- CR-DAT-4 Export (Settings → "Ekspor data belajar"): JSON + CSV of events, states, surveys, reports; shared via the system share sheet; nothing leaves the device otherwise. Delete-all is one tap with confirmation.
+- CR-DAT-5 Age screen is neutral (no "are you under 13?" prompt; ask birth year with a neutral picker, no default selection), shown once per profile creation. Anak profiles can only be created from an Adult profile. Birth year → kind takes the younger possible age: Adult only if `currentYear − birthYear − 1 ≥ 13` (`OnboardingRules.kindFor`); an under-13 on first run is sent to a parent, never given a profile. Trial consent (evidence tracks) additionally needs 18+: `Consent.oldEnough` on the birth year plus the learner's own checkbox; consent text changes bump `Consent.VERSION` so everyone is asked again; deleting the last adult while child profiles exist is refused.
+- CR-DAT-6 Backups: allow Android auto-backup of Room/DataStore (`dataExtractionRules`) so a phone change keeps progress — it is the user's own Google account, not our server.
+
+## 5. Billing (see MONETIZATION_SCHEME.md for products and prices)
+
+- CR-BIL-1 Play Billing Library **8.x or newer** (Google requires 8+ for all updates after 31 Aug 2026). `enablePendingPurchases` with one-time-product params; handle `PENDING` (Indonesian cash/convenience-store payments) by showing "menunggu pembayaran", never unlocking early.
+- CR-BIL-2 Entitlement source of truth = `queryPurchasesAsync(INAPP)` on app start/resume, filtered to `PURCHASED && isAcknowledged`. Acknowledge immediately after grant (Play refunds unacknowledged purchases after 3 days).
+- CR-BIL-3 Offline: last known entitlements cached in DataStore with timestamp; honoured offline indefinitely (Play's own cache usually answers offline anyway). Revoke only when a live query says the purchase is gone.
+- CR-BIL-4 Verify purchase signature on device with the app's Play public key (local RSA check) before granting. Accept that without a server some leakage is possible; do not over-engineer anti-piracy.
+- CR-BIL-5 Store screen on an Anak profile sits behind the adult gate (hold-to-confirm + a simple arithmetic prompt). Price labels show the Play-formatted local price only; no virtual coins anywhere in the app.
+- CR-BIL-6 "Pulihkan pembelian" (restore) is just the same query, exposed as a button. Family switching: entitlements are per Google account, documented in the store screen copy.
+
+## 6. Healthy habit loop (what "addictive" may and may not mean)
+
+- CR-HAB-1 Daily session is the unit of use, chosen by the learner per track mode: evidence tracks 10 / 15 / 20 minutes (Trial_App_Spec §6, default from E-B4); casual tracks 5 / 10 / 15. The planner stops at the end of the current item.
+- CR-HAB-2 Streaks count up and never shame: no "you lost your streak", no streak-freeze purchases, no red countdowns. A missed day shows a calm "lanjut lagi hari ini?".
+- CR-HAB-3 Rewards are collectible hand-drawn stickers and progress scenes (ART_DIRECTION §Rewards), earned by completing sessions and learning, never by paying.
+- CR-HAB-4 Evidence tracks (Arabic) show three honest lines — learned / remembered after 7-30 days / can understand new sentences — never one combined %. Casual tracks may show a single mastery bar.
+- CR-HAB-5 Notifications: at most one daily reminder at a time the user chose, off by default on Anak profiles, no re-engagement blasts. Implementation (P3b): one device-level setting in DataStore, off by default, changed only from an Adult profile; inexact `AlarmManager.setWindow` (no exact-alarm permission), re-armed on fire/boot/time change/update; POST_NOTIFICATIONS asked only when an adult switches it on; copy in the setter's language.
+- CR-HAB-6 Nothing on a Families path uses emotionally manipulative copy, urgency timers, or interstitial prompts for purchases (Play Families policy; also our own standard).
+
+## 7. Config
+
+- CR-CFG-1 `rules.json` (per track) and `app_config.json` ship in `:content` assets with a `config_version`. Engine refuses to run without a valid config; no defaults hidden in code.
+- CR-CFG-2 Optional remote override (OPEN): a static JSON at a free static host fetched at most once per 24 h when online, validated against the same schema, applied only if `config_version` is newer and signature (Ed25519, key in app) is valid. Fetch failure is silent; app never blocks on it.
+
+## 8. Accessibility & localisation
+
+- CR-A11Y-1 Touch targets ≥ 48 dp, contrast ≥ 4.5:1 on text (illustration palette is exempt, UI text is not), full TalkBack labels including on illustrated buttons, supports font scale up to 2.0 without clipping.
+- CR-A11Y-2 All motion respects `Settings.Global.ANIMATOR_DURATION_SCALE == 0` / reduce-motion: Rive animations fall back to a still pose.
+- CR-A11Y-3 RTL-safe layouts (`start`/`end`, never `left`/`right`) because Arabic content lives inside an LTR Indonesian UI.
+
+## 9. Build, test, release gates
+
+- CR-REL-1 `minSdk 26`, `targetSdk` = current Play requirement at release time (verify in Play Console), App Bundle, R8 full mode, resource shrinking, baseline profile generated for the session screen.
+- CR-REL-2 Gate before any stamp above IN SOURCE (flavors are `demo`/`prod`): `./gradlew :core:model:test :core:engine:test :core:content:test :core:content:validatePacks :core:data:testDebugUnitTest :app:testDemoDebugUnitTest :app:lintDemoDebug :app:assembleDemoDebug ktlintCheck`; before a release stamp also `:app:assembleProdRelease`. ktlint is report-only until the P3 gate, then enforced. DEVICE-TESTED requires one low-end phone (≤ 3 GB RAM) and one tablet.
+- CR-REL-7 The repo lives in OneDrive (for ai-memory sync), so build outputs must not: the root `build.gradle.kts` redirects every module's `build/` to `%LOCALAPPDATA%\ayailmu-build\<module>` whenever the root path contains "OneDrive" (override `-Payailmu.buildRoot=`). Never point build/ back into the repo. After any change to the build location: **Sync Project with Gradle Files** before Run, or Studio looks for the APK in the old folder ("Error loading build artifacts … redirect.txt"). Off-switch: `ayailmu.externalBuild=false` in gradle.properties. If `clean` still reports a locked file: `gradlew --stop`, close Android Studio (stops the Kotlin daemon), then retry. CI artifact paths assume the default `build/` (not OneDrive there).
+- CR-REL-3 Tests: engine and content modules ≥ 90 % line coverage (they are pure Kotlin, no excuse); Room migration tests; Compose screenshot tests for every illustrated screen (catches accidental style drift); one end-to-end Compose test per core flow. Screenshots use Roborazzi on Robolectric (`app/src/test/.../ScreenshotTest.kt`, one subclass per variant, plain Application, debug variants only): record `:app:recordRoborazziDemoDebug`, verify `:app:verifyRoborazziDemoDebug`; baselines committed under `app/src/test/screenshots/` and re-recorded on purpose when art changes (P4).
+- CR-REL-4 Versioning: `versionName` semver, `versionCode` monotonic; both live in `android/app/build.gradle.kts` and are mirrored in FILE_MAP.md "Build identity".
+- CR-REL-5 Signing: separate production keystore for AyaIlmu (do not reuse the AyaKasir keystore), enrol in Play App Signing, keystore path and alias recorded in SESSION_LEARNINGS without secrets.
+- CR-REL-6 Git: `main` protected against force-push/deletion; feature branches; commit messages `type(scope): summary` (feat, fix, content, art, docs, chore). Content-only and art-only changes are separate commits from code.
+
+## 10. Visual implementation rules (details in ART_DIRECTION.md)
+
+- CR-VIS-1 Illustrations are shipped as WebP (raster, hand-drawn) or hand-authored SVG→VectorDrawable; never generated at runtime from generic shape primitives except the sanctioned texture overlays.
+- CR-VIS-2 Character animation = Rive files authored by hand (`.riv` in `:core:design/res/raw`), driven by state machine inputs; UI motion = Compose `animate*AsState`/`AnimatedVisibility` with the shared `AyaMotion` easing curves only.
+- CR-VIS-3 Every new visual asset passes the ART_DIRECTION acceptance checklist before merge; the PR links the checklist.
+
+## 11. Bilingual content (ID + EN everywhere) — DECIDED 2026-10-16
+
+- CR-I18N-1 Two layers, two mechanisms: UI chrome strings live in `strings.xml` (`values/` = id, `values-en/` = en, CR-KT-5); learner content strings live inside packs as `{ "id": "...", "en": "..." }` objects. Never put content in `strings.xml`, never put UI chrome in packs.
+- CR-I18N-2 Profile has `instructionLang` (`id`|`en`), set at creation, changeable in Settings; the app locale follows it (per-app language API), and the content loader resolves every bilingual string against it with no silent fallback: a missing language is a validator error at build time, not a runtime fallback.
+- CR-I18N-3 A track declares `instruction_langs`; a track lacking the profile's language is hidden from that profile (not shown locked). Language tracks also declare `target_lang`; target-language text is a separate field (`target_text`), never inside the bilingual object, so fonts/RTL are applied per field.
+- CR-I18N-4 Numbers, dates, currency are formatted with the profile locale (`id-ID` / `en-ID`): Rp 15.000 vs Rp 15,000; the *values* are the same Indonesian-context values in both languages.
+- CR-I18N-5 Translation is part of authoring: a pack PR without both languages for every learner-facing string fails CI (`:core:content:validatePacks`). Machine translation drafts are allowed only if a human reviewer approves before `review_status = approved`.
+- CR-I18N-6 Screenshot tests run in both locales and at `fontScale 1.5`; English copy is typically ~15 % shorter and Indonesian ~10 % longer than designs, so layouts must not assume either.

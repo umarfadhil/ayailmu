@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Platform theme only. AppCompat parent because MainActivity is an AppCompatActivity (per-app language on
+         older Android, CR-I18N-2). Paper-coloured window so the first frame already looks like AyaIlmu; the night
+         variant comes from values-night/colors.xml. System bars are styled by enableEdgeToEdge(). All real
+         theming lives in Compose (AyaTheme, :core:design). -->
+    <style name="Theme.AyaIlmu" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/aya_paper</item>
+    </style>
+</resources>

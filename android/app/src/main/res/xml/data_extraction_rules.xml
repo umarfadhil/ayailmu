@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 12+ backup/transfer rules (CR-DAT-6): learner progress lives only on the device, so the user's
+     own Google backup is the only safety net. Databases and DataStore are included; caches are not. -->
+<data-extraction-rules>
+    <cloud-backup>
+        <include domain="database" path="." />
+        <include domain="file" path="datastore/" />
+        <exclude domain="file" path="cache/" />
+    </cloud-backup>
+    <device-transfer>
+        <include domain="database" path="." />
+        <include domain="file" path="datastore/" />
+        <exclude domain="file" path="cache/" />
+    </device-transfer>
+</data-extraction-rules>
