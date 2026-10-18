@@ -1,0 +1,2224 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sos-a-m-0.1",
+    "subject": "sosial_seni",
+    "track": "sos-a-m",
+    "level": "menengah",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Sosial & Seni — Menengah (Dewasa)",
+      "en": "Social Studies & Arts — Intermediate (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12 starter level, 2 units) for subject + language review: needs a social-studies reviewer, a cultural reviewer, and the Indonesian and English language reviewers before any item is approved (docs/syllabus/04_SOSIAL_SENI.md, Adults Menengah: unit 1 Geografi manusia and unit 3 Hukum sehari-hari (with consumer rights and the RT/RW) as starter units 01-02; unit 2 Kolonial & kemerdekaan left to Sejarah). Picture-first per INTERACTIONS_AUDIO.md §1 and MODULES_LEVELS_STORIES.md §8; values and history figures live in the Nilai and Sejarah modules.",
+  "prompts": {
+    "P-TAP": {
+      "id": "Ketuk tempatnya di peta.",
+      "en": "Tap the place on the map."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban yang tepat.",
+      "en": "Choose the right answer."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-MYTH": {
+      "id": "Mitos atau fakta?",
+      "en": "Myth or fact?"
+    },
+    "P-CONNECT": {
+      "id": "Tarik garis ke pasangannya.",
+      "en": "Draw a line to each match."
+    },
+    "P-SORT": {
+      "id": "Seret ke kelompok yang tepat.",
+      "en": "Drag each into the right group."
+    },
+    "P-ORDER": {
+      "id": "Seret ke urutan yang benar.",
+      "en": "Drag them into the right order."
+    },
+    "P-FILL": {
+      "id": "Seret ke bagian yang kosong.",
+      "en": "Drag into the gap."
+    },
+    "P-NUM": {
+      "id": "Masukkan angkanya.",
+      "en": "Enter the number."
+    },
+    "P-EST": {
+      "id": "Perkirakan.",
+      "en": "Make an estimate."
+    },
+    "P-MEMORY": {
+      "id": "Balik kartu, cari pasangannya.",
+      "en": "Flip the cards, find pairs."
+    },
+    "P-TRY": {
+      "id": "Coba di rumah",
+      "en": "Try at home"
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Correct. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Baik, kita lanjut.",
+      "en": "Good, let's continue."
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Geografi manusia",
+        "en": "Human geography"
+      },
+      "sticker": "sticker_bicycle"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Hukum sehari-hari & hak konsumen",
+        "en": "Everyday law & consumer rights"
+      },
+      "sticker": "sticker_book"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SOS-A-M-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Geografi manusia",
+        "en": "Human geography"
+      },
+      "body": [
+        {
+          "id": "Penduduk Indonesia tidak tersebar merata: menurut Sensus Penduduk 2020, 56,1% tinggal di Pulau Jawa, yang luasnya hanya sekitar 7% wilayah negara.",
+          "en": "Indonesia's people are unevenly spread: in the 2020 census, 56.1% lived on Java, which is only about 7% of the country's area."
+        },
+        {
+          "id": "Orang berpindah karena faktor pendorong (lahan sempit, kerja sulit) dan penarik (pekerjaan, sekolah, layanan): merantau, transmigrasi, urbanisasi.",
+          "en": "People move because of push factors (little land, scarce work) and pull factors (jobs, schools, services): merantau, transmigration, urbanisation."
+        },
+        {
+          "id": "Kota yang tumbuh cepat menghadapi risiko baru. Di pesisir Jakarta, pengambilan air tanah berlebihan membuat tanah turun dan banjir rob makin sering.",
+          "en": "Fast-growing cities face new risks. On Jakarta's coast, heavy groundwater pumping makes the ground sink and tidal floods more frequent."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SOS-A-M-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Hukum sehari-hari & hak konsumen",
+        "en": "Everyday law & consumer rights"
+      },
+      "body": [
+        {
+          "id": "Perjanjian sah jika ada kesepakatan, para pihak cakap hukum, objeknya jelas, dan sebabnya tidak melanggar hukum (Pasal 1320 KUH Perdata). Meterai bukan syarat sah.",
+          "en": "An agreement is valid with consent, parties with legal capacity, a clear subject and a lawful purpose (Civil Code art. 1320). A duty stamp (meterai) is not a condition."
+        },
+        {
+          "id": "UU No. 8 Tahun 1999 memberi konsumen hak atas informasi yang benar, hak didengar keluhannya, dan hak atas ganti rugi. Sengketa bisa dibawa ke BPSK.",
+          "en": "Law No. 8 of 1999 gives consumers the right to truthful information, to be heard and to compensation. Disputes can go to the BPSK consumer dispute board."
+        },
+        {
+          "id": "RT dan RW adalah lembaga kemasyarakatan, mitra pemerintah desa atau kelurahan. Pengurusnya warga setempat, bukan pegawai negeri.",
+          "en": "The RT and RW are community bodies that partner the village or kelurahan government. They are run by local residents, not civil servants."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "SOS-A-M-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "HG-WHERE"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pulau dengan penduduk terbanyak?",
+            "en": "The island where most people live?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          }
+        },
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          },
+          "correct": true
+        },
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Jawa: sekitar 7% wilayah, tetapi 56,1% penduduk (SP2020).",
+        "en": "Java: about 7% of the land, but 56.1% of the people (2020 census)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "estimate_slider",
+      "skills": [
+        "HG-WHERE"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-EST",
+      "image": "pic_station",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Berapa persen penduduk Indonesia tinggal di perkotaan pada 2020?",
+            "en": "What share of Indonesians lived in urban areas in 2020?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 56.7,
+        "tolerance": 7,
+        "unit": {
+          "id": "%",
+          "en": "%"
+        }
+      },
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1
+      },
+      "model_answer": {
+        "id": "Sekitar 56,7% pada 2020 (BPS), dan diproyeksikan terus naik.",
+        "en": "About 56.7% in 2020 (BPS), and projected to keep rising."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "HG-MOVE"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Faktor pendorong atau penarik migrasi?",
+            "en": "A push or a pull factor for migration?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_push",
+          "text": {
+            "id": "Pendorong (di daerah asal)",
+            "en": "Push (at home)"
+          }
+        },
+        {
+          "id": "b_pull",
+          "text": {
+            "id": "Penarik (di daerah tujuan)",
+            "en": "Pull (at the destination)"
+          }
+        },
+        {
+          "id": "c_land",
+          "text": {
+            "id": "Lahan pertanian makin sempit",
+            "en": "Farmland keeps shrinking"
+          }
+        },
+        {
+          "id": "c_school",
+          "text": {
+            "id": "Kampus dan sekolah lanjutan",
+            "en": "Universities and further schooling"
+          },
+          "image": "pic_school"
+        },
+        {
+          "id": "c_storm",
+          "text": {
+            "id": "Bencana dan gagal panen",
+            "en": "Disasters and failed harvests"
+          },
+          "image": "pic_storm"
+        },
+        {
+          "id": "c_hosp",
+          "text": {
+            "id": "Rumah sakit yang lengkap",
+            "en": "Well-equipped hospitals"
+          },
+          "image": "pic_hospital"
+        },
+        {
+          "id": "c_job",
+          "text": {
+            "id": "Lowongan kerja dan upah lebih tinggi",
+            "en": "Job openings and higher wages"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c_land": "b_push",
+        "c_school": "b_pull",
+        "c_storm": "b_push",
+        "c_hosp": "b_pull",
+        "c_job": "b_pull"
+      },
+      "model_answer": {
+        "id": "Pendorong: lahan sempit, bencana, gagal panen. Penarik: pekerjaan, upah, kampus, rumah sakit.",
+        "en": "Push: shrinking land, disasters, failed harvests. Pull: jobs, wages, universities, hospitals."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "HG-MOVE"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Istilah → artinya.",
+            "en": "Term → meaning."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_rantau",
+          "text": {
+            "id": "merantau",
+            "en": "merantau"
+          }
+        },
+        {
+          "id": "t_trans",
+          "text": {
+            "id": "transmigrasi",
+            "en": "transmigrasi"
+          }
+        },
+        {
+          "id": "t_urban",
+          "text": {
+            "id": "urbanisasi",
+            "en": "urbanisation"
+          }
+        },
+        {
+          "id": "t_mudik",
+          "text": {
+            "id": "mudik",
+            "en": "mudik"
+          }
+        },
+        {
+          "id": "d_trans",
+          "text": {
+            "id": "Program pemerintah memindahkan penduduk ke pulau lain",
+            "en": "A government programme moving people to another island"
+          }
+        },
+        {
+          "id": "d_urban",
+          "text": {
+            "id": "Bertambahnya bagian penduduk yang tinggal di kota",
+            "en": "A growing share of people living in cities"
+          }
+        },
+        {
+          "id": "d_mudik",
+          "text": {
+            "id": "Pulang ke kampung halaman, misalnya saat hari raya",
+            "en": "Going back to one's home town, for example for a holiday"
+          }
+        },
+        {
+          "id": "d_rantau",
+          "text": {
+            "id": "Pergi dari kampung untuk bekerja atau belajar, sering dengan niat kembali",
+            "en": "Leaving home to work or study, often meaning to return"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "t_rantau": "d_rantau",
+        "t_trans": "d_trans",
+        "t_urban": "d_urban",
+        "t_mudik": "d_mudik"
+      },
+      "model_answer": {
+        "id": "Merantau: pergi untuk bekerja atau belajar. Transmigrasi: program pindah antarpulau. Urbanisasi: penduduk kota bertambah. Mudik: pulang kampung.",
+        "en": "Merantau: leaving to work or study. Transmigrasi: a programme moving people between islands. Urbanisation: cities' share grows. Mudik: going home."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "HG-MOVE"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Asal tradisi merantau Minangkabau?",
+            "en": "Home of the Minangkabau merantau tradition?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          },
+          "correct": true
+        },
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          }
+        },
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Masyarakat Minangkabau di Sumatra Barat dikenal dengan tradisi merantau.",
+        "en": "The Minangkabau of West Sumatra are known for their merantau tradition."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "HG-MOVE"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-TF",
+      "image": "pic_ship",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Perpindahan penduduk antarpulau yang terencana baru dimulai setelah 1945.",
+            "en": "Planned moves of people between islands only began after 1945."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Perpindahan terencana dimulai 1905 sebagai \"kolonisasi\" ke Gedong Tataan, Lampung, lalu berlanjut sebagai transmigrasi.",
+        "en": "Planned moves began in 1905 as \"colonisation\" to Gedong Tataan, Lampung, and later continued as transmigrasi."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "HG-RISK"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-CHOOSE",
+      "image": "pic_house",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Penyebab utama tanah Jakarta Utara turun?",
+            "en": "The main cause of sinking ground in North Jakarta?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Gempa bumi setiap hari",
+            "en": "Daily earthquakes"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Pengambilan air tanah berlebihan",
+            "en": "Excessive groundwater pumping"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Hujan asam",
+            "en": "Acid rain"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Air tanah terus disedot, lapisan tanah memadat, dan permukaannya turun.",
+        "en": "Groundwater keeps being pumped out, the soil compacts and the surface sinks."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "HG-RISK"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "image": "pic_sea",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rantai sebab dan akibat.",
+            "en": "Chain of cause and effect."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "k_pump",
+          "text": {
+            "id": "Banyak gedung dan rumah menyedot air tanah",
+            "en": "Many buildings and homes pump groundwater"
+          }
+        },
+        {
+          "id": "k_flood",
+          "text": {
+            "id": "Air laut pasang lebih mudah masuk: banjir rob",
+            "en": "High tides flow in more easily: tidal flooding"
+          }
+        },
+        {
+          "id": "k_compact",
+          "text": {
+            "id": "Lapisan tanah di bawahnya memadat",
+            "en": "The soil layers below compact"
+          }
+        },
+        {
+          "id": "k_sink",
+          "text": {
+            "id": "Permukaan tanah turun",
+            "en": "The ground surface sinks"
+          }
+        }
+      ],
+      "solution": [
+        "k_pump",
+        "k_compact",
+        "k_sink",
+        "k_flood"
+      ],
+      "model_answer": {
+        "id": "Air tanah disedot, tanah memadat, permukaan turun, lalu rob lebih mudah masuk.",
+        "en": "Groundwater pumped, soil compacts, ground sinks, then tides flood in more easily."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "HG-WHERE"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Banyak kota tua tumbuh di tepi…",
+            "en": "Many old towns grew up along…"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_river",
+          "text": {
+            "id": "sungai besar",
+            "en": "a big river"
+          },
+          "image": "pic_river",
+          "correct": true
+        },
+        {
+          "id": "pic_volcano",
+          "text": {
+            "id": "gunung api",
+            "en": "a volcano"
+          },
+          "image": "pic_volcano"
+        },
+        {
+          "id": "pic_forest",
+          "text": {
+            "id": "hutan",
+            "en": "a forest"
+          },
+          "image": "pic_forest"
+        }
+      ],
+      "model_answer": {
+        "id": "Sungai dulu jalan raya perdagangan, jadi banyak kota tua tumbuh di tepinya.",
+        "en": "Rivers were the old trade highways, so many old towns grew up on their banks."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "number_input",
+      "skills": [
+        "HG-WHERE"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-NUM",
+      "image": "pic_station",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Penduduk 270 juta, 56,7% di kota. Berapa juta orang tinggal di kota?",
+            "en": "Population 270 million, 56.7% urban. How many million people live in cities?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 153,
+        "tolerance": 1,
+        "unit": {
+          "id": "juta orang",
+          "en": "million people"
+        }
+      },
+      "model_answer": {
+        "id": "56,7% × 270 juta ≈ 153 juta orang.",
+        "en": "56.7% × 270 million ≈ 153 million people."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "HG-WHERE"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kota dan sungainya.",
+            "en": "Cities and their rivers."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "c_plg",
+          "text": {
+            "id": "Palembang",
+            "en": "Palembang"
+          }
+        },
+        {
+          "id": "c_ptk",
+          "text": {
+            "id": "Pontianak",
+            "en": "Pontianak"
+          }
+        },
+        {
+          "id": "c_smd",
+          "text": {
+            "id": "Samarinda",
+            "en": "Samarinda"
+          }
+        },
+        {
+          "id": "c_jkt",
+          "text": {
+            "id": "Jakarta",
+            "en": "Jakarta"
+          }
+        },
+        {
+          "id": "r_kapuas",
+          "text": {
+            "id": "Sungai Kapuas",
+            "en": "the Kapuas River"
+          }
+        },
+        {
+          "id": "r_mahakam",
+          "text": {
+            "id": "Sungai Mahakam",
+            "en": "the Mahakam River"
+          }
+        },
+        {
+          "id": "r_ciliwung",
+          "text": {
+            "id": "Sungai Ciliwung",
+            "en": "the Ciliwung River"
+          }
+        },
+        {
+          "id": "r_musi",
+          "text": {
+            "id": "Sungai Musi",
+            "en": "the Musi River"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c_plg": "r_musi",
+        "c_ptk": "r_kapuas",
+        "c_smd": "r_mahakam",
+        "c_jkt": "r_ciliwung"
+      },
+      "model_answer": {
+        "id": "Palembang–Musi, Pontianak–Kapuas, Samarinda–Mahakam, Jakarta–Ciliwung.",
+        "en": "Palembang–Musi, Pontianak–Kapuas, Samarinda–Mahakam, Jakarta–Ciliwung."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "HG-MOVE"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-TRY",
+      "image": "pic_map_paper",
+      "model_answer": {
+        "id": "Gambar peta keluarga Anda: dari mana kakek-nenek berasal dan ke mana anggota keluarga merantau. Banyak keluarga Indonesia ternyata tersebar di beberapa pulau.",
+        "en": "Draw your family map: where your grandparents came from and where relatives moved. Many Indonesian families turn out to be spread over several islands."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "HG-WHERE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Berapa bagian penduduk Indonesia yang tinggal di Jawa?",
+            "en": "What share of Indonesians live on Java?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Sekitar seperempat",
+            "en": "About a quarter"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Hampir semuanya",
+            "en": "Almost all"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Lebih dari separuh",
+            "en": "More than half"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Lebih dari separuh penduduk Indonesia tinggal di Jawa (56,1% pada SP2020).",
+        "en": "More than half of Indonesians live on Java (56.1% in the 2020 census)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "HG-MOVE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "image": "pic_ship",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Program pemerintah memindahkan penduduk antarpulau disebut…",
+            "en": "A government programme moving people between islands is called…"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Mudik",
+            "en": "Mudik"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Urbanisasi",
+            "en": "Urbanisation"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Transmigrasi",
+            "en": "Transmigrasi"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Transmigrasi adalah program pemerintah untuk memindahkan penduduk ke pulau lain.",
+        "en": "Transmigrasi is a government programme for moving people to other islands."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-01-015",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HG-RISK"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "image": "pic_sea",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Banjir rob adalah banjir karena air laut pasang.",
+            "en": "Rob is flooding caused by high tides."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Rob adalah banjir dari air laut pasang, makin sering di pesisir yang tanahnya turun.",
+        "en": "Rob is flooding from high tides, more frequent where coastal ground is sinking."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-01-016",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "HG-MOVE"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Encyclopaedia Britannica, \"Minangkabau\" (descent and inheritance through the female line; britannica.com); Peggy Reeves Sanday, Women at the Center: Life in a Modern Matriarchy (Cornell University Press, 2002).",
+      "model_answer": {
+        "id": "Masyarakat Minangkabau menganut sistem matrilineal: garis keturunan dan warisan, termasuk rumah gadang dan tanah pusaka kaum, diturunkan melalui garis ibu. Mereka sering disebut salah satu masyarakat matrilineal terbesar di dunia.",
+        "en": "The Minangkabau are matrilineal: descent and inheritance, including the clan's rumah gadang and ancestral land, pass down the mother's line. They are often called one of the largest matrilineal societies in the world."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "LAW-CONTRACT"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Syarat sah perjanjian atau bukan?",
+            "en": "A condition for a valid agreement, or not?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Syarat sah (Pasal 1320)",
+            "en": "A condition (art. 1320)"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Bukan syarat sah",
+            "en": "Not a condition"
+          }
+        },
+        {
+          "id": "c_agree",
+          "text": {
+            "id": "Kedua pihak sepakat",
+            "en": "Both parties agree"
+          },
+          "image": "hist_handshake"
+        },
+        {
+          "id": "c_stamp",
+          "text": {
+            "id": "Ditempeli meterai",
+            "en": "A duty stamp is attached"
+          }
+        },
+        {
+          "id": "c_capable",
+          "text": {
+            "id": "Para pihak cakap hukum, misalnya sudah dewasa",
+            "en": "Both have legal capacity, e.g. are adults"
+          }
+        },
+        {
+          "id": "c_paper",
+          "text": {
+            "id": "Ditulis di kertas bergaris",
+            "en": "It's written on lined paper"
+          }
+        },
+        {
+          "id": "c_object",
+          "text": {
+            "id": "Objeknya jelas dan tidak melanggar hukum",
+            "en": "Its subject is clear and lawful"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c_agree": "b_yes",
+        "c_stamp": "b_no",
+        "c_capable": "b_yes",
+        "c_paper": "b_no",
+        "c_object": "b_yes"
+      },
+      "model_answer": {
+        "id": "Syaratnya: sepakat, cakap, objek tertentu, dan sebab yang tidak melanggar hukum. Meterai dan jenis kertas bukan syarat sah.",
+        "en": "The conditions: consent, capacity, a specific subject and a lawful purpose. Stamps and the kind of paper are not."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "LAW-CONTRACT"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Perjanjian tanpa meterai tidak sah.",
+            "en": "An agreement without a duty stamp is not valid."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Meterai adalah pajak atas dokumen; perjanjian tetap sah tanpanya. Jika dokumen dipakai sebagai bukti di pengadilan, meterai dapat dibubuhkan kemudian.",
+        "en": "Myth. The stamp is a tax on documents; the agreement is valid without it. If it is used as court evidence, the duty can be paid later."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "LAW-CONSUMER"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-CHOOSE",
+      "image": "pic_shoes",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Struk bertuliskan \"Barang yang sudah dibeli tidak dapat dikembalikan.\" Menurut UU Perlindungan Konsumen, klausul ini…",
+            "en": "A receipt says \"Goods sold cannot be returned.\" Under the Consumer Protection Law, this clause is…"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Wajib ada di setiap struk",
+            "en": "Required on every receipt"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Dilarang dicantumkan sebagai klausula baku",
+            "en": "Banned as a standard clause"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Hanya berlaku untuk barang elektronik",
+            "en": "Only valid for electronics"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Pasal 18 UU No. 8/1999 melarang klausula baku yang menolak pengembalian barang yang dibeli konsumen.",
+        "en": "Art. 18 of Law 8/1999 bans standard clauses that refuse the return of goods bought by consumers."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "LAW-CONSUMER"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Masalah → tempat mengadu.",
+            "en": "Problem → where to complain."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p_dispute",
+          "text": {
+            "id": "Sengketa dengan penjual tidak selesai",
+            "en": "A dispute with a seller isn't resolved"
+          }
+        },
+        {
+          "id": "p_food",
+          "text": {
+            "id": "Produk makanan diduga tidak aman",
+            "en": "A food product seems unsafe"
+          }
+        },
+        {
+          "id": "p_fin",
+          "text": {
+            "id": "Masalah dengan layanan bank atau pembiayaan",
+            "en": "A problem with a bank or finance company"
+          }
+        },
+        {
+          "id": "w_bpom",
+          "text": {
+            "id": "BPOM (Badan Pengawas Obat dan Makanan)",
+            "en": "BPOM (food and drug authority)"
+          }
+        },
+        {
+          "id": "w_ojk",
+          "text": {
+            "id": "OJK (Otoritas Jasa Keuangan)",
+            "en": "OJK (financial services authority)"
+          }
+        },
+        {
+          "id": "w_bpsk",
+          "text": {
+            "id": "BPSK (Badan Penyelesaian Sengketa Konsumen)",
+            "en": "BPSK (consumer dispute board)"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p_dispute": "w_bpsk",
+        "p_food": "w_bpom",
+        "p_fin": "w_ojk"
+      },
+      "model_answer": {
+        "id": "Sengketa dengan penjual ke BPSK, keamanan pangan dan obat ke BPOM, layanan keuangan ke OJK.",
+        "en": "Disputes with a seller go to the BPSK, food and drug safety to BPOM, financial services to OJK."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "LAW-CONTRACT"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "image": "pic_house",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Langkah aman menyewa rumah.",
+            "en": "Safe steps for renting a house."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "r_pay",
+          "text": {
+            "id": "Bayar dan simpan kuitansinya",
+            "en": "Pay and keep the receipt"
+          }
+        },
+        {
+          "id": "r_sign",
+          "text": {
+            "id": "Tulis perjanjiannya dan tanda tangani berdua",
+            "en": "Write it down and both sign"
+          }
+        },
+        {
+          "id": "r_agree",
+          "text": {
+            "id": "Sepakati harga, lama sewa, dan siapa memperbaiki apa",
+            "en": "Agree the price, the term and who repairs what"
+          }
+        },
+        {
+          "id": "r_check",
+          "text": {
+            "id": "Periksa kondisi rumah dan bukti kepemilikannya",
+            "en": "Check the house and proof of ownership"
+          }
+        }
+      ],
+      "solution": [
+        "r_check",
+        "r_agree",
+        "r_sign",
+        "r_pay"
+      ],
+      "model_answer": {
+        "id": "Periksa dulu, sepakati isinya, tulis dan tanda tangani, lalu bayar dan simpan kuitansi.",
+        "en": "Check first, agree the terms, write and sign, then pay and keep the receipt."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "LAW-LOCAL"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-CHOOSE",
+      "image": "val_gotong_royong",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Warga ingin mengadakan kerja bakti di gang. Sebaiknya berkoordinasi dengan…",
+            "en": "Residents want to hold a clean-up day in their lane. They should coordinate with…"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Pengurus RT setempat",
+            "en": "The local RT officers"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Kantor pajak",
+            "en": "The tax office"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Kantor pos",
+            "en": "The post office"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Kegiatan bersama di lingkungan dikoordinasikan dengan pengurus RT setempat.",
+        "en": "Shared activities in the neighbourhood are coordinated with the local RT officers."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "LAW-LOCAL"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-TF",
+      "image": "val_greet_neighbor",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "RT dan RW adalah kantor pemerintah dengan pegawai negeri.",
+            "en": "RT and RW are government offices staffed by civil servants."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "RT dan RW adalah lembaga kemasyarakatan, mitra pemerintah desa atau kelurahan; pengurusnya warga setempat.",
+        "en": "RT and RW are community bodies that partner the local government; their officers are local residents."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "LAW-CONSUMER"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-CHOOSE",
+      "image": "pic_phone",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ponsel baru rusak dalam masa garansi. Langkah pertama?",
+            "en": "A new phone breaks within the warranty period. First step?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Hubungi penjual atau pusat servis dengan nota dan kartu garansi",
+            "en": "Contact the seller or service centre with the receipt and warranty card"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Membongkar ponsel sendiri",
+            "en": "Open the phone up yourself"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Langsung menulis ulasan marah di media sosial",
+            "en": "Post an angry review straight away"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Bawa nota dan kartu garansi ke penjual atau pusat servis resmi. Jika buntu, adukan ke BPSK.",
+        "en": "Take the receipt and warranty card to the seller or official service centre. If that fails, go to the BPSK."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "LAW-CONSUMER"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Hak konsumen menurut UU 8/1999 atau bukan?",
+            "en": "A consumer right under Law 8/1999, or not?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_right",
+          "text": {
+            "id": "Hak konsumen",
+            "en": "A consumer right"
+          }
+        },
+        {
+          "id": "b_not",
+          "text": {
+            "id": "Bukan hak konsumen",
+            "en": "Not a consumer right"
+          }
+        },
+        {
+          "id": "c_info",
+          "text": {
+            "id": "Mendapat informasi yang benar tentang barang",
+            "en": "Truthful information about the goods"
+          }
+        },
+        {
+          "id": "c_free",
+          "text": {
+            "id": "Mendapat barang gratis kapan saja",
+            "en": "Free goods whenever you like"
+          }
+        },
+        {
+          "id": "c_heard",
+          "text": {
+            "id": "Didengar pendapat dan keluhannya",
+            "en": "Having opinions and complaints heard"
+          }
+        },
+        {
+          "id": "c_cheap",
+          "text": {
+            "id": "Membayar di bawah harga yang tertera",
+            "en": "Paying below the marked price"
+          }
+        },
+        {
+          "id": "c_comp",
+          "text": {
+            "id": "Mendapat ganti rugi jika barang tidak sesuai",
+            "en": "Compensation if goods are not as agreed"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c_info": "b_right",
+        "c_free": "b_not",
+        "c_heard": "b_right",
+        "c_cheap": "b_not",
+        "c_comp": "b_right"
+      },
+      "model_answer": {
+        "id": "Hak konsumen: informasi yang benar, didengar keluhannya, ganti rugi. Barang gratis dan diskon sepihak bukan hak.",
+        "en": "Consumer rights: truthful information, being heard, compensation. Free goods and self-made discounts are not rights."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "LAW-CONTRACT"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Istilah dan artinya.",
+            "en": "Terms and their meanings."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_wan",
+          "text": {
+            "id": "Wanprestasi",
+            "en": "Wanprestasi"
+          }
+        },
+        {
+          "id": "t_kui",
+          "text": {
+            "id": "Kuitansi",
+            "en": "Kuitansi"
+          }
+        },
+        {
+          "id": "t_dep",
+          "text": {
+            "id": "Deposit sewa",
+            "en": "Rental deposit"
+          }
+        },
+        {
+          "id": "t_klau",
+          "text": {
+            "id": "Klausula baku",
+            "en": "Standard clause"
+          }
+        },
+        {
+          "id": "d_kui",
+          "text": {
+            "id": "Bukti pembayaran",
+            "en": "Proof of payment"
+          }
+        },
+        {
+          "id": "d_dep",
+          "text": {
+            "id": "Uang jaminan yang kembali di akhir sewa",
+            "en": "Security money returned at the end"
+          }
+        },
+        {
+          "id": "d_klau",
+          "text": {
+            "id": "Aturan yang disiapkan sepihak oleh penjual",
+            "en": "Terms prepared in advance by the seller"
+          }
+        },
+        {
+          "id": "d_wan",
+          "text": {
+            "id": "Tidak memenuhi isi perjanjian",
+            "en": "Failing to do what was agreed"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "t_wan": "d_wan",
+        "t_kui": "d_kui",
+        "t_dep": "d_dep",
+        "t_klau": "d_klau"
+      },
+      "model_answer": {
+        "id": "Wanprestasi: ingkar janji. Kuitansi: bukti bayar. Deposit: uang jaminan. Klausula baku: aturan sepihak yang disiapkan penjual.",
+        "en": "Wanprestasi: breach. Kuitansi: receipt. Deposit: security money. Standard clause: terms set in advance by the seller."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "LAW-LOCAL"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "image": "val_gotong_royong",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pengurus RT dan RW di desa dilarang merangkap anggota ____.",
+            "en": "RT and RW officers in villages may not also be members of a ____."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_party",
+          "text": {
+            "id": "partai politik",
+            "en": "political party"
+          }
+        },
+        {
+          "id": "t_coop",
+          "text": {
+            "id": "koperasi",
+            "en": "cooperative"
+          }
+        },
+        {
+          "id": "t_arisan",
+          "text": {
+            "id": "kelompok arisan",
+            "en": "savings club"
+          }
+        }
+      ],
+      "solution": [
+        "t_party"
+      ],
+      "model_answer": {
+        "id": "Larangan ini tercantum dalam Permendagri No. 18 Tahun 2018, Pasal 8 ayat (5).",
+        "en": "This ban is in Interior Ministry Regulation 18/2018, art. 8(5)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "LAW-CONSUMER"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-TRY",
+      "image": "pic_phone",
+      "model_answer": {
+        "id": "Hari ini, foto atau simpan nota dan kartu garansi barang penting Anda dalam satu map. Bukti seperti itu memudahkan klaim garansi atau pengaduan.",
+        "en": "Today, photograph or file the receipts and warranty cards for your important purchases in one folder. Proof like that makes a warranty claim or complaint much easier."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "LAW-CONTRACT"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "image": "hist_handshake",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Berapa syarat sah perjanjian dalam Pasal 1320 KUH Perdata?",
+            "en": "How many validity conditions does art. 1320 of the Civil Code list?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Dua",
+            "en": "Two"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Tujuh",
+            "en": "Seven"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Empat",
+            "en": "Four"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Empat: sepakat, cakap, hal tertentu, dan sebab yang tidak melanggar hukum.",
+        "en": "Four: consent, capacity, a specific subject and a lawful purpose."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "LAW-CONSUMER"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "image": "pic_phone",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Konsumen berhak didengar keluhannya.",
+            "en": "Consumers have the right to have complaints heard."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Hak untuk didengar pendapat dan keluhannya ada dalam Pasal 4 UU No. 8 Tahun 1999.",
+        "en": "The right to have opinions and complaints heard is in art. 4 of Law 8/1999."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "LAW-LOCAL"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "image": "val_greet_neighbor",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pengurus RT dan RW adalah warga setempat, bukan pegawai negeri.",
+            "en": "RT and RW officers are local residents, not civil servants."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Pengurus RT dan RW adalah warga setempat yang mengabdi bagi lingkungannya.",
+        "en": "RT and RW officers are local residents serving their neighbourhood."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    },
+    {
+      "item_id": "SOS-A-M-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya ada di kabupaten/kota dan menyelesaikan sengketa konsumen di luar pengadilan. Nama singkat saya mirip BPS dan BPJS. Siapa saya?",
+            "en": "I sit in regencies and cities and settle consumer disputes out of court. My acronym looks like BPS and BPJS. Who am I?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "bps",
+          "text": {
+            "id": "BPS",
+            "en": "BPS"
+          }
+        },
+        {
+          "id": "bpsk",
+          "text": {
+            "id": "BPSK",
+            "en": "BPSK"
+          },
+          "correct": true
+        },
+        {
+          "id": "bpjs",
+          "text": {
+            "id": "BPJS",
+            "en": "BPJS"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "BPSK: Badan Penyelesaian Sengketa Konsumen.",
+        "en": "BPSK: the consumer dispute settlement board."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-m-0.1"
+    }
+  ]
+}

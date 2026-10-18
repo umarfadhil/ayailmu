@@ -1,0 +1,29 @@
+{
+  "rules_version": "casual-0.1",
+  "track": "nil-a-x",
+  "mode": "casual",
+  "typo_tolerance": { "min_word_length": 5, "max_edits": 1 },
+  "review_spacing_days": [1, 3, 7, 21],
+  "review_share_max": 0.4,
+  "binary_streak": 3,
+  "binary_min_days": 2,
+  "tile_counts_as_free": true,
+  "session_minutes_options": [5, 10, 15],
+  "default_session_minutes": 10,
+  "items_per_minute": 1.2,
+  "ready_after_practice_attempts": 0,
+  "check_days": { "D7": 7, "D30": 30 },
+  "learned": {
+    "window": 4,
+    "min_correct": 3,
+    "min_typed_or_built": 0,
+    "min_distinct_items": 1,
+    "min_ready": 0,
+    "require_later_day": true
+  },
+  "word_learned_days": 2,
+  "typed_rules": {
+    "id": { "negation_words": ["tidak", "bukan", "belum"], "possession_words": [], "action_words": [] },
+    "en": { "negation_words": ["not", "no", "never"], "possession_words": [], "action_words": [] }
+  }
+}

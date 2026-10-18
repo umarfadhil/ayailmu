@@ -1,0 +1,2089 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "kor-k-h-0.1",
+    "subject": "bahasa",
+    "track": "kor-k-h",
+    "level": "mahir",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "target_lang": "ko",
+    "title": {
+      "id": "Bahasa Korea — Mahir (Anak)",
+      "en": "Korean — Advanced (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, starter level: 2 units) for language review: needs a native Korean reviewer (hangul, Revised Romanization, naturalness, register, every voice clip) and the Indonesian and English reviewers before any item is approved (docs/syllabus/bahasa/ko_levels.md, Kids Mahir units 01-02). Picture-first; audio_match items stay hidden until their ko/* clips exist (android/content/voice/ko.json and ko.levels.json); every skill has a REMED item that needs no audio.",
+  "prompts": {
+    "P-LISTEN-PIC": {
+      "id": "Dengar, lalu ketuk gambarnya.",
+      "en": "Listen, then tap the picture."
+    },
+    "P-PICK": {
+      "id": "Pilih gambarnya.",
+      "en": "Pick the picture."
+    },
+    "P-READ": {
+      "id": "Baca, lalu pilih gambarnya.",
+      "en": "Read it, then pick the picture."
+    },
+    "P-MATCH-PIC": {
+      "id": "Pasangkan gambar dan katanya.",
+      "en": "Match each picture to its word."
+    },
+    "P-MATCH": {
+      "id": "Pasangkan.",
+      "en": "Match them up."
+    },
+    "P-BUILD-SAY": {
+      "id": "Susun kalimatnya.",
+      "en": "Build the sentence."
+    },
+    "P-FILL": {
+      "id": "Isi yang kosong.",
+      "en": "Fill the gap."
+    },
+    "P-SORT": {
+      "id": "Kelompokkan.",
+      "en": "Sort them."
+    },
+    "P-MEMORY": {
+      "id": "Buka kartu, cari pasangannya.",
+      "en": "Flip cards, find the pairs."
+    },
+    "P-REPLY": {
+      "id": "Pilih jawaban yang cocok.",
+      "en": "Pick the best reply."
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Di kota & arah",
+        "en": "Around town & directions"
+      },
+      "sticker": "sticker_compass"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Cuaca, musim & kemarin",
+        "en": "Weather, seasons & yesterday"
+      },
+      "sticker": "sticker_umbrella"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "KOR-K-H-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Ke mana? Di mana?",
+        "en": "Where to? Where at?"
+      },
+      "body": [
+        {
+          "id": "Pergi ke tempat: 에 (e). 도서관에 가요 (doseogwane gayo) = aku ke perpustakaan.",
+          "en": "Going to a place: 에 (e). 도서관에 가요 (doseogwane gayo) = I go to the library."
+        },
+        {
+          "id": "Berbuat sesuatu di tempat: 에서 (eseo). 도서관에서 책을 읽어요 (doseogwaneseo chaegeul ilgeoyo).",
+          "en": "Doing something at a place: 에서 (eseo). 도서관에서 책을 읽어요 (doseogwaneseo chaegeul ilgeoyo)."
+        },
+        {
+          "id": "Arah: 왼쪽 (oenjjok) kiri, 오른쪽 (oreunjjok) kanan, 쭉 가세요 (jjuk gaseyo) lurus terus.",
+          "en": "Directions: 왼쪽 (oenjjok) left, 오른쪽 (oreunjjok) right, 쭉 가세요 (jjuk gaseyo) go straight on."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "도서관",
+          "gloss": {
+            "id": "doseogwan · perpustakaan",
+            "en": "doseogwan · library"
+          }
+        },
+        {
+          "target_text": "은행",
+          "gloss": {
+            "id": "eunhaeng · bank",
+            "en": "eunhaeng · bank"
+          }
+        },
+        {
+          "target_text": "식당",
+          "gloss": {
+            "id": "sikdang · rumah makan",
+            "en": "sikdang · restaurant"
+          }
+        },
+        {
+          "target_text": "어디",
+          "gloss": {
+            "id": "eodi · di mana",
+            "en": "eodi · where"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "KOR-K-H-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Cuaca & kemarin",
+        "en": "Weather & yesterday"
+      },
+      "body": [
+        {
+          "id": "Cuaca: 더워요 (deowoyo) panas, 추워요 (chuwoyo) dingin, 비가 와요 (biga wayo) hujan, 눈이 와요 (nuni wayo) salju turun.",
+          "en": "Weather: 더워요 (deowoyo) hot, 추워요 (chuwoyo) cold, 비가 와요 (biga wayo) raining, 눈이 와요 (nuni wayo) snowing."
+        },
+        {
+          "id": "Korea punya empat musim: 봄 (bom), 여름 (yeoreum), 가을 (gaeul), 겨울 (gyeoul). Indonesia punya dua.",
+          "en": "Korea has four seasons: 봄 (bom), 여름 (yeoreum), 가을 (gaeul), 겨울 (gyeoul). Indonesia has two."
+        },
+        {
+          "id": "Kemarin: 가요 (gayo) → 갔어요 (gasseoyo), 먹어요 (meogeoyo) → 먹었어요 (meogeosseoyo), 해요 (haeyo) → 했어요 (haesseoyo).",
+          "en": "Yesterday: 가요 (gayo) → 갔어요 (gasseoyo), 먹어요 (meogeoyo) → 먹었어요 (meogeosseoyo), 해요 (haeyo) → 했어요 (haesseoyo)."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "날씨",
+          "gloss": {
+            "id": "nalssi · cuaca",
+            "en": "nalssi · weather"
+          }
+        },
+        {
+          "target_text": "어제",
+          "gloss": {
+            "id": "eoje · kemarin",
+            "en": "eoje · yesterday"
+          }
+        },
+        {
+          "target_text": "봄",
+          "gloss": {
+            "id": "bom · musim semi",
+            "en": "bom · spring"
+          }
+        },
+        {
+          "target_text": "겨울",
+          "gloss": {
+            "id": "gyeoul · musim dingin",
+            "en": "gyeoul · winter"
+          }
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "KOR-K-H-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-TOWN"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_library",
+          "image": "pic_library",
+          "text": {
+            "id": "perpustakaan",
+            "en": "library"
+          }
+        },
+        {
+          "id": "pic_bank",
+          "image": "pic_bank",
+          "text": {
+            "id": "bank",
+            "en": "bank"
+          }
+        },
+        {
+          "id": "pic_restaurant",
+          "image": "pic_restaurant",
+          "text": {
+            "id": "rumah makan",
+            "en": "restaurant"
+          }
+        },
+        {
+          "id": "pic_post_office",
+          "image": "pic_post_office",
+          "text": {
+            "id": "kantor pos",
+            "en": "post office"
+          }
+        },
+        {
+          "id": "w_doseogwan",
+          "target_text": "도서관",
+          "romanization": "doseogwan",
+          "audio": "ko/doseogwan"
+        },
+        {
+          "id": "w_eunhaeng",
+          "target_text": "은행",
+          "romanization": "eunhaeng",
+          "audio": "ko/eunhaeng"
+        },
+        {
+          "id": "w_sikdang",
+          "target_text": "식당",
+          "romanization": "sikdang",
+          "audio": "ko/sikdang"
+        },
+        {
+          "id": "w_ucheguk",
+          "target_text": "우체국",
+          "romanization": "ucheguk",
+          "audio": "ko/ucheguk"
+        }
+      ],
+      "solution_pairs": {
+        "pic_library": "w_doseogwan",
+        "pic_bank": "w_eunhaeng",
+        "pic_restaurant": "w_sikdang",
+        "pic_post_office": "w_ucheguk"
+      },
+      "model_answer": {
+        "id": "도서관 (doseogwan) perpustakaan, 은행 (eunhaeng) bank, 식당 (sikdang) rumah makan, 우체국 (ucheguk) kantor pos.",
+        "en": "도서관 (doseogwan) library, 은행 (eunhaeng) bank, 식당 (sikdang) restaurant, 우체국 (ucheguk) post office."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-TOWN"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/doseogwan",
+      "options": [
+        {
+          "id": "pic_school",
+          "image": "pic_school",
+          "text": {
+            "id": "sekolah",
+            "en": "school"
+          }
+        },
+        {
+          "id": "pic_library",
+          "image": "pic_library",
+          "text": {
+            "id": "perpustakaan",
+            "en": "library"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_hospital",
+          "image": "pic_hospital",
+          "text": {
+            "id": "rumah sakit",
+            "en": "hospital"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "도서관 (doseogwan) = perpustakaan.",
+        "en": "도서관 (doseogwan) = library."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-TOWN"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-FILL",
+      "image": "pic_school",
+      "target_text": "학교___ 가요.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_eseo",
+          "target_text": "에서",
+          "romanization": "eseo"
+        },
+        {
+          "id": "p_reul",
+          "target_text": "를",
+          "romanization": "reul"
+        },
+        {
+          "id": "p_e",
+          "target_text": "에",
+          "romanization": "e"
+        }
+      ],
+      "solution": [
+        "p_e"
+      ],
+      "romanization": "hakgyo___ gayo.",
+      "model_answer": {
+        "id": "Pergi ke: 에 (e). 학교에 가요 (hakgyoe gayo) = aku ke sekolah.",
+        "en": "Going to: 에 (e). 학교에 가요 (hakgyoe gayo) = I go to school."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-WAY"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-MATCH",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "glyph_arrow_left",
+          "image": "glyph_arrow_left",
+          "text": {
+            "id": "panah ke kiri",
+            "en": "arrow pointing left"
+          }
+        },
+        {
+          "id": "glyph_arrow_right",
+          "image": "glyph_arrow_right",
+          "text": {
+            "id": "panah ke kanan",
+            "en": "arrow pointing right"
+          }
+        },
+        {
+          "id": "glyph_arrow_straight",
+          "image": "glyph_arrow_straight",
+          "text": {
+            "id": "panah lurus ke depan",
+            "en": "arrow pointing straight ahead"
+          }
+        },
+        {
+          "id": "w_oenjjok",
+          "target_text": "왼쪽",
+          "romanization": "oenjjok",
+          "audio": "ko/oenjjok"
+        },
+        {
+          "id": "w_oreunjjok",
+          "target_text": "오른쪽",
+          "romanization": "oreunjjok",
+          "audio": "ko/oreunjjok"
+        },
+        {
+          "id": "w_jjuk_gaseyo",
+          "target_text": "쭉 가세요",
+          "romanization": "jjuk gaseyo",
+          "audio": "ko/jjuk_gaseyo"
+        }
+      ],
+      "solution_pairs": {
+        "glyph_arrow_left": "w_oenjjok",
+        "glyph_arrow_right": "w_oreunjjok",
+        "glyph_arrow_straight": "w_jjuk_gaseyo"
+      },
+      "model_answer": {
+        "id": "왼쪽 (oenjjok) kiri, 오른쪽 (oreunjjok) kanan, 쭉 가세요 (jjuk gaseyo) lurus terus.",
+        "en": "왼쪽 (oenjjok) left, 오른쪽 (oreunjjok) right, 쭉 가세요 (jjuk gaseyo) straight on."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "KOR-TOWN"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-PICK",
+      "target_text": "식당에서 밥을 먹어요.",
+      "options": [
+        {
+          "id": "pic_restaurant",
+          "image": "pic_restaurant",
+          "text": {
+            "id": "rumah makan",
+            "en": "restaurant"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_library",
+          "image": "pic_library",
+          "text": {
+            "id": "perpustakaan",
+            "en": "library"
+          }
+        },
+        {
+          "id": "pic_bank",
+          "image": "pic_bank",
+          "text": {
+            "id": "bank",
+            "en": "bank"
+          }
+        }
+      ],
+      "romanization": "sikdangeseo babeul meogeoyo.",
+      "audio": "ko/sikdangeseo_babeul_meogeoyo",
+      "model_answer": {
+        "id": "식당에서 밥을 먹어요 (sikdangeseo babeul meogeoyo) = aku makan di rumah makan.",
+        "en": "식당에서 밥을 먹어요 (sikdangeseo babeul meogeoyo) = I eat at the restaurant."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-WAY"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/oreunjjogeuro_gaseyo",
+      "options": [
+        {
+          "id": "glyph_arrow_left",
+          "image": "glyph_arrow_left",
+          "text": {
+            "id": "panah ke kiri",
+            "en": "arrow pointing left"
+          }
+        },
+        {
+          "id": "glyph_arrow_straight",
+          "image": "glyph_arrow_straight",
+          "text": {
+            "id": "panah lurus ke depan",
+            "en": "arrow pointing straight ahead"
+          }
+        },
+        {
+          "id": "glyph_arrow_right",
+          "image": "glyph_arrow_right",
+          "text": {
+            "id": "panah ke kanan",
+            "en": "arrow pointing right"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "오른쪽으로 가세요 (oreunjjogeuro gaseyo) = belok kanan.",
+        "en": "오른쪽으로 가세요 (oreunjjogeuro gaseyo) = go right."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-TOWN"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-FILL",
+      "image": "pic_library",
+      "target_text": "도서관___ 책을 읽어요.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_e",
+          "target_text": "에",
+          "romanization": "e"
+        },
+        {
+          "id": "p_eseo",
+          "target_text": "에서",
+          "romanization": "eseo"
+        },
+        {
+          "id": "p_reul",
+          "target_text": "를",
+          "romanization": "reul"
+        }
+      ],
+      "solution": [
+        "p_eseo"
+      ],
+      "romanization": "doseogwan___ chaegeul ilgeoyo.",
+      "model_answer": {
+        "id": "Membaca di perpustakaan: 에서 (eseo). 도서관에서 책을 읽어요 (doseogwaneseo chaegeul ilgeoyo).",
+        "en": "Reading at the library: 에서 (eseo). 도서관에서 책을 읽어요 (doseogwaneseo chaegeul ilgeoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "KOR-WAY"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-MEMORY",
+      "options": [
+        {
+          "id": "pic_bus",
+          "image": "pic_bus",
+          "text": {
+            "id": "bus",
+            "en": "bus"
+          }
+        },
+        {
+          "id": "pic_ship",
+          "image": "pic_ship",
+          "text": {
+            "id": "kapal",
+            "en": "ship"
+          }
+        },
+        {
+          "id": "pic_bicycle",
+          "image": "pic_bicycle",
+          "text": {
+            "id": "sepeda",
+            "en": "bicycle"
+          }
+        },
+        {
+          "id": "pic_plane",
+          "image": "pic_plane",
+          "text": {
+            "id": "pesawat",
+            "en": "plane"
+          }
+        },
+        {
+          "id": "w_beoseu",
+          "target_text": "버스",
+          "romanization": "beoseu",
+          "audio": "ko/beoseu"
+        },
+        {
+          "id": "w_bae",
+          "target_text": "배",
+          "romanization": "bae",
+          "audio": "ko/bae"
+        },
+        {
+          "id": "w_jajeongeo",
+          "target_text": "자전거",
+          "romanization": "jajeongeo",
+          "audio": "ko/jajeongeo"
+        },
+        {
+          "id": "w_bihaenggi",
+          "target_text": "비행기",
+          "romanization": "bihaenggi",
+          "audio": "ko/bihaenggi"
+        }
+      ],
+      "solution_pairs": {
+        "pic_bus": "w_beoseu",
+        "pic_ship": "w_bae",
+        "pic_bicycle": "w_jajeongeo",
+        "pic_plane": "w_bihaenggi"
+      },
+      "model_answer": {
+        "id": "버스 (beoseu) bus, 배 (bae) kapal, 자전거 (jajeongeo) sepeda, 비행기 (bihaenggi) pesawat.",
+        "en": "버스 (beoseu) bus, 배 (bae) ship, 자전거 (jajeongeo) bicycle, 비행기 (bihaenggi) plane."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "KOR-WAY"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-REPLY",
+      "image": "pic_bank",
+      "target_text": "은행이 어디에 있어요?",
+      "options": [
+        {
+          "id": "w_eunhaenge_gayo",
+          "target_text": "은행에 가요.",
+          "romanization": "eunhaenge gayo.",
+          "audio": "ko/eunhaenge_gayo"
+        },
+        {
+          "id": "w_cheon_wonieyo",
+          "target_text": "천 원이에요.",
+          "romanization": "cheon wonieyo.",
+          "audio": "ko/cheon_wonieyo"
+        },
+        {
+          "id": "w_oreunjjoge_isseoyo",
+          "target_text": "오른쪽에 있어요.",
+          "romanization": "oreunjjoge isseoyo.",
+          "audio": "ko/oreunjjoge_isseoyo",
+          "correct": true
+        }
+      ],
+      "romanization": "eunhaengi eodie isseoyo?",
+      "audio": "ko/eunhaengi_eodie_isseoyo",
+      "model_answer": {
+        "id": "어디에 있어요? (eodie isseoyo?) = ada di mana? Jawab tempatnya: 오른쪽에 있어요 (oreunjjoge isseoyo).",
+        "en": "어디에 있어요? (eodie isseoyo?) = where is it? Answer with a place: 오른쪽에 있어요 (oreunjjoge isseoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "KOR-WAY"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-BUILD-SAY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku naik bus.",
+            "en": "I take the bus."
+          }
+        }
+      ],
+      "image": "pic_bus",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_tayo",
+          "target_text": "타요",
+          "romanization": "tayo",
+          "audio": "ko/tayo"
+        },
+        {
+          "id": "w_gichareul",
+          "target_text": "기차를",
+          "romanization": "gichareul",
+          "audio": "ko/gichareul"
+        },
+        {
+          "id": "w_beoseureul",
+          "target_text": "버스를",
+          "romanization": "beoseureul",
+          "audio": "ko/beoseureul"
+        },
+        {
+          "id": "w_meogeoyo",
+          "target_text": "먹어요",
+          "romanization": "meogeoyo",
+          "audio": "ko/meogeoyo"
+        }
+      ],
+      "solution": [
+        "w_beoseureul",
+        "w_tayo"
+      ],
+      "model_answer": {
+        "id": "버스를 타요 (beoseureul tayo) = aku naik bus.",
+        "en": "버스를 타요 (beoseureul tayo) = I take the bus."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "KOR-TOWN"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_e",
+          "target_text": "에",
+          "romanization": "e"
+        },
+        {
+          "id": "b_eseo",
+          "target_text": "에서",
+          "romanization": "eseo"
+        },
+        {
+          "id": "p_jip_wayo",
+          "target_text": "집___ 와요.",
+          "romanization": "jip___ wayo."
+        },
+        {
+          "id": "p_gongwon_norayo",
+          "target_text": "공원___ 놀아요.",
+          "romanization": "gongwon___ norayo."
+        },
+        {
+          "id": "p_sijang_gayo",
+          "target_text": "시장___ 가요.",
+          "romanization": "sijang___ gayo."
+        },
+        {
+          "id": "p_sikdang_meogeoyo",
+          "target_text": "식당___ 먹어요.",
+          "romanization": "sikdang___ meogeoyo."
+        },
+        {
+          "id": "p_eunhaeng_gayo",
+          "target_text": "은행___ 가요.",
+          "romanization": "eunhaeng___ gayo."
+        },
+        {
+          "id": "p_suyeongjang_suyeonghaeyo",
+          "target_text": "수영장___ 수영해요.",
+          "romanization": "suyeongjang___ suyeonghaeyo."
+        }
+      ],
+      "solution_pairs": {
+        "p_jip_wayo": "b_e",
+        "p_gongwon_norayo": "b_eseo",
+        "p_sijang_gayo": "b_e",
+        "p_sikdang_meogeoyo": "b_eseo",
+        "p_eunhaeng_gayo": "b_e",
+        "p_suyeongjang_suyeonghaeyo": "b_eseo"
+      },
+      "model_answer": {
+        "id": "Pergi ke: 집에 (jibe), 시장에 (sijange), 은행에 (eunhaenge). Berbuat di: 공원에서 (gongwoneseo), 식당에서 (sikdangeseo), 수영장에서 (suyeongjangeseo).",
+        "en": "Going to: 집에 (jibe), 시장에 (sijange), 은행에 (eunhaenge). Doing at: 공원에서 (gongwoneseo), 식당에서 (sikdangeseo), 수영장에서 (suyeongjangeseo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-TOWN"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/ucheguk",
+      "options": [
+        {
+          "id": "pic_bank",
+          "image": "pic_bank",
+          "text": {
+            "id": "bank",
+            "en": "bank"
+          }
+        },
+        {
+          "id": "pic_post_office",
+          "image": "pic_post_office",
+          "text": {
+            "id": "kantor pos",
+            "en": "post office"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_market",
+          "image": "pic_market",
+          "text": {
+            "id": "pasar",
+            "en": "market"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "우체국 (ucheguk) = kantor pos.",
+        "en": "우체국 (ucheguk) = post office."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-TOWN"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "image": "pic_market",
+      "target_text": "시장___ 사과를 사요.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_reul",
+          "target_text": "를",
+          "romanization": "reul"
+        },
+        {
+          "id": "p_eseo",
+          "target_text": "에서",
+          "romanization": "eseo"
+        },
+        {
+          "id": "p_e",
+          "target_text": "에",
+          "romanization": "e"
+        }
+      ],
+      "solution": [
+        "p_eseo"
+      ],
+      "romanization": "sijang___ sagwareul sayo.",
+      "model_answer": {
+        "id": "Membeli di pasar: 에서 (eseo). 시장에서 사과를 사요 (sijangeseo sagwareul sayo).",
+        "en": "Buying at the market: 에서 (eseo). 시장에서 사과를 사요 (sijangeseo sagwareul sayo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "KOR-WAY"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "왼쪽",
+      "options": [
+        {
+          "id": "glyph_arrow_left",
+          "image": "glyph_arrow_left",
+          "text": {
+            "id": "panah ke kiri",
+            "en": "arrow pointing left"
+          },
+          "correct": true
+        },
+        {
+          "id": "glyph_arrow_right",
+          "image": "glyph_arrow_right",
+          "text": {
+            "id": "panah ke kanan",
+            "en": "arrow pointing right"
+          }
+        },
+        {
+          "id": "glyph_arrow_straight",
+          "image": "glyph_arrow_straight",
+          "text": {
+            "id": "panah lurus ke depan",
+            "en": "arrow pointing straight ahead"
+          }
+        }
+      ],
+      "romanization": "oenjjok",
+      "audio": "ko/oenjjok",
+      "model_answer": {
+        "id": "왼쪽 (oenjjok) = kiri.",
+        "en": "왼쪽 (oenjjok) = left."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-WEATHER"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_sun",
+          "image": "pic_sun",
+          "text": {
+            "id": "matahari",
+            "en": "sun"
+          }
+        },
+        {
+          "id": "pic_rain",
+          "image": "pic_rain",
+          "text": {
+            "id": "hujan",
+            "en": "rain"
+          }
+        },
+        {
+          "id": "pic_snow",
+          "image": "pic_snow",
+          "text": {
+            "id": "salju",
+            "en": "snow"
+          }
+        },
+        {
+          "id": "pic_wind",
+          "image": "pic_wind",
+          "text": {
+            "id": "angin",
+            "en": "wind"
+          }
+        },
+        {
+          "id": "w_malgayo",
+          "target_text": "맑아요",
+          "romanization": "malgayo",
+          "audio": "ko/malgayo"
+        },
+        {
+          "id": "w_biga_wayo",
+          "target_text": "비가 와요",
+          "romanization": "biga wayo",
+          "audio": "ko/biga_wayo"
+        },
+        {
+          "id": "w_nuni_wayo",
+          "target_text": "눈이 와요",
+          "romanization": "nuni wayo",
+          "audio": "ko/nuni_wayo"
+        },
+        {
+          "id": "w_barami_bureoyo",
+          "target_text": "바람이 불어요",
+          "romanization": "barami bureoyo",
+          "audio": "ko/barami_bureoyo"
+        }
+      ],
+      "solution_pairs": {
+        "pic_sun": "w_malgayo",
+        "pic_rain": "w_biga_wayo",
+        "pic_snow": "w_nuni_wayo",
+        "pic_wind": "w_barami_bureoyo"
+      },
+      "model_answer": {
+        "id": "맑아요 (malgayo) cerah, 비가 와요 (biga wayo) hujan, 눈이 와요 (nuni wayo) salju, 바람이 불어요 (barami bureoyo) berangin.",
+        "en": "맑아요 (malgayo) sunny, 비가 와요 (biga wayo) rain, 눈이 와요 (nuni wayo) snow, 바람이 불어요 (barami bureoyo) windy."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-WEATHER"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/chuwoyo",
+      "options": [
+        {
+          "id": "pic_cold",
+          "image": "pic_cold",
+          "text": {
+            "id": "kedinginan",
+            "en": "cold"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_hot",
+          "image": "pic_hot",
+          "text": {
+            "id": "kepanasan",
+            "en": "hot"
+          }
+        },
+        {
+          "id": "pic_tired",
+          "image": "pic_tired",
+          "text": {
+            "id": "capek",
+            "en": "tired"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "추워요 (chuwoyo) = dingin.",
+        "en": "추워요 (chuwoyo) = it's cold."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-WEATHER"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "pic_spring_blossom",
+          "image": "pic_spring_blossom",
+          "text": {
+            "id": "bunga musim semi",
+            "en": "spring blossom"
+          }
+        },
+        {
+          "id": "pic_beach",
+          "image": "pic_beach",
+          "text": {
+            "id": "pantai",
+            "en": "beach"
+          }
+        },
+        {
+          "id": "pic_autumn_leaves",
+          "image": "pic_autumn_leaves",
+          "text": {
+            "id": "daun musim gugur",
+            "en": "autumn leaves"
+          }
+        },
+        {
+          "id": "pic_snowman",
+          "image": "pic_snowman",
+          "text": {
+            "id": "boneka salju",
+            "en": "snowman"
+          }
+        },
+        {
+          "id": "w_bom",
+          "target_text": "봄",
+          "romanization": "bom",
+          "audio": "ko/bom"
+        },
+        {
+          "id": "w_yeoreum",
+          "target_text": "여름",
+          "romanization": "yeoreum",
+          "audio": "ko/yeoreum"
+        },
+        {
+          "id": "w_gaeul",
+          "target_text": "가을",
+          "romanization": "gaeul",
+          "audio": "ko/gaeul"
+        },
+        {
+          "id": "w_gyeoul",
+          "target_text": "겨울",
+          "romanization": "gyeoul",
+          "audio": "ko/gyeoul"
+        }
+      ],
+      "solution_pairs": {
+        "pic_spring_blossom": "w_bom",
+        "pic_beach": "w_yeoreum",
+        "pic_autumn_leaves": "w_gaeul",
+        "pic_snowman": "w_gyeoul"
+      },
+      "model_answer": {
+        "id": "봄 (bom) semi, 여름 (yeoreum) panas, 가을 (gaeul) gugur, 겨울 (gyeoul) dingin.",
+        "en": "봄 (bom) spring, 여름 (yeoreum) summer, 가을 (gaeul) autumn, 겨울 (gyeoul) winter."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "KOR-WEATHER"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_summer",
+          "target_text": "여름",
+          "romanization": "yeoreum",
+          "audio": "ko/yeoreum"
+        },
+        {
+          "id": "b_winter",
+          "target_text": "겨울",
+          "romanization": "gyeoul",
+          "audio": "ko/gyeoul"
+        },
+        {
+          "id": "pic_snowman",
+          "image": "pic_snowman",
+          "text": {
+            "id": "boneka salju",
+            "en": "snowman"
+          }
+        },
+        {
+          "id": "pic_swim",
+          "image": "pic_swim",
+          "text": {
+            "id": "berenang",
+            "en": "swimming"
+          }
+        },
+        {
+          "id": "pic_jacket",
+          "image": "pic_jacket",
+          "text": {
+            "id": "jaket",
+            "en": "jacket"
+          }
+        },
+        {
+          "id": "pic_watermelon",
+          "image": "pic_watermelon",
+          "text": {
+            "id": "semangka",
+            "en": "watermelon"
+          }
+        },
+        {
+          "id": "pic_snow",
+          "image": "pic_snow",
+          "text": {
+            "id": "salju",
+            "en": "snow"
+          }
+        },
+        {
+          "id": "pic_hot",
+          "image": "pic_hot",
+          "text": {
+            "id": "kepanasan",
+            "en": "hot"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "pic_snowman": "b_winter",
+        "pic_swim": "b_summer",
+        "pic_jacket": "b_winter",
+        "pic_watermelon": "b_summer",
+        "pic_snow": "b_winter",
+        "pic_hot": "b_summer"
+      },
+      "model_answer": {
+        "id": "여름 (yeoreum): berenang, semangka, panas. 겨울 (gyeoul): boneka salju, jaket, salju.",
+        "en": "여름 (yeoreum): swimming, watermelon, heat. 겨울 (gyeoul): snowman, jacket, snow."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "KOR-WEATHER"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-READ",
+      "target_text": "바람이 불어요",
+      "options": [
+        {
+          "id": "pic_sun",
+          "image": "pic_sun",
+          "text": {
+            "id": "matahari",
+            "en": "sun"
+          }
+        },
+        {
+          "id": "pic_snow",
+          "image": "pic_snow",
+          "text": {
+            "id": "salju",
+            "en": "snow"
+          }
+        },
+        {
+          "id": "pic_wind",
+          "image": "pic_wind",
+          "text": {
+            "id": "angin",
+            "en": "wind"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "바람이 불어요 (barami bureoyo) = berangin.",
+        "en": "바람이 불어요 (barami bureoyo) = it's windy."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_snowman",
+          "image": "pic_snowman",
+          "text": {
+            "id": "boneka salju",
+            "en": "snowman"
+          }
+        },
+        {
+          "id": "pic_football",
+          "image": "pic_football",
+          "text": {
+            "id": "sepak bola",
+            "en": "football"
+          }
+        },
+        {
+          "id": "pic_read",
+          "image": "pic_read",
+          "text": {
+            "id": "membaca",
+            "en": "reading"
+          }
+        },
+        {
+          "id": "pic_swim",
+          "image": "pic_swim",
+          "text": {
+            "id": "berenang",
+            "en": "swimming"
+          }
+        },
+        {
+          "id": "w_nunsarameul_mandeureosseoyo",
+          "target_text": "눈사람을 만들었어요.",
+          "romanization": "nunsarameul mandeureosseoyo.",
+          "audio": "ko/nunsarameul_mandeureosseoyo"
+        },
+        {
+          "id": "w_chukgureul_haesseoyo",
+          "target_text": "축구를 했어요.",
+          "romanization": "chukgureul haesseoyo.",
+          "audio": "ko/chukgureul_haesseoyo"
+        },
+        {
+          "id": "w_chaegeul_ilgeosseoyo",
+          "target_text": "책을 읽었어요.",
+          "romanization": "chaegeul ilgeosseoyo.",
+          "audio": "ko/chaegeul_ilgeosseoyo"
+        },
+        {
+          "id": "w_suyeonghaesseoyo",
+          "target_text": "수영했어요.",
+          "romanization": "suyeonghaesseoyo.",
+          "audio": "ko/suyeonghaesseoyo"
+        }
+      ],
+      "solution_pairs": {
+        "pic_snowman": "w_nunsarameul_mandeureosseoyo",
+        "pic_football": "w_chukgureul_haesseoyo",
+        "pic_read": "w_chaegeul_ilgeosseoyo",
+        "pic_swim": "w_suyeonghaesseoyo"
+      },
+      "model_answer": {
+        "id": "Kemarin: 눈사람을 만들었어요 (nunsarameul mandeureosseoyo), 축구를 했어요 (chukgureul haesseoyo), 책을 읽었어요 (chaegeul ilgeosseoyo), 수영했어요 (suyeonghaesseoyo).",
+        "en": "Yesterday: 눈사람을 만들었어요 (nunsarameul mandeureosseoyo), 축구를 했어요 (chukgureul haesseoyo), 책을 읽었어요 (chaegeul ilgeosseoyo), 수영했어요 (suyeonghaesseoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-FILL",
+      "image": "pic_park",
+      "target_text": "어제 공원에 ___.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_gayo",
+          "target_text": "가요",
+          "romanization": "gayo",
+          "audio": "ko/gayo"
+        },
+        {
+          "id": "w_gaseyo",
+          "target_text": "가세요",
+          "romanization": "gaseyo",
+          "audio": "ko/gaseyo"
+        },
+        {
+          "id": "w_gasseoyo",
+          "target_text": "갔어요",
+          "romanization": "gasseoyo",
+          "audio": "ko/gasseoyo"
+        }
+      ],
+      "solution": [
+        "w_gasseoyo"
+      ],
+      "romanization": "eoje gongwone ___.",
+      "model_answer": {
+        "id": "어제 (eoje) = kemarin, jadi lampau: 어제 공원에 갔어요 (eoje gongwone gasseoyo).",
+        "en": "어제 (eoje) = yesterday, so past: 어제 공원에 갔어요 (eoje gongwone gasseoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/eoje_biga_wasseoyo",
+      "options": [
+        {
+          "id": "pic_snow",
+          "image": "pic_snow",
+          "text": {
+            "id": "salju",
+            "en": "snow"
+          }
+        },
+        {
+          "id": "pic_rain",
+          "image": "pic_rain",
+          "text": {
+            "id": "hujan",
+            "en": "rain"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_sun",
+          "image": "pic_sun",
+          "text": {
+            "id": "matahari",
+            "en": "sun"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "어제 비가 왔어요 (eoje biga wasseoyo) = kemarin hujan.",
+        "en": "어제 비가 왔어요 (eoje biga wasseoyo) = it rained yesterday."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "KOR-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_today",
+          "target_text": "오늘",
+          "romanization": "oneul",
+          "audio": "ko/oneul"
+        },
+        {
+          "id": "b_yesterday",
+          "target_text": "어제",
+          "romanization": "eoje",
+          "audio": "ko/eoje"
+        },
+        {
+          "id": "w_gasseoyo",
+          "target_text": "갔어요",
+          "romanization": "gasseoyo",
+          "audio": "ko/gasseoyo"
+        },
+        {
+          "id": "w_gayo",
+          "target_text": "가요",
+          "romanization": "gayo",
+          "audio": "ko/gayo"
+        },
+        {
+          "id": "w_meogeosseoyo",
+          "target_text": "먹었어요",
+          "romanization": "meogeosseoyo",
+          "audio": "ko/meogeosseoyo"
+        },
+        {
+          "id": "w_haeyo",
+          "target_text": "해요",
+          "romanization": "haeyo",
+          "audio": "ko/haeyo"
+        },
+        {
+          "id": "w_meogeoyo",
+          "target_text": "먹어요",
+          "romanization": "meogeoyo",
+          "audio": "ko/meogeoyo"
+        },
+        {
+          "id": "w_haesseoyo",
+          "target_text": "했어요",
+          "romanization": "haesseoyo",
+          "audio": "ko/haesseoyo"
+        }
+      ],
+      "solution_pairs": {
+        "w_gasseoyo": "b_yesterday",
+        "w_gayo": "b_today",
+        "w_meogeosseoyo": "b_yesterday",
+        "w_haeyo": "b_today",
+        "w_meogeoyo": "b_today",
+        "w_haesseoyo": "b_yesterday"
+      },
+      "model_answer": {
+        "id": "Sekarang: 가요 (gayo), 먹어요 (meogeoyo), 해요 (haeyo). Kemarin: 갔어요 (gasseoyo), 먹었어요 (meogeosseoyo), 했어요 (haesseoyo).",
+        "en": "Now: 가요 (gayo), 먹어요 (meogeoyo), 해요 (haeyo). Yesterday: 갔어요 (gasseoyo), 먹었어요 (meogeosseoyo), 했어요 (haesseoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "KOR-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-BUILD-SAY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kemarin aku membuat boneka salju.",
+            "en": "Yesterday I made a snowman."
+          }
+        }
+      ],
+      "image": "pic_snowman",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_mandeureosseoyo",
+          "target_text": "만들었어요",
+          "romanization": "mandeureosseoyo",
+          "audio": "ko/mandeureosseoyo"
+        },
+        {
+          "id": "w_nunsarameul",
+          "target_text": "눈사람을",
+          "romanization": "nunsarameul",
+          "audio": "ko/nunsarameul"
+        },
+        {
+          "id": "w_mandeureoyo",
+          "target_text": "만들어요",
+          "romanization": "mandeureoyo",
+          "audio": "ko/mandeureoyo"
+        },
+        {
+          "id": "w_eoje",
+          "target_text": "어제",
+          "romanization": "eoje",
+          "audio": "ko/eoje"
+        }
+      ],
+      "solution": [
+        "w_eoje",
+        "w_nunsarameul",
+        "w_mandeureosseoyo"
+      ],
+      "model_answer": {
+        "id": "어제 눈사람을 만들었어요 (eoje nunsarameul mandeureosseoyo) = kemarin aku membuat boneka salju.",
+        "en": "어제 눈사람을 만들었어요 (eoje nunsarameul mandeureosseoyo) = yesterday I made a snowman."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-WEATHER"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/nuni_wayo",
+      "options": [
+        {
+          "id": "pic_rain",
+          "image": "pic_rain",
+          "text": {
+            "id": "hujan",
+            "en": "rain"
+          }
+        },
+        {
+          "id": "pic_snow",
+          "image": "pic_snow",
+          "text": {
+            "id": "salju",
+            "en": "snow"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_cloud",
+          "image": "pic_cloud",
+          "text": {
+            "id": "awan",
+            "en": "cloud"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "눈이 와요 (nuni wayo) = turun salju.",
+        "en": "눈이 와요 (nuni wayo) = it's snowing."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "KOR-WEATHER"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-REPLY",
+      "image": "pic_rain",
+      "target_text": "날씨가 어때요?",
+      "options": [
+        {
+          "id": "w_biga_wayo",
+          "target_text": "비가 와요",
+          "romanization": "biga wayo",
+          "audio": "ko/biga_wayo",
+          "correct": true
+        },
+        {
+          "id": "w_nuni_wayo",
+          "target_text": "눈이 와요",
+          "romanization": "nuni wayo",
+          "audio": "ko/nuni_wayo"
+        },
+        {
+          "id": "w_malgayo",
+          "target_text": "맑아요",
+          "romanization": "malgayo",
+          "audio": "ko/malgayo"
+        }
+      ],
+      "romanization": "nalssiga eottaeyo?",
+      "audio": "ko/nalssiga_eottaeyo",
+      "model_answer": {
+        "id": "날씨가 어때요? (nalssiga eottaeyo?) = cuacanya bagaimana? Hujan: 비가 와요 (biga wayo).",
+        "en": "날씨가 어때요? (nalssiga eottaeyo?) = what's the weather like? Rain: 비가 와요 (biga wayo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "KOR-WEATHER"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "더워요",
+      "options": [
+        {
+          "id": "pic_cold",
+          "image": "pic_cold",
+          "text": {
+            "id": "kedinginan",
+            "en": "cold"
+          }
+        },
+        {
+          "id": "pic_snow",
+          "image": "pic_snow",
+          "text": {
+            "id": "salju",
+            "en": "snow"
+          }
+        },
+        {
+          "id": "pic_hot",
+          "image": "pic_hot",
+          "text": {
+            "id": "kepanasan",
+            "en": "hot"
+          },
+          "correct": true
+        }
+      ],
+      "romanization": "deowoyo",
+      "audio": "ko/deowoyo",
+      "model_answer": {
+        "id": "더워요 (deowoyo) = panas.",
+        "en": "더워요 (deowoyo) = it's hot."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-PAST"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "image": "pic_football",
+      "target_text": "어제 축구를 ___.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_haeyo",
+          "target_text": "해요",
+          "romanization": "haeyo",
+          "audio": "ko/haeyo"
+        },
+        {
+          "id": "w_haesseoyo",
+          "target_text": "했어요",
+          "romanization": "haesseoyo",
+          "audio": "ko/haesseoyo"
+        },
+        {
+          "id": "w_haseyo",
+          "target_text": "하세요",
+          "romanization": "haseyo",
+          "audio": "ko/haseyo"
+        }
+      ],
+      "solution": [
+        "w_haesseoyo"
+      ],
+      "romanization": "eoje chukgureul ___.",
+      "model_answer": {
+        "id": "어제 (eoje) → lampau: 어제 축구를 했어요 (eoje chukgureul haesseoyo).",
+        "en": "어제 (eoje) → past: 어제 축구를 했어요 (eoje chukgureul haesseoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-02-015",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "KOR-WEATHER"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Annals of the Joseon Dynasty (Sejong sillok), 1441 (23rd year of King Sejong) and 1442: a standard metal rain gauge made (1441) and set up in the capital and the provinces (1442); Encyclopedia of Korean Culture (Academy of Korean Studies, encykorea.aks.ac.kr), '측우기 (Cheugugi)'; Korea Meteorological Administration, history of Korean meteorology.",
+      "model_answer": {
+        "id": "Tahun 1441, pada masa Raja Sejong, Korea membuat alat penakar hujan dari logam, 측우기 (cheugugi). Setahun kemudian alat itu dipasang di seluruh negeri untuk mencatat hujan.",
+        "en": "In 1441, under King Sejong, Korea made a metal rain gauge, 측우기 (cheugugi). A year later gauges were set up all over the country to record the rain."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    },
+    {
+      "item_id": "KOR-K-H-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "target_text": "봄 → 여름 → 가을 → ?",
+      "options": [
+        {
+          "id": "w_yeoreum",
+          "target_text": "여름",
+          "romanization": "yeoreum",
+          "audio": "ko/yeoreum"
+        },
+        {
+          "id": "w_nalssi",
+          "target_text": "날씨",
+          "romanization": "nalssi",
+          "audio": "ko/nalssi"
+        },
+        {
+          "id": "w_gyeoul",
+          "target_text": "겨울",
+          "romanization": "gyeoul",
+          "audio": "ko/gyeoul",
+          "correct": true
+        }
+      ],
+      "romanization": "bom → yeoreum → gaeul → ?",
+      "model_answer": {
+        "id": "Setelah 가을 (gaeul) datang 겨울 (gyeoul): semi, panas, gugur, dingin.",
+        "en": "After 가을 (gaeul) comes 겨울 (gyeoul): spring, summer, autumn, winter."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-h-0.1"
+    }
+  ]
+}

@@ -1,199 +1,1970 @@
 {
-  "meta": {
-    "schema_version": 1,
-    "content_version": "mat-sample-0.2",
-    "subject": "matematika",
-    "track": "mat",
-    "mode": "casual",
-    "audiences": ["kids"],
-    "instruction_langs": ["id", "en"],
-    "title": { "id": "Matematika — Pemula, Unit 1: Bilangan sampai 100", "en": "Mathematics — Beginner, Unit 1: Numbers to 100" }
-  },
-  "synthetic": true,
-  "note": "12-item developer sample exercising casual mode and the v1 renderer types in both languages (docs/syllabus/02_MATEMATIKA.md, Kids Pemula unit 1). Draft until a math reviewer and both language reviewers approve. Images are placeholders until P4.",
+  "meta": {"schema_version": 1, "content_version": "mat-k-pemula-0.3", "subject": "matematika", "track": "mat", "mode": "casual", "audiences": ["kids"], "instruction_langs": ["id", "en"], "title": {"id": "Matematika — Pemula (Anak)", "en": "Mathematics — Beginner (Kids)"}},
+  "synthetic": false,
+  "note": "Draft written 2026-10-17 for Kids Pemula units 01-10 (docs/syllabus/02_MATEMATIKA.md); needs a subject (math) reviewer and both language reviewers (Indonesian, English) before anything is approved. Pictures are keys from docs/ART_CATALOG.md. Follow-up 11 picture pass (2026-10-18): shorter prompts, gestures on match_pairs, more picture-led items (INTERACTIONS_AUDIO.md §1); same items, skills and order. Follow-up 12 picture pass 2 (2026-10-18): more pictures on cards and questions (MODULES_LEVELS_STORIES.md §8); same items, skills and order. Money cards whose picture hid the amount are words again (the money picture moved to the question).",
   "prompts": {
-    "P-COUNT": { "id": "Ada berapa?", "en": "How many?" },
-    "P-TF": { "id": "Benar atau salah?", "en": "True or false?" },
-    "P-NUM": { "id": "Masukkan angkanya.", "en": "Enter the number." },
-    "P-ORDER": { "id": "Urutkan dari yang terkecil.", "en": "Put them in order, smallest first." },
-    "P-MATCH": { "id": "Pasangkan angka dengan kata.", "en": "Match each numeral to its word." },
-    "P-SORT": { "id": "Kelompokkan: genap atau ganjil?", "en": "Sort: even or odd?" },
-    "P-TILES": { "id": "Isi titik-titiknya.", "en": "Fill in the blank." },
-    "P-PICK": { "id": "Pilih gambar yang jumlahnya sesuai.", "en": "Pick the picture with the right amount." },
-    "P-GEM": { "id": "Tahukah kamu?", "en": "Did you know?" },
-    "P-COMPARE": { "id": "Mana yang lebih besar?", "en": "Which is bigger?" }
+    "P-COUNT": {"id": "Ada berapa?", "en": "How many?"},
+    "P-PICK": {"id": "Pilih gambar yang tepat.", "en": "Pick the right picture."},
+    "P-NUM": {"id": "Masukkan angkanya.", "en": "Enter the number."},
+    "P-CHOOSE": {"id": "Pilih jawaban yang tepat.", "en": "Choose the right answer."},
+    "P-TF": {"id": "Benar atau salah?", "en": "True or false?"},
+    "P-ORDER": {"id": "Seret ke urutan yang benar.", "en": "Drag them into the right order."},
+    "P-ORDER-SMALL": {"id": "Urutkan, mulai dari terkecil.", "en": "Order them, smallest first."},
+    "P-ORDER-SHORT": {"id": "Urutkan, mulai dari terpendek.", "en": "Order them, shortest first."},
+    "P-FILL": {"id": "Seret ke bagian yang kosong.", "en": "Drag into the gap."},
+    "P-TILES": {"id": "Seret kepingan ke tempatnya.", "en": "Drag the tiles into place."},
+    "P-MATCH": {"id": "Pasangkan yang cocok.", "en": "Match the pairs."},
+    "P-CONNECT": {"id": "Tarik garis ke pasangannya.", "en": "Draw a line to each match."},
+    "P-DRAG": {"id": "Seret gambar ke pasangannya.", "en": "Drag each picture to its match."},
+    "P-MATCH-FAMILY": {"id": "Hubungkan dengan saudaranya.", "en": "Connect each fact to its partner."},
+    "P-SORT": {"id": "Seret ke keranjang yang tepat.", "en": "Drag each into the right basket."},
+    "P-MEMORY": {"id": "Balik kartu, cari pasangannya.", "en": "Flip the cards, find pairs."},
+    "P-ESTIMATE": {"id": "Tebak, lalu geser.", "en": "Guess, then slide."},
+    "P-TAP": {"id": "Ketuk bagian yang tepat.", "en": "Tap the right spot."},
+    "P-READ": {"id": "Baca dulu, ya.", "en": "Have a read first."},
+    "P-STORY": {"id": "Baca ceritanya, lalu pilih.", "en": "Read the story, then choose."},
+    "P-CLOCK": {"id": "Pukul berapa sekarang?", "en": "What time is it?"},
+    "P-WHERE": {"id": "Di mana kucingnya?", "en": "Where is the cat?"},
+    "P-GEM": {"id": "Tahukah kamu?", "en": "Did you know?"},
+    "P-PUZZLE": {"id": "Teka-teki hari ini", "en": "Today's puzzle"}
   },
   "feedback": {
-    "FB-OK": { "id": "Betul!", "en": "That's right!" },
-    "FB-OK-MODEL": { "id": "Betul. Jawabannya {model}.", "en": "Right. The answer is {model}." },
-    "FB-NO": { "id": "Belum tepat. Coba lihat lagi: jawabannya {model}.", "en": "Not quite. Look again: the answer is {model}." },
-    "FB-NO-TENS": { "id": "Lihat angka puluhannya dulu, baru satuannya.", "en": "Look at the tens digit first, then the ones." },
-    "FB-NO-COUNT": { "id": "Coba hitung pelan-pelan, satu per satu.", "en": "Try counting slowly, one at a time." },
-    "FB-DONTKNOW": { "id": "Tidak apa-apa. Jawabannya {model}.", "en": "That's okay. The answer is {model}." },
-    "FB-PEND": { "id": "Jawabanmu kami simpan dulu.", "en": "We saved your answer for now." },
-    "FB-GEM": { "id": "Permata ini masuk ke Kotak Permatamu.", "en": "This gem goes into your Gem box." }
+    "FB-OK-MODEL": {"id": "Betul! {model}", "en": "That's right! {model}"},
+    "FB-NO-MODEL": {"id": "Belum tepat. Yuk, lihat lagi: {model}", "en": "Not quite. Let's look again: {model}"},
+    "FB-DONTKNOW": {"id": "Tidak apa-apa. Kita lihat bersama: {model}", "en": "That's okay. Let's look at it together: {model}"},
+    "FB-NO-COUNT": {"id": "Belum tepat. Hitung pelan-pelan sambil menunjuk satu per satu. {model}", "en": "Not quite. Count slowly and point at each one. {model}"},
+    "FB-NO-TENS": {"id": "Belum tepat. Lihat angka puluhannya dulu, baru satuannya. {model}", "en": "Not quite. Look at the tens first, then the ones. {model}"},
+    "FB-NO-ESTIMATE": {"id": "Belum terlalu dekat, tetapi menebak itu latihan yang bagus! {model}", "en": "Not that close yet, but guessing is great practice! {model}"},
+    "FB-NO-MAKE10": {"id": "Belum tepat. Coba genapkan jadi 10 dulu, lalu tambah sisanya. {model}", "en": "Not quite. Try making 10 first, then add what's left. {model}"},
+    "FB-NO-SUB": {"id": "Belum tepat. Mulai dari bilangan yang besar, lalu hitung mundur. {model}", "en": "Not quite. Start from the bigger number and count back. {model}"},
+    "FB-NO-REGROUP": {"id": "Belum tepat. Jumlahkan satuannya dulu. Kalau lebih dari 9, tukar 10 satuan dengan 1 puluhan. {model}", "en": "Not quite. Add the ones first. If you get more than 9, swap 10 ones for 1 ten. {model}"},
+    "FB-NO-BORROW": {"id": "Belum tepat. Kalau satuan yang atas lebih kecil, pinjam 1 puluhan dulu. {model}", "en": "Not quite. If the top ones digit is smaller, borrow 1 ten first. {model}"},
+    "FB-NO-SHAPE": {"id": "Belum tepat. Yuk, hitung sisi dan sudutnya pelan-pelan. {model}", "en": "Not quite. Let's count the sides and corners slowly. {model}"},
+    "FB-NO-MEASURE": {"id": "Belum tepat. Bandingkan dari garis awal yang sama. {model}", "en": "Not quite. Compare them from the same starting line. {model}"},
+    "FB-NO-BALANCE": {"id": "Belum tepat. Sisi timbangan yang lebih berat turun ke bawah. {model}", "en": "Not quite. The heavier side of a balance goes down. {model}"},
+    "FB-NO-CLOCK": {"id": "Belum tepat. Jarum pendek menunjukkan jam, jarum panjang menunjukkan menit. {model}", "en": "Not quite. The short hand shows the hour and the long hand shows the minutes. {model}"},
+    "FB-NO-HALF": {"id": "Belum tepat. Saat jarum panjang di angka 6, jarum pendek ada di antara dua angka. Lihat angka yang baru dilewatinya. {model}", "en": "Not quite. When the long hand is on 6, the short hand sits between two numbers. Look at the one it has just passed. {model}"},
+    "FB-NO-CALENDAR": {"id": "Belum tepat. Coba sebutkan urutannya pelan-pelan dari awal. {model}", "en": "Not quite. Try saying them in order, slowly, from the start. {model}"},
+    "FB-NO-MONEY": {"id": "Belum tepat. Jumlahkan nilai uangnya satu per satu, ya. {model}", "en": "Not quite. Add up the money one piece at a time. {model}"},
+    "FB-NO-CHANGE": {"id": "Belum tepat. Kembalian = uang yang dibayar − harga. {model}", "en": "Not quite. Change = money paid − price. {model}"},
+    "FB-NO-SKIP": {"id": "Belum tepat. Coba hitung loncat sampai tujuanmu. {model}", "en": "Not quite. Try skip counting until you reach the goal. {model}"},
+    "FB-NO-PATTERN": {"id": "Belum tepat. Cari dulu bagian yang berulang atau aturan tambahnya. {model}", "en": "Not quite. First find the part that repeats, or the adding rule. {model}"},
+    "FB-NO-EVEN": {"id": "Belum tepat. Bilangan genap berakhiran 0, 2, 4, 6, atau 8. {model}", "en": "Not quite. Even numbers end in 0, 2, 4, 6 or 8. {model}"},
+    "FB-NO-POS": {"id": "Belum tepat. Lihat lagi letaknya pelan-pelan. {model}", "en": "Not quite. Take another slow look at where it is. {model}"},
+    "FB-NO-LR": {"id": "Belum tepat. Kiri dan kanan dilihat dari arah kamu memandang. {model}", "en": "Not quite. Left and right are as you look at it. {model}"},
+    "FB-NO-DATA": {"id": "Belum tepat. Hitung lagi setiap kelompok dengan teliti. {model}", "en": "Not quite. Count each group again carefully. {model}"},
+    "FB-NO-GROUPS": {"id": "Belum tepat. Hitung dulu banyak kelompoknya, lalu isi setiap kelompok. {model}", "en": "Not quite. First count the groups, then how many are in each one. {model}"},
+    "FB-NO-SHARE": {"id": "Belum tepat. Bagikan satu per satu secara bergiliran sampai habis. {model}", "en": "Not quite. Hand them out one at a time, taking turns, until none are left. {model}"},
+    "FB-GEM": {"id": "Permata ini masuk ke Kotak Permatamu.", "en": "This gem goes into your Gem box."},
+    "FB-READ": {"id": "Bagus, kamu sudah membaca. Sekarang jawab pertanyaannya, ya.", "en": "Nice reading! Now let's answer the questions."},
+    "FB-PUZZLE-OK": {"id": "Hebat, teka-tekinya terpecahkan! {model}", "en": "Brilliant, you solved it! {model}"},
+    "FB-PUZZLE-NO": {"id": "Hampir! Teka-teki memang perlu dipikirkan pelan-pelan. {model}", "en": "Nearly! Puzzles need slow thinking. {model}"}
   },
+  "units": [
+    {"unit": "01", "title": {"id": "Bilangan sampai 100", "en": "Numbers to 100"}, "sticker": "sticker_mango"},
+    {"unit": "02", "title": {"id": "Tambah & kurang", "en": "Add & subtract"}, "sticker": "sticker_shell"},
+    {"unit": "03", "title": {"id": "Bentuk", "en": "Shapes"}, "sticker": "sticker_kite"},
+    {"unit": "04", "title": {"id": "Ukur", "en": "Measure"}, "sticker": "sticker_teapot"},
+    {"unit": "05", "title": {"id": "Waktu", "en": "Time"}, "sticker": "sticker_drum"},
+    {"unit": "06", "title": {"id": "Uang", "en": "Money"}, "sticker": "sticker_bicycle"},
+    {"unit": "07", "title": {"id": "Pola", "en": "Patterns"}, "sticker": "sticker_angklung"},
+    {"unit": "08", "title": {"id": "Posisi & arah", "en": "Position & direction"}, "sticker": "sticker_compass"},
+    {"unit": "09", "title": {"id": "Kelompok & data awal", "en": "Sorting & first data"}, "sticker": "sticker_star_fruit"},
+    {"unit": "10", "title": {"id": "Kali & bagi sebagai gambar", "en": "Multiplying & sharing as pictures"}, "sticker": "sticker_rice_field"}
+  ],
   "screens": [
     {
       "screen_id": "MAT-K-P-01-S1",
       "unit": "01",
       "audience": "kids",
-      "title": { "id": "Bilangan sampai 100", "en": "Numbers to 100" },
+      "title": {"id": "Bilangan sampai 100", "en": "Numbers to 100"},
       "body": [
-        { "id": "Setiap bilangan punya puluhan dan satuan. 47 artinya 4 puluhan dan 7 satuan.", "en": "Every number has tens and ones. 47 means 4 tens and 7 ones." },
-        { "id": "Kalau ragu, hitung pelan-pelan. Tidak ada yang buru-buru di sini.", "en": "If you're unsure, count slowly. Nobody is in a hurry here." }
+        {"id": "Hitung sambil menunjuk satu per satu. Bilangan terakhir = banyaknya.", "en": "Point at each one as you count. The last number is how many."},
+        {"id": "10 satuan = 1 puluhan. 47 = 4 puluhan dan 7 satuan.", "en": "10 ones = 1 ten. 47 = 4 tens and 7 ones."},
+        {"id": "Membandingkan? Lihat puluhannya dulu: 52 lebih besar dari 25.", "en": "Comparing? Look at the tens first: 52 is bigger than 25."}
       ],
+      "examples": [
+        {"gloss": {"id": "35 = 3 puluhan + 5 satuan", "en": "35 = 3 tens + 5 ones"}},
+        {"gloss": {"id": "Pada garis bilangan, 40 ada di antara 39 dan 41.", "en": "On the number line, 40 sits between 39 and 41."}}
+      ],
+      "clue_paragraph": 2,
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "MAT-K-P-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {"id": "Tambah & kurang", "en": "Add & subtract"},
+      "body": [
+        {"id": "Menambah = menggabungkan: 8 + 5 = 13.", "en": "Adding = putting together: 8 + 5 = 13."},
+        {"id": "Trik: genapkan jadi 10 dulu. 8 + 2 = 10, sisa 3, jadi 13.", "en": "Trick: make 10 first. 8 + 2 = 10, 3 left, so 13."},
+        {"id": "Mengurangi = mengambil: 13 − 5 = 8. Keduanya bersaudara!", "en": "Subtracting = taking away: 13 − 5 = 8. They're a family!"}
+      ],
+      "examples": [
+        {"gloss": {"id": "9 + 6 = 9 + 1 + 5 = 10 + 5 = 15", "en": "9 + 6 = 9 + 1 + 5 = 10 + 5 = 15"}},
+        {"gloss": {"id": "27 + 5 = 27 + 3 + 2 = 30 + 2 = 32", "en": "27 + 5 = 27 + 3 + 2 = 30 + 2 = 32"}}
+      ],
+      "clue_paragraph": 1,
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "MAT-K-P-03-S1",
+      "unit": "03",
+      "audience": "kids",
+      "title": {"id": "Bentuk", "en": "Shapes"},
+      "body": [
+        {"id": "Atap seperti segitiga, matahari seperti lingkaran.", "en": "A roof is like a triangle, the sun like a circle."},
+        {"id": "Segitiga: 3 sisi, 3 sudut. Persegi: 4 sisi sama panjang. Lingkaran: tanpa sudut.", "en": "Triangle: 3 sides, 3 corners. Square: 4 equal sides. Circle: no corners."},
+        {"id": "Bangun ruang bisa dipegang: kubus (dadu), tabung (kaleng), bola.", "en": "Solids you can hold: cube (dice), cylinder (tin can), sphere (ball)."}
+      ],
+      "examples": [
+        {"gloss": {"id": "Persegi: 4 sisi sama panjang, 4 sudut", "en": "Square: 4 equal sides, 4 corners"}},
+        {"gloss": {"id": "Tabung: bisa menggelinding dan bisa berdiri", "en": "Cylinder: it can roll and it can stand up"}}
+      ],
+      "clue_paragraph": 1,
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "MAT-K-P-04-S1",
+      "unit": "04",
+      "audience": "kids",
+      "title": {"id": "Ukur", "en": "Measure"},
+      "body": [
+        {"id": "Mengukur = membandingkan: lebih panjang, lebih berat.", "en": "Measuring = comparing: longer, heavier."},
+        {"id": "Jengkal tiap orang berbeda, jadi kita pakai cm (penggaris) dan kg (timbangan).", "en": "Hand spans differ, so we use cm (ruler) and kg (scale)."},
+        {"id": "Mengukur dengan penggaris? Mulai dari angka 0.", "en": "Measuring with a ruler? Start at 0."}
+      ],
+      "examples": [
+        {"gloss": {"id": "lebih panjang ↔ lebih pendek; lebih berat ↔ lebih ringan", "en": "longer ↔ shorter; heavier ↔ lighter"}},
+        {"gloss": {"id": "Penggaris panjang di sekolah biasanya 30 cm.", "en": "A long school ruler is usually 30 cm."}}
+      ],
+      "clue_paragraph": 2,
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "MAT-K-P-05-S1",
+      "unit": "05",
+      "audience": "kids",
+      "title": {"id": "Waktu", "en": "Time"},
+      "body": [
+        {"id": "Jarum pendek = jam, jarum panjang = menit. Jarum panjang di 12: jam tepat.", "en": "Short hand = hour, long hand = minutes. Long hand on 12: on the hour."},
+        {"id": "Jarum panjang di 6: setengah. Pukul 07.30 = setengah delapan.", "en": "Long hand on 6: half past. 7:30 is setengah delapan ('half to eight')."},
+        {"id": "1 minggu = 7 hari. 1 tahun = 12 bulan.", "en": "1 week = 7 days. 1 year = 12 months."}
+      ],
+      "examples": [
+        {"gloss": {"id": "Pukul 09.00: jarum pendek di 9, jarum panjang di 12.", "en": "9 o'clock: short hand on 9, long hand on 12."}},
+        {"gloss": {"id": "Pukul 04.30: jarum pendek di antara 4 dan 5, jarum panjang di 6.", "en": "4:30: short hand between 4 and 5, long hand on 6."}}
+      ],
+      "clue_paragraph": 1,
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "MAT-K-P-06-S1",
+      "unit": "06",
+      "audience": "kids",
+      "title": {"id": "Uang", "en": "Money"},
+      "body": [
+        {"id": "Rupiah: koin (Rp500, Rp1.000) dan uang kertas (Rp2.000, Rp5.000, Rp10.000). Jumlahkan nilainya.", "en": "Rupiah: coins (Rp500, Rp1,000) and notes (Rp2,000, Rp5,000, Rp10,000). Add up the values."},
+        {"id": "Bayar Rp5.000 untuk kue Rp3.000: kembaliannya Rp2.000.", "en": "Pay Rp5,000 for a Rp3,000 cake: Rp2,000 change."},
+        {"id": "Menabung Rp1.000 sehari, seminggu jadi Rp7.000. Sedikit demi sedikit, lama-lama menjadi bukit.", "en": "Save Rp1,000 a day: Rp7,000 in a week. Little by little, it becomes a hill."}
+      ],
+      "examples": [
+        {"gloss": {"id": "Rp2.000 + Rp2.000 + Rp1.000 = Rp5.000", "en": "Rp2,000 + Rp2,000 + Rp1,000 = Rp5,000"}}
+      ],
+      "clue_paragraph": 1,
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "MAT-K-P-07-S1",
+      "unit": "07",
+      "audience": "kids",
+      "title": {"id": "Pola", "en": "Patterns"},
+      "body": [
+        {"id": "Pola = susunan yang berulang menurut aturan, seperti motif batik.", "en": "A pattern repeats by a rule, like batik."},
+        {"id": "Pola berulang: merah, biru, merah, biru, … Cari bagian yang berulang.", "en": "Repeating: red, blue, red, blue, … Find the part that repeats."},
+        {"id": "Pola bertambah: 2, 4, 6, 8, … Genap dibagi dua tanpa sisa; ganjil sisa satu.", "en": "Growing: 2, 4, 6, 8, … Even numbers split in two exactly; odd ones leave one over."}
+      ],
+      "examples": [
+        {"gloss": {"id": "5, 10, 15, 20, … (tambah 5)", "en": "5, 10, 15, 20, … (add 5)"}},
+        {"gloss": {"id": "Bilangan genap berakhiran 0, 2, 4, 6, atau 8.", "en": "Even numbers end in 0, 2, 4, 6 or 8."}}
+      ],
+      "clue_paragraph": 1,
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "MAT-K-P-08-S1",
+      "unit": "08",
+      "audience": "kids",
+      "title": {"id": "Posisi & arah", "en": "Position & direction"},
+      "body": [
+        {"id": "Kata posisi: di atas, di bawah, di dalam, di samping, di depan, di belakang.", "en": "Position words: above, below, inside, beside, in front, behind."},
+        {"id": "Kiri dan kanan pada gambar: dilihat dari arah kamu memandang.", "en": "Left and right in a picture: as you look at it."},
+        {"id": "Petunjuk jalan: lurus, belok, berhenti. Berbalik badan = setengah putaran.", "en": "Directions: straight, turn, stop. Turning around = a half turn."}
+      ],
+      "examples": [
+        {"gloss": {"id": "Kucing di dalam kotak.", "en": "The cat is inside the box."}},
+        {"gloss": {"id": "Atap ada di atas dinding.", "en": "The roof is above the wall."}}
+      ],
+      "clue_paragraph": 1,
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "MAT-K-P-09-S1",
+      "unit": "09",
+      "audience": "kids",
+      "title": {"id": "Kelompok & data awal", "en": "Sorting & first data"},
+      "body": [
+        {"id": "Kelompokkan menurut jenis, warna, atau bentuk, bahkan dua aturan sekaligus.", "en": "Sort by kind, colour or shape, even by two rules at once."},
+        {"id": "Turus: 4 garis tegak, garis kelima mencoret. Satu kelompok = 5.", "en": "Tally: 4 lines, the fifth crosses them. One bundle = 5."},
+        {"id": "Piktogram: satu gambar = satu anak. Hitung gambarnya.", "en": "Pictograph: one picture = one child. Count the pictures."}
+      ],
+      "examples": [
+        {"gloss": {"id": "Dua kelompok turus dan 3 garis = 5 + 5 + 3 = 13", "en": "2 tally bundles and 3 lines = 5 + 5 + 3 = 13"}}
+      ],
+      "clue_paragraph": 1,
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "MAT-K-P-10-S1",
+      "unit": "10",
+      "audience": "kids",
+      "title": {"id": "Kali & bagi sebagai gambar", "en": "Multiplying & sharing as pictures"},
+      "body": [
+        {"id": "3 piring, tiap piring 4 kue: 4 + 4 + 4 = 12, ditulis 3 × 4 = 12.", "en": "3 plates of 4 cakes: 4 + 4 + 4 = 12, written 3 × 4 = 12."},
+        {"id": "Barisan juga begitu: 4 baris padi × 5 rumpun = 20 rumpun.", "en": "Rows work the same: 4 rows of 5 rice clumps = 20."},
+        {"id": "Bagi rata: 12 rambutan untuk 3 anak, masing-masing 4.", "en": "Share fairly: 12 rambutans for 3 children, 4 each."}
+      ],
+      "examples": [
+        {"gloss": {"id": "2 + 2 + 2 + 2 + 2 = 5 × 2 = 10", "en": "2 + 2 + 2 + 2 + 2 = 5 × 2 = 10"}},
+        {"gloss": {"id": "Sepuluh kelereng dibagi rata untuk 2 anak: masing-masing mendapat 5.", "en": "10 marbles shared equally between 2 children: 5 each."}}
+      ],
+      "clue_paragraph": 0,
       "review_status": "draft"
     }
   ],
+  "readings": {
+    "R-06-WARUNG": {
+      "title": {"id": "Warung pagi", "en": "The morning warung"},
+      "body": [
+        {"id": "Pagi ini Dina membawa uang Rp5.000 ke warung Bu Tini.", "en": "This morning Dina takes Rp5,000 to Bu Tini's warung."},
+        {"id": "Di warung ada roti seharga Rp3.000, susu kotak seharga Rp4.000, dan pisang seharga Rp1.000 per buah.", "en": "The warung has bread for Rp3,000, cartons of milk for Rp4,000, and bananas for Rp1,000 each."},
+        {"id": "Dina ingin membeli sarapan. Ia juga ingin menabung Rp2.000 untuk membeli buku cerita.", "en": "Dina wants to buy breakfast. She also wants to save Rp2,000 towards a storybook."}
+      ],
+      "review_status": "draft"
+    },
+    "R-09-BUAH": {
+      "title": {"id": "Buah kesukaan kelas 2B", "en": "Class 2B's favourite fruit"},
+      "body": [
+        {"id": "Bu Guru bertanya, buah apa yang paling kamu sukai? Setiap anak memilih satu buah. Setiap ● berarti satu anak.", "en": "The teacher asked: which fruit do you like best? Each child picked one fruit. Each ● stands for one child."},
+        {"id": "Mangga: ● ● ● ● ● ● ●", "en": "Mango: ● ● ● ● ● ● ●"},
+        {"id": "Pisang: ● ● ● ●", "en": "Banana: ● ● ● ●"},
+        {"id": "Rambutan: ● ● ● ● ● ●", "en": "Rambutan: ● ● ● ● ● ●"},
+        {"id": "Pepaya: ● ●", "en": "Papaya: ● ●"}
+      ],
+      "review_status": "draft"
+    },
+    "R-09-HEWAN": {
+      "title": {"id": "Hewan peliharaan kelas 2A", "en": "Class 2A's pets"},
+      "body": [
+        {"id": "Anak-anak kelas 2A bercerita tentang hewan peliharaan mereka. Setiap ● berarti satu anak.", "en": "The children in Class 2A talked about their pets. Each ● stands for one child."},
+        {"id": "Kucing: ● ● ● ● ●", "en": "Cat: ● ● ● ● ●"},
+        {"id": "Ayam: ● ● ●", "en": "Chicken: ● ● ●"},
+        {"id": "Ikan: ● ● ● ● ● ● ●", "en": "Fish: ● ● ● ● ● ● ●"}
+      ],
+      "review_status": "draft"
+    }
+  },
   "items": [
     {
-      "item_id": "MAT-K-P-01-001", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "choose", "skills": ["NUM-COUNT-20"], "pool": "PRACT", "order": 1,
-      "prompt_id": "P-COUNT",
-      "help_lines": [{ "word": "", "meaning": { "id": "Hitung titiknya: ●  ●  ●  ●  ●  ●  ●", "en": "Count the dots: ●  ●  ●  ●  ●  ●  ●" } }],
-      "model_answer": { "id": "7", "en": "7" },
+      "item_id": "MAT-K-P-01-001", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["NUM-COUNT-20"], "pool": "PRACT", "order": 1, "prompt_id": "P-COUNT",
+      "image": "count_mango_13",
+      "help_lines": [{"word": "", "meaning": {"id": "Satu baris penuh = 5 mangga.", "en": "A full row = 5 mangoes."}}],
+      "numeric": {"value": 13, "tolerance": 0},
+      "model_answer": {"id": "Ada 13 mangga: 5 + 5 + 3.", "en": "There are 13 mangoes: 5 + 5 + 3."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-COUNT", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-01-002", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "pick_image", "skills": ["NUM-COUNT-20"], "pool": "PRACT", "order": 2, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana yang 12 telur?", "en": "Which one shows 12 eggs?"}}],
       "options": [
-        { "id": "a", "text": { "id": "6", "en": "6" } },
-        { "id": "b", "text": { "id": "7", "en": "7" }, "correct": true },
-        { "id": "c", "text": { "id": "8", "en": "8" } }
+        {"id": "i0", "image": "count_egg_12", "correct": true},
+        {"id": "i1", "image": "count_egg_13"},
+        {"id": "i2", "image": "count_egg_11"}
       ],
-      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO-COUNT", "dont_know": "FB-DONTKNOW" },
-      "review_status": "draft", "content_version": "mat-sample-0.2"
+      "model_answer": {"id": "Ada 12 telur: dua baris penuh (10) dan 2 lagi.", "en": "There are 12 eggs: two full rows (10) and 2 more."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-COUNT", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
     },
     {
-      "item_id": "MAT-K-P-01-002", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "pick_image", "skills": ["NUM-COUNT-20"], "pool": "PRACT", "order": 2,
-      "prompt_id": "P-PICK",
-      "model_answer": { "id": "12 mangga", "en": "12 mangoes" },
+      "item_id": "MAT-K-P-01-003", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "estimate_slider", "skills": ["NUM-COUNT-20"], "pool": "PRACT", "order": 3, "prompt_id": "P-ESTIMATE",
+      "image": "count_marble_18",
+      "help_lines": [{"word": "", "meaning": {"id": "Lihat sebentar, jangan dihitung. Kira-kira berapa?", "en": "Just a quick look, no counting. About how many?"}}],
+      "numeric": {"value": 18, "tolerance": 3},
+      "slider": {"min": 0, "max": 30, "step": 1},
+      "model_answer": {"id": "Ada 18 kelereng. Tebakan dari 15 sampai 21 sudah hebat!", "en": "There are 18 marbles. Any guess from 15 to 21 is great!"},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-ESTIMATE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-01-004", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["NUM-TENS-ONES"], "pool": "PRACT", "order": 4, "prompt_id": "P-NUM",
+      "help_lines": [{"word": "", "meaning": {"id": "4 ikat lidi (isi 10) dan 6 lidi lepas. Berapa semuanya?", "en": "4 bundles of 10 sticks and 6 loose sticks. How many altogether?"}}],
+      "numeric": {"value": 46, "tolerance": 0},
+      "model_answer": {"id": "Empat puluhan dan enam satuan, jadi 46 lidi.", "en": "Four tens and six ones make 46 sticks."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-01-005", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "pick_image", "skills": ["NUM-COMPARE"], "pool": "PRACT", "order": 5, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Dina 38 kelereng, Bimo 83. Siapa lebih banyak?", "en": "Dina has 38 marbles, Bimo 83. Who has more?"}}],
       "options": [
-        { "id": "a", "image": "illustrations/mat/mangoes_09.webp" },
-        { "id": "b", "image": "illustrations/mat/mangoes_12.webp", "correct": true },
-        { "id": "c", "image": "illustrations/mat/mangoes_15.webp" }
+        {"id": "a", "text": {"id": "Dina (38)", "en": "Dina (38)"}, "image": "pic_girl"},
+        {"id": "b", "text": {"id": "Bimo (83)", "en": "Bimo (83)"}, "image": "pic_boy", "correct": true},
+        {"id": "c", "text": {"id": "Sama banyak", "en": "They have the same"}, "image": "balance_even"}
       ],
-      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO-COUNT", "dont_know": "FB-DONTKNOW" },
-      "review_status": "draft", "content_version": "mat-sample-0.2"
+      "model_answer": {"id": "Bimo: 83 punya 8 puluhan, 38 hanya 3.", "en": "Bimo: 83 has 8 tens, 38 has only 3."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
     },
     {
-      "item_id": "MAT-K-P-01-003", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "true_false", "skills": ["NUM-COMPARE"], "pool": "PRACT", "order": 3,
-      "prompt_id": "P-TF",
-      "model_answer": { "id": "Salah — 34 lebih kecil dari 43", "en": "False — 34 is smaller than 43" },
+      "item_id": "MAT-K-P-01-006", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "order", "skills": ["NUM-COMPARE"], "pool": "PRACT", "order": 6, "prompt_id": "P-ORDER-SMALL",
       "options": [
-        { "id": "t", "text": { "id": "34 lebih besar dari 43 — benar", "en": "34 is bigger than 43 — true" } },
-        { "id": "f", "text": { "id": "34 lebih besar dari 43 — salah", "en": "34 is bigger than 43 — false" }, "correct": true }
+        {"id": "n56", "text": {"id": "56", "en": "56"}},
+        {"id": "n29", "text": {"id": "29", "en": "29"}},
+        {"id": "n65", "text": {"id": "65", "en": "65"}},
+        {"id": "n31", "text": {"id": "31", "en": "31"}}
       ],
-      "feedback_ids": { "correct": "FB-OK-MODEL", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW" },
-      "review_status": "draft", "content_version": "mat-sample-0.2"
+      "solution": ["n29", "n31", "n56", "n65"],
+      "model_answer": {"id": "Urutannya 29, 31, 56, 65.", "en": "The order is 29, 31, 56, 65."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
     },
     {
-      "item_id": "MAT-K-P-01-004", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["NUM-TENS-ONES"], "pool": "PRACT", "order": 4,
-      "prompt_id": "P-NUM",
-      "model_answer": { "id": "58", "en": "58" },
-      "help_lines": [{ "word": "5 puluhan dan 8 satuan", "meaning": { "id": "5 puluhan dan 8 satuan = ?", "en": "5 tens and 8 ones = ?" } }],
-      "numeric": { "value": 58, "tolerance": 0 },
-      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW" },
-      "review_status": "draft", "content_version": "mat-sample-0.2"
-    },
-    {
-      "item_id": "MAT-K-P-01-005", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "order", "skills": ["NUM-COMPARE"], "pool": "PRACT", "order": 5,
-      "prompt_id": "P-ORDER",
-      "model_answer": { "id": "19, 23, 32, 41", "en": "19, 23, 32, 41" },
+      "item_id": "MAT-K-P-01-007", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "fill_blank", "skills": ["NUM-LINE"], "pool": "PRACT", "order": 7, "prompt_id": "P-FILL",
+      "help_lines": [{"word": "", "meaning": {"id": "Pada garis bilangan: 57, 58, __, 60", "en": "On the number line: 57, 58, __, 60"}}],
       "options": [
-        { "id": "n32", "text": { "id": "32", "en": "32" } },
-        { "id": "n19", "text": { "id": "19", "en": "19" } },
-        { "id": "n41", "text": { "id": "41", "en": "41" } },
-        { "id": "n23", "text": { "id": "23", "en": "23" } }
+        {"id": "t61", "text": {"id": "61", "en": "61"}},
+        {"id": "t59", "text": {"id": "59", "en": "59"}},
+        {"id": "t95", "text": {"id": "95", "en": "95"}}
       ],
-      "solution": ["n19", "n23", "n32", "n41"],
-      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW" },
-      "review_status": "draft", "content_version": "mat-sample-0.2"
+      "solution": ["t59"],
+      "model_answer": {"id": "57, 58, 59, 60: tiap langkah ke kanan tambah 1.", "en": "57, 58, 59, 60: each step right adds 1."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
     },
     {
-      "item_id": "MAT-K-P-01-006", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "info_card", "skills": [], "pool": "GEM", "gem": true,
-      "source": "Babylonian sexagesimal system; see e.g. Britannica, \"Babylonian mathematics\".",
-      "prompt_id": "P-GEM",
-      "help_lines": [],
-      "model_answer": {
-        "id": "Satu jam punya 60 menit karena orang Babilonia, 4.000 tahun lalu, suka menghitung dengan 60 — angka yang bisa dibagi 2, 3, 4, 5, 6, 10, 12, 15, 20 dan 30.",
-        "en": "An hour has 60 minutes because the Babylonians, 4,000 years ago, liked counting in 60s — a number you can split by 2, 3, 4, 5, 6, 10, 12, 15, 20 and 30."
-      },
-      "feedback_ids": { "correct": "FB-GEM" },
-      "review_status": "draft", "content_version": "mat-sample-0.2"
-    },
-    {
-      "item_id": "MAT-K-P-01-007", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "match_pairs", "skills": ["NUM-READ"], "pool": "PRACT", "order": 6,
-      "prompt_id": "P-MATCH",
-      "model_answer": { "id": "25 = dua puluh lima, 52 = lima puluh dua, 15 = lima belas", "en": "25 = twenty-five, 52 = fifty-two, 15 = fifteen" },
+      "item_id": "MAT-K-P-01-008", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "true_false", "skills": ["NUM-TENS-ONES"], "pool": "PRACT", "order": 8, "prompt_id": "P-TF",
+      "help_lines": [{"word": "", "meaning": {"id": "Bilangan 70 sama dengan 7 puluhan.", "en": "70 is the same as 7 tens."}}],
       "options": [
-        { "id": "n25", "text": { "id": "25", "en": "25" } },
-        { "id": "n52", "text": { "id": "52", "en": "52" } },
-        { "id": "n15", "text": { "id": "15", "en": "15" } },
-        { "id": "w25", "text": { "id": "dua puluh lima", "en": "twenty-five" } },
-        { "id": "w52", "text": { "id": "lima puluh dua", "en": "fifty-two" } },
-        { "id": "w15", "text": { "id": "lima belas", "en": "fifteen" } }
+        {"id": "t", "text": {"id": "Benar", "en": "True"}, "correct": true},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}}
       ],
-      "solution_pairs": { "n25": "w25", "n52": "w52", "n15": "w15" },
-      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW" },
-      "review_status": "draft", "content_version": "mat-sample-0.2"
+      "model_answer": {"id": "Bilangan 70 memang 7 puluhan dan 0 satuan.", "en": "70 really is 7 tens and 0 ones."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
     },
     {
-      "item_id": "MAT-K-P-01-008", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "sort_buckets", "skills": ["NUM-EVEN-ODD"], "pool": "PRACT", "order": 7,
-      "prompt_id": "P-SORT",
-      "model_answer": { "id": "Genap: 14, 30. Ganjil: 27, 9.", "en": "Even: 14, 30. Odd: 27, 9." },
+      "item_id": "MAT-K-P-01-009", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "pick_image", "skills": ["NUM-COUNT-20"], "pool": "PRACT", "order": 9, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana yang 17 kelereng?", "en": "Which one shows 17 marbles?"}}],
       "options": [
-        { "id": "b_even", "text": { "id": "Genap", "en": "Even" } },
-        { "id": "b_odd", "text": { "id": "Ganjil", "en": "Odd" } },
-        { "id": "n14", "text": { "id": "14", "en": "14" } },
-        { "id": "n27", "text": { "id": "27", "en": "27" } },
-        { "id": "n30", "text": { "id": "30", "en": "30" } },
-        { "id": "n9", "text": { "id": "9", "en": "9" } }
+        {"id": "i0", "image": "count_marble_16"},
+        {"id": "i1", "image": "count_marble_18"},
+        {"id": "i2", "image": "count_marble_17", "correct": true}
       ],
-      "solution_pairs": { "n14": "b_even", "n27": "b_odd", "n30": "b_even", "n9": "b_odd" },
-      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO", "dont_know": "FB-DONTKNOW" },
-      "review_status": "draft", "content_version": "mat-sample-0.2"
+      "model_answer": {"id": "Ada 17 kelereng: 5 + 5 + 5 + 2.", "en": "There are 17 marbles: 5 + 5 + 5 + 2."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-COUNT", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
     },
     {
-      "item_id": "MAT-K-P-01-009", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "fill_blank", "skills": ["NUM-SEQUENCE"], "pool": "PRACT", "order": 8,
-      "prompt_id": "P-TILES",
-      "model_answer": { "id": "36, 37, 38, 39", "en": "36, 37, 38, 39" },
-      "help_lines": [{ "word": "36, 37, __, 39", "meaning": { "id": "36, 37, __, 39 — angka berapa yang hilang?", "en": "36, 37, __, 39 — which number is missing?" } }],
+      "item_id": "MAT-K-P-01-010", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "match_pairs", "skills": ["NUM-TENS-ONES"], "pool": "PRACT", "order": 10, "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [{"word": "", "meaning": {"id": "Hati-hati: belas dan puluh itu berbeda!", "en": "Careful: -teen and -ty are different!"}}],
       "options": [
-        { "id": "t38", "text": { "id": "38", "en": "38" } },
-        { "id": "t40", "text": { "id": "40", "en": "40" } },
-        { "id": "t83", "text": { "id": "83", "en": "83" } }
+        {"id": "n14", "text": {"id": "14", "en": "14"}},
+        {"id": "n40", "text": {"id": "40", "en": "40"}},
+        {"id": "n19", "text": {"id": "19", "en": "19"}},
+        {"id": "n91", "text": {"id": "91", "en": "91"}},
+        {"id": "w40", "text": {"id": "empat puluh", "en": "forty"}},
+        {"id": "w14", "text": {"id": "empat belas", "en": "fourteen"}},
+        {"id": "w91", "text": {"id": "sembilan puluh satu", "en": "ninety-one"}},
+        {"id": "w19", "text": {"id": "sembilan belas", "en": "nineteen"}}
       ],
-      "solution": ["t38"],
-      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO", "dont_know": "FB-DONTKNOW" },
-      "review_status": "draft", "content_version": "mat-sample-0.2"
+      "solution_pairs": {"n14": "w14", "n40": "w40", "n19": "w19", "n91": "w91"},
+      "model_answer": {"id": "14 = empat belas, 40 = empat puluh, 19 = sembilan belas, 91 = sembilan puluh satu.", "en": "14 = fourteen, 40 = forty, 19 = nineteen, 91 = ninety-one."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
     },
     {
-      "item_id": "MAT-K-P-01-010", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "choose", "skills": ["NUM-COMPARE"], "pool": "PRACT", "order": 9,
-      "prompt_id": "P-COMPARE",
-      "model_answer": { "id": "71", "en": "71" },
+      "item_id": "MAT-K-P-01-011", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "number_input", "skills": ["NUM-LINE"], "pool": "PRACT", "order": 11, "prompt_id": "P-NUM",
+      "help_lines": [{"word": "", "meaning": {"id": "Bilangan apa tepat sesudah 79?", "en": "What number comes right after 79?"}}],
+      "numeric": {"value": 80, "tolerance": 0},
+      "model_answer": {"id": "79 + 1 = 80. Sepuluh satuan menjadi satu puluhan baru.", "en": "79 + 1 = 80. Ten ones make a new ten."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-01-012", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["NUM-TENS-ONES"], "pool": "REMED", "prompt_id": "P-NUM",
+      "help_lines": [{"word": "", "meaning": {"id": "6 kantong kelereng (isi 10) dan 3 kelereng lepas. Berapa semuanya?", "en": "6 bags of 10 marbles and 3 loose marbles. How many altogether?"}}],
+      "numeric": {"value": 63, "tolerance": 0},
+      "model_answer": {"id": "Enam puluhan dan tiga satuan, jadi 63 kelereng.", "en": "Six tens and three ones make 63 marbles."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-01-013", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "choose", "skills": ["NUM-COMPARE"], "pool": "REMED", "prompt_id": "P-CHOOSE",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana bilangan yang lebih kecil?", "en": "Which number is smaller?"}}],
       "options": [
-        { "id": "a", "text": { "id": "17", "en": "17" } },
-        { "id": "b", "text": { "id": "71", "en": "71" }, "correct": true }
+        {"id": "a", "text": {"id": "74", "en": "74"}},
+        {"id": "b", "text": {"id": "47", "en": "47"}, "correct": true}
       ],
-      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW" },
-      "review_status": "draft", "content_version": "mat-sample-0.2"
+      "model_answer": {"id": "Bilangan 47 lebih kecil, karena 4 puluhan lebih sedikit daripada 7 puluhan.", "en": "47 is smaller, because 4 tens are fewer than 7 tens."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
     },
     {
-      "item_id": "MAT-K-P-01-011", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "number_input", "skills": ["NUM-TENS-ONES"], "pool": "REMED",
-      "prompt_id": "P-NUM",
-      "model_answer": { "id": "63", "en": "63" },
-      "help_lines": [{ "word": "6 puluhan dan 3 satuan", "meaning": { "id": "6 puluhan dan 3 satuan = ?", "en": "6 tens and 3 ones = ?" } }],
-      "numeric": { "value": 63, "tolerance": 0 },
-      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW" },
-      "review_status": "draft", "content_version": "mat-sample-0.2"
+      "item_id": "MAT-K-P-01-014", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "info_card", "skills": ["NUM-COUNT-20"], "pool": "GEM", "gem": true, "prompt_id": "P-GEM",
+      "source": "Encyclopaedia Britannica, 'zero' (mathematics) and 'Brahmagupta' (Brahmasphutasiddhanta, 628 CE); Online Etymology Dictionary, entries 'zero' and 'cipher' (from Arabic sifr).",
+      "model_answer": {"id": "Dulu, banyak bangsa belum punya bilangan nol! Ahli di India mulai memakai nol, dan sekitar tahun 628 Brahmagupta menulis aturan berhitung dengannya. Kata Arab sifr ('kosong') menjadi asal kata zero dan cipher.", "en": "Long ago, many peoples had no zero! Mathematicians in India began using zero, and around 628 Brahmagupta wrote rules for calculating with it. The Arabic word sifr ('empty') gave English 'zero' and 'cipher'."},
+      "feedback_ids": {"correct": "FB-GEM"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
     },
     {
-      "item_id": "MAT-K-P-01-012", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "true_false", "skills": ["NUM-EVEN-ODD"], "pool": "REMED",
-      "prompt_id": "P-TF",
-      "model_answer": { "id": "Benar — 48 genap", "en": "True — 48 is even" },
+      "item_id": "MAT-K-P-02-001", "unit": "02", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["ADD-20"], "pool": "PRACT", "order": 12, "prompt_id": "P-NUM",
+      "image": "count_marble_8",
+      "help_lines": [{"word": "", "meaning": {"id": "Raka punya 8 kelereng, lalu diberi 5 lagi. Jadi berapa?", "en": "Raka has 8 marbles and gets 5 more. How many now?"}}],
+      "numeric": {"value": 13, "tolerance": 0},
+      "model_answer": {"id": "8 + 5 = 13 (8 + 2 = 10, lalu 10 + 3).", "en": "8 + 5 = 13 (8 + 2 = 10, then 10 + 3)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MAKE10", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-02-002", "unit": "02", "audience": "kids", "level": "pemula", "step": 1, "type": "match_pairs", "skills": ["SUB-20"], "pool": "PRACT", "order": 13, "prompt_id": "P-MATCH-FAMILY",
+      "gesture": "connect",
+      "help_lines": [{"word": "", "meaning": {"id": "Setiap penjumlahan punya saudara pengurangan.", "en": "Every addition fact has a subtraction partner."}}],
       "options": [
-        { "id": "t", "text": { "id": "48 adalah bilangan genap — benar", "en": "48 is an even number — true" }, "correct": true },
-        { "id": "f", "text": { "id": "48 adalah bilangan genap — salah", "en": "48 is an even number — false" } }
+        {"id": "a1", "text": {"id": "7 + 6 = 13", "en": "7 + 6 = 13"}},
+        {"id": "a2", "text": {"id": "9 + 8 = 17", "en": "9 + 8 = 17"}},
+        {"id": "a3", "text": {"id": "5 + 9 = 14", "en": "5 + 9 = 14"}},
+        {"id": "s1", "text": {"id": "14 − 9 = 5", "en": "14 − 9 = 5"}},
+        {"id": "s2", "text": {"id": "13 − 6 = 7", "en": "13 − 6 = 7"}},
+        {"id": "s3", "text": {"id": "17 − 8 = 9", "en": "17 − 8 = 9"}}
       ],
-      "feedback_ids": { "correct": "FB-OK-MODEL", "wrong": "FB-NO", "dont_know": "FB-DONTKNOW" },
-      "review_status": "draft", "content_version": "mat-sample-0.2"
+      "solution_pairs": {"a1": "s2", "a2": "s3", "a3": "s1"},
+      "model_answer": {"id": "7 + 6 = 13 dan 13 − 6 = 7; 9 + 8 = 17 dan 17 − 8 = 9; 5 + 9 = 14 dan 14 − 9 = 5.", "en": "7 + 6 = 13 and 13 − 6 = 7; 9 + 8 = 17 and 17 − 8 = 9; 5 + 9 = 14 and 14 − 9 = 5."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-02-003", "unit": "02", "audience": "kids", "level": "pemula", "step": 1, "type": "true_false", "skills": ["ADD-20"], "pool": "PRACT", "order": 14, "prompt_id": "P-TF",
+      "help_lines": [{"word": "", "meaning": {"id": "9 + 7 = 16", "en": "9 + 7 = 16"}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}, "correct": true},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}}
+      ],
+      "model_answer": {"id": "9 + 7 memang 16: 9 + 1 = 10, lalu 10 + 6 = 16.", "en": "9 + 7 really is 16: 9 + 1 = 10, then 10 + 6 = 16."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MAKE10", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-02-004", "unit": "02", "audience": "kids", "level": "pemula", "step": 1, "type": "fill_blank", "skills": ["ADD-20"], "pool": "PRACT", "order": 15, "prompt_id": "P-FILL",
+      "image": "count_egg_6",
+      "help_lines": [{"word": "", "meaning": {"id": "6 + __ = 10", "en": "6 + __ = 10"}}],
+      "options": [
+        {"id": "t5", "text": {"id": "5", "en": "5"}},
+        {"id": "t3", "text": {"id": "3", "en": "3"}},
+        {"id": "t4", "text": {"id": "4", "en": "4"}}
+      ],
+      "solution": ["t4"],
+      "model_answer": {"id": "6 + 4 = 10. Hitung maju: 7, 8, 9, 10.", "en": "6 + 4 = 10. Count on: 7, 8, 9, 10."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-02-005", "unit": "02", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["SUB-20"], "pool": "PRACT", "order": 16, "prompt_id": "P-NUM",
+      "image": "count_egg_10",
+      "help_lines": [{"word": "", "meaning": {"id": "Ibu memakai 3 telur untuk kue. Sisa berapa?", "en": "Mum uses 3 eggs for a cake. How many are left?"}}],
+      "numeric": {"value": 7, "tolerance": 0},
+      "model_answer": {"id": "10 − 3 = 7. Masih ada 7 telur.", "en": "10 − 3 = 7. There are 7 eggs left."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SUB", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-02-006", "unit": "02", "audience": "kids", "level": "pemula", "step": 1, "type": "memory_flip", "skills": ["ADD-20"], "pool": "PRACT", "order": 17, "prompt_id": "P-MEMORY",
+      "options": [
+        {"id": "q1", "text": {"id": "6 + 6", "en": "6 + 6"}},
+        {"id": "r3", "text": {"id": "11", "en": "11"}},
+        {"id": "q2", "text": {"id": "8 + 7", "en": "8 + 7"}},
+        {"id": "r4", "text": {"id": "8", "en": "8"}},
+        {"id": "q3", "text": {"id": "9 + 2", "en": "9 + 2"}},
+        {"id": "r1", "text": {"id": "12", "en": "12"}},
+        {"id": "q4", "text": {"id": "5 + 3", "en": "5 + 3"}},
+        {"id": "r2", "text": {"id": "15", "en": "15"}}
+      ],
+      "solution_pairs": {"q1": "r1", "q2": "r2", "q3": "r3", "q4": "r4"},
+      "model_answer": {"id": "6 + 6 = 12, 8 + 7 = 15, 9 + 2 = 11, 5 + 3 = 8.", "en": "6 + 6 = 12, 8 + 7 = 15, 9 + 2 = 11, 5 + 3 = 8."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-02-007", "unit": "02", "audience": "kids", "level": "pemula", "step": 2, "type": "tiles", "skills": ["SUB-20"], "pool": "PRACT", "order": 18, "prompt_id": "P-TILES",
+      "image": "pic_cake",
+      "help_lines": [{"word": "", "meaning": {"id": "Bu Ani membuat 14 kue, 6 diberikan ke tetangga. Sisa berapa?", "en": "Bu Ani bakes 14 cakes and gives 6 away. How many are left?"}}, {"word": "", "meaning": {"id": "Susun: dibuat − diberikan = sisa.", "en": "Build: baked − given away = left."}}],
+      "options": [
+        {"id": "x6", "text": {"id": "6", "en": "6"}},
+        {"id": "eq", "text": {"id": "=", "en": "="}},
+        {"id": "x20", "text": {"id": "20", "en": "20"}},
+        {"id": "x14", "text": {"id": "14", "en": "14"}},
+        {"id": "plus", "text": {"id": "+", "en": "+"}},
+        {"id": "x8", "text": {"id": "8", "en": "8"}},
+        {"id": "minus", "text": {"id": "−", "en": "−"}}
+      ],
+      "solution": ["x14", "minus", "x6", "eq", "x8"],
+      "model_answer": {"id": "14 − 6 = 8. Masih ada 8 kue.", "en": "14 − 6 = 8. There are 8 cakes left."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SUB", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-02-008", "unit": "02", "audience": "kids", "level": "pemula", "step": 2, "type": "number_input", "skills": ["ADD-SUB-100"], "pool": "PRACT", "order": 19, "prompt_id": "P-NUM",
+      "image": "pic_book",
+      "help_lines": [{"word": "", "meaning": {"id": "Ada 36 buku cerita, Pak Guru membawa 27 lagi. Berapa sekarang?", "en": "There are 36 storybooks and the teacher brings 27 more. How many now?"}}],
+      "numeric": {"value": 63, "tolerance": 0},
+      "model_answer": {"id": "36 + 27 = 63 (6 + 7 = 13, simpan 1 puluhan).", "en": "36 + 27 = 63 (6 + 7 = 13, carry 1 ten)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-REGROUP", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-02-009", "unit": "02", "audience": "kids", "level": "pemula", "step": 2, "type": "choose", "skills": ["ADD-SUB-100"], "pool": "PRACT", "order": 20, "prompt_id": "P-CHOOSE",
+      "image": "pic_chair",
+      "help_lines": [{"word": "", "meaning": {"id": "Ada 52 kursi, 18 dipindahkan. Sisa berapa?", "en": "There are 52 chairs and 18 are moved. How many are left?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "34", "en": "34"}, "correct": true},
+        {"id": "b", "text": {"id": "46", "en": "46"}},
+        {"id": "c", "text": {"id": "44", "en": "44"}}
+      ],
+      "model_answer": {"id": "52 − 18 = 34 (pinjam 1 puluhan: 12 − 8 = 4).", "en": "52 − 18 = 34 (borrow 1 ten: 12 − 8 = 4)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-BORROW", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-02-010", "unit": "02", "audience": "kids", "level": "pemula", "step": 2, "type": "true_false", "skills": ["SUB-20"], "pool": "PRACT", "order": 21, "prompt_id": "P-TF",
+      "help_lines": [{"word": "", "meaning": {"id": "15 − 7 = 9", "en": "15 − 7 = 9"}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}, "correct": true}
+      ],
+      "model_answer": {"id": "15 − 7 bukan 9, tetapi 8, karena 8 + 7 = 15.", "en": "15 − 7 isn't 9, it's 8, because 8 + 7 = 15."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SUB", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-02-011", "unit": "02", "audience": "kids", "level": "pemula", "step": 2, "type": "number_input", "skills": ["ADD-SUB-100"], "pool": "PRACT", "order": 22, "prompt_id": "P-NUM",
+      "help_lines": [{"word": "", "meaning": {"id": "Pagi terjual 45 pisang goreng, sore 38. Berapa semuanya?", "en": "45 fried bananas sold in the morning, 38 in the afternoon. How many altogether?"}}],
+      "numeric": {"value": 83, "tolerance": 0},
+      "model_answer": {"id": "45 + 38 = 83 (5 + 8 = 13, simpan 1 puluhan).", "en": "45 + 38 = 83 (5 + 8 = 13, carry 1 ten)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-REGROUP", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-02-012", "unit": "02", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["ADD-20"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "pic_bird",
+      "help_lines": [{"word": "", "meaning": {"id": "7 burung, lalu datang 6 lagi. Berapa sekarang?", "en": "7 birds, then 6 more fly in. How many now?"}}],
+      "numeric": {"value": 13, "tolerance": 0},
+      "model_answer": {"id": "7 + 6 = 13 (7 + 3 = 10, lalu 10 + 3).", "en": "7 + 6 = 13 (7 + 3 = 10, then 10 + 3)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MAKE10", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-02-013", "unit": "02", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["SUB-20"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "sticker_kite",
+      "help_lines": [{"word": "", "meaning": {"id": "12 layang-layang terbang, 4 turun. Berapa yang masih terbang?", "en": "12 kites are flying and 4 come down. How many are still flying?"}}],
+      "numeric": {"value": 8, "tolerance": 0},
+      "model_answer": {"id": "12 − 4 = 8. Hitung mundur: 11, 10, 9, 8.", "en": "12 − 4 = 8. Count back: 11, 10, 9, 8."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SUB", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-02-014", "unit": "02", "audience": "kids", "level": "pemula", "step": 2, "type": "info_card", "skills": ["ADD-20"], "pool": "GEM", "gem": true, "prompt_id": "P-GEM",
+      "source": "Florian Cajori, A History of Mathematical Notations, vol. 1 (1928): Johannes Widmann, Behende und hüpsche Rechenung auff allen Kauffmanschafft (Leipzig, 1489) for + and −, Recorde's The Whetstone of Witte (1557) for =; MacTutor History of Mathematics, 'Robert Recorde'.",
+      "model_answer": {"id": "Tanda + dan − pertama kali tercetak tahun 1489, di buku berhitung untuk pedagang karya Johannes Widmann dari Jerman. Tanda = muncul tahun 1557: Robert Recorde dari Wales memilih dua garis sejajar karena tidak ada yang lebih sama.", "en": "The + and − signs first appeared in print in 1489, in an arithmetic book for merchants by Johannes Widmann of Germany. The = sign came in 1557: Robert Recorde of Wales chose two parallel lines because nothing could be more equal."},
+      "feedback_ids": {"correct": "FB-GEM"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-03-001", "unit": "03", "audience": "kids", "level": "pemula", "step": 1, "type": "tap_hotspot", "skills": ["GEO-SHAPES-2D"], "pool": "PRACT", "order": 23, "prompt_id": "P-TAP",
+      "image": "scene_kampung_shapes",
+      "help_lines": [{"word": "", "meaning": {"id": "Cari segitiga.", "en": "Find the triangle."}}],
+      "options": [
+        {"id": "sun", "text": {"id": "matahari", "en": "sun"}, "region": {"x": 0.06, "y": 0.06, "w": 0.18, "h": 0.24}},
+        {"id": "kite", "text": {"id": "layang-layang", "en": "kite"}, "region": {"x": 0.74, "y": 0.06, "w": 0.16, "h": 0.26}},
+        {"id": "roof", "text": {"id": "atap", "en": "roof"}, "region": {"x": 0.3, "y": 0.2, "w": 0.36, "h": 0.22}, "correct": true},
+        {"id": "board", "text": {"id": "papan pengumuman", "en": "noticeboard"}, "region": {"x": 0.72, "y": 0.56, "w": 0.22, "h": 0.18}},
+        {"id": "wall", "text": {"id": "dinding", "en": "wall"}, "region": {"x": 0.34, "y": 0.44, "w": 0.28, "h": 0.37}}
+      ],
+      "model_answer": {"id": "Atap rumah berbentuk segitiga: 3 sisi dan 3 sudut.", "en": "The roof is a triangle: 3 sides and 3 corners."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SHAPE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-03-002", "unit": "03", "audience": "kids", "level": "pemula", "step": 1, "type": "pick_image", "skills": ["GEO-SHAPES-2D"], "pool": "PRACT", "order": 24, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "4 sisi sama panjang.", "en": "4 sides, all the same length."}}],
+      "options": [
+        {"id": "i0", "image": "shape_rectangle"},
+        {"id": "i1", "image": "shape_triangle"},
+        {"id": "i2", "image": "shape_square", "correct": true}
+      ],
+      "model_answer": {"id": "Persegi: keempat sisinya sama panjang.", "en": "A square: all 4 sides are the same length."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SHAPE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-03-003", "unit": "03", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["GEO-SIDES-CORNERS"], "pool": "PRACT", "order": 25, "prompt_id": "P-NUM",
+      "image": "shape_triangle",
+      "help_lines": [{"word": "", "meaning": {"id": "Berapa sudutnya?", "en": "How many corners?"}}],
+      "numeric": {"value": 3, "tolerance": 0},
+      "model_answer": {"id": "Segitiga punya 3 sudut dan 3 sisi.", "en": "A triangle has 3 corners and 3 sides."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SHAPE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-03-004", "unit": "03", "audience": "kids", "level": "pemula", "step": 1, "type": "sort_buckets", "skills": ["GEO-SIDES-CORNERS"], "pool": "PRACT", "order": 26, "prompt_id": "P-SORT",
+      "help_lines": [{"word": "", "meaning": {"id": "Punya sudut atau tidak?", "en": "Corners or no corners?"}}],
+      "options": [
+        {"id": "b_yes", "text": {"id": "Punya sudut", "en": "Has corners"}},
+        {"id": "b_no", "text": {"id": "Tidak punya sudut", "en": "No corners"}},
+        {"id": "s_tri", "image": "shape_triangle"},
+        {"id": "s_circ", "image": "shape_circle"},
+        {"id": "s_sq", "image": "shape_square"},
+        {"id": "s_oval", "image": "shape_oval"},
+        {"id": "s_rect", "image": "shape_rectangle"}
+      ],
+      "solution_pairs": {"s_tri": "b_yes", "s_circ": "b_no", "s_sq": "b_yes", "s_oval": "b_no", "s_rect": "b_yes"},
+      "model_answer": {"id": "Punya sudut: segitiga, persegi, persegi panjang. Tidak punya sudut: lingkaran, oval.", "en": "Corners: triangle, square, rectangle. No corners: circle, oval."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SHAPE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-03-005", "unit": "03", "audience": "kids", "level": "pemula", "step": 1, "type": "tap_hotspot", "skills": ["GEO-SHAPES-2D"], "pool": "PRACT", "order": 27, "prompt_id": "P-TAP",
+      "image": "scene_kampung_shapes",
+      "help_lines": [{"word": "", "meaning": {"id": "Cari lingkaran.", "en": "Find the circle."}}],
+      "options": [
+        {"id": "roof", "text": {"id": "atap", "en": "roof"}, "region": {"x": 0.3, "y": 0.2, "w": 0.36, "h": 0.22}},
+        {"id": "board", "text": {"id": "papan pengumuman", "en": "noticeboard"}, "region": {"x": 0.72, "y": 0.56, "w": 0.22, "h": 0.18}},
+        {"id": "sun", "text": {"id": "matahari", "en": "sun"}, "region": {"x": 0.06, "y": 0.06, "w": 0.18, "h": 0.24}, "correct": true},
+        {"id": "wall", "text": {"id": "dinding", "en": "wall"}, "region": {"x": 0.34, "y": 0.44, "w": 0.28, "h": 0.37}},
+        {"id": "kite", "text": {"id": "layang-layang", "en": "kite"}, "region": {"x": 0.74, "y": 0.06, "w": 0.16, "h": 0.26}}
+      ],
+      "model_answer": {"id": "Matahari digambar berbentuk lingkaran. Lingkaran tidak punya sudut.", "en": "The sun is drawn as a circle. A circle has no corners."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SHAPE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-03-006", "unit": "03", "audience": "kids", "level": "pemula", "step": 1, "type": "true_false", "skills": ["GEO-SIDES-CORNERS"], "pool": "PRACT", "order": 28, "prompt_id": "P-TF",
+      "image": "shape_triangle",
+      "help_lines": [{"word": "", "meaning": {"id": "Segitiga punya 4 sisi.", "en": "A triangle has 4 sides."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}, "correct": true}
+      ],
+      "model_answer": {"id": "Segitiga hanya punya 3 sisi. Namanya saja segi-tiga!", "en": "A triangle has only 3 sides. 'Tri' means three!"},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SHAPE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-03-007", "unit": "03", "audience": "kids", "level": "pemula", "step": 2, "type": "pick_image", "skills": ["GEO-SOLIDS-3D"], "pool": "PRACT", "order": 29, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Kaleng susu seperti bangun apa?", "en": "Which solid is a tin can like?"}}],
+      "options": [
+        {"id": "i0", "image": "solid_cylinder", "correct": true},
+        {"id": "i1", "image": "solid_cone"},
+        {"id": "i2", "image": "solid_cube"}
+      ],
+      "model_answer": {"id": "Tabung: bagian atas dan bawahnya berbentuk lingkaran, seperti kaleng.", "en": "A cylinder: its top and bottom are circles, just like a tin can."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SHAPE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-03-008", "unit": "03", "audience": "kids", "level": "pemula", "step": 2, "type": "choose", "skills": ["GEO-SOLIDS-3D"], "pool": "PRACT", "order": 30, "prompt_id": "P-CHOOSE",
+      "image": "solid_cube",
+      "help_lines": [{"word": "", "meaning": {"id": "Apa namanya? Bentuknya seperti dadu.", "en": "What is it called? It's shaped like a dice."}}],
+      "options": [
+        {"id": "a", "text": {"id": "Balok", "en": "Cuboid"}},
+        {"id": "b", "text": {"id": "Kubus", "en": "Cube"}, "correct": true},
+        {"id": "c", "text": {"id": "Tabung", "en": "Cylinder"}}
+      ],
+      "model_answer": {"id": "Kubus. Keenam sisinya berbentuk persegi yang sama besar.", "en": "A cube. All six faces are squares of the same size."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SHAPE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-03-009", "unit": "03", "audience": "kids", "level": "pemula", "step": 2, "type": "tap_hotspot", "skills": ["GEO-SHAPES-2D"], "pool": "PRACT", "order": 31, "prompt_id": "P-TAP",
+      "image": "scene_kampung_shapes",
+      "help_lines": [{"word": "", "meaning": {"id": "Cari persegi.", "en": "Find the square."}}],
+      "options": [
+        {"id": "kite", "text": {"id": "layang-layang", "en": "kite"}, "region": {"x": 0.74, "y": 0.06, "w": 0.16, "h": 0.26}},
+        {"id": "board", "text": {"id": "papan pengumuman", "en": "noticeboard"}, "region": {"x": 0.72, "y": 0.56, "w": 0.22, "h": 0.18}},
+        {"id": "wall", "text": {"id": "dinding", "en": "wall"}, "region": {"x": 0.34, "y": 0.44, "w": 0.28, "h": 0.37}, "correct": true},
+        {"id": "sun", "text": {"id": "matahari", "en": "sun"}, "region": {"x": 0.06, "y": 0.06, "w": 0.18, "h": 0.24}},
+        {"id": "roof", "text": {"id": "atap", "en": "roof"}, "region": {"x": 0.3, "y": 0.2, "w": 0.36, "h": 0.22}}
+      ],
+      "model_answer": {"id": "Dinding rumah persegi: 4 sisinya sama panjang.", "en": "The wall is a square: 4 equal sides."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SHAPE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-03-010", "unit": "03", "audience": "kids", "level": "pemula", "step": 2, "type": "sort_buckets", "skills": ["GEO-SOLIDS-3D"], "pool": "PRACT", "order": 32, "prompt_id": "P-SORT",
+      "help_lines": [{"word": "", "meaning": {"id": "Bangun datar atau bangun ruang?", "en": "Flat shape or solid shape?"}}],
+      "options": [
+        {"id": "b_flat", "text": {"id": "Bangun datar", "en": "Flat shapes"}},
+        {"id": "b_solid", "text": {"id": "Bangun ruang", "en": "Solid shapes"}},
+        {"id": "x4", "image": "solid_cube"},
+        {"id": "x1", "image": "shape_circle"},
+        {"id": "x6", "image": "solid_cone"},
+        {"id": "x3", "image": "shape_square"},
+        {"id": "x2", "image": "solid_sphere"},
+        {"id": "x5", "image": "shape_triangle"}
+      ],
+      "solution_pairs": {"x1": "b_flat", "x2": "b_solid", "x3": "b_flat", "x4": "b_solid", "x5": "b_flat", "x6": "b_solid"},
+      "model_answer": {"id": "Bangun datar: lingkaran, persegi, segitiga. Bangun ruang: bola, kubus, kerucut.", "en": "Flat: circle, square, triangle. Solid: sphere, cube, cone."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SHAPE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-03-011", "unit": "03", "audience": "kids", "level": "pemula", "step": 2, "type": "number_input", "skills": ["GEO-SIDES-CORNERS"], "pool": "PRACT", "order": 33, "prompt_id": "P-NUM",
+      "image": "shape_rectangle",
+      "help_lines": [{"word": "", "meaning": {"id": "Papan tulis ini persegi panjang. Berapa sisinya?", "en": "This board is a rectangle. How many sides?"}}],
+      "numeric": {"value": 4, "tolerance": 0},
+      "model_answer": {"id": "Persegi panjang punya 4 sisi: 2 sisi panjang dan 2 sisi pendek.", "en": "A rectangle has 4 sides: 2 long sides and 2 short sides."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SHAPE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-03-012", "unit": "03", "audience": "kids", "level": "pemula", "step": 1, "type": "pick_image", "skills": ["GEO-SHAPES-2D"], "pool": "REMED", "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana yang tidak punya sudut?", "en": "Which one has no corners?"}}],
+      "options": [
+        {"id": "i0", "image": "shape_oval", "correct": true},
+        {"id": "i1", "image": "shape_triangle"},
+        {"id": "i2", "image": "shape_rhombus"}
+      ],
+      "model_answer": {"id": "Oval (bulat telur) tidak punya sudut, sama seperti lingkaran.", "en": "An oval (egg shape) has no corners, just like a circle."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SHAPE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-03-013", "unit": "03", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["GEO-SIDES-CORNERS"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "shape_square",
+      "help_lines": [{"word": "", "meaning": {"id": "Berapa sudutnya?", "en": "How many corners?"}}],
+      "numeric": {"value": 4, "tolerance": 0},
+      "model_answer": {"id": "Persegi punya 4 sudut dan 4 sisi yang sama panjang.", "en": "A square has 4 corners and 4 sides of equal length."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SHAPE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-03-014", "unit": "03", "audience": "kids", "level": "pemula", "step": 2, "type": "info_card", "skills": ["GEO-SHAPES-2D"], "pool": "GEM", "gem": true, "prompt_id": "P-GEM",
+      "source": "Encyclopaedia Britannica, 'Möbius strip' (a one-sided surface made by giving a strip a half twist before joining the ends; described by August Ferdinand Möbius in 1858).",
+      "model_answer": {"id": "Minta orang dewasa menggunting pita kertas panjang. Putar satu ujungnya setengah putaran, lalu rekatkan kedua ujungnya. Tarik garis di tengah pita tanpa mengangkat pensil: garismu melewati 'kedua' sisi dan kembali ke awal! Pita Möbius ini hanya punya satu sisi.", "en": "Ask a grown-up to cut a long paper strip. Give one end a half twist, then tape the ends together. Draw a line along the middle without lifting your pencil: it covers 'both' sides and comes back to the start! This Möbius strip has only one side."},
+      "feedback_ids": {"correct": "FB-GEM"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-04-001", "unit": "04", "audience": "kids", "level": "pemula", "step": 1, "type": "pick_image", "skills": ["MEAS-LENGTH"], "pool": "PRACT", "order": 34, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana yang paling panjang?", "en": "Which is the longest?"}}],
+      "options": [
+        {"id": "i0", "image": "length_long", "correct": true},
+        {"id": "i1", "image": "length_short"},
+        {"id": "i2", "image": "length_medium"}
+      ],
+      "model_answer": {"id": "Pensil yang paling panjang ujungnya paling jauh dari garis awal.", "en": "The longest pencil reaches furthest from the starting line."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MEASURE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-04-002", "unit": "04", "audience": "kids", "level": "pemula", "step": 1, "type": "choose", "skills": ["MEAS-WEIGHT"], "pool": "PRACT", "order": 35, "prompt_id": "P-CHOOSE",
+      "image": "balance_left_heavy",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana yang lebih berat?", "en": "Which is heavier?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "Benda di kiri", "en": "The one on the left"}, "correct": true},
+        {"id": "b", "text": {"id": "Benda di kanan", "en": "The one on the right"}},
+        {"id": "c", "text": {"id": "Sama berat", "en": "They weigh the same"}}
+      ],
+      "model_answer": {"id": "Benda di kiri lebih berat, karena piringnya turun.", "en": "The one on the left is heavier, because its pan has gone down."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-BALANCE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-04-003", "unit": "04", "audience": "kids", "level": "pemula", "step": 1, "type": "order", "skills": ["MEAS-LENGTH"], "pool": "PRACT", "order": 36, "prompt_id": "P-ORDER-SHORT",
+      "options": [
+        {"id": "p_long", "image": "length_long"},
+        {"id": "p_short", "image": "length_short"},
+        {"id": "p_med", "image": "length_medium"}
+      ],
+      "solution": ["p_short", "p_med", "p_long"],
+      "model_answer": {"id": "Pendek, sedang, lalu panjang.", "en": "Short, medium, then long."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MEASURE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-04-004", "unit": "04", "audience": "kids", "level": "pemula", "step": 1, "type": "estimate_slider", "skills": ["MEAS-UNITS"], "pool": "PRACT", "order": 37, "prompt_id": "P-ESTIMATE",
+      "image": "pic_pencil",
+      "help_lines": [{"word": "", "meaning": {"id": "Kira-kira berapa cm pensil baru?", "en": "About how many cm is a new pencil?"}}],
+      "numeric": {"value": 18, "tolerance": 4, "unit": {"id": "cm", "en": "cm"}},
+      "slider": {"min": 0, "max": 50, "step": 1},
+      "model_answer": {"id": "Kira-kira 18 cm. Tebakan 14–22 cm sudah bagus!", "en": "About 18 cm. Any guess from 14 to 22 cm is good!"},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-ESTIMATE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-04-005", "unit": "04", "audience": "kids", "level": "pemula", "step": 1, "type": "pick_image", "skills": ["MEAS-UNITS"], "pool": "PRACT", "order": 38, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Berat beras diukur dengan satuan apa?", "en": "Which unit measures the weight of rice?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "sentimeter (cm)", "en": "centimetres (cm)"}, "image": "length_medium"},
+        {"id": "b", "text": {"id": "jam", "en": "hours"}, "image": "clock_3_00"},
+        {"id": "c", "text": {"id": "kilogram (kg)", "en": "kilograms (kg)"}, "image": "balance_even", "correct": true}
+      ],
+      "model_answer": {"id": "Kilogram (kg). Misalnya, Ibu membeli 5 kg beras.", "en": "Kilograms (kg). For example, Mum buys 5 kg of rice."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-04-006", "unit": "04", "audience": "kids", "level": "pemula", "step": 1, "type": "true_false", "skills": ["MEAS-WEIGHT"], "pool": "PRACT", "order": 39, "prompt_id": "P-TF",
+      "help_lines": [{"word": "", "meaning": {"id": "Satu kilogram kapas lebih ringan daripada satu kilogram besi.", "en": "One kilogram of cotton wool is lighter than one kilogram of iron."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}, "correct": true}
+      ],
+      "model_answer": {"id": "Keduanya sama berat, yaitu 1 kg! Kapas hanya terlihat lebih besar.", "en": "They weigh the same: 1 kg each! The cotton just takes up more space."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-04-007", "unit": "04", "audience": "kids", "level": "pemula", "step": 2, "type": "number_input", "skills": ["MEAS-LENGTH"], "pool": "PRACT", "order": 40, "prompt_id": "P-NUM",
+      "image": "pic_table",
+      "help_lines": [{"word": "", "meaning": {"id": "Meja Sinta 6 jengkal, meja Dodi 4 jengkal (tangan yang sama). Selisihnya berapa jengkal?", "en": "Sinta's table is 6 spans, Dodi's is 4 (same hand). How many spans longer is Sinta's?"}}],
+      "numeric": {"value": 2, "tolerance": 0, "unit": {"id": "jengkal", "en": "hand spans"}},
+      "model_answer": {"id": "6 − 4 = 2. Meja Sinta lebih panjang 2 jengkal.", "en": "6 − 4 = 2. Sinta's table is 2 hand spans longer."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MEASURE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-04-008", "unit": "04", "audience": "kids", "level": "pemula", "step": 2, "type": "order", "skills": ["MEAS-LENGTH"], "pool": "PRACT", "order": 41, "prompt_id": "P-ORDER-SHORT",
+      "options": [
+        {"id": "door", "text": {"id": "pintu kelas", "en": "classroom door"}, "image": "pic_door"},
+        {"id": "ant", "text": {"id": "semut", "en": "ant"}},
+        {"id": "pole", "text": {"id": "tiang bendera", "en": "flagpole"}},
+        {"id": "pencil", "text": {"id": "pensil", "en": "pencil"}, "image": "pic_pencil"}
+      ],
+      "solution": ["ant", "pencil", "door", "pole"],
+      "model_answer": {"id": "Semut, pensil, pintu kelas, lalu tiang bendera.", "en": "Ant, pencil, classroom door, then flagpole."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MEASURE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-04-009", "unit": "04", "audience": "kids", "level": "pemula", "step": 2, "type": "pick_image", "skills": ["MEAS-WEIGHT"], "pool": "PRACT", "order": 42, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana yang sama berat?", "en": "Which one is balanced?"}}],
+      "options": [
+        {"id": "i0", "image": "balance_right_heavy"},
+        {"id": "i1", "image": "balance_even", "correct": true},
+        {"id": "i2", "image": "balance_left_heavy"}
+      ],
+      "model_answer": {"id": "Kalau kedua sisi sama berat, timbangan seimbang dan datar.", "en": "When both sides weigh the same, the balance stays level."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-BALANCE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-04-010", "unit": "04", "audience": "kids", "level": "pemula", "step": 2, "type": "estimate_slider", "skills": ["MEAS-UNITS"], "pool": "PRACT", "order": 43, "prompt_id": "P-ESTIMATE",
+      "image": "pic_cat",
+      "help_lines": [{"word": "", "meaning": {"id": "Kira-kira berapa kg kucing dewasa?", "en": "About how many kg is an adult cat?"}}],
+      "numeric": {"value": 4, "tolerance": 2, "unit": {"id": "kg", "en": "kg"}},
+      "slider": {"min": 0, "max": 20, "step": 1},
+      "model_answer": {"id": "Sekitar 4 kg (antara 3 dan 5 kg).", "en": "About 4 kg (between 3 and 5 kg)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-ESTIMATE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-04-011", "unit": "04", "audience": "kids", "level": "pemula", "step": 2, "type": "number_input", "skills": ["MEAS-UNITS"], "pool": "PRACT", "order": 44, "prompt_id": "P-NUM",
+      "help_lines": [{"word": "", "meaning": {"id": "Pita 15 cm dipotong 6 cm. Sisanya berapa cm?", "en": "A 15 cm ribbon has 6 cm cut off. How many cm are left?"}}],
+      "numeric": {"value": 9, "tolerance": 0, "unit": {"id": "cm", "en": "cm"}},
+      "model_answer": {"id": "15 cm − 6 cm = 9 cm.", "en": "15 cm − 6 cm = 9 cm."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-04-012", "unit": "04", "audience": "kids", "level": "pemula", "step": 1, "type": "pick_image", "skills": ["MEAS-LENGTH"], "pool": "REMED", "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana yang paling pendek?", "en": "Which is the shortest?"}}],
+      "options": [
+        {"id": "i0", "image": "length_medium"},
+        {"id": "i1", "image": "length_short", "correct": true},
+        {"id": "i2", "image": "length_long"}
+      ],
+      "model_answer": {"id": "Pensil yang paling pendek ujungnya paling dekat dengan garis awal.", "en": "The shortest pencil ends closest to the starting line."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MEASURE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-04-013", "unit": "04", "audience": "kids", "level": "pemula", "step": 1, "type": "choose", "skills": ["MEAS-WEIGHT"], "pool": "REMED", "prompt_id": "P-CHOOSE",
+      "image": "balance_right_heavy",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana yang lebih ringan?", "en": "Which is lighter?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "Benda di kanan", "en": "The one on the right"}},
+        {"id": "b", "text": {"id": "Sama berat", "en": "They weigh the same"}},
+        {"id": "c", "text": {"id": "Benda di kiri", "en": "The one on the left"}, "correct": true}
+      ],
+      "model_answer": {"id": "Benda di kiri lebih ringan, karena piringnya naik ke atas.", "en": "The one on the left is lighter, because its pan has gone up."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-BALANCE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-04-014", "unit": "04", "audience": "kids", "level": "pemula", "step": 1, "type": "info_card", "skills": ["MEAS-LENGTH"], "pool": "GEM", "gem": true, "prompt_id": "P-GEM",
+      "image": "sense_hand",
+      "source": "KBBI daring (kbbi.kemdikbud.go.id), entries 'jengkal', 'hasta' and 'depa'; Vitruvius, De architectura, Book III ch. 1 (outstretched arms measure about the same as a person's height).",
+      "model_answer": {"id": "Dulu orang mengukur dengan tubuhnya: jengkal (ibu jari sampai kelingking direntangkan), hasta (siku sampai ujung jari tengah), dan depa (kedua lengan direntangkan). Ukur depamu bersama teman: biasanya hampir sama dengan tinggi badanmu!", "en": "Long ago, people measured with their bodies: the jengkal or hand span (thumb to little finger, stretched), the hasta (elbow to middle fingertip) and the depa (both arms stretched out). Measure your depa with a friend: it's usually almost your height!"},
+      "feedback_ids": {"correct": "FB-GEM"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-05-001", "unit": "05", "audience": "kids", "level": "pemula", "step": 1, "type": "choose", "skills": ["TIME-HOUR"], "pool": "PRACT", "order": 45, "prompt_id": "P-CLOCK",
+      "image": "clock_3_00",
+      "options": [
+        {"id": "a", "text": {"id": "pukul 12.15", "en": "12:15"}},
+        {"id": "b", "text": {"id": "pukul 03.00", "en": "3 o'clock"}, "correct": true},
+        {"id": "c", "text": {"id": "pukul 06.00", "en": "6 o'clock"}}
+      ],
+      "model_answer": {"id": "Pukul 03.00: jarum pendek di 3, jarum panjang di 12.", "en": "3 o'clock: short hand on 3, long hand on 12."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-CLOCK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-05-002", "unit": "05", "audience": "kids", "level": "pemula", "step": 1, "type": "pick_image", "skills": ["TIME-HOUR"], "pool": "PRACT", "order": 46, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Pukul 09.00", "en": "9 o'clock"}}],
+      "options": [
+        {"id": "i0", "image": "clock_9_00", "correct": true},
+        {"id": "i1", "image": "clock_3_00"},
+        {"id": "i2", "image": "clock_9_30"}
+      ],
+      "model_answer": {"id": "Pukul 09.00: jarum pendek di 9, jarum panjang di 12.", "en": "9 o'clock: short hand on 9, long hand on 12."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-CLOCK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-05-003", "unit": "05", "audience": "kids", "level": "pemula", "step": 1, "type": "order", "skills": ["TIME-CALENDAR"], "pool": "PRACT", "order": 47, "prompt_id": "P-ORDER",
+      "help_lines": [{"word": "", "meaning": {"id": "Hari sekolah, mulai Senin.", "en": "School days, starting Monday."}}],
+      "options": [
+        {"id": "d3", "text": {"id": "Rabu", "en": "Wednesday"}},
+        {"id": "d1", "text": {"id": "Senin", "en": "Monday"}},
+        {"id": "d5", "text": {"id": "Jumat", "en": "Friday"}},
+        {"id": "d2", "text": {"id": "Selasa", "en": "Tuesday"}},
+        {"id": "d4", "text": {"id": "Kamis", "en": "Thursday"}}
+      ],
+      "solution": ["d1", "d2", "d3", "d4", "d5"],
+      "model_answer": {"id": "Senin, Selasa, Rabu, Kamis, Jumat.", "en": "Monday, Tuesday, Wednesday, Thursday, Friday."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-CALENDAR", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-05-004", "unit": "05", "audience": "kids", "level": "pemula", "step": 1, "type": "match_pairs", "skills": ["TIME-HOUR"], "pool": "PRACT", "order": 48, "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {"id": "c7", "image": "clock_7_00"},
+        {"id": "c12", "image": "clock_12_00"},
+        {"id": "c4", "image": "clock_4_00"},
+        {"id": "t4", "text": {"id": "pukul 04.00", "en": "4 o'clock"}},
+        {"id": "t7", "text": {"id": "pukul 07.00", "en": "7 o'clock"}},
+        {"id": "t12", "text": {"id": "pukul 12.00", "en": "12 o'clock"}}
+      ],
+      "solution_pairs": {"c7": "t7", "c12": "t12", "c4": "t4"},
+      "model_answer": {"id": "Jarum pendek di 7, 12, dan 4; jarum panjang di 12.", "en": "Short hand on 7, 12 and 4; long hand on 12."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-CLOCK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-05-005", "unit": "05", "audience": "kids", "level": "pemula", "step": 1, "type": "true_false", "skills": ["TIME-HOUR"], "pool": "PRACT", "order": 49, "prompt_id": "P-TF",
+      "image": "clock_5_00",
+      "help_lines": [{"word": "", "meaning": {"id": "Pada pukul 05.00, jarum panjang menunjuk angka 12.", "en": "At 5 o'clock, the long hand points to 12."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}, "correct": true},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}}
+      ],
+      "model_answer": {"id": "Pada jam tepat, jarum panjang selalu menunjuk angka 12.", "en": "On the hour, the long hand always points to 12."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-CLOCK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-05-006", "unit": "05", "audience": "kids", "level": "pemula", "step": 1, "type": "choose", "skills": ["TIME-CALENDAR"], "pool": "PRACT", "order": 50, "prompt_id": "P-CHOOSE",
+      "help_lines": [{"word": "", "meaning": {"id": "Kemarin hari Rabu. Hari ini hari apa?", "en": "Yesterday was Wednesday. What day is it today?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "Selasa", "en": "Tuesday"}},
+        {"id": "b", "text": {"id": "Kamis", "en": "Thursday"}, "correct": true},
+        {"id": "c", "text": {"id": "Jumat", "en": "Friday"}}
+      ],
+      "model_answer": {"id": "Sesudah Rabu adalah Kamis.", "en": "After Wednesday comes Thursday."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-CALENDAR", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-05-007", "unit": "05", "audience": "kids", "level": "pemula", "step": 2, "type": "pick_image", "skills": ["TIME-HALF"], "pool": "PRACT", "order": 51, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Setengah lima (04.30)", "en": "Half past four (4:30)"}}],
+      "options": [
+        {"id": "i0", "image": "clock_4_00"},
+        {"id": "i1", "image": "clock_5_30"},
+        {"id": "i2", "image": "clock_4_30", "correct": true}
+      ],
+      "model_answer": {"id": "Setengah lima artinya setengah jam sebelum pukul 05.00, yaitu pukul 04.30.", "en": "Half past four is 4:30. In Indonesian it's called setengah lima, 'half to five'."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-HALF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-05-008", "unit": "05", "audience": "kids", "level": "pemula", "step": 2, "type": "choose", "skills": ["TIME-HALF"], "pool": "PRACT", "order": 52, "prompt_id": "P-CLOCK",
+      "image": "clock_7_30",
+      "options": [
+        {"id": "a", "text": {"id": "pukul 07.30 (setengah delapan)", "en": "7:30 (half past seven)"}, "correct": true},
+        {"id": "b", "text": {"id": "pukul 06.30 (setengah tujuh)", "en": "6:30 (half past six)"}},
+        {"id": "c", "text": {"id": "pukul 08.30 (setengah sembilan)", "en": "8:30 (half past eight)"}}
+      ],
+      "model_answer": {"id": "Pukul 07.30 (setengah delapan): jarum panjang di 6.", "en": "7:30 (half past seven): the long hand is on 6."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-HALF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-05-009", "unit": "05", "audience": "kids", "level": "pemula", "step": 2, "type": "order", "skills": ["TIME-CALENDAR"], "pool": "PRACT", "order": 53, "prompt_id": "P-ORDER",
+      "help_lines": [{"word": "", "meaning": {"id": "Sesuai urutan kalender.", "en": "In calendar order."}}],
+      "options": [
+        {"id": "m8", "text": {"id": "Agustus", "en": "August"}},
+        {"id": "m6", "text": {"id": "Juni", "en": "June"}},
+        {"id": "m5", "text": {"id": "Mei", "en": "May"}},
+        {"id": "m7", "text": {"id": "Juli", "en": "July"}}
+      ],
+      "solution": ["m5", "m6", "m7", "m8"],
+      "model_answer": {"id": "Mei, Juni, Juli, Agustus.", "en": "May, June, July, August."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-CALENDAR", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-05-010", "unit": "05", "audience": "kids", "level": "pemula", "step": 2, "type": "match_pairs", "skills": ["TIME-CALENDAR"], "pool": "PRACT", "order": 54, "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "options": [
+        {"id": "k1", "text": {"id": "1 minggu", "en": "1 week"}},
+        {"id": "k2", "text": {"id": "1 tahun", "en": "1 year"}},
+        {"id": "k3", "text": {"id": "1 hari", "en": "1 day"}},
+        {"id": "k4", "text": {"id": "1 jam", "en": "1 hour"}},
+        {"id": "v3", "text": {"id": "24 jam", "en": "24 hours"}},
+        {"id": "v1", "text": {"id": "7 hari", "en": "7 days"}},
+        {"id": "v4", "text": {"id": "60 menit", "en": "60 minutes"}},
+        {"id": "v2", "text": {"id": "12 bulan", "en": "12 months"}}
+      ],
+      "solution_pairs": {"k1": "v1", "k2": "v2", "k3": "v3", "k4": "v4"},
+      "model_answer": {"id": "1 minggu = 7 hari, 1 tahun = 12 bulan, 1 hari = 24 jam, 1 jam = 60 menit.", "en": "1 week = 7 days, 1 year = 12 months, 1 day = 24 hours, 1 hour = 60 minutes."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-CALENDAR", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-05-011", "unit": "05", "audience": "kids", "level": "pemula", "step": 2, "type": "number_input", "skills": ["TIME-CALENDAR"], "pool": "PRACT", "order": 55, "prompt_id": "P-NUM",
+      "help_lines": [{"word": "", "meaning": {"id": "Hari ini 10 Agustus. Berapa hari lagi menuju Hari Kemerdekaan (17 Agustus)?", "en": "Today is 10 August. How many days to Independence Day (17 August)?"}}],
+      "numeric": {"value": 7, "tolerance": 0, "unit": {"id": "hari", "en": "days"}},
+      "model_answer": {"id": "17 − 10 = 7. Tinggal 7 hari lagi.", "en": "17 − 10 = 7. Just 7 more days."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-CALENDAR", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-05-012", "unit": "05", "audience": "kids", "level": "pemula", "step": 1, "type": "choose", "skills": ["TIME-HOUR"], "pool": "REMED", "prompt_id": "P-CLOCK",
+      "image": "clock_10_00",
+      "options": [
+        {"id": "a", "text": {"id": "pukul 11.00", "en": "11 o'clock"}},
+        {"id": "b", "text": {"id": "pukul 12.50", "en": "12:50"}},
+        {"id": "c", "text": {"id": "pukul 10.00", "en": "10 o'clock"}, "correct": true}
+      ],
+      "model_answer": {"id": "Pukul 10.00: jarum pendek di 10, jarum panjang di 12.", "en": "10 o'clock: short hand on 10, long hand on 12."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-CLOCK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-05-013", "unit": "05", "audience": "kids", "level": "pemula", "step": 2, "type": "pick_image", "skills": ["TIME-HALF"], "pool": "REMED", "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Setengah tiga (02.30)", "en": "Half past two (2:30)"}}],
+      "options": [
+        {"id": "i0", "image": "clock_2_30", "correct": true},
+        {"id": "i1", "image": "clock_3_30"},
+        {"id": "i2", "image": "clock_2_00"}
+      ],
+      "model_answer": {"id": "Setengah tiga = 02.30: jarum pendek di antara 2 dan 3.", "en": "Half past two = 2:30: the short hand is between 2 and 3."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-HALF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-05-014", "unit": "05", "audience": "kids", "level": "pemula", "step": 2, "type": "info_card", "skills": ["TIME-HOUR"], "pool": "GEM", "gem": true, "prompt_id": "P-GEM",
+      "source": "Encyclopaedia Britannica, 'sexagesimal number system' and 'Mesopotamian mathematics'; O. Neugebauer, The Exact Sciences in Antiquity (2nd ed., 1957), on Babylonian base-60 reckoning and its use for time and angles.",
+      "model_answer": {"id": "Kenapa satu jam ada 60 menit? Kebiasaan membagi dengan 60 berasal dari Mesopotamia kuno (Sumeria dan Babilonia), lebih dari 4.000 tahun lalu. Bilangan 60 mudah dibagi rata: oleh 2, 3, 4, 5, 6, 10, 12, 15, 20, dan 30.", "en": "Why does an hour have 60 minutes? Dividing by 60 comes from ancient Mesopotamia (the Sumerians and Babylonians), over 4,000 years ago. 60 shares out evenly by 2, 3, 4, 5, 6, 10, 12, 15, 20 and 30."},
+      "feedback_ids": {"correct": "FB-GEM"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-06-001", "unit": "06", "audience": "kids", "level": "pemula", "step": 1, "type": "choose", "skills": ["MONEY-AMOUNT"], "pool": "PRACT", "order": 56, "prompt_id": "P-CHOOSE",
+      "image": "note_generic",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana yang nilainya paling besar?", "en": "Which one is worth the most?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "Rp2.000", "en": "Rp2,000"}},
+        {"id": "b", "text": {"id": "Rp500", "en": "Rp500"}},
+        {"id": "c", "text": {"id": "Rp5.000", "en": "Rp5,000"}, "correct": true},
+        {"id": "d", "text": {"id": "Rp1.000", "en": "Rp1,000"}}
+      ],
+      "model_answer": {"id": "Rp5.000 nilainya paling besar.", "en": "Rp5,000 is worth the most."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MONEY", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-06-002", "unit": "06", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["MONEY-AMOUNT"], "pool": "PRACT", "order": 57, "prompt_id": "P-NUM",
+      "image": "coin_generic",
+      "help_lines": [{"word": "", "meaning": {"id": "3 koin Rp500. Berapa rupiah?", "en": "Three Rp500 coins. How many rupiah?"}}],
+      "numeric": {"value": 1500, "tolerance": 0, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "model_answer": {"id": "Rp500 + Rp500 + Rp500 = Rp1.500.", "en": "Rp500 + Rp500 + Rp500 = Rp1,500."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MONEY", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-06-003", "unit": "06", "audience": "kids", "level": "pemula", "step": 1, "type": "choose", "skills": ["MONEY-AMOUNT"], "pool": "PRACT", "order": 58, "prompt_id": "P-CHOOSE",
+      "image": "pic_pencil",
+      "help_lines": [{"word": "", "meaning": {"id": "Pensil Rp3.000. Mana yang pas?", "en": "A pencil costs Rp3,000. Which adds up exactly?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "Rp2.000 + Rp500", "en": "Rp2,000 + Rp500"}},
+        {"id": "b", "text": {"id": "Rp1.000 + Rp1.000", "en": "Rp1,000 + Rp1,000"}},
+        {"id": "c", "text": {"id": "Rp2.000 + Rp1.000", "en": "Rp2,000 + Rp1,000"}, "correct": true}
+      ],
+      "model_answer": {"id": "Rp2.000 + Rp1.000 = Rp3.000, pas!", "en": "Rp2,000 + Rp1,000 = Rp3,000, exactly right!"},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MONEY", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-06-004", "unit": "06", "audience": "kids", "level": "pemula", "step": 1, "type": "tiles", "skills": ["MONEY-AMOUNT"], "pool": "PRACT", "order": 59, "prompt_id": "P-TILES",
+      "image": "note_generic",
+      "help_lines": [{"word": "", "meaning": {"id": "Bayar pas Rp7.000 dengan 2 lembar uang kertas. Yang besar dulu.", "en": "Pay exactly Rp7,000 with 2 notes. Bigger one first."}}],
+      "options": [
+        {"id": "m1000", "text": {"id": "Rp1.000", "en": "Rp1,000"}},
+        {"id": "m5000", "text": {"id": "Rp5.000", "en": "Rp5,000"}},
+        {"id": "m500", "text": {"id": "Rp500", "en": "Rp500"}},
+        {"id": "m2000", "text": {"id": "Rp2.000", "en": "Rp2,000"}},
+        {"id": "m10000", "text": {"id": "Rp10.000", "en": "Rp10,000"}}
+      ],
+      "solution": ["m5000", "m2000"],
+      "model_answer": {"id": "Rp5.000 + Rp2.000 = Rp7.000.", "en": "Rp5,000 + Rp2,000 = Rp7,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MONEY", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-06-005", "unit": "06", "audience": "kids", "level": "pemula", "step": 1, "type": "true_false", "skills": ["MONEY-AMOUNT"], "pool": "PRACT", "order": 60, "prompt_id": "P-TF",
+      "image": "coin_generic",
+      "help_lines": [{"word": "", "meaning": {"id": "Dua koin Rp500 sama nilainya dengan Rp1.000.", "en": "Two Rp500 coins are worth the same as Rp1,000."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}, "correct": true},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}}
+      ],
+      "model_answer": {"id": "Rp500 + Rp500 = Rp1.000.", "en": "Rp500 + Rp500 = Rp1,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MONEY", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-06-006", "unit": "06", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["MONEY-CHANGE"], "pool": "PRACT", "order": 61, "prompt_id": "P-NUM",
+      "image": "pic_cake",
+      "help_lines": [{"word": "", "meaning": {"id": "Kue Rp3.000, dibayar Rp5.000. Kembaliannya berapa?", "en": "A Rp3,000 cake, paid with Rp5,000. How much change?"}}],
+      "numeric": {"value": 2000, "tolerance": 0, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "model_answer": {"id": "Rp5.000 − Rp3.000 = Rp2.000.", "en": "Rp5,000 − Rp3,000 = Rp2,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-CHANGE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-06-007", "unit": "06", "audience": "kids", "level": "pemula", "step": 2, "type": "choose", "skills": ["MONEY-CHANGE"], "pool": "PRACT", "order": 62, "prompt_id": "P-CHOOSE",
+      "image": "pic_vegetables",
+      "help_lines": [{"word": "", "meaning": {"id": "Sayur Rp8.000, dibayar Rp10.000. Kembaliannya?", "en": "Vegetables cost Rp8,000, paid with Rp10,000. How much change?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "Rp2.000", "en": "Rp2,000"}, "correct": true},
+        {"id": "b", "text": {"id": "Rp18.000", "en": "Rp18,000"}},
+        {"id": "c", "text": {"id": "Rp3.000", "en": "Rp3,000"}}
+      ],
+      "model_answer": {"id": "Rp10.000 − Rp8.000 = Rp2.000.", "en": "Rp10,000 − Rp8,000 = Rp2,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-CHANGE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-06-008", "unit": "06", "audience": "kids", "level": "pemula", "step": 2, "type": "tiles", "skills": ["MONEY-CHANGE"], "pool": "PRACT", "order": 63, "prompt_id": "P-TILES",
+      "image": "sticker_kite",
+      "help_lines": [{"word": "", "meaning": {"id": "Layang-layang Rp4.000, dibayar Rp5.000.", "en": "A Rp4,000 kite, paid with Rp5,000."}}, {"word": "", "meaning": {"id": "Susun: dibayar − harga = kembalian.", "en": "Build: paid − price = change."}}],
+      "options": [
+        {"id": "x4", "text": {"id": "Rp4.000", "en": "Rp4,000"}},
+        {"id": "eq", "text": {"id": "=", "en": "="}},
+        {"id": "x9", "text": {"id": "Rp9.000", "en": "Rp9,000"}},
+        {"id": "x5", "text": {"id": "Rp5.000", "en": "Rp5,000"}},
+        {"id": "plus", "text": {"id": "+", "en": "+"}},
+        {"id": "x1", "text": {"id": "Rp1.000", "en": "Rp1,000"}},
+        {"id": "minus", "text": {"id": "−", "en": "−"}}
+      ],
+      "solution": ["x5", "minus", "x4", "eq", "x1"],
+      "model_answer": {"id": "Rp5.000 − Rp4.000 = Rp1.000.", "en": "Rp5,000 − Rp4,000 = Rp1,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-CHANGE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-06-009", "unit": "06", "audience": "kids", "level": "pemula", "step": 2, "type": "number_input", "skills": ["MONEY-SAVE"], "pool": "PRACT", "order": 64, "prompt_id": "P-NUM",
+      "image": "sticker_book",
+      "help_lines": [{"word": "", "meaning": {"id": "Buku Rp10.000. Menabung Rp2.000 sehari. Berapa hari?", "en": "A Rp10,000 book. Saving Rp2,000 a day. How many days?"}}],
+      "numeric": {"value": 5, "tolerance": 0, "unit": {"id": "hari", "en": "days"}},
+      "model_answer": {"id": "Selama 5 hari: Rp2.000, Rp4.000, Rp6.000, Rp8.000, Rp10.000.", "en": "For 5 days: Rp2,000, Rp4,000, Rp6,000, Rp8,000, Rp10,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SKIP", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-06-010", "unit": "06", "audience": "kids", "level": "pemula", "step": 2, "type": "sort_buckets", "skills": ["MONEY-AMOUNT"], "pool": "PRACT", "order": 65, "prompt_id": "P-SORT",
+      "image": "pic_bread",
+      "help_lines": [{"word": "", "meaning": {"id": "Roti Rp4.000. Uangnya cukup?", "en": "The bread costs Rp4,000. Is the money enough?"}}],
+      "options": [
+        {"id": "b_yes", "text": {"id": "Cukup", "en": "Enough"}},
+        {"id": "b_no", "text": {"id": "Belum cukup", "en": "Not enough"}},
+        {"id": "u3", "text": {"id": "Rp1.000 + Rp2.000", "en": "Rp1,000 + Rp2,000"}},
+        {"id": "u1", "text": {"id": "Rp5.000", "en": "Rp5,000"}},
+        {"id": "u4", "text": {"id": "Rp500 + Rp500 + Rp2.000", "en": "Rp500 + Rp500 + Rp2,000"}},
+        {"id": "u2", "text": {"id": "Rp2.000 + Rp2.000", "en": "Rp2,000 + Rp2,000"}}
+      ],
+      "solution_pairs": {"u1": "b_yes", "u2": "b_yes", "u3": "b_no", "u4": "b_no"},
+      "model_answer": {"id": "Cukup: Rp5.000 dan Rp2.000 + Rp2.000. Dua lainnya hanya Rp3.000.", "en": "Enough: Rp5,000 and Rp2,000 + Rp2,000. The other two are only Rp3,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MONEY", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-06-011", "unit": "06", "audience": "kids", "level": "pemula", "step": 2, "type": "story_choice", "skills": ["MONEY-SAVE"], "pool": "PRACT", "order": 66, "prompt_id": "P-STORY",
+      "reading_id": "R-06-WARUNG",
+      "help_lines": [{"word": "", "meaning": {"id": "Apa yang sebaiknya Dina beli supaya masih bisa menabung Rp2.000?", "en": "What should Dina buy so she can still save Rp2,000?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "Susu kotak saja", "en": "Just the carton of milk"}},
+        {"id": "b", "text": {"id": "Roti saja", "en": "Just the bread"}, "correct": true},
+        {"id": "c", "text": {"id": "Roti dan sebuah pisang", "en": "The bread and one banana"}}
+      ],
+      "model_answer": {"id": "Roti saja: Rp5.000 − Rp3.000 = Rp2.000, pas untuk ditabung.", "en": "Just the bread: Rp5,000 − Rp3,000 = Rp2,000, exactly enough to save."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-06-012", "unit": "06", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["MONEY-AMOUNT"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "coin_generic",
+      "help_lines": [{"word": "", "meaning": {"id": "Rp2.000 dan 2 koin Rp500. Berapa semuanya?", "en": "Rp2,000 and two Rp500 coins. How much altogether?"}}],
+      "numeric": {"value": 3000, "tolerance": 0, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "model_answer": {"id": "Rp2.000 + Rp500 + Rp500 = Rp3.000.", "en": "Rp2,000 + Rp500 + Rp500 = Rp3,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MONEY", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-06-013", "unit": "06", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["MONEY-CHANGE"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "pic_pencil",
+      "help_lines": [{"word": "", "meaning": {"id": "Pensil Rp2.000, dibayar Rp5.000. Kembaliannya?", "en": "A Rp2,000 pencil, paid with Rp5,000. How much change?"}}],
+      "numeric": {"value": 3000, "tolerance": 0, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "model_answer": {"id": "Rp5.000 − Rp2.000 = Rp3.000.", "en": "Rp5,000 − Rp2,000 = Rp3,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-CHANGE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-06-014", "unit": "06", "audience": "kids", "level": "pemula", "step": 2, "type": "info_card", "skills": ["MONEY-AMOUNT"], "pool": "GEM", "gem": true, "prompt_id": "P-GEM",
+      "image": "note_generic",
+      "source": "Bank Indonesia, 'Ciri-Ciri Keaslian Uang Rupiah', Uang Rupiah Kertas Tahun Emisi 2016: kode tunanetra (blind code) berupa pasangan garis timbul di sisi kanan dan kiri, berbeda untuk setiap pecahan (bi.go.id).",
+      "model_answer": {"id": "Raba pinggir kiri dan kanan uang kertas rupiah: ada garis-garis kecil yang terasa kasar! Namanya kode tunanetra (blind code). Polanya berbeda untuk setiap nilai, sehingga teman tunanetra bisa mengenali uang dengan meraba. Minta izin orang tuamu dulu, ya.", "en": "Feel the left and right edges of a rupiah note: there are small raised lines! It's called a blind code. The pattern is different for each value, so blind people can tell notes apart by touch. Ask a grown-up first."},
+      "feedback_ids": {"correct": "FB-GEM"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-07-001", "unit": "07", "audience": "kids", "level": "pemula", "step": 1, "type": "pick_image", "skills": ["PATTERN-REPEAT"], "pool": "PRACT", "order": 67, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Berikutnya? mangga, pisang, mangga, pisang, mangga, …", "en": "What's next? mango, banana, mango, banana, mango, …"}}],
+      "options": [
+        {"id": "i0", "image": "fruit_mango"},
+        {"id": "i1", "image": "fruit_papaya"},
+        {"id": "i2", "image": "fruit_banana", "correct": true}
+      ],
+      "model_answer": {"id": "Pisang. Polanya mangga, pisang, lalu berulang.", "en": "Banana. The pattern is mango, banana, and then it repeats."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PATTERN", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-07-002", "unit": "07", "audience": "kids", "level": "pemula", "step": 1, "type": "fill_blank", "skills": ["PATTERN-REPEAT"], "pool": "PRACT", "order": 68, "prompt_id": "P-FILL",
+      "help_lines": [{"word": "", "meaning": {"id": "▲ ● ● ▲ ● ● ▲ __ ●", "en": "▲ ● ● ▲ ● ● ▲ __ ●"}}],
+      "options": [
+        {"id": "o_sq", "text": {"id": "■", "en": "■"}, "image": "shape_square"},
+        {"id": "o_tri", "text": {"id": "▲", "en": "▲"}, "image": "shape_triangle"},
+        {"id": "o_circ", "text": {"id": "●", "en": "●"}, "image": "shape_circle"}
+      ],
+      "solution": ["o_circ"],
+      "model_answer": {"id": "●. Bagian yang berulang: ▲ ● ●.", "en": "●. The part that repeats is ▲ ● ●."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PATTERN", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-07-003", "unit": "07", "audience": "kids", "level": "pemula", "step": 1, "type": "order", "skills": ["PATTERN-GROW"], "pool": "PRACT", "order": 69, "prompt_id": "P-ORDER-SMALL",
+      "help_lines": [{"word": "", "meaning": {"id": "Hitung loncat 5.", "en": "Count by 5s."}}],
+      "options": [
+        {"id": "n15", "text": {"id": "15", "en": "15"}},
+        {"id": "n5", "text": {"id": "5", "en": "5"}},
+        {"id": "n25", "text": {"id": "25", "en": "25"}},
+        {"id": "n10", "text": {"id": "10", "en": "10"}},
+        {"id": "n20", "text": {"id": "20", "en": "20"}}
+      ],
+      "solution": ["n5", "n10", "n15", "n20", "n25"],
+      "model_answer": {"id": "5, 10, 15, 20, 25. Setiap langkah bertambah 5.", "en": "5, 10, 15, 20, 25. Each step adds 5."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PATTERN", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-07-004", "unit": "07", "audience": "kids", "level": "pemula", "step": 1, "type": "sort_buckets", "skills": ["NUM-EVEN-ODD"], "pool": "PRACT", "order": 70, "prompt_id": "P-SORT",
+      "help_lines": [{"word": "", "meaning": {"id": "Genap atau ganjil?", "en": "Even or odd?"}}],
+      "options": [
+        {"id": "b_even", "text": {"id": "Genap", "en": "Even"}},
+        {"id": "b_odd", "text": {"id": "Ganjil", "en": "Odd"}},
+        {"id": "n12", "text": {"id": "12", "en": "12"}},
+        {"id": "n7", "text": {"id": "7", "en": "7"}},
+        {"id": "n20", "text": {"id": "20", "en": "20"}},
+        {"id": "n15", "text": {"id": "15", "en": "15"}},
+        {"id": "n8", "text": {"id": "8", "en": "8"}},
+        {"id": "n3", "text": {"id": "3", "en": "3"}}
+      ],
+      "solution_pairs": {"n12": "b_even", "n7": "b_odd", "n20": "b_even", "n15": "b_odd", "n8": "b_even", "n3": "b_odd"},
+      "model_answer": {"id": "Genap: 12, 20, 8. Ganjil: 7, 15, 3.", "en": "Even: 12, 20, 8. Odd: 7, 15, 3."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-EVEN", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-07-005", "unit": "07", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["PATTERN-GROW"], "pool": "PRACT", "order": 71, "prompt_id": "P-NUM",
+      "help_lines": [{"word": "", "meaning": {"id": "3, 6, 9, 12, … Berikutnya?", "en": "3, 6, 9, 12, … What's next?"}}],
+      "numeric": {"value": 15, "tolerance": 0},
+      "model_answer": {"id": "Bilangan berikutnya 15. Setiap langkah bertambah 3.", "en": "The next number is 15. Each step adds 3."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PATTERN", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-07-006", "unit": "07", "audience": "kids", "level": "pemula", "step": 1, "type": "true_false", "skills": ["NUM-EVEN-ODD"], "pool": "PRACT", "order": 72, "prompt_id": "P-TF",
+      "help_lines": [{"word": "", "meaning": {"id": "Bilangan 17 adalah bilangan genap.", "en": "17 is an even number."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}, "correct": true}
+      ],
+      "model_answer": {"id": "Bilangan 17 itu ganjil. Kalau dibagi dua sama rata, sisanya 1.", "en": "17 is odd. Share it into two equal groups and 1 is left over."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-EVEN", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-07-007", "unit": "07", "audience": "kids", "level": "pemula", "step": 2, "type": "fill_blank", "skills": ["PATTERN-GROW"], "pool": "PRACT", "order": 73, "prompt_id": "P-FILL",
+      "help_lines": [{"word": "", "meaning": {"id": "20, 30, 40, __, 60", "en": "20, 30, 40, __, 60"}}],
+      "options": [
+        {"id": "t41", "text": {"id": "41", "en": "41"}},
+        {"id": "t50", "text": {"id": "50", "en": "50"}},
+        {"id": "t45", "text": {"id": "45", "en": "45"}}
+      ],
+      "solution": ["t50"],
+      "model_answer": {"id": "Jawabannya 50. Polanya bertambah 10.", "en": "It's 50. The pattern adds 10 each time."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PATTERN", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-07-008", "unit": "07", "audience": "kids", "level": "pemula", "step": 2, "type": "choose", "skills": ["NUM-EVEN-ODD"], "pool": "PRACT", "order": 74, "prompt_id": "P-CHOOSE",
+      "image": "count_egg_9",
+      "help_lines": [{"word": "", "meaning": {"id": "Bisa dibagi rata ke 2 piring?", "en": "Can they be shared equally onto 2 plates?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "Bisa, tidak ada sisa", "en": "Yes, none left over"}},
+        {"id": "b", "text": {"id": "Tidak bisa, sisa 1 telur", "en": "No, 1 egg is left over"}, "correct": true}
+      ],
+      "model_answer": {"id": "Ada 9 telur: 4 + 4 = 8, sisa 1. Bilangan 9 ganjil.", "en": "9 eggs: 4 + 4 = 8, 1 left over. 9 is odd."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-EVEN", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-07-009", "unit": "07", "audience": "kids", "level": "pemula", "step": 2, "type": "sort_buckets", "skills": ["PATTERN-REPEAT"], "pool": "PRACT", "order": 75, "prompt_id": "P-SORT",
+      "help_lines": [{"word": "", "meaning": {"id": "Pola berulang atau pola bertambah?", "en": "Repeating pattern or growing pattern?"}}],
+      "options": [
+        {"id": "b_rep", "text": {"id": "Pola berulang", "en": "Repeating"}},
+        {"id": "b_grow", "text": {"id": "Pola bertambah", "en": "Growing"}},
+        {"id": "p2", "text": {"id": "2, 4, 6, 8, 10", "en": "2, 4, 6, 8, 10"}},
+        {"id": "p1", "text": {"id": "1, 2, 1, 2, 1, 2", "en": "1, 2, 1, 2, 1, 2"}},
+        {"id": "p3", "text": {"id": "▲ ● ▲ ● ▲ ●", "en": "▲ ● ▲ ● ▲ ●"}},
+        {"id": "p4", "text": {"id": "5, 10, 15, 20", "en": "5, 10, 15, 20"}},
+        {"id": "p5", "text": {"id": "merah, kuning, merah, kuning", "en": "red, yellow, red, yellow"}}
+      ],
+      "solution_pairs": {"p1": "b_rep", "p2": "b_grow", "p3": "b_rep", "p4": "b_grow", "p5": "b_rep"},
+      "model_answer": {"id": "Berulang: 1, 2, 1, 2; ▲ ● ▲ ●; merah, kuning. Bertambah: 2, 4, 6, 8, 10; 5, 10, 15, 20.", "en": "Repeating: 1, 2, 1, 2; ▲ ● ▲ ●; red, yellow. Growing: 2, 4, 6, 8, 10; 5, 10, 15, 20."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PATTERN", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-07-010", "unit": "07", "audience": "kids", "level": "pemula", "step": 2, "type": "pick_image", "skills": ["PATTERN-REPEAT"], "pool": "PRACT", "order": 76, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Pagar dicat putih, hijau, putih, hijau, … Bilah ke-10 warnanya?", "en": "A fence is painted white, green, white, green, … What colour is the 10th slat?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "Hijau", "en": "Green"}, "image": "pic_color_green", "correct": true},
+        {"id": "b", "text": {"id": "Putih", "en": "White"}, "image": "pic_color_white"}
+      ],
+      "model_answer": {"id": "Hijau: bilah bernomor genap selalu hijau.", "en": "Green: the even-numbered slats are always green."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PATTERN", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-07-011", "unit": "07", "audience": "kids", "level": "pemula", "step": 2, "type": "number_input", "skills": ["PATTERN-GROW"], "pool": "PRACT", "order": 77, "prompt_id": "P-NUM",
+      "help_lines": [{"word": "", "meaning": {"id": "5 pasang sandal. Hitung loncat 2: berapa semuanya?", "en": "5 pairs of sandals. Count by 2s: how many altogether?"}}],
+      "numeric": {"value": 10, "tolerance": 0},
+      "model_answer": {"id": "Hitung loncat: 2, 4, 6, 8, 10. Ada 10 sandal.", "en": "Count by 2s: 2, 4, 6, 8, 10. There are 10 sandals."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SKIP", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-07-012", "unit": "07", "audience": "kids", "level": "pemula", "step": 1, "type": "fill_blank", "skills": ["PATTERN-REPEAT"], "pool": "REMED", "prompt_id": "P-FILL",
+      "help_lines": [{"word": "", "meaning": {"id": "★ ☆ ☆ ★ ☆ ☆ ★ ☆ __", "en": "★ ☆ ☆ ★ ☆ ☆ ★ ☆ __"}}],
+      "options": [
+        {"id": "o_full", "text": {"id": "★", "en": "★"}},
+        {"id": "o_dot", "text": {"id": "●", "en": "●"}},
+        {"id": "o_empty", "text": {"id": "☆", "en": "☆"}}
+      ],
+      "solution": ["o_empty"],
+      "model_answer": {"id": "☆. Bagian yang berulang: ★ ☆ ☆.", "en": "☆. The part that repeats is ★ ☆ ☆."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PATTERN", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-07-013", "unit": "07", "audience": "kids", "level": "pemula", "step": 1, "type": "choose", "skills": ["NUM-EVEN-ODD"], "pool": "REMED", "prompt_id": "P-CHOOSE",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana bilangan ganjil?", "en": "Which number is odd?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "14", "en": "14"}},
+        {"id": "b", "text": {"id": "26", "en": "26"}},
+        {"id": "c", "text": {"id": "31", "en": "31"}, "correct": true},
+        {"id": "d", "text": {"id": "40", "en": "40"}}
+      ],
+      "model_answer": {"id": "Bilangan 31 ganjil, karena angka satuannya 1.", "en": "31 is odd, because it ends in 1."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-EVEN", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-07-014", "unit": "07", "audience": "kids", "level": "pemula", "step": 1, "type": "info_card", "skills": ["PATTERN-REPEAT"], "pool": "GEM", "gem": true, "prompt_id": "P-GEM",
+      "source": "Encyclopaedia Britannica, 'palindrome' (a word, verse, sentence or number that reads the same backward or forward).",
+      "model_answer": {"id": "Bilangan 121 dibaca sama dari depan dan dari belakang. Bilangan seperti ini disebut palindrom, misalnya 77, 303, dan 1.221. Kalimat juga bisa: baca 'kasur ini rusak' dari belakang, huruf demi huruf!", "en": "121 reads the same forwards and backwards. Numbers like this are palindromes, such as 77, 303 and 1,221. Sentences can be too: read 'never odd or even' backwards, letter by letter! In Indonesian, try 'kasur ini rusak'."},
+      "feedback_ids": {"correct": "FB-GEM"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-08-001", "unit": "08", "audience": "kids", "level": "pemula", "step": 1, "type": "pick_image", "skills": ["POS-WORDS"], "pool": "PRACT", "order": 78, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Kucing di dalam kotak.", "en": "The cat inside the box."}}],
+      "options": [
+        {"id": "i0", "image": "pos_cat_above"},
+        {"id": "i1", "image": "pos_cat_left"},
+        {"id": "i2", "image": "pos_cat_inside", "correct": true}
+      ],
+      "model_answer": {"id": "Kucingnya masuk ke dalam kotak.", "en": "The cat has climbed inside the box."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-POS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-08-002", "unit": "08", "audience": "kids", "level": "pemula", "step": 1, "type": "choose", "skills": ["POS-WORDS"], "pool": "PRACT", "order": 79, "prompt_id": "P-WHERE",
+      "image": "pos_cat_above",
+      "options": [
+        {"id": "a", "text": {"id": "di atas kotak", "en": "on top of the box"}, "correct": true},
+        {"id": "b", "text": {"id": "di dalam kotak", "en": "inside the box"}},
+        {"id": "c", "text": {"id": "di bawah kotak", "en": "under the box"}}
+      ],
+      "model_answer": {"id": "Kucing ada di atas kotak.", "en": "The cat is on top of the box."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-POS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-08-003", "unit": "08", "audience": "kids", "level": "pemula", "step": 1, "type": "tap_hotspot", "skills": ["POS-LEFT-RIGHT"], "pool": "PRACT", "order": 80, "prompt_id": "P-TAP",
+      "image": "scene_kampung_shapes",
+      "help_lines": [{"word": "", "meaning": {"id": "Apa yang di kiri rumah?", "en": "What is to the left of the house?"}}],
+      "options": [
+        {"id": "roof", "text": {"id": "atap", "en": "roof"}, "region": {"x": 0.3, "y": 0.2, "w": 0.36, "h": 0.22}},
+        {"id": "kite", "text": {"id": "layang-layang", "en": "kite"}, "region": {"x": 0.74, "y": 0.06, "w": 0.16, "h": 0.26}},
+        {"id": "board", "text": {"id": "papan pengumuman", "en": "noticeboard"}, "region": {"x": 0.72, "y": 0.56, "w": 0.22, "h": 0.18}},
+        {"id": "sun", "text": {"id": "matahari", "en": "sun"}, "region": {"x": 0.06, "y": 0.06, "w": 0.18, "h": 0.24}, "correct": true},
+        {"id": "wall", "text": {"id": "dinding", "en": "wall"}, "region": {"x": 0.34, "y": 0.44, "w": 0.28, "h": 0.37}}
+      ],
+      "model_answer": {"id": "Matahari ada di sebelah kiri rumah.", "en": "The sun is to the left of the house."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LR", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-08-004", "unit": "08", "audience": "kids", "level": "pemula", "step": 1, "type": "pick_image", "skills": ["POS-LEFT-RIGHT"], "pool": "PRACT", "order": 81, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Kucing di kanan kotak.", "en": "The cat to the right of the box."}}],
+      "options": [
+        {"id": "i0", "image": "pos_cat_right", "correct": true},
+        {"id": "i1", "image": "pos_cat_left"},
+        {"id": "i2", "image": "pos_cat_below"}
+      ],
+      "model_answer": {"id": "Kucing di kanan kotak, dilihat dari arahmu.", "en": "The cat is right of the box, as you look at it."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LR", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-08-005", "unit": "08", "audience": "kids", "level": "pemula", "step": 1, "type": "true_false", "skills": ["POS-WORDS"], "pool": "PRACT", "order": 82, "prompt_id": "P-TF",
+      "image": "pos_cat_below",
+      "help_lines": [{"word": "", "meaning": {"id": "Kucing ada di atas kotak.", "en": "The cat is on top of the box."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}, "correct": true}
+      ],
+      "model_answer": {"id": "Kucingnya ada di bawah, sedangkan kotaknya di atas.", "en": "The cat is underneath, and the box is up above it."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-POS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-08-006", "unit": "08", "audience": "kids", "level": "pemula", "step": 1, "type": "tap_hotspot", "skills": ["POS-WORDS"], "pool": "PRACT", "order": 83, "prompt_id": "P-TAP",
+      "image": "scene_kampung_shapes",
+      "help_lines": [{"word": "", "meaning": {"id": "Apa yang tepat di bawah layang-layang?", "en": "What is right below the kite?"}}],
+      "options": [
+        {"id": "sun", "text": {"id": "matahari", "en": "sun"}, "region": {"x": 0.06, "y": 0.06, "w": 0.18, "h": 0.24}},
+        {"id": "wall", "text": {"id": "dinding", "en": "wall"}, "region": {"x": 0.34, "y": 0.44, "w": 0.28, "h": 0.37}},
+        {"id": "board", "text": {"id": "papan pengumuman", "en": "noticeboard"}, "region": {"x": 0.72, "y": 0.56, "w": 0.22, "h": 0.18}, "correct": true},
+        {"id": "roof", "text": {"id": "atap", "en": "roof"}, "region": {"x": 0.3, "y": 0.2, "w": 0.36, "h": 0.22}},
+        {"id": "kite", "text": {"id": "layang-layang", "en": "kite"}, "region": {"x": 0.74, "y": 0.06, "w": 0.16, "h": 0.26}}
+      ],
+      "model_answer": {"id": "Papan pengumuman ada tepat di bawah layang-layang.", "en": "The noticeboard is right below the kite."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-POS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-08-007", "unit": "08", "audience": "kids", "level": "pemula", "step": 2, "type": "choose", "skills": ["POS-DIRECTION"], "pool": "PRACT", "order": 84, "prompt_id": "P-CHOOSE",
+      "help_lines": [{"word": "", "meaning": {"id": "Kamu menghadap papan tulis, lalu berbalik badan. Sekarang menghadap ke mana?", "en": "You face the board, then turn around. Which way are you facing now?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "Tetap ke papan tulis", "en": "Still towards the board"}},
+        {"id": "b", "text": {"id": "Ke samping", "en": "To the side"}},
+        {"id": "c", "text": {"id": "Ke belakang kelas", "en": "Towards the back of the classroom"}, "correct": true}
+      ],
+      "model_answer": {"id": "Setengah putaran: kini kamu menghadap ke belakang kelas.", "en": "A half turn: now you face the back of the classroom."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-08-008", "unit": "08", "audience": "kids", "level": "pemula", "step": 2, "type": "order", "skills": ["POS-DIRECTION"], "pool": "PRACT", "order": 85, "prompt_id": "P-ORDER",
+      "help_lines": [{"word": "", "meaning": {"id": "Dina: dari rumah lurus ke warung, belok kanan melewati lapangan, lalu sampai di sekolah. Urutkan tempatnya.", "en": "Dina walks from home to the warung, turns right past the field, then reaches school. Order the places."}}],
+      "options": [
+        {"id": "s", "text": {"id": "sekolah", "en": "school"}, "image": "pic_school"},
+        {"id": "w", "text": {"id": "warung", "en": "warung"}},
+        {"id": "h", "text": {"id": "rumah", "en": "home"}, "image": "pic_house"},
+        {"id": "f", "text": {"id": "lapangan", "en": "field"}}
+      ],
+      "solution": ["h", "w", "f", "s"],
+      "model_answer": {"id": "Rumah, warung, lapangan, lalu sekolah.", "en": "Home, warung, field, then school."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-08-009", "unit": "08", "audience": "kids", "level": "pemula", "step": 2, "type": "choose", "skills": ["POS-LEFT-RIGHT"], "pool": "PRACT", "order": 86, "prompt_id": "P-CHOOSE",
+      "help_lines": [{"word": "", "meaning": {"id": "Rumah Bu Ani di kiri warung. Warung di kiri sekolah. Mana yang di tengah?", "en": "Bu Ani's house is left of the warung. The warung is left of the school. Which is in the middle?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "Rumah Bu Ani", "en": "Bu Ani's house"}},
+        {"id": "b", "text": {"id": "Sekolah", "en": "The school"}},
+        {"id": "c", "text": {"id": "Warung", "en": "The warung"}, "correct": true}
+      ],
+      "model_answer": {"id": "Dari kiri: rumah Bu Ani, warung, sekolah. Warung di tengah.", "en": "From the left: house, warung, school. The warung is in the middle."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LR", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-08-010", "unit": "08", "audience": "kids", "level": "pemula", "step": 2, "type": "tap_hotspot", "skills": ["POS-WORDS"], "pool": "PRACT", "order": 87, "prompt_id": "P-TAP",
+      "image": "scene_kampung_shapes",
+      "help_lines": [{"word": "", "meaning": {"id": "Apa yang di atas dinding?", "en": "What is above the wall?"}}],
+      "options": [
+        {"id": "wall", "text": {"id": "dinding", "en": "wall"}, "region": {"x": 0.34, "y": 0.44, "w": 0.28, "h": 0.37}},
+        {"id": "sun", "text": {"id": "matahari", "en": "sun"}, "region": {"x": 0.06, "y": 0.06, "w": 0.18, "h": 0.24}},
+        {"id": "kite", "text": {"id": "layang-layang", "en": "kite"}, "region": {"x": 0.74, "y": 0.06, "w": 0.16, "h": 0.26}},
+        {"id": "roof", "text": {"id": "atap", "en": "roof"}, "region": {"x": 0.3, "y": 0.2, "w": 0.36, "h": 0.22}, "correct": true},
+        {"id": "board", "text": {"id": "papan pengumuman", "en": "noticeboard"}, "region": {"x": 0.72, "y": 0.56, "w": 0.22, "h": 0.18}}
+      ],
+      "model_answer": {"id": "Atap ada di atas dinding.", "en": "The roof is above the wall."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-POS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-08-011", "unit": "08", "audience": "kids", "level": "pemula", "step": 2, "type": "fill_blank", "skills": ["POS-LEFT-RIGHT"], "pool": "PRACT", "order": 88, "prompt_id": "P-FILL",
+      "help_lines": [{"word": "", "meaning": {"id": "Dari kiri: Ani, Budi, Cici, Dodo. Tepat di kanan Budi: __", "en": "From the left: Ani, Budi, Cici, Dodo. Right next to Budi, on his right: __"}}],
+      "options": [
+        {"id": "ani", "text": {"id": "Ani", "en": "Ani"}},
+        {"id": "dodo", "text": {"id": "Dodo", "en": "Dodo"}},
+        {"id": "cici", "text": {"id": "Cici", "en": "Cici"}}
+      ],
+      "solution": ["cici"],
+      "model_answer": {"id": "Cici. Urutan dari kiri: Ani, Budi, Cici, Dodo.", "en": "Cici. From the left: Ani, Budi, Cici, Dodo."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LR", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-08-012", "unit": "08", "audience": "kids", "level": "pemula", "step": 1, "type": "pick_image", "skills": ["POS-LEFT-RIGHT"], "pool": "REMED", "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Kucing di kiri kotak.", "en": "The cat to the left of the box."}}],
+      "options": [
+        {"id": "i0", "image": "pos_cat_right"},
+        {"id": "i1", "image": "pos_cat_left", "correct": true},
+        {"id": "i2", "image": "pos_cat_inside"}
+      ],
+      "model_answer": {"id": "Kucing di kiri kotak, dilihat dari arahmu.", "en": "The cat is left of the box, as you look at it."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LR", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-08-013", "unit": "08", "audience": "kids", "level": "pemula", "step": 1, "type": "choose", "skills": ["POS-WORDS"], "pool": "REMED", "prompt_id": "P-WHERE",
+      "image": "pos_cat_inside",
+      "options": [
+        {"id": "a", "text": {"id": "di samping kotak", "en": "next to the box"}},
+        {"id": "b", "text": {"id": "di dalam kotak", "en": "inside the box"}, "correct": true},
+        {"id": "c", "text": {"id": "di bawah kotak", "en": "under the box"}}
+      ],
+      "model_answer": {"id": "Kucing ada di dalam kotak.", "en": "The cat is inside the box."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-POS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-08-014", "unit": "08", "audience": "kids", "level": "pemula", "step": 2, "type": "info_card", "skills": ["POS-DIRECTION"], "pool": "GEM", "gem": true, "prompt_id": "P-GEM",
+      "image": "sticker_boat",
+      "source": "Gene Ammarell, Bugis Navigation (Yale University Southeast Asia Studies, 1999); UNESCO Intangible Cultural Heritage, 'Pinisi, art of boatbuilding in South Sulawesi' (Representative List, inscribed 2017).",
+      "model_answer": {"id": "Pelaut Bugis dari Sulawesi Selatan berlayar jauh mengarungi lautan Nusantara. Mereka menentukan arah dengan membaca bintang, angin, dan gelombang. Tahun 2017, UNESCO mengakui seni membuat kapal pinisi dari Sulawesi Selatan sebagai warisan budaya takbenda dunia.", "en": "Bugis sailors from South Sulawesi sailed far across the archipelago. They found their way by reading the stars, the wind and the waves. In 2017, UNESCO recognised the art of building pinisi boats in South Sulawesi as world intangible cultural heritage."},
+      "feedback_ids": {"correct": "FB-GEM"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-09-001", "unit": "09", "audience": "kids", "level": "pemula", "step": 1, "type": "sort_buckets", "skills": ["DATA-SORT"], "pool": "PRACT", "order": 89, "prompt_id": "P-SORT",
+      "help_lines": [{"word": "", "meaning": {"id": "Menurut jenis buahnya.", "en": "By kind of fruit."}}],
+      "options": [
+        {"id": "b_m", "text": {"id": "Mangga", "en": "Mango"}},
+        {"id": "b_b", "text": {"id": "Pisang", "en": "Banana"}},
+        {"id": "b_r", "text": {"id": "Rambutan", "en": "Rambutan"}},
+        {"id": "f1", "image": "fruit_banana"},
+        {"id": "f2", "image": "fruit_mango"},
+        {"id": "f3", "image": "fruit_rambutan"},
+        {"id": "f4", "image": "fruit_mango"},
+        {"id": "f5", "image": "fruit_banana"},
+        {"id": "f6", "image": "fruit_rambutan"}
+      ],
+      "solution_pairs": {"f1": "b_b", "f2": "b_m", "f3": "b_r", "f4": "b_m", "f5": "b_b", "f6": "b_r"},
+      "model_answer": {"id": "Setiap keranjang berisi 2 buah yang sama jenisnya.", "en": "Each basket gets 2 fruits of the same kind."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-DATA", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-09-002", "unit": "09", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["DATA-TALLY"], "pool": "PRACT", "order": 90, "prompt_id": "P-NUM",
+      "help_lines": [{"word": "", "meaning": {"id": "Turus: 2 kelompok lima dan 3 garis. Berapa jumlahnya?", "en": "Tally: 2 bundles of five and 3 lines. What's the total?"}}],
+      "numeric": {"value": 13, "tolerance": 0},
+      "model_answer": {"id": "5 + 5 + 3 = 13.", "en": "5 + 5 + 3 = 13."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-DATA", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-09-003", "unit": "09", "audience": "kids", "level": "pemula", "step": 1, "type": "pick_image", "skills": ["DATA-SORT"], "pool": "PRACT", "order": 91, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana yang bukan buah?", "en": "Which one isn't fruit?"}}],
+      "options": [
+        {"id": "a", "image": "fruit_mango"},
+        {"id": "b", "image": "fruit_papaya"},
+        {"id": "c", "image": "fruit_rambutan"},
+        {"id": "d", "image": "pic_vegetables", "correct": true}
+      ],
+      "model_answer": {"id": "Sayuran (misalnya wortel) bukan buah.", "en": "The vegetables (like a carrot) aren't fruit."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-DATA", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-09-004", "unit": "09", "audience": "kids", "level": "pemula", "step": 1, "type": "sort_buckets", "skills": ["DATA-SORT"], "pool": "PRACT", "order": 92, "prompt_id": "P-SORT",
+      "help_lines": [{"word": "", "meaning": {"id": "Genap atau ganjil? Lebih atau kurang dari 10?", "en": "Even or odd? More or less than 10?"}}],
+      "options": [
+        {"id": "b1", "text": {"id": "Genap, lebih dari 10", "en": "Even, more than 10"}},
+        {"id": "b2", "text": {"id": "Genap, kurang dari 10", "en": "Even, less than 10"}},
+        {"id": "b3", "text": {"id": "Ganjil", "en": "Odd"}},
+        {"id": "n14", "text": {"id": "14", "en": "14"}},
+        {"id": "n6", "text": {"id": "6", "en": "6"}},
+        {"id": "n9", "text": {"id": "9", "en": "9"}},
+        {"id": "n20", "text": {"id": "20", "en": "20"}},
+        {"id": "n4", "text": {"id": "4", "en": "4"}},
+        {"id": "n13", "text": {"id": "13", "en": "13"}}
+      ],
+      "solution_pairs": {"n14": "b1", "n6": "b2", "n9": "b3", "n20": "b1", "n4": "b2", "n13": "b3"},
+      "model_answer": {"id": "Genap dan lebih dari 10: 14, 20. Genap dan kurang dari 10: 6, 4. Ganjil: 9, 13.", "en": "Even and more than 10: 14, 20. Even and less than 10: 6, 4. Odd: 9, 13."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-DATA", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-09-005", "unit": "09", "audience": "kids", "level": "pemula", "step": 1, "type": "true_false", "skills": ["DATA-TALLY"], "pool": "PRACT", "order": 93, "prompt_id": "P-TF",
+      "help_lines": [{"word": "", "meaning": {"id": "Tiga kelompok turus lima artinya 15.", "en": "3 tally bundles of five make 15."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}, "correct": true},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}}
+      ],
+      "model_answer": {"id": "5 + 5 + 5 = 15.", "en": "5 + 5 + 5 = 15."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-DATA", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-09-006", "unit": "09", "audience": "kids", "level": "pemula", "step": 2, "type": "mini_reading", "skills": ["DATA-PICTO"], "pool": "PRACT", "order": 94, "prompt_id": "P-READ",
+      "reading_id": "R-09-BUAH",
+      "model_answer": {"id": "Setiap ● berarti satu anak. Hitung titik di setiap baris untuk tahu berapa anak yang memilih buah itu.", "en": "Each ● stands for one child. Count the dots in each row to find how many children chose that fruit."},
+      "feedback_ids": {"correct": "FB-READ"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-09-007", "unit": "09", "audience": "kids", "level": "pemula", "step": 2, "type": "number_input", "skills": ["DATA-PICTO"], "pool": "PRACT", "order": 95, "prompt_id": "P-NUM",
+      "image": "fruit_rambutan",
+      "reading_id": "R-09-BUAH",
+      "help_lines": [{"word": "", "meaning": {"id": "Berapa anak yang memilih rambutan?", "en": "How many children chose rambutan?"}}],
+      "numeric": {"value": 6, "tolerance": 0},
+      "model_answer": {"id": "Ada 6 titik di baris rambutan, jadi 6 anak.", "en": "There are 6 dots in the rambutan row, so 6 children."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-DATA", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-09-008", "unit": "09", "audience": "kids", "level": "pemula", "step": 2, "type": "pick_image", "skills": ["DATA-PICTO"], "pool": "PRACT", "order": 96, "prompt_id": "P-PICK",
+      "reading_id": "R-09-BUAH",
+      "help_lines": [{"word": "", "meaning": {"id": "Buah apa yang paling banyak dipilih?", "en": "Which fruit was chosen most?"}}],
+      "options": [
+        {"id": "b", "text": {"id": "Pisang", "en": "Banana"}, "image": "fruit_banana"},
+        {"id": "r", "text": {"id": "Rambutan", "en": "Rambutan"}, "image": "fruit_rambutan"},
+        {"id": "m", "text": {"id": "Mangga", "en": "Mango"}, "image": "fruit_mango", "correct": true},
+        {"id": "p", "text": {"id": "Pepaya", "en": "Papaya"}, "image": "fruit_papaya"}
+      ],
+      "model_answer": {"id": "Mangga, dengan 7 anak.", "en": "Mango, with 7 children."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-DATA", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-09-009", "unit": "09", "audience": "kids", "level": "pemula", "step": 2, "type": "number_input", "skills": ["DATA-PICTO"], "pool": "PRACT", "order": 97, "prompt_id": "P-NUM",
+      "reading_id": "R-09-BUAH",
+      "help_lines": [{"word": "", "meaning": {"id": "Berapa anak lebih banyak yang memilih mangga daripada pepaya?", "en": "How many more children chose mango than papaya?"}}],
+      "numeric": {"value": 5, "tolerance": 0},
+      "model_answer": {"id": "7 − 2 = 5.", "en": "7 − 2 = 5."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-DATA", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-09-010", "unit": "09", "audience": "kids", "level": "pemula", "step": 2, "type": "order", "skills": ["DATA-PICTO"], "pool": "PRACT", "order": 98, "prompt_id": "P-ORDER",
+      "reading_id": "R-09-BUAH",
+      "help_lines": [{"word": "", "meaning": {"id": "Dari yang paling sedikit dipilih.", "en": "From fewest votes to most."}}],
+      "options": [
+        {"id": "r", "text": {"id": "Rambutan", "en": "Rambutan"}, "image": "fruit_rambutan"},
+        {"id": "m", "text": {"id": "Mangga", "en": "Mango"}, "image": "fruit_mango"},
+        {"id": "p", "text": {"id": "Pepaya", "en": "Papaya"}, "image": "fruit_papaya"},
+        {"id": "b", "text": {"id": "Pisang", "en": "Banana"}, "image": "fruit_banana"}
+      ],
+      "solution": ["p", "b", "r", "m"],
+      "model_answer": {"id": "Pepaya (2), pisang (4), rambutan (6), mangga (7).", "en": "Papaya (2), banana (4), rambutan (6), mango (7)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-DATA", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-09-011", "unit": "09", "audience": "kids", "level": "pemula", "step": 2, "type": "number_input", "skills": ["DATA-PICTO"], "pool": "PRACT", "order": 99, "prompt_id": "P-NUM",
+      "reading_id": "R-09-BUAH",
+      "help_lines": [{"word": "", "meaning": {"id": "Berapa anak yang ikut memilih semuanya?", "en": "How many children voted altogether?"}}],
+      "numeric": {"value": 19, "tolerance": 0},
+      "model_answer": {"id": "7 + 4 + 6 + 2 = 19.", "en": "7 + 4 + 6 + 2 = 19."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-DATA", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-09-012", "unit": "09", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["DATA-TALLY"], "pool": "REMED", "prompt_id": "P-NUM",
+      "help_lines": [{"word": "", "meaning": {"id": "Turus: 1 kelompok lima dan 4 garis. Berapa jumlahnya?", "en": "Tally: 1 bundle of five and 4 lines. What's the total?"}}],
+      "numeric": {"value": 9, "tolerance": 0},
+      "model_answer": {"id": "5 + 4 = 9.", "en": "5 + 4 = 9."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-DATA", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-09-013", "unit": "09", "audience": "kids", "level": "pemula", "step": 2, "type": "number_input", "skills": ["DATA-PICTO"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "pic_cat",
+      "reading_id": "R-09-HEWAN",
+      "help_lines": [{"word": "", "meaning": {"id": "Berapa anak yang memelihara kucing?", "en": "How many children have a cat?"}}],
+      "numeric": {"value": 5, "tolerance": 0},
+      "model_answer": {"id": "Ada 5 titik di baris kucing, jadi 5 anak.", "en": "There are 5 dots in the cat row, so 5 children."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-DATA", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-09-014", "unit": "09", "audience": "kids", "level": "pemula", "step": 1, "type": "info_card", "skills": ["DATA-TALLY"], "pool": "GEM", "gem": true, "prompt_id": "P-GEM",
+      "source": "Royal Belgian Institute of Natural Sciences, 'The Ishango bone' (naturalsciences.be): found in 1950 by Jean de Heinzelin at Ishango, DR Congo, dated to about 20,000 years ago.",
+      "model_answer": {"id": "Tulang Ishango ditemukan di Afrika dan umurnya sekitar 20.000 tahun. Goresannya tersusun berkelompok. Para ahli menduga goresan itu dipakai untuk mencatat hitungan, mirip turus yang kamu pakai!", "en": "The Ishango bone was found in Africa and is about 20,000 years old. Its notches are arranged in groups. Experts think they may have been used to keep count, a bit like your tally marks!"},
+      "feedback_ids": {"correct": "FB-GEM"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-10-001", "unit": "10", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["MULT-GROUPS"], "pool": "PRACT", "order": 100, "prompt_id": "P-NUM",
+      "image": "groups_3x4",
+      "help_lines": [{"word": "", "meaning": {"id": "Berapa kelereng semuanya?", "en": "How many marbles altogether?"}}],
+      "numeric": {"value": 12, "tolerance": 0},
+      "model_answer": {"id": "Ada 3 kelompok, masing-masing 4: 4 + 4 + 4 = 12.", "en": "There are 3 groups of 4: 4 + 4 + 4 = 12."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROUPS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-10-002", "unit": "10", "audience": "kids", "level": "pemula", "step": 1, "type": "pick_image", "skills": ["MULT-GROUPS"], "pool": "PRACT", "order": 101, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "2 kelompok, masing-masing 5.", "en": "2 groups of 5."}}],
+      "options": [
+        {"id": "i0", "image": "groups_2x5", "correct": true},
+        {"id": "i1", "image": "groups_5x2"},
+        {"id": "i2", "image": "groups_2x4"}
+      ],
+      "model_answer": {"id": "Ada 2 kelompok, masing-masing 5: 5 + 5 = 10.", "en": "There are 2 groups of 5: 5 + 5 = 10."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROUPS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-10-003", "unit": "10", "audience": "kids", "level": "pemula", "step": 1, "type": "tiles", "skills": ["MULT-GROUPS"], "pool": "PRACT", "order": 102, "prompt_id": "P-TILES",
+      "image": "groups_4x3",
+      "help_lines": [{"word": "", "meaning": {"id": "4 kelompok, masing-masing 3.", "en": "4 groups of 3."}}, {"word": "", "meaning": {"id": "Susun: kelompok × isi = jumlah.", "en": "Build: groups × each = total."}}],
+      "options": [
+        {"id": "x3", "text": {"id": "3", "en": "3"}},
+        {"id": "eq", "text": {"id": "=", "en": "="}},
+        {"id": "x7", "text": {"id": "7", "en": "7"}},
+        {"id": "x4", "text": {"id": "4", "en": "4"}},
+        {"id": "times", "text": {"id": "×", "en": "×"}},
+        {"id": "x12", "text": {"id": "12", "en": "12"}},
+        {"id": "plus", "text": {"id": "+", "en": "+"}}
+      ],
+      "solution": ["x4", "times", "x3", "eq", "x12"],
+      "model_answer": {"id": "4 × 3 = 12, sama dengan 3 + 3 + 3 + 3.", "en": "4 × 3 = 12, the same as 3 + 3 + 3 + 3."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROUPS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-10-004", "unit": "10", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["MULT-ARRAY"], "pool": "PRACT", "order": 103, "prompt_id": "P-NUM",
+      "image": "sticker_rice_field",
+      "help_lines": [{"word": "", "meaning": {"id": "Padi ditanam 3 baris, tiap baris 5 rumpun. Berapa semuanya?", "en": "Rice is planted in 3 rows of 5 clumps. How many altogether?"}}],
+      "numeric": {"value": 15, "tolerance": 0},
+      "model_answer": {"id": "5 + 5 + 5 = 15, atau 3 × 5 = 15.", "en": "5 + 5 + 5 = 15, or 3 × 5 = 15."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROUPS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-10-005", "unit": "10", "audience": "kids", "level": "pemula", "step": 1, "type": "true_false", "skills": ["MULT-GROUPS"], "pool": "PRACT", "order": 104, "prompt_id": "P-TF",
+      "image": "groups_5x2",
+      "help_lines": [{"word": "", "meaning": {"id": "Gambar ini menunjukkan 2 + 2 + 2 + 2 + 2 = 10.", "en": "This picture shows 2 + 2 + 2 + 2 + 2 = 10."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}, "correct": true},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}}
+      ],
+      "model_answer": {"id": "5 kelompok isi 2: 2 + 2 + 2 + 2 + 2 = 5 × 2 = 10.", "en": "5 groups of 2: 2 + 2 + 2 + 2 + 2 = 5 × 2 = 10."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROUPS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-10-006", "unit": "10", "audience": "kids", "level": "pemula", "step": 1, "type": "choose", "skills": ["DIV-SHARE"], "pool": "PRACT", "order": 105, "prompt_id": "P-CHOOSE",
+      "image": "fruit_rambutan",
+      "help_lines": [{"word": "", "meaning": {"id": "8 rambutan dibagi rata untuk 2 anak. Masing-masing dapat berapa?", "en": "8 rambutans shared equally by 2 children. How many each?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "6", "en": "6"}},
+        {"id": "b", "text": {"id": "10", "en": "10"}},
+        {"id": "c", "text": {"id": "4", "en": "4"}, "correct": true}
+      ],
+      "model_answer": {"id": "Setiap anak mendapat 4 rambutan, karena 4 + 4 = 8.", "en": "Each child gets 4 rambutans, because 4 + 4 = 8."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SHARE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-10-007", "unit": "10", "audience": "kids", "level": "pemula", "step": 2, "type": "number_input", "skills": ["DIV-SHARE"], "pool": "PRACT", "order": 106, "prompt_id": "P-NUM",
+      "image": "count_mango_12",
+      "help_lines": [{"word": "", "meaning": {"id": "Bagi rata ke 3 keranjang. Berapa tiap keranjang?", "en": "Share them equally into 3 baskets. How many in each?"}}],
+      "numeric": {"value": 4, "tolerance": 0},
+      "model_answer": {"id": "Setiap keranjang berisi 4 mangga, karena 4 + 4 + 4 = 12.", "en": "Each basket gets 4 mangoes, because 4 + 4 + 4 = 12."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SHARE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-10-008", "unit": "10", "audience": "kids", "level": "pemula", "step": 2, "type": "pick_image", "skills": ["DIV-SHARE"], "pool": "PRACT", "order": 107, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "15 kelereng dibagi rata untuk 3 anak.", "en": "15 marbles shared fairly by 3 children."}}],
+      "options": [
+        {"id": "i0", "image": "groups_5x3"},
+        {"id": "i1", "image": "groups_3x4"},
+        {"id": "i2", "image": "groups_3x5", "correct": true}
+      ],
+      "model_answer": {"id": "Ada 3 kelompok, masing-masing 5 kelereng. Setiap anak mendapat 5.", "en": "There are 3 groups of 5 marbles. Each child gets 5."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SHARE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-10-009", "unit": "10", "audience": "kids", "level": "pemula", "step": 2, "type": "tiles", "skills": ["DIV-SHARE"], "pool": "PRACT", "order": 108, "prompt_id": "P-TILES",
+      "image": "pic_cake",
+      "help_lines": [{"word": "", "meaning": {"id": "10 kue dibagi rata untuk 2 anak.", "en": "10 cakes shared equally by 2 children."}}, {"word": "", "meaning": {"id": "Susun: kue : anak = bagian.", "en": "Build: cakes ÷ children = each share."}}],
+      "options": [
+        {"id": "x2", "text": {"id": "2", "en": "2"}},
+        {"id": "x10", "text": {"id": "10", "en": "10"}},
+        {"id": "div", "text": {"id": ":", "en": "÷"}},
+        {"id": "eq", "text": {"id": "=", "en": "="}},
+        {"id": "x8", "text": {"id": "8", "en": "8"}},
+        {"id": "x5", "text": {"id": "5", "en": "5"}},
+        {"id": "times", "text": {"id": "×", "en": "×"}}
+      ],
+      "solution": ["x10", "div", "x2", "eq", "x5"],
+      "model_answer": {"id": "10 : 2 = 5. Setiap anak mendapat 5 kue.", "en": "10 ÷ 2 = 5. Each child gets 5 cakes."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SHARE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-10-010", "unit": "10", "audience": "kids", "level": "pemula", "step": 2, "type": "number_input", "skills": ["MULT-ARRAY"], "pool": "PRACT", "order": 109, "prompt_id": "P-NUM",
+      "image": "count_egg_10",
+      "help_lines": [{"word": "", "meaning": {"id": "2 baris, tiap baris 5 telur. Berapa semuanya?", "en": "2 rows of 5 eggs. How many altogether?"}}],
+      "numeric": {"value": 10, "tolerance": 0},
+      "model_answer": {"id": "5 + 5 = 10, atau 2 × 5 = 10.", "en": "5 + 5 = 10, or 2 × 5 = 10."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROUPS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-10-011", "unit": "10", "audience": "kids", "level": "pemula", "step": 2, "type": "match_pairs", "skills": ["MULT-GROUPS"], "pool": "PRACT", "order": 110, "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {"id": "g23", "image": "groups_2x3"},
+        {"id": "g32", "image": "groups_3x2"},
+        {"id": "g45", "image": "groups_4x5"},
+        {"id": "e1", "text": {"id": "2 + 2 + 2", "en": "2 + 2 + 2"}},
+        {"id": "e2", "text": {"id": "5 + 5 + 5 + 5", "en": "5 + 5 + 5 + 5"}},
+        {"id": "e3", "text": {"id": "3 + 3", "en": "3 + 3"}}
+      ],
+      "solution_pairs": {"g23": "e3", "g32": "e1", "g45": "e2"},
+      "model_answer": {"id": "2 kelompok isi 3 = 3 + 3; 3 kelompok isi 2 = 2 + 2 + 2; 4 kelompok isi 5 = 5 + 5 + 5 + 5.", "en": "2 groups of 3 = 3 + 3; 3 groups of 2 = 2 + 2 + 2; 4 groups of 5 = 5 + 5 + 5 + 5."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROUPS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-10-012", "unit": "10", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["MULT-GROUPS"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "groups_4x2",
+      "help_lines": [{"word": "", "meaning": {"id": "Berapa semuanya? Hitung kelompoknya dulu.", "en": "How many altogether? Count the groups first."}}],
+      "numeric": {"value": 8, "tolerance": 0},
+      "model_answer": {"id": "Ada 4 kelompok, masing-masing 2: 2 + 2 + 2 + 2 = 8.", "en": "There are 4 groups of 2: 2 + 2 + 2 + 2 = 8."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROUPS", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-10-013", "unit": "10", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["DIV-SHARE"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "pic_cake",
+      "help_lines": [{"word": "", "meaning": {"id": "6 kue dibagi rata ke 3 piring. Tiap piring berapa?", "en": "6 cakes shared equally onto 3 plates. How many on each?"}}],
+      "numeric": {"value": 2, "tolerance": 0},
+      "model_answer": {"id": "Setiap piring berisi 2 kue, karena 2 + 2 + 2 = 6.", "en": "Each plate gets 2 cakes, because 2 + 2 + 2 = 6."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-SHARE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-10-014", "unit": "10", "audience": "kids", "level": "pemula", "step": 2, "type": "info_card", "skills": ["DIV-SHARE"], "pool": "GEM", "gem": true, "prompt_id": "P-GEM",
+      "source": "KBBI daring (kbbi.kemdikbud.go.id), entries 'lusin' (dua belas buah) and 'kodi' (satuan hitung barang, terutama kain atau pakaian, yang banyaknya dua puluh).",
+      "model_answer": {"id": "Pedagang punya satuan hitung sendiri: satu lusin berisi 12 buah (misalnya selusin piring), satu kodi berisi 20 lembar (biasa untuk kain atau baju). Bilangan 12 enak untuk berbagi: bisa dibagi rata untuk 2, 3, 4, atau 6 anak!", "en": "Traders have their own counting words: a lusin is 12 things (a dozen plates, say) and a kodi is 20 pieces (often cloth or clothes). 12 is great for sharing: it splits evenly between 2, 3, 4 or 6 children!"},
+      "feedback_ids": {"correct": "FB-GEM"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-DP-01", "unit": "01", "audience": "kids", "level": "pemula", "type": "daily_puzzle", "skills": ["NUM-TENS-ONES"], "pool": "SPARE", "prompt_id": "P-PUZZLE",
+      "help_lines": [{"word": "", "meaning": {"id": "Aku lebih besar dari 40, tetapi lebih kecil dari 50. Angka puluhan dan angka satuanku sama. Siapa aku?", "en": "I'm bigger than 40 but smaller than 50. My tens digit and my ones digit are the same. Who am I?"}}],
+      "numeric": {"value": 44, "tolerance": 0},
+      "model_answer": {"id": "Aku 44.", "en": "I'm 44."},
+      "feedback_ids": {"correct": "FB-PUZZLE-OK", "wrong": "FB-PUZZLE-NO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-DP-02", "unit": "01", "audience": "kids", "level": "pemula", "type": "daily_puzzle", "skills": ["ADD-20"], "pool": "SPARE", "prompt_id": "P-PUZZLE",
+      "help_lines": [{"word": "", "meaning": {"id": "Di halaman ada 2 ayam dan 1 kucing. Berapa kaki semuanya?", "en": "In the yard there are 2 chickens and 1 cat. How many legs are there altogether?"}}],
+      "numeric": {"value": 8, "tolerance": 0},
+      "model_answer": {"id": "2 + 2 + 4 = 8 kaki.", "en": "2 + 2 + 4 = 8 legs."},
+      "feedback_ids": {"correct": "FB-PUZZLE-OK", "wrong": "FB-PUZZLE-NO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-DP-03", "unit": "01", "audience": "kids", "level": "pemula", "type": "daily_puzzle", "skills": ["ADD-20"], "pool": "SPARE", "prompt_id": "P-PUZZLE",
+      "help_lines": [{"word": "", "meaning": {"id": "Dina sedang berbaris. Di depannya ada 3 anak, di belakangnya ada 4 anak. Berapa anak di barisan itu?", "en": "Dina is standing in a line. There are 3 children in front of her and 4 behind her. How many children are in the line?"}}],
+      "numeric": {"value": 8, "tolerance": 0},
+      "model_answer": {"id": "3 + 1 + 4 = 8 anak. Jangan lupa menghitung Dina!", "en": "3 + 1 + 4 = 8 children. Don't forget to count Dina!"},
+      "feedback_ids": {"correct": "FB-PUZZLE-OK", "wrong": "FB-PUZZLE-NO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-K-P-DP-04", "unit": "01", "audience": "kids", "level": "pemula", "type": "daily_puzzle", "skills": ["TIME-CALENDAR"], "pool": "SPARE", "prompt_id": "P-PUZZLE",
+      "help_lines": [{"word": "", "meaning": {"id": "Hari ini hari Sabtu. Tiga hari lagi hari apa?", "en": "Today is Saturday. What day will it be in three days?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "Senin", "en": "Monday"}},
+        {"id": "b", "text": {"id": "Rabu", "en": "Wednesday"}},
+        {"id": "c", "text": {"id": "Selasa", "en": "Tuesday"}, "correct": true}
+      ],
+      "model_answer": {"id": "Minggu, Senin, Selasa. Tiga hari lagi hari Selasa.", "en": "Sunday, Monday, Tuesday. In three days it will be Tuesday."},
+      "feedback_ids": {"correct": "FB-PUZZLE-OK", "wrong": "FB-PUZZLE-NO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-pemula-0.3"
     }
   ]
 }

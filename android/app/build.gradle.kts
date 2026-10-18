@@ -24,6 +24,11 @@ android {
         vectorDrawables { useSupportLibrary = true }
         // Optional static config override (CR-CFG-2). Empty = disabled. Never required.
         buildConfigField("String", "REMOTE_CONFIG_URL", "\"\"")
+        // Play licence key (Play Console > Monetisation setup) for the local purchase signature check (CR-BIL-4).
+        // Set `ayailmu.playLicenseKey=...` in ~/.gradle/gradle.properties on the build machine; never commit it.
+        // Empty (the default) skips the check, which is fine for demo builds and before the Play app exists.
+        val playLicenseKey = providers.gradleProperty("ayailmu.playLicenseKey").getOrElse("")
+        buildConfigField("String", "PLAY_LICENSE_KEY", "\"$playLicenseKey\"")
     }
 
     // Two flavors (CR-ENG-2): demo shows unapproved content behind a draft banner; prod shows only approved items.

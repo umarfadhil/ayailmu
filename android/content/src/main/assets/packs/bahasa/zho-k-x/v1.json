@@ -1,0 +1,2025 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "zho-k-x-0.1",
+    "subject": "bahasa",
+    "track": "zho-k-x",
+    "level": "master",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "target_lang": "zh",
+    "title": {
+      "id": "Bahasa Mandarin — Master (Anak)",
+      "en": "Mandarin Chinese — Master (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12) for review: needs a native Mandarin (Putonghua) reviewer plus the Indonesian and English language reviewers before any item is approved (docs/syllabus/bahasa/zh_levels.md, Kids Master, starter units 01-02). Clips: android/content/voice/zh.json and zh.levels.json (items that need a missing clip stay hidden). Pinyin is written with citation tones (no tone sandhi marked). Art keys from MODULES_LEVELS_STORIES.md §6 are drafts being drawn.",
+  "prompts": {
+    "P-LISTEN-PIC": {
+      "id": "Dengar, lalu ketuk gambarnya.",
+      "en": "Listen, then tap the picture."
+    },
+    "P-WHY": {
+      "id": "Kenapa? Dengar, lalu pilih.",
+      "en": "Why? Listen, then pick."
+    },
+    "P-WHY-PIC": {
+      "id": "Kenapa? Pilih gambarnya.",
+      "en": "Why? Pick the picture."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke katanya.",
+      "en": "Drag each picture to its word."
+    },
+    "P-NEED": {
+      "id": "Apa yang dibutuhkan?",
+      "en": "What does each one need?"
+    },
+    "P-SORT": {
+      "id": "Seret ke keranjang yang tepat.",
+      "en": "Drag into the right basket."
+    },
+    "P-BUILD": {
+      "id": "Susun kalimatnya.",
+      "en": "Build the sentence."
+    },
+    "P-DIALOG": {
+      "id": "Urutkan percakapannya.",
+      "en": "Put the conversation in order."
+    },
+    "P-MEMORY": {
+      "id": "Buka kartu, cari pasangannya.",
+      "en": "Flip cards, find the pairs."
+    },
+    "P-MEANING": {
+      "id": "Apa artinya?",
+      "en": "What does it mean?"
+    },
+    "P-REPLY": {
+      "id": "Apa jawabannya?",
+      "en": "What's the reply?"
+    },
+    "P-FILL": {
+      "id": "Isi yang kosong.",
+      "en": "Fill the gap."
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Hobiku",
+        "en": "My hobbies"
+      },
+      "sticker": "sticker_angklung"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Perasaanku",
+        "en": "My feelings"
+      },
+      "sticker": "sticker_star_fruit"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "ZHO-K-X-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Hobiku",
+        "en": "My hobbies"
+      },
+      "body": [
+        {
+          "id": "Hobi: 我喜欢画画。 Wǒ xǐhuan huà huà. = Aku suka menggambar.",
+          "en": "Hobbies: 我喜欢画画。 Wǒ xǐhuan huà huà. = I like drawing."
+        },
+        {
+          "id": "Kata kerjanya berbeda: 踢足球 tī zúqiú (tendang), 打羽毛球 dǎ yǔmáoqiú (pukul), 弹吉他 tán jítā (petik).",
+          "en": "Different verbs: 踢足球 tī zúqiú (kick), 打羽毛球 dǎ yǔmáoqiú (hit), 弹吉他 tán jítā (pluck)."
+        },
+        {
+          "id": "Bertanya balik: 你呢？ Nǐ ne? = Kalau kamu? Setuju: 我也喜欢！ Wǒ yě xǐhuan!",
+          "en": "Ask back: 你呢？ Nǐ ne? = And you? Agree: 我也喜欢！ Wǒ yě xǐhuan!"
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "唱歌",
+          "gloss": {
+            "id": "chàng gē — bernyanyi",
+            "en": "chàng gē — sing"
+          }
+        },
+        {
+          "target_text": "跳舞",
+          "gloss": {
+            "id": "tiàowǔ — menari",
+            "en": "tiàowǔ — dance"
+          }
+        },
+        {
+          "target_text": "游泳",
+          "gloss": {
+            "id": "yóuyǒng — berenang",
+            "en": "yóuyǒng — swim"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "ZHO-K-X-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Perasaanku",
+        "en": "My feelings"
+      },
+      "body": [
+        {
+          "id": "Perasaan: 我很高兴。 Wǒ hěn gāoxìng. = Aku senang. 很 hěn biasa ada sebelum kata sifat.",
+          "en": "Feelings: 我很高兴。 Wǒ hěn gāoxìng. = I'm happy. 很 hěn usually comes before the describing word."
+        },
+        {
+          "id": "Alasan: 因为 yīnwèi = karena, 所以 suǒyǐ = jadi.",
+          "en": "Reasons: 因为 yīnwèi = because, 所以 suǒyǐ = so."
+        },
+        {
+          "id": "因为我很累，所以我想睡觉。 Yīnwèi wǒ hěn lèi, suǒyǐ wǒ xiǎng shuìjiào. = Aku capek, jadi mau tidur.",
+          "en": "因为我很累，所以我想睡觉。 Yīnwèi wǒ hěn lèi, suǒyǐ wǒ xiǎng shuìjiào. = I'm tired, so I want to sleep."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "高兴",
+          "gloss": {
+            "id": "gāoxìng — senang",
+            "en": "gāoxìng — happy"
+          }
+        },
+        {
+          "target_text": "难过",
+          "gloss": {
+            "id": "nánguò — sedih",
+            "en": "nánguò — sad"
+          }
+        },
+        {
+          "target_text": "累",
+          "gloss": {
+            "id": "lèi — capek",
+            "en": "lèi — tired"
+          }
+        },
+        {
+          "target_text": "饿",
+          "gloss": {
+            "id": "è — lapar",
+            "en": "è — hungry"
+          }
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "items": [
+    {
+      "item_id": "ZHO-K-X-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-DRAG",
+      "options": [
+        {
+          "id": "l1",
+          "image": "pic_draw_paint",
+          "text": {
+            "id": "menggambar",
+            "en": "drawing and painting"
+          }
+        },
+        {
+          "id": "l2",
+          "image": "pic_guitar",
+          "text": {
+            "id": "gitar",
+            "en": "guitar"
+          }
+        },
+        {
+          "id": "l3",
+          "image": "pic_football",
+          "text": {
+            "id": "sepak bola",
+            "en": "football"
+          }
+        },
+        {
+          "id": "l4",
+          "image": "pic_badminton",
+          "text": {
+            "id": "bulu tangkis",
+            "en": "badminton"
+          }
+        },
+        {
+          "id": "r_da_yu_mao_qiu",
+          "target_text": "打羽毛球",
+          "romanization": "dǎ yǔmáoqiú",
+          "audio": "zh/da_yumaoqiu"
+        },
+        {
+          "id": "r_hua_hua",
+          "target_text": "画画",
+          "romanization": "huà huà",
+          "audio": "zh/hua_hua"
+        },
+        {
+          "id": "r_ti_zu_qiu",
+          "target_text": "踢足球",
+          "romanization": "tī zúqiú",
+          "audio": "zh/ti_zuqiu"
+        },
+        {
+          "id": "r_tan_ji_ta",
+          "target_text": "弹吉他",
+          "romanization": "tán jítā",
+          "audio": "zh/tan_jita"
+        }
+      ],
+      "solution_pairs": {
+        "l1": "r_hua_hua",
+        "l2": "r_tan_ji_ta",
+        "l3": "r_ti_zu_qiu",
+        "l4": "r_da_yu_mao_qiu"
+      },
+      "model_answer": {
+        "id": "画画 huà huà menggambar, 弹吉他 tán jítā main gitar, 踢足球 tī zúqiú sepak bola, 打羽毛球 dǎ yǔmáoqiú bulu tangkis.",
+        "en": "画画 huà huà draw, 弹吉他 tán jítā guitar, 踢足球 tī zúqiú football, 打羽毛球 dǎ yǔmáoqiú badminton."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "zh/tiaowu",
+      "options": [
+        {
+          "id": "p2",
+          "image": "pic_sing",
+          "text": {
+            "id": "menyanyi",
+            "en": "singing"
+          }
+        },
+        {
+          "id": "p1",
+          "image": "pic_dance",
+          "text": {
+            "id": "menari",
+            "en": "dancing"
+          },
+          "correct": true
+        },
+        {
+          "id": "p3",
+          "image": "pic_run",
+          "text": {
+            "id": "berlari",
+            "en": "running"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "跳舞 tiàowǔ = menari.",
+        "en": "跳舞 tiàowǔ = dance."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Main sepak bola.",
+            "en": "Play football."
+          }
+        }
+      ],
+      "image": "pic_football",
+      "target_text": "＿足球",
+      "romanization": "＿ zúqiú",
+      "options": [
+        {
+          "id": "t_da3",
+          "target_text": "打",
+          "romanization": "dǎ",
+          "audio": "zh/da3"
+        },
+        {
+          "id": "t_tan",
+          "target_text": "弹",
+          "romanization": "tán",
+          "audio": "zh/tan"
+        },
+        {
+          "id": "t_ti",
+          "target_text": "踢",
+          "romanization": "tī",
+          "audio": "zh/ti"
+        }
+      ],
+      "solution": [
+        "t_ti"
+      ],
+      "model_answer": {
+        "id": "踢足球 tī zúqiú: bolanya ditendang!",
+        "en": "踢足球 tī zúqiú: you kick the ball!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ZHO-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-PICK",
+      "target_text": "钓鱼",
+      "romanization": "diàoyú",
+      "audio": "zh/diaoyu",
+      "options": [
+        {
+          "id": "p1",
+          "image": "pic_fishing",
+          "text": {
+            "id": "memancing",
+            "en": "fishing"
+          },
+          "correct": true
+        },
+        {
+          "id": "p2",
+          "image": "pic_swim",
+          "text": {
+            "id": "berenang",
+            "en": "swimming"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_fish",
+          "text": {
+            "id": "ikan",
+            "en": "fish"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "钓鱼 diàoyú = memancing.",
+        "en": "钓鱼 diàoyú = go fishing."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "memory_flip",
+      "skills": [
+        "ZHO-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-MEMORY",
+      "options": [
+        {
+          "id": "m1",
+          "image": "pic_camera",
+          "text": {
+            "id": "kamera",
+            "en": "camera"
+          }
+        },
+        {
+          "id": "m2",
+          "image": "pic_gardening",
+          "text": {
+            "id": "berkebun",
+            "en": "gardening"
+          }
+        },
+        {
+          "id": "m3",
+          "image": "pic_swim",
+          "text": {
+            "id": "berenang",
+            "en": "swimming"
+          }
+        },
+        {
+          "id": "m4",
+          "image": "pic_read",
+          "text": {
+            "id": "membaca",
+            "en": "reading"
+          }
+        },
+        {
+          "id": "c_zhong_hua",
+          "target_text": "种花",
+          "romanization": "zhòng huā",
+          "audio": "zh/zhong_hua"
+        },
+        {
+          "id": "c_you_yong",
+          "target_text": "游泳",
+          "romanization": "yóuyǒng",
+          "audio": "zh/youyong"
+        },
+        {
+          "id": "c_kan_shu",
+          "target_text": "看书",
+          "romanization": "kàn shū",
+          "audio": "zh/kan_shu"
+        },
+        {
+          "id": "c_pai_zhao",
+          "target_text": "拍照",
+          "romanization": "pāizhào",
+          "audio": "zh/paizhao"
+        }
+      ],
+      "solution_pairs": {
+        "m1": "c_pai_zhao",
+        "m2": "c_zhong_hua",
+        "m3": "c_you_yong",
+        "m4": "c_kan_shu"
+      },
+      "model_answer": {
+        "id": "拍照 pāizhào memotret, 种花 zhòng huā menanam bunga, 游泳 yóuyǒng berenang, 看书 kàn shū membaca.",
+        "en": "拍照 pāizhào take photos, 种花 zhòng huā grow flowers, 游泳 yóuyǒng swim, 看书 kàn shū read."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-LIKE"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "zh/wo_xihuan_ti_zuqiu",
+      "options": [
+        {
+          "id": "p2",
+          "image": "pic_badminton",
+          "text": {
+            "id": "bulu tangkis",
+            "en": "badminton"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_guitar",
+          "text": {
+            "id": "gitar",
+            "en": "guitar"
+          }
+        },
+        {
+          "id": "p1",
+          "image": "pic_football",
+          "text": {
+            "id": "sepak bola",
+            "en": "football"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "我喜欢踢足球。 Wǒ xǐhuan tī zúqiú. = Aku suka main sepak bola.",
+        "en": "我喜欢踢足球。 Wǒ xǐhuan tī zúqiú. = I like playing football."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "tiles",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-LIKE"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-BUILD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku suka bernyanyi.",
+            "en": "I like singing."
+          }
+        }
+      ],
+      "image": "pic_sing",
+      "options": [
+        {
+          "id": "t_chang_ge",
+          "target_text": "唱歌",
+          "romanization": "chàng gē",
+          "audio": "zh/chang_ge"
+        },
+        {
+          "id": "t_xi_huan",
+          "target_text": "喜欢",
+          "romanization": "xǐhuan",
+          "audio": "zh/xihuan"
+        },
+        {
+          "id": "t_wo",
+          "target_text": "我",
+          "romanization": "wǒ",
+          "audio": "zh/wo"
+        },
+        {
+          "id": "t_bu",
+          "target_text": "不",
+          "romanization": "bù",
+          "audio": "zh/bu"
+        }
+      ],
+      "solution": [
+        "t_wo",
+        "t_xi_huan",
+        "t_chang_ge"
+      ],
+      "model_answer": {
+        "id": "我喜欢唱歌。 Wǒ xǐhuan chàng gē. = Aku suka bernyanyi.",
+        "en": "我喜欢唱歌。 Wǒ xǐhuan chàng gē. = I like singing."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ZHO-LIKE"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-REPLY",
+      "target_text": "你喜欢做什么？",
+      "romanization": "Nǐ xǐhuan zuò shénme?",
+      "audio": "zh/ni_xihuan_zuo_shenme",
+      "options": [
+        {
+          "id": "w_wo_jiu_dian_shui_jiao",
+          "target_text": "我九点睡觉。",
+          "romanization": "Wǒ jiǔ diǎn shuìjiào.",
+          "audio": "zh/wo_jiu_dian_shuijiao"
+        },
+        {
+          "id": "w_zai_jian",
+          "target_text": "再见",
+          "romanization": "zàijiàn",
+          "audio": "zh/zaijian"
+        },
+        {
+          "id": "w_wo_xi_huan_hua_hua",
+          "target_text": "我喜欢画画。",
+          "romanization": "Wǒ xǐhuan huà huà.",
+          "audio": "zh/wo_xihuan_hua_hua",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "我喜欢画画。 Wǒ xǐhuan huà huà. = Aku suka menggambar.",
+        "en": "我喜欢画画。 Wǒ xǐhuan huà huà. = I like drawing."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "tiles",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-LIKE"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-BUILD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku tidak suka berenang.",
+            "en": "I don't like swimming."
+          }
+        }
+      ],
+      "image": "pic_swim",
+      "options": [
+        {
+          "id": "t_you_yong",
+          "target_text": "游泳",
+          "romanization": "yóuyǒng",
+          "audio": "zh/youyong"
+        },
+        {
+          "id": "t_bu",
+          "target_text": "不",
+          "romanization": "bù",
+          "audio": "zh/bu"
+        },
+        {
+          "id": "t_wo",
+          "target_text": "我",
+          "romanization": "wǒ",
+          "audio": "zh/wo"
+        },
+        {
+          "id": "t_xi_huan",
+          "target_text": "喜欢",
+          "romanization": "xǐhuan",
+          "audio": "zh/xihuan"
+        },
+        {
+          "id": "t_ye",
+          "target_text": "也",
+          "romanization": "yě",
+          "audio": "zh/ye"
+        }
+      ],
+      "solution": [
+        "t_wo",
+        "t_bu",
+        "t_xi_huan",
+        "t_you_yong"
+      ],
+      "model_answer": {
+        "id": "我不喜欢游泳。 Wǒ bù xǐhuan yóuyǒng. 不 bù sebelum 喜欢 xǐhuan.",
+        "en": "我不喜欢游泳。 Wǒ bù xǐhuan yóuyǒng. 不 bù goes before 喜欢 xǐhuan."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-LIKE"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-DIALOG",
+      "image": "pic_badminton",
+      "options": [
+        {
+          "id": "o_wo_ye_xi_huan",
+          "target_text": "我也喜欢！",
+          "romanization": "Wǒ yě xǐhuan!",
+          "audio": "zh/wo_ye_xihuan"
+        },
+        {
+          "id": "o_ni_xi_huan_zuo_shen_me",
+          "target_text": "你喜欢做什么？",
+          "romanization": "Nǐ xǐhuan zuò shénme?",
+          "audio": "zh/ni_xihuan_zuo_shenme"
+        },
+        {
+          "id": "o_wo_xi_huan_da_yu_mao_qiu_ni_ne",
+          "target_text": "我喜欢打羽毛球。你呢？",
+          "romanization": "Wǒ xǐhuan dǎ yǔmáoqiú. Nǐ ne?",
+          "audio": "zh/wo_xihuan_da_yumaoqiu_ni_ne"
+        }
+      ],
+      "solution": [
+        "o_ni_xi_huan_zuo_shen_me",
+        "o_wo_xi_huan_da_yu_mao_qiu_ni_ne",
+        "o_wo_ye_xi_huan"
+      ],
+      "model_answer": {
+        "id": "Bertanya balik dengan 你呢？ Nǐ ne? Jawab: 我也喜欢！ Wǒ yě xǐhuan!",
+        "en": "Ask back with 你呢？ Nǐ ne? Answer: 我也喜欢！ Wǒ yě xǐhuan!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "zh/paizhao",
+      "options": [
+        {
+          "id": "p2",
+          "image": "pic_phone",
+          "text": {
+            "id": "ponsel",
+            "en": "mobile phone"
+          }
+        },
+        {
+          "id": "p1",
+          "image": "pic_camera",
+          "text": {
+            "id": "kamera",
+            "en": "camera"
+          },
+          "correct": true
+        },
+        {
+          "id": "p3",
+          "image": "pic_draw_paint",
+          "text": {
+            "id": "menggambar",
+            "en": "drawing and painting"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "拍照 pāizhào = memotret.",
+        "en": "拍照 pāizhào = take photos."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-SORT",
+      "options": [
+        {
+          "id": "b_ti",
+          "target_text": "踢",
+          "romanization": "tī",
+          "audio": "zh/ti"
+        },
+        {
+          "id": "b_da",
+          "target_text": "打",
+          "romanization": "dǎ",
+          "audio": "zh/da3"
+        },
+        {
+          "id": "b_tan",
+          "target_text": "弹",
+          "romanization": "tán",
+          "audio": "zh/tan"
+        },
+        {
+          "id": "f1",
+          "image": "pic_football",
+          "text": {
+            "id": "sepak bola",
+            "en": "football"
+          }
+        },
+        {
+          "id": "f2",
+          "image": "pic_badminton",
+          "text": {
+            "id": "bulu tangkis",
+            "en": "badminton"
+          }
+        },
+        {
+          "id": "f3",
+          "image": "pic_guitar",
+          "text": {
+            "id": "gitar",
+            "en": "guitar"
+          }
+        },
+        {
+          "id": "f4",
+          "image": "pic_ball",
+          "text": {
+            "id": "bola",
+            "en": "ball"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "f1": "b_ti",
+        "f2": "b_da",
+        "f3": "b_tan",
+        "f4": "b_ti"
+      },
+      "model_answer": {
+        "id": "踢 tī: bola dengan kaki. 打 dǎ: bulu tangkis. 弹 tán: gitar.",
+        "en": "踢 tī: kick a ball. 打 dǎ: badminton. 弹 tán: guitar."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-HOBBY"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Main gitar.",
+            "en": "Play the guitar."
+          }
+        }
+      ],
+      "image": "pic_guitar",
+      "target_text": "＿吉他",
+      "romanization": "＿ jítā",
+      "options": [
+        {
+          "id": "t_ti",
+          "target_text": "踢",
+          "romanization": "tī",
+          "audio": "zh/ti"
+        },
+        {
+          "id": "t_tan",
+          "target_text": "弹",
+          "romanization": "tán",
+          "audio": "zh/tan"
+        },
+        {
+          "id": "t_da3",
+          "target_text": "打",
+          "romanization": "dǎ",
+          "audio": "zh/da3"
+        }
+      ],
+      "solution": [
+        "t_tan"
+      ],
+      "model_answer": {
+        "id": "弹吉他 tán jítā: senarnya dipetik.",
+        "en": "弹吉他 tán jítā: you pluck the strings."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ZHO-LIKE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-MEANING",
+      "target_text": "我不喜欢跳舞。",
+      "romanization": "Wǒ bù xǐhuan tiàowǔ.",
+      "audio": "zh/wo_bu_xihuan_tiaowu",
+      "options": [
+        {
+          "id": "o1",
+          "text": {
+            "id": "Aku tidak suka menari.",
+            "en": "I don't like dancing."
+          },
+          "correct": true
+        },
+        {
+          "id": "o2",
+          "text": {
+            "id": "Aku suka menari.",
+            "en": "I like dancing."
+          }
+        },
+        {
+          "id": "o3",
+          "text": {
+            "id": "Aku mau menari.",
+            "en": "I want to dance."
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "我不喜欢跳舞。 Wǒ bù xǐhuan tiàowǔ. = Aku tidak suka menari.",
+        "en": "我不喜欢跳舞。 Wǒ bù xǐhuan tiàowǔ. = I don't like dancing."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-DRAG",
+      "options": [
+        {
+          "id": "l1",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          }
+        },
+        {
+          "id": "l2",
+          "image": "pic_sad",
+          "text": {
+            "id": "sedih",
+            "en": "sad"
+          }
+        },
+        {
+          "id": "l3",
+          "image": "pic_tired",
+          "text": {
+            "id": "capek",
+            "en": "tired"
+          }
+        },
+        {
+          "id": "l4",
+          "image": "pic_hungry",
+          "text": {
+            "id": "lapar",
+            "en": "hungry"
+          }
+        },
+        {
+          "id": "r_lei",
+          "target_text": "累",
+          "romanization": "lèi",
+          "audio": "zh/lei"
+        },
+        {
+          "id": "r_gao_xing",
+          "target_text": "高兴",
+          "romanization": "gāoxìng",
+          "audio": "zh/gaoxing"
+        },
+        {
+          "id": "r_e",
+          "target_text": "饿",
+          "romanization": "è",
+          "audio": "zh/e"
+        },
+        {
+          "id": "r_nan_guo",
+          "target_text": "难过",
+          "romanization": "nánguò",
+          "audio": "zh/nanguo"
+        }
+      ],
+      "solution_pairs": {
+        "l1": "r_gao_xing",
+        "l2": "r_nan_guo",
+        "l3": "r_lei",
+        "l4": "r_e"
+      },
+      "model_answer": {
+        "id": "高兴 gāoxìng senang, 难过 nánguò sedih, 累 lèi capek, 饿 è lapar.",
+        "en": "高兴 gāoxìng happy, 难过 nánguò sad, 累 lèi tired, 饿 è hungry."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "zh/wo_hen_lei",
+      "options": [
+        {
+          "id": "p1",
+          "image": "pic_tired",
+          "text": {
+            "id": "capek",
+            "en": "tired"
+          },
+          "correct": true
+        },
+        {
+          "id": "p2",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_hungry",
+          "text": {
+            "id": "lapar",
+            "en": "hungry"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "我很累。 Wǒ hěn lèi. = Aku capek.",
+        "en": "我很累。 Wǒ hěn lèi. = I'm tired."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ZHO-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-PICK",
+      "target_text": "生气",
+      "romanization": "shēngqì",
+      "audio": "zh/shengqi",
+      "options": [
+        {
+          "id": "p2",
+          "image": "pic_sad",
+          "text": {
+            "id": "sedih",
+            "en": "sad"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          }
+        },
+        {
+          "id": "p1",
+          "image": "val_angry_face",
+          "text": {
+            "id": "wajah marah",
+            "en": "an angry face"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "生气 shēngqì = marah. Tarik napas dulu, ya!",
+        "en": "生气 shēngqì = angry. Take a deep breath!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "tiles",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-BUILD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku senang.",
+            "en": "I'm happy."
+          }
+        }
+      ],
+      "image": "pic_happy",
+      "options": [
+        {
+          "id": "t_gao_xing",
+          "target_text": "高兴",
+          "romanization": "gāoxìng",
+          "audio": "zh/gaoxing"
+        },
+        {
+          "id": "t_hen",
+          "target_text": "很",
+          "romanization": "hěn",
+          "audio": "zh/hen"
+        },
+        {
+          "id": "t_wo",
+          "target_text": "我",
+          "romanization": "wǒ",
+          "audio": "zh/wo"
+        },
+        {
+          "id": "t_lei",
+          "target_text": "累",
+          "romanization": "lèi",
+          "audio": "zh/lei"
+        }
+      ],
+      "solution": [
+        "t_wo",
+        "t_hen",
+        "t_gao_xing"
+      ],
+      "model_answer": {
+        "id": "我很高兴。 Wǒ hěn gāoxìng. = Aku senang.",
+        "en": "我很高兴。 Wǒ hěn gāoxìng. = I'm happy."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "zh/wo_hen_nanguo",
+      "options": [
+        {
+          "id": "p2",
+          "image": "pic_tired",
+          "text": {
+            "id": "capek",
+            "en": "tired"
+          }
+        },
+        {
+          "id": "p1",
+          "image": "pic_sad",
+          "text": {
+            "id": "sedih",
+            "en": "sad"
+          },
+          "correct": true
+        },
+        {
+          "id": "p3",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "我很难过。 Wǒ hěn nánguò. = Aku sedih.",
+        "en": "我很难过。 Wǒ hěn nánguò. = I'm sad."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ZHO-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-REPLY",
+      "target_text": "你怎么了？",
+      "romanization": "Nǐ zěnme le?",
+      "audio": "zh/ni_zenme_le",
+      "options": [
+        {
+          "id": "w_wo_xi_huan_hua_hua",
+          "target_text": "我喜欢画画。",
+          "romanization": "Wǒ xǐhuan huà huà.",
+          "audio": "zh/wo_xihuan_hua_hua"
+        },
+        {
+          "id": "w_wo_hen_e",
+          "target_text": "我很饿。",
+          "romanization": "Wǒ hěn è.",
+          "audio": "zh/wo_hen_e",
+          "correct": true
+        },
+        {
+          "id": "w_zai_jian",
+          "target_text": "再见",
+          "romanization": "zàijiàn",
+          "audio": "zh/zaijian"
+        }
+      ],
+      "model_answer": {
+        "id": "你怎么了？ Nǐ zěnme le? = Kamu kenapa? — 我很饿。 Wǒ hěn è. = Aku lapar.",
+        "en": "你怎么了？ Nǐ zěnme le? = What's wrong? — 我很饿。 Wǒ hěn è. = I'm hungry."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ZHO-BECAUSE"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-WHY-PIC",
+      "target_text": "我很高兴，因为今天是我的生日。",
+      "romanization": "Wǒ hěn gāoxìng, yīnwèi jīntiān shì wǒ de shēngrì.",
+      "audio": "zh/wo_hen_gaoxing_yinwei_jintian_shi_wo_de_shengri",
+      "options": [
+        {
+          "id": "p1",
+          "image": "pic_cake",
+          "text": {
+            "id": "kue",
+            "en": "cake"
+          },
+          "correct": true
+        },
+        {
+          "id": "p2",
+          "image": "pic_rain",
+          "text": {
+            "id": "hujan",
+            "en": "rain"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_medicine",
+          "text": {
+            "id": "obat",
+            "en": "medicine"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "因为 yīnwèi = karena: hari ini 生日 shēngrì, ulang tahun!",
+        "en": "因为 yīnwèi = because: today is a 生日 shēngrì, a birthday!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-BECAUSE"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku lapar, jadi aku makan.",
+            "en": "I'm hungry, so I eat."
+          }
+        }
+      ],
+      "image": "pic_hungry",
+      "target_text": "我饿了，＿我吃饭。",
+      "romanization": "Wǒ è le, ＿ wǒ chī fàn.",
+      "options": [
+        {
+          "id": "t_yin_wei",
+          "target_text": "因为",
+          "romanization": "yīnwèi",
+          "audio": "zh/yinwei"
+        },
+        {
+          "id": "t_suo_yi",
+          "target_text": "所以",
+          "romanization": "suǒyǐ",
+          "audio": "zh/suoyi"
+        }
+      ],
+      "solution": [
+        "t_suo_yi"
+      ],
+      "model_answer": {
+        "id": "所以 suǒyǐ = jadi: akibatnya ada sesudahnya.",
+        "en": "所以 suǒyǐ = so: the result comes after it."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-BECAUSE"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-WHY",
+      "audio": "zh/yinwei_wo_hen_e_suoyi_wo_chi_miantiao",
+      "options": [
+        {
+          "id": "p2",
+          "image": "pic_tired",
+          "text": {
+            "id": "capek",
+            "en": "tired"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          }
+        },
+        {
+          "id": "p1",
+          "image": "pic_hungry",
+          "text": {
+            "id": "lapar",
+            "en": "hungry"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "因为我很饿 yīnwèi wǒ hěn è = karena aku lapar.",
+        "en": "因为我很饿 yīnwèi wǒ hěn è = because I'm hungry."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "tiles",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-BECAUSE"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-BUILD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Karena hujan, aku di rumah.",
+            "en": "It's raining, so I stay in."
+          }
+        }
+      ],
+      "image": "pic_rain",
+      "options": [
+        {
+          "id": "t_suo_yi",
+          "target_text": "所以",
+          "romanization": "suǒyǐ",
+          "audio": "zh/suoyi"
+        },
+        {
+          "id": "t_wo_zai_jia",
+          "target_text": "我在家",
+          "romanization": "wǒ zài jiā",
+          "audio": "zh/wo_zai_jia"
+        },
+        {
+          "id": "t_yin_wei",
+          "target_text": "因为",
+          "romanization": "yīnwèi",
+          "audio": "zh/yinwei"
+        },
+        {
+          "id": "t_xia_yu",
+          "target_text": "下雨",
+          "romanization": "xià yǔ",
+          "audio": "zh/xia_yu"
+        }
+      ],
+      "solution": [
+        "t_yin_wei",
+        "t_xia_yu",
+        "t_suo_yi",
+        "t_wo_zai_jia"
+      ],
+      "model_answer": {
+        "id": "因为下雨，所以我在家。 Yīnwèi xià yǔ, suǒyǐ wǒ zài jiā.",
+        "en": "因为下雨，所以我在家。 Yīnwèi xià yǔ, suǒyǐ wǒ zài jiā."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "match_pairs",
+      "gesture": "connect",
+      "skills": [
+        "ZHO-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-NEED",
+      "options": [
+        {
+          "id": "l1",
+          "target_text": "饿",
+          "romanization": "è",
+          "audio": "zh/e"
+        },
+        {
+          "id": "l2",
+          "target_text": "累",
+          "romanization": "lèi",
+          "audio": "zh/lei"
+        },
+        {
+          "id": "l3",
+          "target_text": "冷",
+          "romanization": "lěng",
+          "audio": "zh/leng"
+        },
+        {
+          "id": "r2",
+          "image": "pic_bed",
+          "text": {
+            "id": "tempat tidur",
+            "en": "bed"
+          }
+        },
+        {
+          "id": "r3",
+          "image": "pic_jacket",
+          "text": {
+            "id": "jaket",
+            "en": "jacket"
+          }
+        },
+        {
+          "id": "r1",
+          "image": "pic_rice_bowl",
+          "text": {
+            "id": "semangkuk nasi",
+            "en": "bowl of rice"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "l1": "r1",
+        "l2": "r2",
+        "l3": "r3"
+      },
+      "model_answer": {
+        "id": "饿 è → makan, 累 lèi → tidur, 冷 lěng → pakai jaket.",
+        "en": "饿 è → eat, 累 lèi → sleep, 冷 lěng → put on a jacket."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ZHO-BECAUSE"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-REPLY",
+      "target_text": "你为什么不去公园？",
+      "romanization": "Nǐ wèishénme bù qù gōngyuán?",
+      "audio": "zh/ni_weishenme_bu_qu_gongyuan",
+      "options": [
+        {
+          "id": "w_ni_hao",
+          "target_text": "你好",
+          "romanization": "nǐ hǎo",
+          "audio": "zh/ni_hao"
+        },
+        {
+          "id": "w_zai_jian",
+          "target_text": "再见",
+          "romanization": "zàijiàn",
+          "audio": "zh/zaijian"
+        },
+        {
+          "id": "w_yin_wei_xia_yu_le",
+          "target_text": "因为下雨了。",
+          "romanization": "Yīnwèi xià yǔ le.",
+          "audio": "zh/yinwei_xia_yu_le",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "为什么 wèishénme = kenapa. Jawab dengan 因为 yīnwèi: 因为下雨了。 Yīnwèi xià yǔ le.",
+        "en": "为什么 wèishénme = why. Answer with 因为 yīnwèi: 因为下雨了。 Yīnwèi xià yǔ le."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ZHO-FEEL"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "饿",
+      "romanization": "è",
+      "audio": "zh/e",
+      "options": [
+        {
+          "id": "p2",
+          "image": "pic_tired",
+          "text": {
+            "id": "capek",
+            "en": "tired"
+          }
+        },
+        {
+          "id": "p1",
+          "image": "pic_hungry",
+          "text": {
+            "id": "lapar",
+            "en": "hungry"
+          },
+          "correct": true
+        },
+        {
+          "id": "p3",
+          "image": "pic_sad",
+          "text": {
+            "id": "sedih",
+            "en": "sad"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "饿 è = lapar.",
+        "en": "饿 è = hungry."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-BECAUSE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Karena capek, aku mau tidur.",
+            "en": "I'm tired, so I'll sleep."
+          }
+        }
+      ],
+      "image": "pic_tired",
+      "target_text": "＿我很累，所以我想睡觉。",
+      "romanization": "＿ wǒ hěn lèi, suǒyǐ wǒ xiǎng shuìjiào.",
+      "options": [
+        {
+          "id": "t_suo_yi",
+          "target_text": "所以",
+          "romanization": "suǒyǐ",
+          "audio": "zh/suoyi"
+        },
+        {
+          "id": "t_yin_wei",
+          "target_text": "因为",
+          "romanization": "yīnwèi",
+          "audio": "zh/yinwei"
+        }
+      ],
+      "solution": [
+        "t_yin_wei"
+      ],
+      "model_answer": {
+        "id": "因为 yīnwèi = karena: alasannya di depan.",
+        "en": "因为 yīnwèi = because: the reason comes first."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-02-015",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "ZHO-FEEL"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "model_answer": {
+        "id": "心 xīn berarti hati. Aksara ini juga ada di dalam aksara lain: di bawah 想 xiǎng 'berpikir', dan sebagai tiga garis di kiri 情 qíng 'perasaan'.",
+        "en": "心 xīn means heart. It hides inside other characters too: at the bottom of 想 xiǎng 'to think', and as three strokes on the left of 情 qíng 'feeling'."
+      },
+      "gem": true,
+      "source": "Wikipedia, \"Radical 61\" (心 'heart'; written 忄, three strokes, on the left of a character, and ⺗ or 心 at the bottom; 情 and 想 are listed under this radical); CC-CEDICT: 情 qíng \"feeling, emotion\", 想 xiǎng \"to think\".",
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    },
+    {
+      "item_id": "ZHO-K-X-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bisa 弹 tán, tidak bisa 踢 tī. Apa?",
+            "en": "You can 弹 tán it, not 踢 tī. What?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "q1",
+          "target_text": "吉他",
+          "romanization": "jítā",
+          "audio": "zh/jita",
+          "correct": true
+        },
+        {
+          "id": "q2",
+          "target_text": "足球",
+          "romanization": "zúqiú",
+          "audio": "zh/zuqiu"
+        },
+        {
+          "id": "q3",
+          "target_text": "羽毛球",
+          "romanization": "yǔmáoqiú",
+          "audio": "zh/yumaoqiu"
+        }
+      ],
+      "model_answer": {
+        "id": "吉他 jítā: 弹吉他 tán jítā = main gitar.",
+        "en": "吉他 jítā: 弹吉他 tán jítā = play the guitar."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-k-x-0.1"
+    }
+  ]
+}

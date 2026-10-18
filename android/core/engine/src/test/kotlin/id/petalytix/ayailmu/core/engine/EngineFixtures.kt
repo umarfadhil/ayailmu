@@ -31,12 +31,16 @@ object EngineFixtures {
     }
 
     val arabicPack: ContentPack by lazy { PackLoader.parse(resource("packs/bahasa/arab/v1.json")) }
-    val mathPack: ContentPack by lazy { PackLoader.parse(resource("packs/matematika/mat/v1.json")) }
+    /** Frozen copy of the P1 math sample (src/test/resources/fixtures); the bundled kids pack keeps growing. */
+    val mathPack: ContentPack by lazy { PackLoader.parse(resource("fixtures/mat-sample-v1.json")) }
+    /** Follow-up 11 sample: trace, gestures, picture audio_match (src/test/resources/fixtures). */
+    val langPack: ContentPack by lazy { PackLoader.parse(resource("fixtures/lang-sample-v1.json")) }
     val arabicRules: RuleConfig by lazy { RuleConfig.parse(resource("config/rules.arab.json")) }
     val mathRules: RuleConfig by lazy { RuleConfig.parse(resource("config/rules.mat.json")) }
 
     val arabic: GatedContent by lazy { Gating.gate(arabicPack, developerDemo = true) }
     val math: GatedContent by lazy { Gating.gate(mathPack, developerDemo = true) }
+    val lang: GatedContent by lazy { Gating.gate(langPack, developerDemo = true) }
 
     fun item(id: String): Item = arabic.item(id)
 

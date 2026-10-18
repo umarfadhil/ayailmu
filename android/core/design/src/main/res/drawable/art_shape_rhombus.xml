@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- shape_rhombus: DRAFT art authored as code by art/tools/draw.py (ART_DIRECTION section 6). Placeholder until a human illustrator redraws or approves it (section 7). Generated: do not edit by hand. -->
+<!-- Texture slot: the app composites the shared paper-grain overlay above this drawing; no grain is baked in. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+  android:width="240dp"
+  android:height="240dp"
+  android:viewportWidth="240"
+  android:viewportHeight="240">
+  <path
+    android:fillColor="@color/art_clay"
+    android:pathData="M125.8 26.1L136.4 39.9L147.8 53.7L158.7 67.6L169.5 81.4L179.7 94.5L190.7 108.6L201.8 122.1L189.6 135.4L178.5 148.4L166 161.2L154.3 175.1L143.1 187.5L131.5 201.1L120 213.7L108.7 200.4L97.5 186.7L86.9 172.1L76.7 158.5L64.9 144.7L54.8 130.6L44.1 115.9L54.9 103.7L67.3 90.5L78.8 77.8L90.5 65L102.1 51.5L114.3 38.6Z" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="3"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M124.5 27C150.1 58.5 175.8 91.6 201 123.4M200.9 121.2C172.6 151.7 143.9 183.4 116.9 215M119 215.2C93.9 182 67.6 148.2 41.6 115.7M42.3 115.8C69.7 86.5 97.7 56.1 124.2 25.9" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="1.5"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M182.2 142.2C167.9 157.7 153.5 174 139.7 189.9" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="1.1"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:strokeAlpha="0.45"
+    android:pathData="M193.4 115.1L197.7 121.8M188.1 118.3L193.4 127.7M182.1 120.5L188.9 132.2M178.8 123.7L186.2 136.6M174 126.6L182.6 139.8M168.6 128.2L178.7 144M164.1 132.2L173.4 148.3M159.1 134.9L170.2 152.6M155.1 137.7L166.4 157.7M145.4 141.9L159.4 166.5M140.9 146L155.5 169.9M131.5 151.6L146.6 178.7M125.6 153.9L143.2 183.3M121.9 157.5L140.2 187.9M116.8 158.6L135.5 191.4M108.1 165.1L128.2 200.6M101.7 167.4L124 206M97.3 171.8L119.1 209.4M92.4 174.5L106.4 197.9" />
+</vector>

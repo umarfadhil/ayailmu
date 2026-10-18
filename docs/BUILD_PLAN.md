@@ -43,28 +43,35 @@ Effort is in sessions (≈ 2–4 focused hours each). Stamps are the CODE_RULES 
 
 **Produce:** intake of the style bible (palette tokens, texture overlays, type pairing) into `AyaTheme`; replace placeholder art with the core set; Aya Rive rig integrated with state-machine inputs (`idle`, `onCorrect`, `onNotYet`, `onSessionDone`, `sleep`), reduce-motion still pose (CR-A11Y-2); `AyaMotion` easing set; sticker shelf and level scenes; store screenshots pipeline.
 **Gate:** every shipped asset passes the ART_DIRECTION §7 checklist (linked in PRs); app icon final; screenshot tests re-baselined.
+**Status (2026-10-17): IN SOURCE** — Claude's DRAFT vector set (187 keys, `art/`, CR-VIS-4) integrated everywhere art appears, Aya bob on twos, draft launcher icon, illustrator briefs written. Open: style bible, illustrator redraw/approval, Rive rig, monochrome icon, Noto Naskh Arabic.
 
 ### P5 — Billing & store (1–2 sessions) → M4
 
 **Produce:** `:core:billing` on Play Billing 8.x: products from MONETIZATION_SCHEME, `queryPurchasesAsync` on start/resume, acknowledge, `PENDING` handling, local signature check, DataStore entitlement cache (CR-BIL-1..6); store screen with Play-formatted prices; adult gate on Anak profiles; restore button; Play Console: products created, licence testers, internal testing track.
 **Gate:** test purchases for each product pass; airplane-mode launch keeps entitlements; refund in Play Console revokes on next online start.
+**Status (2026-10-17): IN SOURCE** — code complete (CR-BIL-1..7), prices DECIDED (defaults). Open: Play Console products, licence key, licence testers, the gate's test purchases.
 
 ### P6 — v2 renderers, gems, daily puzzle (2 sessions)
 
 **Produce:** `tap_hotspot`, `estimate_slider`, `memory_flip`, `story_choice`, `speed_round` (opt-in, CR-ENG-9), `daily_puzzle` wrapper; gem mechanic (once per step, Gem box, gem pool feeds the daily puzzle); unit challenge → sticker; level scene fill.
 **Gate:** each type has schema + renderer + scoring + fixture + test (CR-ENG-5); a kids profile never sees a speed round below Mahir (test).
+**Status (2026-10-17): IN SOURCE** — all six built; speed round is adults-only for now (stricter than the gate), Gem box and Sticker shelf done; unit challenge → sticker and the «Kebun Ilmu» garden scene IN SOURCE (follow-up 10). Open: other level scenes.
 
 ### P7 — Arabic closed test readiness → M5
 
 **Produce:** import of reviewer-approved Arabic items (only `approved`), ~75 entry-check audio clips bundled, "Kalimat latihan buatan" labels, report-this-item flow, surveys at day 7 and end, export verified end-to-end with the human-check spreadsheet; privacy policy page on petalytix.id matching the Data Safety form ("data stays on device"); Play Families self-review checklist completed; internal → closed testing with ≥ 12 testers.
 **Gate:** Trial_App_Spec §14 acceptance checks pass; closed test running 14 days with no P0.
+**Status (2026-10-17): kit IN SOURCE** — report flow, synthetic-sentence label, background/day-7/end surveys, export with surveys/challenges/report_flag, tester codes with an end date, per-child delete, privacy link; store drafts in `docs/store/`. Open: approved Arabic items, entry-check audio, policy page live, Data safety + Families forms, closed track.
 
 ### P8 — First casual tracks & production (3–4 sessions) → M6
 
 **Produce:** Matematika Pemula (kids + adults) full packs in ID + EN with gems; one Sains and one Sosial & Seni unit each audience; listing copy and screenshots; production release.
 **Gate:** reviewer-approved packs; Families policy self-review; production rollout at 20 % → 100 %.
+**Status (2026-10-17): draft packs IN SOURCE** — Claude-written, `review_status: draft` (prod shows none until approved); Sains and Sosial & Seni have units 01–05 per audience since follow-up 10. Open: subject + language reviewers, listing copy, screenshots, release.
 
 ### P9 — Growth (ongoing) → M7+
+
+**Status (2026-10-18): started** — Inggris, Korea, Jepang, Mandarin Pemula units 01–05 (kids + adults) as drafts, with drag & drop, connect-lines, listening, tracing and sound (follow-up 11). Open: native reviewers, ElevenLabs clips, Menengah. Follow-up 12: four levels per audience (2 starter units each) in every module and language, plus Nilai and Sejarah modules with animated stories — IN SOURCE.
 
 Inggris Pemula–Menengah (kids + adults), Bahasa Indonesia Literasi Pemula, more math/science/social levels, Play Pass application, cross-promo in AyaKasir, optional static config override (OPEN), kids Arabic track once its curriculum is reviewed.
 

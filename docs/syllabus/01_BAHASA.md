@@ -99,6 +99,12 @@ Hidden gems: *bisa* means both "can" and "venom" (two different origins) · ther
 
 ---
 
-## E. Jepang · Korea · Mandarin (PLANNED — no syllabus yet)
+## E. Jepang · Korea · Mandarin (Pemula DRAFT 2026-10-18)
+
+**Follow-up 11:** Pemula units 01–05 for kids and adults are written as drafts (packs `kor-k/a`, `jpn-k/a`,
+`zho-k/a`; contract `docs/content/INTERACTIONS_AUDIO.md`). Detailed syllabi: `bahasa/ko_pemula.md`,
+`bahasa/ja_pemula.md`, `bahasa/zh_pemula.md`; English Pemula detail: `bahasa/en_pemula.md`. Native-speaker
+review, ElevenLabs clips (listened to by a native speaker) and the open questions in each file come before release.
+The paragraph below is the original plan.
 
 Shelf label "Segera / Coming soon" after the first three language tracks ship. Each needs a script-first Pemula (kana / hangul / pinyin + 100 characters), a native-speaker reviewer, recorded audio, and a gem list of its own (e.g. hangul was designed in 1443 to be learnable in a morning; Japanese has three scripts in one sentence; Mandarin tones change meaning). No further detail until Umar schedules them.

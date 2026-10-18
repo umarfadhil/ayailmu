@@ -2,6 +2,7 @@ package id.petalytix.ayailmu.core.content
 
 import id.petalytix.ayailmu.core.model.Audience
 import id.petalytix.ayailmu.core.model.Lang
+import id.petalytix.ayailmu.core.model.Level
 import id.petalytix.ayailmu.core.model.LocalizedText
 import id.petalytix.ayailmu.core.model.Subject
 import id.petalytix.ayailmu.core.model.TrackMode
@@ -23,4 +24,9 @@ data class PackMeta(
     @SerialName("instruction_langs") val instructionLangs: List<Lang>,
     @SerialName("target_lang") val targetLang: String? = null,
     val title: LocalizedText,
+    /**
+     * The level this track teaches (MODULES_LEVELS_STORIES.md section 1). Packs written before follow-up 12 leave it out and
+     * are Pemula; an item's own `level`, when set, must match it.
+     */
+    @SerialName("level") val level: Level = Level.PEMULA,
 )

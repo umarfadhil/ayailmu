@@ -1,0 +1,2421 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "nil-k-h-0.1",
+    "subject": "nilai",
+    "track": "nil-k-h",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "level": "mahir",
+    "title": {
+      "id": "Nilai — Mahir (Anak)",
+      "en": "Values — Advanced (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12) for review: needs a primary-school teacher or child psychologist (values content, tone) and the Indonesian and English language reviewers before any item is approved. Stories are original fiction; scene pictures are the val_* drafts of MODULES_LEVELS_STORIES.md section 6.3.",
+  "prompts": {
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-KIND": {
+      "id": "Mana yang paling baik?",
+      "en": "Which is the best choice?"
+    },
+    "P-DO": {
+      "id": "Apa yang sebaiknya dilakukan?",
+      "en": "What's best to do?"
+    },
+    "P-YOU": {
+      "id": "Apa yang akan kamu lakukan?",
+      "en": "What would you do?"
+    },
+    "P-FEEL": {
+      "id": "Bagaimana perasaannya?",
+      "en": "How do they feel?"
+    },
+    "P-FAIR": {
+      "id": "Apakah ini adil?",
+      "en": "Is this fair?"
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-SORT": {
+      "id": "Seret ke keranjang yang tepat.",
+      "en": "Drag each into the right basket."
+    },
+    "P-ORDER": {
+      "id": "Seret ke urutan yang benar.",
+      "en": "Drag them into the right order."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke pasangannya.",
+      "en": "Drag each picture to its match."
+    },
+    "P-FILL": {
+      "id": "Seret ke bagian yang kosong.",
+      "en": "Drag into the gap."
+    },
+    "P-STORY": {
+      "id": "Tonton ceritanya, yuk.",
+      "en": "Let's watch the story."
+    },
+    "P-STORY-Q": {
+      "id": "Ingat ceritanya? Pilih.",
+      "en": "Remember the story? Choose."
+    },
+    "P-STORY-ORDER": {
+      "id": "Urutkan kejadian di cerita.",
+      "en": "Put the story in order."
+    },
+    "P-TRY": {
+      "id": "Coba di rumah",
+      "en": "Try at home"
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Hampir! {model}",
+      "en": "Almost! {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Sip, kita lanjut!",
+      "en": "Great, let's keep going!"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    },
+    "FBH-01-002-b": {
+      "id": "Hampir! Pertanyaan itu membuat orang tergoda. Integritas tidak bergantung pada siapa yang melihat. {model}",
+      "en": "Almost! That question tempts people. Integrity doesn't depend on who's watching. {model}"
+    },
+    "FBH-01-002-c": {
+      "id": "Hampir! Uang itu milik penjual, berapa pun jumlahnya. {model}",
+      "en": "Almost! The money is the seller's, however much it is. {model}"
+    },
+    "FBH-01-004-b": {
+      "id": "Hampir! Satu atau banyak, tetap bukan hasil kerjamu. {model}",
+      "en": "Almost! One or many, it still isn't your own work. {model}"
+    },
+    "FBH-01-004-c": {
+      "id": "Hampir! Itu juga menyontek, dan mengganggu temanmu. {model}",
+      "en": "Almost! That's copying too, and it disturbs your friend. {model}"
+    },
+    "FBH-01-007-b": {
+      "id": "Hampir! Badan besar tidak membuat haknya lebih besar. {model}",
+      "en": "Almost! Being bigger doesn't give anyone a bigger share. {model}"
+    },
+    "FBH-01-007-c": {
+      "id": "Hampir! Yang cepat belum tentu adil. Bagian yang sama lebih adil di sini. {model}",
+      "en": "Almost! Being fast isn't the same as fair. Equal pieces are fairer here. {model}"
+    },
+    "FBH-01-008-left_out": {
+      "id": "Hampir! Kalau dibiarkan, ia tidak pernah ikut bermain. Itu tidak adil. {model}",
+      "en": "Almost! If we leave it, they never get to play. That isn't fair. {model}"
+    },
+    "FBH-01-008-cut_queue": {
+      "id": "Hampir! Menyerobot giliran membuat ia makin lama menunggu. {model}",
+      "en": "Almost! Jumping the turn makes them wait even longer. {model}"
+    },
+    "FBH-01-011-b": {
+      "id": "Hampir! Adil artinya setiap orang bisa belajar. Ia butuh tempat itu untuk melihat papan. {model}",
+      "en": "Almost! Fair means everyone can learn. They need that seat to see the board. {model}"
+    },
+    "FBH-01-011-c": {
+      "id": "Hampir! Kebutuhan melihat papan tidak bergantung pada nilai. {model}",
+      "en": "Almost! Needing to see the board has nothing to do with marks. {model}"
+    },
+    "FBH-01-013-b": {
+      "id": "Hampir! Tidak dilihat bukan berarti boleh. Pemiliknya mungkin sedang mencari. {model}",
+      "en": "Almost! Not being seen doesn't make it okay. The owner may be looking for it. {model}"
+    },
+    "FBH-01-013-c": {
+      "id": "Hampir! Uang itu tetap milik orang lain. {model}",
+      "en": "Almost! The money still belongs to someone else. {model}"
+    },
+    "FBH-01-014-count_marble_3": {
+      "id": "Hampir! Kalau tiap anak dapat 3, butuh 9 kelereng. Kita hanya punya 6. {model}",
+      "en": "Almost! If each got 3, we'd need 9 marbles. We only have 6. {model}"
+    },
+    "FBH-01-014-count_marble_1": {
+      "id": "Hampir! Kalau tiap anak dapat 1, masih sisa 3. Bagi sampai habis. {model}",
+      "en": "Almost! If each got 1, there'd be 3 left over. Share them all out. {model}"
+    },
+    "FBH-02-001-happy": {
+      "id": "Hampir! Lihat lagi: ia duduk sendiri sementara yang lain bermain. {model}",
+      "en": "Almost! Look again: they sit alone while the others play. {model}"
+    },
+    "FBH-02-001-cold": {
+      "id": "Hampir! Dingin itu rasa di kulit. Coba tebak perasaan di hatinya. {model}",
+      "en": "Almost! Cold is something your skin feels. Guess what their heart feels. {model}"
+    },
+    "FBH-02-003-b": {
+      "id": "Hampir! Ia mungkin kesepian di rumah. Sedikit perhatian sangat berarti. {model}",
+      "en": "Almost! They may feel lonely at home. A little care means a lot. {model}"
+    },
+    "FBH-02-003-c": {
+      "id": "Hampir! Itu bisa jadi kabar yang belum tentu benar dan membuatnya malu. {model}",
+      "en": "Almost! That might not even be true, and it could embarrass them. {model}"
+    },
+    "FBH-02-005-run": {
+      "id": "Hampir! Kalau ditinggal lari, ia bisa bingung dan tersesat. {model}",
+      "en": "Almost! If you run off, they could get confused and lost. {model}"
+    },
+    "FBH-02-005-read": {
+      "id": "Hampir! Membaca bisa nanti. Ia butuh ditunjukkan jalan sekarang. {model}",
+      "en": "Almost! Reading can wait. They need someone to show the way now. {model}"
+    },
+    "FBH-02-009-b": {
+      "id": "Hampir! Itu bisa merusak dan menyakiti. Di cerita, ia memilih menenangkan diri. {model}",
+      "en": "Almost! That could break things and hurt someone. In the story, they chose to calm down. {model}"
+    },
+    "FBH-02-009-c": {
+      "id": "Hampir! Menyalahkan membuat suasana makin panas. {model}",
+      "en": "Almost! Blaming makes things even more heated. {model}"
+    },
+    "FBH-02-013-b": {
+      "id": "Hampir! Kalimat itu membuatnya makin sedih. Perasaannya penting. {model}",
+      "en": "Almost! That makes them feel worse. Their feelings matter. {model}"
+    },
+    "FBH-02-013-c": {
+      "id": "Hampir! Nanti boleh. Sekarang ia butuh ditemani dulu. {model}",
+      "en": "Almost! Later is fine. Right now they need company. {model}"
+    },
+    "FBH-02-014-b": {
+      "id": "Hampir! Membalas membuat dua orang sedih. Tenangkan diri dulu. {model}",
+      "en": "Almost! Getting even makes two people sad. Calm down first. {model}"
+    },
+    "FBH-02-014-c": {
+      "id": "Hampir! Kesal yang disimpan terus bisa membuatmu tidak nyaman. Lebih baik dibicarakan. {model}",
+      "en": "Almost! Bottled-up anger can make you feel bad. It's better to talk about it. {model}"
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Benar dan adil",
+        "en": "Doing right, being fair"
+      },
+      "sticker": "sticker_compass"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Peduli perasaan",
+        "en": "Caring about feelings"
+      },
+      "sticker": "sticker_teapot"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "NIL-K-H-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Benar dan adil",
+        "en": "Doing right, being fair"
+      },
+      "body": [
+        {
+          "id": "Integritas artinya tetap berbuat benar, walaupun tidak ada yang melihat.",
+          "en": "Integrity means doing the right thing, even when no one is watching."
+        },
+        {
+          "id": "Adil artinya setiap orang mendapat kesempatan yang layak, dan aturan berlaku untuk semua.",
+          "en": "Fairness means everyone gets a proper chance, and the rules apply to all."
+        },
+        {
+          "id": "Kalau ragu, tanyakan: \"Apakah aku tetap melakukannya kalau semua orang tahu?\"",
+          "en": "When unsure, ask: \"Would I still do it if everyone knew?\""
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "NIL-K-H-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Peduli perasaan",
+        "en": "Caring about feelings"
+      },
+      "body": [
+        {
+          "id": "Empati artinya mencoba merasakan apa yang dirasakan orang lain.",
+          "en": "Empathy means trying to feel what someone else feels."
+        },
+        {
+          "id": "Marah itu wajar. Yang penting, apa yang kita lakukan saat marah.",
+          "en": "Feeling angry is normal. What matters is what we do with it."
+        },
+        {
+          "id": "Coba: berhenti, tarik napas pelan, lalu bicarakan baik-baik.",
+          "en": "Try this: stop, breathe slowly, then talk it through calmly."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "stories": {
+    "ST-NIL-K-H-INTEGRITAS": {
+      "figure": "Aya dan teman-teman (tokoh rekaan / fictional characters)",
+      "title": {
+        "id": "Tidak ada yang melihat",
+        "en": "No one is watching"
+      },
+      "source": "Cerita asli AyaIlmu (fiksi) / AyaIlmu original story (fiction)",
+      "emblem": "val_return_change",
+      "panels": [
+        {
+          "scene": "val_queue",
+          "caption": {
+            "id": "Sore itu, seorang anak disuruh membeli gula di warung. Antreannya panjang.",
+            "en": "That afternoon, a child is sent to buy sugar at the warung. The queue is long."
+          },
+          "narration": {
+            "id": "id/nil_k_integritas_01",
+            "en": "en/nil_k_integritas_01"
+          },
+          "layers": [
+            {
+              "art": "pic_sun",
+              "x": 0.04,
+              "y": 0.04,
+              "w": 0.12,
+              "motion": {
+                "type": "glow",
+                "ms": 2400,
+                "loop": true
+              }
+            },
+            {
+              "art": "aya_idle",
+              "x": 0.82,
+              "y": 0.66,
+              "w": 0.14,
+              "motion": {
+                "type": "slide_in",
+                "from": "right",
+                "ms": 600,
+                "delay_ms": 0
+              }
+            }
+          ]
+        },
+        {
+          "scene": "val_return_change",
+          "caption": {
+            "id": "Penjual sibuk dan memberi kembalian terlalu banyak. Tidak ada yang melihat.",
+            "en": "The busy seller gives back too much change. No one notices."
+          },
+          "narration": {
+            "id": "id/nil_k_integritas_02",
+            "en": "en/nil_k_integritas_02"
+          },
+          "layers": [
+            {
+              "art": "coin_generic",
+              "x": 0.06,
+              "y": 0.72,
+              "w": 0.08,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "aya_think",
+              "x": 0.82,
+              "y": 0.66,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 0
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.06,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "val_calm_breath",
+          "caption": {
+            "id": "Anak itu berhenti sejenak dan bertanya dalam hati, \"Kalau semua orang tahu, apakah aku tetap menyimpannya?\"",
+            "en": "The child pauses and wonders, \"If everyone knew, would I still keep it?\""
+          },
+          "narration": {
+            "id": "id/nil_k_integritas_03",
+            "en": "en/nil_k_integritas_03"
+          },
+          "layers": [
+            {
+              "art": "aya_think",
+              "x": 0.82,
+              "y": 0.66,
+              "w": 0.14
+            }
+          ]
+        },
+        {
+          "scene": "val_return_change",
+          "caption": {
+            "id": "Ia mengembalikan uang itu. Penjual berterima kasih, karena uang itu hasil kerjanya hari itu.",
+            "en": "They hand the money back. The seller says thank you: that money came from a hard day's work."
+          },
+          "narration": {
+            "id": "id/nil_k_integritas_04",
+            "en": "en/nil_k_integritas_04"
+          },
+          "layers": [
+            {
+              "art": "aya_happy",
+              "x": 0.82,
+              "y": 0.66,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 0
+              }
+            }
+          ]
+        },
+        {
+          "scene": "val_greet_neighbor",
+          "caption": {
+            "id": "Sejak itu, penjual selalu menyapanya dengan ramah. Kejujuran membangun kepercayaan.",
+            "en": "Since then, the seller always greets them warmly. Honesty builds trust."
+          },
+          "narration": {
+            "id": "id/nil_k_integritas_05",
+            "en": "en/nil_k_integritas_05"
+          },
+          "layers": [
+            {
+              "art": "pic_cloud",
+              "x": 0.58,
+              "y": 0.03,
+              "w": 0.16,
+              "motion": {
+                "type": "drift",
+                "dx": 0.05,
+                "ms": 6000,
+                "loop": true
+              }
+            },
+            {
+              "art": "aya_happy",
+              "x": 0.82,
+              "y": 0.66,
+              "w": 0.14,
+              "motion": {
+                "type": "bob",
+                "amp": 0.01,
+                "ms": 2000,
+                "loop": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ST-NIL-K-H-SABAR": {
+      "figure": "Aya dan teman-teman (tokoh rekaan / fictional characters)",
+      "title": {
+        "id": "Menara yang roboh",
+        "en": "The tower that fell"
+      },
+      "source": "Cerita asli AyaIlmu (fiksi) / AyaIlmu original story (fiction)",
+      "emblem": "val_calm_breath",
+      "panels": [
+        {
+          "scene": "val_teamwork",
+          "caption": {
+            "id": "Anak-anak membangun menara dari kardus untuk tugas kelompok.",
+            "en": "The children are building a cardboard tower for a group project."
+          },
+          "narration": {
+            "id": "id/nil_k_sabar_01",
+            "en": "en/nil_k_sabar_01"
+          },
+          "layers": [
+            {
+              "art": "aya_happy",
+              "x": 0.82,
+              "y": 0.66,
+              "w": 0.14,
+              "motion": {
+                "type": "slide_in",
+                "from": "right",
+                "ms": 600,
+                "delay_ms": 0
+              }
+            }
+          ]
+        },
+        {
+          "scene": "val_angry_face",
+          "caption": {
+            "id": "Menara tersenggol dan roboh. Seorang anak marah sekali dan ingin berteriak.",
+            "en": "The tower gets bumped and falls. One child is really angry and wants to shout."
+          },
+          "narration": {
+            "id": "id/nil_k_sabar_02",
+            "en": "en/nil_k_sabar_02"
+          },
+          "layers": [
+            {
+              "art": "aya_think",
+              "x": 0.82,
+              "y": 0.66,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 0
+              }
+            }
+          ]
+        },
+        {
+          "scene": "val_calm_breath",
+          "caption": {
+            "id": "Ia berhenti, menarik napas pelan, dan menghitung sampai lima.",
+            "en": "They stop, breathe slowly and count to five."
+          },
+          "narration": {
+            "id": "id/nil_k_sabar_03",
+            "en": "en/nil_k_sabar_03"
+          },
+          "layers": [
+            {
+              "art": "aya_idle",
+              "x": 0.82,
+              "y": 0.66,
+              "w": 0.14
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.06,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "val_say_sorry",
+          "caption": {
+            "id": "Teman yang menyenggol meminta maaf. \"Tidak apa-apa, ayo kita bangun lagi,\" jawabnya.",
+            "en": "The friend who bumped it says sorry. \"It's okay, let's build it again,\" comes the reply."
+          },
+          "narration": {
+            "id": "id/nil_k_sabar_04",
+            "en": "en/nil_k_sabar_04"
+          },
+          "layers": [
+            {
+              "art": "aya_happy",
+              "x": 0.82,
+              "y": 0.66,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 0
+              }
+            }
+          ]
+        },
+        {
+          "scene": "val_teamwork",
+          "caption": {
+            "id": "Menara kedua malah lebih kokoh. Tenang membantu kita berpikir jernih.",
+            "en": "The second tower is even sturdier. Staying calm helps us think clearly."
+          },
+          "narration": {
+            "id": "id/nil_k_sabar_05",
+            "en": "en/nil_k_sabar_05"
+          },
+          "layers": [
+            {
+              "art": "pic_sun",
+              "x": 0.04,
+              "y": 0.04,
+              "w": 0.12,
+              "motion": {
+                "type": "glow",
+                "ms": 2400,
+                "loop": true
+              }
+            },
+            {
+              "art": "aya_happy",
+              "x": 0.82,
+              "y": 0.66,
+              "w": 0.14,
+              "motion": {
+                "type": "bob",
+                "amp": 0.01,
+                "ms": 2000,
+                "loop": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "NIL-K-H-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "story",
+      "skills": [
+        "VAL-INTEGRITY"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-NIL-K-H-INTEGRITAS",
+      "model_answer": {
+        "id": "Integritas: berbuat benar walau tidak ada yang melihat.",
+        "en": "Integrity: doing right even when no one watches."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "VAL-INTEGRITY"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-STORY-Q",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pertanyaan apa yang membantu anak itu memilih?",
+            "en": "Which question helped the child decide?"
+          }
+        }
+      ],
+      "image": "val_calm_breath",
+      "story_id": "ST-NIL-K-H-INTEGRITAS",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "\"Apakah ada yang melihatku?\"",
+            "en": "\"Is anyone watching me?\""
+          },
+          "feedback_id": "FBH-01-002-b"
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "\"Kalau semua tahu, apakah aku tetap melakukannya?\"",
+            "en": "\"If everyone knew, would I still do it?\""
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "\"Apakah uangnya cukup untuk jajan?\"",
+            "en": "\"Is it enough for snacks?\""
+          },
+          "feedback_id": "FBH-01-002-c"
+        }
+      ],
+      "model_answer": {
+        "id": "\"Kalau semua orang tahu, apakah aku tetap melakukannya?\" Pertanyaan ini membantu kita memilih yang benar.",
+        "en": "\"If everyone knew, would I still do it?\" This question helps us choose what's right."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "VAL-INTEGRITY"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di cerita, anak itu jujur karena takut dimarahi.",
+            "en": "In the story, the child was honest out of fear of a telling-off."
+          }
+        }
+      ],
+      "image": "val_return_change",
+      "story_id": "ST-NIL-K-H-INTEGRITAS",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Tidak ada yang melihat, jadi tidak ada yang akan memarahinya. Ia jujur karena ingin berbuat benar.",
+        "en": "No one saw, so no one would have scolded them. They were honest because they wanted to do right."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "VAL-INTEGRITY"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-YOU",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Guru keluar sebentar saat ulangan. Jawaban teman terlihat.",
+            "en": "The teacher steps out during a test. A friend's answers are in view."
+          }
+        }
+      ],
+      "image": "val_copy_answer",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Tetap mengerjakan sendiri",
+            "en": "Keep doing my own work"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Melihat satu soal saja",
+            "en": "Look at just one answer"
+          },
+          "feedback_id": "FBH-01-004-b"
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Bertanya jawaban ke teman sebelah",
+            "en": "Ask the friend next to me"
+          },
+          "feedback_id": "FBH-01-004-c"
+        }
+      ],
+      "model_answer": {
+        "id": "Tetap kerjakan sendiri. Nilaimu menunjukkan apa yang benar-benar kamu pahami, dan itu membantumu belajar.",
+        "en": "Keep doing your own work. Your mark shows what you really understand, and that helps you learn."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "VAL-INTEGRITY"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tetap benar walau tak dilihat?",
+            "en": "Still right when no one's watching?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_good",
+          "text": {
+            "id": "Baik",
+            "en": "Good"
+          }
+        },
+        {
+          "id": "b_less",
+          "text": {
+            "id": "Kurang baik",
+            "en": "Not so good"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Mengembalikan kembalian yang kelebihan",
+            "en": "Handing back extra change"
+          },
+          "image": "val_return_change"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Menyalin PR teman dan mengaku buatan sendiri",
+            "en": "Copying homework and calling it your own"
+          },
+          "image": "val_copy_answer"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Mengaku memecahkan pot walau tak ada yang tahu",
+            "en": "Owning up to a broken pot no one saw"
+          },
+          "image": "val_tell_truth"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Membuang sampah sembarangan saat sepi",
+            "en": "Littering when nobody's around"
+          },
+          "image": "val_litter"
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Mengembalikan barang yang ditemukan",
+            "en": "Returning something you found"
+          },
+          "image": "val_return_wallet"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_good",
+        "c2": "b_less",
+        "c3": "b_good",
+        "c4": "b_less",
+        "c5": "b_good"
+      },
+      "model_answer": {
+        "id": "Berintegritas: mengembalikan kembalian, mengaku jujur, mengembalikan barang temuan. Menyalin PR dan membuang sampah saat sepi kurang baik: benar atau salah tidak berubah walau tidak ada yang melihat.",
+        "en": "Integrity: handing back change, owning up, returning what you find. Copying homework and littering when no one's around are not so good: right and wrong don't change when nobody is looking."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "VAL-INTEGRITY"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan dengan pilihan yang lebih baik.",
+            "en": "Match each with a better choice."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x_litter",
+          "text": {
+            "id": "membuang sampah sembarangan",
+            "en": "littering"
+          },
+          "image": "val_litter"
+        },
+        {
+          "id": "x_cut",
+          "text": {
+            "id": "menyerobot antrean",
+            "en": "pushing in"
+          },
+          "image": "val_cut_queue"
+        },
+        {
+          "id": "x_copy",
+          "text": {
+            "id": "menyontek",
+            "en": "copying answers"
+          },
+          "image": "val_copy_answer"
+        },
+        {
+          "id": "x_unkind",
+          "text": {
+            "id": "pesan yang menyakitkan",
+            "en": "a hurtful message"
+          },
+          "image": "val_phone_unkind"
+        },
+        {
+          "id": "y_study",
+          "text": {
+            "id": "belajar sendiri",
+            "en": "studying for yourself"
+          },
+          "image": "pic_study"
+        },
+        {
+          "id": "y_bin",
+          "text": {
+            "id": "membuang sampah di tempatnya",
+            "en": "using the bin"
+          },
+          "image": "val_throw_trash"
+        },
+        {
+          "id": "y_kind",
+          "text": {
+            "id": "pesan yang baik",
+            "en": "a kind message"
+          },
+          "image": "val_phone_kind"
+        },
+        {
+          "id": "y_queue",
+          "text": {
+            "id": "antre dengan rapi",
+            "en": "queueing neatly"
+          },
+          "image": "val_queue"
+        }
+      ],
+      "solution_pairs": {
+        "x_litter": "y_bin",
+        "x_cut": "y_queue",
+        "x_copy": "y_study",
+        "x_unkind": "y_kind"
+      },
+      "model_answer": {
+        "id": "Buang sampah di tempatnya, antre, belajar sendiri, dan kirim pesan yang baik, juga saat tidak ada yang melihat.",
+        "en": "Use the bin, queue, study for yourself and send kind messages, even when no one is watching."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "VAL-FAIR"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-KIND",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ada 1 kue untuk 4 anak.",
+            "en": "There's 1 cake for 4 children."
+          }
+        }
+      ],
+      "image": "pic_cake",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Yang badannya paling besar dapat paling banyak",
+            "en": "The biggest child gets the most"
+          },
+          "feedback_id": "FBH-01-007-b"
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Yang paling cepat boleh memilih dulu",
+            "en": "The fastest one picks first"
+          },
+          "feedback_id": "FBH-01-007-c"
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Potong menjadi 4 bagian yang sama",
+            "en": "Cut it into 4 equal pieces"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Potong menjadi 4 bagian yang sama, supaya semua mendapat bagian yang sama besar.",
+        "en": "Cut it into 4 equal pieces, so everyone gets the same."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "VAL-FAIR"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-DO",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dalam permainan, satu teman belum pernah dapat giliran.",
+            "en": "In a game, one friend hasn't had a turn yet."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "left_out",
+          "image": "val_left_out",
+          "feedback_id": "FBH-01-008-left_out"
+        },
+        {
+          "id": "cut_queue",
+          "image": "val_cut_queue",
+          "feedback_id": "FBH-01-008-cut_queue"
+        },
+        {
+          "id": "include_friend",
+          "image": "val_include_friend",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Beri ia giliran. Adil artinya semua pemain mendapat kesempatan.",
+        "en": "Give them a turn. Fair means every player gets a chance."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "VAL-FAIR"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Adil atau tidak adil?",
+            "en": "Fair or unfair?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_fair",
+          "text": {
+            "id": "Adil",
+            "en": "Fair"
+          }
+        },
+        {
+          "id": "b_unfair",
+          "text": {
+            "id": "Tidak adil",
+            "en": "Unfair"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Semua pemain mendapat giliran",
+            "en": "Every player gets a turn"
+          },
+          "image": "val_wait_turn"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Yang menyerobot dilayani duluan",
+            "en": "The one who pushes in is served first"
+          },
+          "image": "val_cut_queue"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Kue dibagi sama besar",
+            "en": "The cake is cut into equal pieces"
+          },
+          "image": "pic_cake"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Hanya teman dekat yang boleh ikut main",
+            "en": "Only close friends may play"
+          },
+          "image": "val_left_out"
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Aturan rumah sama untuk kakak dan adik",
+            "en": "House rules are the same for older and younger"
+          },
+          "image": "fam_sister"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_fair",
+        "c2": "b_unfair",
+        "c3": "b_fair",
+        "c4": "b_unfair",
+        "c5": "b_fair"
+      },
+      "model_answer": {
+        "id": "Adil: giliran untuk semua, kue sama besar, aturan sama untuk semua. Tidak adil: menyerobot dan hanya mengajak teman dekat.",
+        "en": "Fair: turns for everyone, equal cake, the same rules for all. Unfair: pushing in and only letting close friends play."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "VAL-FAIR"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Cara adil membagi kue berdua: satu memotong, yang lain memilih lebih dulu.",
+            "en": "A fair way for two to share a cake: one cuts, the other chooses first."
+          }
+        }
+      ],
+      "image": "pic_cake",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Cara \"aku potong, kamu pilih\" membuat pemotong berusaha adil, karena ia mendapat potongan terakhir.",
+        "en": "\"I cut, you choose\" makes the cutter try to be fair, because they get the last piece."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "VAL-FAIR"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-FAIR",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Teman berkacamata duduk di depan supaya bisa melihat papan.",
+            "en": "A friend with glasses sits at the front to see the board."
+          }
+        }
+      ],
+      "image": "pic_glasses",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Tidak adil, semua harus duduk sama",
+            "en": "Unfair, everyone must sit the same"
+          },
+          "feedback_id": "FBH-01-011-b"
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Adil, karena ia butuh itu untuk belajar",
+            "en": "Fair, because they need it to learn"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Adil hanya kalau ia juara kelas",
+            "en": "Fair only if they're top of the class"
+          },
+          "feedback_id": "FBH-01-011-c"
+        }
+      ],
+      "model_answer": {
+        "id": "Adil tidak selalu berarti semua sama. Kadang adil berarti memberi yang dibutuhkan, supaya semua bisa belajar.",
+        "en": "Fair doesn't always mean the same for everyone. Sometimes it means giving what's needed, so everyone can learn."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "VAL-FAIR"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-TRY",
+      "image": "val_teamwork",
+      "model_answer": {
+        "id": "Saat bermain di rumah, jadilah \"penjaga adil\": pastikan semua mendapat giliran dan aturannya sama untuk semua.",
+        "en": "Next time you play at home, be the \"fairness keeper\": make sure everyone gets a turn and the rules are the same for all."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "VAL-INTEGRITY"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-YOU",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kamu menemukan uang di kolong meja kelas.",
+            "en": "You find money under a desk at school."
+          }
+        }
+      ],
+      "image": "coin_generic",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Serahkan kepada guru",
+            "en": "Hand it to the teacher"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Simpan, karena tidak ada yang melihat",
+            "en": "Keep it, since no one saw"
+          },
+          "feedback_id": "FBH-01-013-b"
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Bagi dua dengan teman sebangku",
+            "en": "Split it with my deskmate"
+          },
+          "feedback_id": "FBH-01-013-c"
+        }
+      ],
+      "model_answer": {
+        "id": "Serahkan kepada guru, supaya bisa dikembalikan kepada pemiliknya.",
+        "en": "Hand it to the teacher, so it can go back to its owner."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "VAL-FAIR"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ada 6 kelereng untuk 3 anak. Berapa untuk tiap anak?",
+            "en": "There are 6 marbles for 3 children. How many each?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "count_marble_2",
+          "image": "count_marble_2",
+          "correct": true
+        },
+        {
+          "id": "count_marble_3",
+          "image": "count_marble_3",
+          "feedback_id": "FBH-01-014-count_marble_3"
+        },
+        {
+          "id": "count_marble_1",
+          "image": "count_marble_1",
+          "feedback_id": "FBH-01-014-count_marble_1"
+        }
+      ],
+      "model_answer": {
+        "id": "2 kelereng untuk tiap anak: 2 + 2 + 2 = 6. Semua mendapat sama banyak.",
+        "en": "2 marbles each: 2 + 2 + 2 = 6. Everyone gets the same."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-01-015",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "VAL-FAIR"
+      ],
+      "pool": "GEM",
+      "gem": true,
+      "prompt_id": "P-GEM",
+      "image": "pic_monkey",
+      "source": "Brosnan, S. F., & de Waal, F. B. M. (2003). Monkeys reject unequal pay. Nature, 425(6955), 297–299. doi:10.1038/nature01963",
+      "model_answer": {
+        "id": "Dalam sebuah percobaan, monyet kapusin menukar batu kecil dengan makanan. Kalau temannya mendapat anggur yang manis untuk tugas yang sama, monyet yang hanya mendapat mentimun sering menolak!",
+        "en": "In an experiment, capuchin monkeys swapped small stones for food. When a partner got a sweet grape for the same task, the monkey given only cucumber often refused it!"
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "VAL-EMPATHY"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-FEEL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Anak ini duduk sendirian. Apa perasaannya?",
+            "en": "This child is sitting alone. How might they feel?"
+          }
+        }
+      ],
+      "image": "val_left_out",
+      "options": [
+        {
+          "id": "happy",
+          "image": "pic_happy",
+          "feedback_id": "FBH-02-001-happy"
+        },
+        {
+          "id": "cold",
+          "image": "pic_cold",
+          "feedback_id": "FBH-02-001-cold"
+        },
+        {
+          "id": "sad",
+          "image": "pic_sad",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Kemungkinan besar ia sedih. Kalau kita bisa merasakannya, kita tahu ia butuh diajak.",
+        "en": "Most likely they feel sad. When we sense that, we know they need an invitation."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "VAL-EMPATHY"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Perasaan teman, lalu apa yang membantu?",
+            "en": "A friend's feeling, and what helps?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "f_sad",
+          "text": {
+            "id": "sedih",
+            "en": "sad"
+          },
+          "image": "pic_sad"
+        },
+        {
+          "id": "f_tired",
+          "text": {
+            "id": "lelah",
+            "en": "tired"
+          },
+          "image": "pic_tired"
+        },
+        {
+          "id": "f_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          },
+          "image": "pic_happy"
+        },
+        {
+          "id": "f_hungry",
+          "text": {
+            "id": "lapar",
+            "en": "hungry"
+          },
+          "image": "pic_hungry"
+        },
+        {
+          "id": "r_tired",
+          "text": {
+            "id": "Tawarkan bantuan membawa barangnya",
+            "en": "Offer to help carry their things"
+          }
+        },
+        {
+          "id": "r_hungry",
+          "text": {
+            "id": "Tawarkan berbagi bekal",
+            "en": "Offer to share your lunch"
+          }
+        },
+        {
+          "id": "r_sad",
+          "text": {
+            "id": "Temani dan tanya, \"Kamu kenapa?\"",
+            "en": "Stay close and ask, \"What's wrong?\""
+          }
+        },
+        {
+          "id": "r_happy",
+          "text": {
+            "id": "Ikut senang dan beri selamat",
+            "en": "Share the joy and say well done"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "f_sad": "r_sad",
+        "f_tired": "r_tired",
+        "f_happy": "r_happy",
+        "f_hungry": "r_hungry"
+      },
+      "model_answer": {
+        "id": "Sedih: temani. Lelah: bantu. Senang: ikut senang. Lapar: berbagi. Empati menuntun kita pada cara menolong.",
+        "en": "Sad: stay close. Tired: help out. Happy: share the joy. Hungry: share food. Empathy shows us how to help."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "VAL-EMPATHY"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-DO",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Temanmu sakit dan tidak masuk sekolah tiga hari.",
+            "en": "Your friend has been off sick for three days."
+          }
+        }
+      ],
+      "image": "val_visit_sick",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Menunggu sampai ia masuk lagi",
+            "en": "Wait until they're back"
+          },
+          "feedback_id": "FBH-02-003-b"
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Kirim pesan atau menjenguk, lalu berbagi catatan",
+            "en": "Send a message or visit, then share notes"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Bercerita ke semua orang bahwa ia sakit parah",
+            "en": "Tell everyone they're seriously ill"
+          },
+          "feedback_id": "FBH-02-003-c"
+        }
+      ],
+      "model_answer": {
+        "id": "Kirim pesan atau jenguk bersama orang tua, lalu bagikan catatan pelajaran supaya ia tidak tertinggal.",
+        "en": "Send a message or visit with a parent, then share your notes so they don't fall behind."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "VAL-EMPATHY"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kalau teman sedang sedih, yang terbaik selalu langsung menasihatinya panjang lebar.",
+            "en": "When a friend is sad, the best thing is always to give them a long lecture."
+          }
+        }
+      ],
+      "image": "pic_sad",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Teman yang sedih biasanya lebih butuh didengarkan dulu. Nasihat bisa nanti, kalau ia mau.",
+        "en": "A sad friend usually needs to be listened to first. Advice can come later, if they want it."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "VAL-EMPATHY"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-YOU",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Teman barumu belum tahu letak kantin.",
+            "en": "Your new classmate doesn't know where the canteen is."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "run",
+          "image": "pic_run",
+          "feedback_id": "FBH-02-005-run"
+        },
+        {
+          "id": "help_friend",
+          "image": "val_help_friend",
+          "correct": true
+        },
+        {
+          "id": "read",
+          "image": "pic_read",
+          "feedback_id": "FBH-02-005-read"
+        }
+      ],
+      "model_answer": {
+        "id": "Antar ia ke kantin. Ingat rasanya jadi anak baru: semua terasa asing.",
+        "en": "Walk them there. Remember how it feels to be new: everything seems strange."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "VAL-EMPATHY"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saat teman bercerita sedih, aku menatapnya, ____ dengan tenang, lalu bertanya pelan.",
+            "en": "When a friend shares something sad, I look at them, ____ quietly, then ask gently."
+          }
+        }
+      ],
+      "image": "val_listen",
+      "options": [
+        {
+          "id": "f_listen",
+          "text": {
+            "id": "mendengarkan",
+            "en": "listen"
+          }
+        },
+        {
+          "id": "f_laugh",
+          "text": {
+            "id": "menertawakan",
+            "en": "laugh"
+          }
+        },
+        {
+          "id": "f_phone",
+          "text": {
+            "id": "bermain ponsel",
+            "en": "play on my phone"
+          }
+        }
+      ],
+      "solution": [
+        "f_listen"
+      ],
+      "model_answer": {
+        "id": "Mendengarkan dengan tenang membuat teman merasa dipahami.",
+        "en": "Listening quietly helps a friend feel understood."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "VAL-CALM"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-NIL-K-H-SABAR",
+      "model_answer": {
+        "id": "Marah itu wajar. Berhenti dan menarik napas membantu kita memilih cara yang baik.",
+        "en": "Anger is normal. Stopping to breathe helps us choose a good way forward."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "VAL-CALM"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-STORY-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang terjadi di cerita?",
+            "en": "What happened in the story?"
+          }
+        }
+      ],
+      "story_id": "ST-NIL-K-H-SABAR",
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Saling memaafkan",
+            "en": "Making up"
+          },
+          "image": "val_say_sorry"
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Merasa marah",
+            "en": "Feeling angry"
+          },
+          "image": "val_angry_face"
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Menarik napas pelan",
+            "en": "Breathing slowly"
+          },
+          "image": "val_calm_breath"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3"
+      ],
+      "model_answer": {
+        "id": "Marah dulu, lalu menarik napas, lalu saling memaafkan dan membangun lagi.",
+        "en": "First anger, then slow breaths, then making up and building again."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "VAL-CALM"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-STORY-Q",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang membantu anak itu tidak berteriak?",
+            "en": "What helped the child not shout?"
+          }
+        }
+      ],
+      "image": "val_calm_breath",
+      "story_id": "ST-NIL-K-H-SABAR",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Berhenti dan menarik napas pelan",
+            "en": "Stopping and breathing slowly"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Menendang menaranya",
+            "en": "Kicking the tower"
+          },
+          "feedback_id": "FBH-02-009-b"
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Menyalahkan semua teman",
+            "en": "Blaming everyone"
+          },
+          "feedback_id": "FBH-02-009-c"
+        }
+      ],
+      "model_answer": {
+        "id": "Ia berhenti, menarik napas pelan, dan menghitung sampai lima. Setelah tenang, ia bisa berpikir jernih.",
+        "en": "They stopped, breathed slowly and counted to five. Once calm, they could think clearly."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "VAL-CALM"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saat kamu marah.",
+            "en": "When you feel angry."
+          }
+        }
+      ],
+      "image": "val_calm_breath",
+      "options": [
+        {
+          "id": "s2",
+          "text": {
+            "id": "Tarik napas pelan tiga kali",
+            "en": "Take three slow breaths"
+          }
+        },
+        {
+          "id": "s4",
+          "text": {
+            "id": "Cari jalan keluar bersama",
+            "en": "Find a way forward together"
+          }
+        },
+        {
+          "id": "s1",
+          "text": {
+            "id": "Berhenti",
+            "en": "Stop"
+          }
+        },
+        {
+          "id": "s3",
+          "text": {
+            "id": "Sebutkan perasaanmu: \"Aku kesal.\"",
+            "en": "Name the feeling: \"I'm upset.\""
+          }
+        }
+      ],
+      "solution": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "model_answer": {
+        "id": "Berhenti, tarik napas, sebutkan perasaanmu, lalu cari jalan keluar bersama.",
+        "en": "Stop, breathe, name the feeling, then find a way forward together."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "VAL-CALM"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Cara apa yang baik saat marah?",
+            "en": "Which ways help when you're angry?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_ok",
+          "text": {
+            "id": "Membantu menenangkan",
+            "en": "Helps you calm down"
+          }
+        },
+        {
+          "id": "b_hurt",
+          "text": {
+            "id": "Bisa menyakiti",
+            "en": "Could hurt"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Menarik napas pelan",
+            "en": "Breathing slowly"
+          },
+          "image": "val_calm_breath"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Membanting barang",
+            "en": "Throwing things"
+          }
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Bercerita kepada orang yang dipercaya",
+            "en": "Talking to someone you trust"
+          },
+          "image": "fam_grandmother"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Mengirim pesan kasar",
+            "en": "Sending a rude message"
+          },
+          "image": "val_phone_unkind"
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Menjauh sebentar sampai tenang",
+            "en": "Walking away until you're calm"
+          },
+          "image": "pic_walk"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_ok",
+        "c2": "b_hurt",
+        "c3": "b_ok",
+        "c4": "b_hurt",
+        "c5": "b_ok"
+      },
+      "model_answer": {
+        "id": "Membantu: menarik napas, bercerita, menjauh sebentar. Membanting barang dan pesan kasar bisa menyakiti orang lain atau diri sendiri.",
+        "en": "Helpful: breathing, talking it over, stepping away. Throwing things and rude messages can hurt others or ourselves."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "VAL-CALM"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Merasa marah itu wajar. Yang penting kita tidak menyakiti siapa pun.",
+            "en": "Feeling angry is normal. What matters is not hurting anyone."
+          }
+        }
+      ],
+      "image": "val_angry_face",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Semua orang pernah marah. Kita bisa memilih cara yang tidak menyakiti.",
+        "en": "Everyone gets angry sometimes. We can choose a way that doesn't hurt."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "VAL-EMPATHY"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-YOU",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Temanmu kalah lomba dan menangis.",
+            "en": "Your friend lost a race and is crying."
+          }
+        }
+      ],
+      "image": "pic_sad",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Bilang, \"Begitu saja menangis.\"",
+            "en": "Say, \"Crying over that?\""
+          },
+          "feedback_id": "FBH-02-013-b"
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Langsung membahas lomba berikutnya",
+            "en": "Start talking about the next race"
+          },
+          "feedback_id": "FBH-02-013-c"
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Duduk di dekatnya: \"Kamu sudah berusaha keras.\"",
+            "en": "Sit with them: \"You tried really hard.\""
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Temani dan akui usahanya. Saat sedih, orang butuh merasa dimengerti.",
+        "en": "Stay with them and notice their effort. When we're sad, we need to feel understood."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "VAL-CALM"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-DO",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Adikmu merusak gambarmu. Kamu kesal sekali.",
+            "en": "Your little sibling ruins your drawing. You're really upset."
+          }
+        }
+      ],
+      "image": "val_calm_breath",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Merobek buku adik",
+            "en": "Tear up their book"
+          },
+          "feedback_id": "FBH-02-014-b"
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Diam dan menyimpan kesal berhari-hari",
+            "en": "Say nothing and stay upset for days"
+          },
+          "feedback_id": "FBH-02-014-c"
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Tarik napas, lalu bilang, \"Aku sedih gambarku rusak.\"",
+            "en": "Breathe, then say, \"I'm sad my drawing is ruined.\""
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Tenangkan diri, lalu katakan perasaanmu dengan jelas. Adikmu jadi tahu akibat perbuatannya.",
+        "en": "Calm down, then say clearly how you feel. Your sibling learns what their action did."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    },
+    {
+      "item_id": "NIL-K-H-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku tak terlihat, tapi bisa kamu pegang. Kalau kamu menepatiku, orang jadi percaya padamu. Siapa aku?",
+            "en": "You can't see me, but you can keep me. When you do, people trust you. What am I?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Uang",
+            "en": "Money"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Janji",
+            "en": "A promise"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Bola",
+            "en": "A ball"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Janji! Janji bisa \"dipegang\" dan ditepati.",
+        "en": "A promise! You keep it, and people trust you."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-k-h-0.1"
+    }
+  ]
+}

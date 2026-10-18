@@ -113,3 +113,39 @@ interface ReportDao {
     @Query("DELETE FROM item_reports WHERE profile_id = :profileId")
     suspend fun deleteForProfile(profileId: String)
 }
+
+@Dao
+interface SurveyDao {
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(survey: SurveyAnswerEntity)
+
+    @Query("SELECT * FROM survey_answers ORDER BY timestamp")
+    suspend fun all(): List<SurveyAnswerEntity>
+
+    @Query("SELECT * FROM survey_answers WHERE profile_id = :profileId ORDER BY timestamp")
+    fun observeFor(profileId: String): Flow<List<SurveyAnswerEntity>>
+
+    @Query("SELECT * FROM survey_answers WHERE profile_id = :profileId ORDER BY timestamp")
+    suspend fun forProfile(profileId: String): List<SurveyAnswerEntity>
+
+    @Query("DELETE FROM survey_answers WHERE profile_id = :profileId")
+    suspend fun deleteForProfile(profileId: String)
+}
+
+@Dao
+interface ChallengeDao {
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(challenge: UnitChallengeEntity)
+
+    @Query("SELECT * FROM unit_challenges ORDER BY completed_at")
+    suspend fun all(): List<UnitChallengeEntity>
+
+    @Query("SELECT * FROM unit_challenges WHERE profile_id = :profileId ORDER BY completed_at")
+    fun observeFor(profileId: String): Flow<List<UnitChallengeEntity>>
+
+    @Query("SELECT * FROM unit_challenges WHERE profile_id = :profileId ORDER BY completed_at")
+    suspend fun forProfile(profileId: String): List<UnitChallengeEntity>
+
+    @Query("DELETE FROM unit_challenges WHERE profile_id = :profileId")
+    suspend fun deleteForProfile(profileId: String)
+}

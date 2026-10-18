@@ -117,8 +117,9 @@ class FreshnessTest {
     }
 
     @Test
-    fun `v2-only item types are not served until a renderer exists (new, CR-ENG-5)`() {
-        val v2 = item("DEMO-P02").copy(itemId = "T-V2", type = id.petalytix.ayailmu.core.model.ItemType.TAP_HOTSPOT)
+    fun `item types without a renderer are never served (new, CR-ENG-5)`() {
+        // speed_round is a practice mode, not a session item; it is the one type left without a renderer (P6).
+        val v2 = item("DEMO-P02").copy(itemId = "T-V2", type = id.petalytix.ayailmu.core.model.ItemType.SPEED_ROUND)
         assertFalse(Freshness.isEligibleFresh(v2, ctx("2026-10-15")))
     }
 }

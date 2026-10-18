@@ -32,7 +32,6 @@
     <string name="home_greeting">Halo! Aya siap belajar bareng kamu.</string>
     <string name="home_greeting_name">Halo, %1$s! Aya siap belajar bareng kamu.</string>
     <string name="home_tracks_title">Pilih pelajaran</string>
-    <string name="home_track_items">Soal tersedia: %1$d</string>
     <string name="home_track_draft">Konten draf</string>
     <string name="home_track_resume">Lanjutkan</string>
     <string name="home_start">Mulai</string>
@@ -45,7 +44,12 @@
     <string name="home_profile_kind_child">Anak</string>
     <string name="home_track_progress">Kemajuan</string>
     <string name="home_track_consent_first">Sebelum sesi pertama, baca dan setujui ketentuan uji coba.</string>
-    <string name="home_phase_label">Tahap pembangunan: P3b — pengaturan, kemajuan, persetujuan</string>
+    <string name="home_phase_label">Tahap pembangunan: P4–P8 — gambar draf, paket belajar, kegiatan baru</string>
+    <string name="home_track_units_open">Unit terbuka: %1$d dari %2$d. %3$s membuka semuanya.</string>
+    <string name="home_track_see_packs">Lihat paket</string>
+    <string name="home_puzzle_from">Dari %1$s. Satu teka-teki sehari.</string>
+    <string name="home_puzzle_done">Sudah dijawab hari ini. Teka-teki baru datang besok.</string>
+    <string name="home_puzzle_open">Coba teka-teki</string>
 
     <!-- Session -->
     <string name="session_loading">Menyiapkan sesi…</string>
@@ -79,6 +83,17 @@
     <string name="session_sequence_empty">Jawabanmu muncul di sini.</string>
     <string name="session_pairs_hint">Ketuk satu di kiri, lalu pasangannya di kanan.</string>
     <string name="session_buckets_hint">Ketuk satu di kiri, lalu kelompoknya di kanan.</string>
+    <string name="session_hotspot_hint">Ketuk bagian gambar yang tepat.</string>
+    <string name="session_slider_hint">Geser untuk memilih, lalu periksa.</string>
+    <string name="session_slider_value">Pilihanmu: %1$s</string>
+    <string name="session_slider_less">Kurangi</string>
+    <string name="session_slider_more">Tambah</string>
+    <string name="session_memory_hint">Balik dua kartu. Kalau berpasangan, keduanya tetap terbuka.</string>
+    <string name="session_memory_found">Pasangan ditemukan: %1$d dari %2$d</string>
+    <string name="session_memory_card_down">Kartu %1$d, tertutup</string>
+    <string name="session_memory_card_found">%1$s, sudah berpasangan</string>
+    <string name="session_picture_option_cd">Gambar pilihan %1$d</string>
+    <string name="session_question_picture_cd">Gambar untuk soal ini</string>
     <string name="session_image_placeholder">Gambar: %1$s (draf — gambar tangan menyusul)</string>
     <string name="session_unsupported">Jenis kegiatan ini hadir di versi berikutnya.</string>
     <string name="session_save_error">Belum tersimpan. Coba lagi.</string>
@@ -119,6 +134,8 @@
     <string name="dev_delete_confirm_body">Semua profil, jawaban, dan sesi yang tersimpan di HP ini akan dihapus. Tindakan ini tidak bisa dibatalkan.</string>
     <string name="dev_delete_confirm_yes">Hapus</string>
     <string name="dev_cancel">Batal</string>
+    <string name="dev_free_tier_off">Simulasikan versi gratis: mati (semua unit terbuka)</string>
+    <string name="dev_free_tier_on">Simulasikan versi gratis: aktif (unit terkunci seperti di rilis)</string>
     <string name="dev_moved_note">Ekspor dan hapus data sekarang ada di Pengaturan.</string>
     <string name="dev_notice_failed">Tindakan gagal. Coba lagi.</string>
     <string name="export_chooser_title">Bagikan data belajar</string>
@@ -162,6 +179,88 @@
     <string name="progress_gems">Kotak Permata: %1$d</string>
     <string name="progress_days">Hari belajar: %1$d</string>
     <string name="progress_note">Angka di sini dihitung ulang dari jawabanmu setiap kali dibuka. «Sudah dipelajari» butuh jawaban benar di hari yang berbeda, jadi butuh waktu.</string>
+    <string name="progress_empty_title">Belum ada latihan</string>
+    <string name="progress_open_gems">Buka Kotak Permata</string>
+    <string name="progress_open_stickers">Buka Rak Stiker</string>
+    <string name="progress_speed_body">Ulangi sampai 10 soal yang sudah pernah kamu jawab, dengan batas waktu yang longgar. Tidak disimpan.</string>
+    <string name="progress_speed_start">Mulai putaran kilat</string>
+
+    <!-- Daily puzzle (P6): practice only, never saved as an answer -->
+    <string name="puzzle_title">Teka-teki hari ini</string>
+    <string name="puzzle_none_title">Belum ada teka-teki</string>
+    <string name="puzzle_none_body">Teka-teki harian diambil dari pelajaran di rakmu. Coba lagi besok.</string>
+    <string name="puzzle_show_answer">Lihat jawabannya</string>
+    <string name="puzzle_done_today">Teka-teki ini sudah dijawab hari ini.</string>
+    <string name="puzzle_answer">Jawaban: %1$s</string>
+    <string name="puzzle_tomorrow">Teka-teki baru datang besok. Tidak ada nilai dan tidak ada rekor, hanya untuk seru-seruan.</string>
+    <string name="puzzle_save_failed">Belum tersimpan, jadi teka-teki ini mungkin muncul lagi hari ini.</string>
+
+    <!-- Speed round (P6): adults only, opt-in, nothing saved -->
+    <string name="speed_title">Putaran kilat</string>
+    <string name="speed_leave">Selesai</string>
+    <string name="speed_not_available_title">Putaran kilat belum tersedia</string>
+    <string name="speed_not_available_body">Putaran kilat mengulang soal yang sudah pernah kamu jawab. Kerjakan beberapa sesi dulu.</string>
+    <string name="speed_time_cd">Sisa waktu</string>
+    <string name="speed_time_plenty">masih banyak</string>
+    <string name="speed_time_half">tinggal separuh</string>
+    <string name="speed_time_little">tinggal sedikit</string>
+    <string name="speed_position">Soal %1$d dari %2$d</string>
+    <string name="speed_skip">Lewati</string>
+    <string name="speed_done">Putaran selesai</string>
+    <string name="speed_time_up">Waktunya habis</string>
+    <string name="speed_result">Dijawab: %1$d. Betul: %2$d.</string>
+    <string name="speed_note">Putaran kilat hanya latihan: tidak disimpan dan tidak mengubah kemajuan.</string>
+
+    <!-- Gem box and sticker shelf (P6) -->
+    <string name="gems_title">Kotak Permata</string>
+    <string name="gems_count">Permata yang sudah kamu temukan: %1$d</string>
+    <string name="gems_source">Sumber: %1$s</string>
+    <string name="gems_empty_title">Kotaknya masih kosong</string>
+    <string name="gems_empty_body">Sesekali ada permata (fakta menarik) di sesi harian. Setiap permata yang kamu temukan disimpan di sini.</string>
+    <string name="stickers_title">Rak Stiker</string>
+    <string name="stickers_body">Satu stiker untuk setiap unit. Stiker didapat dengan menyelesaikan tantangan unit, yang terbuka setelah semua soal latihan di unit itu dijawab, apa pun hasilnya.</string>
+    <string name="stickers_count">Stiker: %1$d dari %2$d</string>
+    <string name="stickers_cd_earned">Stiker %1$s, sudah didapat</string>
+    <string name="stickers_cd_not_yet">Stiker %1$s, belum didapat</string>
+    <string name="stickers_empty_title">Belum ada rak stiker</string>
+    <string name="stickers_empty_body">Pelajaran yang punya stiker akan muncul di sini.</string>
+    <string name="collection_failed">Halaman ini belum bisa dibuka.</string>
+
+    <!-- Learning packs (P5): Play prices only, no pressure (MONETIZATION_SCHEME) -->
+    <string name="store_title">Paket belajar</string>
+    <string name="store_intro">Sekali bayar, berlaku seterusnya. Tanpa langganan, tanpa iklan. Unit pertama setiap pelajaran selalu gratis.</string>
+    <string name="store_footer">Pembayaran diproses oleh Google Play dengan harga yang ditampilkan Play. Pembayaran tunda (misalnya di minimarket) baru membuka paket setelah lunas. Pembelian terikat pada akun Google, jadi bisa dipulihkan di HP lain.</string>
+    <string name="store_failed">Halaman paket belum bisa dibuka.</string>
+    <string name="store_prices_unavailable">Harga belum bisa dimuat dari Google Play. Periksa koneksi, lalu buka halaman ini lagi.</string>
+    <string name="store_demo_unlocked">Build demo: semua unit sudah terbuka. Nyalakan «Simulasikan versi gratis» di Cek pengembang untuk melihat kunci seperti di versi rilis.</string>
+    <string name="store_demo_free_tier">Build demo dengan versi gratis disimulasikan. Google Play tidak menjual ke build demo, jadi tombol beli mungkin tetap mati.</string>
+    <string name="store_product_all">Semua Akses</string>
+    <string name="store_product_bahasa">Paket Bahasa</string>
+    <string name="store_product_bahasa_body">Semua kursus bahasa, mulai dengan Bahasa Arab. Unit baru ikut terbuka saat terbit.</string>
+    <string name="store_product_matematika">Paket Matematika</string>
+    <string name="store_product_matematika_body">Semua unit Matematika, untuk anak dan dewasa.</string>
+    <string name="store_product_sains">Paket Sains</string>
+    <string name="store_product_sains_body">Semua unit Sains, untuk anak dan dewasa.</string>
+    <string name="store_product_sosial_seni">Paket Sosial &amp; Seni</string>
+    <string name="store_product_sosial_seni_body">Semua unit Sosial dan Seni, untuk anak dan dewasa.</string>
+    <string name="store_buy">Beli</string>
+    <string name="store_buy_price">Beli · %1$s</string>
+    <string name="store_owned">Sudah dimiliki</string>
+    <string name="store_pending">Menunggu pembayaran</string>
+    <string name="store_restore">Pulihkan pembelian</string>
+    <string name="store_gate_title">Untuk orang dewasa</string>
+    <string name="store_gate_body">Pembelian memakai akun Google Play orang tua atau wali. Minta mereka menjawab pertanyaan ini, lalu menahan tombol di bawah.</string>
+    <string name="store_gate_question">Berapa %1$d × %2$d?</string>
+    <string name="store_gate_answer">Jawaban</string>
+    <string name="store_gate_hold">Tahan untuk lanjut</string>
+    <string name="store_notice_purchased">Terima kasih! %1$s sudah terbuka.</string>
+    <string name="store_notice_pending">%1$s menunggu pembayaran. Paket terbuka setelah pembayaran selesai.</string>
+    <string name="store_notice_cancelled">Pembelian dibatalkan. Tidak ada biaya.</string>
+    <string name="store_notice_owned">Paket ini sudah kamu miliki.</string>
+    <string name="store_notice_unavailable">Google Play belum bisa dihubungi. Periksa koneksi, lalu coba lagi.</string>
+    <string name="store_notice_failed">Pembelian belum berhasil. Coba lagi nanti.</string>
+    <string name="store_notice_restored">Pembelian dipulihkan.</string>
+    <string name="store_notice_nothing">Tidak ada pembelian di akun Google ini.</string>
 
     <!-- Settings (P3b) -->
     <string name="settings_title">Pengaturan</string>
@@ -195,6 +294,14 @@
     <string name="settings_delete_profile">Hapus profil ini</string>
     <string name="settings_delete_profile_title">Hapus profil ini?</string>
     <string name="settings_delete_profile_body">Profil ini dan semua jawabannya akan dihapus dari HP ini. Tindakan ini tidak bisa dibatalkan.</string>
+    <string name="settings_purchases">Paket belajar</string>
+    <string name="settings_purchases_body">Lihat paket, beli, atau pulihkan pembelian dari akun Google Play.</string>
+    <string name="settings_open_store">Buka paket belajar</string>
+    <string name="settings_delete_child">Hapus profil anak: %1$s</string>
+    <string name="settings_delete_child_title">Hapus profil %1$s?</string>
+    <string name="settings_delete_child_body">Profil anak ini dan semua jawabannya akan dihapus dari HP ini. Profil lain tidak berubah. Tindakan ini tidak bisa dibatalkan.</string>
+    <string name="settings_privacy_policy">Kebijakan privasi</string>
+    <string name="settings_font_licence">Huruf Arab: Noto Naskh Arabic, lisensi SIL Open Font License 1.1. Data urutan goresan kana dan hanzi: KanjiVG © Ulrich Apel, lisensi CC BY-SA 3.0.</string>
     <string name="settings_about">Tentang</string>
     <string name="settings_learner_id">ID pelajar (tekan lama untuk menyalin)</string>
     <string name="settings_contact">Pertanyaan atau permintaan hapus data: %1$s</string>
@@ -206,13 +313,243 @@
     <string name="reminder_channel_name">Pengingat harian</string>
     <string name="reminder_channel_description">Satu pengingat sehari pada jam yang kamu pilih.</string>
 
+    <!-- Home additions (P6/P7): units, trial survey card -->
+    <string name="home_track_units">Unit</string>
+    <string name="home_survey_title_day7">Seminggu bersama Bahasa Arab</string>
+    <string name="home_survey_title_end">Uji coba hampir selesai</string>
+    <string name="home_survey_title_background">Sedikit tentang latar belakang Anda</string>
+    <string name="home_survey_body_background">Empat pertanyaan singkat yang belum terisi. Semuanya boleh dilewati.</string>
+    <string name="home_survey_body">Lima pertanyaan singkat tentang pengalamanmu. Jawabannya tersimpan di HP ini.</string>
+    <string name="home_survey_open">Isi survei</string>
+
+    <!-- Units, locked-unit preview, unit challenge (P5/P6) -->
+    <string name="units_title">Daftar unit</string>
+    <string name="units_intro">Unit yang terbuka dilatih di sesi harian. Setelah semua soal latihan sebuah unit dijawab, tantangan unitnya terbuka: beberapa soal yang sudah pernah kamu temui, tanpa nilai lulus. Menyelesaikannya memberi stiker unit itu.</string>
+    <string name="units_failed">Daftar unit belum bisa dibuka.</string>
+    <string name="units_unit_label">Unit %1$s</string>
+    <string name="units_answered">Latihan: %1$d dari %2$d soal sudah dijawab</string>
+    <string name="units_locked">Termasuk dalam %1$s</string>
+    <string name="units_try_one">Coba satu soal</string>
+    <string name="units_challenge_ready">Tantangan unit sudah terbuka.</string>
+    <string name="units_challenge_start">Mulai tantangan unit</string>
+    <string name="units_challenge_done">Tantangan unit selesai</string>
+    <string name="units_back">Kembali ke daftar unit</string>
+    <string name="preview_note">Hanya contoh: jawabannya tidak disimpan dan tidak mengubah kemajuan.</string>
+    <string name="preview_none_title">Belum ada contoh soal</string>
+    <string name="preview_none_body">Unit ini belum punya soal yang cocok untuk dicoba di sini.</string>
+    <string name="challenge_title">Tantangan unit</string>
+    <string name="challenge_note">Soal-soal yang sudah pernah kamu temui. Tidak ada nilai lulus, dan jawabannya tidak disimpan.</string>
+    <string name="challenge_position">Soal %1$d dari %2$d</string>
+    <string name="challenge_done_title">Tantangan selesai!</string>
+    <string name="challenge_done_sticker">Stiker unit ini sekarang ada di Rak Stiker dan tumbuh di Kebun Ilmu.</string>
+    <string name="challenge_done_plain">Unit ini sudah kamu selesaikan.</string>
+    <string name="challenge_save_failed">Belum tersimpan. Coba tantangannya lagi nanti.</string>
+    <string name="challenge_not_ready_title">Tantangan belum terbuka</string>
+    <string name="challenge_not_ready_body">Tantangan unit terbuka setelah semua soal latihan di unit ini dijawab.</string>
+
+    <!-- Kebun Ilmu garden (P6) -->
+    <string name="garden_title">Kebun Ilmu</string>
+    <string name="garden_body">Setiap unit punya satu petak. Selesaikan tantangan unit, dan stikernya tumbuh di petak itu.</string>
+    <string name="garden_cd">Kebun Ilmu: %1$d dari %2$d petak sudah tumbuh.</string>
+    <string name="garden_cd_grown">Sudah tumbuh: %1$s.</string>
+
+    <!-- Report a question (P7, Trial_App_Spec section 7) -->
+    <string name="report_open">Laporkan soal</string>
+    <string name="report_title">Laporkan soal ini</string>
+    <string name="report_body">Apa yang kurang pas? Laporan tersimpan di HP ini dan ikut dalam file ekspor data.</string>
+    <string name="report_reason_typo">Ada salah ketik</string>
+    <string name="report_reason_wrong_answer">Kunci jawabannya salah</string>
+    <string name="report_reason_confusing">Soalnya membingungkan</string>
+    <string name="report_reason_picture">Gambarnya kurang pas</string>
+    <string name="report_reason_other">Lainnya</string>
+    <string name="report_text_label">Ceritakan sedikit (boleh kosong)</string>
+    <string name="report_send">Simpan laporan</string>
+    <string name="report_done">Laporan tersimpan. Terima kasih!</string>
+    <string name="report_failed">Laporan belum tersimpan.</string>
+    <string name="report_retry">Coba lagi</string>
+    <string name="synthetic_label">Kalimat latihan buatan — bukan ayat Al-Qur\'an</string>
+
+    <!-- Trial questionnaires (P7): background E-B1..E-B4 (Lessons_Unit_A_B_Draft section 1.1), day 7 and end (Trial_App_Spec section 10) -->
+    <string name="survey_bg_title">Sebelum mulai: sedikit tentang latar belakang</string>
+    <string name="survey_bg_intro">Empat pertanyaan singkat. Ini bukan ujian, dan semuanya boleh dilewati.</string>
+    <string name="survey_day7_title">Bagaimana seminggu pertama?</string>
+    <string name="survey_end_title">Survei akhir uji coba</string>
+    <string name="survey_trial_intro">Jawaban jujur membantu kami memperbaiki pelajaran. Semua pertanyaan boleh dilewati.</string>
+    <string name="survey_saved_note">Jawaban tersimpan di HP ini saja dan ikut dalam file ekspor data.</string>
+    <string name="survey_failed">Jawaban belum tersimpan. Coba lagi.</string>
+    <string name="survey_submit">Simpan jawaban</string>
+    <string name="survey_skip">Lewati</string>
+    <string name="survey_later">Nanti saja</string>
+    <string name="survey_clarity_scale">1 = sangat sulit dipahami, 5 = sangat jelas</string>
+    <string name="survey_text_label">Jawabanmu (boleh kosong)</string>
+    <string name="survey_q_e_b1">Bagaimana Anda dulu belajar membaca huruf Arab? (boleh pilih lebih dari satu)</string>
+    <string name="survey_q_e_b2">Seberapa sering Anda membaca teks berbahasa Arab sekarang?</string>
+    <string name="survey_q_e_b3">Apakah Anda pernah belajar tata bahasa Arab (nahwu/sharaf)?</string>
+    <string name="survey_q_e_b4">Berapa lama Anda ingin belajar setiap hari?</string>
+    <string name="survey_o_e_b1_tpa">TPA/TPQ</string>
+    <string name="survey_o_e_b1_iqra">Iqra\' di rumah atau masjid</string>
+    <string name="survey_o_e_b1_pesantren">Pesantren</string>
+    <string name="survey_o_e_b1_madrasah">Madrasah/sekolah</string>
+    <string name="survey_o_e_b1_self">Belajar sendiri</string>
+    <string name="survey_o_e_b1_other">Lainnya</string>
+    <string name="survey_o_e_b2_daily">Hampir setiap hari</string>
+    <string name="survey_o_e_b2_weekly">Beberapa kali seminggu</string>
+    <string name="survey_o_e_b2_rarely">Jarang</string>
+    <string name="survey_o_e_b2_almost_never">Hampir tidak pernah</string>
+    <string name="survey_o_e_b3_never">Belum pernah</string>
+    <string name="survey_o_e_b3_a_little">Sedikit</string>
+    <string name="survey_o_e_b3_quite_a_lot">Cukup banyak</string>
+    <string name="survey_q_clarity">Seberapa jelas penjelasan pelajarannya?</string>
+    <string name="survey_q_hardest">Bagian mana yang paling sulit?</string>
+    <string name="survey_q_continue">Apakah kamu ingin terus belajar dengan AyaIlmu?</string>
+    <string name="survey_q_daily_minutes">Berapa lama kamu benar-benar belajar setiap hari?</string>
+    <string name="survey_q_confusing">Ada yang membingungkan? Ceritakan di sini.</string>
+    <string name="survey_o_continue_yes">Ya</string>
+    <string name="survey_o_continue_maybe">Mungkin</string>
+    <string name="survey_o_continue_no">Tidak</string>
+    <string name="survey_o_daily_lt5">Kurang dari 5 menit</string>
+    <string name="survey_o_daily_5_10">5–10 menit</string>
+    <string name="survey_o_daily_10_15">10–15 menit</string>
+    <string name="survey_o_daily_15_20">15–20 menit</string>
+    <string name="survey_o_daily_gt20">Lebih dari 20 menit</string>
+
+    <!-- Settings additions (P7): trial survey, tester code -->
+    <string name="settings_survey">Survei uji coba</string>
+    <string name="settings_survey_body">Ada survei singkat untukmu. Boleh diisi sekarang atau nanti.</string>
+    <string name="settings_survey_open">Isi survei uji coba</string>
+    <string name="settings_tester_title">Kode penguji</string>
+    <string name="settings_tester_body">Untuk penguji tertutup dari Petalytix. Kode yang benar membuka semua unit di HP ini selama masa uji.</string>
+    <string name="settings_tester_apply">Pakai kode</string>
+    <string name="settings_tester_active">Akses penguji aktif: semua unit terbuka di HP ini.</string>
+    <string name="settings_tester_remove">Hapus akses penguji</string>
+    <string name="settings_notice_tester_on">Kode diterima. Semua unit sudah terbuka.</string>
+    <string name="settings_notice_tester_wrong">Kode itu tidak dikenali, atau masa uji sudah selesai. Periksa lagi hurufnya.</string>
+    <string name="settings_notice_tester_off">Akses penguji dihapus.</string>
+
     <!-- Accessibility -->
     <string name="cd_aya_mascot">Aya, maskot AyaIlmu</string>
+
+    <!-- Interactions (follow-up 11) -->
+    <string name="interact_connect_hint">Tarik garis ke pasangannya, atau ketuk keduanya.</string>
+    <string name="interact_drag_pairs_hint">Seret tiap kartu ke pasangannya, atau ketuk lalu ketuk.</string>
+    <string name="interact_buckets_hint">Seret tiap kartu ke keranjangnya, atau ketuk lalu ketuk.</string>
+    <string name="interact_sequence_hint">Seret kotak ke tempatnya. Ketuk untuk menaruh atau mengembalikan.</string>
+    <string name="interact_pool_empty">Semua kartu sudah ditaruh.</string>
+    <string name="interact_empty">Kosong</string>
+    <string name="interact_selected">Dipilih</string>
+    <string name="interact_pair_with">Pasangkan dengan %1$s</string>
+    <string name="interact_put_in">Masukkan ke %1$s</string>
+    <string name="interact_put_in_slot">Taruh di tempat %1$d</string>
+    <string name="interact_take_out">Keluarkan</string>
+    <string name="interact_unlink">Lepaskan pasangan</string>
+    <string name="interact_linked_to">Berpasangan dengan %1$s</string>
+    <string name="interact_in_basket">Di %1$s</string>
+    <string name="interact_in_slot">Di tempat %1$d</string>
+    <string name="interact_slot_empty_cd">Tempat %1$d, kosong</string>
+
+    <!-- Listening (follow-up 11) -->
+    <string name="listen_again">Dengar lagi</string>
+    <string name="listen_speaker_cd">Dengarkan</string>
+    <string name="listen_speaker_word_cd">Dengarkan: %1$s</string>
+
+    <!-- Tracing (follow-up 11) -->
+    <string name="trace_hint">Ikuti garisnya dengan jari, mulai dari titik.</string>
+    <string name="trace_progress">Goresan %1$d dari %2$d</string>
+    <string name="trace_try_again">Hampir! Coba goresan ini sekali lagi.</string>
+    <string name="trace_done">Selesai! Hurufnya sudah lengkap.</string>
+    <string name="trace_canvas_cd">Tempat menulis huruf %1$s</string>
+    <string name="trace_skip_stroke">Tandai goresan ini selesai</string>
+    <string name="trace_no_strokes">Panduan goresan huruf ini belum ada. Lihat hurufnya, lalu lanjut.</string>
+
+    <!-- Sound (follow-up 11) -->
+    <string name="settings_sound_title">Efek suara</string>
+    <string name="settings_sound_body">Bunyi kecil saat menjawab dan menyeret kartu. Suara pengucapan tetap ada.</string>
+    <string name="settings_sound_switch">Putar efek suara</string>
+
+    <!-- Modules & levels (follow-up 12) -->
+    <string name="module_name_bahasa">Bahasa</string>
+    <string name="module_name_matematika">Matematika</string>
+    <string name="module_name_sains">Sains</string>
+    <string name="module_name_sosial_seni">Sosial &amp; Seni</string>
+    <string name="module_name_nilai">Nilai</string>
+    <string name="module_name_sejarah">Sejarah</string>
+    <string name="module_lang_ar">Arab</string>
+    <string name="module_lang_en">Inggris</string>
+    <string name="module_lang_ko">Korea</string>
+    <string name="module_lang_ja">Jepang</string>
+    <string name="module_lang_zh">Mandarin</string>
+    <string name="level_name_pemula">Pemula</string>
+    <string name="level_name_menengah">Menengah</string>
+    <string name="level_name_mahir">Mahir</string>
+    <string name="level_name_master">Master</string>
+    <string name="level_desc_pemula_kids">Langkah pertama, seperti kelas 1–2.</string>
+    <string name="level_desc_menengah_kids">Makin mandiri, seperti kelas 3–4.</string>
+    <string name="level_desc_mahir_kids">Bernalar dan tugas lebih panjang, seperti kelas 5–6.</string>
+    <string name="level_desc_master_kids">Memakai ilmu di hal baru dan berkarya.</string>
+    <string name="level_desc_pemula_adults">Langkah pertama.</string>
+    <string name="level_desc_menengah_adults">Mandiri dalam keseharian.</string>
+    <string name="level_desc_mahir_adults">Bernalar dan tugas yang lebih panjang.</string>
+    <string name="level_desc_master_adults">Nuansa, menerapkan, dan berkarya.</string>
+    <string name="module_change">Ganti</string>
+    <string name="module_coming_soon">Segera</string>
+    <string name="module_free">Gratis</string>
+    <string name="module_today">Hari ini: %1$d soal dijawab</string>
+    <string name="module_units_done">Unit selesai: %1$d dari %2$d</string>
+    <string name="module_level_progress">%1$d dari %2$d unit selesai</string>
+    <string name="module_suggest_line">Hampir semua unit di tingkat ini selesai. Tingkat %1$s siap dicoba kapan saja.</string>
+    <string name="module_suggest_badge">Siap dicoba</string>
+    <string name="module_languages_title">Pilih bahasa</string>
+    <string name="module_levels_title">Pilih tingkat</string>
+    <string name="module_figures">Galeri tokoh</string>
+    <string name="module_failed">Pelajaran ini belum bisa dibuka.</string>
+    <string name="module_cd_language">Bahasa: %1$s</string>
+    <string name="module_cd_level">Tingkat: %1$s</string>
+
+    <!-- Sejarah pack and all-access (follow-up 12) -->
+    <string name="store_product_sejarah">Paket Sejarah</string>
+    <string name="store_product_sejarah_body">Semua unit Sejarah: tokoh mulia dari Indonesia dan dunia, untuk anak dan dewasa.</string>
+    <string name="store_all_access_body">Semua pelajaran sekarang dan yang akan datang: bahasa, matematika, sains, sosial dan seni, serta sejarah. Untuk semua profil, anak dan dewasa.</string>
+
+    <!-- Profile pictures (follow-up 12) -->
+    <string name="avatar_title">Gambar profil</string>
+    <string name="avatar_body">Pilih hewan untuk profil ini. Gambarnya muncul di beranda dan saat ganti profil.</string>
+    <string name="avatar_pick_prompt">Pilih gambar untuk profil ini (boleh dilewati).</string>
+    <string name="avatar_cat">Kucing</string>
+    <string name="avatar_dog">Anjing</string>
+    <string name="avatar_rabbit">Kelinci</string>
+    <string name="avatar_bird">Burung</string>
+    <string name="avatar_fish">Ikan</string>
+    <string name="avatar_duck">Bebek</string>
+    <string name="avatar_chicken">Ayam</string>
+    <string name="avatar_cow">Sapi</string>
+    <string name="avatar_goat">Kambing</string>
+    <string name="avatar_horse">Kuda</string>
+    <string name="avatar_elephant">Gajah</string>
+    <string name="avatar_monkey">Monyet</string>
+
+    <!-- Stories (follow-up 12) -->
+    <string name="story_next">Lanjut</string>
+    <string name="story_done">Selesai</string>
+    <string name="story_close">Tutup</string>
+    <string name="story_skip">Lewati cerita</string>
+    <string name="story_watch_again">Lihat cerita lagi</string>
+    <string name="story_listen_cd">Dengarkan ceritanya lagi</string>
+    <string name="story_stage_cd">Gambar %1$d dari %2$d: %3$s</string>
+    <string name="story_source">Sumber: %1$s</string>
+    <string name="figures_title">Tokoh Sejarah</string>
+    <string name="figures_body">Tokoh yang sudah kamu temui di cerita Sejarah. Ketuk salah satu untuk menonton ceritanya lagi.</string>
+    <string name="figures_count">Sudah bertemu: %1$d dari %2$d</string>
+    <string name="figures_not_met">Belum bertemu</string>
+    <string name="figures_watch">tonton ceritanya</string>
+    <string name="figures_empty_title">Belum ada tokoh di sini</string>
+    <string name="figures_empty_body">Cerita di modul Sejarah memperkenalkan orang-orang hebat. Setiap tokoh yang kamu temui akan muncul di sini.</string>
 
     <!-- Never translated: language names (in their own language), the contact address, an Arabic sample, a format. -->
     <string name="lang_name_id" translatable="false">Bahasa Indonesia</string>
     <string name="lang_name_en" translatable="false">English</string>
     <string name="contact_email" translatable="false">support@petalytix.id</string>
+    <string name="privacy_policy_url" translatable="false">https://petalytix.id/ayailmu/privasi</string>
     <string name="settings_arabic_sample" translatable="false">هِيَ صَابِرَةٌ</string>
     <string name="home_profile_button" translatable="false">%1$s · %2$s</string>
+    <string name="report_text_count" translatable="false">%1$d/%2$d</string>
 </resources>

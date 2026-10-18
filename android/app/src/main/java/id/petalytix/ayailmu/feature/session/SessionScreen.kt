@@ -3,11 +3,8 @@ package id.petalytix.ayailmu.feature.session
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,38 +13,34 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.petalytix.ayailmu.R
+import id.petalytix.ayailmu.core.design.art.ArtImage
+import id.petalytix.ayailmu.core.design.art.AyaFigure
+import id.petalytix.ayailmu.core.design.art.AyaPose
 import id.petalytix.ayailmu.core.design.components.AyaButton
 import id.petalytix.ayailmu.core.design.components.AyaSecondaryButton
 import id.petalytix.ayailmu.core.design.components.AyaTextField
@@ -56,8 +49,9 @@ import id.petalytix.ayailmu.core.design.components.OptionCard
 import id.petalytix.ayailmu.core.design.components.PaperBackground
 import id.petalytix.ayailmu.core.design.components.PaperCard
 import id.petalytix.ayailmu.core.design.components.SessionProgressBar
-import id.petalytix.ayailmu.core.design.components.TargetText
 import id.petalytix.ayailmu.core.design.components.headingSemantics
+import id.petalytix.ayailmu.core.design.sound.LocalSoundFx
+import id.petalytix.ayailmu.core.design.sound.Sfx
 import id.petalytix.ayailmu.core.design.theme.AyaSpacing
 import id.petalytix.ayailmu.core.design.theme.AyaTheme
 import id.petalytix.ayailmu.core.design.theme.AyaThemeTokens
@@ -66,8 +60,11 @@ import id.petalytix.ayailmu.core.engine.Session
 import id.petalytix.ayailmu.core.engine.SessionState
 import id.petalytix.ayailmu.core.engine.Step
 import id.petalytix.ayailmu.core.model.Outcome
-import id.petalytix.ayailmu.core.model.Referent
-import id.petalytix.ayailmu.core.model.Response
+import id.petalytix.ayailmu.feature.session.interact.TargetLine
+import id.petalytix.ayailmu.feature.session.story.PreviewStory
+import id.petalytix.ayailmu.feature.session.story.StoryNavRow
+import id.petalytix.ayailmu.feature.session.story.StoryTimeline
+import id.petalytix.ayailmu.feature.session.story.WatchAgainButton
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -118,12 +115,14 @@ fun SessionScreen(
 ) {
     Column(modifier = modifier.fillMaxSize().safeDrawingPadding()) {
         when (state) {
-            SessionUiState.Loading -> CenteredMessage(stringResource(R.string.session_loading), null, null)
-            SessionUiState.Failed -> CenteredMessage(stringResource(R.string.session_failed), null, onExit)
+            // Loading has a picture too (MODULES_LEVELS_STORIES.md section 8): Aya thinking, no spinner, no bare text.
+            SessionUiState.Loading -> CenteredMessage(AyaPose.THINK.key, stringResource(R.string.session_loading), null, null)
+            SessionUiState.Failed -> CenteredMessage("state_error", stringResource(R.string.session_failed), null, onExit)
             SessionUiState.NothingToday ->
-                CenteredMessage(stringResource(R.string.session_nothing_title), stringResource(R.string.session_nothing_body), onExit)
+                CenteredMessage(AyaPose.SLEEP.key, stringResource(R.string.session_nothing_title), stringResource(R.string.session_nothing_body), onExit)
             SessionUiState.NeedsConsent ->
                 CenteredMessage(
+                    AyaPose.THINK.key,
                     stringResource(R.string.session_consent_title),
                     stringResource(R.string.session_consent_body),
                     onExit,
@@ -135,20 +134,25 @@ fun SessionScreen(
     }
 }
 
+/** A calm screen: one picture (draft art), a title, a line, and the way back. Never a guilt message. */
 @Composable
 private fun CenteredMessage(
+    picture: String?,
     title: String,
     body: String?,
     onExit: (() -> Unit)?,
     primary: Pair<String, () -> Unit>? = null,
 ) {
-    val colors = AyaThemeTokens.colors
     Column(
-        modifier = Modifier.fillMaxSize().padding(AyaSpacing.lg),
+        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(AyaSpacing.lg),
         verticalArrangement = Arrangement.spacedBy(AyaSpacing.md, Alignment.CenterVertically),
     ) {
-        Text(title, style = MaterialTheme.typography.headlineMedium, color = colors.ink, modifier = Modifier.headingSemantics())
-        if (body != null) Text(body, style = MaterialTheme.typography.bodyLarge, color = colors.inkSoft)
+        if (picture != null) {
+            PictureMessage(picture, title, body)
+        } else {
+            Text(title, style = MaterialTheme.typography.headlineMedium, color = AyaThemeTokens.colors.ink, modifier = Modifier.headingSemantics())
+            if (body != null) Text(body, style = MaterialTheme.typography.bodyLarge, color = AyaThemeTokens.colors.inkSoft)
+        }
         primary?.let { (label, action) -> AyaButton(text = label, onClick = action, modifier = Modifier.fillMaxWidth()) }
         if (onExit != null) {
             if (primary == null) {
@@ -213,6 +217,7 @@ private fun LessonView(
     val colors = AyaThemeTokens.colors
     Text(stringResource(R.string.session_lesson_label), style = MaterialTheme.typography.labelLarge, color = colors.accentDeep)
     Text(step.title, style = MaterialTheme.typography.headlineMedium, color = colors.ink, modifier = Modifier.headingSemantics())
+    if (s.syntheticArabic) SyntheticLabel()
     step.body.forEachIndexed { i, p ->
         if (i == step.clueIndex) {
             PaperCard(edge = colors.ochre) { Text(p, style = MaterialTheme.typography.bodyLarge, color = colors.ink) }
@@ -221,9 +226,11 @@ private fun LessonView(
         }
     }
     if (step.examples.isNotEmpty()) {
+        // TargetLine: Arabic keeps TargetText; Han and Hangul get their language's text locale (CR-I18N-3).
+        val ts = TargetStyle(rtl = s.targetRtl, scale = s.targetScale, synthetic = s.syntheticArabic, lang = s.targetLang)
         PaperCard {
             step.examples.forEach { ex ->
-                ex.target?.let { TargetText(it, modifier = Modifier.fillMaxWidth(), rtl = s.targetRtl, scale = s.targetScale) }
+                ex.target?.let { TargetLine(it, ts, modifier = Modifier.fillMaxWidth()) }
                 Text(ex.gloss, style = MaterialTheme.typography.bodyMedium, color = colors.inkSoft)
             }
         }
@@ -233,7 +240,7 @@ private fun LessonView(
 // ---- questions -------------------------------------------------------------------------------------
 
 @Composable
-private fun QuestionView(
+private fun ColumnScope.QuestionView(
     q: StepUi.Question,
     s: SessionUiState.Running,
     draft: AnswerDraft,
@@ -242,39 +249,105 @@ private fun QuestionView(
 ) {
     val colors = AyaThemeTokens.colors
     roleLabel(q)?.let { Text(stringResource(it), style = MaterialTheme.typography.labelLarge, color = colors.accentDeep) }
-    if (q.prompt.isNotEmpty()) Text(q.prompt, style = MaterialTheme.typography.titleLarge, color = colors.ink)
-    q.reading?.let { r ->
-        PaperCard {
-            r.title?.let { Text(it, style = MaterialTheme.typography.titleLarge, color = colors.ink) }
-            r.target?.let { TargetText(it, modifier = Modifier.fillMaxWidth(), rtl = s.targetRtl, scale = s.targetScale) }
-            r.body.forEach { Text(it, style = MaterialTheme.typography.bodyLarge, color = colors.ink) }
-        }
-    }
-    q.target?.let { TargetText(it, modifier = Modifier.fillMaxWidth(), rtl = s.targetRtl, scale = s.targetScale) }
-    q.help.forEach { h ->
-        Column {
-            h.word?.let { TargetText(it, modifier = Modifier.fillMaxWidth(), rtl = s.targetRtl, scale = s.targetScale, small = true) }
-            Text(h.meaning, style = MaterialTheme.typography.bodyLarge, color = if (h.word != null) colors.inkSoft else colors.ink)
-        }
-    }
-    val outcome = s.feedback?.outcome
-    when (q.kind) {
-        RenderKind.CHOICE -> ChoiceBody(q, s, draft, enabled, outcome)
-        RenderKind.TYPED -> TypedBody(draft, enabled, onDone = { draft.toResponse(q)?.let { onEvent(SessionEvent.Answer(it)) } })
-        RenderKind.PARAPHRASE -> ParaphraseBody(draft, enabled)
-        RenderKind.NUMBER -> NumberBody(q, draft, enabled)
-        RenderKind.SEQUENCE -> SequenceBody(q, s, draft, enabled)
-        RenderKind.PAIRS -> PairsBody(q, s, draft, enabled, oneToOne = true)
-        RenderKind.BUCKETS -> PairsBody(q, s, draft, enabled, oneToOne = false)
-        RenderKind.GEM ->
-            PaperCard(edge = colors.ochre) {
-                Text(stringResource(R.string.session_gem_label), style = MaterialTheme.typography.labelLarge, color = colors.accentDeep)
-                q.cardText?.let { Text(it, style = MaterialTheme.typography.bodyLarge, color = colors.ink) }
+    // A question about a story: the story is one tap away (MODULES_LEVELS_STORIES.md section 2).
+    if (q.kind != RenderKind.STORY) q.story?.let { WatchAgainButton(it) }
+    QuestionBlock(
+        q = q,
+        draft = draft,
+        enabled = enabled,
+        outcome = s.feedback?.outcome,
+        ts = TargetStyle(rtl = s.targetRtl, scale = s.targetScale, synthetic = s.syntheticArabic, lang = s.targetLang),
+        onSubmit = { onEvent(SessionEvent.Answer(it)) },
+    )
+    ReportRow(s, onEvent)
+}
+
+/** «Laporkan soal»: small and out of the way; once used it just says thank you. */
+@Composable
+private fun ReportRow(
+    s: SessionUiState.Running,
+    onEvent: (SessionEvent) -> Unit,
+) {
+    val colors = AyaThemeTokens.colors
+    var open by remember { mutableStateOf(false) }
+    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End, verticalAlignment = Alignment.CenterVertically) {
+        when {
+            s.reported -> Text(stringResource(R.string.report_done), style = MaterialTheme.typography.bodyMedium, color = colors.inkSoft)
+            s.reportFailed -> {
+                Text(
+                    stringResource(R.string.report_failed),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = colors.notYet,
+                    modifier = Modifier.weight(1f, fill = false),
+                )
+                TextButton(onClick = { open = true }) { Text(stringResource(R.string.report_retry), color = colors.accentDeep) }
             }
-        RenderKind.INFO -> q.cardText?.let { PaperCard { Text(it, style = MaterialTheme.typography.bodyLarge, color = colors.ink) } }
-        RenderKind.UNSUPPORTED -> Text(stringResource(R.string.session_unsupported), style = MaterialTheme.typography.bodyMedium, color = colors.inkSoft)
+            else -> TextButton(onClick = { open = true }, enabled = !s.reporting) { Text(stringResource(R.string.report_open), color = colors.inkSoft) }
+        }
+    }
+    if (open) {
+        ReportDialog(
+            child = s.childProfile,
+            onSend = { reason, text ->
+                open = false
+                onEvent(SessionEvent.Report(reason, text))
+            },
+            onDismiss = { open = false },
+        )
     }
 }
+
+@Composable
+private fun ReportDialog(
+    child: Boolean,
+    onSend: (String, String) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val colors = AyaThemeTokens.colors
+    var reason by remember { mutableStateOf<String?>(null) }
+    var text by remember { mutableStateOf("") }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.report_title)) },
+        text = {
+            Column(modifier = Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(AyaSpacing.sm)) {
+                Text(stringResource(R.string.report_body), style = MaterialTheme.typography.bodyMedium, color = colors.inkSoft)
+                Reports.REASONS.forEach { r ->
+                    OptionCard(
+                        state = if (r == reason) ChoiceState.SELECTED else ChoiceState.IDLE,
+                        compact = true,
+                        onClick = { reason = r },
+                    ) { Text(stringResource(reasonLabel(r)), style = MaterialTheme.typography.bodyLarge, color = colors.ink) }
+                }
+                // Child profiles pick a reason only: no free text from children (CR-DAT-2).
+                if (!child) {
+                    AyaTextField(
+                        value = text,
+                        onValueChange = { text = it.take(Reports.MAX_TEXT) },
+                        label = stringResource(R.string.report_text_label),
+                        supporting = stringResource(R.string.report_text_count, text.length, Reports.MAX_TEXT),
+                        singleLine = false,
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(enabled = reason != null, onClick = { reason?.let { onSend(it, if (child) "" else text) } }) {
+                Text(stringResource(R.string.report_send))
+            }
+        },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.dev_cancel)) } },
+    )
+}
+
+private fun reasonLabel(reason: String): Int =
+    when (reason) {
+        "typo" -> R.string.report_reason_typo
+        "wrong_answer" -> R.string.report_reason_wrong_answer
+        "confusing" -> R.string.report_reason_confusing
+        "picture" -> R.string.report_reason_picture
+        else -> R.string.report_reason_other
+    }
 
 private fun roleLabel(q: StepUi.Question): Int? =
     when {
@@ -283,220 +356,6 @@ private fun roleLabel(q: StepUi.Question): Int? =
         q.role == Step.Role.REMED || q.role == Step.Role.FOCUS -> R.string.session_followup_label
         else -> null
     }
-
-@Composable
-private fun OptionContent(
-    o: OptionUi,
-    s: SessionUiState.Running,
-) {
-    val colors = AyaThemeTokens.colors
-    when {
-        o.target != null -> TargetText(o.target, rtl = s.targetRtl, scale = s.targetScale, small = true)
-        o.text != null -> Text(o.text, style = MaterialTheme.typography.bodyLarge, color = colors.ink)
-        o.image != null -> ImagePlaceholder(o.image)
-    }
-}
-
-/** Until the hand-drawn set lands (P4) a picture option is a labelled dashed frame, clearly a draft. */
-@Composable
-private fun ImagePlaceholder(path: String) {
-    val colors = AyaThemeTokens.colors
-    val name = path.substringAfterLast('/').substringBeforeLast('.')
-    Box(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .heightIn(min = 72.dp)
-                .padding(vertical = AyaSpacing.xs)
-                .drawBehind {
-                    drawRoundRect(
-                        color = colors.inkSoft,
-                        cornerRadius = CornerRadius(8.dp.toPx()),
-                        style = Stroke(width = 1.4.dp.toPx(), pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 7f))),
-                    )
-                },
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(stringResource(R.string.session_image_placeholder, name), style = MaterialTheme.typography.bodyMedium, color = colors.inkSoft, modifier = Modifier.padding(AyaSpacing.sm))
-    }
-}
-
-@Composable
-private fun ChoiceBody(
-    q: StepUi.Question,
-    s: SessionUiState.Running,
-    draft: AnswerDraft,
-    enabled: Boolean,
-    outcome: Outcome?,
-) {
-    q.options.forEach { o ->
-        val chosen = draft.choice == o.id
-        val state =
-            when {
-                outcome == null -> if (chosen) ChoiceState.SELECTED else ChoiceState.IDLE
-                !chosen -> ChoiceState.DIMMED
-                outcome == Outcome.CORRECT -> ChoiceState.CORRECT
-                outcome == Outcome.WRONG -> ChoiceState.WRONG
-                else -> ChoiceState.SELECTED
-            }
-        OptionCard(state = state, enabled = enabled, onClick = { draft.choice = o.id }) { OptionContent(o, s) }
-    }
-}
-
-@Composable
-private fun TypedBody(
-    draft: AnswerDraft,
-    enabled: Boolean,
-    onDone: () -> Unit,
-) {
-    AyaTextField(
-        value = draft.text,
-        onValueChange = { draft.text = it },
-        label = stringResource(R.string.session_type_answer),
-        enabled = enabled,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-        keyboardActions = KeyboardActions(onDone = { onDone() }),
-    )
-}
-
-@Composable
-private fun ParaphraseBody(
-    draft: AnswerDraft,
-    enabled: Boolean,
-) {
-    val colors = AyaThemeTokens.colors
-    AyaTextField(
-        value = draft.text,
-        onValueChange = { draft.text = it },
-        label = stringResource(R.string.session_type_answer),
-        enabled = enabled,
-        singleLine = false,
-    )
-    Text(stringResource(R.string.session_who_question), style = MaterialTheme.typography.bodyLarge, color = colors.ink)
-    listOf(
-        Response.refTag(Referent.LAKI_LAKI) to R.string.session_who_male,
-        Response.refTag(Referent.PEREMPUAN) to R.string.session_who_female,
-        Response.REF_DONT_KNOW to R.string.session_who_unknown,
-    ).forEach { (tag, label) ->
-        OptionCard(
-            state = if (draft.ref == tag) ChoiceState.SELECTED else ChoiceState.IDLE,
-            enabled = enabled,
-            compact = true,
-            onClick = { draft.ref = tag },
-        ) { Text(stringResource(label), style = MaterialTheme.typography.bodyLarge, color = colors.ink) }
-    }
-}
-
-@Composable
-private fun NumberBody(
-    q: StepUi.Question,
-    draft: AnswerDraft,
-    enabled: Boolean,
-) {
-    AyaTextField(
-        value = draft.text,
-        onValueChange = { v -> draft.text = v.filter { it.isDigit() || it == ',' || it == '.' || it == '-' }.take(MAX_NUMBER_CHARS) },
-        label = stringResource(R.string.session_number_label),
-        supporting = q.unitLabel?.let { stringResource(R.string.session_unit, it) },
-        enabled = enabled,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal, imeAction = ImeAction.Done),
-    )
-}
-
-private const val MAX_NUMBER_CHARS = 16
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun SequenceBody(
-    q: StepUi.Question,
-    s: SessionUiState.Running,
-    draft: AnswerDraft,
-    enabled: Boolean,
-) {
-    val colors = AyaThemeTokens.colors
-    val byId = q.options.associateBy { it.id }
-    val rtlTiles = s.targetRtl && q.options.any { it.target != null }
-    Text(stringResource(R.string.session_sequence_hint), style = MaterialTheme.typography.bodyMedium, color = colors.inkSoft)
-    PaperCard {
-        if (draft.placed.isEmpty()) {
-            Text(stringResource(R.string.session_sequence_empty), style = MaterialTheme.typography.bodyMedium, color = colors.inkSoft)
-        } else {
-            CompositionLocalProvider(LocalLayoutDirection provides if (rtlTiles) LayoutDirection.Rtl else LocalLayoutDirection.current) {
-                FlowRow(horizontalArrangement = Arrangement.spacedBy(AyaSpacing.sm), verticalArrangement = Arrangement.spacedBy(AyaSpacing.sm)) {
-                    draft.placed.forEach { id ->
-                        byId[id]?.let { o ->
-                            OptionCard(state = ChoiceState.SELECTED, enabled = enabled, compact = true, fillWidth = false, onClick = { draft.place(id, q.slots) }) {
-                                OptionContent(o, s)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    FlowRow(horizontalArrangement = Arrangement.spacedBy(AyaSpacing.sm), verticalArrangement = Arrangement.spacedBy(AyaSpacing.sm)) {
-        q.options.filter { it.id !in draft.placed }.forEach { o ->
-            OptionCard(
-                state = ChoiceState.IDLE,
-                enabled = enabled && draft.placed.size < q.slots,
-                compact = true,
-                fillWidth = false,
-                onClick = { draft.place(o.id, q.slots) },
-            ) { OptionContent(o, s) }
-        }
-    }
-}
-
-@Composable
-private fun PairsBody(
-    q: StepUi.Question,
-    s: SessionUiState.Running,
-    draft: AnswerDraft,
-    enabled: Boolean,
-    oneToOne: Boolean,
-) {
-    val colors = AyaThemeTokens.colors
-    val rightById = q.right.associateBy { it.id }
-    Text(
-        stringResource(if (oneToOne) R.string.session_pairs_hint else R.string.session_buckets_hint),
-        style = MaterialTheme.typography.bodyMedium,
-        color = colors.inkSoft,
-    )
-    Row(horizontalArrangement = Arrangement.spacedBy(AyaSpacing.sm)) {
-        Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(AyaSpacing.sm)) {
-            q.left.forEach { o ->
-                val paired = draft.pairs[o.id]?.let { rightById[it] }
-                OptionCard(
-                    state =
-                        when {
-                            draft.activeLeft == o.id -> ChoiceState.SELECTED
-                            paired != null -> ChoiceState.DIMMED
-                            else -> ChoiceState.IDLE
-                        },
-                    enabled = enabled,
-                    compact = true,
-                    onClick = { draft.tapLeft(o.id) },
-                ) {
-                    Column {
-                        OptionContent(o, s)
-                        paired?.let { Text("→ " + (it.text ?: it.target ?: it.id), style = MaterialTheme.typography.labelSmall, color = colors.accentDeep) }
-                    }
-                }
-            }
-        }
-        Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(AyaSpacing.sm)) {
-            q.right.forEach { o ->
-                val used = oneToOne && draft.pairs.containsValue(o.id)
-                OptionCard(
-                    state = if (used) ChoiceState.DIMMED else ChoiceState.IDLE,
-                    enabled = enabled && draft.activeLeft != null,
-                    compact = true,
-                    onClick = { draft.tapRight(o.id, oneToOne) },
-                ) { OptionContent(o, s) }
-            }
-        }
-    }
-}
 
 // ---- actions and feedback --------------------------------------------------------------------------
 
@@ -507,6 +366,7 @@ private fun BottomBar(
     onEvent: (SessionEvent) -> Unit,
 ) {
     val colors = AyaThemeTokens.colors
+    val sound = LocalSoundFx.current
     Column(
         modifier = Modifier.fillMaxWidth().background(colors.paper).padding(horizontal = AyaSpacing.lg, vertical = AyaSpacing.md),
         verticalArrangement = Arrangement.spacedBy(AyaSpacing.sm),
@@ -516,11 +376,21 @@ private fun BottomBar(
         val feedback = s.feedback
         when {
             s.phase == SessionState.Phase.FEEDBACK && feedback != null -> {
-                FeedbackPanel(feedback)
+                FeedbackCard(feedback.outcome, feedback.messages)
                 AyaButton(text = stringResource(R.string.action_continue), enabled = !s.busy, onClick = { onEvent(SessionEvent.Continue) }, modifier = Modifier.fillMaxWidth())
             }
             step is StepUi.Screen ->
-                AyaButton(text = stringResource(R.string.action_continue), enabled = !s.busy, onClick = { onEvent(SessionEvent.Continue) }, modifier = Modifier.fillMaxWidth())
+                AyaButton(
+                    text = stringResource(R.string.action_continue),
+                    enabled = !s.busy,
+                    onClick = {
+                        // A lesson screen turns like a page (INTERACTIONS_AUDIO.md §3.2).
+                        sound.play(Sfx.PAGE)
+                        onEvent(SessionEvent.Continue)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            step is StepUi.Question && step.kind == RenderKind.STORY -> StoryBar(s, step, draft, onEvent)
             step is StepUi.Question && (step.kind == RenderKind.GEM || step.kind == RenderKind.INFO) ->
                 AyaButton(
                     text = stringResource(R.string.action_continue),
@@ -545,20 +415,47 @@ private fun BottomBar(
     }
 }
 
+/**
+ * STORY: «Kembali» and «Lanjut» turn the panels (a page-turn sound each time); on the last panel «Lanjut» answers
+ * the story item as seen, like an info card. Adults, and anyone meeting the story again, may skip it.
+ */
 @Composable
-private fun FeedbackPanel(f: FeedbackView) {
+private fun StoryBar(
+    s: SessionUiState.Running,
+    step: StepUi.Question,
+    draft: AnswerDraft,
+    onEvent: (SessionEvent) -> Unit,
+) {
     val colors = AyaThemeTokens.colors
-    val (title, tone) =
-        when (f.outcome) {
-            Outcome.CORRECT -> R.string.session_outcome_correct to colors.correct
-            Outcome.WRONG -> R.string.session_outcome_wrong to colors.notYet
-            Outcome.PENDING -> R.string.session_outcome_pending to colors.slate
-            Outcome.DONT_KNOW -> R.string.session_outcome_dont_know to colors.inkSoft
-            Outcome.NOT_ASSESSED -> R.string.session_outcome_seen to colors.accentDeep
-        }
-    PaperCard(edge = tone) {
-        Text(stringResource(title), style = MaterialTheme.typography.titleLarge, color = tone)
-        f.messages.forEach { Text(it, style = MaterialTheme.typography.bodyLarge, color = colors.ink) }
+    val sound = LocalSoundFx.current
+    val timeline = draft.storyTimeline(step)
+    val response = draft.toResponse(step)
+    val turn: (StoryTimeline) -> Unit = { next ->
+        if (StoryTimeline.turnsPage(timeline, next)) sound.play(Sfx.PAGE)
+        draft.story = next
+    }
+    StoryNavRow(
+        timeline = timeline,
+        forwardLabel = stringResource(if (timeline.isLast) R.string.action_continue else R.string.story_next),
+        forwardEnabled = !s.busy && (!timeline.isLast || response != null),
+        onBack = { turn(timeline.back()) },
+        onForward = {
+            if (!timeline.isLast) {
+                turn(timeline.next())
+            } else {
+                response?.let { onEvent(SessionEvent.Answer(it)) }
+            }
+        },
+    )
+    if (!timeline.isLast && StoryTimeline.offersSkip(adult = !s.childProfile, seenBefore = s.storySeenBefore)) {
+        TextButton(
+            enabled = !s.busy,
+            onClick = {
+                draft.story = timeline.skip()
+                draft.toResponse(step)?.let { onEvent(SessionEvent.Answer(it)) }
+            },
+            modifier = Modifier.fillMaxWidth().heightIn(min = AyaSpacing.touch),
+        ) { Text(stringResource(R.string.story_skip), color = colors.inkSoft) }
     }
 }
 
@@ -572,6 +469,15 @@ private fun SummaryView(
 ) {
     val colors = AyaThemeTokens.colors
     val locale = LocalConfiguration.current.locales[0]
+    // Once per summary: rememberSaveable keeps a rotation or a return to the app from playing it again.
+    val sound = LocalSoundFx.current
+    var chimed by rememberSaveable { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        if (!chimed) {
+            chimed = true
+            sound.play(Sfx.SESSION_DONE)
+        }
+    }
     val nextReview =
         runCatching {
             LocalDate.parse(summary.nextReviewDate).format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale))
@@ -580,23 +486,46 @@ private fun SummaryView(
         modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(AyaSpacing.lg),
         verticalArrangement = Arrangement.spacedBy(AyaSpacing.md),
     ) {
-        Text(stringResource(R.string.summary_title), style = MaterialTheme.typography.displaySmall, color = colors.ink, modifier = Modifier.headingSemantics())
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AyaSpacing.md)) {
+            AyaFigure(pose = AyaPose.HAPPY, contentDescription = null, size = 88.dp)
+            Text(
+                stringResource(R.string.summary_title),
+                style = MaterialTheme.typography.displaySmall,
+                color = colors.ink,
+                modifier = Modifier.weight(1f).headingSemantics(),
+            )
+        }
         PaperCard {
-            val line = MaterialTheme.typography.bodyLarge
-            Text(stringResource(R.string.summary_answered, summary.answered), style = line, color = colors.ink)
-            Text(stringResource(R.string.summary_correct, summary.correct), style = line, color = colors.ink)
-            Text(stringResource(R.string.summary_not_yet, summary.wrong), style = line, color = colors.ink)
-            if (summary.pending > 0) Text(stringResource(R.string.summary_pending, summary.pending), style = line, color = colors.ink)
-            if (summary.dontKnow > 0) Text(stringResource(R.string.summary_dont_know, summary.dontKnow), style = line, color = colors.ink)
-            if (summary.gems > 0) Text(stringResource(R.string.summary_gems, summary.gems), style = line, color = colors.ink)
-            Text(stringResource(R.string.summary_minutes, summary.minutes), style = line, color = colors.inkSoft)
-            Text(stringResource(R.string.summary_next_review, nextReview), style = line, color = colors.inkSoft)
+            SummaryLine(stringResource(R.string.summary_answered, summary.answered), colors.ink)
+            // The correct and not-yet counts carry the same drawn marks as the feedback card (section 8).
+            SummaryLine(stringResource(R.string.summary_correct, summary.correct), colors.ink, glyph = "glyph_correct")
+            SummaryLine(stringResource(R.string.summary_not_yet, summary.wrong), colors.ink, glyph = "glyph_not_yet")
+            if (summary.pending > 0) SummaryLine(stringResource(R.string.summary_pending, summary.pending), colors.ink)
+            if (summary.dontKnow > 0) SummaryLine(stringResource(R.string.summary_dont_know, summary.dontKnow), colors.ink)
+            if (summary.gems > 0) SummaryLine(stringResource(R.string.summary_gems, summary.gems), colors.ink, glyph = "gem")
+            SummaryLine(stringResource(R.string.summary_minutes, summary.minutes), colors.inkSoft)
+            SummaryLine(stringResource(R.string.summary_next_review, nextReview), colors.inkSoft)
         }
         Text(stringResource(R.string.summary_note), style = MaterialTheme.typography.bodyMedium, color = colors.inkSoft)
         Spacer(Modifier.height(AyaSpacing.sm))
         AyaButton(text = stringResource(R.string.session_back_home), onClick = onExit, modifier = Modifier.fillMaxWidth())
     }
 }
+
+/** One line of the summary card, with its drawn mark when it has one (the glyph is decoration; the text says it all). */
+@Composable
+private fun SummaryLine(
+    text: String,
+    color: Color,
+    glyph: String? = null,
+) {
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AyaSpacing.sm)) {
+        if (glyph != null) ArtImage(glyph, contentDescription = null, modifier = Modifier.size(SUMMARY_GLYPH))
+        Text(text, style = MaterialTheme.typography.bodyLarge, color = color)
+    }
+}
+
+private val SUMMARY_GLYPH = 22.dp
 
 // ---- previews --------------------------------------------------------------------------------------
 
@@ -646,6 +575,34 @@ private fun SessionFeedbackPreview() {
                             ),
                         phase = SessionState.Phase.FEEDBACK,
                         feedback = FeedbackView("DEMO-P01", Outcome.PENDING, listOf("Jawaban Anda kami simpan untuk dicek.")),
+                    ),
+                onEvent = {},
+                onClose = {},
+                onExit = {},
+            )
+        }
+    }
+}
+
+@Preview(name = "story · id", showBackground = true, locale = "id")
+@Preview(name = "story · en · dark", showBackground = true, locale = "en", uiMode = android.content.res.Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun SessionStoryPreview() {
+    AyaTheme {
+        PaperBackground {
+            SessionScreen(
+                state =
+                    previewChoice.copy(
+                        step =
+                            StepUi.Question(
+                                itemId = "SEJ-K-P-01-001",
+                                kind = RenderKind.STORY,
+                                role = Step.Role.PRACTICE,
+                                prompt = "Tonton ceritanya.",
+                                target = null,
+                                help = emptyList(),
+                                story = PreviewStory,
+                            ),
                     ),
                 onEvent = {},
                 onClose = {},

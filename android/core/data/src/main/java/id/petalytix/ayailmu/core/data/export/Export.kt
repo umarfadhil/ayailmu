@@ -6,6 +6,8 @@ import androidx.core.content.FileProvider
 import id.petalytix.ayailmu.core.content.ContentJson
 import id.petalytix.ayailmu.core.data.ItemReport
 import id.petalytix.ayailmu.core.data.Profile
+import id.petalytix.ayailmu.core.data.SurveyRecord
+import id.petalytix.ayailmu.core.data.UnitChallenge
 import id.petalytix.ayailmu.core.model.AnswerEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -19,7 +21,8 @@ import java.io.File
  * Profiles are exported without label or birth year: the team needs ids, kind, audience and language only.
  */
 object ExportBuilder {
-    const val SCHEMA_VERSION = 1
+    /** 2 (P7): adds `surveys` and `unit_challenges`, and `report_flag` in the CSV. Older readers ignore them. */
+    const val SCHEMA_VERSION = 2
 
     @Serializable
     data class ExportProfile(
@@ -42,6 +45,25 @@ object ExportBuilder {
     )
 
     @Serializable
+    data class ExportSurvey(
+        @SerialName("survey_id") val surveyId: String,
+        @SerialName("profile_id") val profileId: String,
+        val track: String,
+        val kind: String,
+        val timestamp: String,
+        @SerialName("app_version") val appVersion: String,
+        val answers: Map<String, List<String>>,
+    )
+
+    @Serializable
+    data class ExportChallenge(
+        @SerialName("profile_id") val profileId: String,
+        val track: String,
+        val unit: String,
+        @SerialName("completed_at") val completedAt: String,
+    )
+
+    @Serializable
     data class ExportDoc(
         @SerialName("schema_version") val schemaVersion: Int,
         @SerialName("exported_at") val exportedAt: String,
@@ -49,6 +71,8 @@ object ExportBuilder {
         val profiles: List<ExportProfile>,
         val events: List<AnswerEvent>,
         val reports: List<ExportReport>,
+        val surveys: List<ExportSurvey> = emptyList(),
+        @SerialName("unit_challenges") val unitChallenges: List<ExportChallenge> = emptyList(),
     )
 
     data class Bundle(
@@ -63,7 +87,7 @@ object ExportBuilder {
             "answer_id", "learner_id", "item_id", "track", "content_version", "rules_version", "app_version",
             "timestamp", "local_date", "session_id", "lang", "pool", "unit", "item_type", "skills", "outcome",
             "auto_score", "error_tags", "serious_tag", "hint_used", "first_attempt", "fresh_evidence",
-            "time_on_item_ms", "audio_status", "gem", "review_status", "synthetic", "raw_response",
+            "time_on_item_ms", "audio_status", "gem", "review_status", "synthetic", "raw_response", "report_flag",
         )
 
     fun build(
@@ -72,6 +96,8 @@ object ExportBuilder {
         reports: List<ItemReport>,
         exportedAt: String,
         appVersion: String,
+        surveys: List<SurveyRecord> = emptyList(),
+        challenges: List<UnitChallenge> = emptyList(),
     ): Bundle {
         val doc =
             ExportDoc(
@@ -81,6 +107,8 @@ object ExportBuilder {
                 profiles = profiles.map { ExportProfile(it.id, it.kind.name, it.audience.name, it.lang.tag, it.createdAtMs) },
                 events = events,
                 reports = reports.map { ExportReport(it.reportId, it.profileId, it.itemId, it.contentVersion, it.timestamp, it.reason, it.text) },
+                surveys = surveys.map { ExportSurvey(it.surveyId, it.profileId, it.track, it.kind, it.timestamp, it.appVersion, it.answers) },
+                unitChallenges = challenges.map { ExportChallenge(it.profileId, it.track, it.unit, it.completedAt) },
             )
         return Bundle(json = pretty.encodeToString(ExportDoc.serializer(), doc), csv = csv(events))
     }
@@ -99,7 +127,7 @@ object ExportBuilder {
                     e.errorTags.joinToString("|") { it.name }, e.seriousTag?.name.orEmpty(),
                     e.hintUsed.toString(), e.firstAttempt.toString(), e.freshEvidence.toString(),
                     e.timeOnItemMs.toString(), e.audioStatus?.name.orEmpty(), e.gem.toString(),
-                    e.reviewStatus.name, e.synthetic.toString(), e.rawResponse,
+                    e.reviewStatus.name, e.synthetic.toString(), e.rawResponse, e.reportFlag.toString(),
                 )
             sb.append(row.joinToString(",") { cell(it) }).append("\r\n")
         }

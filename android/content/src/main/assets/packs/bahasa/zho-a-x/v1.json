@@ -1,0 +1,1962 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "zho-a-x-0.1",
+    "subject": "bahasa",
+    "track": "zho-a-x",
+    "level": "master",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "target_lang": "zh",
+    "title": {
+      "id": "Bahasa Mandarin — Master (Dewasa)",
+      "en": "Mandarin Chinese — Master (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12) for review: needs a native Mandarin (Putonghua) reviewer plus the Indonesian and English language reviewers before any item is approved (docs/syllabus/bahasa/zh_levels.md, Adults Master, starter units 01-02). Clips: android/content/voice/zh.json and zh.levels.json (items that need a missing clip stay hidden). Pinyin is written with citation tones (no tone sandhi marked). Art keys from MODULES_LEVELS_STORIES.md §6 are drafts being drawn.",
+  "prompts": {
+    "P-LISTEN": {
+      "id": "Dengar, lalu pilih.",
+      "en": "Listen, then pick."
+    },
+    "P-LISTEN-PIC": {
+      "id": "Dengar, lalu ketuk gambarnya.",
+      "en": "Listen, then tap the picture."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-READ": {
+      "id": "Baca, lalu pilih gambarnya.",
+      "en": "Read it, then pick the picture."
+    },
+    "P-CONNECT": {
+      "id": "Tarik garis ke pasangannya.",
+      "en": "Draw a line to its partner."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke katanya.",
+      "en": "Drag each picture to its word."
+    },
+    "P-SORT": {
+      "id": "Seret ke keranjang yang tepat.",
+      "en": "Drag into the right basket."
+    },
+    "P-BUILD": {
+      "id": "Susun kalimatnya.",
+      "en": "Build the sentence."
+    },
+    "P-DIALOG": {
+      "id": "Urutkan percakapannya.",
+      "en": "Put the conversation in order."
+    },
+    "P-MEANING": {
+      "id": "Apa artinya?",
+      "en": "What does it mean?"
+    },
+    "P-REPLY": {
+      "id": "Apa jawabannya?",
+      "en": "What's the reply?"
+    },
+    "P-FILL": {
+      "id": "Isi yang kosong.",
+      "en": "Fill the gap."
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Permintaan sopan",
+        "en": "Polite requests"
+      },
+      "sticker": "sticker_leaf"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Pendapat & percakapan",
+        "en": "Opinions & conversations"
+      },
+      "sticker": "sticker_boat"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "ZHO-A-X-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Permintaan sopan",
+        "en": "Polite requests"
+      },
+      "body": [
+        {
+          "id": "请 qǐng + kata kerja = silakan: 请坐 qǐng zuò, 请进 qǐng jìn. Kepada yang dihormati: 您 nín.",
+          "en": "请 qǐng + verb = please: 请坐 qǐng zuò, 请进 qǐng jìn. To someone you respect: 您 nín."
+        },
+        {
+          "id": "Minta izin: 可以…吗？ kěyǐ… ma? → 可以拍照吗？ Kěyǐ pāizhào ma?",
+          "en": "Asking permission: 可以…吗？ kěyǐ… ma? → 可以拍照吗？ Kěyǐ pāizhào ma?"
+        },
+        {
+          "id": "Jawaban: 当然可以。 Dāngrán kěyǐ. / 不好意思，不行。 Bù hǎoyìsi, bù xíng.",
+          "en": "Replies: 当然可以。 Dāngrán kěyǐ. / 不好意思，不行。 Bù hǎoyìsi, bù xíng."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "请等一下",
+          "gloss": {
+            "id": "qǐng děng yīxià — mohon tunggu sebentar",
+            "en": "qǐng děng yīxià — please wait a moment"
+          }
+        },
+        {
+          "target_text": "不好意思",
+          "gloss": {
+            "id": "bù hǎoyìsi — maaf, permisi",
+            "en": "bù hǎoyìsi — sorry, excuse me"
+          }
+        },
+        {
+          "target_text": "麻烦您",
+          "gloss": {
+            "id": "máfan nín — maaf merepotkan",
+            "en": "máfan nín — sorry to trouble you"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "ZHO-A-X-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Pendapat & percakapan",
+        "en": "Opinions & conversations"
+      },
+      "body": [
+        {
+          "id": "Pendapat: 我觉得… wǒ juéde… = menurut saya… 我觉得很好吃。 Wǒ juéde hěn hǎochī.",
+          "en": "Opinions: 我觉得… wǒ juéde… = I think… 我觉得很好吃。 Wǒ juéde hěn hǎochī."
+        },
+        {
+          "id": "Lebih halus: 有点儿 yǒudiǎnr = agak (untuk hal kurang enak); 不过 bùguò = tetapi.",
+          "en": "Softer: 有点儿 yǒudiǎnr = a bit (for something not so good); 不过 bùguò = but."
+        },
+        {
+          "id": "Bertanya: 你觉得怎么样？ Nǐ juéde zěnmeyàng? Setuju: 我也这么觉得。 Wǒ yě zhème juéde.",
+          "en": "To ask: 你觉得怎么样？ Nǐ juéde zěnmeyàng? To agree: 我也这么觉得。 Wǒ yě zhème juéde."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "好看",
+          "gloss": {
+            "id": "hǎokàn — bagus (dilihat)",
+            "en": "hǎokàn — good-looking"
+          }
+        },
+        {
+          "target_text": "方便",
+          "gloss": {
+            "id": "fāngbiàn — praktis",
+            "en": "fāngbiàn — convenient"
+          }
+        },
+        {
+          "target_text": "有意思",
+          "gloss": {
+            "id": "yǒu yìsi — menarik",
+            "en": "yǒu yìsi — interesting"
+          }
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "items": [
+    {
+      "item_id": "ZHO-A-X-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-POLITE"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-DRAG",
+      "options": [
+        {
+          "id": "l1",
+          "image": "pic_door",
+          "text": {
+            "id": "pintu",
+            "en": "door"
+          }
+        },
+        {
+          "id": "l2",
+          "image": "pic_sit",
+          "text": {
+            "id": "duduk",
+            "en": "sitting"
+          }
+        },
+        {
+          "id": "l3",
+          "image": "pic_tea_cup",
+          "text": {
+            "id": "secangkir teh",
+            "en": "cup of tea"
+          }
+        },
+        {
+          "id": "l4",
+          "image": "pic_wave_hello",
+          "text": {
+            "id": "melambai halo",
+            "en": "waving hello"
+          }
+        },
+        {
+          "id": "r_qing_he_cha",
+          "target_text": "请喝茶。",
+          "romanization": "Qǐng hē chá.",
+          "audio": "zh/qing_he_cha"
+        },
+        {
+          "id": "r_nin_hao",
+          "target_text": "您好！",
+          "romanization": "Nín hǎo!",
+          "audio": "zh/nin_hao"
+        },
+        {
+          "id": "r_qing_jin",
+          "target_text": "请进。",
+          "romanization": "Qǐng jìn.",
+          "audio": "zh/qing_jin"
+        },
+        {
+          "id": "r_qing_zuo",
+          "target_text": "请坐。",
+          "romanization": "Qǐng zuò.",
+          "audio": "zh/qing_zuo"
+        }
+      ],
+      "solution_pairs": {
+        "l1": "r_qing_jin",
+        "l2": "r_qing_zuo",
+        "l3": "r_qing_he_cha",
+        "l4": "r_nin_hao"
+      },
+      "model_answer": {
+        "id": "请进 qǐng jìn silakan masuk, 请坐 qǐng zuò silakan duduk, 请喝茶 qǐng hē chá silakan minum teh, 您好 nín hǎo.",
+        "en": "请进 qǐng jìn come in, 请坐 qǐng zuò sit down, 请喝茶 qǐng hē chá have some tea, 您好 nín hǎo hello."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-POLITE"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "zh/qing_zuo",
+      "options": [
+        {
+          "id": "p2",
+          "image": "pic_door",
+          "text": {
+            "id": "pintu",
+            "en": "door"
+          }
+        },
+        {
+          "id": "p1",
+          "image": "pic_sit",
+          "text": {
+            "id": "duduk",
+            "en": "sitting"
+          },
+          "correct": true
+        },
+        {
+          "id": "p3",
+          "image": "pic_tea_cup",
+          "text": {
+            "id": "secangkir teh",
+            "en": "cup of tea"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "请坐。 Qǐng zuò. = Silakan duduk.",
+        "en": "请坐。 Qǐng zuò. = Please sit down."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-POLITE"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sapa guru dengan sopan.",
+            "en": "Greet a teacher politely."
+          }
+        }
+      ],
+      "image": "pic_teacher",
+      "target_text": "老师，＿好！",
+      "romanization": "Lǎoshī, ＿ hǎo!",
+      "options": [
+        {
+          "id": "t_ni",
+          "target_text": "你",
+          "romanization": "nǐ",
+          "audio": "zh/ni"
+        },
+        {
+          "id": "t_nin",
+          "target_text": "您",
+          "romanization": "nín",
+          "audio": "zh/nin"
+        }
+      ],
+      "solution": [
+        "t_nin"
+      ],
+      "model_answer": {
+        "id": "您好 nín hǎo: sopan untuk guru, atasan, orang tua. 你好 nǐ hǎo untuk teman.",
+        "en": "您好 nín hǎo: polite, for teachers, bosses, elders. 你好 nǐ hǎo for friends."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ZHO-POLITE"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-REPLY",
+      "target_text": "请喝茶。",
+      "romanization": "Qǐng hē chá.",
+      "audio": "zh/qing_he_cha",
+      "options": [
+        {
+          "id": "w_xie_xie_nin",
+          "target_text": "谢谢您！",
+          "romanization": "Xièxie nín!",
+          "audio": "zh/xiexie_nin",
+          "correct": true
+        },
+        {
+          "id": "w_bu_ke_qi",
+          "target_text": "不客气",
+          "romanization": "bù kèqi",
+          "audio": "zh/bu_keqi"
+        },
+        {
+          "id": "w_mei_guan_xi",
+          "target_text": "没关系",
+          "romanization": "méi guānxi",
+          "audio": "zh/mei_guanxi"
+        }
+      ],
+      "model_answer": {
+        "id": "Ditawari: 谢谢您！ Xièxie nín! 不客气 bù kèqi untuk menjawab terima kasih.",
+        "en": "When offered: 谢谢您！ Xièxie nín! 不客气 bù kèqi answers a thank-you."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-POLITE"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-LISTEN",
+      "audio": "zh/qing_deng_yixia",
+      "options": [
+        {
+          "id": "o2",
+          "text": {
+            "id": "Silakan masuk.",
+            "en": "Please come in."
+          }
+        },
+        {
+          "id": "o3",
+          "text": {
+            "id": "Silakan duduk.",
+            "en": "Please sit down."
+          }
+        },
+        {
+          "id": "o1",
+          "text": {
+            "id": "Mohon tunggu sebentar.",
+            "en": "Please wait a moment."
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "请等一下。 Qǐng děng yīxià. = Mohon tunggu sebentar.",
+        "en": "请等一下。 Qǐng děng yīxià. = Please wait a moment."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "tiles",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-POLITE"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-BUILD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Boleh tahu nama keluarga Anda?",
+            "en": "May I ask your surname?"
+          }
+        }
+      ],
+      "image": "pic_man",
+      "options": [
+        {
+          "id": "t_gui_xing",
+          "target_text": "贵姓",
+          "romanization": "guìxìng",
+          "audio": "zh/guixing"
+        },
+        {
+          "id": "t_qing_wen",
+          "target_text": "请问",
+          "romanization": "qǐngwèn",
+          "audio": "zh/qingwen"
+        },
+        {
+          "id": "t_nin",
+          "target_text": "您",
+          "romanization": "nín",
+          "audio": "zh/nin"
+        },
+        {
+          "id": "t_shen_me",
+          "target_text": "什么",
+          "romanization": "shénme",
+          "audio": "zh/shenme"
+        }
+      ],
+      "solution": [
+        "t_qing_wen",
+        "t_nin",
+        "t_gui_xing"
+      ],
+      "model_answer": {
+        "id": "请问，您贵姓？ Qǐngwèn, nín guìxìng? Jawabnya: 我姓王。 Wǒ xìng Wáng.",
+        "en": "请问，您贵姓？ Qǐngwèn, nín guìxìng? Reply: 我姓王。 Wǒ xìng Wáng."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ZHO-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-PICK",
+      "target_text": "可以用一下电脑吗？",
+      "romanization": "Kěyǐ yòng yīxià diànnǎo ma?",
+      "audio": "zh/keyi_yong_yixia_diannao_ma",
+      "options": [
+        {
+          "id": "p2",
+          "image": "pic_phone",
+          "text": {
+            "id": "ponsel",
+            "en": "mobile phone"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_tablet",
+          "text": {
+            "id": "tablet",
+            "en": "tablet"
+          }
+        },
+        {
+          "id": "p1",
+          "image": "pic_computer",
+          "text": {
+            "id": "komputer",
+            "en": "computer"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "电脑 diànnǎo = komputer. 一下 yīxià = sebentar.",
+        "en": "电脑 diànnǎo = computer. 一下 yīxià = for a moment."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "tiles",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-BUILD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Boleh saya duduk di sini?",
+            "en": "May I sit here?"
+          }
+        }
+      ],
+      "image": "pic_chair",
+      "options": [
+        {
+          "id": "t_zher",
+          "target_text": "这儿",
+          "romanization": "zhèr",
+          "audio": "zh/zher"
+        },
+        {
+          "id": "t_ma5",
+          "target_text": "吗",
+          "romanization": "ma",
+          "audio": "zh/ma5"
+        },
+        {
+          "id": "t_ke_yi",
+          "target_text": "可以",
+          "romanization": "kěyǐ",
+          "audio": "zh/keyi"
+        },
+        {
+          "id": "t_nar",
+          "target_text": "哪儿",
+          "romanization": "nǎr",
+          "audio": "zh/nar"
+        },
+        {
+          "id": "t_wo",
+          "target_text": "我",
+          "romanization": "wǒ",
+          "audio": "zh/wo"
+        },
+        {
+          "id": "t_zuo",
+          "target_text": "坐",
+          "romanization": "zuò",
+          "audio": "zh/zuo"
+        }
+      ],
+      "solution": [
+        "t_wo",
+        "t_ke_yi",
+        "t_zuo",
+        "t_zher",
+        "t_ma5"
+      ],
+      "model_answer": {
+        "id": "我可以坐这儿吗？ Wǒ kěyǐ zuò zhèr ma? 可以 kěyǐ sebelum kata kerja, 吗 ma di akhir.",
+        "en": "我可以坐这儿吗？ Wǒ kěyǐ zuò zhèr ma? 可以 kěyǐ before the verb, 吗 ma at the end."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ZHO-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-REPLY",
+      "target_text": "可以拍照吗？",
+      "romanization": "Kěyǐ pāizhào ma?",
+      "audio": "zh/keyi_paizhao_ma",
+      "options": [
+        {
+          "id": "w_bu_ke_qi",
+          "target_text": "不客气",
+          "romanization": "bù kèqi",
+          "audio": "zh/bu_keqi"
+        },
+        {
+          "id": "w_dang_ran_ke_yi",
+          "target_text": "当然可以。",
+          "romanization": "Dāngrán kěyǐ.",
+          "audio": "zh/dangran_keyi",
+          "correct": true
+        },
+        {
+          "id": "w_xie_xie_nin",
+          "target_text": "谢谢您！",
+          "romanization": "Xièxie nín!",
+          "audio": "zh/xiexie_nin"
+        }
+      ],
+      "model_answer": {
+        "id": "可以拍照吗？ Kěyǐ pāizhào ma? — 当然可以。 Dāngrán kěyǐ. = Tentu boleh.",
+        "en": "可以拍照吗？ Kěyǐ pāizhào ma? — 当然可以。 Dāngrán kěyǐ. = Of course."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-LISTEN",
+      "image": "pic_camera",
+      "audio": "zh/bu_haoyisi_zher_bu_neng_paizhao",
+      "options": [
+        {
+          "id": "o1",
+          "text": {
+            "id": "Maaf, di sini tidak boleh memotret.",
+            "en": "Sorry, no photos here."
+          },
+          "correct": true
+        },
+        {
+          "id": "o2",
+          "text": {
+            "id": "Silakan memotret di sini.",
+            "en": "Feel free to take photos here."
+          }
+        },
+        {
+          "id": "o3",
+          "text": {
+            "id": "Maaf, kameranya rusak.",
+            "en": "Sorry, the camera is broken."
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "不能 bù néng = tidak boleh. 不好意思 bù hǎoyìsi membuat penolakan terdengar sopan.",
+        "en": "不能 bù néng = may not. 不好意思 bù hǎoyìsi makes a refusal polite."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-DIALOG",
+      "options": [
+        {
+          "id": "o_ta_zai_kai_hui",
+          "target_text": "不好意思，他在开会。请等一下。",
+          "romanization": "Bù hǎoyìsi, tā zài kāihuì. Qǐng děng yīxià.",
+          "audio": "zh/bu_haoyisi_ta_zai_kaihui_qing_deng_yixia"
+        },
+        {
+          "id": "o_dang_ran_ke_yi_qing_zuo",
+          "target_text": "当然可以，请坐。",
+          "romanization": "Dāngrán kěyǐ, qǐng zuò.",
+          "audio": "zh/dangran_keyi_qing_zuo"
+        },
+        {
+          "id": "o_nin_hao_wang_jing_li_zai_ma",
+          "target_text": "您好！请问，王经理在吗？",
+          "romanization": "Nín hǎo! Qǐngwèn, Wáng jīnglǐ zài ma?",
+          "audio": "zh/nin_hao_qingwen_wang_jingli_zai_ma"
+        },
+        {
+          "id": "o_hao_de_wo_ke_yi_zuo_zher_ma",
+          "target_text": "好的。我可以坐这儿吗？",
+          "romanization": "Hǎo de. Wǒ kěyǐ zuò zhèr ma?",
+          "audio": "zh/hao_de_wo_keyi_zuo_zher_ma"
+        }
+      ],
+      "solution": [
+        "o_nin_hao_wang_jing_li_zai_ma",
+        "o_ta_zai_kai_hui",
+        "o_hao_de_wo_ke_yi_zuo_zher_ma",
+        "o_dang_ran_ke_yi_qing_zuo"
+      ],
+      "model_answer": {
+        "id": "Di kantor: bertanya dengan 请问 qǐngwèn, minta izin dengan 可以…吗？ kěyǐ… ma?",
+        "en": "At an office: ask with 请问 qǐngwèn, ask permission with 可以…吗？ kěyǐ… ma?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-SORT",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "boleh",
+            "en": "yes"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "tidak boleh",
+            "en": "no"
+          }
+        },
+        {
+          "id": "f1",
+          "target_text": "当然可以。",
+          "romanization": "Dāngrán kěyǐ.",
+          "audio": "zh/dangran_keyi"
+        },
+        {
+          "id": "f2",
+          "target_text": "不好意思，不行。",
+          "romanization": "Bù hǎoyìsi, bù xíng.",
+          "audio": "zh/bu_haoyisi_bu_xing"
+        },
+        {
+          "id": "f3",
+          "target_text": "没问题。",
+          "romanization": "Méi wèntí.",
+          "audio": "zh/mei_wenti"
+        },
+        {
+          "id": "f4",
+          "target_text": "不好意思，这儿不能拍照。",
+          "romanization": "Bù hǎoyìsi, zhèr bù néng pāizhào.",
+          "audio": "zh/bu_haoyisi_zher_bu_neng_paizhao"
+        }
+      ],
+      "solution_pairs": {
+        "f1": "b_yes",
+        "f2": "b_no",
+        "f3": "b_yes",
+        "f4": "b_no"
+      },
+      "model_answer": {
+        "id": "Boleh: 当然可以 dāngrán kěyǐ, 没问题 méi wèntí. Tidak: 不行 bù xíng, 不能 bù néng.",
+        "en": "Yes: 当然可以 dāngrán kěyǐ, 没问题 méi wèntí. No: 不行 bù xíng, 不能 bù néng."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ZHO-POLITE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "请进。",
+      "romanization": "Qǐng jìn.",
+      "audio": "zh/qing_jin",
+      "options": [
+        {
+          "id": "p1",
+          "image": "pic_door",
+          "text": {
+            "id": "pintu",
+            "en": "door"
+          },
+          "correct": true
+        },
+        {
+          "id": "p2",
+          "image": "pic_sit",
+          "text": {
+            "id": "duduk",
+            "en": "sitting"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_tea_cup",
+          "text": {
+            "id": "secangkir teh",
+            "en": "cup of tea"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "请进。 Qǐng jìn. = Silakan masuk.",
+        "en": "请进。 Qǐng jìn. = Please come in."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ZHO-REQUEST"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-REPLY",
+      "target_text": "我可以坐这儿吗？",
+      "romanization": "Wǒ kěyǐ zuò zhèr ma?",
+      "audio": "zh/wo_keyi_zuo_zher_ma",
+      "options": [
+        {
+          "id": "w_bu_ke_qi",
+          "target_text": "不客气",
+          "romanization": "bù kèqi",
+          "audio": "zh/bu_keqi"
+        },
+        {
+          "id": "w_zai_jian",
+          "target_text": "再见",
+          "romanization": "zàijiàn",
+          "audio": "zh/zaijian"
+        },
+        {
+          "id": "w_dang_ran_ke_yi_qing_zuo",
+          "target_text": "当然可以，请坐。",
+          "romanization": "Dāngrán kěyǐ, qǐng zuò.",
+          "audio": "zh/dangran_keyi_qing_zuo",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "当然可以，请坐。 Dāngrán kěyǐ, qǐng zuò. = Tentu boleh, silakan duduk.",
+        "en": "当然可以，请坐。 Dāngrán kěyǐ, qǐng zuò. = Of course, please sit down."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-01-015",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "ZHO-POLITE"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "model_answer": {
+        "id": "请 qǐng berarti 'silakan', juga 'mengundang' dan 'mentraktir'. 我请你喝茶。 Wǒ qǐng nǐ hē chá. = Saya traktir Anda minum teh.",
+        "en": "请 qǐng means 'please', and also 'to invite' and 'to treat'. 我请你喝茶。 Wǒ qǐng nǐ hē chá. = Let me treat you to some tea."
+      },
+      "gem": true,
+      "source": "CC-CEDICT entry 请 qǐng: \"to ask; to invite; please (do sth); to treat (to a meal etc); to request\" (as shown at mandarinbanana.com/words/153585, which credits CC-CEDICT).",
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "gesture": "connect",
+      "skills": [
+        "ZHO-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-CONNECT",
+      "options": [
+        {
+          "id": "l1",
+          "target_text": "好看",
+          "romanization": "hǎokàn",
+          "audio": "zh/haokan"
+        },
+        {
+          "id": "l2",
+          "target_text": "好吃",
+          "romanization": "hǎochī",
+          "audio": "zh/haochi"
+        },
+        {
+          "id": "l3",
+          "target_text": "方便",
+          "romanization": "fāngbiàn",
+          "audio": "zh/fangbian"
+        },
+        {
+          "id": "l4",
+          "target_text": "有意思",
+          "romanization": "yǒu yìsi",
+          "audio": "zh/you_yisi"
+        },
+        {
+          "id": "m3",
+          "text": {
+            "id": "praktis",
+            "en": "convenient"
+          }
+        },
+        {
+          "id": "m1",
+          "text": {
+            "id": "bagus dilihat",
+            "en": "good-looking"
+          }
+        },
+        {
+          "id": "m4",
+          "text": {
+            "id": "menarik",
+            "en": "interesting"
+          }
+        },
+        {
+          "id": "m2",
+          "text": {
+            "id": "enak",
+            "en": "tasty"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "l1": "m1",
+        "l2": "m2",
+        "l3": "m3",
+        "l4": "m4"
+      },
+      "model_answer": {
+        "id": "好看 hǎokàn bagus, 好吃 hǎochī enak, 方便 fāngbiàn praktis, 有意思 yǒu yìsi menarik.",
+        "en": "好看 hǎokàn good-looking, 好吃 hǎochī tasty, 方便 fāngbiàn convenient, 有意思 yǒu yìsi interesting."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-LISTEN",
+      "audio": "zh/wo_juede_zhege_cai_hen_haochi",
+      "options": [
+        {
+          "id": "o2",
+          "text": {
+            "id": "Menurut saya masakan ini mahal.",
+            "en": "I think this dish is expensive."
+          }
+        },
+        {
+          "id": "o1",
+          "text": {
+            "id": "Menurut saya masakan ini enak.",
+            "en": "I think this dish is delicious."
+          },
+          "correct": true
+        },
+        {
+          "id": "o3",
+          "text": {
+            "id": "Saya tidak suka masakan ini.",
+            "en": "I don't like this dish."
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "我觉得这个菜很好吃。 Wǒ juéde zhège cài hěn hǎochī. = Menurut saya masakan ini enak.",
+        "en": "我觉得这个菜很好吃。 Wǒ juéde zhège cài hěn hǎochī. = I think this dish is delicious."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ZHO-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-REPLY",
+      "image": "pic_jacket",
+      "target_text": "这件外套怎么样？",
+      "romanization": "Zhè jiàn wàitào zěnmeyàng?",
+      "audio": "zh/zhe_jian_waitao_zenmeyang",
+      "options": [
+        {
+          "id": "w_wo_mai_le_liang_zhang_piao",
+          "target_text": "我买了两张票。",
+          "romanization": "Wǒ mǎi le liǎng zhāng piào.",
+          "audio": "zh/wo_mai_le_liang_zhang_piao"
+        },
+        {
+          "id": "w_wo_jue_de_hen_hao_kan",
+          "target_text": "我觉得很好看。",
+          "romanization": "Wǒ juéde hěn hǎokàn.",
+          "audio": "zh/wo_juede_hen_haokan",
+          "correct": true
+        },
+        {
+          "id": "w_xian_zai_shi_dian",
+          "target_text": "现在十点。",
+          "romanization": "Xiànzài shí diǎn.",
+          "audio": "zh/xianzai_shi_dian"
+        }
+      ],
+      "model_answer": {
+        "id": "我觉得很好看。 Wǒ juéde hěn hǎokàn. = Menurut saya bagus.",
+        "en": "我觉得很好看。 Wǒ juéde hěn hǎokàn. = I think it looks good."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bagus, tapi agak mahal.",
+            "en": "Nice, but a bit pricey."
+          }
+        }
+      ],
+      "image": "pic_dress",
+      "target_text": "很好看，＿有点儿贵。",
+      "romanization": "Hěn hǎokàn, ＿ yǒudiǎnr guì.",
+      "options": [
+        {
+          "id": "t_yin_wei",
+          "target_text": "因为",
+          "romanization": "yīnwèi",
+          "audio": "zh/yinwei"
+        },
+        {
+          "id": "t_bu_guo",
+          "target_text": "不过",
+          "romanization": "bùguò",
+          "audio": "zh/buguo"
+        },
+        {
+          "id": "t_suo_yi",
+          "target_text": "所以",
+          "romanization": "suǒyǐ",
+          "audio": "zh/suoyi"
+        }
+      ],
+      "solution": [
+        "t_bu_guo"
+      ],
+      "model_answer": {
+        "id": "不过 bùguò = tetapi: memuji dulu, lalu kritik halus.",
+        "en": "不过 bùguò = but: praise first, then a gentle 'but'."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "tiles",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-BUILD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Jaket ini agak mahal.",
+            "en": "This jacket's a bit pricey."
+          }
+        }
+      ],
+      "image": "pic_jacket",
+      "options": [
+        {
+          "id": "t_gui",
+          "target_text": "贵",
+          "romanization": "guì",
+          "audio": "zh/gui"
+        },
+        {
+          "id": "t_wai_tao",
+          "target_text": "外套",
+          "romanization": "wàitào",
+          "audio": "zh/waitao"
+        },
+        {
+          "id": "t_you_dian_r",
+          "target_text": "有点儿",
+          "romanization": "yǒudiǎnr",
+          "audio": "zh/youdianr"
+        },
+        {
+          "id": "t_zhe",
+          "target_text": "这",
+          "romanization": "zhè",
+          "audio": "zh/zhe"
+        },
+        {
+          "id": "t_jian",
+          "target_text": "件",
+          "romanization": "jiàn",
+          "audio": "zh/jian"
+        },
+        {
+          "id": "t_shuang",
+          "target_text": "双",
+          "romanization": "shuāng",
+          "audio": "zh/shuang"
+        }
+      ],
+      "solution": [
+        "t_zhe",
+        "t_jian",
+        "t_wai_tao",
+        "t_you_dian_r",
+        "t_gui"
+      ],
+      "model_answer": {
+        "id": "这件外套有点儿贵。 Zhè jiàn wàitào yǒudiǎnr guì. 有点儿 yǒudiǎnr untuk hal yang kurang disukai.",
+        "en": "这件外套有点儿贵。 Zhè jiàn wàitào yǒudiǎnr guì. 有点儿 yǒudiǎnr is for things you don't like."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "sort_buckets",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-SORT",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "setuju",
+            "en": "agree"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "tidak setuju",
+            "en": "disagree"
+          }
+        },
+        {
+          "id": "f1",
+          "target_text": "我也这么觉得。",
+          "romanization": "Wǒ yě zhème juéde.",
+          "audio": "zh/wo_ye_zheme_juede"
+        },
+        {
+          "id": "f2",
+          "target_text": "我不这么觉得。",
+          "romanization": "Wǒ bù zhème juéde.",
+          "audio": "zh/wo_bu_zheme_juede"
+        },
+        {
+          "id": "f3",
+          "target_text": "我同意。",
+          "romanization": "Wǒ tóngyì.",
+          "audio": "zh/wo_tongyi"
+        },
+        {
+          "id": "f4",
+          "target_text": "我不太同意。",
+          "romanization": "Wǒ bù tài tóngyì.",
+          "audio": "zh/wo_bu_tai_tongyi"
+        }
+      ],
+      "solution_pairs": {
+        "f1": "b_yes",
+        "f2": "b_no",
+        "f3": "b_yes",
+        "f4": "b_no"
+      },
+      "model_answer": {
+        "id": "Setuju: 我也这么觉得 wǒ yě zhème juéde, 我同意 wǒ tóngyì. 不太 bù tài = kurang: lebih halus.",
+        "en": "Agree: 我也这么觉得 wǒ yě zhème juéde, 我同意 wǒ tóngyì. 不太 bù tài = not quite: softer."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-DIALOGUE"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "zh/huoche_xiawu_san_dian_ban_kai",
+      "options": [
+        {
+          "id": "p1",
+          "image": "clock_3_30",
+          "text": {
+            "id": "jam 3.30",
+            "en": "3:30"
+          },
+          "correct": true
+        },
+        {
+          "id": "p2",
+          "image": "clock_3_00",
+          "text": {
+            "id": "jam 3",
+            "en": "3 o'clock"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "clock_4_30",
+          "text": {
+            "id": "jam 4.30",
+            "en": "4:30"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "火车下午三点半开。 Huǒchē xiàwǔ sān diǎn bàn kāi. = Keretanya berangkat jam 15.30.",
+        "en": "火车下午三点半开。 Huǒchē xiàwǔ sān diǎn bàn kāi. = The train leaves at 3:30 pm."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-DIALOGUE"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-DIALOG",
+      "image": "pic_ticket",
+      "options": [
+        {
+          "id": "o_ji_dian_de",
+          "target_text": "几点的？",
+          "romanization": "Jǐ diǎn de?",
+          "audio": "zh/ji_dian_de"
+        },
+        {
+          "id": "o_hao_de_wu_shi_wu_kuai",
+          "target_text": "好的，五十五块。",
+          "romanization": "Hǎo de, wǔshíwǔ kuài.",
+          "audio": "zh/hao_de_wushiwu_kuai"
+        },
+        {
+          "id": "o_nin_hao_wo_yao_yi_zhang_qu_shang_hai_de_piao",
+          "target_text": "您好，我要一张去上海的票。",
+          "romanization": "Nín hǎo, wǒ yào yī zhāng qù Shànghǎi de piào.",
+          "audio": "zh/nin_hao_wo_yao_yi_zhang_qu_shanghai_de_piao"
+        },
+        {
+          "id": "o_xia_wu_san_dian_ban_de",
+          "target_text": "下午三点半的。",
+          "romanization": "Xiàwǔ sān diǎn bàn de.",
+          "audio": "zh/xiawu_san_dian_ban_de"
+        }
+      ],
+      "solution": [
+        "o_nin_hao_wo_yao_yi_zhang_qu_shang_hai_de_piao",
+        "o_ji_dian_de",
+        "o_xia_wu_san_dian_ban_de",
+        "o_hao_de_wu_shi_wu_kuai"
+      ],
+      "model_answer": {
+        "id": "Di loket: 几点的？ Jǐ diǎn de? = yang jam berapa? Jawab: 下午三点半的。 Xiàwǔ sān diǎn bàn de.",
+        "en": "At the counter: 几点的？ Jǐ diǎn de? = for what time? Reply: 下午三点半的。 Xiàwǔ sān diǎn bàn de."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ZHO-DIALOGUE"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-REPLY",
+      "image": "pic_noodle_bowl",
+      "target_text": "你觉得怎么样？",
+      "romanization": "Nǐ juéde zěnmeyàng?",
+      "audio": "zh/ni_juede_zenmeyang",
+      "options": [
+        {
+          "id": "w_ji_dian_de",
+          "target_text": "几点的？",
+          "romanization": "Jǐ diǎn de?",
+          "audio": "zh/ji_dian_de"
+        },
+        {
+          "id": "w_wo_mai_le_liang_zhang_piao",
+          "target_text": "我买了两张票。",
+          "romanization": "Wǒ mǎi le liǎng zhāng piào.",
+          "audio": "zh/wo_mai_le_liang_zhang_piao"
+        },
+        {
+          "id": "w_wo_jue_de_hen_hao_chi",
+          "target_text": "我觉得很好吃。",
+          "romanization": "Wǒ juéde hěn hǎochī.",
+          "audio": "zh/wo_juede_hen_haochi",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "你觉得怎么样？ Nǐ juéde zěnmeyàng? — 我觉得很好吃。 Wǒ juéde hěn hǎochī.",
+        "en": "你觉得怎么样？ Nǐ juéde zěnmeyàng? — 我觉得很好吃。 Wǒ juéde hěn hǎochī."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ZHO-DIALOGUE"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-READ",
+      "target_text": "火车站",
+      "options": [
+        {
+          "id": "p2",
+          "image": "pic_airport",
+          "text": {
+            "id": "bandara",
+            "en": "airport"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_hospital",
+          "text": {
+            "id": "rumah sakit",
+            "en": "hospital"
+          }
+        },
+        {
+          "id": "p1",
+          "image": "pic_station",
+          "text": {
+            "id": "stasiun",
+            "en": "station"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "火车站 huǒchēzhàn = stasiun kereta.",
+        "en": "火车站 huǒchēzhàn = train station."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-DIALOGUE"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "zh/nin_hao_wo_yao_yi_zhang_qu_shanghai_de_piao",
+      "options": [
+        {
+          "id": "p2",
+          "image": "pic_map_paper",
+          "text": {
+            "id": "peta",
+            "en": "map"
+          }
+        },
+        {
+          "id": "p1",
+          "image": "pic_ticket",
+          "text": {
+            "id": "tiket",
+            "en": "ticket"
+          },
+          "correct": true
+        },
+        {
+          "id": "p3",
+          "image": "pic_suitcase",
+          "text": {
+            "id": "koper",
+            "en": "suitcase"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "您好，我要一张去上海的票。 Nín hǎo, wǒ yào yī zhāng qù Shànghǎi de piào. = Satu tiket ke Shanghai.",
+        "en": "您好，我要一张去上海的票。 Nín hǎo, wǒ yào yī zhāng qù Shànghǎi de piào. = One ticket to Shanghai."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "tiles",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-DIALOGUE"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-BUILD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Keretanya berangkat jam berapa?",
+            "en": "When does the train leave?"
+          }
+        }
+      ],
+      "image": "pic_train",
+      "options": [
+        {
+          "id": "t_kai",
+          "target_text": "开",
+          "romanization": "kāi",
+          "audio": "zh/kai"
+        },
+        {
+          "id": "t_ji_dian",
+          "target_text": "几点",
+          "romanization": "jǐ diǎn",
+          "audio": "zh/ji_dian"
+        },
+        {
+          "id": "t_huo_che",
+          "target_text": "火车",
+          "romanization": "huǒchē",
+          "audio": "zh/huoche"
+        },
+        {
+          "id": "t_qu",
+          "target_text": "去",
+          "romanization": "qù",
+          "audio": "zh/qu"
+        }
+      ],
+      "solution": [
+        "t_huo_che",
+        "t_ji_dian",
+        "t_kai"
+      ],
+      "model_answer": {
+        "id": "火车几点开？ Huǒchē jǐ diǎn kāi? 开 kāi = berangkat (kendaraan).",
+        "en": "火车几点开？ Huǒchē jǐ diǎn kāi? 开 kāi = to leave (a train or bus)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ZHO-OPINION"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-MEANING",
+      "target_text": "我觉得有点儿贵。",
+      "romanization": "Wǒ juéde yǒudiǎnr guì.",
+      "audio": "zh/wo_juede_youdianr_gui",
+      "options": [
+        {
+          "id": "o1",
+          "text": {
+            "id": "Menurut saya agak mahal.",
+            "en": "I think it's a bit expensive."
+          },
+          "correct": true
+        },
+        {
+          "id": "o2",
+          "text": {
+            "id": "Menurut saya murah.",
+            "en": "I think it's cheap."
+          }
+        },
+        {
+          "id": "o3",
+          "text": {
+            "id": "Saya mau beli ini.",
+            "en": "I'd like to buy this."
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "我觉得有点儿贵。 Wǒ juéde yǒudiǎnr guì. = Menurut saya agak mahal.",
+        "en": "我觉得有点儿贵。 Wǒ juéde yǒudiǎnr guì. = I think it's a bit expensive."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ZHO-DIALOGUE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-REPLY",
+      "target_text": "去上海的票多少钱？",
+      "romanization": "Qù Shànghǎi de piào duōshao qián?",
+      "audio": "zh/qu_shanghai_de_piao_duoshao_qian",
+      "options": [
+        {
+          "id": "w_wu_shi_wu_kuai_s",
+          "target_text": "五十五块。",
+          "romanization": "Wǔshíwǔ kuài.",
+          "audio": "zh/wushiwu_kuai",
+          "correct": true
+        },
+        {
+          "id": "w_xia_wu_san_dian_ban_de",
+          "target_text": "下午三点半的。",
+          "romanization": "Xiàwǔ sān diǎn bàn de.",
+          "audio": "zh/xiawu_san_dian_ban_de"
+        },
+        {
+          "id": "w_bu_ke_qi",
+          "target_text": "不客气",
+          "romanization": "bù kèqi",
+          "audio": "zh/bu_keqi"
+        }
+      ],
+      "model_answer": {
+        "id": "五十五块。 Wǔshíwǔ kuài. = Lima puluh lima yuan.",
+        "en": "五十五块。 Wǔshíwǔ kuài. = Fifty-five yuan."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    },
+    {
+      "item_id": "ZHO-A-X-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "你 nǐ + 心 xīn = 您 nín = ?",
+            "en": "你 nǐ + 心 xīn = 您 nín = ?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "q2",
+          "text": {
+            "id": "hati",
+            "en": "heart"
+          }
+        },
+        {
+          "id": "q3",
+          "text": {
+            "id": "teman",
+            "en": "friend"
+          }
+        },
+        {
+          "id": "q1",
+          "text": {
+            "id": "Anda (sopan)",
+            "en": "you (polite)"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "您 nín = Anda (sopan): di bawah 你 nǐ ada 心 xīn, 'hati'.",
+        "en": "您 nín = you (polite): 你 nǐ with 心 xīn, 'heart', underneath."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-x-0.1"
+    }
+  ]
+}

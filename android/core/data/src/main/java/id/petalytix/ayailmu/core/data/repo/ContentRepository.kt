@@ -39,6 +39,8 @@ data class ContentCatalog(
         val track: String,
         val pack: String,
         val rules: String,
+        /** Units anyone can play without buying (MONETIZATION_SCHEME "Free tier"); empty = the whole track is free. */
+        @SerialName("free_units") val freeUnits: List<String> = emptyList(),
     )
 }
 
@@ -49,15 +51,20 @@ data class LoadedTrack(
     val rules: RuleConfig,
     val content: GatedContent,
     val problems: List<PackProblem>,
+    /** See [ContentCatalog.Entry.freeUnits]. */
+    val freeUnits: List<String> = emptyList(),
 )
 
 /**
  * Loads every track in the catalog once per process (CR-CFG-1, CR-ENG-2). A pack that fails validation is
  * still returned with its problems so the demo build can show them; prod shows only approved items anyway.
+ * Follow-up 11: after gating, items whose clip or stroke data is not bundled are left out ([ContentFilters],
+ * the missing-clip rule), so every screen that reads [LoadedTrack.content] sees only playable items.
  */
 class ContentRepository(
     private val assets: AssetSource,
     private val build: AppBuildInfo,
+    private val media: MediaRepository = MediaRepository(assets),
 ) {
     private val lock = Mutex()
     private var cache: List<LoadedTrack>? = null
@@ -66,8 +73,10 @@ class ContentRepository(
 
     suspend fun track(track: String): LoadedTrack? = tracks().firstOrNull { it.track == track }
 
-    private suspend fun load(): List<LoadedTrack> =
-        withContext(Dispatchers.IO) {
+    private suspend fun load(): List<LoadedTrack> {
+        val audio = media.audio()
+        val strokes = media.strokes()
+        return withContext(Dispatchers.IO) {
             val catalog = ContentJson.json.decodeFromString(ContentCatalog.serializer(), assets.read(CATALOG))
             catalog.tracks.map { entry ->
                 val pack = PackLoader.parse(assets.read(entry.pack))
@@ -75,9 +84,11 @@ class ContentRepository(
                 val problems = PackValidator.validate(pack).toMutableList()
                 if (pack.meta.track != entry.track) problems += PackProblem("catalog", "pack track ${pack.meta.track} != ${entry.track}")
                 if (rules.track != entry.track) problems += PackProblem("catalog", "rules track ${rules.track} != ${entry.track}")
-                LoadedTrack(entry.track, pack, rules, Gating.gate(pack, build.developerDemo), problems)
+                val content = ContentFilters.playableMedia(Gating.gate(pack, build.developerDemo), audio::has) { it in strokes.keys }
+                LoadedTrack(entry.track, pack, rules, content, problems, entry.freeUnits)
             }
         }
+    }
 
     companion object {
         const val CATALOG = "config/catalog.json"

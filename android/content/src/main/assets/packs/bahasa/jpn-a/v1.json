@@ -1,0 +1,5003 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "jpn-a-pemula-0.1",
+    "subject": "bahasa",
+    "track": "jpn-a",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "target_lang": "ja",
+    "title": {
+      "id": "Bahasa Jepang — Pemula (Dewasa)",
+      "en": "Japanese — Beginner (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 11) for review: needs a native Japanese reviewer and the Indonesian and English language reviewers before any item is approved (docs/syllabus/bahasa/ja_pemula.md, Adults Pemula units 01-05). Voice clips: android/content/voice/ja.json (hidden until recorded).",
+  "prompts": {
+    "P-TRACE": {
+      "id": "Telusuri hurufnya.",
+      "en": "Trace the letter."
+    },
+    "P-CONNECT": {
+      "id": "Hubungkan pasangannya.",
+      "en": "Connect the pairs."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke katanya.",
+      "en": "Drag each picture to its word."
+    },
+    "P-PICK": {
+      "id": "Pilih gambarnya.",
+      "en": "Pick the picture."
+    },
+    "P-LISTEN-PIC": {
+      "id": "Dengar, lalu ketuk gambarnya.",
+      "en": "Listen, then tap the picture."
+    },
+    "P-LISTEN-KANA": {
+      "id": "Dengar, lalu ketuk hurufnya.",
+      "en": "Listen, then tap the letter."
+    },
+    "P-LISTEN-MEAN": {
+      "id": "Dengar, lalu pilih artinya.",
+      "en": "Listen, then pick the meaning."
+    },
+    "P-BUILD": {
+      "id": "Susun hurufnya.",
+      "en": "Build the word."
+    },
+    "P-SENTENCE": {
+      "id": "Susun kalimatnya.",
+      "en": "Build the sentence."
+    },
+    "P-ORDER": {
+      "id": "Urutkan.",
+      "en": "Put them in order."
+    },
+    "P-DIALOG": {
+      "id": "Urutkan percakapannya.",
+      "en": "Put the dialogue in order."
+    },
+    "P-REPLY": {
+      "id": "Pilih balasannya.",
+      "en": "Pick the reply."
+    },
+    "P-SORT": {
+      "id": "Kelompokkan.",
+      "en": "Sort them."
+    },
+    "P-FILL": {
+      "id": "Isi yang kosong.",
+      "en": "Fill the gap."
+    },
+    "P-MEMORY": {
+      "id": "Cari pasangannya.",
+      "en": "Find the pairs."
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Correct. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-TRACE": {
+      "id": "Bagus. {model}",
+      "en": "Well done. {model}"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Hiragana あ–そ & salam",
+        "en": "Hiragana あ–そ & greetings"
+      },
+      "sticker": "sticker_lantern"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Hiragana た–ほ & angka",
+        "en": "Hiragana た–ほ & numbers"
+      },
+      "sticker": "sticker_umbrella"
+    },
+    {
+      "unit": "03",
+      "title": {
+        "id": "Hiragana ま–ん & keluarga",
+        "en": "Hiragana ま–ん & family"
+      },
+      "sticker": "sticker_book"
+    },
+    {
+      "unit": "04",
+      "title": {
+        "id": "Makan & minum",
+        "en": "Food & drink"
+      },
+      "sticker": "sticker_teapot"
+    },
+    {
+      "unit": "05",
+      "title": {
+        "id": "Tempat & perjalanan",
+        "en": "Places & getting around"
+      },
+      "sticker": "sticker_bicycle"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "JPN-A-P-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Hiragana あ–そ & salam",
+        "en": "Hiragana あ–そ & greetings"
+      },
+      "body": [
+        {
+          "id": "Hiragana adalah huruf dasar bahasa Jepang: satu huruf, satu suku kata.",
+          "en": "Hiragana is the basic Japanese script: one letter, one syllable."
+        },
+        {
+          "id": "あ い う え お = a i u e o bahasa Indonesia; え selalu é.",
+          "en": "あ い う え お match Indonesian a i u e o; え is always e as in 'bed'."
+        },
+        {
+          "id": "Garis di atas romaji (ō, ū) menandai vokal panjang: arigatō.",
+          "en": "A line over a romaji vowel (ō, ū) marks a long vowel: arigatō."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "あ い う え お",
+          "gloss": {
+            "id": "a i u e o",
+            "en": "a i u e o"
+          }
+        },
+        {
+          "target_text": "か き く け こ",
+          "gloss": {
+            "id": "ka ki ku ke ko",
+            "en": "ka ki ku ke ko"
+          }
+        },
+        {
+          "target_text": "さ し す せ そ",
+          "gloss": {
+            "id": "sa shi su se so",
+            "en": "sa shi su se so"
+          }
+        },
+        {
+          "target_text": "はじめまして。たなかです。",
+          "gloss": {
+            "id": "Hajimemashite. Tanaka desu. = Salam kenal. Saya Tanaka.",
+            "en": "Hajimemashite. Tanaka desu. = Nice to meet you. I'm Tanaka."
+          }
+        },
+        {
+          "target_text": "よろしく おねがいします。",
+          "gloss": {
+            "id": "Yoroshiku onegai shimasu. = Mohon kerja samanya.",
+            "en": "Yoroshiku onegai shimasu. = Pleased to meet you."
+          }
+        },
+        {
+          "target_text": "ありがとうございます。",
+          "gloss": {
+            "id": "Arigatō gozaimasu. = Terima kasih (sopan).",
+            "en": "Arigatō gozaimasu. = Thank you (polite)."
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "JPN-A-P-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Hiragana た–ほ & angka",
+        "en": "Hiragana た–ほ & numbers"
+      },
+      "body": [
+        {
+          "id": "Baris た, な, は: 15 huruf baru.",
+          "en": "The た, な and は rows: 15 new letters."
+        },
+        {
+          "id": "Perhatikan: し shi, ち chi, つ tsu, ふ fu.",
+          "en": "Watch these: し shi, ち chi, つ tsu, ふ fu."
+        },
+        {
+          "id": "4 dan 7 punya dua bacaan: よん/し (yon/shi), なな/しち (nana/shichi).",
+          "en": "4 and 7 have two readings: よん/し (yon/shi), なな/しち (nana/shichi)."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "た ち つ て と",
+          "gloss": {
+            "id": "ta chi tsu te to",
+            "en": "ta chi tsu te to"
+          }
+        },
+        {
+          "target_text": "な に ぬ ね の",
+          "gloss": {
+            "id": "na ni nu ne no",
+            "en": "na ni nu ne no"
+          }
+        },
+        {
+          "target_text": "は ひ ふ へ ほ",
+          "gloss": {
+            "id": "ha hi fu he ho",
+            "en": "ha hi fu he ho"
+          }
+        },
+        {
+          "target_text": "いち に さん よん ご",
+          "gloss": {
+            "id": "ichi ni san yon go = 1–5",
+            "en": "ichi ni san yon go = 1–5"
+          }
+        },
+        {
+          "target_text": "ろく なな はち きゅう じゅう",
+          "gloss": {
+            "id": "roku nana hachi kyū jū = 6–10",
+            "en": "roku nana hachi kyū jū = 6–10"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "JPN-A-P-03-S1",
+      "unit": "03",
+      "audience": "adults",
+      "title": {
+        "id": "Hiragana ま–ん & keluarga",
+        "en": "Hiragana ま–ん & family"
+      },
+      "body": [
+        {
+          "id": "16 huruf terakhir, ま sampai ん: hiragana lengkap!",
+          "en": "The last 16 letters, ま to ん: hiragana complete!"
+        },
+        {
+          "id": "Saat bercerita tentang keluarga sendiri: はは (haha) ibu, ちち (chichi) ayah.",
+          "en": "Talking about your own family: はは (haha) mother, ちち (chichi) father."
+        },
+        {
+          "id": "Untuk keluarga orang lain: おかあさん (okāsan), おとうさん (otōsan).",
+          "en": "For someone else's family: おかあさん (okāsan), おとうさん (otōsan)."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "ま み む め も",
+          "gloss": {
+            "id": "ma mi mu me mo",
+            "en": "ma mi mu me mo"
+          }
+        },
+        {
+          "target_text": "や ゆ よ",
+          "gloss": {
+            "id": "ya yu yo",
+            "en": "ya yu yo"
+          }
+        },
+        {
+          "target_text": "ら り る れ ろ",
+          "gloss": {
+            "id": "ra ri ru re ro",
+            "en": "ra ri ru re ro"
+          }
+        },
+        {
+          "target_text": "わ を ん",
+          "gloss": {
+            "id": "wa o n",
+            "en": "wa o n"
+          }
+        },
+        {
+          "target_text": "おかあさん！",
+          "gloss": {
+            "id": "Okāsan! = Ibu! (memanggil ibu sendiri juga pakai ini)",
+            "en": "Okāsan! = Mum! (also how you call your own mother)"
+          }
+        },
+        {
+          "target_text": "おばあさん ≠ おばさん",
+          "gloss": {
+            "id": "obāsan = nenek, obasan = bibi: vokal panjang mengubah arti",
+            "en": "obāsan = grandmother, obasan = aunt: long vowels change meaning"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "JPN-A-P-04-S1",
+      "unit": "04",
+      "audience": "adults",
+      "title": {
+        "id": "Makan & minum",
+        "en": "Food & drink"
+      },
+      "body": [
+        {
+          "id": "Memesan: …を ください (… o kudasai).",
+          "en": "Ordering: …を ください (… o kudasai)."
+        },
+        {
+          "id": "Bertanya harga: いくらですか (ikura desu ka)?",
+          "en": "Asking the price: いくらですか (ikura desu ka)?"
+        },
+        {
+          "id": "Kata serapan ditulis dengan katakana: コーヒー (kōhī).",
+          "en": "Loanwords are written in katakana: コーヒー (kōhī)."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "水（みず）を ください。",
+          "gloss": {
+            "id": "Mizu o kudasai. = Minta air.",
+            "en": "Mizu o kudasai. = Water, please."
+          }
+        },
+        {
+          "target_text": "コーヒーを ふたつ ください。",
+          "gloss": {
+            "id": "Kōhī o futatsu kudasai. = Minta dua kopi. (hitotsu 1, futatsu 2, mittsu 3)",
+            "en": "Kōhī o futatsu kudasai. = Two coffees, please. (hitotsu 1, futatsu 2, mittsu 3)"
+          }
+        },
+        {
+          "target_text": "いただきます · ごちそうさまでした",
+          "gloss": {
+            "id": "itadakimasu · gochisōsama deshita = sebelum · sesudah makan",
+            "en": "itadakimasu · gochisōsama deshita = before · after a meal"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "JPN-A-P-05-S1",
+      "unit": "05",
+      "audience": "adults",
+      "title": {
+        "id": "Tempat & perjalanan",
+        "en": "Places & getting around"
+      },
+      "body": [
+        {
+          "id": "Bertanya arah: えきは どこですか (eki wa doko desu ka)?",
+          "en": "Asking the way: えきは どこですか (eki wa doko desu ka)?"
+        },
+        {
+          "id": "Di sini は adalah partikel, jadi dibaca wa.",
+          "en": "Here は is a particle, so it is read wa."
+        },
+        {
+          "id": "Naik kereta: でんしゃで いきます (densha de ikimasu).",
+          "en": "By train: でんしゃで いきます (densha de ikimasu)."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "すみません。",
+          "gloss": {
+            "id": "Sumimasen. = Permisi. / Maaf.",
+            "en": "Sumimasen. = Excuse me. / Sorry."
+          }
+        },
+        {
+          "target_text": "あそこです。",
+          "gloss": {
+            "id": "Asoko desu. = Di sana.",
+            "en": "Asoko desu. = It's over there."
+          }
+        },
+        {
+          "target_text": "びょういん ≠ びよういん",
+          "gloss": {
+            "id": "byōin = rumah sakit, biyōin = salon kecantikan",
+            "en": "byōin = hospital, biyōin = beauty salon"
+          }
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "JPN-A-P-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-TRACE",
+      "target_text": "あ",
+      "romanization": "a",
+      "trace": "hira_a",
+      "audio": "ja/a",
+      "model_answer": {
+        "id": "あ dibaca a, seperti di あさ (asa, pagi).",
+        "en": "あ is read a, as in あさ (asa, morning)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-TRACE",
+      "target_text": "い",
+      "romanization": "i",
+      "trace": "hira_i",
+      "audio": "ja/i",
+      "model_answer": {
+        "id": "い dibaca i, seperti di いす (isu, kursi).",
+        "en": "い is read i, as in いす (isu, chair)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-TRACE",
+      "target_text": "う",
+      "romanization": "u",
+      "trace": "hira_u",
+      "audio": "ja/u",
+      "model_answer": {
+        "id": "う dibaca u, seperti di うえ (ue, atas).",
+        "en": "う is read u, as in うえ (ue, above)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-TRACE",
+      "target_text": "え",
+      "romanization": "e",
+      "trace": "hira_e",
+      "audio": "ja/e",
+      "model_answer": {
+        "id": "え selalu dibaca é seperti di sate: えいが (eiga, film).",
+        "en": "え is always e as in 'bed': えいが (eiga, film)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-TRACE",
+      "target_text": "お",
+      "romanization": "o",
+      "trace": "hira_o",
+      "audio": "ja/o",
+      "model_answer": {
+        "id": "お dibaca o; おお berarti o panjang: おおきい (ōkii, besar).",
+        "en": "お is read o; おお is a long o: おおきい (ōkii, big)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-TRACE",
+      "target_text": "か",
+      "romanization": "ka",
+      "trace": "hira_ka",
+      "audio": "ja/ka",
+      "model_answer": {
+        "id": "か dibaca ka, seperti di かさ (kasa, payung).",
+        "en": "か is read ka, as in かさ (kasa, umbrella)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-TRACE",
+      "target_text": "き",
+      "romanization": "ki",
+      "trace": "hira_ki",
+      "audio": "ja/ki",
+      "model_answer": {
+        "id": "き dibaca ki, seperti di えき (eki, stasiun).",
+        "en": "き is read ki, as in えき (eki, station)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-TRACE",
+      "target_text": "く",
+      "romanization": "ku",
+      "trace": "hira_ku",
+      "audio": "ja/ku",
+      "model_answer": {
+        "id": "く dibaca ku, seperti di きく (kiku, mendengar).",
+        "en": "く is read ku, as in きく (kiku, to listen)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-TRACE",
+      "target_text": "け",
+      "romanization": "ke",
+      "trace": "hira_ke",
+      "audio": "ja/ke",
+      "model_answer": {
+        "id": "け dibaca ke, seperti di けさ (kesa, tadi pagi).",
+        "en": "け is read ke, as in けさ (kesa, this morning)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-TRACE",
+      "target_text": "こ",
+      "romanization": "ko",
+      "trace": "hira_ko",
+      "audio": "ja/ko",
+      "model_answer": {
+        "id": "こ dibaca ko, seperti di こえ (koe, suara).",
+        "en": "こ is read ko, as in こえ (koe, voice)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-BUILD",
+      "audio": "ja/eki",
+      "gesture": "drag",
+      "image": "pic_station",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "eki = stasiun",
+            "en": "eki = station"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "さ"
+        },
+        {
+          "id": "t1",
+          "target_text": "き"
+        },
+        {
+          "id": "t0",
+          "target_text": "え"
+        }
+      ],
+      "solution": [
+        "t0",
+        "t1"
+      ],
+      "model_answer": {
+        "id": "え + き = えき (eki, stasiun). き punya dua garis mendatar, さ hanya satu.",
+        "en": "え + き = えき (eki, station). き has two crossbars, さ has one."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "JPN-GREET"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/arigatoo_gozaimasu",
+      "options": [
+        {
+          "id": "pic_sorry",
+          "image": "pic_sorry",
+          "text": {
+            "id": "minta maaf",
+            "en": "saying sorry"
+          }
+        },
+        {
+          "id": "pic_thanks",
+          "image": "pic_thanks",
+          "text": {
+            "id": "berterima kasih",
+            "en": "saying thank you"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_wave_bye",
+          "image": "pic_wave_bye",
+          "text": {
+            "id": "melambai pamit",
+            "en": "waving goodbye"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "ありがとうございます (arigatō gozaimasu) = terima kasih (sopan).",
+        "en": "ありがとうございます (arigatō gozaimasu) = thank you (polite)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-TRACE",
+      "target_text": "さ",
+      "romanization": "sa",
+      "trace": "hira_sa",
+      "audio": "ja/sa",
+      "model_answer": {
+        "id": "さ dibaca sa, seperti di さかな (sakana, ikan).",
+        "en": "さ is read sa, as in さかな (sakana, fish)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-TRACE",
+      "target_text": "し",
+      "romanization": "shi",
+      "trace": "hira_shi",
+      "audio": "ja/shi",
+      "model_answer": {
+        "id": "し dibaca shi, bukan si: すし (sushi).",
+        "en": "し is read shi, not si: すし (sushi)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-015",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-TRACE",
+      "target_text": "す",
+      "romanization": "su",
+      "trace": "hira_su",
+      "audio": "ja/su",
+      "model_answer": {
+        "id": "す dibaca su; di です (desu) u-nya nyaris tak terdengar.",
+        "en": "す is read su; in です (desu) the u is almost silent."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-016",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-TRACE",
+      "target_text": "せ",
+      "romanization": "se",
+      "trace": "hira_se",
+      "audio": "ja/se",
+      "model_answer": {
+        "id": "せ dibaca se, seperti di せき (seki, tempat duduk).",
+        "en": "せ is read se, as in せき (seki, seat)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-017",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-TRACE",
+      "target_text": "そ",
+      "romanization": "so",
+      "trace": "hira_so",
+      "audio": "ja/so",
+      "model_answer": {
+        "id": "そ dibaca so, seperti di そこ (soko, di situ).",
+        "en": "そ is read so, as in そこ (soko, there)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-018",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "JPN-GREET"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-DIALOG",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Perkenalan diri.",
+            "en": "Introducing yourself."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s2",
+          "target_text": "よろしく おねがいします。",
+          "romanization": "Yoroshiku onegai shimasu.",
+          "audio": "ja/yoroshiku_onegai_shimasu"
+        },
+        {
+          "id": "s1",
+          "target_text": "たなかです。",
+          "romanization": "Tanaka desu.",
+          "audio": "ja/tanaka_desu"
+        },
+        {
+          "id": "s0",
+          "target_text": "はじめまして。",
+          "romanization": "Hajimemashite.",
+          "audio": "ja/hajimemashite"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2"
+      ],
+      "model_answer": {
+        "id": "はじめまして。→ たなかです。→ よろしく おねがいします。",
+        "en": "はじめまして。→ たなかです。→ よろしく おねがいします。"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-019",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-LISTEN-KANA",
+      "audio": "ja/su",
+      "options": [
+        {
+          "id": "c",
+          "target_text": "す",
+          "correct": true
+        },
+        {
+          "id": "x0",
+          "target_text": "し"
+        },
+        {
+          "id": "x1",
+          "target_text": "そ"
+        }
+      ],
+      "model_answer": {
+        "id": "Itu す (su).",
+        "en": "That's す (su)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-020",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "k0",
+          "target_text": "か"
+        },
+        {
+          "id": "k1",
+          "target_text": "き"
+        },
+        {
+          "id": "k2",
+          "target_text": "く"
+        },
+        {
+          "id": "k3",
+          "target_text": "け"
+        },
+        {
+          "id": "k4",
+          "target_text": "こ"
+        },
+        {
+          "id": "r4",
+          "text": {
+            "id": "ko",
+            "en": "ko"
+          }
+        },
+        {
+          "id": "r0",
+          "text": {
+            "id": "ka",
+            "en": "ka"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "id": "ki",
+            "en": "ki"
+          }
+        },
+        {
+          "id": "r2",
+          "text": {
+            "id": "ku",
+            "en": "ku"
+          }
+        },
+        {
+          "id": "r3",
+          "text": {
+            "id": "ke",
+            "en": "ke"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "k0": "r0",
+        "k1": "r1",
+        "k2": "r2",
+        "k3": "r3",
+        "k4": "r4"
+      },
+      "model_answer": {
+        "id": "か ka · き ki · く ku · け ke · こ ko",
+        "en": "か ka · き ki · く ku · け ke · こ ko"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-021",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "JPN-GREET"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-REPLY",
+      "target_text": "ありがとうございます。",
+      "romanization": "Arigatō gozaimasu.",
+      "audio": "ja/arigatoo_gozaimasu",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Balasan yang sopan?",
+            "en": "The polite reply?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "target_text": "いただきます",
+          "romanization": "itadakimasu",
+          "audio": "ja/itadakimasu"
+        },
+        {
+          "id": "c",
+          "target_text": "はじめまして",
+          "romanization": "hajimemashite",
+          "audio": "ja/hajimemashite"
+        },
+        {
+          "id": "a",
+          "target_text": "どういたしまして",
+          "romanization": "dō itashimashite",
+          "audio": "ja/doo_itashimashite",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Balasan untuk ありがとうございます: どういたしまして (dō itashimashite, sama-sama).",
+        "en": "The reply to ありがとうございます: どういたしまして (dō itashimashite, you're welcome)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-01-022",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "JPN-HIRA-A"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Encyclopaedia Britannica, 'kana' (britannica.com/topic/kana): hiragana developed from cursive forms of man'yōgana; Christopher Seeley, A History of Writing in Japan (Brill, 1991), tables of kana and their source characters.",
+      "model_answer": {
+        "id": "Hiragana lahir dari kanji yang ditulis cepat dalam gaya kursif. Kanji yang dipinjam hanya untuk bunyinya disebut man'yōgana: 安（あん）→ あ, 加（か）→ か, 世（せ）→ せ.",
+        "en": "Hiragana grew out of kanji written fast in a cursive hand. Kanji borrowed just for their sound are called man'yōgana: 安（あん）→ あ, 加（か）→ か, 世（せ）→ せ."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-T"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-TRACE",
+      "target_text": "た",
+      "romanization": "ta",
+      "trace": "hira_ta",
+      "audio": "ja/ta",
+      "model_answer": {
+        "id": "た dibaca ta, seperti di たべもの (tabemono, makanan).",
+        "en": "た is read ta, as in たべもの (tabemono, food)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-T"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-TRACE",
+      "target_text": "ち",
+      "romanization": "chi",
+      "trace": "hira_chi",
+      "audio": "ja/chi",
+      "model_answer": {
+        "id": "ち dibaca chi, mirip 'ci' bahasa Indonesia: ちち (chichi, ayah saya).",
+        "en": "ち is read chi: ちち (chichi, my father)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-T"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-TRACE",
+      "target_text": "つ",
+      "romanization": "tsu",
+      "trace": "hira_tsu",
+      "audio": "ja/tsu",
+      "model_answer": {
+        "id": "つ dibaca tsu, bukan su: つくえ (tsukue, meja).",
+        "en": "つ is read tsu, not su: つくえ (tsukue, desk)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-T"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-TRACE",
+      "target_text": "て",
+      "romanization": "te",
+      "trace": "hira_te",
+      "audio": "ja/te",
+      "model_answer": {
+        "id": "て dibaca te, seperti di てがみ (tegami, surat).",
+        "en": "て is read te, as in てがみ (tegami, letter)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-T"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-TRACE",
+      "target_text": "と",
+      "romanization": "to",
+      "trace": "hira_to",
+      "audio": "ja/to",
+      "model_answer": {
+        "id": "と dibaca to, seperti di ひと (hito, orang).",
+        "en": "と is read to, as in ひと (hito, person)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "JPN-HIRA-T"
+      ],
+      "pool": "PRACT",
+      "order": 25,
+      "prompt_id": "P-LISTEN-KANA",
+      "audio": "ja/chi",
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "し"
+        },
+        {
+          "id": "x1",
+          "target_text": "つ"
+        },
+        {
+          "id": "c",
+          "target_text": "ち",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Itu ち (chi). し = shi, つ = tsu.",
+        "en": "That's ち (chi). し = shi, つ = tsu."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-T"
+      ],
+      "pool": "PRACT",
+      "order": 26,
+      "prompt_id": "P-TRACE",
+      "target_text": "な",
+      "romanization": "na",
+      "trace": "hira_na",
+      "audio": "ja/na",
+      "model_answer": {
+        "id": "な dibaca na, seperti di なつ (natsu, musim panas).",
+        "en": "な is read na, as in なつ (natsu, summer)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-T"
+      ],
+      "pool": "PRACT",
+      "order": 27,
+      "prompt_id": "P-TRACE",
+      "target_text": "に",
+      "romanization": "ni",
+      "trace": "hira_ni",
+      "audio": "ja/ni",
+      "model_answer": {
+        "id": "に dibaca ni, seperti di にく (niku, daging).",
+        "en": "に is read ni, as in にく (niku, meat)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-T"
+      ],
+      "pool": "PRACT",
+      "order": 28,
+      "prompt_id": "P-TRACE",
+      "target_text": "ぬ",
+      "romanization": "nu",
+      "trace": "hira_nu",
+      "audio": "ja/nu",
+      "model_answer": {
+        "id": "ぬ dibaca nu, seperti di ぬの (nuno, kain).",
+        "en": "ぬ is read nu, as in ぬの (nuno, cloth)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-T"
+      ],
+      "pool": "PRACT",
+      "order": 29,
+      "prompt_id": "P-TRACE",
+      "target_text": "ね",
+      "romanization": "ne",
+      "trace": "hira_ne",
+      "audio": "ja/ne",
+      "model_answer": {
+        "id": "ね dibaca ne, seperti di ねる (neru, tidur).",
+        "en": "ね is read ne, as in ねる (neru, to sleep)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-T"
+      ],
+      "pool": "PRACT",
+      "order": 30,
+      "prompt_id": "P-TRACE",
+      "target_text": "の",
+      "romanization": "no",
+      "trace": "hira_no",
+      "audio": "ja/no",
+      "model_answer": {
+        "id": "の dibaca no, seperti di のむ (nomu, minum).",
+        "en": "の is read no, as in のむ (nomu, to drink)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "JPN-HIRA-T"
+      ],
+      "pool": "PRACT",
+      "order": 31,
+      "prompt_id": "P-BUILD",
+      "audio": "ja/sakana",
+      "gesture": "drag",
+      "image": "pic_fish",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "sakana = ikan",
+            "en": "sakana = fish"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "た"
+        },
+        {
+          "id": "t2",
+          "target_text": "な"
+        },
+        {
+          "id": "t0",
+          "target_text": "さ"
+        },
+        {
+          "id": "t1",
+          "target_text": "か"
+        }
+      ],
+      "solution": [
+        "t0",
+        "t1",
+        "t2"
+      ],
+      "model_answer": {
+        "id": "さ + か + な = さかな (sakana, ikan).",
+        "en": "さ + か + な = さかな (sakana, fish)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-T"
+      ],
+      "pool": "PRACT",
+      "order": 32,
+      "prompt_id": "P-TRACE",
+      "target_text": "は",
+      "romanization": "ha",
+      "trace": "hira_ha",
+      "audio": "ja/ha",
+      "model_answer": {
+        "id": "は dibaca ha (sebagai partikel: wa), seperti di はし (hashi, sumpit).",
+        "en": "は is read ha (as a particle: wa), as in はし (hashi, chopsticks)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-T"
+      ],
+      "pool": "PRACT",
+      "order": 33,
+      "prompt_id": "P-TRACE",
+      "target_text": "ひ",
+      "romanization": "hi",
+      "trace": "hira_hi",
+      "audio": "ja/hi",
+      "model_answer": {
+        "id": "ひ dibaca hi, seperti di ひこうき (hikōki, pesawat).",
+        "en": "ひ is read hi, as in ひこうき (hikōki, plane)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-T"
+      ],
+      "pool": "PRACT",
+      "order": 34,
+      "prompt_id": "P-TRACE",
+      "target_text": "ふ",
+      "romanization": "fu",
+      "trace": "hira_fu",
+      "audio": "ja/fu",
+      "model_answer": {
+        "id": "ふ dibaca fu, dengan embusan lembut: ふく (fuku, baju).",
+        "en": "ふ is read fu, a soft breath: ふく (fuku, clothes)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-016",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-T"
+      ],
+      "pool": "PRACT",
+      "order": 35,
+      "prompt_id": "P-TRACE",
+      "target_text": "へ",
+      "romanization": "he",
+      "trace": "hira_he",
+      "audio": "ja/he",
+      "model_answer": {
+        "id": "へ dibaca he (sebagai partikel arah: e), seperti di へや (heya, kamar).",
+        "en": "へ is read he (as a direction particle: e), as in へや (heya, room)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-017",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-T"
+      ],
+      "pool": "PRACT",
+      "order": 36,
+      "prompt_id": "P-TRACE",
+      "target_text": "ほ",
+      "romanization": "ho",
+      "trace": "hira_ho",
+      "audio": "ja/ho",
+      "model_answer": {
+        "id": "ほ dibaca ho, seperti di ほん (hon, buku).",
+        "en": "ほ is read ho, as in ほん (hon, book)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-018",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "JPN-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 37,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari 6 sampai 10.",
+            "en": "From 6 to 10."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s1",
+          "target_text": "なな",
+          "romanization": "nana",
+          "audio": "ja/nana"
+        },
+        {
+          "id": "s4",
+          "target_text": "じゅう",
+          "romanization": "jū",
+          "audio": "ja/juu"
+        },
+        {
+          "id": "s2",
+          "target_text": "はち",
+          "romanization": "hachi",
+          "audio": "ja/hachi"
+        },
+        {
+          "id": "s3",
+          "target_text": "きゅう",
+          "romanization": "kyū",
+          "audio": "ja/kyuu"
+        },
+        {
+          "id": "s0",
+          "target_text": "ろく",
+          "romanization": "roku",
+          "audio": "ja/roku"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "model_answer": {
+        "id": "ろく (roku), なな (nana), はち (hachi), きゅう (kyū), じゅう (jū) = 6–10.",
+        "en": "ろく (roku), なな (nana), はち (hachi), きゅう (kyū), じゅう (jū) = 6–10."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-019",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "JPN-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 38,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/nana",
+      "options": [
+        {
+          "id": "count_mango_6",
+          "image": "count_mango_6",
+          "text": {
+            "id": "6 mangga",
+            "en": "6 mangoes"
+          }
+        },
+        {
+          "id": "count_mango_7",
+          "image": "count_mango_7",
+          "text": {
+            "id": "7 mangga",
+            "en": "7 mangoes"
+          },
+          "correct": true
+        },
+        {
+          "id": "count_mango_9",
+          "image": "count_mango_9",
+          "text": {
+            "id": "9 mangga",
+            "en": "9 mangoes"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "なな (nana) = 7; bisa juga しち (shichi).",
+        "en": "なな (nana) = 7; also しち (shichi)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-020",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-HIRA-T"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "k0",
+          "target_text": "な"
+        },
+        {
+          "id": "k1",
+          "target_text": "に"
+        },
+        {
+          "id": "k2",
+          "target_text": "ぬ"
+        },
+        {
+          "id": "k3",
+          "target_text": "ね"
+        },
+        {
+          "id": "k4",
+          "target_text": "の"
+        },
+        {
+          "id": "r1",
+          "text": {
+            "id": "ni",
+            "en": "ni"
+          }
+        },
+        {
+          "id": "r2",
+          "text": {
+            "id": "nu",
+            "en": "nu"
+          }
+        },
+        {
+          "id": "r3",
+          "text": {
+            "id": "ne",
+            "en": "ne"
+          }
+        },
+        {
+          "id": "r4",
+          "text": {
+            "id": "no",
+            "en": "no"
+          }
+        },
+        {
+          "id": "r0",
+          "text": {
+            "id": "na",
+            "en": "na"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "k0": "r0",
+        "k1": "r1",
+        "k2": "r2",
+        "k3": "r3",
+        "k4": "r4"
+      },
+      "model_answer": {
+        "id": "な na · に ni · ぬ nu · ね ne · の no",
+        "en": "な na · に ni · ぬ nu · ね ne · の no"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-02-021",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-NUM"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "count_egg_2",
+          "image": "count_egg_2",
+          "text": {
+            "id": "2 telur",
+            "en": "2 eggs"
+          }
+        },
+        {
+          "id": "count_egg_3",
+          "image": "count_egg_3",
+          "text": {
+            "id": "3 telur",
+            "en": "3 eggs"
+          }
+        },
+        {
+          "id": "count_egg_4",
+          "image": "count_egg_4",
+          "text": {
+            "id": "4 telur",
+            "en": "4 eggs"
+          }
+        },
+        {
+          "id": "count_egg_5",
+          "image": "count_egg_5",
+          "text": {
+            "id": "5 telur",
+            "en": "5 eggs"
+          }
+        },
+        {
+          "id": "w2",
+          "target_text": "よん",
+          "romanization": "yon",
+          "audio": "ja/yon"
+        },
+        {
+          "id": "w3",
+          "target_text": "ご",
+          "romanization": "go",
+          "audio": "ja/go"
+        },
+        {
+          "id": "w0",
+          "target_text": "に",
+          "romanization": "ni",
+          "audio": "ja/ni"
+        },
+        {
+          "id": "w1",
+          "target_text": "さん",
+          "romanization": "san",
+          "audio": "ja/san"
+        }
+      ],
+      "solution_pairs": {
+        "count_egg_2": "w0",
+        "count_egg_3": "w1",
+        "count_egg_4": "w2",
+        "count_egg_5": "w3"
+      },
+      "model_answer": {
+        "id": "に (ni) 2 · さん (san) 3 · よん (yon) 4 · ご (go) 5",
+        "en": "に (ni) 2 · さん (san) 3 · よん (yon) 4 · ご (go) 5"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-001",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "PRACT",
+      "order": 39,
+      "prompt_id": "P-TRACE",
+      "target_text": "ま",
+      "romanization": "ma",
+      "trace": "hira_ma",
+      "audio": "ja/ma",
+      "model_answer": {
+        "id": "ま dibaca ma, seperti di まど (mado, jendela).",
+        "en": "ま is read ma, as in まど (mado, window)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-002",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "PRACT",
+      "order": 40,
+      "prompt_id": "P-TRACE",
+      "target_text": "み",
+      "romanization": "mi",
+      "trace": "hira_mi",
+      "audio": "ja/mi",
+      "model_answer": {
+        "id": "み dibaca mi, seperti di みず (mizu, air).",
+        "en": "み is read mi, as in みず (mizu, water)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-003",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "PRACT",
+      "order": 41,
+      "prompt_id": "P-TRACE",
+      "target_text": "む",
+      "romanization": "mu",
+      "trace": "hira_mu",
+      "audio": "ja/mu",
+      "model_answer": {
+        "id": "む dibaca mu, seperti di むすめ (musume, anak perempuan).",
+        "en": "む is read mu, as in むすめ (musume, daughter)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-004",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "PRACT",
+      "order": 42,
+      "prompt_id": "P-TRACE",
+      "target_text": "め",
+      "romanization": "me",
+      "trace": "hira_me",
+      "audio": "ja/me",
+      "model_answer": {
+        "id": "め dibaca me, seperti di あめ (ame, hujan).",
+        "en": "め is read me, as in あめ (ame, rain)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-005",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "PRACT",
+      "order": 43,
+      "prompt_id": "P-TRACE",
+      "target_text": "も",
+      "romanization": "mo",
+      "trace": "hira_mo",
+      "audio": "ja/mo",
+      "model_answer": {
+        "id": "も dibaca mo, seperti di もの (mono, barang).",
+        "en": "も is read mo, as in もの (mono, thing)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-006",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-FAMILY"
+      ],
+      "pool": "PRACT",
+      "order": 44,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "fam_mother",
+          "image": "fam_mother",
+          "text": {
+            "id": "ibu",
+            "en": "mother"
+          }
+        },
+        {
+          "id": "fam_father",
+          "image": "fam_father",
+          "text": {
+            "id": "ayah",
+            "en": "father"
+          }
+        },
+        {
+          "id": "fam_brother",
+          "image": "fam_brother",
+          "text": {
+            "id": "kakak laki-laki",
+            "en": "older brother"
+          }
+        },
+        {
+          "id": "fam_sister",
+          "image": "fam_sister",
+          "text": {
+            "id": "kakak perempuan",
+            "en": "older sister"
+          }
+        },
+        {
+          "id": "w1",
+          "target_text": "おとうさん",
+          "romanization": "otōsan",
+          "audio": "ja/otoosan"
+        },
+        {
+          "id": "w2",
+          "target_text": "おにいさん",
+          "romanization": "oniisan",
+          "audio": "ja/oniisan"
+        },
+        {
+          "id": "w3",
+          "target_text": "おねえさん",
+          "romanization": "onēsan",
+          "audio": "ja/oneesan"
+        },
+        {
+          "id": "w0",
+          "target_text": "おかあさん",
+          "romanization": "okāsan",
+          "audio": "ja/okaasan"
+        }
+      ],
+      "solution_pairs": {
+        "fam_mother": "w0",
+        "fam_father": "w1",
+        "fam_brother": "w2",
+        "fam_sister": "w3"
+      },
+      "model_answer": {
+        "id": "おかあさん ibu · おとうさん ayah · おにいさん kakak laki-laki · おねえさん kakak perempuan",
+        "en": "おかあさん mother · おとうさん father · おにいさん older brother · おねえさん older sister"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-007",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "PRACT",
+      "order": 45,
+      "prompt_id": "P-TRACE",
+      "target_text": "や",
+      "romanization": "ya",
+      "trace": "hira_ya",
+      "audio": "ja/ya",
+      "model_answer": {
+        "id": "や dibaca ya, seperti di やさい (yasai, sayur).",
+        "en": "や is read ya, as in やさい (yasai, vegetables)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-008",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "PRACT",
+      "order": 46,
+      "prompt_id": "P-TRACE",
+      "target_text": "ゆ",
+      "romanization": "yu",
+      "trace": "hira_yu",
+      "audio": "ja/yu",
+      "model_answer": {
+        "id": "ゆ dibaca yu, seperti di ゆび (yubi, jari).",
+        "en": "ゆ is read yu, as in ゆび (yubi, finger)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-009",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "PRACT",
+      "order": 47,
+      "prompt_id": "P-TRACE",
+      "target_text": "よ",
+      "romanization": "yo",
+      "trace": "hira_yo",
+      "audio": "ja/yo",
+      "model_answer": {
+        "id": "よ dibaca yo, seperti di よむ (yomu, membaca).",
+        "en": "よ is read yo, as in よむ (yomu, to read)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-010",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "JPN-FAMILY"
+      ],
+      "pool": "PRACT",
+      "order": 48,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/obaasan",
+      "options": [
+        {
+          "id": "fam_grandmother",
+          "image": "fam_grandmother",
+          "text": {
+            "id": "nenek",
+            "en": "grandmother"
+          },
+          "correct": true
+        },
+        {
+          "id": "fam_grandfather",
+          "image": "fam_grandfather",
+          "text": {
+            "id": "kakek",
+            "en": "grandfather"
+          }
+        },
+        {
+          "id": "fam_mother",
+          "image": "fam_mother",
+          "text": {
+            "id": "ibu",
+            "en": "mother"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "おばあさん (obāsan) = nenek. おばさん (obasan) = bibi.",
+        "en": "おばあさん (obāsan) = grandmother. おばさん (obasan) = aunt."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-011",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "PRACT",
+      "order": 49,
+      "prompt_id": "P-TRACE",
+      "target_text": "ら",
+      "romanization": "ra",
+      "trace": "hira_ra",
+      "audio": "ja/ra",
+      "model_answer": {
+        "id": "ら dibaca ra; r Jepang ringan, antara r dan l: らいねん (rainen, tahun depan).",
+        "en": "ら is read ra; Japanese r is a light tap, between r and l: らいねん (rainen, next year)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-012",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "PRACT",
+      "order": 50,
+      "prompt_id": "P-TRACE",
+      "target_text": "り",
+      "romanization": "ri",
+      "trace": "hira_ri",
+      "audio": "ja/ri",
+      "model_answer": {
+        "id": "り dibaca ri, seperti di くすり (kusuri, obat).",
+        "en": "り is read ri, as in くすり (kusuri, medicine)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-013",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "PRACT",
+      "order": 51,
+      "prompt_id": "P-TRACE",
+      "target_text": "る",
+      "romanization": "ru",
+      "trace": "hira_ru",
+      "audio": "ja/ru",
+      "model_answer": {
+        "id": "る dibaca ru, seperti di よる (yoru, malam).",
+        "en": "る is read ru, as in よる (yoru, night)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-014",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "PRACT",
+      "order": 52,
+      "prompt_id": "P-TRACE",
+      "target_text": "れ",
+      "romanization": "re",
+      "trace": "hira_re",
+      "audio": "ja/re",
+      "model_answer": {
+        "id": "れ dibaca re, seperti di それ (sore, itu).",
+        "en": "れ is read re, as in それ (sore, that)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-015",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "PRACT",
+      "order": 53,
+      "prompt_id": "P-TRACE",
+      "target_text": "ろ",
+      "romanization": "ro",
+      "trace": "hira_ro",
+      "audio": "ja/ro",
+      "model_answer": {
+        "id": "ろ dibaca ro, seperti di ろく (roku, enam).",
+        "en": "ろ is read ro, as in ろく (roku, six)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-016",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "PRACT",
+      "order": 54,
+      "prompt_id": "P-BUILD",
+      "audio": "ja/yoru",
+      "gesture": "drag",
+      "image": "sleep_moon",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "yoru = malam",
+            "en": "yoru = night"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "ろ"
+        },
+        {
+          "id": "t1",
+          "target_text": "る"
+        },
+        {
+          "id": "t0",
+          "target_text": "よ"
+        }
+      ],
+      "solution": [
+        "t0",
+        "t1"
+      ],
+      "model_answer": {
+        "id": "よ + る = よる (yoru, malam). ろ tidak punya lingkaran.",
+        "en": "よ + る = よる (yoru, night). ろ has no loop."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-017",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "PRACT",
+      "order": 55,
+      "prompt_id": "P-TRACE",
+      "target_text": "わ",
+      "romanization": "wa",
+      "trace": "hira_wa",
+      "audio": "ja/wa",
+      "model_answer": {
+        "id": "わ dibaca wa, seperti di わたし (watashi, saya).",
+        "en": "わ is read wa, as in わたし (watashi, I)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-018",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "PRACT",
+      "order": 56,
+      "prompt_id": "P-TRACE",
+      "target_text": "を",
+      "romanization": "o",
+      "trace": "hira_wo",
+      "audio": "ja/o",
+      "model_answer": {
+        "id": "を dibaca o; hanya dipakai sebagai partikel: みずを ください (mizu o kudasai).",
+        "en": "を is read o; it is only a particle: みずを ください (mizu o kudasai)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-019",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "PRACT",
+      "order": 57,
+      "prompt_id": "P-TRACE",
+      "target_text": "ん",
+      "romanization": "n",
+      "trace": "hira_n",
+      "audio": "ja/n",
+      "model_answer": {
+        "id": "ん dibaca n, seperti di でんしゃ (densha, kereta).",
+        "en": "ん is read n, as in でんしゃ (densha, train)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-020",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "PRACT",
+      "order": 58,
+      "prompt_id": "P-LISTEN-KANA",
+      "audio": "ja/ru",
+      "options": [
+        {
+          "id": "c",
+          "target_text": "る",
+          "correct": true
+        },
+        {
+          "id": "x0",
+          "target_text": "ろ"
+        },
+        {
+          "id": "x1",
+          "target_text": "れ"
+        }
+      ],
+      "model_answer": {
+        "id": "Itu る (ru), yang punya lingkaran kecil.",
+        "en": "That's る (ru), the one with the little loop."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-021",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-HIRA-M"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "k0",
+          "target_text": "め"
+        },
+        {
+          "id": "k1",
+          "target_text": "ぬ"
+        },
+        {
+          "id": "k2",
+          "target_text": "ね"
+        },
+        {
+          "id": "k3",
+          "target_text": "れ"
+        },
+        {
+          "id": "r3",
+          "text": {
+            "id": "re",
+            "en": "re"
+          }
+        },
+        {
+          "id": "r0",
+          "text": {
+            "id": "me",
+            "en": "me"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "id": "nu",
+            "en": "nu"
+          }
+        },
+        {
+          "id": "r2",
+          "text": {
+            "id": "ne",
+            "en": "ne"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "k0": "r0",
+        "k1": "r1",
+        "k2": "r2",
+        "k3": "r3"
+      },
+      "model_answer": {
+        "id": "め me · ぬ nu · ね ne · れ re",
+        "en": "め me · ぬ nu · ね ne · れ re"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-03-022",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "JPN-FAMILY"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Keluarga siapa yang dibicarakan?",
+            "en": "Whose family are you talking about?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_mine",
+          "text": {
+            "id": "Keluarga saya",
+            "en": "My family"
+          }
+        },
+        {
+          "id": "b_other",
+          "text": {
+            "id": "Keluarga orang lain",
+            "en": "Someone else's family"
+          }
+        },
+        {
+          "id": "m1",
+          "target_text": "はは",
+          "romanization": "haha",
+          "audio": "ja/haha"
+        },
+        {
+          "id": "o2",
+          "target_text": "おとうさん",
+          "romanization": "otōsan",
+          "audio": "ja/otoosan"
+        },
+        {
+          "id": "o1",
+          "target_text": "おかあさん",
+          "romanization": "okāsan",
+          "audio": "ja/okaasan"
+        },
+        {
+          "id": "m2",
+          "target_text": "ちち",
+          "romanization": "chichi",
+          "audio": "ja/chichi"
+        }
+      ],
+      "solution_pairs": {
+        "m1": "b_mine",
+        "m2": "b_mine",
+        "o1": "b_other",
+        "o2": "b_other"
+      },
+      "model_answer": {
+        "id": "Keluarga saya: はは, ちち. Keluarga orang lain: おかあさん, おとうさん.",
+        "en": "My family: はは, ちち. Someone else's: おかあさん, おとうさん."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-04-001",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 59,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "drink_water",
+          "image": "drink_water",
+          "text": {
+            "id": "air putih",
+            "en": "water"
+          }
+        },
+        {
+          "id": "pic_tea_cup",
+          "image": "pic_tea_cup",
+          "text": {
+            "id": "secangkir teh",
+            "en": "a cup of tea"
+          }
+        },
+        {
+          "id": "pic_coffee_cup",
+          "image": "pic_coffee_cup",
+          "text": {
+            "id": "secangkir kopi",
+            "en": "a cup of coffee"
+          }
+        },
+        {
+          "id": "pic_rice_bowl",
+          "image": "pic_rice_bowl",
+          "text": {
+            "id": "semangkuk nasi",
+            "en": "a bowl of rice"
+          }
+        },
+        {
+          "id": "w2",
+          "target_text": "コーヒー",
+          "romanization": "kōhī",
+          "audio": "ja/koohii"
+        },
+        {
+          "id": "w3",
+          "target_text": "ご飯（ごはん）",
+          "romanization": "gohan",
+          "audio": "ja/gohan"
+        },
+        {
+          "id": "w0",
+          "target_text": "水（みず）",
+          "romanization": "mizu",
+          "audio": "ja/mizu"
+        },
+        {
+          "id": "w1",
+          "target_text": "お茶（おちゃ）",
+          "romanization": "ocha",
+          "audio": "ja/ocha"
+        }
+      ],
+      "solution_pairs": {
+        "drink_water": "w0",
+        "pic_tea_cup": "w1",
+        "pic_coffee_cup": "w2",
+        "pic_rice_bowl": "w3"
+      },
+      "model_answer": {
+        "id": "水（みず）air · お茶（おちゃ）teh · コーヒー kopi · ご飯（ごはん）nasi",
+        "en": "水（みず）water · お茶（おちゃ）tea · コーヒー coffee · ご飯（ごはん）rice"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-04-008",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "JPN-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 60,
+      "prompt_id": "P-PICK",
+      "target_text": "ケーキ",
+      "romanization": "kēki",
+      "audio": "ja/keeki",
+      "options": [
+        {
+          "id": "pic_bread",
+          "image": "pic_bread",
+          "text": {
+            "id": "roti",
+            "en": "bread"
+          }
+        },
+        {
+          "id": "pic_onigiri",
+          "image": "pic_onigiri",
+          "text": {
+            "id": "nasi kepal",
+            "en": "rice ball"
+          }
+        },
+        {
+          "id": "pic_cake",
+          "image": "pic_cake",
+          "text": {
+            "id": "kue",
+            "en": "cake"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "ケーキ (kēki) = kue, dari bahasa Inggris cake.",
+        "en": "ケーキ (kēki) = cake, a loanword from English."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-04-002",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "JPN-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 61,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/pan",
+      "options": [
+        {
+          "id": "pic_rice_bowl",
+          "image": "pic_rice_bowl",
+          "text": {
+            "id": "semangkuk nasi",
+            "en": "a bowl of rice"
+          }
+        },
+        {
+          "id": "pic_bread",
+          "image": "pic_bread",
+          "text": {
+            "id": "roti",
+            "en": "bread"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_cake",
+          "image": "pic_cake",
+          "text": {
+            "id": "kue",
+            "en": "cake"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "パン (pan) = roti.",
+        "en": "パン (pan) = bread."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-04-009",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 62,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_bread",
+          "image": "pic_bread",
+          "text": {
+            "id": "roti",
+            "en": "bread"
+          }
+        },
+        {
+          "id": "pic_egg_fried",
+          "image": "pic_egg_fried",
+          "text": {
+            "id": "telur ceplok",
+            "en": "fried egg"
+          }
+        },
+        {
+          "id": "pic_fish_dish",
+          "image": "pic_fish_dish",
+          "text": {
+            "id": "ikan goreng",
+            "en": "fried fish"
+          }
+        },
+        {
+          "id": "pic_vegetables",
+          "image": "pic_vegetables",
+          "text": {
+            "id": "sayur",
+            "en": "vegetables"
+          }
+        },
+        {
+          "id": "w1",
+          "target_text": "卵（たまご）",
+          "romanization": "tamago",
+          "audio": "ja/tamago"
+        },
+        {
+          "id": "w2",
+          "target_text": "魚（さかな）",
+          "romanization": "sakana",
+          "audio": "ja/sakana"
+        },
+        {
+          "id": "w3",
+          "target_text": "野菜（やさい）",
+          "romanization": "yasai",
+          "audio": "ja/yasai"
+        },
+        {
+          "id": "w0",
+          "target_text": "パン",
+          "romanization": "pan",
+          "audio": "ja/pan"
+        }
+      ],
+      "solution_pairs": {
+        "pic_bread": "w0",
+        "pic_egg_fried": "w1",
+        "pic_fish_dish": "w2",
+        "pic_vegetables": "w3"
+      },
+      "model_answer": {
+        "id": "パン roti · 卵（たまご）telur · 魚（さかな）ikan · 野菜（やさい）sayur",
+        "en": "パン bread · 卵（たまご）egg · 魚（さかな）fish · 野菜（やさい）vegetables"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-04-003",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "JPN-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 63,
+      "prompt_id": "P-SENTENCE",
+      "gesture": "drag",
+      "image": "pic_coffee_cup",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Minta kopi.",
+            "en": "A coffee, please."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s2",
+          "target_text": "ください",
+          "romanization": "kudasai",
+          "audio": "ja/kudasai"
+        },
+        {
+          "id": "s0",
+          "target_text": "コーヒー",
+          "romanization": "kōhī",
+          "audio": "ja/koohii"
+        },
+        {
+          "id": "x0",
+          "target_text": "です",
+          "romanization": "desu",
+          "audio": "ja/desu"
+        },
+        {
+          "id": "s1",
+          "target_text": "を",
+          "romanization": "o",
+          "audio": "ja/o"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2"
+      ],
+      "model_answer": {
+        "id": "コーヒーを ください。(Kōhī o kudasai.) = Minta kopi.",
+        "en": "コーヒーを ください。(Kōhī o kudasai.) = A coffee, please."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-04-010",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "JPN-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 64,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_food",
+          "text": {
+            "id": "makanan",
+            "en": "food"
+          },
+          "target_text": "たべもの",
+          "romanization": "tabemono",
+          "audio": "ja/tabemono"
+        },
+        {
+          "id": "b_drink",
+          "text": {
+            "id": "minuman",
+            "en": "drinks"
+          },
+          "target_text": "のみもの",
+          "romanization": "nomimono",
+          "audio": "ja/nomimono"
+        },
+        {
+          "id": "pic_fish_dish",
+          "image": "pic_fish_dish",
+          "text": {
+            "id": "ikan goreng",
+            "en": "fried fish"
+          }
+        },
+        {
+          "id": "pic_bread",
+          "image": "pic_bread",
+          "text": {
+            "id": "roti",
+            "en": "bread"
+          }
+        },
+        {
+          "id": "pic_juice",
+          "image": "pic_juice",
+          "text": {
+            "id": "jus jeruk",
+            "en": "orange juice"
+          }
+        },
+        {
+          "id": "pic_milk_glass",
+          "image": "pic_milk_glass",
+          "text": {
+            "id": "segelas susu",
+            "en": "a glass of milk"
+          }
+        },
+        {
+          "id": "pic_rice_bowl",
+          "image": "pic_rice_bowl",
+          "text": {
+            "id": "semangkuk nasi",
+            "en": "a bowl of rice"
+          }
+        },
+        {
+          "id": "pic_coffee_cup",
+          "image": "pic_coffee_cup",
+          "text": {
+            "id": "secangkir kopi",
+            "en": "a cup of coffee"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "pic_rice_bowl": "b_food",
+        "pic_bread": "b_food",
+        "pic_fish_dish": "b_food",
+        "pic_coffee_cup": "b_drink",
+        "pic_juice": "b_drink",
+        "pic_milk_glass": "b_drink"
+      },
+      "model_answer": {
+        "id": "たべもの (tabemono, makanan): nasi, roti, ikan. のみもの (nomimono, minuman): kopi, jus, susu.",
+        "en": "たべもの (tabemono, food): rice, bread, fish. のみもの (nomimono, drinks): coffee, juice, milk."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-04-004",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "JPN-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 65,
+      "prompt_id": "P-DIALOG",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di kafe.",
+            "en": "At a café."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s1",
+          "target_text": "おちゃを ください。",
+          "romanization": "Ocha o kudasai.",
+          "audio": "ja/ocha_o_kudasai"
+        },
+        {
+          "id": "s0",
+          "target_text": "いらっしゃいませ。",
+          "romanization": "Irasshaimase.",
+          "audio": "ja/irasshaimase"
+        },
+        {
+          "id": "s2",
+          "target_text": "はい、どうぞ。",
+          "romanization": "Hai, dōzo.",
+          "audio": "ja/hai_doozo"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2"
+      ],
+      "model_answer": {
+        "id": "いらっしゃいませ (selamat datang) → おちゃを ください (minta teh) → はい、どうぞ (silakan)",
+        "en": "いらっしゃいませ (welcome) → おちゃを ください (tea, please) → はい、どうぞ (here you are)"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-04-011",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 66,
+      "prompt_id": "P-FILL",
+      "target_text": "マンゴーを ＿＿ ください。",
+      "romanization": "Mangō o ___ kudasai.",
+      "gesture": "drag",
+      "image": "count_mango_2",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Minta … mangga.",
+            "en": "… mangoes, please."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "ひとつ",
+          "romanization": "hitotsu",
+          "audio": "ja/hitotsu"
+        },
+        {
+          "id": "x1",
+          "target_text": "みっつ",
+          "romanization": "mittsu",
+          "audio": "ja/mittsu"
+        },
+        {
+          "id": "c",
+          "target_text": "ふたつ",
+          "romanization": "futatsu",
+          "audio": "ja/futatsu"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "マンゴーを ふたつ ください。(Mangō o futatsu kudasai.) = Minta dua mangga.",
+        "en": "マンゴーを ふたつ ください。(Mangō o futatsu kudasai.) = Two mangoes, please."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-04-005",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "JPN-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 67,
+      "prompt_id": "P-LISTEN-MEAN",
+      "audio": "ja/ikura_desu_ka",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Di mana?",
+            "en": "Where is it?"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Berapa harganya?",
+            "en": "How much is it?"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Apa ini?",
+            "en": "What is this?"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "いくらですか (ikura desu ka) = berapa harganya?",
+        "en": "いくらですか (ikura desu ka) = how much is it?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-04-012",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "JPN-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 68,
+      "prompt_id": "P-MEMORY",
+      "options": [
+        {
+          "id": "w1",
+          "target_text": "おにぎり",
+          "romanization": "onigiri",
+          "audio": "ja/onigiri"
+        },
+        {
+          "id": "pic_noodle_bowl",
+          "image": "pic_noodle_bowl",
+          "text": {
+            "id": "semangkuk mi",
+            "en": "a bowl of noodles"
+          }
+        },
+        {
+          "id": "w2",
+          "target_text": "ぎょうざ",
+          "romanization": "gyōza",
+          "audio": "ja/gyooza"
+        },
+        {
+          "id": "w3",
+          "target_text": "はし",
+          "romanization": "hashi",
+          "audio": "ja/hashi"
+        },
+        {
+          "id": "pic_onigiri",
+          "image": "pic_onigiri",
+          "text": {
+            "id": "nasi kepal",
+            "en": "rice ball"
+          }
+        },
+        {
+          "id": "pic_chopsticks",
+          "image": "pic_chopsticks",
+          "text": {
+            "id": "sumpit",
+            "en": "chopsticks"
+          }
+        },
+        {
+          "id": "pic_dumplings",
+          "image": "pic_dumplings",
+          "text": {
+            "id": "pangsit",
+            "en": "dumplings"
+          }
+        },
+        {
+          "id": "w0",
+          "target_text": "ラーメン",
+          "romanization": "rāmen",
+          "audio": "ja/raamen"
+        }
+      ],
+      "solution_pairs": {
+        "pic_noodle_bowl": "w0",
+        "pic_onigiri": "w1",
+        "pic_dumplings": "w2",
+        "pic_chopsticks": "w3"
+      },
+      "model_answer": {
+        "id": "ラーメン ramen · おにぎり nasi kepal · ぎょうざ pangsit · はし sumpit",
+        "en": "ラーメン ramen · おにぎり rice ball · ぎょうざ dumplings · はし chopsticks"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-04-013",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "JPN-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 69,
+      "prompt_id": "P-SENTENCE",
+      "gesture": "drag",
+      "image": "drink_water",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya minum air.",
+            "en": "I drink water."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s1",
+          "target_text": "を",
+          "romanization": "o",
+          "audio": "ja/o"
+        },
+        {
+          "id": "s0",
+          "target_text": "水（みず）",
+          "romanization": "mizu",
+          "audio": "ja/mizu"
+        },
+        {
+          "id": "x0",
+          "target_text": "食（た）べます",
+          "romanization": "tabemasu",
+          "audio": "ja/tabemasu"
+        },
+        {
+          "id": "s2",
+          "target_text": "飲（の）みます",
+          "romanization": "nomimasu",
+          "audio": "ja/nomimasu"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2"
+      ],
+      "model_answer": {
+        "id": "水（みず）を 飲（の）みます。(Mizu o nomimasu.) = Saya minum air.",
+        "en": "水（みず）を 飲（の）みます。(Mizu o nomimasu.) = I drink water."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-04-014",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "JPN-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 70,
+      "prompt_id": "P-PICK",
+      "target_text": "いただきます",
+      "audio": "ja/itadakimasu",
+      "options": [
+        {
+          "id": "pic_eat",
+          "image": "pic_eat",
+          "text": {
+            "id": "makan",
+            "en": "eating"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_sleep",
+          "image": "pic_sleep",
+          "text": {
+            "id": "tidur",
+            "en": "sleeping"
+          }
+        },
+        {
+          "id": "pic_wave_bye",
+          "image": "pic_wave_bye",
+          "text": {
+            "id": "melambai pamit",
+            "en": "waving goodbye"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "いただきます (itadakimasu): sebelum makan. Sesudahnya: ごちそうさまでした.",
+        "en": "いただきます (itadakimasu): before eating. Afterwards: ごちそうさまでした."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-04-006",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-FOOD"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "＿＿を ください。",
+      "romanization": "___ o kudasai.",
+      "gesture": "drag",
+      "image": "pic_juice",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Minta …",
+            "en": "… please."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "パン",
+          "romanization": "pan",
+          "audio": "ja/pan"
+        },
+        {
+          "id": "x1",
+          "target_text": "水（みず）",
+          "romanization": "mizu",
+          "audio": "ja/mizu"
+        },
+        {
+          "id": "c",
+          "target_text": "ジュース",
+          "romanization": "jūsu",
+          "audio": "ja/juusu"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "ジュースを ください。(Jūsu o kudasai.) = Minta jus.",
+        "en": "ジュースを ください。(Jūsu o kudasai.) = Juice, please."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-04-015",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "JPN-FOOD"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "野菜（やさい）",
+      "romanization": "yasai",
+      "audio": "ja/yasai",
+      "options": [
+        {
+          "id": "pic_fish_dish",
+          "image": "pic_fish_dish",
+          "text": {
+            "id": "ikan goreng",
+            "en": "fried fish"
+          }
+        },
+        {
+          "id": "pic_soup",
+          "image": "pic_soup",
+          "text": {
+            "id": "sup",
+            "en": "soup"
+          }
+        },
+        {
+          "id": "pic_vegetables",
+          "image": "pic_vegetables",
+          "text": {
+            "id": "sayur",
+            "en": "vegetables"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "野菜（やさい）(yasai) = sayur.",
+        "en": "野菜（やさい）(yasai) = vegetables."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-04-007",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "JPN-FOOD"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Encyclopaedia Britannica, 'Japanese language', section on the writing system (britannica.com/topic/Japanese-language); Encyclopaedia Britannica, 'kana'.",
+      "model_answer": {
+        "id": "Satu kalimat Jepang bisa memakai tiga jenis huruf: 私（わたし）は コーヒーを 飲（の）みます (watashi wa kōhī o nomimasu) = Saya minum kopi. Kanji untuk makna, katakana untuk kata serapan, hiragana untuk sisanya.",
+        "en": "One Japanese sentence can use three scripts: 私（わたし）は コーヒーを 飲（の）みます (watashi wa kōhī o nomimasu) = I drink coffee. Kanji for meaning, katakana for loanwords, hiragana for the rest."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-05-001",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 71,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_station",
+          "image": "pic_station",
+          "text": {
+            "id": "stasiun",
+            "en": "station"
+          }
+        },
+        {
+          "id": "pic_hospital",
+          "image": "pic_hospital",
+          "text": {
+            "id": "rumah sakit",
+            "en": "hospital"
+          }
+        },
+        {
+          "id": "pic_park",
+          "image": "pic_park",
+          "text": {
+            "id": "taman",
+            "en": "park"
+          }
+        },
+        {
+          "id": "pic_school",
+          "image": "pic_school",
+          "text": {
+            "id": "sekolah",
+            "en": "school"
+          }
+        },
+        {
+          "id": "w1",
+          "target_text": "病院（びょういん）",
+          "romanization": "byōin",
+          "audio": "ja/byooin"
+        },
+        {
+          "id": "w2",
+          "target_text": "公園（こうえん）",
+          "romanization": "kōen",
+          "audio": "ja/kooen"
+        },
+        {
+          "id": "w3",
+          "target_text": "学校（がっこう）",
+          "romanization": "gakkō",
+          "audio": "ja/gakkoo"
+        },
+        {
+          "id": "w0",
+          "target_text": "駅（えき）",
+          "romanization": "eki",
+          "audio": "ja/eki"
+        }
+      ],
+      "solution_pairs": {
+        "pic_station": "w0",
+        "pic_hospital": "w1",
+        "pic_park": "w2",
+        "pic_school": "w3"
+      },
+      "model_answer": {
+        "id": "駅（えき）stasiun · 病院（びょういん）rumah sakit · 公園（こうえん）taman · 学校（がっこう）sekolah",
+        "en": "駅（えき）station · 病院（びょういん）hospital · 公園（こうえん）park · 学校（がっこう）school"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-05-007",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "JPN-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 72,
+      "prompt_id": "P-PICK",
+      "target_text": "市場（いちば）",
+      "romanization": "ichiba",
+      "audio": "ja/ichiba",
+      "options": [
+        {
+          "id": "pic_park",
+          "image": "pic_park",
+          "text": {
+            "id": "taman",
+            "en": "park"
+          }
+        },
+        {
+          "id": "pic_school",
+          "image": "pic_school",
+          "text": {
+            "id": "sekolah",
+            "en": "school"
+          }
+        },
+        {
+          "id": "pic_market",
+          "image": "pic_market",
+          "text": {
+            "id": "pasar",
+            "en": "market"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "市場（いちば）(ichiba) = pasar.",
+        "en": "市場（いちば）(ichiba) = market."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-05-002",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "JPN-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 73,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/densha",
+      "options": [
+        {
+          "id": "pic_bus",
+          "image": "pic_bus",
+          "text": {
+            "id": "bus",
+            "en": "bus"
+          }
+        },
+        {
+          "id": "pic_train",
+          "image": "pic_train",
+          "text": {
+            "id": "kereta",
+            "en": "train"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_car",
+          "image": "pic_car",
+          "text": {
+            "id": "mobil",
+            "en": "car"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "でんしゃ (densha) = kereta.",
+        "en": "でんしゃ (densha) = train."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-05-008",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 74,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_car",
+          "image": "pic_car",
+          "text": {
+            "id": "mobil",
+            "en": "car"
+          }
+        },
+        {
+          "id": "pic_bicycle",
+          "image": "pic_bicycle",
+          "text": {
+            "id": "sepeda",
+            "en": "bicycle"
+          }
+        },
+        {
+          "id": "pic_ship",
+          "image": "pic_ship",
+          "text": {
+            "id": "kapal",
+            "en": "ship"
+          }
+        },
+        {
+          "id": "pic_motorbike",
+          "image": "pic_motorbike",
+          "text": {
+            "id": "sepeda motor",
+            "en": "motorbike"
+          }
+        },
+        {
+          "id": "w3",
+          "target_text": "バイク",
+          "romanization": "baiku",
+          "audio": "ja/baiku"
+        },
+        {
+          "id": "w0",
+          "target_text": "車（くるま）",
+          "romanization": "kuruma",
+          "audio": "ja/kuruma"
+        },
+        {
+          "id": "w1",
+          "target_text": "自転車（じてんしゃ）",
+          "romanization": "jitensha",
+          "audio": "ja/jitensha"
+        },
+        {
+          "id": "w2",
+          "target_text": "船（ふね）",
+          "romanization": "fune",
+          "audio": "ja/fune"
+        }
+      ],
+      "solution_pairs": {
+        "pic_car": "w0",
+        "pic_bicycle": "w1",
+        "pic_ship": "w2",
+        "pic_motorbike": "w3"
+      },
+      "model_answer": {
+        "id": "車（くるま）mobil · 自転車（じてんしゃ）sepeda · 船（ふね）kapal · バイク sepeda motor",
+        "en": "車（くるま）car · 自転車（じてんしゃ）bicycle · 船（ふね）ship · バイク motorbike"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-05-003",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "JPN-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 75,
+      "prompt_id": "P-SENTENCE",
+      "gesture": "drag",
+      "image": "pic_station",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tanyakan: di mana stasiun?",
+            "en": "Ask: where is the station?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s2",
+          "target_text": "どこ",
+          "romanization": "doko",
+          "audio": "ja/doko"
+        },
+        {
+          "id": "s3",
+          "target_text": "ですか",
+          "romanization": "desu ka",
+          "audio": "ja/desu_ka"
+        },
+        {
+          "id": "s1",
+          "target_text": "は",
+          "romanization": "wa",
+          "audio": "ja/wa"
+        },
+        {
+          "id": "s0",
+          "target_text": "えき",
+          "romanization": "eki",
+          "audio": "ja/eki"
+        },
+        {
+          "id": "x0",
+          "target_text": "を",
+          "romanization": "o",
+          "audio": "ja/o"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "model_answer": {
+        "id": "えきは どこですか。(Eki wa doko desu ka?) = Di mana stasiun?",
+        "en": "えきは どこですか。(Eki wa doko desu ka?) = Where is the station?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-05-009",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 76,
+      "prompt_id": "P-FILL",
+      "target_text": "＿＿で いきます。",
+      "romanization": "___ de ikimasu.",
+      "gesture": "drag",
+      "image": "pic_ship",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya pergi naik …",
+            "en": "I'm going by …"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "c",
+          "target_text": "船（ふね）",
+          "romanization": "fune",
+          "audio": "ja/fune"
+        },
+        {
+          "id": "x1",
+          "target_text": "自転車（じてんしゃ）",
+          "romanization": "jitensha",
+          "audio": "ja/jitensha"
+        },
+        {
+          "id": "x0",
+          "target_text": "車（くるま）",
+          "romanization": "kuruma",
+          "audio": "ja/kuruma"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "船（ふね）で いきます。(Fune de ikimasu.) = Saya pergi naik kapal.",
+        "en": "船（ふね）で いきます。(Fune de ikimasu.) = I'm going by ship."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-05-004",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "JPN-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 77,
+      "prompt_id": "P-DIALOG",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bertanya arah.",
+            "en": "Asking the way."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s2",
+          "target_text": "あそこです。",
+          "romanization": "Asoko desu.",
+          "audio": "ja/asoko_desu"
+        },
+        {
+          "id": "s3",
+          "target_text": "ありがとうございます。",
+          "romanization": "Arigatō gozaimasu.",
+          "audio": "ja/arigatoo_gozaimasu"
+        },
+        {
+          "id": "s0",
+          "target_text": "すみません。",
+          "romanization": "Sumimasen.",
+          "audio": "ja/sumimasen"
+        },
+        {
+          "id": "s1",
+          "target_text": "びょういんは どこですか。",
+          "romanization": "Byōin wa doko desu ka?",
+          "audio": "ja/byooin_wa_doko_desu_ka"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "model_answer": {
+        "id": "すみません → びょういんは どこですか → あそこです (di sana) → ありがとうございます",
+        "en": "すみません → びょういんは どこですか → あそこです (over there) → ありがとうございます"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-05-010",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "JPN-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 78,
+      "prompt_id": "P-REPLY",
+      "target_text": "えきは どこですか。",
+      "romanization": "Eki wa doko desu ka?",
+      "audio": "ja/eki_wa_doko_desu_ka",
+      "image": "pic_station",
+      "options": [
+        {
+          "id": "a",
+          "target_text": "あそこです。",
+          "romanization": "Asoko desu.",
+          "audio": "ja/asoko_desu",
+          "correct": true
+        },
+        {
+          "id": "x0",
+          "target_text": "バスで いきます。",
+          "romanization": "Basu de ikimasu.",
+          "audio": "ja/basu_de_ikimasu"
+        },
+        {
+          "id": "x1",
+          "target_text": "いらっしゃいませ。",
+          "romanization": "Irasshaimase.",
+          "audio": "ja/irasshaimase"
+        }
+      ],
+      "model_answer": {
+        "id": "えきは どこですか？ — あそこです。(Asoko desu.) = Di mana stasiun? — Di sana.",
+        "en": "えきは どこですか？ — あそこです。(Asoko desu.) = Where is the station? — Over there."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-05-005",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "JPN-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 79,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/hikooki",
+      "options": [
+        {
+          "id": "pic_plane",
+          "image": "pic_plane",
+          "text": {
+            "id": "pesawat",
+            "en": "plane"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_ship",
+          "image": "pic_ship",
+          "text": {
+            "id": "kapal",
+            "en": "ship"
+          }
+        },
+        {
+          "id": "pic_train",
+          "image": "pic_train",
+          "text": {
+            "id": "kereta",
+            "en": "train"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "ひこうき (hikōki) = pesawat.",
+        "en": "ひこうき (hikōki) = plane."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-05-011",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "JPN-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 80,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_vehicle",
+          "text": {
+            "id": "kendaraan",
+            "en": "vehicles"
+          },
+          "target_text": "のりもの",
+          "romanization": "norimono",
+          "audio": "ja/norimono"
+        },
+        {
+          "id": "b_place",
+          "text": {
+            "id": "tempat",
+            "en": "places"
+          },
+          "target_text": "ばしょ",
+          "romanization": "basho",
+          "audio": "ja/basho"
+        },
+        {
+          "id": "pic_bus",
+          "image": "pic_bus",
+          "text": {
+            "id": "bus",
+            "en": "bus"
+          }
+        },
+        {
+          "id": "pic_station",
+          "image": "pic_station",
+          "text": {
+            "id": "stasiun",
+            "en": "station"
+          }
+        },
+        {
+          "id": "pic_school",
+          "image": "pic_school",
+          "text": {
+            "id": "sekolah",
+            "en": "school"
+          }
+        },
+        {
+          "id": "pic_plane",
+          "image": "pic_plane",
+          "text": {
+            "id": "pesawat",
+            "en": "plane"
+          }
+        },
+        {
+          "id": "pic_train",
+          "image": "pic_train",
+          "text": {
+            "id": "kereta",
+            "en": "train"
+          }
+        },
+        {
+          "id": "pic_hospital",
+          "image": "pic_hospital",
+          "text": {
+            "id": "rumah sakit",
+            "en": "hospital"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "pic_bus": "b_vehicle",
+        "pic_train": "b_vehicle",
+        "pic_plane": "b_vehicle",
+        "pic_station": "b_place",
+        "pic_hospital": "b_place",
+        "pic_school": "b_place"
+      },
+      "model_answer": {
+        "id": "のりもの (norimono, kendaraan): bus, kereta, pesawat. ばしょ (basho, tempat): stasiun, rumah sakit, sekolah.",
+        "en": "のりもの (norimono, vehicles): bus, train, plane. ばしょ (basho, places): station, hospital, school."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-05-012",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "JPN-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 81,
+      "prompt_id": "P-SENTENCE",
+      "gesture": "drag",
+      "image": "pic_train",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya pergi naik kereta.",
+            "en": "I'm going by train."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s2",
+          "target_text": "いきます",
+          "romanization": "ikimasu",
+          "audio": "ja/ikimasu"
+        },
+        {
+          "id": "x0",
+          "target_text": "を",
+          "romanization": "o",
+          "audio": "ja/o"
+        },
+        {
+          "id": "s0",
+          "target_text": "電車（でんしゃ）",
+          "romanization": "densha",
+          "audio": "ja/densha"
+        },
+        {
+          "id": "s1",
+          "target_text": "で",
+          "romanization": "de",
+          "audio": "ja/de"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2"
+      ],
+      "model_answer": {
+        "id": "電車（でんしゃ）で いきます。(Densha de ikimasu.) = Saya pergi naik kereta.",
+        "en": "電車（でんしゃ）で いきます。(Densha de ikimasu.) = I'm going by train."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-05-013",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 82,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_house",
+          "image": "pic_house",
+          "text": {
+            "id": "rumah",
+            "en": "house"
+          }
+        },
+        {
+          "id": "pic_mountain",
+          "image": "pic_mountain",
+          "text": {
+            "id": "gunung",
+            "en": "mountain"
+          }
+        },
+        {
+          "id": "pic_sea",
+          "image": "pic_sea",
+          "text": {
+            "id": "laut",
+            "en": "sea"
+          }
+        },
+        {
+          "id": "pic_park",
+          "image": "pic_park",
+          "text": {
+            "id": "taman",
+            "en": "park"
+          }
+        },
+        {
+          "id": "w1",
+          "target_text": "山（やま）",
+          "romanization": "yama",
+          "audio": "ja/yama"
+        },
+        {
+          "id": "w2",
+          "target_text": "海（うみ）",
+          "romanization": "umi",
+          "audio": "ja/umi"
+        },
+        {
+          "id": "w3",
+          "target_text": "公園（こうえん）",
+          "romanization": "kōen",
+          "audio": "ja/kooen"
+        },
+        {
+          "id": "w0",
+          "target_text": "家（いえ）",
+          "romanization": "ie",
+          "audio": "ja/ie"
+        }
+      ],
+      "solution_pairs": {
+        "pic_house": "w0",
+        "pic_mountain": "w1",
+        "pic_sea": "w2",
+        "pic_park": "w3"
+      },
+      "model_answer": {
+        "id": "家（いえ）rumah · 山（やま）gunung · 海（うみ）laut · 公園（こうえん）taman",
+        "en": "家（いえ）house · 山（やま）mountain · 海（うみ）sea · 公園（こうえん）park"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-05-006",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-PLACE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "＿＿で いきます。",
+      "romanization": "___ de ikimasu.",
+      "gesture": "drag",
+      "image": "pic_bus",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya pergi naik …",
+            "en": "I'm going by …"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "電車（でんしゃ）",
+          "romanization": "densha",
+          "audio": "ja/densha"
+        },
+        {
+          "id": "x1",
+          "target_text": "自転車（じてんしゃ）",
+          "romanization": "jitensha",
+          "audio": "ja/jitensha"
+        },
+        {
+          "id": "c",
+          "target_text": "バス",
+          "romanization": "basu",
+          "audio": "ja/basu"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "バスで いきます。(Basu de ikimasu.) = Saya pergi naik bus.",
+        "en": "バスで いきます。(Basu de ikimasu.) = I'm going by bus."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-05-014",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "JPN-PLACE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "車（くるま）",
+      "romanization": "kuruma",
+      "audio": "ja/kuruma",
+      "options": [
+        {
+          "id": "pic_bus",
+          "image": "pic_bus",
+          "text": {
+            "id": "bus",
+            "en": "bus"
+          }
+        },
+        {
+          "id": "pic_train",
+          "image": "pic_train",
+          "text": {
+            "id": "kereta",
+            "en": "train"
+          }
+        },
+        {
+          "id": "pic_car",
+          "image": "pic_car",
+          "text": {
+            "id": "mobil",
+            "en": "car"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "車（くるま）(kuruma) = mobil.",
+        "en": "車（くるま）(kuruma) = car."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Hiragana dasar ada 46 huruf. Anda sudah belajar あ–そ (15) dan た–ほ (15). Berapa yang tersisa?",
+            "en": "There are 46 basic hiragana. You've learned あ–そ (15) and た–ほ (15). How many are left?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 16,
+        "tolerance": 0
+      },
+      "model_answer": {
+        "id": "46 − 15 − 15 = 16: dari ま sampai ん.",
+        "en": "46 − 15 − 15 = 16: from ま to ん."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    },
+    {
+      "item_id": "JPN-A-P-DP-02",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ungkapan mana yang sama bila dibaca dari belakang (dalam hiragana)?",
+            "en": "Which phrase reads the same backwards (in hiragana)?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "target_text": "いただきます",
+          "romanization": "itadakimasu",
+          "audio": "ja/itadakimasu"
+        },
+        {
+          "id": "a",
+          "target_text": "たけやぶやけた",
+          "romanization": "takeyabu yaketa",
+          "audio": "ja/takeyabu_yaketa",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "target_text": "よろしく おねがいします",
+          "romanization": "yoroshiku onegai shimasu",
+          "audio": "ja/yoroshiku_onegai_shimasu"
+        }
+      ],
+      "model_answer": {
+        "id": "たけやぶやけた (takeyabu yaketa, 'rumpun bambu terbakar'): た-け-や-ぶ-や-け-た.",
+        "en": "たけやぶやけた (takeyabu yaketa, 'the bamboo grove burned'): た-け-や-ぶ-や-け-た."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-pemula-0.1"
+    }
+  ]
+}

@@ -1,0 +1,5245 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sos-a-pemula-0.3",
+    "subject": "sosial_seni",
+    "track": "sos-a",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Sosial & Seni — Pemula (Dewasa)",
+      "en": "Social Studies & Arts — Beginner (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-17 for subject + language review: needs a social-studies reviewer (geography, history, civics and economics), a cultural reviewer, and the Indonesian and English language reviewers before any item is approved (docs/syllabus/04_SOSIAL_SENI.md, Adults Pemula units 1-5). Follow-up 12 picture pass 2 (2026-10-18): more pictures on cards and questions (MODULES_LEVELS_STORIES.md §8); same items, skills and order.",
+  "prompts": {
+    "P-TAP": {
+      "id": "Ketuk pada gambar.",
+      "en": "Tap on the picture."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban yang tepat.",
+      "en": "Choose the right answer."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-MATCH": {
+      "id": "Pasangkan.",
+      "en": "Match them up."
+    },
+    "P-SORT": {
+      "id": "Kelompokkan.",
+      "en": "Sort into groups."
+    },
+    "P-ORDER": {
+      "id": "Urutkan.",
+      "en": "Put them in order."
+    },
+    "P-FILL": {
+      "id": "Isi bagian yang kosong.",
+      "en": "Fill in the gap."
+    },
+    "P-NUM": {
+      "id": "Masukkan angkanya.",
+      "en": "Enter the number."
+    },
+    "P-EST": {
+      "id": "Perkirakan.",
+      "en": "Make an estimate."
+    },
+    "P-TYPE": {
+      "id": "Ketik jawaban Anda.",
+      "en": "Type your answer."
+    },
+    "P-MEMORY": {
+      "id": "Buka kartu dan temukan pasangannya.",
+      "en": "Flip the cards and find the pairs."
+    },
+    "P-READ": {
+      "id": "Silakan baca dulu.",
+      "en": "Read this first."
+    },
+    "P-TRY": {
+      "id": "Coba di rumah",
+      "en": "Try at home"
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Correct. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Baik, kita lanjut.",
+      "en": "Good, let's continue."
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Peta Indonesia dalam 10 menit",
+        "en": "Indonesia's map in 10 minutes"
+      },
+      "sticker": "sticker_compass"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Garis waktu nasional",
+        "en": "National timeline"
+      },
+      "sticker": "sticker_boat"
+    },
+    {
+      "unit": "03",
+      "title": {
+        "id": "Bagaimana negara bekerja",
+        "en": "How the state works"
+      },
+      "sticker": "sticker_book"
+    },
+    {
+      "unit": "04",
+      "title": {
+        "id": "Ekonomi rumah tangga & negara",
+        "en": "Household & national economy"
+      },
+      "sticker": "sticker_rice_field"
+    },
+    {
+      "unit": "05",
+      "title": {
+        "id": "Seni rupa: melihat dengan sadar",
+        "en": "Visual art: looking well"
+      },
+      "sticker": "sticker_umbrella"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SOS-A-P-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Peta Indonesia dalam 10 menit",
+        "en": "Indonesia's map in 10 minutes"
+      },
+      "body": [
+        {
+          "id": "Indonesia adalah negara kepulauan di antara dua benua (Asia dan Australia) dan dua samudra (Hindia dan Pasifik). Kelompok pulau utamanya: Sumatra, Jawa, Kalimantan, Sulawesi, Bali dan Nusa Tenggara, Maluku, serta Papua.",
+          "en": "Indonesia is an archipelago between two continents (Asia and Australia) and two oceans (the Indian and the Pacific). Its main island groups are Sumatra, Java, Kalimantan, Sulawesi, Bali and Nusa Tenggara, Maluku, and Papua."
+        },
+        {
+          "id": "Sejak 2022, Indonesia terdiri atas 38 provinsi; empat yang terbaru dibentuk di Tanah Papua. UU No. 3 Tahun 2022 menetapkan Nusantara (IKN) di Kalimantan Timur sebagai ibu kota negara; pemindahannya berlaku resmi melalui Keputusan Presiden.",
+          "en": "Since 2022, Indonesia has had 38 provinces; the four newest were created in Papua. Law No. 3 of 2022 named Nusantara (IKN) in East Kalimantan as the national capital; the move takes legal effect through a presidential decree."
+        },
+        {
+          "id": "Indonesia memakai tiga zona waktu. WIB (UTC+7): Sumatra, Jawa, serta Kalimantan Barat dan Tengah. WITA (UTC+8): Bali, Nusa Tenggara, Kalimantan Selatan, Timur, dan Utara, serta seluruh Sulawesi. WIT (UTC+9): Maluku dan Papua.",
+          "en": "Indonesia uses three time zones. WIB (UTC+7): Sumatra, Java, and West and Central Kalimantan. WITA (UTC+8): Bali, Nusa Tenggara, South, East and North Kalimantan, and all of Sulawesi. WIT (UTC+9): Maluku and Papua."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SOS-A-P-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Garis waktu nasional",
+        "en": "National timeline"
+      },
+      "body": [
+        {
+          "id": "Jauh sebelum ada Indonesia, Nusantara sudah memiliki kerajaan besar. Sriwijaya (sekitar abad ke-7 hingga ke-13) menguasai jalur dagang laut di sekitar Selat Malaka. Majapahit (berdiri 1293) berpusat di Jawa Timur.",
+          "en": "Long before Indonesia existed, the archipelago had great kingdoms. Srivijaya (roughly the 7th to the 13th century) controlled the sea trade routes around the Strait of Malacca. Majapahit (founded 1293) was centred in East Java."
+        },
+        {
+          "id": "VOC, kongsi dagang Belanda, dibentuk pada 1602. Kekuasaan kolonial meluas sedikit demi sedikit; banyak daerah baru ditaklukkan pada akhir abad ke-19 hingga awal abad ke-20.",
+          "en": "The VOC, the Dutch East India Company, was founded in 1602. Colonial control spread gradually; many regions were only conquered in the late 19th and early 20th centuries."
+        },
+        {
+          "id": "Pergerakan nasional tumbuh: Budi Utomo (1908), Sumpah Pemuda (28 Oktober 1928), lalu Proklamasi Kemerdekaan pada 17 Agustus 1945. Belanda mengakui kedaulatan Indonesia pada 27 Desember 1949. Reformasi 1998 membuka era demokrasi yang lebih terbuka.",
+          "en": "The national movement grew: Budi Utomo (1908), the Youth Pledge (28 October 1928), then the Proclamation of Independence on 17 August 1945. The Netherlands recognised Indonesia's sovereignty on 27 December 1949. Reformasi in 1998 opened a more open democratic era."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SOS-A-P-03-S1",
+      "unit": "03",
+      "audience": "adults",
+      "title": {
+        "id": "Bagaimana negara bekerja",
+        "en": "How the state works"
+      },
+      "body": [
+        {
+          "id": "UUD 1945 membagi kekuasaan negara ke beberapa lembaga. Lembaga perwakilan (legislatif) adalah DPR, DPD, dan MPR. Kekuasaan pemerintahan (eksekutif) dipegang presiden, dibantu para menteri. Kekuasaan kehakiman (yudikatif) dijalankan Mahkamah Agung (MA) dan Mahkamah Konstitusi (MK).",
+          "en": "The 1945 Constitution divides state power among several institutions. The representative (legislative) bodies are the DPR, the DPD and the MPR. Executive power is held by the President, helped by the ministers. Judicial power is exercised by the Supreme Court (MA) and the Constitutional Court (MK)."
+        },
+        {
+          "id": "Urusan pemerintahan dibagi antara pusat dan daerah. Enam urusan hanya dipegang pusat: politik luar negeri, pertahanan, keamanan, yustisi (peradilan), moneter dan fiskal nasional, serta agama (UU No. 23 Tahun 2014). Banyak layanan sehari-hari, seperti SD dan SMP negeri, puskesmas, dan pengelolaan sampah, diurus pemerintah daerah: provinsi (gubernur dan DPRD provinsi) serta kabupaten/kota (bupati atau wali kota dan DPRD-nya).",
+          "en": "Government affairs are split between the centre and the regions. Six matters belong to the central government alone: foreign policy, defence, security, justice, national monetary and fiscal policy, and religion (Law No. 23 of 2014). Many everyday services, such as state primary and junior secondary schools, puskesmas and rubbish collection, are run by regional government: provinces (a governor and a provincial DPRD) and regencies or cities (a regent or mayor and their own DPRD)."
+        },
+        {
+          "id": "Dokumen yang sering Anda pakai: NIK (16 digit, nomor kependudukan seumur hidup), KTP-el, dan Kartu Keluarga (KK) dari Disdukcapil; kartu BPJS Kesehatan (JKN) dan BPJS Ketenagakerjaan; NPWP, nomor pajak dari Direktorat Jenderal Pajak (bagi orang pribadi penduduk, NIK kini juga berfungsi sebagai NPWP); serta SIM dari Polri.",
+          "en": "Documents you use often: the NIK (16 digits, your population number for life), the e-KTP identity card and the family card (KK) from Disdukcapil, the civil registry; BPJS Kesehatan (national health insurance, JKN) and BPJS Ketenagakerjaan cards; the NPWP, your tax number from the Directorate General of Taxes (for resident individuals the NIK now also serves as the NPWP); and the driving licence (SIM) from the police."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SOS-A-P-04-S1",
+      "unit": "04",
+      "audience": "adults",
+      "title": {
+        "id": "Ekonomi rumah tangga & negara",
+        "en": "Household & national economy"
+      },
+      "body": [
+        {
+          "id": "Inflasi adalah kenaikan harga barang dan jasa secara umum dan terus-menerus. Akibatnya, uang yang sama membeli lebih sedikit. BPS mengukurnya setiap bulan, dan Bank Indonesia bertugas menjaga nilai rupiah tetap stabil, termasuk menjaga inflasi rendah dan stabil.",
+          "en": "Inflation is a general, continuing rise in the prices of goods and services. As a result, the same money buys less. BPS measures it every month, and Bank Indonesia's job is to keep the rupiah's value stable, including keeping inflation low and steady."
+        },
+        {
+          "id": "PDB (Produk Domestik Bruto) dalam satu kalimat: nilai seluruh barang dan jasa akhir yang dihasilkan di dalam negeri dalam satu periode. Pertumbuhan PDB menunjukkan seberapa cepat ekonomi membesar, tetapi tidak menunjukkan bagaimana hasilnya terbagi.",
+          "en": "GDP (Gross Domestic Product) in one sentence: the value of all final goods and services produced in the country over a period. GDP growth shows how fast the economy is growing, but not how the gains are shared."
+        },
+        {
+          "id": "Negara membiayai belanjanya lewat APBN, yang pendapatannya sebagian besar berasal dari pajak. Anda sudah membayar pajak hampir setiap hari: PPN saat berbelanja, PPh yang dipotong dari gaji (bila penghasilan di atas batas tidak kena pajak), pajak kendaraan bermotor bersama STNK, dan PBB rumah. Sebagian APBN dipakai untuk subsidi, misalnya LPG 3 kg, agar harga yang dibayar masyarakat lebih rendah.",
+          "en": "The state pays for its spending through the APBN (state budget), and most of its revenue comes from taxes. You already pay taxes almost every day: VAT (PPN) when you shop, income tax (PPh) taken from your salary (if you earn above the tax-free threshold), motor vehicle tax with your STNK, and property tax (PBB) on your home. Part of the APBN goes on subsidies, such as for 3 kg LPG cylinders, so that people pay a lower price."
+        },
+        {
+          "id": "Unit ini berisi informasi umum, bukan saran keuangan. Data resmi tersedia di BPS (bps.go.id), Bank Indonesia (bi.go.id), dan Kementerian Keuangan (kemenkeu.go.id).",
+          "en": "This unit is general information, not financial advice. Official data is published by BPS (bps.go.id), Bank Indonesia (bi.go.id) and the Ministry of Finance (kemenkeu.go.id)."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SOS-A-P-05-S1",
+      "unit": "05",
+      "audience": "adults",
+      "title": {
+        "id": "Seni rupa: melihat dengan sadar",
+        "en": "Visual art: looking well"
+      },
+      "body": [
+        {
+          "id": "Melihat karya seni dengan sadar berarti meluangkan waktu: lihat dulu, baru menilai. Ada tiga hal yang bisa Anda perhatikan: garis, warna, dan komposisi.",
+          "en": "Looking at art well means taking your time: look first, judge later. Three things are worth watching for: line, colour and composition."
+        },
+        {
+          "id": "Garis memberi kesan: horizontal terasa tenang, vertikal terasa kokoh, diagonal terasa bergerak, dan lengkung terasa lembut. Warna hangat (merah, jingga, kuning) terasa dekat dan bersemangat; warna dingin (biru, hijau, ungu) terasa jauh dan tenang. Warna yang berseberangan di roda warna, seperti biru dan jingga, disebut komplementer dan saling menguatkan.",
+          "en": "Lines create a mood: horizontal feels calm, vertical feels strong, diagonal feels full of movement and curved feels soft. Warm colours (red, orange, yellow) seem close and lively; cool colours (blue, green, purple) seem distant and calm. Colours opposite each other on the colour wheel, such as blue and orange, are called complementary and make each other stronger."
+        },
+        {
+          "id": "Komposisi adalah cara unsur-unsur disusun. Keseimbangan bisa simetris (kiri dan kanan sama) atau asimetris (berbeda, tetapi tetap terasa seimbang). Titik fokus adalah bagian yang paling dulu menarik mata, sering karena kontras ukuran, bentuk, atau warna.",
+          "en": "Composition is how the parts are arranged. Balance can be symmetrical (left and right the same) or asymmetrical (different, yet still balanced). The focal point is the part that catches the eye first, often through contrast of size, shape or colour."
+        },
+        {
+          "id": "Latih mata Anda dengan karya pelukis Indonesia, dari Raden Saleh pada abad ke-19 hingga Affandi, S. Sudjojono, Hendra Gunawan, Basuki Abdullah, Emiria Sunassa, Lee Man Fong, Ahmad Sadali, Srihadi Soedarsono, dan Popo Iskandar. Banyak karya mereka bisa dilihat di museum dan koleksi negara.",
+          "en": "Train your eye on the work of Indonesian painters, from Raden Saleh in the 19th century to Affandi, S. Sudjojono, Hendra Gunawan, Basuki Abdullah, Emiria Sunassa, Lee Man Fong, Ahmad Sadali, Srihadi Soedarsono and Popo Iskandar. Many of their works can be seen in museums and state collections."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {
+    "R-SOSA-KERAJAAN": {
+      "title": {
+        "id": "Dua kerajaan besar",
+        "en": "Two great kingdoms"
+      },
+      "body": [
+        {
+          "id": "Pusat Sriwijaya diperkirakan berada di sekitar Palembang. Dari sana, kerajaan ini mengendalikan perdagangan kapal yang melewati Selat Malaka dan menjadi kaya karenanya.",
+          "en": "Srivijaya's centre is thought to have been around Palembang. From there the kingdom controlled the shipping trade through the Strait of Malacca and grew rich from it."
+        },
+        {
+          "id": "Sriwijaya juga menjadi pusat belajar agama Buddha. Biksu dari Tiongkok, I-Tsing (Yijing), singgah di sana pada 671 untuk belajar bahasa Sanskerta.",
+          "en": "Srivijaya was also a centre of Buddhist learning. The Chinese monk Yijing stopped there in 671 to study Sanskrit."
+        },
+        {
+          "id": "Majapahit berdiri pada 1293 di Jawa Timur. Dari masa ini kita mewarisi Kakawin Sutasoma karya Mpu Tantular, yang memuat ungkapan \"Bhinneka Tunggal Ika\": berbeda-beda tetapi tetap satu.",
+          "en": "Majapahit was founded in 1293 in East Java. From this era comes Mpu Tantular's poem Kakawin Sutasoma, which contains the phrase \"Bhinneka Tunggal Ika\": unity in diversity."
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-SOSA-NEGARA": {
+      "title": {
+        "id": "Siapa membuat, menjalankan, dan mengadili?",
+        "en": "Who makes, runs and judges?"
+      },
+      "body": [
+        {
+          "id": "DPR memegang kekuasaan membentuk undang-undang. Setiap rancangan undang-undang (RUU) dibahas oleh DPR dan Presiden untuk mendapat persetujuan bersama. DPR juga punya fungsi anggaran dan pengawasan.",
+          "en": "The DPR holds the power to make laws. Every bill is debated by the DPR and the President to reach joint approval. The DPR also has budget and oversight roles."
+        },
+        {
+          "id": "Presiden memegang kekuasaan pemerintahan. Presiden dan wakil presiden dipilih langsung oleh rakyat sebagai satu pasangan untuk masa jabatan lima tahun, dan sesudahnya dapat dipilih kembali dalam jabatan yang sama hanya untuk satu kali masa jabatan.",
+          "en": "The President holds executive power. The President and Vice-President are elected directly by the people as a pair for a five-year term, and can then be re-elected to the same office for one more term only."
+        },
+        {
+          "id": "MA adalah puncak peradilan umum, agama, militer, dan tata usaha negara. MK, antara lain, menguji undang-undang terhadap UUD dan memutus perselisihan hasil pemilu. MPR, yang beranggotakan anggota DPR dan anggota DPD, berwenang mengubah dan menetapkan UUD serta melantik presiden dan wakil presiden.",
+          "en": "The MA is the highest court for the general, religious, military and administrative courts. The MK, among other things, reviews laws against the Constitution and settles disputes over election results. The MPR, made up of the members of the DPR and the DPD, can amend and enact the Constitution and inaugurates the President and Vice-President."
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-SOSA-INFLASI": {
+      "title": {
+        "id": "Membaca angka inflasi",
+        "en": "Reading the inflation figure"
+      },
+      "body": [
+        {
+          "id": "Setiap awal bulan, BPS mengumumkan angka inflasi. Angka ini dihitung dari Indeks Harga Konsumen (IHK): harga sekeranjang barang dan jasa yang biasa dibeli rumah tangga, misalnya beras, cabai, sewa rumah, ongkos angkutan, dan biaya sekolah.",
+          "en": "At the start of each month, BPS announces the inflation figure. It is calculated from the Consumer Price Index (IHK): the price of a basket of goods and services households usually buy, such as rice, chillies, rent, transport fares and school fees."
+        },
+        {
+          "id": "Kalau hanya satu barang yang naik, misalnya cabai menjelang hari raya, itu belum tentu inflasi. Inflasi berarti harga barang dan jasa naik secara umum dan terus-menerus.",
+          "en": "If only one item goes up, such as chillies before a festival, that is not necessarily inflation. Inflation means the prices of goods and services rise across the board and keep rising."
+        },
+        {
+          "id": "Bank Indonesia bertugas menjaga stabilitas nilai rupiah, termasuk menjaga inflasi tetap rendah dan stabil, antara lain melalui suku bunga acuannya.",
+          "en": "Bank Indonesia's job is to keep the rupiah's value stable, which includes keeping inflation low and steady, partly through its policy interest rate."
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-SOSA-PELUKIS": {
+      "title": {
+        "id": "Beberapa pelukis Indonesia",
+        "en": "A few Indonesian painters"
+      },
+      "body": [
+        {
+          "id": "Raden Saleh, pelukis Jawa abad ke-19, belajar melukis di Belanda dan tinggal di Eropa lebih dari dua puluh tahun. Ia sering disebut perintis seni lukis modern di Indonesia.",
+          "en": "Raden Saleh, a 19th-century Javanese painter, studied painting in the Netherlands and lived in Europe for more than twenty years. He is often called the pioneer of modern painting in Indonesia."
+        },
+        {
+          "id": "Pada 1938, sejumlah pelukis mendirikan PERSAGI (Persatuan Ahli-Ahli Gambar Indonesia) di Batavia, kini Jakarta. Salah satu pendirinya, S. Sudjojono, mengajak pelukis menampilkan \"jiwa ketok\", jiwa yang tampak dalam karya, dan melukis kehidupan bangsanya sendiri.",
+          "en": "In 1938 a group of painters founded PERSAGI (the Association of Indonesian Draughtsmen) in Batavia, now Jakarta. One of its founders, S. Sudjojono, urged painters to show \"jiwa ketok\", the soul made visible in the work, and to paint the life of their own people."
+        },
+        {
+          "id": "Affandi, pelukis ekspresionis dari Cirebon, terkenal karena sering memencet cat langsung dari tube ke kanvas dan meratakannya dengan jari. Basuki Abdullah dikenal dengan potret dan pemandangan bergaya realis, sedangkan Hendra Gunawan dikenal dengan warna-warna cerah dan tokoh-tokoh rakyat sehari-hari.",
+          "en": "Affandi, an expressionist painter from Cirebon, is famous for often squeezing paint straight from the tube onto the canvas and spreading it with his fingers. Basuki Abdullah is known for realistic portraits and landscapes, while Hendra Gunawan is known for bright colours and everyday working people."
+        }
+      ],
+      "review_status": "draft"
+    }
+  },
+  "items": [
+    {
+      "item_id": "SOS-A-P-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "MAP-ISLANDS"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ketuk pulau tempat Jakarta berada.",
+            "en": "Tap the island Jakarta is on."
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "options": [
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          }
+        },
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          },
+          "correct": true
+        },
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Jakarta berada di pesisir utara bagian barat Pulau Jawa.",
+        "en": "Jakarta is on the north-west coast of Java."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "MAP-CAPITALS"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan provinsi dengan ibu kotanya.",
+            "en": "Match each province with its capital."
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "options": [
+        {
+          "id": "p_sumut",
+          "text": {
+            "id": "Sumatera Utara",
+            "en": "North Sumatra"
+          }
+        },
+        {
+          "id": "p_sulsel",
+          "text": {
+            "id": "Sulawesi Selatan",
+            "en": "South Sulawesi"
+          }
+        },
+        {
+          "id": "p_bali",
+          "text": {
+            "id": "Bali",
+            "en": "Bali"
+          }
+        },
+        {
+          "id": "p_papua",
+          "text": {
+            "id": "Papua",
+            "en": "Papua"
+          }
+        },
+        {
+          "id": "c_medan",
+          "text": {
+            "id": "Medan",
+            "en": "Medan"
+          }
+        },
+        {
+          "id": "c_makassar",
+          "text": {
+            "id": "Makassar",
+            "en": "Makassar"
+          }
+        },
+        {
+          "id": "c_denpasar",
+          "text": {
+            "id": "Denpasar",
+            "en": "Denpasar"
+          }
+        },
+        {
+          "id": "c_jayapura",
+          "text": {
+            "id": "Jayapura",
+            "en": "Jayapura"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p_sumut": "c_medan",
+        "p_sulsel": "c_makassar",
+        "p_bali": "c_denpasar",
+        "p_papua": "c_jayapura"
+      },
+      "model_answer": {
+        "id": "Sumatera Utara: Medan. Sulawesi Selatan: Makassar. Bali: Denpasar. Papua: Jayapura.",
+        "en": "North Sumatra: Medan. South Sulawesi: Makassar. Bali: Denpasar. Papua: Jayapura."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "MAP-ISLANDS"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "UU No. 3 Tahun 2022 menetapkan Nusantara (IKN) sebagai ibu kota negara. Ketuk pulau tempat IKN berada.",
+            "en": "Law No. 3 of 2022 named Nusantara (IKN) as the national capital. Tap the island where IKN is located."
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "options": [
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          },
+          "correct": true
+        },
+        {
+          "id": "papua",
+          "text": {
+            "id": "Papua",
+            "en": "Papua"
+          },
+          "region": {
+            "x": 0.77,
+            "y": 0.25,
+            "w": 0.22,
+            "h": 0.45
+          }
+        },
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          }
+        },
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "IKN berada di Kalimantan Timur, di Pulau Kalimantan.",
+        "en": "IKN is in East Kalimantan, on the island of Kalimantan (Borneo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "MAP-CAPITALS"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Indonesia saat ini terdiri atas 38 provinsi.",
+            "en": "Indonesia currently has 38 provinces."
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Jumlahnya menjadi 38 pada 2022, setelah empat provinsi baru dibentuk di Tanah Papua: Papua Selatan, Papua Tengah, Papua Pegunungan, dan Papua Barat Daya.",
+        "en": "The number reached 38 in 2022, when four new provinces were created in Papua: South Papua, Central Papua, Highland Papua and Southwest Papua."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "memory_flip",
+      "skills": [
+        "MAP-CAPITALS"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Temukan pasangan provinsi dan ibu kotanya.",
+            "en": "Find each province and its capital."
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "options": [
+        {
+          "id": "p_jabar",
+          "text": {
+            "id": "Jawa Barat",
+            "en": "West Java"
+          }
+        },
+        {
+          "id": "p_jatim",
+          "text": {
+            "id": "Jawa Timur",
+            "en": "East Java"
+          }
+        },
+        {
+          "id": "p_ntt",
+          "text": {
+            "id": "Nusa Tenggara Timur",
+            "en": "East Nusa Tenggara"
+          }
+        },
+        {
+          "id": "p_maluku",
+          "text": {
+            "id": "Maluku",
+            "en": "Maluku"
+          }
+        },
+        {
+          "id": "c_bandung",
+          "text": {
+            "id": "Bandung",
+            "en": "Bandung"
+          }
+        },
+        {
+          "id": "c_surabaya",
+          "text": {
+            "id": "Surabaya",
+            "en": "Surabaya"
+          }
+        },
+        {
+          "id": "c_kupang",
+          "text": {
+            "id": "Kupang",
+            "en": "Kupang"
+          }
+        },
+        {
+          "id": "c_ambon",
+          "text": {
+            "id": "Ambon",
+            "en": "Ambon"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p_jabar": "c_bandung",
+        "p_jatim": "c_surabaya",
+        "p_ntt": "c_kupang",
+        "p_maluku": "c_ambon"
+      },
+      "model_answer": {
+        "id": "Jawa Barat: Bandung. Jawa Timur: Surabaya. Nusa Tenggara Timur: Kupang. Maluku: Ambon.",
+        "en": "West Java: Bandung. East Java: Surabaya. East Nusa Tenggara: Kupang. Maluku: Ambon."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "MAP-ISLANDS"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Danau Toba, danau terbesar di Indonesia, berada di Sumatera Utara. Ketuk pulaunya.",
+            "en": "Lake Toba, Indonesia's largest lake, is in North Sumatra. Tap its island."
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "options": [
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          }
+        },
+        {
+          "id": "maluku",
+          "text": {
+            "id": "Maluku",
+            "en": "Maluku"
+          },
+          "region": {
+            "x": 0.66,
+            "y": 0.25,
+            "w": 0.1,
+            "h": 0.35
+          }
+        },
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Danau Toba ada di Pulau Sumatra.",
+        "en": "Lake Toba is on Sumatra."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "MAP-TIMEZONES"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kelompokkan kota menurut zona waktunya.",
+            "en": "Sort the cities by time zone."
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "options": [
+        {
+          "id": "b_wib",
+          "text": {
+            "id": "WIB (UTC+7)",
+            "en": "WIB (UTC+7)"
+          }
+        },
+        {
+          "id": "b_wita",
+          "text": {
+            "id": "WITA (UTC+8)",
+            "en": "WITA (UTC+8)"
+          }
+        },
+        {
+          "id": "b_wit",
+          "text": {
+            "id": "WIT (UTC+9)",
+            "en": "WIT (UTC+9)"
+          }
+        },
+        {
+          "id": "k_makassar",
+          "text": {
+            "id": "Makassar",
+            "en": "Makassar"
+          }
+        },
+        {
+          "id": "k_medan",
+          "text": {
+            "id": "Medan",
+            "en": "Medan"
+          }
+        },
+        {
+          "id": "k_jayapura",
+          "text": {
+            "id": "Jayapura",
+            "en": "Jayapura"
+          }
+        },
+        {
+          "id": "k_pontianak",
+          "text": {
+            "id": "Pontianak",
+            "en": "Pontianak"
+          }
+        },
+        {
+          "id": "k_ambon",
+          "text": {
+            "id": "Ambon",
+            "en": "Ambon"
+          }
+        },
+        {
+          "id": "k_denpasar",
+          "text": {
+            "id": "Denpasar",
+            "en": "Denpasar"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "k_makassar": "b_wita",
+        "k_medan": "b_wib",
+        "k_jayapura": "b_wit",
+        "k_pontianak": "b_wib",
+        "k_ambon": "b_wit",
+        "k_denpasar": "b_wita"
+      },
+      "model_answer": {
+        "id": "WIB: Medan, Pontianak. WITA: Denpasar, Makassar. WIT: Ambon, Jayapura.",
+        "en": "WIB: Medan, Pontianak. WITA: Denpasar, Makassar. WIT: Ambon, Jayapura."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "number_input",
+      "skills": [
+        "MAP-TIMEZONES"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pukul 08.00 WIB di Jakarta. Pukul berapa saat itu di Jayapura (WIT)? Tulis jamnya saja.",
+            "en": "It is 08:00 WIB in Jakarta. What time is it in Jayapura (WIT)? Enter just the hour."
+          }
+        }
+      ],
+      "image": "clock_8_00",
+      "numeric": {
+        "value": 10,
+        "tolerance": 0,
+        "unit": {
+          "id": "WIT",
+          "en": "WIT"
+        }
+      },
+      "model_answer": {
+        "id": "WIT dua jam lebih cepat daripada WIB, jadi di Jayapura pukul 10.00 WIT.",
+        "en": "WIT is two hours ahead of WIB, so it is 10:00 WIT in Jayapura."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "MAP-TIMEZONES"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Seluruh wilayah Indonesia di Pulau Kalimantan memakai zona waktu yang sama.",
+            "en": "All of Indonesian Kalimantan uses the same time zone."
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Kalimantan Barat dan Kalimantan Tengah memakai WIB, sedangkan Kalimantan Selatan, Timur, dan Utara memakai WITA.",
+        "en": "West and Central Kalimantan use WIB, while South, East and North Kalimantan use WITA."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "tap_hotspot",
+      "skills": [
+        "MAP-TIMEZONES"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ketuk kelompok pulau yang semua provinsinya memakai WITA.",
+            "en": "Tap the island group where every province uses WITA."
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "options": [
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          },
+          "correct": true
+        },
+        {
+          "id": "papua",
+          "text": {
+            "id": "Papua",
+            "en": "Papua"
+          },
+          "region": {
+            "x": 0.77,
+            "y": 0.25,
+            "w": 0.22,
+            "h": 0.45
+          }
+        },
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Semua provinsi di Sulawesi memakai WITA. Kalimantan terbagi dua zona waktu, Sumatra memakai WIB, dan Papua memakai WIT.",
+        "en": "Every province in Sulawesi uses WITA. Kalimantan is split between two zones, Sumatra uses WIB and Papua uses WIT."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "MAP-TIMEZONES"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kota mana yang lebih dulu mencapai pukul 12.00 siang waktu setempat?",
+            "en": "Which city reaches 12 noon local time first?"
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "options": [
+        {
+          "id": "medan",
+          "text": {
+            "id": "Medan",
+            "en": "Medan"
+          }
+        },
+        {
+          "id": "jayapura",
+          "text": {
+            "id": "Jayapura",
+            "en": "Jayapura"
+          },
+          "correct": true
+        },
+        {
+          "id": "makassar",
+          "text": {
+            "id": "Makassar",
+            "en": "Makassar"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Jayapura lebih dulu, karena WIT satu jam lebih cepat daripada WITA dan dua jam lebih cepat daripada WIB.",
+        "en": "Jayapura gets there first: WIT is one hour ahead of WITA and two hours ahead of WIB."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "type_in",
+      "skills": [
+        "MAP-TIMEZONES"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-TYPE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ketik singkatan zona waktu yang dipakai di Bali.",
+            "en": "Type the abbreviation for Bali's time zone."
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "accepted": {
+        "id": {
+          "terms": [
+            "WITA",
+            "Waktu Indonesia Tengah"
+          ]
+        },
+        "en": {
+          "terms": [
+            "WITA",
+            "Central Indonesia Time",
+            "Central Indonesian Time",
+            "Waktu Indonesia Tengah"
+          ]
+        }
+      },
+      "model_answer": {
+        "id": "Bali memakai WITA (Waktu Indonesia Tengah, UTC+8).",
+        "en": "Bali uses WITA (Central Indonesia Time, UTC+8)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "MAP-ISLANDS",
+        "MAP-CAPITALS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kupang adalah ibu kota Nusa Tenggara Timur. Ketuk kelompok pulau tempat Kupang berada.",
+            "en": "Kupang is the capital of East Nusa Tenggara. Tap the island group Kupang belongs to."
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "options": [
+        {
+          "id": "maluku",
+          "text": {
+            "id": "Maluku",
+            "en": "Maluku"
+          },
+          "region": {
+            "x": 0.66,
+            "y": 0.25,
+            "w": 0.1,
+            "h": 0.35
+          }
+        },
+        {
+          "id": "bali_nusa_tenggara",
+          "text": {
+            "id": "Bali dan Nusa Tenggara",
+            "en": "Bali and Nusa Tenggara"
+          },
+          "region": {
+            "x": 0.45,
+            "y": 0.78,
+            "w": 0.22,
+            "h": 0.12
+          },
+          "correct": true
+        },
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Kupang ada di Pulau Timor, bagian dari Nusa Tenggara.",
+        "en": "Kupang is on the island of Timor, part of Nusa Tenggara."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "MAP-TIMEZONES"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pukul 12.00 WITA di Makassar. Pukul berapa saat itu di Medan?",
+            "en": "It is 12:00 WITA in Makassar. What time is it in Medan?"
+          }
+        }
+      ],
+      "image": "clock_12_00",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "11.00 WIB",
+            "en": "11:00 WIB"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "13.00 WIB",
+            "en": "13:00 WIB"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "12.00 WIB",
+            "en": "12:00 WIB"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "WIB satu jam lebih lambat daripada WITA, jadi di Medan pukul 11.00 WIB.",
+        "en": "WIB is one hour behind WITA, so it is 11:00 WIB in Medan."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-01-015",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "MAP-ISLANDS"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "map_indonesia",
+      "gem": true,
+      "source": "Encyclopaedia Britannica, \"Wallace Line\"; A. R. Wallace, The Malay Archipelago (1869), chapter on Bali and Lombok.",
+      "model_answer": {
+        "id": "Garis Wallace melintasi selat dalam antara Bali dan Lombok, lalu antara Kalimantan dan Sulawesi. Di sebelah baratnya hewan mirip hewan Asia; di sebelah timurnya mulai muncul hewan khas Australia, seperti kakatua. Alfred Russel Wallace mencatatnya saat menjelajahi Nusantara pada 1850-an.",
+        "en": "The Wallace Line runs through the deep strait between Bali and Lombok, then between Kalimantan and Sulawesi. West of it the animals are mostly Asian; east of it, Australian types such as cockatoos start to appear. Alfred Russel Wallace described it while exploring the archipelago in the 1850s."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "TL-ORDER"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutkan dari yang paling awal.",
+            "en": "Put these in order, earliest first."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e_voc",
+          "text": {
+            "id": "VOC dibentuk",
+            "en": "The VOC is founded"
+          }
+        },
+        {
+          "id": "e_kutai",
+          "text": {
+            "id": "Kerajaan Kutai meninggalkan prasasti Yupa",
+            "en": "The Kutai kingdom leaves its Yupa inscriptions"
+          }
+        },
+        {
+          "id": "e_majapahit",
+          "text": {
+            "id": "Majapahit berdiri",
+            "en": "Majapahit is founded"
+          }
+        },
+        {
+          "id": "e_sriwijaya",
+          "text": {
+            "id": "Sriwijaya berjaya",
+            "en": "Srivijaya flourishes"
+          }
+        }
+      ],
+      "solution": [
+        "e_kutai",
+        "e_sriwijaya",
+        "e_majapahit",
+        "e_voc"
+      ],
+      "model_answer": {
+        "id": "Kutai (prasasti Yupa, sekitar abad ke-4 atau ke-5), Sriwijaya (abad ke-7), Majapahit (1293), VOC (1602).",
+        "en": "Kutai (the Yupa inscriptions, around the 4th or 5th century), Srivijaya (7th century), Majapahit (1293), the VOC (1602)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "mini_reading",
+      "skills": [
+        "TL-MEANING"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-READ",
+      "reading_id": "R-SOSA-KERAJAAN",
+      "model_answer": {
+        "id": "Sriwijaya: kerajaan dagang dan pusat belajar di sekitar Selat Malaka. Majapahit: berdiri 1293 di Jawa Timur dan mewariskan ungkapan \"Bhinneka Tunggal Ika\".",
+        "en": "Srivijaya: a trading kingdom and centre of learning around the Strait of Malacca. Majapahit: founded 1293 in East Java, and the source of the phrase \"Bhinneka Tunggal Ika\"."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "TL-MEANING"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menurut bacaan, dari mana kekayaan Sriwijaya terutama berasal?",
+            "en": "According to the reading, where did Srivijaya's wealth mainly come from?"
+          }
+        }
+      ],
+      "reading_id": "R-SOSA-KERAJAAN",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Tambang emas di pegunungan",
+            "en": "Gold mines in the mountains"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Perkebunan kopi",
+            "en": "Coffee plantations"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Mengendalikan perdagangan kapal di Selat Malaka",
+            "en": "Controlling the shipping trade through the Strait of Malacca"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Sriwijaya kaya karena mengendalikan perdagangan kapal di Selat Malaka.",
+        "en": "Srivijaya grew rich by controlling the shipping trade through the Strait of Malacca."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "TL-MEANING"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ungkapan \"Bhinneka Tunggal Ika\" berasal dari Kakawin Sutasoma karya Mpu Tantular, dari masa Majapahit.",
+            "en": "The phrase \"Bhinneka Tunggal Ika\" comes from Mpu Tantular's Kakawin Sutasoma, from the Majapahit era."
+          }
+        }
+      ],
+      "reading_id": "R-SOSA-KERAJAAN",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Ungkapan itu berasal dari Kakawin Sutasoma (abad ke-14) dan kini menjadi semboyan pada lambang negara Garuda Pancasila.",
+        "en": "The phrase comes from the Kakawin Sutasoma (14th century) and is now the motto on the national emblem, the Garuda Pancasila."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "TL-DATES"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan peristiwa dengan tahunnya.",
+            "en": "Match each event with its year."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e_majapahit",
+          "text": {
+            "id": "Majapahit berdiri",
+            "en": "Majapahit is founded"
+          }
+        },
+        {
+          "id": "e_voc",
+          "text": {
+            "id": "VOC dibentuk",
+            "en": "The VOC is founded"
+          }
+        },
+        {
+          "id": "e_bu",
+          "text": {
+            "id": "Budi Utomo berdiri",
+            "en": "Budi Utomo is founded"
+          }
+        },
+        {
+          "id": "e_sp",
+          "text": {
+            "id": "Sumpah Pemuda",
+            "en": "The Youth Pledge"
+          }
+        },
+        {
+          "id": "y1293",
+          "text": {
+            "id": "1293",
+            "en": "1293"
+          }
+        },
+        {
+          "id": "y1602",
+          "text": {
+            "id": "1602",
+            "en": "1602"
+          }
+        },
+        {
+          "id": "y1908",
+          "text": {
+            "id": "1908",
+            "en": "1908"
+          }
+        },
+        {
+          "id": "y1928",
+          "text": {
+            "id": "1928",
+            "en": "1928"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "e_majapahit": "y1293",
+        "e_voc": "y1602",
+        "e_bu": "y1908",
+        "e_sp": "y1928"
+      },
+      "model_answer": {
+        "id": "Majapahit berdiri 1293, VOC dibentuk 1602, Budi Utomo berdiri 1908, dan Sumpah Pemuda 1928.",
+        "en": "Majapahit founded 1293, the VOC founded 1602, Budi Utomo founded 1908, the Youth Pledge 1928."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "number_input",
+      "skills": [
+        "TL-DATES"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Belanda mengakui kedaulatan Indonesia pada 27 Desember tahun berapa?",
+            "en": "In which year did the Netherlands recognise Indonesia's sovereignty, on 27 December?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 1949,
+        "tolerance": 0
+      },
+      "model_answer": {
+        "id": "27 Desember 1949, setelah Konferensi Meja Bundar di Den Haag.",
+        "en": "27 December 1949, after the Round Table Conference in The Hague."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "TL-ORDER"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutkan dari yang paling awal.",
+            "en": "Put these in order, earliest first."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e_prok",
+          "text": {
+            "id": "Proklamasi Kemerdekaan",
+            "en": "The Proclamation of Independence"
+          }
+        },
+        {
+          "id": "e_ref",
+          "text": {
+            "id": "Reformasi",
+            "en": "Reformasi"
+          }
+        },
+        {
+          "id": "e_sp",
+          "text": {
+            "id": "Sumpah Pemuda",
+            "en": "The Youth Pledge"
+          }
+        },
+        {
+          "id": "e_kaa",
+          "text": {
+            "id": "Konferensi Asia-Afrika di Bandung",
+            "en": "The Asian-African Conference in Bandung"
+          }
+        },
+        {
+          "id": "e_jp",
+          "text": {
+            "id": "Pendudukan Jepang dimulai",
+            "en": "The Japanese occupation begins"
+          }
+        }
+      ],
+      "solution": [
+        "e_sp",
+        "e_jp",
+        "e_prok",
+        "e_kaa",
+        "e_ref"
+      ],
+      "model_answer": {
+        "id": "Sumpah Pemuda (1928), pendudukan Jepang (1942), Proklamasi (1945), Konferensi Asia-Afrika di Bandung (1955), Reformasi (1998).",
+        "en": "Youth Pledge (1928), Japanese occupation (1942), Proclamation (1945), Asian-African Conference in Bandung (1955), Reformasi (1998)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "TL-DATES"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Teks Proklamasi dibacakan pada 17 Agustus 1945 di Jalan ____ 56, Jakarta.",
+            "en": "The Proclamation was read out on 17 August 1945 at Jalan ____ 56, Jakarta."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_malioboro",
+          "text": {
+            "id": "Malioboro",
+            "en": "Malioboro"
+          }
+        },
+        {
+          "id": "t_pegangsaan",
+          "text": {
+            "id": "Pegangsaan Timur",
+            "en": "Pegangsaan Timur"
+          }
+        },
+        {
+          "id": "t_braga",
+          "text": {
+            "id": "Braga",
+            "en": "Braga"
+          }
+        }
+      ],
+      "solution": [
+        "t_pegangsaan"
+      ],
+      "model_answer": {
+        "id": "Jalan Pegangsaan Timur 56, kini Jalan Proklamasi, Jakarta.",
+        "en": "Jalan Pegangsaan Timur 56, today's Jalan Proklamasi, Jakarta."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "TL-MEANING"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sumpah Pemuda 1928 sudah menyebut bahasa Indonesia sebagai bahasa persatuan, 17 tahun sebelum Indonesia merdeka.",
+            "en": "The 1928 Youth Pledge already named Indonesian as the language of unity, 17 years before independence."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Butir ketiganya berbunyi: menjunjung bahasa persatuan, bahasa Indonesia.",
+        "en": "Its third point reads: we uphold the language of unity, Indonesian."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "TL-DATES"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Setiap 20 Mei kita memperingati Hari Kebangkitan Nasional. Peristiwa apa yang dikenang?",
+            "en": "Every 20 May is National Awakening Day. Which event does it remember?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Pembacaan Proklamasi",
+            "en": "The reading of the Proclamation"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Konferensi Asia-Afrika",
+            "en": "The Asian-African Conference"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Berdirinya Budi Utomo pada 1908",
+            "en": "The founding of Budi Utomo in 1908"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Hari Kebangkitan Nasional memperingati berdirinya Budi Utomo pada 20 Mei 1908.",
+        "en": "National Awakening Day marks the founding of Budi Utomo on 20 May 1908."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "TL-ORDER"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sebelum atau sesudah Proklamasi 1945?",
+            "en": "Before or after the 1945 Proclamation?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_before",
+          "text": {
+            "id": "Sebelum 1945",
+            "en": "Before 1945"
+          }
+        },
+        {
+          "id": "b_after",
+          "text": {
+            "id": "Sesudah 1945",
+            "en": "After 1945"
+          }
+        },
+        {
+          "id": "x_pemilu",
+          "text": {
+            "id": "Pemilu pertama Indonesia",
+            "en": "Indonesia's first general election"
+          }
+        },
+        {
+          "id": "x_kartini",
+          "text": {
+            "id": "Kartini menulis surat-suratnya",
+            "en": "Kartini writes her letters"
+          }
+        },
+        {
+          "id": "x_pilpres",
+          "text": {
+            "id": "Pemilihan presiden langsung pertama",
+            "en": "The first direct presidential election"
+          }
+        },
+        {
+          "id": "x_voc",
+          "text": {
+            "id": "VOC dibentuk",
+            "en": "The VOC is founded"
+          }
+        },
+        {
+          "id": "x_kmb",
+          "text": {
+            "id": "Belanda mengakui kedaulatan Indonesia",
+            "en": "The Netherlands recognises Indonesia's sovereignty"
+          }
+        },
+        {
+          "id": "x_bu",
+          "text": {
+            "id": "Budi Utomo berdiri",
+            "en": "Budi Utomo is founded"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "x_pemilu": "b_after",
+        "x_kartini": "b_before",
+        "x_pilpres": "b_after",
+        "x_voc": "b_before",
+        "x_kmb": "b_after",
+        "x_bu": "b_before"
+      },
+      "model_answer": {
+        "id": "Sebelum 1945: VOC (1602), surat-surat Kartini (1899–1904), Budi Utomo (1908). Sesudah 1945: pengakuan kedaulatan (1949), pemilu pertama (1955), pemilihan presiden langsung pertama (2004).",
+        "en": "Before 1945: the VOC (1602), Kartini's letters (1899–1904), Budi Utomo (1908). After 1945: recognition of sovereignty (1949), the first general election (1955), the first direct presidential election (2004)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "estimate_slider",
+      "skills": [
+        "TL-DATES"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-EST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kira-kira berapa tahun berlalu sejak VOC dibentuk (1602) sampai Proklamasi (1945)?",
+            "en": "Roughly how many years passed between the founding of the VOC (1602) and the Proclamation (1945)?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 343,
+        "tolerance": 15,
+        "unit": {
+          "id": "tahun",
+          "en": "years"
+        }
+      },
+      "slider": {
+        "min": 0,
+        "max": 500,
+        "step": 1
+      },
+      "model_answer": {
+        "id": "1945 − 1602 = 343 tahun. Namun, Nusantara tidak dikuasai sekaligus: VOC mula-mula hanya menguasai pos dagang, dan banyak daerah baru ditaklukkan Belanda pada akhir abad ke-19 hingga awal abad ke-20. Karena itu, banyak sejarawan menyebut ungkapan \"dijajah 350 tahun\" sebagai penyederhanaan.",
+        "en": "1945 − 1602 = 343 years. But the archipelago was not taken all at once: the VOC first held only trading posts, and many regions were conquered by the Dutch only in the late 19th and early 20th centuries. That is why many historians call the phrase \"350 years of colonisation\" a simplification."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "TL-ORDER",
+        "TL-DATES"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutkan dari yang paling awal.",
+            "en": "Put these in order, earliest first."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e_prok",
+          "text": {
+            "id": "Proklamasi Kemerdekaan",
+            "en": "The Proclamation of Independence"
+          }
+        },
+        {
+          "id": "e_bu",
+          "text": {
+            "id": "Budi Utomo berdiri",
+            "en": "Budi Utomo is founded"
+          }
+        },
+        {
+          "id": "e_sp",
+          "text": {
+            "id": "Sumpah Pemuda",
+            "en": "The Youth Pledge"
+          }
+        }
+      ],
+      "solution": [
+        "e_bu",
+        "e_sp",
+        "e_prok"
+      ],
+      "model_answer": {
+        "id": "Budi Utomo (1908), Sumpah Pemuda (1928), Proklamasi (1945).",
+        "en": "Budi Utomo (1908), the Youth Pledge (1928), the Proclamation (1945)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "TL-MEANING"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa isi pokok Sumpah Pemuda?",
+            "en": "What is the heart of the Youth Pledge?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Pernyataan bahwa Indonesia sudah merdeka",
+            "en": "A declaration that Indonesia was already independent"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Satu tanah air, satu bangsa, dan menjunjung bahasa persatuan: Indonesia",
+            "en": "One homeland, one nation, and upholding one language of unity: Indonesian"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Perjanjian dagang dengan VOC",
+            "en": "A trade agreement with the VOC"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Para pemuda mengaku bertumpah darah yang satu, tanah air Indonesia, dan berbangsa yang satu, bangsa Indonesia, serta menjunjung bahasa persatuan, bahasa Indonesia.",
+        "en": "The young delegates pledged one homeland and one nation, Indonesia, and to uphold the language of unity, Indonesian."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "TL-DATES"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Museum Sumpah Pemuda, Kemendikbudristek (museumsumpahpemuda.kemdikbud.go.id), on W.R. Supratman and the Second Youth Congress; UU No. 24 Tahun 2009 tentang Bendera, Bahasa, dan Lambang Negara, serta Lagu Kebangsaan (Indonesia Raya composed by Wage Rudolf Supratman).",
+      "model_answer": {
+        "id": "Pada Kongres Pemuda II, 28 Oktober 1928, W.R. Supratman memperdengarkan lagu \"Indonesia Raya\" dengan biola, tanpa syairnya dinyanyikan. Ia wafat pada 1938, tujuh tahun sebelum Proklamasi, sehingga tidak sempat mendengar lagunya menjadi lagu kebangsaan negara yang merdeka.",
+        "en": "At the Second Youth Congress on 28 October 1928, W.R. Supratman played \"Indonesia Raya\" on the violin, without the words being sung. He died in 1938, seven years before the Proclamation, so he never heard his song become the anthem of an independent nation."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-03-001",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "mini_reading",
+      "skills": [
+        "STATE-BRANCHES"
+      ],
+      "pool": "PRACT",
+      "order": 25,
+      "prompt_id": "P-READ",
+      "reading_id": "R-SOSA-NEGARA",
+      "model_answer": {
+        "id": "DPR membentuk undang-undang bersama Presiden; Presiden menjalankan pemerintahan; MA dan MK menjalankan kekuasaan kehakiman; MPR beranggotakan anggota DPR dan DPD.",
+        "en": "The DPR makes laws together with the President; the President runs the government; the MA and the MK hold judicial power; the MPR is made up of the members of the DPR and the DPD."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-03-002",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "STATE-BRANCHES"
+      ],
+      "pool": "PRACT",
+      "order": 26,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menurut bacaan, siapa yang membahas setiap RUU untuk mendapat persetujuan bersama?",
+            "en": "According to the reading, who debate each bill to reach joint approval?"
+          }
+        }
+      ],
+      "reading_id": "R-SOSA-NEGARA",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "DPR dan Presiden",
+            "en": "The DPR and the President"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "MA dan MK",
+            "en": "The MA and the MK"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "MPR dan DPD",
+            "en": "The MPR and the DPD"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "DPR dan Presiden. Sebuah RUU menjadi undang-undang setelah mendapat persetujuan bersama keduanya (Pasal 20 UUD 1945).",
+        "en": "The DPR and the President. A bill becomes law after both have approved it (Article 20 of the 1945 Constitution)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-03-003",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "STATE-BRANCHES"
+      ],
+      "pool": "PRACT",
+      "order": 27,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kelompokkan lembaga menurut cabang kekuasaannya.",
+            "en": "Sort each institution into its branch of power."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_leg",
+          "text": {
+            "id": "Legislatif (lembaga perwakilan)",
+            "en": "Legislative (representative bodies)"
+          }
+        },
+        {
+          "id": "b_exe",
+          "text": {
+            "id": "Eksekutif (pemerintahan)",
+            "en": "Executive (government)"
+          }
+        },
+        {
+          "id": "b_jud",
+          "text": {
+            "id": "Yudikatif (kehakiman)",
+            "en": "Judicial (the courts)"
+          }
+        },
+        {
+          "id": "x_dpr",
+          "text": {
+            "id": "DPR",
+            "en": "DPR (House of Representatives)"
+          }
+        },
+        {
+          "id": "x_ma",
+          "text": {
+            "id": "Mahkamah Agung (MA)",
+            "en": "Supreme Court (MA)"
+          }
+        },
+        {
+          "id": "x_pres",
+          "text": {
+            "id": "Presiden",
+            "en": "The President"
+          }
+        },
+        {
+          "id": "x_mk",
+          "text": {
+            "id": "Mahkamah Konstitusi (MK)",
+            "en": "Constitutional Court (MK)"
+          }
+        },
+        {
+          "id": "x_dpd",
+          "text": {
+            "id": "DPD",
+            "en": "DPD (Regional Representative Council)"
+          }
+        },
+        {
+          "id": "x_men",
+          "text": {
+            "id": "Para menteri",
+            "en": "The ministers"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "x_dpr": "b_leg",
+        "x_ma": "b_jud",
+        "x_pres": "b_exe",
+        "x_mk": "b_jud",
+        "x_dpd": "b_leg",
+        "x_men": "b_exe"
+      },
+      "model_answer": {
+        "id": "Legislatif: DPR dan DPD. Eksekutif: Presiden dan para menteri. Yudikatif: MA dan MK.",
+        "en": "Legislative: the DPR and the DPD. Executive: the President and the ministers. Judicial: the MA and the MK."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-03-004",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "STATE-BRANCHES"
+      ],
+      "pool": "PRACT",
+      "order": 28,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "MPR beranggotakan anggota DPR dan anggota DPD.",
+            "en": "The MPR is made up of the members of the DPR and the members of the DPD."
+          }
+        }
+      ],
+      "reading_id": "R-SOSA-NEGARA",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Pasal 2 UUD 1945 menyebut MPR terdiri atas anggota DPR dan anggota DPD. MPR berwenang mengubah dan menetapkan UUD serta melantik presiden dan wakil presiden.",
+        "en": "Article 2 of the 1945 Constitution says the MPR consists of the members of the DPR and the DPD. The MPR can amend and enact the Constitution and inaugurates the President and Vice-President."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-03-005",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "STATE-BRANCHES"
+      ],
+      "pool": "PRACT",
+      "order": 29,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan lembaga dengan salah satu tugasnya.",
+            "en": "Match each institution with one of its jobs."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "i_mk",
+          "text": {
+            "id": "Mahkamah Konstitusi (MK)",
+            "en": "Constitutional Court (MK)"
+          }
+        },
+        {
+          "id": "i_ma",
+          "text": {
+            "id": "Mahkamah Agung (MA)",
+            "en": "Supreme Court (MA)"
+          }
+        },
+        {
+          "id": "i_bpk",
+          "text": {
+            "id": "Badan Pemeriksa Keuangan (BPK)",
+            "en": "Audit Board (BPK)"
+          }
+        },
+        {
+          "id": "i_mpr",
+          "text": {
+            "id": "MPR",
+            "en": "MPR (People's Consultative Assembly)"
+          }
+        },
+        {
+          "id": "t_mk",
+          "text": {
+            "id": "Menguji undang-undang terhadap UUD",
+            "en": "Reviews laws against the Constitution"
+          }
+        },
+        {
+          "id": "t_ma",
+          "text": {
+            "id": "Mengadili pada tingkat kasasi",
+            "en": "Hears cases at the final appeal (cassation) level"
+          }
+        },
+        {
+          "id": "t_bpk",
+          "text": {
+            "id": "Memeriksa pengelolaan keuangan negara",
+            "en": "Audits how state money is managed"
+          }
+        },
+        {
+          "id": "t_mpr",
+          "text": {
+            "id": "Mengubah dan menetapkan UUD",
+            "en": "Amends and enacts the Constitution"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "i_mk": "t_mk",
+        "i_ma": "t_ma",
+        "i_bpk": "t_bpk",
+        "i_mpr": "t_mpr"
+      },
+      "model_answer": {
+        "id": "MK menguji undang-undang terhadap UUD; MA mengadili pada tingkat kasasi; BPK memeriksa pengelolaan keuangan negara; MPR mengubah dan menetapkan UUD.",
+        "en": "The MK reviews laws against the Constitution; the MA hears final appeals (cassation); the BPK audits how state money is managed; the MPR amends and enacts the Constitution."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-03-006",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "STATE-REGIONS"
+      ],
+      "pool": "PRACT",
+      "order": 30,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutkan tingkat wilayah pemerintahan, dari yang paling atas.",
+            "en": "Put these levels of government in order, from the top down."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "w_kec",
+          "text": {
+            "id": "Kecamatan",
+            "en": "Kecamatan (district)"
+          }
+        },
+        {
+          "id": "w_prov",
+          "text": {
+            "id": "Provinsi",
+            "en": "Province"
+          }
+        },
+        {
+          "id": "w_desa",
+          "text": {
+            "id": "Desa atau kelurahan",
+            "en": "Village (desa or kelurahan)"
+          }
+        },
+        {
+          "id": "w_kab",
+          "text": {
+            "id": "Kabupaten atau kota",
+            "en": "Regency or city (kabupaten/kota)"
+          }
+        }
+      ],
+      "solution": [
+        "w_prov",
+        "w_kab",
+        "w_kec",
+        "w_desa"
+      ],
+      "model_answer": {
+        "id": "Provinsi (gubernur), kabupaten/kota (bupati atau wali kota), kecamatan (camat), lalu desa (kepala desa) atau kelurahan (lurah).",
+        "en": "Province (governor), regency or city (regent or mayor), kecamatan (camat), then village: a desa (village head) or kelurahan (lurah)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-03-007",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "STATE-REGIONS"
+      ],
+      "pool": "PRACT",
+      "order": 31,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urusan ini dipegang pemerintah pusat atau pemerintah daerah?",
+            "en": "Is this run by the central government or by regional government?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_pusat",
+          "text": {
+            "id": "Pemerintah pusat",
+            "en": "Central government"
+          }
+        },
+        {
+          "id": "b_daerah",
+          "text": {
+            "id": "Pemerintah daerah",
+            "en": "Regional government"
+          }
+        },
+        {
+          "id": "y_lu",
+          "text": {
+            "id": "Politik luar negeri",
+            "en": "Foreign policy"
+          }
+        },
+        {
+          "id": "y_pkm",
+          "text": {
+            "id": "Puskesmas",
+            "en": "Community health centres (puskesmas)"
+          }
+        },
+        {
+          "id": "y_def",
+          "text": {
+            "id": "Pertahanan negara",
+            "en": "National defence"
+          }
+        },
+        {
+          "id": "y_sd",
+          "text": {
+            "id": "SD dan SMP negeri",
+            "en": "State primary and junior secondary schools"
+          }
+        },
+        {
+          "id": "y_just",
+          "text": {
+            "id": "Peradilan (yustisi)",
+            "en": "The courts and justice"
+          }
+        },
+        {
+          "id": "y_trash",
+          "text": {
+            "id": "Pengelolaan sampah",
+            "en": "Rubbish collection and disposal"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "y_lu": "b_pusat",
+        "y_pkm": "b_daerah",
+        "y_def": "b_pusat",
+        "y_sd": "b_daerah",
+        "y_just": "b_pusat",
+        "y_trash": "b_daerah"
+      },
+      "model_answer": {
+        "id": "Politik luar negeri, pertahanan, dan yustisi termasuk urusan yang hanya dipegang pusat (UU No. 23 Tahun 2014). Puskesmas, SD dan SMP negeri, serta pengelolaan sampah diurus kabupaten/kota.",
+        "en": "Foreign policy, defence and justice are among the matters reserved to the centre (Law No. 23 of 2014). Puskesmas, state primary and junior secondary schools and rubbish collection are run by regencies and cities."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-03-008",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "number_input",
+      "skills": [
+        "CIVIC-DOCS"
+      ],
+      "pool": "PRACT",
+      "order": 32,
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Berapa digit angka pada NIK (Nomor Induk Kependudukan) yang tercantum di KTP-el?",
+            "en": "How many digits are in the NIK (population identity number) printed on the e-KTP?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 16,
+        "tolerance": 0,
+        "unit": {
+          "id": "digit",
+          "en": "digits"
+        }
+      },
+      "model_answer": {
+        "id": "NIK terdiri atas 16 digit. Nomor ini diberikan sekali dan berlaku seumur hidup.",
+        "en": "The NIK has 16 digits. It is issued once and stays yours for life."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-03-009",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "CIVIC-DOCS"
+      ],
+      "pool": "PRACT",
+      "order": 33,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Anda pindah ke kabupaten lain dan perlu memperbarui alamat di KK dan KTP-el. Ke mana Anda mengurusnya?",
+            "en": "You move to another regency and need to update the address on your family card (KK) and e-KTP. Where do you go?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "c",
+          "text": {
+            "id": "Disdukcapil (Dinas Kependudukan dan Pencatatan Sipil)",
+            "en": "Disdukcapil (the population and civil registry office)"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Kantor pelayanan pajak",
+            "en": "The tax office"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Satpas SIM di kantor polisi",
+            "en": "The driving-licence office at the police station"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Disdukcapil kabupaten/kota mengurus KK, KTP-el, akta kelahiran, dan surat keterangan pindah.",
+        "en": "The regency or city Disdukcapil handles family cards, e-KTPs, birth certificates and moving letters."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-03-010",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "CIVIC-DOCS"
+      ],
+      "pool": "PRACT",
+      "order": 34,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan dokumen dengan lembaga yang menerbitkannya.",
+            "en": "Match each document with the body that issues it."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "d_kk",
+          "text": {
+            "id": "Kartu Keluarga (KK)",
+            "en": "Family card (KK)"
+          }
+        },
+        {
+          "id": "d_sim",
+          "text": {
+            "id": "SIM",
+            "en": "Driving licence (SIM)"
+          }
+        },
+        {
+          "id": "d_npwp",
+          "text": {
+            "id": "NPWP",
+            "en": "Tax ID number (NPWP)"
+          }
+        },
+        {
+          "id": "d_jkn",
+          "text": {
+            "id": "Kartu peserta JKN",
+            "en": "JKN health insurance card"
+          }
+        },
+        {
+          "id": "o_dukcapil",
+          "text": {
+            "id": "Disdukcapil",
+            "en": "Disdukcapil (civil registry)"
+          }
+        },
+        {
+          "id": "o_polri",
+          "text": {
+            "id": "Polri",
+            "en": "The national police (Polri)"
+          }
+        },
+        {
+          "id": "o_djp",
+          "text": {
+            "id": "Direktorat Jenderal Pajak",
+            "en": "Directorate General of Taxes"
+          }
+        },
+        {
+          "id": "o_bpjs",
+          "text": {
+            "id": "BPJS Kesehatan",
+            "en": "BPJS Kesehatan"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "d_kk": "o_dukcapil",
+        "d_sim": "o_polri",
+        "d_npwp": "o_djp",
+        "d_jkn": "o_bpjs"
+      },
+      "model_answer": {
+        "id": "KK dari Disdukcapil, SIM dari Polri, NPWP dari Direktorat Jenderal Pajak, dan kartu peserta JKN dari BPJS Kesehatan.",
+        "en": "The family card from Disdukcapil, the driving licence from the police, the NPWP from the Directorate General of Taxes and the JKN membership card from BPJS Kesehatan."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-03-011",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "CIVIC-DOCS"
+      ],
+      "pool": "PRACT",
+      "order": 35,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "KTP-el untuk warga negara Indonesia harus diperpanjang setiap lima tahun.",
+            "en": "The e-KTP for Indonesian citizens must be renewed every five years."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Sejak UU No. 24 Tahun 2013, KTP-el untuk WNI berlaku seumur hidup. Jika data berubah, misalnya alamat atau status perkawinan, KTP-el tetap perlu diperbarui di Disdukcapil.",
+        "en": "Since Law No. 24 of 2013, the e-KTP is valid for life for Indonesian citizens. If your details change, such as your address or marital status, you still need to update it at Disdukcapil."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-03-012",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "CIVIC-DOCS"
+      ],
+      "pool": "PRACT",
+      "order": 36,
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dokumen yang memuat nama dan NIK semua anggota keluarga dalam satu rumah tangga disebut ____.",
+            "en": "The document that lists the names and NIKs of everyone in a household is the ____."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_ktp",
+          "text": {
+            "id": "KTP-el",
+            "en": "e-KTP"
+          }
+        },
+        {
+          "id": "t_kk",
+          "text": {
+            "id": "Kartu Keluarga (KK)",
+            "en": "family card (KK)"
+          }
+        },
+        {
+          "id": "t_npwp",
+          "text": {
+            "id": "NPWP",
+            "en": "NPWP (tax number)"
+          }
+        }
+      ],
+      "solution": [
+        "t_kk"
+      ],
+      "model_answer": {
+        "id": "Kartu Keluarga (KK) memuat data semua anggota keluarga dan sering diminta untuk urusan sekolah, kesehatan, dan bantuan sosial.",
+        "en": "The family card (KK) lists everyone in the household and is often asked for at schools, health services and for social assistance."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-03-013",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "STATE-REGIONS",
+        "STATE-BRANCHES"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Peraturan daerah (perda) sebuah kabupaten dibentuk oleh DPRD kabupaten bersama …",
+            "en": "A regency's regional regulation (perda) is made by the regency DPRD together with …"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "gubernur",
+            "en": "the governor"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "camat",
+            "en": "the camat (district head)"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "bupati",
+            "en": "the regent (bupati)"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Perda kabupaten dibahas dan disetujui bersama oleh DPRD kabupaten dan bupati; di kota, oleh DPRD kota dan wali kota.",
+        "en": "A regency's perda is debated and jointly approved by the regency DPRD and the regent; in a city, by the city DPRD and the mayor."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-03-014",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "CIVIC-DOCS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "BPJS Kesehatan dan BPJS Ketenagakerjaan adalah dua badan yang berbeda, dengan program yang berbeda.",
+            "en": "BPJS Kesehatan and BPJS Ketenagakerjaan are two separate bodies running different programmes."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "BPJS Kesehatan menjalankan Jaminan Kesehatan Nasional (JKN). BPJS Ketenagakerjaan menjalankan jaminan kecelakaan kerja, kematian, hari tua, pensiun, dan kehilangan pekerjaan.",
+        "en": "BPJS Kesehatan runs national health insurance (JKN). BPJS Ketenagakerjaan runs cover for work accidents, death, old-age savings, pensions and job loss."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-03-015",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "STATE-BRANCHES"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "UUD Negara Republik Indonesia Tahun 1945, naskah setelah Perubahan Keempat (2002), Pasal 6A, 28A–28J dan 37; Sekretariat Jenderal MPR RI, Panduan Pemasyarakatan UUD NRI Tahun 1945 (mpr.go.id).",
+      "model_answer": {
+        "id": "UUD 1945 diubah empat kali (1999–2002), tetapi pasal terakhirnya tetap Pasal 37. Pasal-pasal baru disisipkan dengan tambahan huruf, seperti Pasal 6A tentang pemilihan presiden secara langsung dan Pasal 28A–28J tentang hak asasi manusia.",
+        "en": "The 1945 Constitution was amended four times (1999–2002), yet its last article is still Article 37. New articles were slotted in with letters, such as Article 6A on direct presidential elections and Articles 28A–28J on human rights."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-04-001",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "mini_reading",
+      "skills": [
+        "ECON-PRICES"
+      ],
+      "pool": "PRACT",
+      "order": 37,
+      "prompt_id": "P-READ",
+      "reading_id": "R-SOSA-INFLASI",
+      "model_answer": {
+        "id": "BPS mengukur inflasi setiap bulan dengan IHK. Satu barang yang naik belum tentu inflasi. Bank Indonesia menjaga inflasi rendah dan stabil.",
+        "en": "BPS measures inflation each month with the CPI. One item going up is not necessarily inflation. Bank Indonesia works to keep inflation low and steady."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-04-002",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ECON-PRICES"
+      ],
+      "pool": "PRACT",
+      "order": 38,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menurut bacaan, lembaga mana yang mengumumkan angka inflasi setiap bulan?",
+            "en": "According to the reading, which body announces the inflation figure every month?"
+          }
+        }
+      ],
+      "reading_id": "R-SOSA-INFLASI",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "OJK",
+            "en": "OJK (Financial Services Authority)"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "BPS",
+            "en": "BPS (Statistics Indonesia)"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "DPR",
+            "en": "The DPR"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "BPS (Badan Pusat Statistik) mengukur inflasi setiap bulan dengan IHK. Data resminya ada di bps.go.id.",
+        "en": "BPS (Statistics Indonesia) measures inflation every month with the CPI. The official data is at bps.go.id."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-04-003",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "ECON-PRICES"
+      ],
+      "pool": "PRACT",
+      "order": 39,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menurut bacaan, kalau hanya harga cabai yang naik menjelang hari raya, itu pasti inflasi.",
+            "en": "According to the reading, if only the price of chillies goes up before a festival, that is definitely inflation."
+          }
+        }
+      ],
+      "reading_id": "R-SOSA-INFLASI",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Satu barang yang naik belum tentu inflasi. Inflasi adalah kenaikan harga secara umum dan terus-menerus.",
+        "en": "One item going up is not necessarily inflation. Inflation is a general, continuing rise in prices."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-04-004",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "number_input",
+      "skills": [
+        "ECON-PRICES"
+      ],
+      "pool": "PRACT",
+      "order": 40,
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Contoh: harga 1 kg beras naik dari Rp12.000 menjadi Rp12.600. Berapa persen kenaikannya?",
+            "en": "Example: the price of 1 kg of rice goes up from Rp12,000 to Rp12,600. By what percentage did it rise?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 5,
+        "tolerance": 0,
+        "unit": {
+          "id": "%",
+          "en": "%"
+        }
+      },
+      "model_answer": {
+        "id": "Kenaikannya Rp600. Rp600 : Rp12.000 = 0,05, jadi naik 5%.",
+        "en": "It rose by Rp600. Rp600 ÷ Rp12,000 = 0.05, so a 5% rise."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-04-005",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ECON-NATIONAL"
+      ],
+      "pool": "PRACT",
+      "order": 41,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana penjelasan PDB (Produk Domestik Bruto) yang paling tepat?",
+            "en": "Which is the best description of GDP (Gross Domestic Product)?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Jumlah uang yang dicetak dalam setahun",
+            "en": "The amount of money printed in a year"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Nilai seluruh barang dan jasa akhir yang dihasilkan di dalam negeri dalam satu periode",
+            "en": "The value of all final goods and services produced in the country over a period"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Total utang pemerintah",
+            "en": "The government's total debt"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "PDB adalah nilai seluruh barang dan jasa akhir yang dihasilkan di dalam negeri. BPS menerbitkannya setiap triwulan dan setiap tahun.",
+        "en": "GDP is the value of all final goods and services produced in the country. BPS publishes it every quarter and every year."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-04-006",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ECON-NATIONAL"
+      ],
+      "pool": "PRACT",
+      "order": 42,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan lembaga dengan perannya.",
+            "en": "Match each institution with its role."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "i_bps",
+          "text": {
+            "id": "BPS",
+            "en": "BPS (Statistics Indonesia)"
+          }
+        },
+        {
+          "id": "i_bi",
+          "text": {
+            "id": "Bank Indonesia",
+            "en": "Bank Indonesia"
+          }
+        },
+        {
+          "id": "i_ojk",
+          "text": {
+            "id": "OJK",
+            "en": "OJK (Financial Services Authority)"
+          }
+        },
+        {
+          "id": "i_kmk",
+          "text": {
+            "id": "Kementerian Keuangan",
+            "en": "Ministry of Finance"
+          }
+        },
+        {
+          "id": "r_bps",
+          "text": {
+            "id": "Menerbitkan statistik resmi, seperti inflasi dan PDB",
+            "en": "Publishes official statistics such as inflation and GDP"
+          }
+        },
+        {
+          "id": "r_bi",
+          "text": {
+            "id": "Menjaga stabilitas nilai rupiah",
+            "en": "Keeps the value of the rupiah stable"
+          }
+        },
+        {
+          "id": "r_ojk",
+          "text": {
+            "id": "Mengatur dan mengawasi bank, asuransi, pasar modal, dan pinjaman daring",
+            "en": "Regulates and supervises banks, insurers, the capital market and online lenders"
+          }
+        },
+        {
+          "id": "r_kmk",
+          "text": {
+            "id": "Mengelola APBN dan pajak pusat",
+            "en": "Manages the state budget and central taxes"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "i_bps": "r_bps",
+        "i_bi": "r_bi",
+        "i_ojk": "r_ojk",
+        "i_kmk": "r_kmk"
+      },
+      "model_answer": {
+        "id": "BPS menerbitkan statistik resmi; Bank Indonesia menjaga stabilitas nilai rupiah; OJK mengatur dan mengawasi lembaga jasa keuangan; Kementerian Keuangan mengelola APBN dan pajak pusat.",
+        "en": "BPS publishes official statistics; Bank Indonesia keeps the rupiah stable; OJK regulates and supervises financial services; the Ministry of Finance manages the APBN and central taxes."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-04-007",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "ECON-FISCAL"
+      ],
+      "pool": "PRACT",
+      "order": 43,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "LPG tabung 3 kg dijual lebih murah daripada harga keekonomiannya karena sebagian harganya ditanggung APBN (subsidi).",
+            "en": "3 kg LPG cylinders are sold below their economic price because part of the price is paid from the state budget (a subsidy)."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Tabungnya bertuliskan \"Hanya untuk Masyarakat Miskin\": subsidi ini ditujukan bagi rumah tangga dan usaha mikro yang membutuhkan.",
+        "en": "The cylinder is labelled \"Hanya untuk Masyarakat Miskin\" (only for poor households): the subsidy is meant for households and micro-businesses in need."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-04-008",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "ECON-FISCAL"
+      ],
+      "pool": "PRACT",
+      "order": 44,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pajak ini dikelola pusat atau daerah?",
+            "en": "Is this tax run by the central government or by the regions?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_pusat",
+          "text": {
+            "id": "Pajak pusat (Direktorat Jenderal Pajak)",
+            "en": "Central tax (Directorate General of Taxes)"
+          }
+        },
+        {
+          "id": "b_daerah",
+          "text": {
+            "id": "Pajak daerah (provinsi atau kabupaten/kota)",
+            "en": "Regional tax (province, regency or city)"
+          }
+        },
+        {
+          "id": "x_ppn",
+          "text": {
+            "id": "PPN saat berbelanja",
+            "en": "VAT (PPN) when you shop"
+          }
+        },
+        {
+          "id": "x_pkb",
+          "text": {
+            "id": "Pajak kendaraan bermotor (dibayar bersama STNK)",
+            "en": "Motor vehicle tax (paid with the STNK)"
+          }
+        },
+        {
+          "id": "x_pph",
+          "text": {
+            "id": "PPh yang dipotong dari gaji",
+            "en": "Income tax (PPh) taken from your salary"
+          }
+        },
+        {
+          "id": "x_pbb",
+          "text": {
+            "id": "PBB rumah dan tanah (PBB-P2)",
+            "en": "Property tax on house and land (PBB-P2)"
+          }
+        },
+        {
+          "id": "x_meterai",
+          "text": {
+            "id": "Bea meterai",
+            "en": "Stamp duty"
+          }
+        },
+        {
+          "id": "x_resto",
+          "text": {
+            "id": "Pajak restoran (kini bagian dari PBJT)",
+            "en": "Restaurant tax (now part of PBJT)"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "x_ppn": "b_pusat",
+        "x_pkb": "b_daerah",
+        "x_pph": "b_pusat",
+        "x_pbb": "b_daerah",
+        "x_meterai": "b_pusat",
+        "x_resto": "b_daerah"
+      },
+      "model_answer": {
+        "id": "Pajak pusat (Direktorat Jenderal Pajak): PPN, PPh, dan bea meterai. Pajak daerah: pajak kendaraan bermotor (provinsi), PBB-P2 dan pajak restoran (kabupaten/kota).",
+        "en": "Central taxes (Directorate General of Taxes): VAT (PPN), income tax (PPh) and stamp duty. Regional taxes: motor vehicle tax (province), PBB-P2 property tax and restaurant tax (regency or city)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-04-009",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ECON-FISCAL"
+      ],
+      "pool": "PRACT",
+      "order": 45,
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pajak yang ikut Anda bayar ketika membeli banyak barang dan jasa, dan sering tertera di struk belanja, disebut ____.",
+            "en": "The tax you pay when you buy many goods and services, which often appears on your receipt, is ____."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_pbb",
+          "text": {
+            "id": "PBB (Pajak Bumi dan Bangunan)",
+            "en": "PBB (land and building tax)"
+          }
+        },
+        {
+          "id": "t_ppn",
+          "text": {
+            "id": "PPN (Pajak Pertambahan Nilai)",
+            "en": "PPN (value added tax)"
+          }
+        },
+        {
+          "id": "t_pkb",
+          "text": {
+            "id": "PKB (Pajak Kendaraan Bermotor)",
+            "en": "PKB (motor vehicle tax)"
+          }
+        }
+      ],
+      "solution": [
+        "t_ppn"
+      ],
+      "model_answer": {
+        "id": "PPN (Pajak Pertambahan Nilai) dikenakan pada banyak barang dan jasa, dan sering tertera di struk belanja.",
+        "en": "VAT (PPN, Pajak Pertambahan Nilai) is charged on many goods and services and often appears on your receipt."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-04-010",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "number_input",
+      "skills": [
+        "ECON-PRICES"
+      ],
+      "pool": "PRACT",
+      "order": 46,
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tahun ini gaji Bu Rina naik 4%, sedangkan inflasi 3%. Kira-kira berapa persen daya belinya bertambah?",
+            "en": "This year Bu Rina's pay went up 4%, while inflation was 3%. Roughly by what percentage did her purchasing power grow?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 1,
+        "tolerance": 0.1,
+        "unit": {
+          "id": "%",
+          "en": "%"
+        }
+      },
+      "model_answer": {
+        "id": "Sekitar 1%: kenaikan gaji 4% dikurangi inflasi 3%. Hitungan tepatnya 1,04 : 1,03 ≈ 1,0097, sedikit di bawah 1%.",
+        "en": "About 1%: the 4% pay rise minus 3% inflation. Precisely, 1.04 ÷ 1.03 ≈ 1.0097, just under 1%."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-04-011",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "ECON-FISCAL"
+      ],
+      "pool": "PRACT",
+      "order": 47,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutkan perjalanan APBN dalam satu siklus.",
+            "en": "Put one cycle of the state budget (APBN) in order."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a_run",
+          "text": {
+            "id": "APBN dijalankan selama tahun anggaran, 1 Januari–31 Desember",
+            "en": "The budget is spent over the fiscal year, 1 January–31 December"
+          }
+        },
+        {
+          "id": "a_draft",
+          "text": {
+            "id": "Pemerintah menyusun RAPBN",
+            "en": "The government drafts the budget bill (RAPBN)"
+          }
+        },
+        {
+          "id": "a_audit",
+          "text": {
+            "id": "BPK memeriksa laporan keuangan pemerintah pusat",
+            "en": "The BPK audits the central government's financial report"
+          }
+        },
+        {
+          "id": "a_submit",
+          "text": {
+            "id": "Pemerintah mengajukan RAPBN dan Nota Keuangan ke DPR (Agustus)",
+            "en": "The government submits the bill and Financial Note to the DPR (August)"
+          }
+        },
+        {
+          "id": "a_approve",
+          "text": {
+            "id": "DPR membahasnya bersama pemerintah, lalu menyetujuinya menjadi UU APBN",
+            "en": "The DPR debates it with the government, then passes it as the APBN law"
+          }
+        }
+      ],
+      "solution": [
+        "a_draft",
+        "a_submit",
+        "a_approve",
+        "a_run",
+        "a_audit"
+      ],
+      "model_answer": {
+        "id": "Pemerintah menyusun RAPBN, mengajukannya ke DPR pada bulan Agustus, DPR menyetujuinya menjadi UU APBN, APBN dijalankan 1 Januari–31 Desember, lalu BPK memeriksa laporan keuangannya.",
+        "en": "The government drafts the budget, submits it to the DPR in August, the DPR approves it as the APBN law, it runs from 1 January to 31 December, then the BPK audits the financial report."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-04-012",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "estimate_slider",
+      "skills": [
+        "ECON-FISCAL"
+      ],
+      "pool": "PRACT",
+      "order": 48,
+      "prompt_id": "P-EST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dalam APBN 2024, kira-kira berapa persen pendapatan negara yang direncanakan berasal dari perpajakan?",
+            "en": "In the 2024 state budget, roughly what percentage of state revenue was planned to come from taxes?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 82,
+        "tolerance": 8,
+        "unit": {
+          "id": "%",
+          "en": "%"
+        }
+      },
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1
+      },
+      "model_answer": {
+        "id": "Sekitar 82%: Rp2.309,9 triliun dari total pendapatan negara Rp2.802,3 triliun (UU No. 19 Tahun 2023 tentang APBN 2024). Sisanya terutama penerimaan negara bukan pajak (PNBP).",
+        "en": "About 82%: Rp2,309.9 trillion out of total state revenue of Rp2,802.3 trillion (Law No. 19 of 2023 on the 2024 State Budget). Most of the rest is non-tax state revenue (PNBP)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-04-013",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "ECON-PRICES"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Jika harga-harga naik rata-rata 3% dalam setahun sementara penghasilan Anda tetap, uang Anda membeli lebih sedikit barang daripada tahun lalu.",
+            "en": "If prices rise by 3% on average over a year while your income stays the same, your money buys fewer goods than it did last year."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Itulah turunnya daya beli: uang yang sama membeli lebih sedikit ketika harga-harga naik.",
+        "en": "That is a fall in purchasing power: the same money buys less when prices go up."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-04-014",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ECON-FISCAL",
+        "ECON-NATIONAL"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Lembaga mana yang menyusun dan mengelola APBN, termasuk memungut pajak pusat?",
+            "en": "Which institution drafts and manages the state budget, including collecting central taxes?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "c",
+          "text": {
+            "id": "Kementerian Keuangan",
+            "en": "The Ministry of Finance"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Bank Indonesia",
+            "en": "Bank Indonesia"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "BPS",
+            "en": "BPS (Statistics Indonesia)"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Kementerian Keuangan menyusun dan mengelola APBN; Direktorat Jenderal Pajak, yang memungut pajak pusat, berada di bawahnya.",
+        "en": "The Ministry of Finance drafts and manages the APBN; the Directorate General of Taxes, which collects central taxes, sits within it."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-04-015",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ECON-NATIONAL"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "note_generic",
+      "gem": true,
+      "source": "Kementerian Keuangan RI, \"Sejarah Hari Oeang Republik Indonesia\" (kemenkeu.go.id); Bank Indonesia, Museum Bank Indonesia, history of ORI (bi.go.id).",
+      "model_answer": {
+        "id": "Uang pertama Republik Indonesia, ORI (Oeang Republik Indonesia), resmi beredar pada 30 Oktober 1946 dan mulai menggantikan uang dari masa pendudukan Jepang. Tanggal itu kini diperingati setiap tahun sebagai Hari Oeang Republik Indonesia.",
+        "en": "The Republic of Indonesia's first money, ORI (Oeang Republik Indonesia), officially went into circulation on 30 October 1946, starting to replace the money of the Japanese occupation. The date is still marked every year as Hari Oeang, Indonesia's Money Day."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-05-001",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "memory_flip",
+      "skills": [
+        "ART-ELEMENTS"
+      ],
+      "pool": "PRACT",
+      "order": 49,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Temukan pasangan jenis garis dan kesan yang biasa ditimbulkannya.",
+            "en": "Find each kind of line and the feeling it usually gives."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "g_h",
+          "text": {
+            "id": "Garis horizontal",
+            "en": "Horizontal line"
+          }
+        },
+        {
+          "id": "g_v",
+          "text": {
+            "id": "Garis vertikal",
+            "en": "Vertical line"
+          }
+        },
+        {
+          "id": "g_d",
+          "text": {
+            "id": "Garis diagonal",
+            "en": "Diagonal line"
+          }
+        },
+        {
+          "id": "g_l",
+          "text": {
+            "id": "Garis lengkung",
+            "en": "Curved line"
+          }
+        },
+        {
+          "id": "k_h",
+          "text": {
+            "id": "Tenang, damai",
+            "en": "Calm, peaceful"
+          }
+        },
+        {
+          "id": "k_v",
+          "text": {
+            "id": "Kokoh, tegak",
+            "en": "Strong, upright"
+          }
+        },
+        {
+          "id": "k_d",
+          "text": {
+            "id": "Bergerak, dinamis",
+            "en": "Moving, dynamic"
+          }
+        },
+        {
+          "id": "k_l",
+          "text": {
+            "id": "Lembut, luwes",
+            "en": "Soft, flowing"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "g_h": "k_h",
+        "g_v": "k_v",
+        "g_d": "k_d",
+        "g_l": "k_l"
+      },
+      "model_answer": {
+        "id": "Horizontal terasa tenang (seperti cakrawala), vertikal kokoh (seperti tiang), diagonal bergerak, dan lengkung lembut.",
+        "en": "Horizontal feels calm (like the horizon), vertical feels strong (like a pillar), diagonal feels full of movement and curved feels soft."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-05-002",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "ART-ELEMENTS"
+      ],
+      "pool": "PRACT",
+      "order": 50,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ketuk benda yang semua garis tepinya diagonal (miring).",
+            "en": "Tap the object whose edges are all diagonal (slanting)."
+          }
+        }
+      ],
+      "image": "scene_kampung_shapes",
+      "options": [
+        {
+          "id": "sun",
+          "text": {
+            "id": "matahari",
+            "en": "sun"
+          },
+          "region": {
+            "x": 0.06,
+            "y": 0.06,
+            "w": 0.18,
+            "h": 0.24
+          }
+        },
+        {
+          "id": "board",
+          "text": {
+            "id": "papan pengumuman",
+            "en": "noticeboard"
+          },
+          "region": {
+            "x": 0.72,
+            "y": 0.56,
+            "w": 0.22,
+            "h": 0.18
+          }
+        },
+        {
+          "id": "wall",
+          "text": {
+            "id": "dinding rumah",
+            "en": "house wall"
+          },
+          "region": {
+            "x": 0.34,
+            "y": 0.44,
+            "w": 0.28,
+            "h": 0.37
+          }
+        },
+        {
+          "id": "kite",
+          "text": {
+            "id": "layang-layang",
+            "en": "kite"
+          },
+          "region": {
+            "x": 0.74,
+            "y": 0.06,
+            "w": 0.16,
+            "h": 0.26
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Keempat sisi layang-layang miring, sehingga bentuknya terasa paling bergerak. Papan dan dinding dibentuk garis horizontal dan vertikal.",
+        "en": "All four sides of the kite slant, so it feels the most full of movement. The board and the wall are made of horizontal and vertical lines."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-05-003",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "ART-ELEMENTS"
+      ],
+      "pool": "PRACT",
+      "order": 51,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kelompokkan warna hangat dan warna dingin.",
+            "en": "Sort the warm colours from the cool colours."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_warm",
+          "text": {
+            "id": "Warna hangat",
+            "en": "Warm colours"
+          }
+        },
+        {
+          "id": "b_cool",
+          "text": {
+            "id": "Warna dingin",
+            "en": "Cool colours"
+          }
+        },
+        {
+          "id": "w1",
+          "text": {
+            "id": "Merah",
+            "en": "Red"
+          },
+          "image": "pic_color_red"
+        },
+        {
+          "id": "w2",
+          "text": {
+            "id": "Biru",
+            "en": "Blue"
+          },
+          "image": "pic_color_blue"
+        },
+        {
+          "id": "w3",
+          "text": {
+            "id": "Jingga",
+            "en": "Orange"
+          },
+          "image": "pic_color_orange"
+        },
+        {
+          "id": "w4",
+          "text": {
+            "id": "Hijau",
+            "en": "Green"
+          },
+          "image": "pic_color_green"
+        },
+        {
+          "id": "w5",
+          "text": {
+            "id": "Kuning",
+            "en": "Yellow"
+          },
+          "image": "pic_color_yellow"
+        },
+        {
+          "id": "w6",
+          "text": {
+            "id": "Ungu",
+            "en": "Purple"
+          },
+          "image": "pic_color_purple"
+        }
+      ],
+      "solution_pairs": {
+        "w1": "b_warm",
+        "w2": "b_cool",
+        "w3": "b_warm",
+        "w4": "b_cool",
+        "w5": "b_warm",
+        "w6": "b_cool"
+      },
+      "model_answer": {
+        "id": "Warna hangat: merah, jingga, kuning. Warna dingin: biru, hijau, ungu.",
+        "en": "Warm colours: red, orange, yellow. Cool colours: blue, green, purple."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-05-004",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ART-ELEMENTS"
+      ],
+      "pool": "PRACT",
+      "order": 52,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pada roda warna, warna yang letaknya berseberangan disebut warna komplementer. Apa komplementer dari biru?",
+            "en": "Colours opposite each other on the colour wheel are called complementary. What is the complement of blue?"
+          }
+        }
+      ],
+      "image": "pic_color_blue",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Hijau",
+            "en": "Green"
+          },
+          "image": "pic_color_green"
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Ungu",
+            "en": "Purple"
+          },
+          "image": "pic_color_purple"
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Jingga",
+            "en": "Orange"
+          },
+          "image": "pic_color_orange",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Jingga. Pasangan komplementer lainnya adalah merah–hijau dan kuning–ungu. Bila disandingkan, keduanya tampak makin kuat.",
+        "en": "Orange. The other complementary pairs are red–green and yellow–purple. Side by side, each makes the other look stronger."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-05-005",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ART-LOOKING"
+      ],
+      "pool": "PRACT",
+      "order": 53,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Keseimbangan simetris berarti bobot visual di kiri dan kanan sama. Pilih timbangan yang paling mirip dengan komposisi simetris.",
+            "en": "Symmetrical balance means equal visual weight on the left and right. Pick the scale that best matches a symmetrical composition."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "balance_left_heavy",
+          "image": "balance_left_heavy"
+        },
+        {
+          "id": "balance_right_heavy",
+          "image": "balance_right_heavy"
+        },
+        {
+          "id": "balance_even",
+          "image": "balance_even",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Timbangan yang rata menggambarkan keseimbangan simetris: bobot di kiri dan di kanan sama.",
+        "en": "A level scale shows symmetrical balance: the same weight on the left and the right."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-05-006",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "ART-LOOKING"
+      ],
+      "pool": "PRACT",
+      "order": 54,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sebuah komposisi hanya bisa terasa seimbang jika sisi kiri dan kanannya sama persis.",
+            "en": "A composition can only feel balanced if its left and right sides are exactly the same."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Komposisi asimetris pun bisa terasa seimbang. Misalnya, satu benda besar di kiri bisa diimbangi beberapa benda kecil, atau satu warna yang mencolok, di kanan.",
+        "en": "An asymmetrical composition can feel balanced too. For example, one large object on the left can be balanced by several small ones, or by one striking colour, on the right."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-05-007",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "tap_hotspot",
+      "skills": [
+        "ART-LOOKING"
+      ],
+      "pool": "PRACT",
+      "order": 55,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Hampir semua bentuk di gambar ini bersudut. Ketuk satu-satunya bentuk bulat, yang paling kontras dengan bentuk lainnya.",
+            "en": "Almost every shape in this picture has corners. Tap the only round shape, the one that contrasts most with the rest."
+          }
+        }
+      ],
+      "image": "scene_kampung_shapes",
+      "options": [
+        {
+          "id": "sun",
+          "text": {
+            "id": "matahari",
+            "en": "sun"
+          },
+          "region": {
+            "x": 0.06,
+            "y": 0.06,
+            "w": 0.18,
+            "h": 0.24
+          },
+          "correct": true
+        },
+        {
+          "id": "roof",
+          "text": {
+            "id": "atap",
+            "en": "roof"
+          },
+          "region": {
+            "x": 0.3,
+            "y": 0.2,
+            "w": 0.36,
+            "h": 0.22
+          }
+        },
+        {
+          "id": "kite",
+          "text": {
+            "id": "layang-layang",
+            "en": "kite"
+          },
+          "region": {
+            "x": 0.74,
+            "y": 0.06,
+            "w": 0.16,
+            "h": 0.26
+          }
+        },
+        {
+          "id": "board",
+          "text": {
+            "id": "papan pengumuman",
+            "en": "noticeboard"
+          },
+          "region": {
+            "x": 0.72,
+            "y": 0.56,
+            "w": 0.22,
+            "h": 0.18
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Matahari. Bentuk yang berbeda sendiri, karena kontras bentuk, warna, atau ukuran, cenderung menarik mata lebih dulu.",
+        "en": "The sun. A shape that stands apart from the rest, through contrast of form, colour or size, tends to catch the eye first."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-05-008",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "ART-LOOKING"
+      ],
+      "pool": "PRACT",
+      "order": 56,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutkan langkah melihat karya seni dengan sadar.",
+            "en": "Put the steps for looking at an artwork well in order."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s_interp",
+          "text": {
+            "id": "Tafsirkan: suasana atau makna apa yang Anda tangkap?",
+            "en": "Interpret: what mood or meaning do you take from it?"
+          }
+        },
+        {
+          "id": "s_desc",
+          "text": {
+            "id": "Gambarkan: sebutkan apa saja yang terlihat, tanpa menilai",
+            "en": "Describe: say what you can see, without judging"
+          }
+        },
+        {
+          "id": "s_judge",
+          "text": {
+            "id": "Nilai: baru putuskan pendapat Anda dan alasannya",
+            "en": "Judge: only now decide what you think, and why"
+          }
+        },
+        {
+          "id": "s_anal",
+          "text": {
+            "id": "Uraikan: perhatikan garis, warna, dan komposisinya",
+            "en": "Analyse: look at its lines, colours and composition"
+          }
+        }
+      ],
+      "solution": [
+        "s_desc",
+        "s_anal",
+        "s_interp",
+        "s_judge"
+      ],
+      "model_answer": {
+        "id": "Deskripsi, analisis, interpretasi, lalu penilaian: urutan kritik seni yang dipopulerkan Edmund Feldman. Menunda penilaian membuat Anda melihat lebih banyak.",
+        "en": "Describe, analyse, interpret, then judge: the art-criticism sequence popularised by Edmund Feldman. Holding back judgement helps you see more."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-05-009",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "mini_reading",
+      "skills": [
+        "ART-PAINTERS"
+      ],
+      "pool": "PRACT",
+      "order": 57,
+      "prompt_id": "P-READ",
+      "reading_id": "R-SOSA-PELUKIS",
+      "model_answer": {
+        "id": "Raden Saleh: perintis seni lukis modern, lama tinggal di Eropa. S. Sudjojono: ikut mendirikan PERSAGI (1938), \"jiwa ketok\". Affandi: ekspresionis yang memencet cat dari tube. Basuki Abdullah: potret realis. Hendra Gunawan: warna cerah, rakyat sehari-hari.",
+        "en": "Raden Saleh: pioneer of modern painting, long in Europe. S. Sudjojono: co-founded PERSAGI (1938), \"jiwa ketok\". Affandi: expressionist who squeezed paint from the tube. Basuki Abdullah: realist portraits. Hendra Gunawan: bright colours, everyday people."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-05-010",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ART-PAINTERS"
+      ],
+      "pool": "PRACT",
+      "order": 58,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menurut bacaan, apa yang diserukan S. Sudjojono dengan \"jiwa ketok\"?",
+            "en": "According to the reading, what was S. Sudjojono calling for with \"jiwa ketok\"?"
+          }
+        }
+      ],
+      "reading_id": "R-SOSA-PELUKIS",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Lukisan harus semirip mungkin dengan foto",
+            "en": "Paintings should look as much like photos as possible"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Jiwa pelukis harus tampak dalam karyanya",
+            "en": "The painter's soul should be visible in the work"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Pelukis hanya boleh memakai warna gelap",
+            "en": "Painters should only use dark colours"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "\"Jiwa ketok\" berarti jiwa atau perasaan pelukis yang tampak dalam karyanya; \"ketok\" dalam bahasa Jawa berarti tampak.",
+        "en": "\"Jiwa ketok\" means the painter's soul or feeling made visible in the work; \"ketok\" is Javanese for visible."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-05-011",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "ART-PAINTERS"
+      ],
+      "pool": "PRACT",
+      "order": 59,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan pelukis dengan keterangannya.",
+            "en": "Match each painter with the right description."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p_rs",
+          "text": {
+            "id": "Raden Saleh",
+            "en": "Raden Saleh"
+          }
+        },
+        {
+          "id": "p_af",
+          "text": {
+            "id": "Affandi",
+            "en": "Affandi"
+          }
+        },
+        {
+          "id": "p_sj",
+          "text": {
+            "id": "S. Sudjojono",
+            "en": "S. Sudjojono"
+          }
+        },
+        {
+          "id": "p_ba",
+          "text": {
+            "id": "Basuki Abdullah",
+            "en": "Basuki Abdullah"
+          }
+        },
+        {
+          "id": "d_rs",
+          "text": {
+            "id": "Pelukis abad ke-19 yang lebih dari dua puluh tahun tinggal di Eropa",
+            "en": "19th-century painter who lived in Europe for more than twenty years"
+          }
+        },
+        {
+          "id": "d_af",
+          "text": {
+            "id": "Sering memencet cat langsung dari tube ke kanvas",
+            "en": "Often squeezed paint straight from the tube onto the canvas"
+          }
+        },
+        {
+          "id": "d_sj",
+          "text": {
+            "id": "Ikut mendirikan PERSAGI dan menyerukan \"jiwa ketok\"",
+            "en": "Co-founded PERSAGI and called for \"jiwa ketok\""
+          }
+        },
+        {
+          "id": "d_ba",
+          "text": {
+            "id": "Dikenal dengan potret dan pemandangan bergaya realis",
+            "en": "Known for realistic portraits and landscapes"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p_rs": "d_rs",
+        "p_af": "d_af",
+        "p_sj": "d_sj",
+        "p_ba": "d_ba"
+      },
+      "model_answer": {
+        "id": "Raden Saleh lama tinggal di Eropa, Affandi memencet cat dari tube, S. Sudjojono ikut mendirikan PERSAGI, dan Basuki Abdullah dikenal dengan potret realis.",
+        "en": "Raden Saleh lived long in Europe, Affandi squeezed paint from the tube, S. Sudjojono co-founded PERSAGI and Basuki Abdullah is known for realistic portraits."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-05-012",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ART-LOOKING"
+      ],
+      "pool": "PRACT",
+      "order": 60,
+      "prompt_id": "P-TRY",
+      "model_answer": {
+        "id": "Latihan satu menit: pilih satu gambar, foto, atau pemandangan di sekitar Anda. Lihat selama satu menit penuh tanpa menilai. Sebutkan tiga garis, tiga warna, dan tempat mata Anda pertama kali berhenti. Baru setelah itu tanyakan: suasana apa yang terasa?",
+        "en": "The one-minute exercise: choose a picture, a photo or a view around you. Look at it for a full minute without judging. Name three lines, three colours and the place your eye stopped first. Only then ask: what mood does it have?"
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-05-013",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "ART-PAINTERS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "PERSAGI, perkumpulan pelukis yang ikut didirikan S. Sudjojono, baru berdiri setelah Proklamasi 1945.",
+            "en": "PERSAGI, the painters' association S. Sudjojono helped found, was only set up after the 1945 Proclamation."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "PERSAGI berdiri pada 1938 di Batavia (kini Jakarta), tujuh tahun sebelum Proklamasi.",
+        "en": "PERSAGI was founded in 1938 in Batavia (now Jakarta), seven years before the Proclamation."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-05-014",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ART-LOOKING",
+        "ART-ELEMENTS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bayangkan sebuah lukisan: satu perahu merah kecil di tengah laut biru yang luas. Mengapa mata kita langsung tertuju ke perahu itu?",
+            "en": "Imagine a painting: one small red boat in the middle of a wide blue sea. Why does the eye go straight to the boat?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "c",
+          "text": {
+            "id": "Karena warnanya kontras dengan sekelilingnya",
+            "en": "Because its colour contrasts with everything around it"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Karena perahu itu benda yang paling besar",
+            "en": "Because the boat is the largest thing"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Karena lautnya digambar dengan garis vertikal",
+            "en": "Because the sea is drawn with vertical lines"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Merah adalah warna hangat di tengah biru yang dingin. Kontras warna seperti ini menciptakan titik fokus.",
+        "en": "Red is a warm colour surrounded by cool blue. Colour contrast like this creates a focal point."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-05-015",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "ART-ELEMENTS"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "soc_batik",
+      "gem": true,
+      "source": "UNESCO Intangible Cultural Heritage, \"Indonesian Batik\" (Representative List, inscribed 2009; ich.unesco.org); Keputusan Presiden No. 33 Tahun 2009 tentang Hari Batik Nasional.",
+      "model_answer": {
+        "id": "Batik Indonesia masuk Daftar Representatif Warisan Budaya Takbenda UNESCO pada 2 Oktober 2009. Sejak itu, 2 Oktober diperingati sebagai Hari Batik Nasional. Pada batik tulis, setiap garis motif digambar dengan canting berisi malam (lilin) panas.",
+        "en": "Indonesian batik was inscribed on UNESCO's Representative List of Intangible Cultural Heritage on 2 October 2009. Since then, 2 October has been National Batik Day. In hand-drawn batik (batik tulis), every line of the pattern is drawn with a canting filled with hot wax."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Indonesia memproklamasikan kemerdekaannya pada 17 Agustus 1945. Pada 17 Agustus 2045, berapa tahun usia kemerdekaan Indonesia?",
+            "en": "Indonesia proclaimed its independence on 17 August 1945. How many years of independence will it mark on 17 August 2045?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 100,
+        "tolerance": 0,
+        "unit": {
+          "id": "tahun",
+          "en": "years"
+        }
+      },
+      "model_answer": {
+        "id": "2045 − 1945 = 100 tahun.",
+        "en": "2045 − 1945 = 100 years."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-DP-02",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya ibu kota Sulawesi Selatan dan memakai WITA. Dari 1971 sampai 1999 nama saya Ujung Pandang. Siapa saya?",
+            "en": "I am the capital of South Sulawesi and I run on WITA. From 1971 to 1999 my name was Ujung Pandang. Which city am I?"
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "options": [
+        {
+          "id": "makassar",
+          "text": {
+            "id": "Makassar",
+            "en": "Makassar"
+          },
+          "correct": true
+        },
+        {
+          "id": "manado",
+          "text": {
+            "id": "Manado",
+            "en": "Manado"
+          }
+        },
+        {
+          "id": "kendari",
+          "text": {
+            "id": "Kendari",
+            "en": "Kendari"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Makassar.",
+        "en": "Makassar."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    },
+    {
+      "item_id": "SOS-A-P-DP-03",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Anggota saya adalah anggota DPR dan anggota DPD. Saya berwenang mengubah UUD dan melantik presiden. Siapa saya?",
+            "en": "My members are the members of the DPR and the DPD. I can amend the Constitution and I inaugurate the President. Who am I?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "mpr",
+          "text": {
+            "id": "MPR",
+            "en": "MPR"
+          },
+          "correct": true
+        },
+        {
+          "id": "bpk",
+          "text": {
+            "id": "BPK",
+            "en": "BPK"
+          }
+        },
+        {
+          "id": "ma",
+          "text": {
+            "id": "MA",
+            "en": "MA"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "MPR (Majelis Permusyawaratan Rakyat).",
+        "en": "The MPR (People's Consultative Assembly)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-pemula-0.3"
+    }
+  ]
+}

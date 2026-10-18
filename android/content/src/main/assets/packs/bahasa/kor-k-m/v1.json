@@ -1,0 +1,2034 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "kor-k-m-0.1",
+    "subject": "bahasa",
+    "track": "kor-k-m",
+    "level": "menengah",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "target_lang": "ko",
+    "title": {
+      "id": "Bahasa Korea — Menengah (Anak)",
+      "en": "Korean — Intermediate (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, starter level: 2 units) for language review: needs a native Korean reviewer (hangul, Revised Romanization, naturalness, register, every voice clip) and the Indonesian and English reviewers before any item is approved (docs/syllabus/bahasa/ko_levels.md, Kids Menengah units 01-02). Picture-first; audio_match items stay hidden until their ko/* clips exist (android/content/voice/ko.json and ko.levels.json); every skill has a REMED item that needs no audio.",
+  "prompts": {
+    "P-LISTEN": {
+      "id": "Dengar, lalu pilih.",
+      "en": "Listen, then choose."
+    },
+    "P-LISTEN-PIC": {
+      "id": "Dengar, lalu ketuk gambarnya.",
+      "en": "Listen, then tap the picture."
+    },
+    "P-PICK": {
+      "id": "Pilih gambarnya.",
+      "en": "Pick the picture."
+    },
+    "P-MATCH-PIC": {
+      "id": "Pasangkan gambar dan katanya.",
+      "en": "Match each picture to its word."
+    },
+    "P-MATCH": {
+      "id": "Pasangkan.",
+      "en": "Match them up."
+    },
+    "P-BUILD-SAY": {
+      "id": "Susun kalimatnya.",
+      "en": "Build the sentence."
+    },
+    "P-FILL": {
+      "id": "Isi yang kosong.",
+      "en": "Fill the gap."
+    },
+    "P-SORT": {
+      "id": "Kelompokkan.",
+      "en": "Sort them."
+    },
+    "P-ORDER-TIME": {
+      "id": "Urutkan dari pagi ke malam.",
+      "en": "Order from morning to night."
+    },
+    "P-ORDER-PRICE": {
+      "id": "Urutkan dari yang termurah.",
+      "en": "From cheapest to dearest."
+    },
+    "P-MEMORY": {
+      "id": "Buka kartu, cari pasangannya.",
+      "en": "Flip cards, find the pairs."
+    },
+    "P-REPLY": {
+      "id": "Pilih jawaban yang cocok.",
+      "en": "Pick the best reply."
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    },
+    "P-PRICE": {
+      "id": "Berapa harganya?",
+      "en": "How much is it?"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Jam & hari-hariku",
+        "en": "Time & my day"
+      },
+      "sticker": "sticker_star_fruit"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Belanja & uang",
+        "en": "Shopping & money"
+      },
+      "sticker": "sticker_mango"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "KOR-K-M-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Jam berapa?",
+        "en": "What time is it?"
+      },
+      "body": [
+        {
+          "id": "Jam memakai angka asli; 1–4 dipendekkan: 한 시 (han si), 두 시 (du si), 세 시 (se si), 네 시 (ne si).",
+          "en": "Hours use native numbers; 1–4 get shorter: 한 시 (han si), 두 시 (du si), 세 시 (se si), 네 시 (ne si)."
+        },
+        {
+          "id": "Menit memakai angka Sino: 십 분 (sip bun). 반 (ban) = setengah: 세 시 반 (se si ban).",
+          "en": "Minutes use Sino numbers: 십 분 (sip bun). 반 (ban) = half past: 세 시 반 (se si ban)."
+        },
+        {
+          "id": "Kapan? Tambahkan 에 (e): 일곱 시에 일어나요 (ilgop sie ireonayo).",
+          "en": "When? Add 에 (e): 일곱 시에 일어나요 (ilgop sie ireonayo)."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "세 시",
+          "gloss": {
+            "id": "se si · jam tiga",
+            "en": "se si · three o'clock"
+          }
+        },
+        {
+          "target_text": "세 시 반",
+          "gloss": {
+            "id": "se si ban · setengah empat",
+            "en": "se si ban · half past three"
+          }
+        },
+        {
+          "target_text": "일어나요",
+          "gloss": {
+            "id": "ireonayo · bangun",
+            "en": "ireonayo · get up"
+          }
+        },
+        {
+          "target_text": "자요",
+          "gloss": {
+            "id": "jayo · tidur",
+            "en": "jayo · go to bed"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "KOR-K-M-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Belanja",
+        "en": "Shopping"
+      },
+      "body": [
+        {
+          "id": "Uang memakai angka Sino: 백 원 (baek won) 100, 천 원 (cheon won) 1.000, 만 원 (man won) 10.000.",
+          "en": "Money uses Sino numbers: 백 원 (baek won) 100, 천 원 (cheon won) 1,000, 만 원 (man won) 10,000."
+        },
+        {
+          "id": "Tanya harga: 이거 얼마예요? (igeo eolmayeyo?) Jawabnya: 천 원이에요 (cheon wonieyo).",
+          "en": "Ask the price: 이거 얼마예요? (igeo eolmayeyo?) The answer: 천 원이에요 (cheon wonieyo)."
+        },
+        {
+          "id": "Menghitung barang: 한 개 (han gae), 두 개 (du gae), 세 개 (se gae). 망고 두 개 주세요 (manggo du gae juseyo).",
+          "en": "Counting things: 한 개 (han gae), 두 개 (du gae), 세 개 (se gae). 망고 두 개 주세요 (manggo du gae juseyo)."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "원",
+          "gloss": {
+            "id": "won · mata uang Korea",
+            "en": "won · Korean money"
+          }
+        },
+        {
+          "target_text": "개",
+          "gloss": {
+            "id": "gae · buah (untuk barang)",
+            "en": "gae · counter for things"
+          }
+        },
+        {
+          "target_text": "이거",
+          "gloss": {
+            "id": "igeo · ini",
+            "en": "igeo · this one"
+          }
+        },
+        {
+          "target_text": "얼마예요?",
+          "gloss": {
+            "id": "eolmayeyo? · berapa?",
+            "en": "eolmayeyo? · how much?"
+          }
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "KOR-K-M-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-TIME"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "clock_1_00",
+          "image": "clock_1_00",
+          "text": {
+            "id": "jam 1",
+            "en": "1 o'clock"
+          }
+        },
+        {
+          "id": "clock_2_00",
+          "image": "clock_2_00",
+          "text": {
+            "id": "jam 2",
+            "en": "2 o'clock"
+          }
+        },
+        {
+          "id": "clock_3_00",
+          "image": "clock_3_00",
+          "text": {
+            "id": "jam 3",
+            "en": "3 o'clock"
+          }
+        },
+        {
+          "id": "clock_4_00",
+          "image": "clock_4_00",
+          "text": {
+            "id": "jam 4",
+            "en": "4 o'clock"
+          }
+        },
+        {
+          "id": "w_han_si",
+          "target_text": "한 시",
+          "romanization": "han si",
+          "audio": "ko/han_si"
+        },
+        {
+          "id": "w_du_si",
+          "target_text": "두 시",
+          "romanization": "du si",
+          "audio": "ko/du_si"
+        },
+        {
+          "id": "w_se_si",
+          "target_text": "세 시",
+          "romanization": "se si",
+          "audio": "ko/se_si"
+        },
+        {
+          "id": "w_ne_si",
+          "target_text": "네 시",
+          "romanization": "ne si",
+          "audio": "ko/ne_si"
+        }
+      ],
+      "solution_pairs": {
+        "clock_1_00": "w_han_si",
+        "clock_2_00": "w_du_si",
+        "clock_3_00": "w_se_si",
+        "clock_4_00": "w_ne_si"
+      },
+      "model_answer": {
+        "id": "Jam 1, 2, 3, 4: 한 시 (han si), 두 시 (du si), 세 시 (se si), 네 시 (ne si).",
+        "en": "1, 2, 3, 4 o'clock: 한 시 (han si), 두 시 (du si), 세 시 (se si), 네 시 (ne si)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-TIME"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/se_si",
+      "options": [
+        {
+          "id": "clock_4_00",
+          "image": "clock_4_00",
+          "text": {
+            "id": "jam 4",
+            "en": "4 o'clock"
+          }
+        },
+        {
+          "id": "clock_3_00",
+          "image": "clock_3_00",
+          "text": {
+            "id": "jam 3",
+            "en": "3 o'clock"
+          },
+          "correct": true
+        },
+        {
+          "id": "clock_10_00",
+          "image": "clock_10_00",
+          "text": {
+            "id": "jam 10",
+            "en": "10 o'clock"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "세 시 (se si) = jam tiga. Jam empat: 네 시 (ne si).",
+        "en": "세 시 (se si) = three o'clock. Four o'clock is 네 시 (ne si)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-TIME"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-FILL",
+      "image": "clock_5_00",
+      "target_text": "___ 시예요.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_o",
+          "target_text": "오",
+          "romanization": "o",
+          "audio": "ko/o"
+        },
+        {
+          "id": "w_daseot",
+          "target_text": "다섯",
+          "romanization": "daseot",
+          "audio": "ko/daseot"
+        },
+        {
+          "id": "w_yeoseot",
+          "target_text": "여섯",
+          "romanization": "yeoseot",
+          "audio": "ko/yeoseot"
+        }
+      ],
+      "solution": [
+        "w_daseot"
+      ],
+      "romanization": "___ siyeyo.",
+      "model_answer": {
+        "id": "Jam memakai angka asli: 다섯 시예요 (daseot siyeyo), jam lima.",
+        "en": "Hours take native numbers: 다섯 시예요 (daseot siyeyo), five o'clock."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "KOR-TIME"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-PICK",
+      "target_text": "일곱 시 반",
+      "options": [
+        {
+          "id": "clock_7_30",
+          "image": "clock_7_30",
+          "text": {
+            "id": "jam 7.30",
+            "en": "7:30"
+          },
+          "correct": true
+        },
+        {
+          "id": "clock_7_00",
+          "image": "clock_7_00",
+          "text": {
+            "id": "jam 7",
+            "en": "7 o'clock"
+          }
+        },
+        {
+          "id": "clock_6_30",
+          "image": "clock_6_30",
+          "text": {
+            "id": "jam 6.30",
+            "en": "6:30"
+          }
+        }
+      ],
+      "romanization": "ilgop si ban",
+      "audio": "ko/ilgop_si_ban",
+      "model_answer": {
+        "id": "일곱 시 반 (ilgop si ban) = setengah delapan (7.30).",
+        "en": "일곱 시 반 (ilgop si ban) = half past seven (7:30)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-ROUTINE"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_wake_up",
+          "image": "pic_wake_up",
+          "text": {
+            "id": "bangun tidur",
+            "en": "waking up"
+          }
+        },
+        {
+          "id": "pic_brush_teeth",
+          "image": "pic_brush_teeth",
+          "text": {
+            "id": "menyikat gigi",
+            "en": "brushing teeth"
+          }
+        },
+        {
+          "id": "pic_breakfast",
+          "image": "pic_breakfast",
+          "text": {
+            "id": "sarapan",
+            "en": "breakfast"
+          }
+        },
+        {
+          "id": "pic_go_school",
+          "image": "pic_go_school",
+          "text": {
+            "id": "berangkat sekolah",
+            "en": "going to school"
+          }
+        },
+        {
+          "id": "w_ireonayo",
+          "target_text": "일어나요",
+          "romanization": "ireonayo",
+          "audio": "ko/ireonayo"
+        },
+        {
+          "id": "w_ireul_dakkayo",
+          "target_text": "이를 닦아요",
+          "romanization": "ireul dakkayo",
+          "audio": "ko/ireul_dakkayo"
+        },
+        {
+          "id": "w_achimeul_meogeoyo",
+          "target_text": "아침을 먹어요",
+          "romanization": "achimeul meogeoyo",
+          "audio": "ko/achimeul_meogeoyo"
+        },
+        {
+          "id": "w_hakgyoe_gayo",
+          "target_text": "학교에 가요",
+          "romanization": "hakgyoe gayo",
+          "audio": "ko/hakgyoe_gayo"
+        }
+      ],
+      "solution_pairs": {
+        "pic_wake_up": "w_ireonayo",
+        "pic_brush_teeth": "w_ireul_dakkayo",
+        "pic_breakfast": "w_achimeul_meogeoyo",
+        "pic_go_school": "w_hakgyoe_gayo"
+      },
+      "model_answer": {
+        "id": "일어나요 (ireonayo) bangun, 이를 닦아요 (ireul dakkayo) sikat gigi, 아침을 먹어요 (achimeul meogeoyo) sarapan, 학교에 가요 (hakgyoe gayo) ke sekolah.",
+        "en": "일어나요 (ireonayo) get up, 이를 닦아요 (ireul dakkayo) brush teeth, 아침을 먹어요 (achimeul meogeoyo) have breakfast, 학교에 가요 (hakgyoe gayo) go to school."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "KOR-TIME"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_si",
+          "target_text": "시",
+          "romanization": "si"
+        },
+        {
+          "id": "b_bun",
+          "target_text": "분",
+          "romanization": "bun"
+        },
+        {
+          "id": "p_daseot",
+          "target_text": "다섯",
+          "romanization": "daseot"
+        },
+        {
+          "id": "p_isip",
+          "target_text": "이십",
+          "romanization": "isip"
+        },
+        {
+          "id": "p_yeoldu",
+          "target_text": "열두",
+          "romanization": "yeoldu"
+        },
+        {
+          "id": "p_o",
+          "target_text": "오",
+          "romanization": "o"
+        },
+        {
+          "id": "p_se",
+          "target_text": "세",
+          "romanization": "se"
+        },
+        {
+          "id": "p_samsip",
+          "target_text": "삼십",
+          "romanization": "samsip"
+        }
+      ],
+      "solution_pairs": {
+        "p_daseot": "b_si",
+        "p_isip": "b_bun",
+        "p_yeoldu": "b_si",
+        "p_o": "b_bun",
+        "p_se": "b_si",
+        "p_samsip": "b_bun"
+      },
+      "model_answer": {
+        "id": "Jam: 다섯 (daseot), 열두 (yeoldu), 세 (se) + 시 (si). Menit: 오 (o), 이십 (isip), 삼십 (samsip) + 분 (bun).",
+        "en": "Hours: 다섯 (daseot), 열두 (yeoldu), 세 (se) + 시 (si). Minutes: 오 (o), 이십 (isip), 삼십 (samsip) + 분 (bun)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "KOR-ROUTINE"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-MEMORY",
+      "options": [
+        {
+          "id": "pic_shower",
+          "image": "pic_shower",
+          "text": {
+            "id": "mandi",
+            "en": "taking a shower"
+          }
+        },
+        {
+          "id": "pic_get_dressed",
+          "image": "pic_get_dressed",
+          "text": {
+            "id": "berpakaian",
+            "en": "getting dressed"
+          }
+        },
+        {
+          "id": "pic_study",
+          "image": "pic_study",
+          "text": {
+            "id": "belajar",
+            "en": "studying"
+          }
+        },
+        {
+          "id": "pic_sleep",
+          "image": "pic_sleep",
+          "text": {
+            "id": "tidur",
+            "en": "sleeping"
+          }
+        },
+        {
+          "id": "w_syawohaeyo",
+          "target_text": "샤워해요",
+          "romanization": "syawohaeyo",
+          "audio": "ko/syawohaeyo"
+        },
+        {
+          "id": "w_oseul_ibeoyo",
+          "target_text": "옷을 입어요",
+          "romanization": "oseul ibeoyo",
+          "audio": "ko/oseul_ibeoyo"
+        },
+        {
+          "id": "w_gongbuhaeyo",
+          "target_text": "공부해요",
+          "romanization": "gongbuhaeyo",
+          "audio": "ko/gongbuhaeyo"
+        },
+        {
+          "id": "w_jayo",
+          "target_text": "자요",
+          "romanization": "jayo",
+          "audio": "ko/jayo"
+        }
+      ],
+      "solution_pairs": {
+        "pic_shower": "w_syawohaeyo",
+        "pic_get_dressed": "w_oseul_ibeoyo",
+        "pic_study": "w_gongbuhaeyo",
+        "pic_sleep": "w_jayo"
+      },
+      "model_answer": {
+        "id": "샤워해요 (syawohaeyo) mandi, 옷을 입어요 (oseul ibeoyo) berpakaian, 공부해요 (gongbuhaeyo) belajar, 자요 (jayo) tidur.",
+        "en": "샤워해요 (syawohaeyo) shower, 옷을 입어요 (oseul ibeoyo) get dressed, 공부해요 (gongbuhaeyo) study, 자요 (jayo) sleep."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-ROUTINE"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/oseul_ibeoyo",
+      "options": [
+        {
+          "id": "pic_shower",
+          "image": "pic_shower",
+          "text": {
+            "id": "mandi",
+            "en": "taking a shower"
+          }
+        },
+        {
+          "id": "pic_study",
+          "image": "pic_study",
+          "text": {
+            "id": "belajar",
+            "en": "studying"
+          }
+        },
+        {
+          "id": "pic_get_dressed",
+          "image": "pic_get_dressed",
+          "text": {
+            "id": "berpakaian",
+            "en": "getting dressed"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "옷을 입어요 (oseul ibeoyo) = berpakaian.",
+        "en": "옷을 입어요 (oseul ibeoyo) = I get dressed."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "KOR-ROUTINE",
+        "KOR-TIME"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-ORDER-TIME",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_du_sie_jibe_wayo",
+          "target_text": "두 시에 집에 와요.",
+          "romanization": "du sie jibe wayo.",
+          "audio": "ko/du_sie_jibe_wayo"
+        },
+        {
+          "id": "w_ilgop_sie_ireonayo",
+          "target_text": "일곱 시에 일어나요.",
+          "romanization": "ilgop sie ireonayo.",
+          "audio": "ko/ilgop_sie_ireonayo"
+        },
+        {
+          "id": "w_ahop_sie_jayo",
+          "target_text": "아홉 시에 자요.",
+          "romanization": "ahop sie jayo.",
+          "audio": "ko/ahop_sie_jayo"
+        },
+        {
+          "id": "w_yeodeol_sie_hakgyoe_gayo",
+          "target_text": "여덟 시에 학교에 가요.",
+          "romanization": "yeodeol sie hakgyoe gayo.",
+          "audio": "ko/yeodeol_sie_hakgyoe_gayo"
+        }
+      ],
+      "solution": [
+        "w_ilgop_sie_ireonayo",
+        "w_yeodeol_sie_hakgyoe_gayo",
+        "w_du_sie_jibe_wayo",
+        "w_ahop_sie_jayo"
+      ],
+      "model_answer": {
+        "id": "Bangun jam 7, sekolah jam 8, pulang jam 2, tidur jam 9: 아홉 시에 자요 (ahop sie jayo).",
+        "en": "Up at 7, school at 8, home at 2, bed at 9: 아홉 시에 자요 (ahop sie jayo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-TIME"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/yeoldu_si",
+      "options": [
+        {
+          "id": "clock_2_00",
+          "image": "clock_2_00",
+          "text": {
+            "id": "jam 2",
+            "en": "2 o'clock"
+          }
+        },
+        {
+          "id": "clock_10_00",
+          "image": "clock_10_00",
+          "text": {
+            "id": "jam 10",
+            "en": "10 o'clock"
+          }
+        },
+        {
+          "id": "clock_12_00",
+          "image": "clock_12_00",
+          "text": {
+            "id": "jam 12",
+            "en": "12 o'clock"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "열두 시 (yeoldu si) = jam dua belas. 열 (yeol) 10 + 두 (du) 2.",
+        "en": "열두 시 (yeoldu si) = twelve o'clock: 열 (yeol) 10 + 두 (du) 2."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "KOR-ROUTINE"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-BUILD-SAY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku ke sekolah jam delapan.",
+            "en": "I go to school at eight."
+          }
+        }
+      ],
+      "image": "pic_go_school",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_gayo",
+          "target_text": "가요",
+          "romanization": "gayo",
+          "audio": "ko/gayo"
+        },
+        {
+          "id": "w_yeodeol_sie",
+          "target_text": "여덟 시에",
+          "romanization": "yeodeol sie",
+          "audio": "ko/yeodeol_sie"
+        },
+        {
+          "id": "w_jayo",
+          "target_text": "자요",
+          "romanization": "jayo",
+          "audio": "ko/jayo"
+        },
+        {
+          "id": "w_hakgyoe",
+          "target_text": "학교에",
+          "romanization": "hakgyoe",
+          "audio": "ko/hakgyoe"
+        }
+      ],
+      "solution": [
+        "w_yeodeol_sie",
+        "w_hakgyoe",
+        "w_gayo"
+      ],
+      "model_answer": {
+        "id": "여덟 시에 학교에 가요 (yeodeol sie hakgyoe gayo) = aku ke sekolah jam delapan.",
+        "en": "여덟 시에 학교에 가요 (yeodeol sie hakgyoe gayo) = I go to school at eight."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "KOR-TIME",
+        "KOR-ROUTINE"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-REPLY",
+      "image": "clock_6_30",
+      "target_text": "몇 시에 일어나요?",
+      "options": [
+        {
+          "id": "w_yeoseot_si_bane_jayo",
+          "target_text": "여섯 시 반에 자요.",
+          "romanization": "yeoseot si bane jayo."
+        },
+        {
+          "id": "w_yeoseot_si_bane_ireonayo",
+          "target_text": "여섯 시 반에 일어나요.",
+          "romanization": "yeoseot si bane ireonayo.",
+          "correct": true
+        },
+        {
+          "id": "x_yuk_si_bane_ireonayo",
+          "target_text": "육 시 반에 일어나요.",
+          "romanization": "yuk si bane ireonayo."
+        }
+      ],
+      "romanization": "myeot sie ireonayo?",
+      "audio": "ko/myeot_sie_ireonayo",
+      "model_answer": {
+        "id": "Jam memakai angka asli: 여섯 시 반에 일어나요 (yeoseot si bane ireonayo). 육 (yuk) tidak dipakai untuk jam.",
+        "en": "Hours take native numbers: 여섯 시 반에 일어나요 (yeoseot si bane ireonayo). 육 (yuk) is never used for hours."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "KOR-TIME"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "열 시",
+      "options": [
+        {
+          "id": "clock_10_00",
+          "image": "clock_10_00",
+          "text": {
+            "id": "jam 10",
+            "en": "10 o'clock"
+          },
+          "correct": true
+        },
+        {
+          "id": "clock_1_00",
+          "image": "clock_1_00",
+          "text": {
+            "id": "jam 1",
+            "en": "1 o'clock"
+          }
+        },
+        {
+          "id": "clock_12_00",
+          "image": "clock_12_00",
+          "text": {
+            "id": "jam 12",
+            "en": "12 o'clock"
+          }
+        }
+      ],
+      "romanization": "yeol si",
+      "audio": "ko/yeol_si",
+      "model_answer": {
+        "id": "열 시 (yeol si) = jam sepuluh.",
+        "en": "열 시 (yeol si) = ten o'clock."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "KOR-ROUTINE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "텔레비전을 봐요",
+      "options": [
+        {
+          "id": "pic_watch_tv",
+          "image": "pic_watch_tv",
+          "text": {
+            "id": "menonton TV",
+            "en": "watching TV"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_read",
+          "image": "pic_read",
+          "text": {
+            "id": "membaca",
+            "en": "reading"
+          }
+        },
+        {
+          "id": "pic_study",
+          "image": "pic_study",
+          "text": {
+            "id": "belajar",
+            "en": "studying"
+          }
+        }
+      ],
+      "romanization": "tellebijeoneul bwayo",
+      "audio": "ko/tellebijeoneul_bwayo",
+      "model_answer": {
+        "id": "텔레비전을 봐요 (tellebijeoneul bwayo) = menonton televisi.",
+        "en": "텔레비전을 봐요 (tellebijeoneul bwayo) = I watch TV."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-01-015",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "KOR-TIME"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Korea Research Institute of Standards and Science (KRISS), which keeps Korea Standard Time: KST = UTC+9 with no daylight saving; Keputusan Presiden RI No. 41 Tahun 1987 tentang Pembagian Wilayah Republik Indonesia menjadi 3 (tiga) Wilayah Waktu: WIB = UTC+7, WITA = UTC+8, WIT = UTC+9.",
+      "model_answer": {
+        "id": "Saat di Jakarta jam 7 pagi, di Seoul sudah jam 9. Jam di Jayapura (WIT) sama persis dengan jam di Seoul!",
+        "en": "When it is 7 a.m. in Jakarta, it is already 9 in Seoul. Clocks in Jayapura (WIT) show exactly the same time as Seoul!"
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-MONEY"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-MATCH",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "w_baek_won",
+          "target_text": "백 원",
+          "romanization": "baek won",
+          "audio": "ko/baek_won"
+        },
+        {
+          "id": "w_obaek_won",
+          "target_text": "오백 원",
+          "romanization": "obaek won",
+          "audio": "ko/obaek_won"
+        },
+        {
+          "id": "w_cheon_won",
+          "target_text": "천 원",
+          "romanization": "cheon won",
+          "audio": "ko/cheon_won"
+        },
+        {
+          "id": "w_man_won",
+          "target_text": "만 원",
+          "romanization": "man won",
+          "audio": "ko/man_won"
+        },
+        {
+          "id": "n100",
+          "text": {
+            "id": "100 won",
+            "en": "100 won"
+          }
+        },
+        {
+          "id": "n500",
+          "text": {
+            "id": "500 won",
+            "en": "500 won"
+          }
+        },
+        {
+          "id": "n1000",
+          "text": {
+            "id": "1.000 won",
+            "en": "1,000 won"
+          }
+        },
+        {
+          "id": "n10000",
+          "text": {
+            "id": "10.000 won",
+            "en": "10,000 won"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "w_baek_won": "n100",
+        "w_obaek_won": "n500",
+        "w_cheon_won": "n1000",
+        "w_man_won": "n10000"
+      },
+      "model_answer": {
+        "id": "백 원 (baek won) 100, 오백 원 (obaek won) 500, 천 원 (cheon won) 1.000, 만 원 (man won) 10.000.",
+        "en": "백 원 (baek won) 100, 오백 원 (obaek won) 500, 천 원 (cheon won) 1,000, 만 원 (man won) 10,000."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-MONEY"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-LISTEN",
+      "audio": "ko/obaek_won",
+      "options": [
+        {
+          "id": "n5000",
+          "text": {
+            "id": "5.000 won",
+            "en": "5,000 won"
+          }
+        },
+        {
+          "id": "n50",
+          "text": {
+            "id": "50 won",
+            "en": "50 won"
+          }
+        },
+        {
+          "id": "n500",
+          "text": {
+            "id": "500 won",
+            "en": "500 won"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "오백 원 (obaek won) = 500 won: 오 (o) 5 + 백 (baek) 100.",
+        "en": "오백 원 (obaek won) = 500 won: 오 (o) 5 + 백 (baek) 100."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "KOR-SHOP"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-PICK",
+      "target_text": "계란 네 개",
+      "options": [
+        {
+          "id": "count_egg_3",
+          "image": "count_egg_3",
+          "text": {
+            "id": "3 telur",
+            "en": "3 eggs"
+          }
+        },
+        {
+          "id": "count_egg_4",
+          "image": "count_egg_4",
+          "text": {
+            "id": "4 telur",
+            "en": "4 eggs"
+          },
+          "correct": true
+        },
+        {
+          "id": "count_egg_5",
+          "image": "count_egg_5",
+          "text": {
+            "id": "5 telur",
+            "en": "5 eggs"
+          }
+        }
+      ],
+      "romanization": "gyeran ne gae",
+      "audio": "ko/gyeran_ne_gae",
+      "model_answer": {
+        "id": "계란 네 개 (gyeran ne gae) = empat butir telur. 넷 (net) jadi 네 (ne) sebelum 개 (gae).",
+        "en": "계란 네 개 (gyeran ne gae) = four eggs. 넷 (net) becomes 네 (ne) before 개 (gae)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-SHOP"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-FILL",
+      "image": "count_mango_2",
+      "target_text": "망고 ___ 개 주세요.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_dul",
+          "target_text": "둘",
+          "romanization": "dul"
+        },
+        {
+          "id": "p_i",
+          "target_text": "이",
+          "romanization": "i"
+        },
+        {
+          "id": "p_du",
+          "target_text": "두",
+          "romanization": "du"
+        }
+      ],
+      "solution": [
+        "p_du"
+      ],
+      "romanization": "manggo ___ gae juseyo.",
+      "model_answer": {
+        "id": "둘 (dul) jadi 두 (du) sebelum 개 (gae): 망고 두 개 주세요 (manggo du gae juseyo).",
+        "en": "둘 (dul) becomes 두 (du) before 개 (gae): 망고 두 개 주세요 (manggo du gae juseyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "memory_flip",
+      "skills": [
+        "KOR-SHOP"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-MEMORY",
+      "options": [
+        {
+          "id": "pic_socks",
+          "image": "pic_socks",
+          "text": {
+            "id": "kaus kaki",
+            "en": "socks"
+          }
+        },
+        {
+          "id": "pic_shoes",
+          "image": "pic_shoes",
+          "text": {
+            "id": "sepatu",
+            "en": "shoes"
+          }
+        },
+        {
+          "id": "pic_pants",
+          "image": "pic_pants",
+          "text": {
+            "id": "celana",
+            "en": "trousers"
+          }
+        },
+        {
+          "id": "pic_skirt",
+          "image": "pic_skirt",
+          "text": {
+            "id": "rok",
+            "en": "skirt"
+          }
+        },
+        {
+          "id": "w_yangmal",
+          "target_text": "양말",
+          "romanization": "yangmal",
+          "audio": "ko/yangmal"
+        },
+        {
+          "id": "w_sinbal",
+          "target_text": "신발",
+          "romanization": "sinbal",
+          "audio": "ko/sinbal"
+        },
+        {
+          "id": "w_baji",
+          "target_text": "바지",
+          "romanization": "baji",
+          "audio": "ko/baji"
+        },
+        {
+          "id": "w_chima",
+          "target_text": "치마",
+          "romanization": "chima",
+          "audio": "ko/chima"
+        }
+      ],
+      "solution_pairs": {
+        "pic_socks": "w_yangmal",
+        "pic_shoes": "w_sinbal",
+        "pic_pants": "w_baji",
+        "pic_skirt": "w_chima"
+      },
+      "model_answer": {
+        "id": "양말 (yangmal) kaus kaki, 신발 (sinbal) sepatu, 바지 (baji) celana, 치마 (chima) rok.",
+        "en": "양말 (yangmal) socks, 신발 (sinbal) shoes, 바지 (baji) trousers, 치마 (chima) skirt."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-SHOP"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/yangmal",
+      "options": [
+        {
+          "id": "pic_shoes",
+          "image": "pic_shoes",
+          "text": {
+            "id": "sepatu",
+            "en": "shoes"
+          }
+        },
+        {
+          "id": "pic_socks",
+          "image": "pic_socks",
+          "text": {
+            "id": "kaus kaki",
+            "en": "socks"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_hat",
+          "image": "pic_hat",
+          "text": {
+            "id": "topi",
+            "en": "cap"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "양말 (yangmal) = kaus kaki.",
+        "en": "양말 (yangmal) = socks."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "KOR-SHOP"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-REPLY",
+      "image": "pic_hat",
+      "target_text": "이거 얼마예요?",
+      "options": [
+        {
+          "id": "w_samcheon_wonieyo",
+          "target_text": "삼천 원이에요.",
+          "romanization": "samcheon wonieyo.",
+          "audio": "ko/samcheon_wonieyo",
+          "correct": true
+        },
+        {
+          "id": "w_mojayeyo",
+          "target_text": "모자예요.",
+          "romanization": "mojayeyo.",
+          "audio": "ko/mojayeyo"
+        },
+        {
+          "id": "w_ne_juseyo",
+          "target_text": "네, 주세요.",
+          "romanization": "ne, juseyo.",
+          "audio": "ko/ne_juseyo"
+        }
+      ],
+      "romanization": "igeo eolmayeyo?",
+      "audio": "ko/igeo_eolmayeyo",
+      "model_answer": {
+        "id": "얼마예요? (eolmayeyo?) menanyakan harga. Jawabnya harga: 삼천 원이에요 (samcheon wonieyo).",
+        "en": "얼마예요? (eolmayeyo?) asks the price, so the answer is a price: 삼천 원이에요 (samcheon wonieyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "KOR-MONEY",
+        "KOR-SHOP"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_gae",
+          "target_text": "개",
+          "romanization": "gae"
+        },
+        {
+          "id": "b_won",
+          "target_text": "원",
+          "romanization": "won"
+        },
+        {
+          "id": "p_du",
+          "target_text": "두",
+          "romanization": "du"
+        },
+        {
+          "id": "p_icheon",
+          "target_text": "이천",
+          "romanization": "icheon"
+        },
+        {
+          "id": "p_se",
+          "target_text": "세",
+          "romanization": "se"
+        },
+        {
+          "id": "p_sambaek",
+          "target_text": "삼백",
+          "romanization": "sambaek"
+        },
+        {
+          "id": "p_han",
+          "target_text": "한",
+          "romanization": "han"
+        },
+        {
+          "id": "p_ocheon",
+          "target_text": "오천",
+          "romanization": "ocheon"
+        }
+      ],
+      "solution_pairs": {
+        "p_du": "b_gae",
+        "p_icheon": "b_won",
+        "p_se": "b_gae",
+        "p_sambaek": "b_won",
+        "p_han": "b_gae",
+        "p_ocheon": "b_won"
+      },
+      "model_answer": {
+        "id": "Barang: 한 (han), 두 (du), 세 (se) + 개 (gae). Uang: 삼백 (sambaek), 이천 (icheon), 오천 (ocheon) + 원 (won).",
+        "en": "Things: 한 (han), 두 (du), 세 (se) + 개 (gae). Money: 삼백 (sambaek), 이천 (icheon), 오천 (ocheon) + 원 (won)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "KOR-SHOP"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-BUILD-SAY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ini berapa?",
+            "en": "How much is this?"
+          }
+        }
+      ],
+      "image": "pic_shoes",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_eolmayeyo",
+          "target_text": "얼마예요?",
+          "romanization": "eolmayeyo?",
+          "audio": "ko/eolmayeyo"
+        },
+        {
+          "id": "w_juseyo",
+          "target_text": "주세요",
+          "romanization": "juseyo",
+          "audio": "ko/juseyo"
+        },
+        {
+          "id": "w_igeo",
+          "target_text": "이거",
+          "romanization": "igeo",
+          "audio": "ko/igeo"
+        },
+        {
+          "id": "w_sinbal",
+          "target_text": "신발",
+          "romanization": "sinbal",
+          "audio": "ko/sinbal"
+        }
+      ],
+      "solution": [
+        "w_igeo",
+        "w_eolmayeyo"
+      ],
+      "model_answer": {
+        "id": "이거 얼마예요? (igeo eolmayeyo?) = ini berapa?",
+        "en": "이거 얼마예요? (igeo eolmayeyo?) = how much is this?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "KOR-MONEY"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-ORDER-PRICE",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_cheon_won",
+          "target_text": "천 원",
+          "romanization": "cheon won",
+          "audio": "ko/cheon_won"
+        },
+        {
+          "id": "w_man_won",
+          "target_text": "만 원",
+          "romanization": "man won",
+          "audio": "ko/man_won"
+        },
+        {
+          "id": "w_baek_won",
+          "target_text": "백 원",
+          "romanization": "baek won",
+          "audio": "ko/baek_won"
+        },
+        {
+          "id": "w_obaek_won",
+          "target_text": "오백 원",
+          "romanization": "obaek won",
+          "audio": "ko/obaek_won"
+        }
+      ],
+      "solution": [
+        "w_baek_won",
+        "w_obaek_won",
+        "w_cheon_won",
+        "w_man_won"
+      ],
+      "model_answer": {
+        "id": "백 원 (baek won) < 오백 원 (obaek won) < 천 원 (cheon won) < 만 원 (man won).",
+        "en": "백 원 (baek won) < 오백 원 (obaek won) < 천 원 (cheon won) < 만 원 (man won)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-SHOP"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/guseul_daseot_gae",
+      "options": [
+        {
+          "id": "count_marble_4",
+          "image": "count_marble_4",
+          "text": {
+            "id": "4 kelereng",
+            "en": "4 marbles"
+          }
+        },
+        {
+          "id": "count_marble_6",
+          "image": "count_marble_6",
+          "text": {
+            "id": "6 kelereng",
+            "en": "6 marbles"
+          }
+        },
+        {
+          "id": "count_marble_5",
+          "image": "count_marble_5",
+          "text": {
+            "id": "5 kelereng",
+            "en": "5 marbles"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "구슬 다섯 개 (guseul daseot gae) = lima kelereng. 다섯 (daseot) tidak berubah.",
+        "en": "구슬 다섯 개 (guseul daseot gae) = five marbles. 다섯 (daseot) stays the same."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "KOR-MONEY"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-PRICE",
+      "image": "pic_bread",
+      "target_text": "빵 이천 원",
+      "options": [
+        {
+          "id": "n200",
+          "text": {
+            "id": "200 won",
+            "en": "200 won"
+          }
+        },
+        {
+          "id": "n20000",
+          "text": {
+            "id": "20.000 won",
+            "en": "20,000 won"
+          }
+        },
+        {
+          "id": "n2000",
+          "text": {
+            "id": "2.000 won",
+            "en": "2,000 won"
+          },
+          "correct": true
+        }
+      ],
+      "romanization": "ppang icheon won",
+      "audio": "ko/ppang_icheon_won",
+      "model_answer": {
+        "id": "이천 원 (icheon won) = 2.000 won: 이 (i) 2 + 천 (cheon) 1.000.",
+        "en": "이천 원 (icheon won) = 2,000 won: 이 (i) 2 + 천 (cheon) 1,000."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "KOR-MONEY"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PRICE",
+      "image": "note_generic",
+      "target_text": "오천 원",
+      "options": [
+        {
+          "id": "n500",
+          "text": {
+            "id": "500 won",
+            "en": "500 won"
+          }
+        },
+        {
+          "id": "n5000",
+          "text": {
+            "id": "5.000 won",
+            "en": "5,000 won"
+          },
+          "correct": true
+        },
+        {
+          "id": "n50000",
+          "text": {
+            "id": "50.000 won",
+            "en": "50,000 won"
+          }
+        }
+      ],
+      "romanization": "ocheon won",
+      "audio": "ko/ocheon_won",
+      "model_answer": {
+        "id": "오천 원 (ocheon won) = 5.000 won: 오 (o) 5 + 천 (cheon) 1.000.",
+        "en": "오천 원 (ocheon won) = 5,000 won: 오 (o) 5 + 천 (cheon) 1,000."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-SHOP"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "image": "count_egg_3",
+      "target_text": "계란 ___ 개 주세요.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_set",
+          "target_text": "셋",
+          "romanization": "set"
+        },
+        {
+          "id": "p_se",
+          "target_text": "세",
+          "romanization": "se"
+        },
+        {
+          "id": "p_sam",
+          "target_text": "삼",
+          "romanization": "sam"
+        }
+      ],
+      "solution": [
+        "p_se"
+      ],
+      "romanization": "gyeran ___ gae juseyo.",
+      "model_answer": {
+        "id": "셋 (set) jadi 세 (se) sebelum 개 (gae): 계란 세 개 주세요 (gyeran se gae juseyo).",
+        "en": "셋 (set) becomes 세 (se) before 개 (gae): 계란 세 개 주세요 (gyeran se gae juseyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    },
+    {
+      "item_id": "KOR-K-M-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "target_text": "천 원 + 천 원 = ?",
+      "options": [
+        {
+          "id": "w_icheon_won",
+          "target_text": "이천 원",
+          "romanization": "icheon won",
+          "correct": true
+        },
+        {
+          "id": "x_ducheon_won",
+          "target_text": "두천 원",
+          "romanization": "ducheon won"
+        },
+        {
+          "id": "w_ibaek_won",
+          "target_text": "이백 원",
+          "romanization": "ibaek won"
+        }
+      ],
+      "romanization": "cheon won + cheon won = ?",
+      "model_answer": {
+        "id": "천 원 (cheon won) + 천 원 (cheon won) = 이천 원 (icheon won). Uang memakai angka Sino.",
+        "en": "천 원 (cheon won) + 천 원 (cheon won) = 이천 원 (icheon won). Money takes Sino numbers."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-m-0.1"
+    }
+  ]
+}

@@ -37,3 +37,26 @@ data class ItemReport(
     val reason: String,
     val text: String,
 )
+
+/**
+ * A trial questionnaire (Trial_App_Spec §10): [kind] is "background" (E-B1..E-B4, after consent), "day7" or
+ * "end". [answers] maps a question id to the chosen option ids or the typed text (one element).
+ */
+data class SurveyRecord(
+    val surveyId: String,
+    val profileId: String,
+    val track: String,
+    val kind: String,
+    val timestamp: String,
+    val appVersion: String,
+    val answers: Map<String, List<String>>,
+)
+
+/** A finished unit challenge; the unit's sticker is earned by it (P6). */
+data class UnitChallenge(
+    val challengeId: String,
+    val profileId: String,
+    val track: String,
+    val unit: String,
+    val completedAt: String,
+)

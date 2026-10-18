@@ -2,19 +2,25 @@ package id.petalytix.ayailmu.core.design.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import id.petalytix.ayailmu.core.design.R
 
 /**
- * Typography. P0 uses the system sans so the project compiles without font files; the headline/body pairing
- * is shortlisted at the P3 gate (ART_DIRECTION §8). Noto Naskh Arabic is bundled in P1 together with the
- * first Arabic pack (CR-ENG-6) and exposed here as [AyaFonts.arabic].
+ * Typography. Headline and body use the system sans until the illustrator's type pairing is chosen
+ * (ART_DIRECTION §8). Arabic is Noto Naskh Arabic 2.021 (SIL OFL 1.1, licence in
+ * `content/src/main/assets/licenses/`), bundled 2026-10-17 so harakat render the same on every phone (CR-ENG-6).
  */
 object AyaFonts {
     val headline: FontFamily = FontFamily.SansSerif
     val body: FontFamily = FontFamily.SansSerif
-    val arabic: FontFamily = FontFamily.Serif // placeholder until noto_naskh_arabic.ttf lands (P1)
+    val arabic: FontFamily =
+        FontFamily(
+            Font(R.font.noto_naskh_arabic_regular, FontWeight.Normal),
+            Font(R.font.noto_naskh_arabic_bold, FontWeight.Bold),
+        )
 }
 
 val AyaTypography =

@@ -2,7 +2,6 @@ package id.petalytix.ayailmu.core.engine
 
 import id.petalytix.ayailmu.core.content.Item
 import id.petalytix.ayailmu.core.model.AnswerEvent
-import id.petalytix.ayailmu.core.model.ItemType
 import id.petalytix.ayailmu.core.model.Outcome
 import id.petalytix.ayailmu.core.model.Pool
 
@@ -33,7 +32,7 @@ object ReviewScheduler {
             .groupBy { it.itemId }
             .forEach { (itemId, events) ->
                 val item = byItem[itemId] ?: return@forEach
-                if (item.pool in NEVER_REVIEWED || !item.type.evidenceCapable) return@forEach
+                if (!isReviewable(item)) return@forEach
                 val ordered = events.sortedWith(compareBy({ it.localDate }, { it.timestamp }))
                 var rung = 0
                 ordered.drop(1).forEach { e ->
@@ -59,5 +58,6 @@ object ReviewScheduler {
         rules: RuleConfig,
     ): Int = kotlin.math.floor(plannedItems * rules.reviewShareMax).toInt()
 
-    fun isReviewable(item: Item): Boolean = item.pool !in NEVER_REVIEWED && item.type != ItemType.INFO_CARD
+    /** Same rule as [due]: practice-only types (info cards, stories, `memory_flip`, `trace`, puzzles) are never reviewed. */
+    fun isReviewable(item: Item): Boolean = item.pool !in NEVER_REVIEWED && item.type.evidenceCapable
 }

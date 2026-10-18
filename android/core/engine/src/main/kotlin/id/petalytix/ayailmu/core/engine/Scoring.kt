@@ -200,9 +200,21 @@ object Scoring {
             return ItemScore(Outcome.DONT_KNOW, parts, emptyList(), null, listOfNotNull(fb["dont_know"]))
         }
 
-        if (item.type == ItemType.INFO_CARD || item.type == ItemType.MINI_READING) {
-            // Not scored: the learner just continues. Gems are collected through the recorded event.
+        if (item.type == ItemType.INFO_CARD || item.type == ItemType.MINI_READING || item.isStory) {
+            // Not scored: the learner just continues. Gems are collected through the recorded event. A `story` is the
+            // same kind of step (MODULES_LEVELS_STORIES.md section 2): watched, then "seen".
             return single(Outcome.NOT_ASSESSED, "seen", PartScore.NOT_ASSESSED, feedback = fb["correct"])
+        }
+
+        if (item.isTrace) {
+            // Practice only (CR-ENG-9, INTERACTIONS_AUDIO.md section 4): the app checks each stroke loosely and lets the
+            // learner retry it, then sends the ids of the strokes completed. Finishing is "done"; a trace is never wrong.
+            require(response.kind == Response.Kind.SEQUENCE) { "${item.itemId}: trace item needs a sequence response" }
+            return if (response.sequence.isNullOrEmpty()) {
+                single(Outcome.NOT_ASSESSED, "answer", PartScore.NOT_ASSESSED)
+            } else {
+                single(Outcome.CORRECT, "answer", PartScore.CORRECT, feedback = fb["correct"])
+            }
         }
 
         if (item.isMeaning) {
@@ -261,7 +273,7 @@ object Scoring {
             return ItemScore(outcome, parts, tags, serious, feedback)
         }
 
-        if (item.type == ItemType.NUMBER_INPUT || item.type == ItemType.ESTIMATE_SLIDER) {
+        if (item.isNumeric) {
             require(response.kind == Response.Kind.NUMBER) { "${item.itemId}: numeric item needs a number response" }
             val numeric = requireNotNull(item.numeric) { "${item.itemId}: numeric item has no answer" }
             val value = requireNotNull(response.value) { "${item.itemId}: number response has no value" }

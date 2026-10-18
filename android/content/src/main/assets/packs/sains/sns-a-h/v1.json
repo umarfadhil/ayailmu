@@ -1,0 +1,2297 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sns-a-h-0.1",
+    "subject": "sains",
+    "track": "sns-a-h",
+    "level": "mahir",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Sains — Mahir (Dewasa)",
+      "en": "Science — Advanced (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, starter level: 2 units) for subject + language review: needs a science reviewer (research methods, genetics) and a health reviewer for the antibiotic and thalassaemia items and the Indonesian and English language reviewers before any item is approved (docs/syllabus/03_SAINS.md, Adults Mahir units 1-2; MODULES_LEVELS_STORIES.md). New sci_/pic_ art keys (contract section 6) are drafts being drawn.",
+  "prompts": {
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban yang tepat.",
+      "en": "Choose the right answer."
+    },
+    "P-MYTH": {
+      "id": "Mitos atau fakta?",
+      "en": "Myth or fact?"
+    },
+    "P-CONNECT": {
+      "id": "Tarik garis ke pasangannya.",
+      "en": "Draw a line to each match."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke pasangannya.",
+      "en": "Drag each picture to its match."
+    },
+    "P-SORT": {
+      "id": "Seret ke keranjang yang tepat.",
+      "en": "Drag each into the right basket."
+    },
+    "P-ORDER": {
+      "id": "Seret ke urutan yang benar.",
+      "en": "Drag them into the right order."
+    },
+    "P-FILL": {
+      "id": "Seret ke bagian yang kosong.",
+      "en": "Drag into the gap."
+    },
+    "P-MEMORY": {
+      "id": "Balik kartu, cari pasangannya.",
+      "en": "Flip the cards, find pairs."
+    },
+    "P-EST": {
+      "id": "Perkirakan, lalu geser.",
+      "en": "Estimate, then slide."
+    },
+    "P-READ": {
+      "id": "Silakan baca dulu.",
+      "en": "Read this first."
+    },
+    "P-TRY": {
+      "id": "Coba di rumah",
+      "en": "Try at home"
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Correct. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Baik, kita lanjut.",
+      "en": "Good, let's continue."
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Metode ilmiah & bias",
+        "en": "Scientific method & bias"
+      },
+      "sticker": "sticker_book"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Genetika & evolusi",
+        "en": "Genetics & evolution"
+      },
+      "sticker": "sticker_cat"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SNS-A-H-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Uji yang adil",
+        "en": "A fair test"
+      },
+      "body": [
+        {
+          "id": "Uji yang adil membandingkan dua kelompok yang dibagi secara acak: satu mendapat perlakuan, satu lagi menjadi kontrol (sering diberi plasebo).",
+          "en": "A fair test compares two randomly split groups: one gets the treatment, the other is the control (often given a placebo)."
+        },
+        {
+          "id": "Bias menipu kita: harapan, hanya melihat yang cocok, atau faktor lain yang ikut berubah.",
+          "en": "Bias fools us: expectations, noticing only what fits, or another factor changing at the same time."
+        },
+        {
+          "id": "Hasil kebetulan sering muncul pada sampel kecil. Karena itu ilmuwan menghitung peluang dan mengulang penelitian.",
+          "en": "Chance results are common in small samples. That's why scientists calculate probabilities and repeat studies."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SNS-A-H-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Genetika & evolusi",
+        "en": "Genetics & evolution"
+      },
+      "body": [
+        {
+          "id": "DNA adalah \"buku resep\" di hampir setiap sel. Manusia punya 23 pasang kromosom: satu set dari ibu, satu set dari ayah.",
+          "en": "DNA is the \"recipe book\" in almost every cell. Humans have 23 pairs of chromosomes: one set from the mother, one from the father."
+        },
+        {
+          "id": "Mutasi adalah perubahan kecil pada resep; kebanyakan tidak berpengaruh, sebagian merugikan, sebagian kecil menguntungkan.",
+          "en": "A mutation is a small change in the recipe; most do nothing, some harm, a few help."
+        },
+        {
+          "id": "Evolusi: makhluk dengan sifat yang lebih cocok bertahan dan berkembang biak lebih banyak, seperti bakteri yang kebal antibiotik.",
+          "en": "Evolution: living things with better-suited traits survive and reproduce more, like antibiotic-resistant bacteria."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {
+    "R-SNSAH-DNA": {
+      "title": {
+        "id": "Resep di dalam sel",
+        "en": "The recipe inside your cells"
+      },
+      "body": [
+        {
+          "id": "Hampir setiap sel tubuh Anda menyimpan DNA yang panjangnya sekitar 2 meter bila direntangkan, tergulung rapat di dalam inti sel.",
+          "en": "Almost every cell in your body holds DNA about 2 metres long if stretched out, coiled tightly inside the nucleus."
+        },
+        {
+          "id": "DNA itu terbagi menjadi 46 kromosom (23 pasang) dan memuat sekitar 20.000 gen pengode protein.",
+          "en": "That DNA is divided into 46 chromosomes (23 pairs) and carries about 20,000 protein-coding genes."
+        },
+        {
+          "id": "Sel membaca gen seperti resep untuk membuat protein, bahan kerja tubuh.",
+          "en": "Cells read genes like recipes to make proteins, the body's working materials."
+        }
+      ],
+      "review_status": "draft"
+    }
+  },
+  "items": [
+    {
+      "item_id": "SNS-A-H-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "SCI-METHOD"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Langkah metode ilmiah.",
+            "en": "The steps of the scientific method."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "test",
+          "text": {
+            "id": "Uji dengan kelompok kontrol",
+            "en": "Test it with a control group"
+          },
+          "image": "hist_curie_flask"
+        },
+        {
+          "id": "ask",
+          "text": {
+            "id": "Ajukan pertanyaan",
+            "en": "Ask a question"
+          },
+          "image": "aya_think"
+        },
+        {
+          "id": "share",
+          "text": {
+            "id": "Bagikan agar orang lain bisa mengulang",
+            "en": "Share it so others can repeat it"
+          },
+          "image": "hist_book_stack"
+        },
+        {
+          "id": "guess",
+          "text": {
+            "id": "Rumuskan dugaan (hipotesis)",
+            "en": "Form a hypothesis"
+          },
+          "image": "hist_notebook"
+        },
+        {
+          "id": "data",
+          "text": {
+            "id": "Catat dan analisis data",
+            "en": "Record and analyse the data"
+          },
+          "image": "math_bar_chart"
+        }
+      ],
+      "solution": [
+        "ask",
+        "guess",
+        "test",
+        "data",
+        "share"
+      ],
+      "model_answer": {
+        "id": "Pertanyaan → hipotesis → uji → data → bagikan dan ulangi.",
+        "en": "Question → hypothesis → test → data → share and repeat."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "SCI-STATS"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Seberapa kuat buktinya?",
+            "en": "How strong is the evidence?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_strong",
+          "text": {
+            "id": "Bukti lebih kuat",
+            "en": "Stronger evidence"
+          }
+        },
+        {
+          "id": "b_weak",
+          "text": {
+            "id": "Bukti lebih lemah",
+            "en": "Weaker evidence"
+          }
+        },
+        {
+          "id": "testi",
+          "text": {
+            "id": "Testimoni satu orang di media sosial",
+            "en": "One person's testimonial on social media"
+          },
+          "image": "pic_phone"
+        },
+        {
+          "id": "rct",
+          "text": {
+            "id": "Uji acak terkontrol dengan 1.000 peserta",
+            "en": "A randomised controlled trial with 1,000 people"
+          },
+          "image": "groups_5x5"
+        },
+        {
+          "id": "neighbour",
+          "text": {
+            "id": "\"Tetangga saya sembuh setelah minum ini\"",
+            "en": "\"My neighbour got better after drinking this\""
+          },
+          "image": "pic_man"
+        },
+        {
+          "id": "repl",
+          "text": {
+            "id": "Hasil yang diulang oleh tim peneliti lain",
+            "en": "A result repeated by another research team"
+          },
+          "image": "math_bar_chart"
+        },
+        {
+          "id": "ad",
+          "text": {
+            "id": "Iklan dengan bintang terkenal",
+            "en": "An advert with a celebrity"
+          },
+          "image": "pic_tv"
+        }
+      ],
+      "solution_pairs": {
+        "testi": "b_weak",
+        "rct": "b_strong",
+        "neighbour": "b_weak",
+        "repl": "b_strong",
+        "ad": "b_weak"
+      },
+      "model_answer": {
+        "id": "Kuat: uji acak terkontrol yang besar dan hasil yang terulang. Lemah: testimoni, cerita tetangga, iklan.",
+        "en": "Strong: large randomised controlled trials and repeated results. Weak: testimonials, anecdotes, adverts."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "SCI-BIAS"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Istilah dan contohnya.",
+            "en": "Term and example."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "placebo",
+          "text": {
+            "id": "Efek plasebo",
+            "en": "Placebo effect"
+          }
+        },
+        {
+          "id": "confirm",
+          "text": {
+            "id": "Bias konfirmasi",
+            "en": "Confirmation bias"
+          }
+        },
+        {
+          "id": "confound",
+          "text": {
+            "id": "Faktor pengganggu",
+            "en": "Confounding factor"
+          }
+        },
+        {
+          "id": "repl",
+          "text": {
+            "id": "Replikasi",
+            "en": "Replication"
+          }
+        },
+        {
+          "id": "e_placebo",
+          "text": {
+            "id": "Merasa membaik karena yakin sedang diobati",
+            "en": "Feeling better because you believe you're treated"
+          },
+          "image": "pic_medicine"
+        },
+        {
+          "id": "e_confirm",
+          "text": {
+            "id": "Hanya membaca berita yang cocok dengan pendapat sendiri",
+            "en": "Only reading news that fits your view"
+          },
+          "image": "pic_phone"
+        },
+        {
+          "id": "e_confound",
+          "text": {
+            "id": "Penjualan payung dan kasus DBD naik bersama karena musim hujan",
+            "en": "Umbrella sales and dengue cases rise together because of the rainy season"
+          },
+          "image": "pic_rain"
+        },
+        {
+          "id": "e_repl",
+          "text": {
+            "id": "Tim lain mengulang dan hasilnya sama",
+            "en": "Another team repeats it and gets the same result"
+          },
+          "image": "math_bar_chart"
+        }
+      ],
+      "solution_pairs": {
+        "placebo": "e_placebo",
+        "confirm": "e_confirm",
+        "confound": "e_confound",
+        "repl": "e_repl"
+      },
+      "model_answer": {
+        "id": "Plasebo: harapan. Konfirmasi: memilih bukti. Pengganggu: faktor ketiga. Replikasi: diulang tim lain.",
+        "en": "Placebo: expectation. Confirmation: picking evidence. Confounder: a third factor. Replication: another team repeats it."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "estimate_slider",
+      "skills": [
+        "SCI-STATS"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-EST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Lempar koin 10 kali. Seberapa sering muncul 7 \"angka\" atau lebih?",
+            "en": "Toss a coin 10 times. How often do you get 7 or more heads?"
+          }
+        }
+      ],
+      "image": "coin_generic",
+      "numeric": {
+        "value": 17,
+        "tolerance": 7,
+        "unit": {
+          "id": "% dari percobaan",
+          "en": "% of tries"
+        }
+      },
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1
+      },
+      "model_answer": {
+        "id": "Sekitar 17%, hampir 1 dari 6 kali! Pada sampel kecil, hasil yang tampak mencolok sering hanya kebetulan.",
+        "en": "About 17%, almost 1 time in 6! In small samples, results that look striking are often just chance."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "SCI-METHOD"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Susun uji obat yang adil.",
+            "en": "Set up a fair drug trial."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "measure",
+          "text": {
+            "id": "Ukur hasil dengan cara yang sama",
+            "en": "Measure outcomes the same way"
+          },
+          "image": "math_thermometer"
+        },
+        {
+          "id": "compare",
+          "text": {
+            "id": "Bandingkan: lebih besar dari kebetulan?",
+            "en": "Compare: bigger than chance?"
+          },
+          "image": "math_bar_chart"
+        },
+        {
+          "id": "random",
+          "text": {
+            "id": "Bagi peserta dengan undian",
+            "en": "Split participants by lottery"
+          },
+          "image": "coin_generic"
+        },
+        {
+          "id": "give",
+          "text": {
+            "id": "Satu kelompok dapat obat, satu dapat plasebo yang tampak sama",
+            "en": "One group gets the drug, one a look-alike placebo"
+          },
+          "image": "pic_medicine"
+        }
+      ],
+      "solution": [
+        "random",
+        "give",
+        "measure",
+        "compare"
+      ],
+      "model_answer": {
+        "id": "Undi → beri obat atau plasebo → ukur dengan cara sama → bandingkan.",
+        "en": "Randomise → give drug or placebo → measure the same way → compare."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "SCI-STATS"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Jika dua hal naik bersamaan, yang satu pasti menyebabkan yang lain.",
+            "en": "If two things rise together, one must cause the other."
+          }
+        }
+      ],
+      "image": "math_bar_chart",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Korelasi belum tentu sebab-akibat; bisa ada faktor ketiga, seperti musim hujan.",
+        "en": "Myth. Correlation isn't necessarily causation; there may be a third factor, like the rainy season."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "SCI-BIAS"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mengurangi atau menambah bias?",
+            "en": "Reduces or adds bias?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_less",
+          "text": {
+            "id": "Mengurangi bias",
+            "en": "Reduces bias"
+          }
+        },
+        {
+          "id": "b_more",
+          "text": {
+            "id": "Menambah bias",
+            "en": "Adds bias"
+          }
+        },
+        {
+          "id": "blind",
+          "text": {
+            "id": "Peserta tidak tahu dapat obat atau plasebo",
+            "en": "Participants don't know if they got drug or placebo"
+          },
+          "image": "pic_medicine"
+        },
+        {
+          "id": "pick",
+          "text": {
+            "id": "Peneliti memilih sendiri pasien yang paling sehat untuk diberi obat",
+            "en": "Researchers hand-pick the healthiest patients for the drug"
+          },
+          "image": "pic_doctor"
+        },
+        {
+          "id": "lottery",
+          "text": {
+            "id": "Kelompok dibagi dengan undian",
+            "en": "Groups are split by lottery"
+          },
+          "image": "coin_generic"
+        },
+        {
+          "id": "cherry",
+          "text": {
+            "id": "Hanya melaporkan hasil yang bagus",
+            "en": "Only reporting the good results"
+          },
+          "image": "hist_notebook"
+        },
+        {
+          "id": "assess",
+          "text": {
+            "id": "Penilai tidak tahu kelompok peserta",
+            "en": "Assessors don't know who's in which group"
+          },
+          "image": "hist_sil_scientist"
+        }
+      ],
+      "solution_pairs": {
+        "blind": "b_less",
+        "pick": "b_more",
+        "lottery": "b_less",
+        "cherry": "b_more",
+        "assess": "b_less"
+      },
+      "model_answer": {
+        "id": "Penyamaran dan undian mengurangi bias; memilih pasien dan menyembunyikan hasil buruk menambahnya.",
+        "en": "Blinding and randomising reduce bias; hand-picking patients and hiding bad results add it."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "SCI-METHOD"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kelompok pembanding yang tidak mendapat perlakuan disebut kelompok ____.",
+            "en": "The comparison group that gets no treatment is the ____ group."
+          }
+        }
+      ],
+      "image": "hist_curie_flask",
+      "options": [
+        {
+          "id": "exp",
+          "text": {
+            "id": "eksperimen",
+            "en": "experimental"
+          }
+        },
+        {
+          "id": "ctrl",
+          "text": {
+            "id": "kontrol",
+            "en": "control"
+          }
+        },
+        {
+          "id": "rand",
+          "text": {
+            "id": "acak",
+            "en": "random"
+          }
+        }
+      ],
+      "solution": [
+        "ctrl"
+      ],
+      "model_answer": {
+        "id": "Kelompok kontrol: tanpanya kita tidak tahu apa yang terjadi bila tidak diberi apa-apa.",
+        "en": "The control group: without it we can't tell what happens with no treatment."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "SCI-BIAS"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mengapa penilai sebaiknya tidak tahu siapa mendapat obat?",
+            "en": "Why shouldn't the assessors know who got the drug?"
+          }
+        }
+      ],
+      "image": "hist_sil_scientist",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Agar penelitiannya lebih murah",
+            "en": "To make the study cheaper"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Agar harapan mereka tidak memengaruhi penilaian",
+            "en": "So their expectations can't sway the assessment"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Agar peserta tidak takut",
+            "en": "So the participants aren't scared"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Penilai yang tahu bisa tanpa sadar menilai lebih baik pada kelompok obat.",
+        "en": "Assessors who know may unconsciously rate the drug group more kindly."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "SCI-STATS"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bisa kebetulan, atau sulit dijelaskan kebetulan?",
+            "en": "Could be chance, or hard to explain by chance?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_chance",
+          "text": {
+            "id": "Bisa jadi kebetulan",
+            "en": "Could easily be chance"
+          }
+        },
+        {
+          "id": "b_real",
+          "text": {
+            "id": "Sulit dijelaskan kebetulan",
+            "en": "Hard to explain by chance"
+          }
+        },
+        {
+          "id": "coin",
+          "text": {
+            "id": "Koin keluar \"angka\" 3 kali berturut-turut",
+            "en": "A coin lands heads 3 times in a row"
+          },
+          "image": "coin_generic"
+        },
+        {
+          "id": "trial",
+          "text": {
+            "id": "Pada 2.000 pasien, kelompok obat jauh lebih jarang dirawat, dan hasilnya terulang",
+            "en": "In 2,000 patients the drug group was admitted far less, and it was replicated"
+          },
+          "image": "groups_5x5"
+        },
+        {
+          "id": "bday",
+          "text": {
+            "id": "Di kelas berisi 30 siswa, ada 2 yang berulang tahun sama",
+            "en": "In a class of 30, two pupils share a birthday"
+          },
+          "image": "pic_cake"
+        },
+        {
+          "id": "cured",
+          "text": {
+            "id": "Satu orang sembuh setelah minum ramuan",
+            "en": "One person recovered after a herbal drink"
+          },
+          "image": "pic_man"
+        }
+      ],
+      "solution_pairs": {
+        "coin": "b_chance",
+        "trial": "b_real",
+        "bday": "b_chance",
+        "cured": "b_chance"
+      },
+      "model_answer": {
+        "id": "Tiga \"angka\" berturut-turut peluangnya 1/8; ulang tahun kembar di kelas 30 orang peluangnya ±70%; orang bisa sembuh sendiri. Uji besar yang terulang sulit dijelaskan kebetulan.",
+        "en": "Three heads in a row has a 1-in-8 chance; a shared birthday among 30 is about 70% likely; people recover on their own. A large replicated trial is hard to explain by chance."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "SCI-BIAS"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-TRY",
+      "image": "pic_tea_cup",
+      "model_answer": {
+        "id": "Uji buta di rumah: seduh teh dua merek dalam gelas yang sama, beri tanda tersembunyi di dasarnya. Minta keluarga mencicipi tanpa tahu mereknya, lalu memilih favorit. Apakah pilihannya berubah saat merek disembunyikan?",
+        "en": "A blind test at home: brew two brands of tea in identical glasses with a hidden mark underneath. Ask your family to taste without knowing the brand and pick a favourite. Does the choice change when the brand is hidden?"
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "SCI-METHOD"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Istilah dan gambarnya.",
+            "en": "Term and picture."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_placebo",
+          "text": {
+            "id": "Plasebo",
+            "en": "Placebo"
+          }
+        },
+        {
+          "id": "t_random",
+          "text": {
+            "id": "Acak",
+            "en": "Random"
+          }
+        },
+        {
+          "id": "t_data",
+          "text": {
+            "id": "Data",
+            "en": "Data"
+          }
+        },
+        {
+          "id": "t_hypo",
+          "text": {
+            "id": "Hipotesis",
+            "en": "Hypothesis"
+          }
+        },
+        {
+          "id": "p_placebo",
+          "text": {
+            "id": "kapsul tanpa obat",
+            "en": "a capsule with no drug"
+          },
+          "image": "pic_medicine"
+        },
+        {
+          "id": "p_random",
+          "text": {
+            "id": "undian koin",
+            "en": "a coin toss"
+          },
+          "image": "coin_generic"
+        },
+        {
+          "id": "p_data",
+          "text": {
+            "id": "grafik hasil",
+            "en": "a results chart"
+          },
+          "image": "math_bar_chart"
+        },
+        {
+          "id": "p_hypo",
+          "text": {
+            "id": "dugaan yang bisa diuji",
+            "en": "a testable guess"
+          },
+          "image": "aya_think"
+        }
+      ],
+      "solution_pairs": {
+        "t_placebo": "p_placebo",
+        "t_random": "p_random",
+        "t_data": "p_data",
+        "t_hypo": "p_hypo"
+      },
+      "model_answer": {
+        "id": "Plasebo = kapsul tanpa obat; acak = undian; data = grafik hasil; hipotesis = dugaan yang bisa diuji.",
+        "en": "Placebo = a capsule with no drug; random = a lottery; data = a results chart; hypothesis = a testable guess."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "SCI-METHOD"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Uji yang adil membagi peserta secara ____.",
+            "en": "A fair test splits participants ____."
+          }
+        }
+      ],
+      "image": "coin_generic",
+      "options": [
+        {
+          "id": "age",
+          "text": {
+            "id": "menurut usia saja",
+            "en": "by age only"
+          }
+        },
+        {
+          "id": "rand",
+          "text": {
+            "id": "acak (diundi)",
+            "en": "at random (by lottery)"
+          }
+        },
+        {
+          "id": "choice",
+          "text": {
+            "id": "sesuai pilihan peneliti",
+            "en": "as the researcher chooses"
+          }
+        }
+      ],
+      "solution": [
+        "rand"
+      ],
+      "model_answer": {
+        "id": "Acak, supaya kedua kelompok setara sejak awal.",
+        "en": "At random, so both groups start out alike."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "SCI-BIAS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sakit kepala hilang setelah minum kapsul gula. Ini contoh…",
+            "en": "A headache goes away after a sugar pill. This is an example of…"
+          }
+        }
+      ],
+      "image": "pic_medicine",
+      "options": [
+        {
+          "id": "c",
+          "text": {
+            "id": "efek plasebo",
+            "en": "the placebo effect"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "replikasi",
+            "en": "replication"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "bias konfirmasi",
+            "en": "confirmation bias"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Efek plasebo: tubuh dan pikiran merespons keyakinan sedang diobati.",
+        "en": "The placebo effect: body and mind respond to the belief of being treated."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-01-015",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "SCI-STATS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bisa kebetulan, atau bukti kuat?",
+            "en": "Could be chance, or strong evidence?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_chance",
+          "text": {
+            "id": "Bisa jadi kebetulan",
+            "en": "Could be chance"
+          }
+        },
+        {
+          "id": "b_real",
+          "text": {
+            "id": "Bukti kuat",
+            "en": "Strong evidence"
+          }
+        },
+        {
+          "id": "coin",
+          "text": {
+            "id": "Koin 4 kali berturut-turut \"gambar\"",
+            "en": "A coin lands tails 4 times running"
+          },
+          "image": "coin_generic"
+        },
+        {
+          "id": "many",
+          "text": {
+            "id": "Hasil sama di 5 penelitian besar",
+            "en": "The same result in 5 large studies"
+          },
+          "image": "math_bar_chart"
+        },
+        {
+          "id": "one",
+          "text": {
+            "id": "Satu orang membaik setelah memakai gelang magnet",
+            "en": "One person improved after wearing a magnetic bracelet"
+          },
+          "image": "pic_man"
+        }
+      ],
+      "solution_pairs": {
+        "coin": "b_chance",
+        "many": "b_real",
+        "one": "b_chance"
+      },
+      "model_answer": {
+        "id": "Satu cerita atau beberapa lemparan koin mudah terjadi karena kebetulan; banyak penelitian besar tidak.",
+        "en": "One story or a few coin tosses easily happen by chance; many large studies don't."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-01-016",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "SCI-BIAS"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "wash_hands",
+      "gem": true,
+      "source": "Encyclopaedia Britannica, \"Ignaz Semmelweis\"; M. Best & D. Neuhauser, \"Ignaz Semmelweis and the birth of infection control\", Quality and Safety in Health Care 13(3):233-234 (2004).",
+      "model_answer": {
+        "id": "Tahun 1847 di Wina, dokter Ignaz Semmelweis mewajibkan cuci tangan dengan larutan kapur klor sebelum memeriksa ibu bersalin. Kematian ibu di bangsalnya turun drastis, dari sekitar 1 dari 10 menjadi sekitar 1 dari 100. Banyak dokter saat itu menolak idenya; teori kuman baru diterima puluhan tahun kemudian.",
+        "en": "In 1847 in Vienna, Dr Ignaz Semmelweis made doctors wash their hands in chlorinated lime before examining women in labour. Deaths on his ward fell sharply, from about 1 in 10 to about 1 in 100. Many doctors rejected his idea; germ theory was accepted only decades later."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "mini_reading",
+      "skills": [
+        "GEN-DNA"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-READ",
+      "image": "sci_microscope",
+      "reading_id": "R-SNSAH-DNA",
+      "model_answer": {
+        "id": "DNA ±2 m per sel, 46 kromosom, ±20.000 gen; gen dibaca untuk membuat protein.",
+        "en": "About 2 m of DNA per cell, 46 chromosomes, about 20,000 genes; genes are read to make proteins."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "GEN-DNA"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Jika DNA sebuah perpustakaan…",
+            "en": "If DNA were a library…"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "lib",
+          "text": {
+            "id": "Seluruh perpustakaan",
+            "en": "The whole library"
+          },
+          "image": "hist_book_stack"
+        },
+        {
+          "id": "vol",
+          "text": {
+            "id": "Satu jilid buku",
+            "en": "One volume"
+          },
+          "image": "pic_book"
+        },
+        {
+          "id": "rec",
+          "text": {
+            "id": "Satu resep",
+            "en": "One recipe"
+          },
+          "image": "hist_notebook"
+        },
+        {
+          "id": "typo",
+          "text": {
+            "id": "Salah ketik",
+            "en": "A typo"
+          },
+          "image": "pic_pencil"
+        },
+        {
+          "id": "genome",
+          "text": {
+            "id": "Genom (seluruh DNA)",
+            "en": "Genome (all the DNA)"
+          }
+        },
+        {
+          "id": "chrom",
+          "text": {
+            "id": "Kromosom",
+            "en": "Chromosome"
+          }
+        },
+        {
+          "id": "gene",
+          "text": {
+            "id": "Gen",
+            "en": "Gene"
+          }
+        },
+        {
+          "id": "mut",
+          "text": {
+            "id": "Mutasi",
+            "en": "Mutation"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "lib": "genome",
+        "vol": "chrom",
+        "rec": "gene",
+        "typo": "mut"
+      },
+      "model_answer": {
+        "id": "Perpustakaan = genom, jilid = kromosom, resep = gen, salah ketik = mutasi.",
+        "en": "Library = genome, volume = chromosome, recipe = gene, typo = mutation."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "GEN-EVOL"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mempercepat atau memperlambat kebal antibiotik?",
+            "en": "Speeds up or slows down antibiotic resistance?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_fast",
+          "text": {
+            "id": "Mempercepat",
+            "en": "Speeds it up"
+          }
+        },
+        {
+          "id": "b_slow",
+          "text": {
+            "id": "Memperlambat",
+            "en": "Slows it down"
+          }
+        },
+        {
+          "id": "flu",
+          "text": {
+            "id": "Minum antibiotik untuk flu (virus)",
+            "en": "Taking antibiotics for flu (a virus)"
+          },
+          "image": "pic_cough"
+        },
+        {
+          "id": "hygiene",
+          "text": {
+            "id": "Cuci tangan dan vaksinasi",
+            "en": "Handwashing and vaccination"
+          },
+          "image": "wash_hands"
+        },
+        {
+          "id": "otc",
+          "text": {
+            "id": "Membeli antibiotik tanpa resep",
+            "en": "Buying antibiotics without a prescription"
+          },
+          "image": "pic_medicine"
+        },
+        {
+          "id": "rx",
+          "text": {
+            "id": "Memakai antibiotik sesuai resep dan arahan dokter",
+            "en": "Using antibiotics as prescribed and advised by a doctor"
+          },
+          "image": "pic_doctor"
+        },
+        {
+          "id": "farm",
+          "text": {
+            "id": "Antibiotik untuk memacu pertumbuhan ternak sehat",
+            "en": "Antibiotics to speed up growth in healthy livestock"
+          },
+          "image": "pic_chicken"
+        }
+      ],
+      "solution_pairs": {
+        "flu": "b_fast",
+        "hygiene": "b_slow",
+        "otc": "b_fast",
+        "rx": "b_slow",
+        "farm": "b_fast"
+      },
+      "model_answer": {
+        "id": "Setiap pemakaian yang tidak perlu memberi bakteri kebal kesempatan menang; mencegah infeksi mengurangi kebutuhan antibiotik.",
+        "en": "Every unnecessary use gives resistant bacteria a chance to win; preventing infection reduces the need for antibiotics."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "GEN-EVOL"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bagaimana bakteri menjadi kebal?",
+            "en": "How do bacteria become resistant?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "kill",
+          "text": {
+            "id": "Antibiotik membunuh bakteri yang tidak tahan",
+            "en": "The antibiotic kills the non-resistant bacteria"
+          },
+          "image": "pic_medicine"
+        },
+        {
+          "id": "hard",
+          "text": {
+            "id": "Infeksi berikutnya sulit diobati",
+            "en": "The next infection is hard to treat"
+          },
+          "image": "pic_fever"
+        },
+        {
+          "id": "few",
+          "text": {
+            "id": "Di antara jutaan bakteri, segelintir kebetulan tahan obat",
+            "en": "Among millions of bacteria, a few happen to resist the drug"
+          },
+          "image": "sci_microscope"
+        },
+        {
+          "id": "grow",
+          "text": {
+            "id": "Yang tahan bertahan dan berkembang biak",
+            "en": "The resistant ones survive and multiply"
+          }
+        }
+      ],
+      "solution": [
+        "few",
+        "kill",
+        "grow",
+        "hard"
+      ],
+      "model_answer": {
+        "id": "Variasi → seleksi oleh antibiotik → yang tahan berbiak → infeksi kebal. Itulah evolusi.",
+        "en": "Variation → selection by the antibiotic → survivors multiply → resistant infection. That's evolution."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "GEN-EVOL"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tubuh kitalah yang menjadi kebal terhadap antibiotik.",
+            "en": "It's our body that becomes resistant to antibiotics."
+          }
+        }
+      ],
+      "image": "pic_medicine",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Yang kebal adalah bakterinya, dan bakteri kebal itu bisa menular ke orang lain.",
+        "en": "Myth. It's the bacteria that become resistant, and resistant bacteria can spread to other people."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "GEN-EVOL"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana kerabat terdekat manusia?",
+            "en": "Which is humans' closest relative?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_monkey",
+          "image": "pic_monkey"
+        },
+        {
+          "id": "pic_cat",
+          "image": "pic_cat"
+        },
+        {
+          "id": "pic_orangutan",
+          "image": "pic_orangutan",
+          "correct": true
+        },
+        {
+          "id": "pic_elephant",
+          "image": "pic_elephant"
+        }
+      ],
+      "model_answer": {
+        "id": "Orangutan, kera besar yang berbagi sekitar 97% urutan DNA dengan kita. Kita tidak berasal dari orangutan; kita punya nenek moyang bersama.",
+        "en": "The orangutan, a great ape sharing about 97% of our DNA sequence. We didn't descend from orangutans; we share a common ancestor."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "GEN-INHERIT"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bayi mendapat ____ kromosom dari ibu dan sebanyak itu pula dari ayah.",
+            "en": "A baby gets ____ chromosomes from the mother and the same number from the father."
+          }
+        }
+      ],
+      "image": "fam_baby",
+      "options": [
+        {
+          "id": "n46",
+          "text": {
+            "id": "46",
+            "en": "46"
+          }
+        },
+        {
+          "id": "n23",
+          "text": {
+            "id": "23",
+            "en": "23"
+          }
+        },
+        {
+          "id": "n12",
+          "text": {
+            "id": "12",
+            "en": "12"
+          }
+        }
+      ],
+      "solution": [
+        "n23"
+      ],
+      "model_answer": {
+        "id": "23 dari ibu + 23 dari ayah = 46 kromosom.",
+        "en": "23 from the mother + 23 from the father = 46 chromosomes."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "GEN-INHERIT"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Diwariskan lewat gen, atau didapat semasa hidup?",
+            "en": "Inherited through genes, or acquired in life?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_gene",
+          "text": {
+            "id": "Diwariskan lewat gen",
+            "en": "Inherited through genes"
+          }
+        },
+        {
+          "id": "b_life",
+          "text": {
+            "id": "Didapat semasa hidup",
+            "en": "Acquired during life"
+          }
+        },
+        {
+          "id": "eye",
+          "text": {
+            "id": "Warna mata",
+            "en": "Eye colour"
+          },
+          "image": "sense_eye"
+        },
+        {
+          "id": "muscle",
+          "text": {
+            "id": "Otot besar hasil latihan",
+            "en": "Big muscles from training"
+          },
+          "image": "pic_exercise"
+        },
+        {
+          "id": "hair",
+          "text": {
+            "id": "Rambut ikal alami",
+            "en": "Naturally curly hair"
+          },
+          "image": "pic_head"
+        },
+        {
+          "id": "guitar",
+          "text": {
+            "id": "Pandai bermain gitar",
+            "en": "Being good at guitar"
+          },
+          "image": "pic_guitar"
+        }
+      ],
+      "solution_pairs": {
+        "eye": "b_gene",
+        "muscle": "b_life",
+        "hair": "b_gene",
+        "guitar": "b_life"
+      },
+      "model_answer": {
+        "id": "Warna mata dan rambut ikal diwariskan; otot hasil latihan dan keterampilan tidak masuk ke DNA anak.",
+        "en": "Eye colour and curly hair are inherited; trained muscles and skills don't enter a child's DNA."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "GEN-INHERIT"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ayah dan ibu sama-sama pembawa sifat thalassemia beta. Peluang tiap anak lahir dengan thalassemia mayor?",
+            "en": "Both parents carry the beta-thalassaemia trait. Each child's chance of thalassaemia major?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "frac_1_2",
+          "image": "frac_1_2"
+        },
+        {
+          "id": "frac_3_4",
+          "image": "frac_3_4"
+        },
+        {
+          "id": "frac_1_4",
+          "image": "frac_1_4",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "1/4 (25%) pada setiap kehamilan; 1/2 menjadi pembawa sifat, 1/4 tidak membawa. Karena itu Kemenkes menganjurkan skrining sebelum menikah.",
+        "en": "1 in 4 (25%) in every pregnancy; 1 in 2 will be carriers, 1 in 4 neither. That's why Indonesia's Ministry of Health encourages screening before marriage."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "GEN-EVOL"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bakteri bisa membelah diri kira-kira tiap 20 menit, jadi sehari muncul banyak ____.",
+            "en": "Bacteria can divide about every 20 minutes, so a day brings many ____."
+          }
+        }
+      ],
+      "image": "sci_microscope",
+      "options": [
+        {
+          "id": "organ",
+          "text": {
+            "id": "organ",
+            "en": "organs"
+          }
+        },
+        {
+          "id": "gen",
+          "text": {
+            "id": "generasi",
+            "en": "generations"
+          }
+        },
+        {
+          "id": "chrom",
+          "text": {
+            "id": "kromosom",
+            "en": "chromosomes"
+          }
+        }
+      ],
+      "solution": [
+        "gen"
+      ],
+      "model_answer": {
+        "id": "Generasi. Banyak generasi dalam waktu singkat membuat seleksi alam bekerja cepat.",
+        "en": "Generations. Many generations in a short time let natural selection work fast."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "GEN-DNA"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-TRY",
+      "image": "fruit_banana",
+      "model_answer": {
+        "id": "Ekstrak DNA pisang: haluskan setengah pisang dengan sedikit air, 1 sendok teh sabun cuci piring, dan sejumput garam. Saring ke gelas, lalu tuang pelan alkohol dingin dari apotek di atasnya. Benang putih yang muncul adalah gumpalan DNA. Jauhkan alkohol dari api.",
+        "en": "Extract banana DNA: mash half a banana with a little water, 1 teaspoon of washing-up liquid and a pinch of salt. Strain into a glass, then gently pour cold rubbing alcohol on top. The white strands that appear are clumps of DNA. Keep the alcohol away from flames."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "GEN-INHERIT"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Berapa banyak DNA yang sama (rata-rata)?",
+            "en": "How much DNA is shared (on average)?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "mother",
+          "text": {
+            "id": "Ibu dan anaknya",
+            "en": "A mother and her child"
+          },
+          "image": "fam_mother"
+        },
+        {
+          "id": "grandma",
+          "text": {
+            "id": "Nenek dan cucunya",
+            "en": "A grandmother and her grandchild"
+          },
+          "image": "fam_grandmother"
+        },
+        {
+          "id": "twins",
+          "text": {
+            "id": "Kembar identik",
+            "en": "Identical twins"
+          }
+        },
+        {
+          "id": "s50",
+          "text": {
+            "id": "sekitar separuh",
+            "en": "about half"
+          }
+        },
+        {
+          "id": "s25",
+          "text": {
+            "id": "sekitar seperempat",
+            "en": "about a quarter"
+          }
+        },
+        {
+          "id": "s100",
+          "text": {
+            "id": "hampir semuanya",
+            "en": "almost all of it"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "mother": "s50",
+        "grandma": "s25",
+        "twins": "s100"
+      },
+      "model_answer": {
+        "id": "Ibu–anak: separuh. Nenek–cucu: sekitar seperempat. Kembar identik: hampir sama persis.",
+        "en": "Mother–child: half. Grandmother–grandchild: about a quarter. Identical twins: almost identical."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "GEN-DNA"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Manusia punya ____ pasang kromosom.",
+            "en": "Humans have ____ pairs of chromosomes."
+          }
+        }
+      ],
+      "image": "sci_microscope",
+      "options": [
+        {
+          "id": "n46",
+          "text": {
+            "id": "46",
+            "en": "46"
+          }
+        },
+        {
+          "id": "n100",
+          "text": {
+            "id": "100",
+            "en": "100"
+          }
+        },
+        {
+          "id": "n23",
+          "text": {
+            "id": "23",
+            "en": "23"
+          }
+        }
+      ],
+      "solution": [
+        "n23"
+      ],
+      "model_answer": {
+        "id": "23 pasang, atau 46 kromosom.",
+        "en": "23 pairs, or 46 chromosomes."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "GEN-INHERIT"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ayah pembawa sifat thalassemia, ibu bukan pembawa. Peluang tiap anak menjadi pembawa sifat?",
+            "en": "The father carries the thalassaemia trait, the mother doesn't. Each child's chance of being a carrier?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "frac_1_4",
+          "image": "frac_1_4"
+        },
+        {
+          "id": "frac_3_4",
+          "image": "frac_3_4"
+        },
+        {
+          "id": "frac_1_2",
+          "image": "frac_1_2",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "1/2 menjadi pembawa sifat; tidak ada yang lahir dengan thalassemia mayor.",
+        "en": "1 in 2 will be carriers; none will have thalassaemia major."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "GEN-EVOL"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Antibiotik berguna untuk infeksi oleh…",
+            "en": "Antibiotics work against infections caused by…"
+          }
+        }
+      ],
+      "image": "sci_microscope",
+      "options": [
+        {
+          "id": "virus",
+          "text": {
+            "id": "virus flu",
+            "en": "flu viruses"
+          }
+        },
+        {
+          "id": "bact",
+          "text": {
+            "id": "bakteri",
+            "en": "bacteria"
+          },
+          "correct": true
+        },
+        {
+          "id": "allergy",
+          "text": {
+            "id": "alergi debu",
+            "en": "dust allergies"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Bakteri. Antibiotik tidak mempan untuk virus seperti flu.",
+        "en": "Bacteria. Antibiotics don't work on viruses such as flu."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    },
+    {
+      "item_id": "SNS-A-H-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tes 99% akurat untuk orang sakit maupun sehat. Penyakitnya diderita 1 dari 1.000 orang. Hasil Anda positif. Berapa persen peluang Anda benar-benar sakit?",
+            "en": "A test is 99% accurate for both ill and healthy people. The disease affects 1 in 1,000 people. You test positive. What's the percentage chance you're really ill?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 9,
+        "tolerance": 2,
+        "unit": {
+          "id": "%",
+          "en": "%"
+        }
+      },
+      "model_answer": {
+        "id": "Sekitar 9%. Dari 1.000 orang, 1 sakit dan positif, tetapi ±10 orang sehat juga positif palsu (1%). 1 dari 11 ≈ 9%.",
+        "en": "About 9%. Of 1,000 people, 1 is ill and tests positive, but about 10 healthy people are false positives (1%). 1 in 11 ≈ 9%."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-h-0.1"
+    }
+  ]
+}

@@ -1,0 +1,4994 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "ing-k-pemula-0.1",
+    "subject": "bahasa",
+    "track": "ing-k",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id"
+    ],
+    "target_lang": "en",
+    "title": {
+      "id": "Bahasa Inggris — Pemula (Anak)",
+      "en": "English — Beginner (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 11) for review: needs a native English reviewer (listen to every clip in android/content/voice/en.json too) and the Indonesian and English language reviewers before any item is approved (docs/syllabus/bahasa/en_pemula.md, Kids Pemula units 01-05). American spelling throughout.",
+  "prompts": {
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-LISTEN": {
+      "id": "Dengar, lalu pilih gambarnya.",
+      "en": "Listen, then pick the picture."
+    },
+    "P-MATCH": {
+      "id": "Hubungkan gambar dengan katanya.",
+      "en": "Connect each picture to its word."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke katanya.",
+      "en": "Drag each picture to its word."
+    },
+    "P-SORT": {
+      "id": "Seret ke keranjang yang tepat.",
+      "en": "Drag each card into a basket."
+    },
+    "P-SPELL": {
+      "id": "Susun hurufnya.",
+      "en": "Build the word."
+    },
+    "P-BUILD": {
+      "id": "Susun kalimatnya.",
+      "en": "Build the sentence."
+    },
+    "P-ORDER-NUM": {
+      "id": "Urutkan dari yang terkecil.",
+      "en": "Order them, smallest first."
+    },
+    "P-FILL": {
+      "id": "Seret kata ke tempat kosong.",
+      "en": "Drag the word into the gap."
+    },
+    "P-MEMORY": {
+      "id": "Buka kartu, cari pasangannya.",
+      "en": "Flip cards and find pairs."
+    },
+    "P-TAP": {
+      "id": "Ketuk di gambar.",
+      "en": "Tap it on the picture."
+    },
+    "P-YESNO": {
+      "id": "Cocok? Pilih Yes atau No.",
+      "en": "Does it match? Yes or no?"
+    },
+    "P-TRY": {
+      "id": "Coba di rumah",
+      "en": "Try it at home"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Sip, kita lanjut!",
+      "en": "Great, let's keep going!"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Halo, ini aku!",
+        "en": "Hello & me"
+      },
+      "sticker": "sticker_kite"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Angka & warna",
+        "en": "Numbers & colors"
+      },
+      "sticker": "sticker_umbrella"
+    },
+    {
+      "unit": "03",
+      "title": {
+        "id": "Keluarga & teman",
+        "en": "Family & friends"
+      },
+      "sticker": "sticker_angklung"
+    },
+    {
+      "unit": "04",
+      "title": {
+        "id": "Makanan & minuman",
+        "en": "Food & drink"
+      },
+      "sticker": "sticker_mango"
+    },
+    {
+      "unit": "05",
+      "title": {
+        "id": "Hewan & benda",
+        "en": "Animals & things"
+      },
+      "sticker": "sticker_cat"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "ING-K-P-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Halo!",
+        "en": "Hello!"
+      },
+      "body": [
+        {
+          "id": "Ayo menyapa dalam bahasa Inggris!",
+          "en": "Let's say hello in English!"
+        },
+        {
+          "id": "Lalu sebut namamu: I'm Sari.",
+          "en": "Then say your name: I'm Sari."
+        },
+        {
+          "id": "Bagaimana perasaanmu? I'm happy!",
+          "en": "How do you feel? I'm happy!"
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "Hello!",
+          "gloss": {
+            "id": "Halo!",
+            "en": "a friendly greeting"
+          }
+        },
+        {
+          "target_text": "Good morning!",
+          "gloss": {
+            "id": "Selamat pagi!",
+            "en": "said in the morning"
+          }
+        },
+        {
+          "target_text": "Goodbye!",
+          "gloss": {
+            "id": "Sampai jumpa!",
+            "en": "said when you leave"
+          }
+        },
+        {
+          "target_text": "I'm Sari.",
+          "gloss": {
+            "id": "Aku Sari.",
+            "en": "saying your name"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "ING-K-P-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Angka & warna",
+        "en": "Numbers & colors"
+      },
+      "body": [
+        {
+          "id": "Ayo berhitung: one, two, three!",
+          "en": "Let's count: one, two, three!"
+        },
+        {
+          "id": "Warna juga punya nama: red, blue, yellow.",
+          "en": "Colors have names too: red, blue, yellow."
+        },
+        {
+          "id": "Lebih dari satu? Tambah -s: two eggs.",
+          "en": "More than one? Add -s: two eggs."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "one, two, three",
+          "gloss": {
+            "id": "satu, dua, tiga",
+            "en": "counting"
+          }
+        },
+        {
+          "target_text": "red, blue, yellow",
+          "gloss": {
+            "id": "merah, biru, kuning",
+            "en": "three colors"
+          }
+        },
+        {
+          "target_text": "one egg, two eggs",
+          "gloss": {
+            "id": "satu telur, dua telur",
+            "en": "add -s for more than one"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "ING-K-P-03-S1",
+      "unit": "03",
+      "audience": "kids",
+      "title": {
+        "id": "Keluarga & teman",
+        "en": "Family & friends"
+      },
+      "body": [
+        {
+          "id": "Ini keluargaku: mom, dad, sister, brother.",
+          "en": "This is my family: mom, dad, sister, brother."
+        },
+        {
+          "id": "Laki-laki: he. Perempuan: she.",
+          "en": "A boy or a man: he. A girl or a woman: she."
+        },
+        {
+          "id": "Kenalkan mereka: This is my mom.",
+          "en": "Introduce them: This is my mom."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "mom",
+          "gloss": {
+            "id": "ibu",
+            "en": "your mother"
+          }
+        },
+        {
+          "target_text": "dad",
+          "gloss": {
+            "id": "ayah",
+            "en": "your father"
+          }
+        },
+        {
+          "target_text": "He is my brother.",
+          "gloss": {
+            "id": "Dia saudara laki-lakiku.",
+            "en": "he = a boy or a man"
+          }
+        },
+        {
+          "target_text": "She is my sister.",
+          "gloss": {
+            "id": "Dia saudara perempuanku.",
+            "en": "she = a girl or a woman"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "ING-K-P-04-S1",
+      "unit": "04",
+      "audience": "kids",
+      "title": {
+        "id": "Makanan & minuman",
+        "en": "Food & drink"
+      },
+      "body": [
+        {
+          "id": "Makan apa? Rice, noodles, bread.",
+          "en": "What's to eat? Rice, noodles, bread."
+        },
+        {
+          "id": "Minum apa? Water, milk, juice.",
+          "en": "What's to drink? Water, milk, juice."
+        },
+        {
+          "id": "Suka: I like… Tidak suka: I don't like…",
+          "en": "Like it: I like… Don't: I don't like…"
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "rice",
+          "gloss": {
+            "id": "nasi",
+            "en": "a food"
+          }
+        },
+        {
+          "target_text": "milk",
+          "gloss": {
+            "id": "susu",
+            "en": "a drink"
+          }
+        },
+        {
+          "target_text": "I like apples.",
+          "gloss": {
+            "id": "Aku suka apel.",
+            "en": "saying what you like"
+          }
+        },
+        {
+          "target_text": "I don't like fish.",
+          "gloss": {
+            "id": "Aku tidak suka ikan.",
+            "en": "saying what you don't like"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "ING-K-P-05-S1",
+      "unit": "05",
+      "audience": "kids",
+      "title": {
+        "id": "Hewan & benda",
+        "en": "Animals & things"
+      },
+      "body": [
+        {
+          "id": "Hewan: cat, dog, bird.",
+          "en": "Animals: cat, dog, bird."
+        },
+        {
+          "id": "Benda: book, bag, ball.",
+          "en": "Things: book, bag, ball."
+        },
+        {
+          "id": "Di mana? In, on, under.",
+          "en": "Where is it? In, on, under."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "cat",
+          "gloss": {
+            "id": "kucing",
+            "en": "an animal"
+          }
+        },
+        {
+          "target_text": "ball",
+          "gloss": {
+            "id": "bola",
+            "en": "a thing"
+          }
+        },
+        {
+          "target_text": "The cat is in the box.",
+          "gloss": {
+            "id": "Kucing itu di dalam kotak.",
+            "en": "in = inside"
+          }
+        },
+        {
+          "target_text": "The cat is under the table.",
+          "gloss": {
+            "id": "Kucing itu di bawah meja.",
+            "en": "under = below"
+          }
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "ING-K-P-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-GREET"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-PICK",
+      "target_text": "Hello!",
+      "audio": "en/hello",
+      "options": [
+        {
+          "id": "p_goodbye",
+          "image": "pic_wave_bye",
+          "text": {
+            "id": "Sampai jumpa!",
+            "en": "Goodbye!"
+          }
+        },
+        {
+          "id": "p_hello",
+          "image": "pic_wave_hello",
+          "text": {
+            "id": "Halo!",
+            "en": "Hello!"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_thank_you",
+          "image": "pic_thanks",
+          "text": {
+            "id": "Terima kasih!",
+            "en": "Thank you!"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "\"Hello!\" artinya halo.",
+        "en": "\"Hello!\" is how we greet someone."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ENG-GREET"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-MATCH",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p_hello",
+          "image": "pic_wave_hello",
+          "text": {
+            "id": "Halo!",
+            "en": "Hello!"
+          }
+        },
+        {
+          "id": "p_goodbye",
+          "image": "pic_wave_bye",
+          "text": {
+            "id": "Sampai jumpa!",
+            "en": "Goodbye!"
+          }
+        },
+        {
+          "id": "p_thank_you",
+          "image": "pic_thanks",
+          "text": {
+            "id": "Terima kasih!",
+            "en": "Thank you!"
+          }
+        },
+        {
+          "id": "p_sorry",
+          "image": "pic_sorry",
+          "text": {
+            "id": "Maaf!",
+            "en": "Sorry!"
+          }
+        },
+        {
+          "id": "w_hello",
+          "target_text": "Hello!",
+          "audio": "en/hello"
+        },
+        {
+          "id": "w_goodbye",
+          "target_text": "Goodbye!",
+          "audio": "en/goodbye"
+        },
+        {
+          "id": "w_thank_you",
+          "target_text": "Thank you!",
+          "audio": "en/thank_you"
+        },
+        {
+          "id": "w_sorry",
+          "target_text": "Sorry!",
+          "audio": "en/sorry"
+        }
+      ],
+      "solution_pairs": {
+        "p_hello": "w_hello",
+        "p_goodbye": "w_goodbye",
+        "p_thank_you": "w_thank_you",
+        "p_sorry": "w_sorry"
+      },
+      "model_answer": {
+        "id": "Hello = halo, Goodbye = sampai jumpa, Thank you = terima kasih, Sorry = maaf.",
+        "en": "Hello, goodbye, thank you, sorry: words for every day."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ENG-GREET"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/good_morning",
+      "options": [
+        {
+          "id": "p_good_morning",
+          "image": "pic_sun",
+          "text": {
+            "id": "Selamat pagi!",
+            "en": "Good morning!"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_good_night",
+          "image": "sleep_moon",
+          "text": {
+            "id": "Selamat tidur! (berpamitan malam)",
+            "en": "Good night!"
+          }
+        },
+        {
+          "id": "p_goodbye",
+          "image": "pic_wave_bye",
+          "text": {
+            "id": "Sampai jumpa!",
+            "en": "Goodbye!"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "\"Good morning!\" artinya selamat pagi.",
+        "en": "\"Good morning!\" is what we say in the morning."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "ENG-ME"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-TAP",
+      "target_text": "nose",
+      "audio": "en/nose",
+      "image": "body_child",
+      "options": [
+        {
+          "id": "eyes",
+          "text": {
+            "id": "mata",
+            "en": "eyes"
+          },
+          "region": {
+            "x": 0.36,
+            "y": 0.1,
+            "w": 0.28,
+            "h": 0.07
+          }
+        },
+        {
+          "id": "mouth",
+          "text": {
+            "id": "mulut",
+            "en": "mouth"
+          },
+          "region": {
+            "x": 0.42,
+            "y": 0.235,
+            "w": 0.16,
+            "h": 0.05
+          }
+        },
+        {
+          "id": "nose",
+          "text": {
+            "id": "hidung",
+            "en": "nose"
+          },
+          "region": {
+            "x": 0.45,
+            "y": 0.175,
+            "w": 0.1,
+            "h": 0.05
+          },
+          "correct": true
+        },
+        {
+          "id": "ear",
+          "text": {
+            "id": "telinga",
+            "en": "ear"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.11,
+            "w": 0.09,
+            "h": 0.1
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Nose artinya hidung.",
+        "en": "That's the nose."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "memory_flip",
+      "skills": [
+        "ENG-ME"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-MEMORY",
+      "options": [
+        {
+          "id": "p_eye",
+          "image": "sense_eye",
+          "text": {
+            "id": "mata",
+            "en": "eye"
+          }
+        },
+        {
+          "id": "p_ear",
+          "image": "sense_ear",
+          "text": {
+            "id": "telinga",
+            "en": "ear"
+          }
+        },
+        {
+          "id": "p_hand",
+          "image": "sense_hand",
+          "text": {
+            "id": "tangan",
+            "en": "hand"
+          }
+        },
+        {
+          "id": "p_foot",
+          "image": "pic_foot",
+          "text": {
+            "id": "kaki",
+            "en": "foot"
+          }
+        },
+        {
+          "id": "w_eye",
+          "target_text": "eye",
+          "audio": "en/eye"
+        },
+        {
+          "id": "w_ear",
+          "target_text": "ear",
+          "audio": "en/ear"
+        },
+        {
+          "id": "w_hand",
+          "target_text": "hand",
+          "audio": "en/hand"
+        },
+        {
+          "id": "w_foot",
+          "target_text": "foot",
+          "audio": "en/foot"
+        }
+      ],
+      "solution_pairs": {
+        "p_eye": "w_eye",
+        "p_ear": "w_ear",
+        "p_hand": "w_hand",
+        "p_foot": "w_foot"
+      },
+      "model_answer": {
+        "id": "eye = mata, ear = telinga, hand = tangan, foot = kaki.",
+        "en": "Eye, ear, hand, foot: parts of your body."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ENG-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/im_happy",
+      "options": [
+        {
+          "id": "p_sad",
+          "image": "pic_sad",
+          "text": {
+            "id": "sedih",
+            "en": "sad"
+          }
+        },
+        {
+          "id": "p_tired",
+          "image": "pic_tired",
+          "text": {
+            "id": "capek",
+            "en": "tired"
+          }
+        },
+        {
+          "id": "p_happy",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "\"I'm happy\" artinya aku senang.",
+        "en": "\"I'm happy\" means you feel good."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "ENG-ME"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-BUILD",
+      "image": "pic_boy",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "t3",
+          "target_text": "a"
+        },
+        {
+          "id": "t2",
+          "target_text": "am"
+        },
+        {
+          "id": "x1",
+          "target_text": "girl"
+        },
+        {
+          "id": "t4",
+          "target_text": "boy"
+        },
+        {
+          "id": "t1",
+          "target_text": "I"
+        }
+      ],
+      "solution": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "model_answer": {
+        "id": "Anak laki-laki ini berkata: I am a boy.",
+        "en": "The boy says: I am a boy."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "ENG-GREET"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_hello",
+          "image": "pic_wave_hello",
+          "text": {
+            "id": "saat datang",
+            "en": "arriving"
+          }
+        },
+        {
+          "id": "b_bye",
+          "image": "pic_wave_bye",
+          "text": {
+            "id": "saat pergi",
+            "en": "leaving"
+          }
+        },
+        {
+          "id": "w_hello",
+          "target_text": "Hello!",
+          "audio": "en/hello"
+        },
+        {
+          "id": "w_bye",
+          "target_text": "Bye!",
+          "audio": "en/bye"
+        },
+        {
+          "id": "w_good_morning",
+          "target_text": "Good morning!",
+          "audio": "en/good_morning"
+        },
+        {
+          "id": "w_goodbye",
+          "target_text": "Goodbye!",
+          "audio": "en/goodbye"
+        },
+        {
+          "id": "w_hi",
+          "target_text": "Hi!",
+          "audio": "en/hi"
+        },
+        {
+          "id": "w_good_night",
+          "target_text": "Good night!",
+          "audio": "en/good_night"
+        }
+      ],
+      "solution_pairs": {
+        "w_hello": "b_hello",
+        "w_bye": "b_bye",
+        "w_good_morning": "b_hello",
+        "w_goodbye": "b_bye",
+        "w_hi": "b_hello",
+        "w_good_night": "b_bye"
+      },
+      "model_answer": {
+        "id": "Datang: Hello! Hi! Good morning! Pergi: Bye! Goodbye! Good night!",
+        "en": "Arriving: Hello! Hi! Good morning! Leaving: Bye! Goodbye! Good night!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "ENG-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-YESNO",
+      "target_text": "happy",
+      "audio": "en/happy",
+      "image": "pic_sad",
+      "options": [
+        {
+          "id": "yes",
+          "target_text": "Yes",
+          "audio": "en/yes"
+        },
+        {
+          "id": "no",
+          "target_text": "No",
+          "audio": "en/no",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Wajah ini sad (sedih), bukan happy (senang).",
+        "en": "This face is sad, not happy."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "ENG-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_happy",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          }
+        },
+        {
+          "id": "p_sad",
+          "image": "pic_sad",
+          "text": {
+            "id": "sedih",
+            "en": "sad"
+          }
+        },
+        {
+          "id": "p_tired",
+          "image": "pic_tired",
+          "text": {
+            "id": "capek",
+            "en": "tired"
+          }
+        },
+        {
+          "id": "p_hungry",
+          "image": "pic_hungry",
+          "text": {
+            "id": "lapar",
+            "en": "hungry"
+          }
+        },
+        {
+          "id": "w_happy",
+          "target_text": "happy",
+          "audio": "en/happy"
+        },
+        {
+          "id": "w_sad",
+          "target_text": "sad",
+          "audio": "en/sad"
+        },
+        {
+          "id": "w_tired",
+          "target_text": "tired",
+          "audio": "en/tired"
+        },
+        {
+          "id": "w_hungry",
+          "target_text": "hungry",
+          "audio": "en/hungry"
+        }
+      ],
+      "solution_pairs": {
+        "p_happy": "w_happy",
+        "p_sad": "w_sad",
+        "p_tired": "w_tired",
+        "p_hungry": "w_hungry"
+      },
+      "model_answer": {
+        "id": "happy = senang, sad = sedih, tired = capek, hungry = lapar.",
+        "en": "Happy, sad, tired, hungry: four feelings."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-ME"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-FILL",
+      "target_text": "Hello! I ___ Sari.",
+      "image": "pic_wave_hello",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "is",
+          "target_text": "is"
+        },
+        {
+          "id": "are",
+          "target_text": "are"
+        },
+        {
+          "id": "am",
+          "target_text": "am"
+        }
+      ],
+      "solution": [
+        "am"
+      ],
+      "model_answer": {
+        "id": "Hello! I am Sari. Pasangan I adalah am.",
+        "en": "Hello! I am Sari. With I, we say am."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ENG-GREET"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-TRY",
+      "image": "pic_sun",
+      "model_answer": {
+        "id": "Besok pagi, sapa keluargamu: \"Good morning!\" Saat mau tidur, ucapkan: \"Good night!\"",
+        "en": "Tomorrow morning, greet your family: \"Good morning!\" At bedtime, say: \"Good night!\""
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "ENG-GREET"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "pic_wave_bye",
+      "gem": true,
+      "source": "Online Etymology Dictionary, \"goodbye\" (etymonline.com/word/good-bye: 1590s, contraction of \"God be with ye\"); Merriam-Webster, \"goodbye\" (word history).",
+      "model_answer": {
+        "id": "Dulu orang Inggris berpamitan dengan \"God be with ye\" (Tuhan menyertaimu). Lama-lama ucapan itu memendek menjadi \"goodbye\".",
+        "en": "Long ago, English speakers said \"God be with ye\" when they left. Over time it got shorter and became \"goodbye\"."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-GREET"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "Goodbye!",
+      "audio": "en/goodbye",
+      "options": [
+        {
+          "id": "p_hello",
+          "image": "pic_wave_hello",
+          "text": {
+            "id": "Halo!",
+            "en": "Hello!"
+          }
+        },
+        {
+          "id": "p_sorry",
+          "image": "pic_sorry",
+          "text": {
+            "id": "Maaf!",
+            "en": "Sorry!"
+          }
+        },
+        {
+          "id": "p_goodbye",
+          "image": "pic_wave_bye",
+          "text": {
+            "id": "Sampai jumpa!",
+            "en": "Goodbye!"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "\"Goodbye!\" diucapkan saat berpisah.",
+        "en": "We say \"Goodbye!\" when we leave."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-01-015",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-ME"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "foot",
+      "audio": "en/foot",
+      "options": [
+        {
+          "id": "p_head",
+          "image": "pic_head",
+          "text": {
+            "id": "kepala",
+            "en": "head"
+          }
+        },
+        {
+          "id": "p_foot",
+          "image": "pic_foot",
+          "text": {
+            "id": "kaki",
+            "en": "foot"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_hand",
+          "image": "sense_hand",
+          "text": {
+            "id": "tangan",
+            "en": "hand"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Foot artinya kaki.",
+        "en": "That's a foot."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-01-016",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ENG-FEEL"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "I'm tired.",
+      "audio": "en/im_tired",
+      "options": [
+        {
+          "id": "p_tired",
+          "image": "pic_tired",
+          "text": {
+            "id": "capek",
+            "en": "tired"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_happy",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          }
+        },
+        {
+          "id": "p_hungry",
+          "image": "pic_hungry",
+          "text": {
+            "id": "lapar",
+            "en": "hungry"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "\"I'm tired\" artinya aku capek.",
+        "en": "\"I'm tired\" means you need a rest."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-PICK",
+      "target_text": "three",
+      "audio": "en/three",
+      "options": [
+        {
+          "id": "count_mango_3",
+          "image": "count_mango_3",
+          "text": {
+            "id": "3 mangga",
+            "en": "3 mangoes"
+          },
+          "correct": true
+        },
+        {
+          "id": "count_mango_2",
+          "image": "count_mango_2",
+          "text": {
+            "id": "2 mangga",
+            "en": "2 mangoes"
+          }
+        },
+        {
+          "id": "count_mango_5",
+          "image": "count_mango_5",
+          "text": {
+            "id": "5 mangga",
+            "en": "5 mangoes"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Three artinya tiga.",
+        "en": "Three: one, two, three!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ENG-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-MATCH",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "count_marble_4",
+          "image": "count_marble_4",
+          "text": {
+            "id": "4 kelereng",
+            "en": "4 marbles"
+          }
+        },
+        {
+          "id": "count_marble_8",
+          "image": "count_marble_8",
+          "text": {
+            "id": "8 kelereng",
+            "en": "8 marbles"
+          }
+        },
+        {
+          "id": "count_marble_10",
+          "image": "count_marble_10",
+          "text": {
+            "id": "10 kelereng",
+            "en": "10 marbles"
+          }
+        },
+        {
+          "id": "count_marble_6",
+          "image": "count_marble_6",
+          "text": {
+            "id": "6 kelereng",
+            "en": "6 marbles"
+          }
+        },
+        {
+          "id": "w_four",
+          "target_text": "four",
+          "audio": "en/four"
+        },
+        {
+          "id": "w_eight",
+          "target_text": "eight",
+          "audio": "en/eight"
+        },
+        {
+          "id": "w_ten",
+          "target_text": "ten",
+          "audio": "en/ten"
+        },
+        {
+          "id": "w_six",
+          "target_text": "six",
+          "audio": "en/six"
+        }
+      ],
+      "solution_pairs": {
+        "count_marble_4": "w_four",
+        "count_marble_8": "w_eight",
+        "count_marble_10": "w_ten",
+        "count_marble_6": "w_six"
+      },
+      "model_answer": {
+        "id": "four = 4, six = 6, eight = 8, ten = 10.",
+        "en": "Four, six, eight, ten."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ENG-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/seven",
+      "options": [
+        {
+          "id": "count_egg_6",
+          "image": "count_egg_6",
+          "text": {
+            "id": "6 telur",
+            "en": "6 eggs"
+          }
+        },
+        {
+          "id": "count_egg_9",
+          "image": "count_egg_9",
+          "text": {
+            "id": "9 telur",
+            "en": "9 eggs"
+          }
+        },
+        {
+          "id": "count_egg_7",
+          "image": "count_egg_7",
+          "text": {
+            "id": "7 telur",
+            "en": "7 eggs"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Seven artinya tujuh.",
+        "en": "Seven eggs!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "ENG-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-ORDER-NUM",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_two",
+          "target_text": "two",
+          "audio": "en/two"
+        },
+        {
+          "id": "w_three",
+          "target_text": "three",
+          "audio": "en/three"
+        },
+        {
+          "id": "w_four",
+          "target_text": "four",
+          "audio": "en/four"
+        },
+        {
+          "id": "w_five",
+          "target_text": "five",
+          "audio": "en/five"
+        },
+        {
+          "id": "w_one",
+          "target_text": "one",
+          "audio": "en/one"
+        }
+      ],
+      "solution": [
+        "w_one",
+        "w_two",
+        "w_three",
+        "w_four",
+        "w_five"
+      ],
+      "model_answer": {
+        "id": "Urutannya: one, two, three, four, five.",
+        "en": "One, two, three, four, five!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "ENG-COLOR"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-SPELL",
+      "image": "pic_color_red",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "x_a0",
+          "target_text": "a"
+        },
+        {
+          "id": "l_r1",
+          "target_text": "r"
+        },
+        {
+          "id": "l_d1",
+          "target_text": "d"
+        },
+        {
+          "id": "l_e1",
+          "target_text": "e"
+        }
+      ],
+      "solution": [
+        "l_r1",
+        "l_e1",
+        "l_d1"
+      ],
+      "model_answer": {
+        "id": "R-E-D: red, merah.",
+        "en": "R-E-D spells red."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ENG-COLOR"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/purple",
+      "options": [
+        {
+          "id": "p_pink",
+          "image": "pic_color_pink",
+          "text": {
+            "id": "merah muda",
+            "en": "pink"
+          }
+        },
+        {
+          "id": "p_purple",
+          "image": "pic_color_purple",
+          "text": {
+            "id": "ungu",
+            "en": "purple"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_brown",
+          "image": "pic_color_brown",
+          "text": {
+            "id": "cokelat",
+            "en": "brown"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Purple artinya ungu.",
+        "en": "That's purple."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "ENG-COLOR"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-MEMORY",
+      "options": [
+        {
+          "id": "p_red",
+          "image": "pic_color_red",
+          "text": {
+            "id": "merah",
+            "en": "red"
+          }
+        },
+        {
+          "id": "p_yellow",
+          "image": "pic_color_yellow",
+          "text": {
+            "id": "kuning",
+            "en": "yellow"
+          }
+        },
+        {
+          "id": "p_green",
+          "image": "pic_color_green",
+          "text": {
+            "id": "hijau",
+            "en": "green"
+          }
+        },
+        {
+          "id": "p_white",
+          "image": "pic_color_white",
+          "text": {
+            "id": "putih",
+            "en": "white"
+          }
+        },
+        {
+          "id": "w_red",
+          "target_text": "red",
+          "audio": "en/red"
+        },
+        {
+          "id": "w_yellow",
+          "target_text": "yellow",
+          "audio": "en/yellow"
+        },
+        {
+          "id": "w_green",
+          "target_text": "green",
+          "audio": "en/green"
+        },
+        {
+          "id": "w_white",
+          "target_text": "white",
+          "audio": "en/white"
+        }
+      ],
+      "solution_pairs": {
+        "p_red": "w_red",
+        "p_yellow": "w_yellow",
+        "p_green": "w_green",
+        "p_white": "w_white"
+      },
+      "model_answer": {
+        "id": "red = merah, yellow = kuning, green = hijau, white = putih.",
+        "en": "Red, yellow, green and white."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ENG-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-PICK",
+      "target_text": "twelve",
+      "audio": "en/twelve",
+      "options": [
+        {
+          "id": "count_mango_2",
+          "image": "count_mango_2",
+          "text": {
+            "id": "2 mangga",
+            "en": "2 mangoes"
+          }
+        },
+        {
+          "id": "count_mango_12",
+          "image": "count_mango_12",
+          "text": {
+            "id": "12 mangga",
+            "en": "12 mangoes"
+          },
+          "correct": true
+        },
+        {
+          "id": "count_mango_20",
+          "image": "count_mango_20",
+          "text": {
+            "id": "20 mangga",
+            "en": "20 mangoes"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Twelve artinya dua belas.",
+        "en": "Twelve: ten and two more."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-PLURAL"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-FILL",
+      "target_text": "I see three ___.",
+      "image": "count_egg_3",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "egg",
+          "target_text": "egg"
+        },
+        {
+          "id": "eggs",
+          "target_text": "eggs"
+        }
+      ],
+      "solution": [
+        "eggs"
+      ],
+      "model_answer": {
+        "id": "Three eggs: lebih dari satu, jadi tambah -s.",
+        "en": "Three eggs: more than one, so add -s."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "ENG-PLURAL"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_one",
+          "image": "count_marble_1",
+          "text": {
+            "id": "satu",
+            "en": "one"
+          }
+        },
+        {
+          "id": "b_many",
+          "image": "count_marble_5",
+          "text": {
+            "id": "lebih dari satu",
+            "en": "more than one"
+          }
+        },
+        {
+          "id": "w_cat",
+          "target_text": "cat",
+          "audio": "en/cat"
+        },
+        {
+          "id": "w_dogs",
+          "target_text": "dogs",
+          "audio": "en/dogs"
+        },
+        {
+          "id": "w_book",
+          "target_text": "book",
+          "audio": "en/book"
+        },
+        {
+          "id": "w_pens",
+          "target_text": "pens",
+          "audio": "en/pens"
+        },
+        {
+          "id": "w_eggs",
+          "target_text": "eggs",
+          "audio": "en/eggs"
+        },
+        {
+          "id": "w_ball",
+          "target_text": "ball",
+          "audio": "en/ball"
+        }
+      ],
+      "solution_pairs": {
+        "w_cat": "b_one",
+        "w_dogs": "b_many",
+        "w_book": "b_one",
+        "w_pens": "b_many",
+        "w_eggs": "b_many",
+        "w_ball": "b_one"
+      },
+      "model_answer": {
+        "id": "Ada -s berarti lebih dari satu: dogs, pens, eggs.",
+        "en": "An -s means more than one: dogs, pens, eggs."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ENG-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/fifteen",
+      "options": [
+        {
+          "id": "count_marble_15",
+          "image": "count_marble_15",
+          "text": {
+            "id": "15 kelereng",
+            "en": "15 marbles"
+          },
+          "correct": true
+        },
+        {
+          "id": "count_marble_5",
+          "image": "count_marble_5",
+          "text": {
+            "id": "5 kelereng",
+            "en": "5 marbles"
+          }
+        },
+        {
+          "id": "count_marble_20",
+          "image": "count_marble_20",
+          "text": {
+            "id": "20 kelereng",
+            "en": "20 marbles"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Fifteen artinya lima belas.",
+        "en": "Fifteen: ten and five more."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ENG-NUM"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "count_marble_11",
+      "gem": true,
+      "source": "Online Etymology Dictionary, \"eleven\" and \"twelve\" (etymonline.com/word/eleven, /word/twelve: Old English endleofan / twelf, from Proto-Germanic *ainlif- \"one left\" and *twa-lif- \"two left\" over ten).",
+      "model_answer": {
+        "id": "Kenapa bukan \"one-teen\" dan \"two-teen\"? Eleven dan twelve kata yang sangat tua. Dulu artinya kira-kira \"sisa satu\" dan \"sisa dua\": sisa setelah menghitung sampai sepuluh!",
+        "en": "Why not \"one-teen\" and \"two-teen\"? Eleven and twelve are very old words. They once meant something like \"one left\" and \"two left\": what's left after counting to ten!"
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ENG-NUM"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "count_mango_1",
+          "image": "count_mango_1",
+          "text": {
+            "id": "1 mangga",
+            "en": "1 mango"
+          }
+        },
+        {
+          "id": "count_mango_2",
+          "image": "count_mango_2",
+          "text": {
+            "id": "2 mangga",
+            "en": "2 mangoes"
+          }
+        },
+        {
+          "id": "count_mango_9",
+          "image": "count_mango_9",
+          "text": {
+            "id": "9 mangga",
+            "en": "9 mangoes"
+          }
+        },
+        {
+          "id": "count_marble_5",
+          "image": "count_marble_5",
+          "text": {
+            "id": "5 kelereng",
+            "en": "5 marbles"
+          }
+        },
+        {
+          "id": "w_one",
+          "target_text": "one",
+          "audio": "en/one"
+        },
+        {
+          "id": "w_two",
+          "target_text": "two",
+          "audio": "en/two"
+        },
+        {
+          "id": "w_nine",
+          "target_text": "nine",
+          "audio": "en/nine"
+        },
+        {
+          "id": "w_five",
+          "target_text": "five",
+          "audio": "en/five"
+        }
+      ],
+      "solution_pairs": {
+        "count_mango_1": "w_one",
+        "count_mango_2": "w_two",
+        "count_mango_9": "w_nine",
+        "count_marble_5": "w_five"
+      },
+      "model_answer": {
+        "id": "one = 1, two = 2, nine = 9, five = 5.",
+        "en": "One, two, nine, five."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ENG-COLOR"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_blue",
+          "image": "pic_color_blue",
+          "text": {
+            "id": "biru",
+            "en": "blue"
+          }
+        },
+        {
+          "id": "p_black",
+          "image": "pic_color_black",
+          "text": {
+            "id": "hitam",
+            "en": "black"
+          }
+        },
+        {
+          "id": "p_c_orange",
+          "image": "pic_color_orange",
+          "text": {
+            "id": "oranye",
+            "en": "orange"
+          }
+        },
+        {
+          "id": "p_brown",
+          "image": "pic_color_brown",
+          "text": {
+            "id": "cokelat",
+            "en": "brown"
+          }
+        },
+        {
+          "id": "w_blue",
+          "target_text": "blue",
+          "audio": "en/blue"
+        },
+        {
+          "id": "w_black",
+          "target_text": "black",
+          "audio": "en/black"
+        },
+        {
+          "id": "w_c_orange",
+          "target_text": "orange",
+          "audio": "en/orange"
+        },
+        {
+          "id": "w_brown",
+          "target_text": "brown",
+          "audio": "en/brown"
+        }
+      ],
+      "solution_pairs": {
+        "p_blue": "w_blue",
+        "p_black": "w_black",
+        "p_c_orange": "w_c_orange",
+        "p_brown": "w_brown"
+      },
+      "model_answer": {
+        "id": "blue = biru, black = hitam, orange = oranye, brown = cokelat.",
+        "en": "Blue, black, orange, brown."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-02-015",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-PLURAL"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "five ___",
+      "image": "count_marble_5",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "marble",
+          "target_text": "marble"
+        },
+        {
+          "id": "marbles",
+          "target_text": "marbles"
+        }
+      ],
+      "solution": [
+        "marbles"
+      ],
+      "model_answer": {
+        "id": "Five marbles: lima kelereng, jadi tambah -s.",
+        "en": "Five marbles: more than one, so add -s."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-03-001",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-FAMILY"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-PICK",
+      "target_text": "mom",
+      "audio": "en/mom",
+      "options": [
+        {
+          "id": "p_dad",
+          "image": "fam_father",
+          "text": {
+            "id": "ayah",
+            "en": "dad"
+          }
+        },
+        {
+          "id": "p_grandma",
+          "image": "fam_grandmother",
+          "text": {
+            "id": "nenek",
+            "en": "grandma"
+          }
+        },
+        {
+          "id": "p_mom",
+          "image": "fam_mother",
+          "text": {
+            "id": "ibu",
+            "en": "mom"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mom artinya ibu.",
+        "en": "Mom is your mother."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-03-002",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ENG-FAMILY"
+      ],
+      "pool": "PRACT",
+      "order": 25,
+      "prompt_id": "P-MATCH",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p_dad",
+          "image": "fam_father",
+          "text": {
+            "id": "ayah",
+            "en": "dad"
+          }
+        },
+        {
+          "id": "p_sister",
+          "image": "fam_sister",
+          "text": {
+            "id": "kakak/adik perempuan",
+            "en": "sister"
+          }
+        },
+        {
+          "id": "p_brother",
+          "image": "fam_brother",
+          "text": {
+            "id": "kakak/adik laki-laki",
+            "en": "brother"
+          }
+        },
+        {
+          "id": "p_baby",
+          "image": "fam_baby",
+          "text": {
+            "id": "bayi",
+            "en": "baby"
+          }
+        },
+        {
+          "id": "w_dad",
+          "target_text": "dad",
+          "audio": "en/dad"
+        },
+        {
+          "id": "w_sister",
+          "target_text": "sister",
+          "audio": "en/sister"
+        },
+        {
+          "id": "w_brother",
+          "target_text": "brother",
+          "audio": "en/brother"
+        },
+        {
+          "id": "w_baby",
+          "target_text": "baby",
+          "audio": "en/baby"
+        }
+      ],
+      "solution_pairs": {
+        "p_dad": "w_dad",
+        "p_sister": "w_sister",
+        "p_brother": "w_brother",
+        "p_baby": "w_baby"
+      },
+      "model_answer": {
+        "id": "dad = ayah, sister = saudara perempuan, brother = saudara laki-laki, baby = bayi.",
+        "en": "Dad, sister, brother and baby."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-03-003",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ENG-FAMILY"
+      ],
+      "pool": "PRACT",
+      "order": 26,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/grandpa",
+      "options": [
+        {
+          "id": "p_dad",
+          "image": "fam_father",
+          "text": {
+            "id": "ayah",
+            "en": "dad"
+          }
+        },
+        {
+          "id": "p_brother",
+          "image": "fam_brother",
+          "text": {
+            "id": "kakak/adik laki-laki",
+            "en": "brother"
+          }
+        },
+        {
+          "id": "p_grandpa",
+          "image": "fam_grandfather",
+          "text": {
+            "id": "kakek",
+            "en": "grandpa"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Grandpa artinya kakek.",
+        "en": "Grandpa is your grandfather."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-03-004",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "ENG-HESHE"
+      ],
+      "pool": "PRACT",
+      "order": 27,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_he",
+          "target_text": "he",
+          "audio": "en/he"
+        },
+        {
+          "id": "b_she",
+          "target_text": "she",
+          "audio": "en/she"
+        },
+        {
+          "id": "p_dad",
+          "image": "fam_father",
+          "text": {
+            "id": "ayah",
+            "en": "dad"
+          }
+        },
+        {
+          "id": "p_mom",
+          "image": "fam_mother",
+          "text": {
+            "id": "ibu",
+            "en": "mom"
+          }
+        },
+        {
+          "id": "p_boy",
+          "image": "pic_boy",
+          "text": {
+            "id": "anak laki-laki",
+            "en": "boy"
+          }
+        },
+        {
+          "id": "p_sister",
+          "image": "fam_sister",
+          "text": {
+            "id": "kakak/adik perempuan",
+            "en": "sister"
+          }
+        },
+        {
+          "id": "p_brother",
+          "image": "fam_brother",
+          "text": {
+            "id": "kakak/adik laki-laki",
+            "en": "brother"
+          }
+        },
+        {
+          "id": "p_girl",
+          "image": "pic_girl",
+          "text": {
+            "id": "anak perempuan",
+            "en": "girl"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p_dad": "b_he",
+        "p_mom": "b_she",
+        "p_boy": "b_he",
+        "p_sister": "b_she",
+        "p_brother": "b_he",
+        "p_girl": "b_she"
+      },
+      "model_answer": {
+        "id": "He untuk laki-laki, she untuk perempuan.",
+        "en": "He is for a boy or a man, she is for a girl or a woman."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-03-005",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-PEOPLE"
+      ],
+      "pool": "PRACT",
+      "order": 28,
+      "prompt_id": "P-PICK",
+      "target_text": "teacher",
+      "audio": "en/teacher",
+      "options": [
+        {
+          "id": "p_doctor",
+          "image": "pic_doctor",
+          "text": {
+            "id": "dokter",
+            "en": "doctor"
+          }
+        },
+        {
+          "id": "p_teacher",
+          "image": "pic_teacher",
+          "text": {
+            "id": "guru",
+            "en": "teacher"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_man",
+          "image": "pic_man",
+          "text": {
+            "id": "laki-laki dewasa",
+            "en": "man"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Teacher artinya guru.",
+        "en": "A teacher helps you learn."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-03-006",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "ENG-HESHE"
+      ],
+      "pool": "PRACT",
+      "order": 29,
+      "prompt_id": "P-BUILD",
+      "image": "fam_father",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "t4",
+          "target_text": "dad"
+        },
+        {
+          "id": "x1",
+          "target_text": "She"
+        },
+        {
+          "id": "t2",
+          "target_text": "is"
+        },
+        {
+          "id": "t1",
+          "target_text": "He"
+        },
+        {
+          "id": "t3",
+          "target_text": "my"
+        }
+      ],
+      "solution": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "model_answer": {
+        "id": "He is my dad. Artinya: dia ayahku.",
+        "en": "He is my dad."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-03-007",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ENG-PEOPLE"
+      ],
+      "pool": "PRACT",
+      "order": 30,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/friends",
+      "options": [
+        {
+          "id": "p_friends",
+          "image": "pic_friends",
+          "text": {
+            "id": "teman-teman",
+            "en": "friends"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_teacher",
+          "image": "pic_teacher",
+          "text": {
+            "id": "guru",
+            "en": "teacher"
+          }
+        },
+        {
+          "id": "p_baby",
+          "image": "fam_baby",
+          "text": {
+            "id": "bayi",
+            "en": "baby"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Friends artinya teman-teman.",
+        "en": "Friends play together."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-03-008",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ENG-HESHE"
+      ],
+      "pool": "PRACT",
+      "order": 31,
+      "prompt_id": "P-PICK",
+      "target_text": "She is my sister.",
+      "audio": "en/she_is_my_sister",
+      "options": [
+        {
+          "id": "p_sister",
+          "image": "fam_sister",
+          "text": {
+            "id": "kakak/adik perempuan",
+            "en": "sister"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_brother",
+          "image": "fam_brother",
+          "text": {
+            "id": "kakak/adik laki-laki",
+            "en": "brother"
+          }
+        },
+        {
+          "id": "p_dad",
+          "image": "fam_father",
+          "text": {
+            "id": "ayah",
+            "en": "dad"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "She untuk perempuan: she is my sister.",
+        "en": "She is for a girl: she is my sister."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-03-009",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "ENG-FAMILY"
+      ],
+      "pool": "PRACT",
+      "order": 32,
+      "prompt_id": "P-YESNO",
+      "target_text": "brother",
+      "audio": "en/brother",
+      "image": "fam_sister",
+      "options": [
+        {
+          "id": "yes",
+          "target_text": "Yes",
+          "audio": "en/yes"
+        },
+        {
+          "id": "no",
+          "target_text": "No",
+          "audio": "en/no",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Ini sister (saudara perempuan), bukan brother.",
+        "en": "This is a sister, not a brother."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-03-010",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-HESHE"
+      ],
+      "pool": "PRACT",
+      "order": 33,
+      "prompt_id": "P-FILL",
+      "target_text": "___ is my grandma.",
+      "image": "fam_grandmother",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "he",
+          "target_text": "He"
+        },
+        {
+          "id": "she",
+          "target_text": "She"
+        }
+      ],
+      "solution": [
+        "she"
+      ],
+      "model_answer": {
+        "id": "She is my grandma. Nenek perempuan, jadi pakai she.",
+        "en": "She is my grandma: a woman, so we say she."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-03-011",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ENG-FAMILY"
+      ],
+      "pool": "PRACT",
+      "order": 34,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/this_is_my_mom",
+      "options": [
+        {
+          "id": "p_grandma",
+          "image": "fam_grandmother",
+          "text": {
+            "id": "nenek",
+            "en": "grandma"
+          }
+        },
+        {
+          "id": "p_sister",
+          "image": "fam_sister",
+          "text": {
+            "id": "kakak/adik perempuan",
+            "en": "sister"
+          }
+        },
+        {
+          "id": "p_mom",
+          "image": "fam_mother",
+          "text": {
+            "id": "ibu",
+            "en": "mom"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "\"This is my mom\" artinya ini ibuku.",
+        "en": "This is my mom: you are introducing your mother."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-03-012",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ENG-FAMILY"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_mom",
+          "image": "fam_mother",
+          "text": {
+            "id": "ibu",
+            "en": "mom"
+          }
+        },
+        {
+          "id": "p_grandma",
+          "image": "fam_grandmother",
+          "text": {
+            "id": "nenek",
+            "en": "grandma"
+          }
+        },
+        {
+          "id": "p_grandpa",
+          "image": "fam_grandfather",
+          "text": {
+            "id": "kakek",
+            "en": "grandpa"
+          }
+        },
+        {
+          "id": "p_brother",
+          "image": "fam_brother",
+          "text": {
+            "id": "kakak/adik laki-laki",
+            "en": "brother"
+          }
+        },
+        {
+          "id": "w_mom",
+          "target_text": "mom",
+          "audio": "en/mom"
+        },
+        {
+          "id": "w_grandma",
+          "target_text": "grandma",
+          "audio": "en/grandma"
+        },
+        {
+          "id": "w_grandpa",
+          "target_text": "grandpa",
+          "audio": "en/grandpa"
+        },
+        {
+          "id": "w_brother",
+          "target_text": "brother",
+          "audio": "en/brother"
+        }
+      ],
+      "solution_pairs": {
+        "p_mom": "w_mom",
+        "p_grandma": "w_grandma",
+        "p_grandpa": "w_grandpa",
+        "p_brother": "w_brother"
+      },
+      "model_answer": {
+        "id": "mom = ibu, grandma = nenek, grandpa = kakek, brother = saudara laki-laki.",
+        "en": "Mom, grandma, grandpa and brother."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-03-013",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-PEOPLE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "doctor",
+      "audio": "en/doctor",
+      "options": [
+        {
+          "id": "p_teacher",
+          "image": "pic_teacher",
+          "text": {
+            "id": "guru",
+            "en": "teacher"
+          }
+        },
+        {
+          "id": "p_doctor",
+          "image": "pic_doctor",
+          "text": {
+            "id": "dokter",
+            "en": "doctor"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_woman",
+          "image": "pic_woman",
+          "text": {
+            "id": "perempuan dewasa",
+            "en": "woman"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Doctor artinya dokter.",
+        "en": "A doctor helps people who are sick."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-03-014",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ENG-HESHE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "He is my brother.",
+      "audio": "en/he_is_my_brother",
+      "options": [
+        {
+          "id": "p_sister",
+          "image": "fam_sister",
+          "text": {
+            "id": "kakak/adik perempuan",
+            "en": "sister"
+          }
+        },
+        {
+          "id": "p_brother",
+          "image": "fam_brother",
+          "text": {
+            "id": "kakak/adik laki-laki",
+            "en": "brother"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_mom",
+          "image": "fam_mother",
+          "text": {
+            "id": "ibu",
+            "en": "mom"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "He untuk laki-laki: he is my brother.",
+        "en": "He is for a boy: he is my brother."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-04-001",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 35,
+      "prompt_id": "P-PICK",
+      "target_text": "rice",
+      "audio": "en/rice",
+      "options": [
+        {
+          "id": "p_rice",
+          "image": "pic_rice_bowl",
+          "text": {
+            "id": "nasi",
+            "en": "rice"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_noodles",
+          "image": "pic_noodle_bowl",
+          "text": {
+            "id": "mi",
+            "en": "noodles"
+          }
+        },
+        {
+          "id": "p_bread",
+          "image": "pic_bread",
+          "text": {
+            "id": "roti",
+            "en": "bread"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Rice artinya nasi.",
+        "en": "Rice: we eat it almost every day."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-04-002",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ENG-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 36,
+      "prompt_id": "P-MATCH",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p_banana",
+          "image": "fruit_banana",
+          "text": {
+            "id": "pisang",
+            "en": "banana"
+          }
+        },
+        {
+          "id": "p_apple",
+          "image": "pic_apple",
+          "text": {
+            "id": "apel",
+            "en": "apple"
+          }
+        },
+        {
+          "id": "p_watermelon",
+          "image": "pic_watermelon",
+          "text": {
+            "id": "semangka",
+            "en": "watermelon"
+          }
+        },
+        {
+          "id": "p_mango",
+          "image": "fruit_mango",
+          "text": {
+            "id": "mangga",
+            "en": "mango"
+          }
+        },
+        {
+          "id": "w_banana",
+          "target_text": "banana",
+          "audio": "en/banana"
+        },
+        {
+          "id": "w_apple",
+          "target_text": "apple",
+          "audio": "en/apple"
+        },
+        {
+          "id": "w_watermelon",
+          "target_text": "watermelon",
+          "audio": "en/watermelon"
+        },
+        {
+          "id": "w_mango",
+          "target_text": "mango",
+          "audio": "en/mango"
+        }
+      ],
+      "solution_pairs": {
+        "p_banana": "w_banana",
+        "p_apple": "w_apple",
+        "p_watermelon": "w_watermelon",
+        "p_mango": "w_mango"
+      },
+      "model_answer": {
+        "id": "banana = pisang, apple = apel, watermelon = semangka, mango = mangga.",
+        "en": "Banana, apple, watermelon, mango: yummy fruit!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-04-003",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ENG-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 37,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/noodles",
+      "options": [
+        {
+          "id": "p_soup",
+          "image": "pic_soup",
+          "text": {
+            "id": "sup",
+            "en": "soup"
+          }
+        },
+        {
+          "id": "p_rice",
+          "image": "pic_rice_bowl",
+          "text": {
+            "id": "nasi",
+            "en": "rice"
+          }
+        },
+        {
+          "id": "p_noodles",
+          "image": "pic_noodle_bowl",
+          "text": {
+            "id": "mi",
+            "en": "noodles"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Noodles artinya mi.",
+        "en": "Noodles: long and slurpy!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-04-004",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "ENG-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 38,
+      "prompt_id": "P-SPELL",
+      "image": "pic_cake",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "l_a1",
+          "target_text": "a"
+        },
+        {
+          "id": "l_c1",
+          "target_text": "c"
+        },
+        {
+          "id": "l_e1",
+          "target_text": "e"
+        },
+        {
+          "id": "x_o0",
+          "target_text": "o"
+        },
+        {
+          "id": "l_k1",
+          "target_text": "k"
+        }
+      ],
+      "solution": [
+        "l_c1",
+        "l_a1",
+        "l_k1",
+        "l_e1"
+      ],
+      "model_answer": {
+        "id": "C-A-K-E: cake, kue.",
+        "en": "C-A-K-E spells cake."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-04-005",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "ENG-DRINK",
+        "ENG-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 39,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_food",
+          "target_text": "food",
+          "audio": "en/food"
+        },
+        {
+          "id": "b_drink",
+          "target_text": "drink",
+          "audio": "en/drink"
+        },
+        {
+          "id": "p_bread",
+          "image": "pic_bread",
+          "text": {
+            "id": "roti",
+            "en": "bread"
+          }
+        },
+        {
+          "id": "p_milk",
+          "image": "pic_milk_glass",
+          "text": {
+            "id": "susu",
+            "en": "milk"
+          }
+        },
+        {
+          "id": "p_fish_dish",
+          "image": "pic_fish_dish",
+          "text": {
+            "id": "ikan",
+            "en": "fish"
+          }
+        },
+        {
+          "id": "p_juice",
+          "image": "pic_juice",
+          "text": {
+            "id": "jus",
+            "en": "juice"
+          }
+        },
+        {
+          "id": "p_cake",
+          "image": "pic_cake",
+          "text": {
+            "id": "kue",
+            "en": "cake"
+          }
+        },
+        {
+          "id": "p_water",
+          "image": "drink_water",
+          "text": {
+            "id": "air putih",
+            "en": "water"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p_bread": "b_food",
+        "p_milk": "b_drink",
+        "p_fish_dish": "b_food",
+        "p_juice": "b_drink",
+        "p_cake": "b_food",
+        "p_water": "b_drink"
+      },
+      "model_answer": {
+        "id": "Food (makanan): bread, fish, cake. Drink (minuman): milk, juice, water.",
+        "en": "Food: bread, fish, cake. Drinks: milk, juice, water."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-04-006",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ENG-DRINK"
+      ],
+      "pool": "PRACT",
+      "order": 40,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/water",
+      "options": [
+        {
+          "id": "p_milk",
+          "image": "pic_milk_glass",
+          "text": {
+            "id": "susu",
+            "en": "milk"
+          }
+        },
+        {
+          "id": "p_tea",
+          "image": "pic_tea_cup",
+          "text": {
+            "id": "teh",
+            "en": "tea"
+          }
+        },
+        {
+          "id": "p_water",
+          "image": "drink_water",
+          "text": {
+            "id": "air putih",
+            "en": "water"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Water artinya air.",
+        "en": "Water: the best drink when you're thirsty."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-04-007",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "ENG-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 41,
+      "prompt_id": "P-MEMORY",
+      "options": [
+        {
+          "id": "p_chicken_dish",
+          "image": "pic_chicken_dish",
+          "text": {
+            "id": "ayam",
+            "en": "chicken"
+          }
+        },
+        {
+          "id": "p_fish_dish",
+          "image": "pic_fish_dish",
+          "text": {
+            "id": "ikan",
+            "en": "fish"
+          }
+        },
+        {
+          "id": "p_vegetables",
+          "image": "pic_vegetables",
+          "text": {
+            "id": "sayur",
+            "en": "vegetables"
+          }
+        },
+        {
+          "id": "p_soup",
+          "image": "pic_soup",
+          "text": {
+            "id": "sup",
+            "en": "soup"
+          }
+        },
+        {
+          "id": "w_chicken_dish",
+          "target_text": "chicken",
+          "audio": "en/chicken"
+        },
+        {
+          "id": "w_fish_dish",
+          "target_text": "fish",
+          "audio": "en/fish"
+        },
+        {
+          "id": "w_vegetables",
+          "target_text": "vegetables",
+          "audio": "en/vegetables"
+        },
+        {
+          "id": "w_soup",
+          "target_text": "soup",
+          "audio": "en/soup"
+        }
+      ],
+      "solution_pairs": {
+        "p_chicken_dish": "w_chicken_dish",
+        "p_fish_dish": "w_fish_dish",
+        "p_vegetables": "w_vegetables",
+        "p_soup": "w_soup"
+      },
+      "model_answer": {
+        "id": "chicken = ayam, fish = ikan, vegetables = sayur, soup = sup.",
+        "en": "Chicken, fish, vegetables, soup."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-04-008",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ENG-LIKE"
+      ],
+      "pool": "PRACT",
+      "order": 42,
+      "prompt_id": "P-PICK",
+      "target_text": "I'm hungry!",
+      "audio": "en/im_hungry",
+      "options": [
+        {
+          "id": "p_tired",
+          "image": "pic_tired",
+          "text": {
+            "id": "capek",
+            "en": "tired"
+          }
+        },
+        {
+          "id": "p_hungry",
+          "image": "pic_hungry",
+          "text": {
+            "id": "lapar",
+            "en": "hungry"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_happy",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "\"I'm hungry\" artinya aku lapar.",
+        "en": "\"I'm hungry\" means you want to eat."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-04-009",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-LIKE"
+      ],
+      "pool": "PRACT",
+      "order": 43,
+      "prompt_id": "P-FILL",
+      "target_text": "I ___ like fish.",
+      "image": "pic_fish_dish",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "no",
+          "target_text": "no"
+        },
+        {
+          "id": "not",
+          "target_text": "not"
+        },
+        {
+          "id": "dont",
+          "target_text": "don't"
+        }
+      ],
+      "solution": [
+        "dont"
+      ],
+      "model_answer": {
+        "id": "I don't like fish. Pakai don't, bukan not saja.",
+        "en": "I don't like fish. We say don't, not just not."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-04-010",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "ENG-LIKE"
+      ],
+      "pool": "PRACT",
+      "order": 44,
+      "prompt_id": "P-BUILD",
+      "image": "pic_apple",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "x1",
+          "target_text": "is"
+        },
+        {
+          "id": "t2",
+          "target_text": "like"
+        },
+        {
+          "id": "t1",
+          "target_text": "I"
+        },
+        {
+          "id": "t3",
+          "target_text": "apples"
+        }
+      ],
+      "solution": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "model_answer": {
+        "id": "I like apples. Artinya: aku suka apel.",
+        "en": "I like apples."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-04-011",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ENG-LIKE",
+        "ENG-DRINK"
+      ],
+      "pool": "PRACT",
+      "order": 45,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/i_like_juice",
+      "options": [
+        {
+          "id": "p_juice",
+          "image": "pic_juice",
+          "text": {
+            "id": "jus",
+            "en": "juice"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_tea",
+          "image": "pic_tea_cup",
+          "text": {
+            "id": "teh",
+            "en": "tea"
+          }
+        },
+        {
+          "id": "p_milk",
+          "image": "pic_milk_glass",
+          "text": {
+            "id": "susu",
+            "en": "milk"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "\"I like juice\" artinya aku suka jus.",
+        "en": "\"I like juice\": you enjoy drinking juice."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-04-012",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-FOOD"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "bread",
+      "audio": "en/bread",
+      "options": [
+        {
+          "id": "p_bread",
+          "image": "pic_bread",
+          "text": {
+            "id": "roti",
+            "en": "bread"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_cake",
+          "image": "pic_cake",
+          "text": {
+            "id": "kue",
+            "en": "cake"
+          }
+        },
+        {
+          "id": "p_egg",
+          "image": "pic_egg_fried",
+          "text": {
+            "id": "telur",
+            "en": "egg"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Bread artinya roti.",
+        "en": "Bread: you can make a sandwich with it."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-04-013",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ENG-DRINK"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_tea",
+          "image": "pic_tea_cup",
+          "text": {
+            "id": "teh",
+            "en": "tea"
+          }
+        },
+        {
+          "id": "p_juice",
+          "image": "pic_juice",
+          "text": {
+            "id": "jus",
+            "en": "juice"
+          }
+        },
+        {
+          "id": "p_milk",
+          "image": "pic_milk_glass",
+          "text": {
+            "id": "susu",
+            "en": "milk"
+          }
+        },
+        {
+          "id": "w_tea",
+          "target_text": "tea",
+          "audio": "en/tea"
+        },
+        {
+          "id": "w_juice",
+          "target_text": "juice",
+          "audio": "en/juice"
+        },
+        {
+          "id": "w_milk",
+          "target_text": "milk",
+          "audio": "en/milk"
+        }
+      ],
+      "solution_pairs": {
+        "p_tea": "w_tea",
+        "p_juice": "w_juice",
+        "p_milk": "w_milk"
+      },
+      "model_answer": {
+        "id": "tea = teh, juice = jus, milk = susu.",
+        "en": "Tea, juice and milk."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-04-014",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "ENG-LIKE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-BUILD",
+      "image": "pic_soup",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "t4",
+          "target_text": "soup"
+        },
+        {
+          "id": "t2",
+          "target_text": "don't"
+        },
+        {
+          "id": "t1",
+          "target_text": "I"
+        },
+        {
+          "id": "t3",
+          "target_text": "like"
+        },
+        {
+          "id": "x1",
+          "target_text": "not"
+        }
+      ],
+      "solution": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "model_answer": {
+        "id": "I don't like soup. Artinya: aku tidak suka sup.",
+        "en": "I don't like soup."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-05-001",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-ANIMAL"
+      ],
+      "pool": "PRACT",
+      "order": 46,
+      "prompt_id": "P-PICK",
+      "target_text": "dog",
+      "audio": "en/dog",
+      "options": [
+        {
+          "id": "p_cat",
+          "image": "pic_cat",
+          "text": {
+            "id": "kucing",
+            "en": "cat"
+          }
+        },
+        {
+          "id": "p_goat",
+          "image": "pic_goat",
+          "text": {
+            "id": "kambing",
+            "en": "goat"
+          }
+        },
+        {
+          "id": "p_dog",
+          "image": "pic_dog",
+          "text": {
+            "id": "anjing",
+            "en": "dog"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Dog artinya anjing.",
+        "en": "A dog says woof!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-05-002",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ENG-ANIMAL"
+      ],
+      "pool": "PRACT",
+      "order": 47,
+      "prompt_id": "P-MATCH",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p_cow",
+          "image": "pic_cow",
+          "text": {
+            "id": "sapi",
+            "en": "cow"
+          }
+        },
+        {
+          "id": "p_duck",
+          "image": "pic_duck",
+          "text": {
+            "id": "bebek",
+            "en": "duck"
+          }
+        },
+        {
+          "id": "p_rabbit",
+          "image": "pic_rabbit",
+          "text": {
+            "id": "kelinci",
+            "en": "rabbit"
+          }
+        },
+        {
+          "id": "p_horse",
+          "image": "pic_horse",
+          "text": {
+            "id": "kuda",
+            "en": "horse"
+          }
+        },
+        {
+          "id": "w_cow",
+          "target_text": "cow",
+          "audio": "en/cow"
+        },
+        {
+          "id": "w_duck",
+          "target_text": "duck",
+          "audio": "en/duck"
+        },
+        {
+          "id": "w_rabbit",
+          "target_text": "rabbit",
+          "audio": "en/rabbit"
+        },
+        {
+          "id": "w_horse",
+          "target_text": "horse",
+          "audio": "en/horse"
+        }
+      ],
+      "solution_pairs": {
+        "p_cow": "w_cow",
+        "p_duck": "w_duck",
+        "p_rabbit": "w_rabbit",
+        "p_horse": "w_horse"
+      },
+      "model_answer": {
+        "id": "cow = sapi, duck = bebek, rabbit = kelinci, horse = kuda.",
+        "en": "Cow, duck, rabbit, horse."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-05-003",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ENG-ANIMAL"
+      ],
+      "pool": "PRACT",
+      "order": 48,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/elephant",
+      "options": [
+        {
+          "id": "p_horse",
+          "image": "pic_horse",
+          "text": {
+            "id": "kuda",
+            "en": "horse"
+          }
+        },
+        {
+          "id": "p_elephant",
+          "image": "pic_elephant",
+          "text": {
+            "id": "gajah",
+            "en": "elephant"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_monkey",
+          "image": "pic_monkey",
+          "text": {
+            "id": "monyet",
+            "en": "monkey"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Elephant artinya gajah.",
+        "en": "An elephant is big, with a long trunk."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-05-004",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "ENG-ANIMAL"
+      ],
+      "pool": "PRACT",
+      "order": 49,
+      "prompt_id": "P-SPELL",
+      "image": "pic_cat",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "x_o0",
+          "target_text": "o"
+        },
+        {
+          "id": "l_c1",
+          "target_text": "c"
+        },
+        {
+          "id": "l_t1",
+          "target_text": "t"
+        },
+        {
+          "id": "l_a1",
+          "target_text": "a"
+        }
+      ],
+      "solution": [
+        "l_c1",
+        "l_a1",
+        "l_t1"
+      ],
+      "model_answer": {
+        "id": "C-A-T: cat, kucing.",
+        "en": "C-A-T spells cat."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-05-005",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "memory_flip",
+      "skills": [
+        "ENG-ANIMAL"
+      ],
+      "pool": "PRACT",
+      "order": 50,
+      "prompt_id": "P-MEMORY",
+      "options": [
+        {
+          "id": "p_bird",
+          "image": "pic_bird",
+          "text": {
+            "id": "burung",
+            "en": "bird"
+          }
+        },
+        {
+          "id": "p_fish",
+          "image": "pic_fish",
+          "text": {
+            "id": "ikan",
+            "en": "fish"
+          }
+        },
+        {
+          "id": "p_monkey",
+          "image": "pic_monkey",
+          "text": {
+            "id": "monyet",
+            "en": "monkey"
+          }
+        },
+        {
+          "id": "p_chicken",
+          "image": "pic_chicken",
+          "text": {
+            "id": "ayam",
+            "en": "chicken"
+          }
+        },
+        {
+          "id": "w_bird",
+          "target_text": "bird",
+          "audio": "en/bird"
+        },
+        {
+          "id": "w_fish",
+          "target_text": "fish",
+          "audio": "en/fish"
+        },
+        {
+          "id": "w_monkey",
+          "target_text": "monkey",
+          "audio": "en/monkey"
+        },
+        {
+          "id": "w_chicken",
+          "target_text": "chicken",
+          "audio": "en/chicken"
+        }
+      ],
+      "solution_pairs": {
+        "p_bird": "w_bird",
+        "p_fish": "w_fish",
+        "p_monkey": "w_monkey",
+        "p_chicken": "w_chicken"
+      },
+      "model_answer": {
+        "id": "bird = burung, fish = ikan, monkey = monyet, chicken = ayam.",
+        "en": "Bird, fish, monkey, chicken."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-05-006",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "ENG-THINGS",
+        "ENG-ANIMAL"
+      ],
+      "pool": "PRACT",
+      "order": 51,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_animals",
+          "target_text": "animals",
+          "audio": "en/animals"
+        },
+        {
+          "id": "b_things",
+          "target_text": "things",
+          "audio": "en/things"
+        },
+        {
+          "id": "p_goat",
+          "image": "pic_goat",
+          "text": {
+            "id": "kambing",
+            "en": "goat"
+          }
+        },
+        {
+          "id": "p_ball",
+          "image": "pic_ball",
+          "text": {
+            "id": "bola",
+            "en": "ball"
+          }
+        },
+        {
+          "id": "p_duck",
+          "image": "pic_duck",
+          "text": {
+            "id": "bebek",
+            "en": "duck"
+          }
+        },
+        {
+          "id": "p_book",
+          "image": "pic_book",
+          "text": {
+            "id": "buku",
+            "en": "book"
+          }
+        },
+        {
+          "id": "p_rabbit",
+          "image": "pic_rabbit",
+          "text": {
+            "id": "kelinci",
+            "en": "rabbit"
+          }
+        },
+        {
+          "id": "p_hat",
+          "image": "pic_hat",
+          "text": {
+            "id": "topi",
+            "en": "hat"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p_goat": "b_animals",
+        "p_ball": "b_things",
+        "p_duck": "b_animals",
+        "p_book": "b_things",
+        "p_rabbit": "b_animals",
+        "p_hat": "b_things"
+      },
+      "model_answer": {
+        "id": "Animals (hewan): goat, duck, rabbit. Things (benda): ball, book, hat.",
+        "en": "Animals: goat, duck, rabbit. Things: ball, book, hat."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-05-007",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "tap_hotspot",
+      "skills": [
+        "ENG-THINGS"
+      ],
+      "pool": "PRACT",
+      "order": 52,
+      "prompt_id": "P-TAP",
+      "target_text": "kite",
+      "audio": "en/kite",
+      "image": "scene_kampung_shapes",
+      "options": [
+        {
+          "id": "kite",
+          "text": {
+            "id": "layang-layang",
+            "en": "kite"
+          },
+          "region": {
+            "x": 0.74,
+            "y": 0.06,
+            "w": 0.16,
+            "h": 0.26
+          },
+          "correct": true
+        },
+        {
+          "id": "sun",
+          "text": {
+            "id": "matahari",
+            "en": "sun"
+          },
+          "region": {
+            "x": 0.06,
+            "y": 0.06,
+            "w": 0.18,
+            "h": 0.24
+          }
+        },
+        {
+          "id": "roof",
+          "text": {
+            "id": "atap",
+            "en": "roof"
+          },
+          "region": {
+            "x": 0.3,
+            "y": 0.2,
+            "w": 0.36,
+            "h": 0.22
+          }
+        },
+        {
+          "id": "board",
+          "text": {
+            "id": "papan",
+            "en": "board"
+          },
+          "region": {
+            "x": 0.72,
+            "y": 0.56,
+            "w": 0.22,
+            "h": 0.18
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Kite artinya layang-layang.",
+        "en": "There's the kite, up in the sky!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-05-008",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ENG-THINGS"
+      ],
+      "pool": "PRACT",
+      "order": 53,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/ball",
+      "options": [
+        {
+          "id": "p_bag",
+          "image": "pic_bag",
+          "text": {
+            "id": "tas",
+            "en": "bag"
+          }
+        },
+        {
+          "id": "p_ball",
+          "image": "pic_ball",
+          "text": {
+            "id": "bola",
+            "en": "ball"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_hat",
+          "image": "pic_hat",
+          "text": {
+            "id": "topi",
+            "en": "hat"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Ball artinya bola.",
+        "en": "A ball: let's play!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-05-009",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ENG-WHERE"
+      ],
+      "pool": "PRACT",
+      "order": 54,
+      "prompt_id": "P-PICK",
+      "target_text": "The cat is in the box.",
+      "audio": "en/the_cat_is_in_the_box",
+      "options": [
+        {
+          "id": "pos_cat_inside",
+          "image": "pos_cat_inside",
+          "text": {
+            "id": "kucing di dalam kotak",
+            "en": "the cat in the box"
+          },
+          "correct": true
+        },
+        {
+          "id": "pos_cat_above",
+          "image": "pos_cat_above",
+          "text": {
+            "id": "kucing di atas kotak",
+            "en": "the cat on the box"
+          }
+        },
+        {
+          "id": "pos_cat_below",
+          "image": "pos_cat_below",
+          "text": {
+            "id": "kucing di bawah meja",
+            "en": "the cat under the table"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "In artinya di dalam.",
+        "en": "In means inside."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-05-010",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-WHERE"
+      ],
+      "pool": "PRACT",
+      "order": 55,
+      "prompt_id": "P-FILL",
+      "target_text": "The cat is ___ the table.",
+      "image": "pos_cat_below",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "in",
+          "target_text": "in"
+        },
+        {
+          "id": "under",
+          "target_text": "under"
+        },
+        {
+          "id": "on",
+          "target_text": "on"
+        }
+      ],
+      "solution": [
+        "under"
+      ],
+      "model_answer": {
+        "id": "Under artinya di bawah.",
+        "en": "Under means below."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-05-011",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ENG-WHERE"
+      ],
+      "pool": "PRACT",
+      "order": 56,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/the_cat_is_on_the_box",
+      "options": [
+        {
+          "id": "pos_cat_inside",
+          "image": "pos_cat_inside",
+          "text": {
+            "id": "kucing di dalam kotak",
+            "en": "the cat in the box"
+          }
+        },
+        {
+          "id": "pos_cat_below",
+          "image": "pos_cat_below",
+          "text": {
+            "id": "kucing di bawah meja",
+            "en": "the cat under the table"
+          }
+        },
+        {
+          "id": "pos_cat_above",
+          "image": "pos_cat_above",
+          "text": {
+            "id": "kucing di atas kotak",
+            "en": "the cat on the box"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "On artinya di atas.",
+        "en": "On means on top."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-05-012",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ENG-THINGS"
+      ],
+      "pool": "PRACT",
+      "order": 57,
+      "prompt_id": "P-TRY",
+      "image": "pic_door",
+      "model_answer": {
+        "id": "Tulis door, chair, dan bed di kertas kecil. Minta izin, lalu tempel di pintu, kursi, dan tempat tidurmu. Baca setiap kali kamu lewat!",
+        "en": "Write door, chair and bed on little notes. Ask first, then stick them on your door, chair and bed. Read them every time you walk past!"
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-05-013",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "ENG-ANIMAL"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Online Etymology Dictionary, \"orangutan\" (etymonline.com/word/orangutan: from Malay orang \"man\" + utan, hutan \"forest\"); Merriam-Webster, \"orangutan\" (etymology).",
+      "model_answer": {
+        "id": "Kata Inggris \"orangutan\" berasal dari bahasa Melayu: orang + hutan. Jadi, ada kata Inggris yang lahir dari bahasa kita!",
+        "en": "The English word \"orangutan\" comes from Malay: orang (person) + hutan (forest). So some English words come from our language!"
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-05-014",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-ANIMAL"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "monkey",
+      "audio": "en/monkey",
+      "options": [
+        {
+          "id": "p_cat",
+          "image": "pic_cat",
+          "text": {
+            "id": "kucing",
+            "en": "cat"
+          }
+        },
+        {
+          "id": "p_rabbit",
+          "image": "pic_rabbit",
+          "text": {
+            "id": "kelinci",
+            "en": "rabbit"
+          }
+        },
+        {
+          "id": "p_monkey",
+          "image": "pic_monkey",
+          "text": {
+            "id": "monyet",
+            "en": "monkey"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Monkey artinya monyet.",
+        "en": "A monkey loves to climb trees."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-05-015",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "ENG-THINGS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_pencil",
+          "image": "pic_pencil",
+          "text": {
+            "id": "pensil",
+            "en": "pencil"
+          }
+        },
+        {
+          "id": "p_chair",
+          "image": "pic_chair",
+          "text": {
+            "id": "kursi",
+            "en": "chair"
+          }
+        },
+        {
+          "id": "p_door",
+          "image": "pic_door",
+          "text": {
+            "id": "pintu",
+            "en": "door"
+          }
+        },
+        {
+          "id": "p_shoes",
+          "image": "pic_shoes",
+          "text": {
+            "id": "sepatu",
+            "en": "shoes"
+          }
+        },
+        {
+          "id": "w_pencil",
+          "target_text": "pencil",
+          "audio": "en/pencil"
+        },
+        {
+          "id": "w_chair",
+          "target_text": "chair",
+          "audio": "en/chair"
+        },
+        {
+          "id": "w_door",
+          "target_text": "door",
+          "audio": "en/door"
+        },
+        {
+          "id": "w_shoes",
+          "target_text": "shoes",
+          "audio": "en/shoes"
+        }
+      ],
+      "solution_pairs": {
+        "p_pencil": "w_pencil",
+        "p_chair": "w_chair",
+        "p_door": "w_door",
+        "p_shoes": "w_shoes"
+      },
+      "model_answer": {
+        "id": "pencil = pensil, chair = kursi, door = pintu, shoes = sepatu.",
+        "en": "Pencil, chair, door, shoes."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-05-016",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ENG-WHERE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "The cat is under the table.",
+      "audio": "en/the_cat_is_under_the_table",
+      "options": [
+        {
+          "id": "pos_cat_inside",
+          "image": "pos_cat_inside",
+          "text": {
+            "id": "kucing di dalam kotak",
+            "en": "the cat in the box"
+          }
+        },
+        {
+          "id": "pos_cat_below",
+          "image": "pos_cat_below",
+          "text": {
+            "id": "kucing di bawah meja",
+            "en": "the cat under the table"
+          },
+          "correct": true
+        },
+        {
+          "id": "pos_cat_above",
+          "image": "pos_cat_above",
+          "text": {
+            "id": "kucing di atas kotak",
+            "en": "the cat on the box"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Under artinya di bawah: kucing di bawah meja.",
+        "en": "Under means below: the cat is under the table."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku hewan. Nama Inggrisku dimulai dengan huruf C. Aku berbunyi \"meong\". Siapa aku?",
+            "en": "I'm an animal. My English name starts with C. I say \"meow\". Who am I?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "w_cat",
+          "target_text": "cat",
+          "audio": "en/cat",
+          "correct": true
+        },
+        {
+          "id": "w_cow",
+          "target_text": "cow",
+          "audio": "en/cow"
+        },
+        {
+          "id": "w_chicken",
+          "target_text": "chicken",
+          "audio": "en/chicken"
+        }
+      ],
+      "model_answer": {
+        "id": "Cat! Kucing berbunyi meong. Cow dan chicken juga dimulai dengan C.",
+        "en": "Cat! A cat says meow. Cow and chicken start with C too."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    },
+    {
+      "item_id": "ING-K-P-DP-02",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Campurkan warna merah dan warna kuning. Jadi warna apa?",
+            "en": "Mix red and yellow paint. What color do you get?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "w_c_orange",
+          "target_text": "orange",
+          "audio": "en/orange",
+          "correct": true
+        },
+        {
+          "id": "w_green",
+          "target_text": "green",
+          "audio": "en/green"
+        },
+        {
+          "id": "w_purple",
+          "target_text": "purple",
+          "audio": "en/purple"
+        }
+      ],
+      "model_answer": {
+        "id": "Merah + kuning = orange (oranye).",
+        "en": "Red + yellow = orange."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-pemula-0.1"
+    }
+  ]
+}

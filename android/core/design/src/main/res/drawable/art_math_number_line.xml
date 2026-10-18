@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- math_number_line: DRAFT art authored as code by art/tools/draw.py (ART_DIRECTION section 6). Placeholder until a human illustrator redraws or approves it (section 7). Generated: do not edit by hand. -->
+<!-- Texture slot: the app composites the shared paper-grain overlay above this drawing; no grain is baked in. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+  android:width="240dp"
+  android:height="240dp"
+  android:viewportWidth="240"
+  android:viewportHeight="240">
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="3"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M16 150C50 150 86 151 120 151C154 151 190 151 224 151M25.9 143.1L15.8 149.8L26.1 158.1M214 142.8L224.2 151.1L214.1 158" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="2.5"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M36 142C36 147 36 153 36 158M57 142C57 147 57 153 57 158M78 142C78 147 78 153 78 158M99 142C99 147 99 153 99 158M120 137C120 146 120 154 120 163M141 142C141 147 141 153 141 158M162 142C162 147 162 153 162 158M183 142C183 147 183 153 183 158M204 142C204 147 204 153 204 158" />
+  <path
+    android:strokeColor="@color/art_clay"
+    android:strokeWidth="1.9"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:strokeAlpha="0.9"
+    android:pathData="M78 138C79 135 81 133 82 130M84 124C85 122 86 120 87 118M90 112C92 109 94 106 96 103M102 103C104 106 106 109 108 112M111 118C112 120 113 122 114 124M116 130C118 132 119 135 120 138M120 138C121 135 122 132 124 130M126 124C127 122 128 120 129 118M132 112C134 109 136 106 138 103M144 103C146 106 148 109 150 112M153 118C154 120 155 122 156 124M158 130C159 132 161 135 162 138" />
+  <path
+    android:fillColor="@color/art_sage"
+    android:pathData="M152 135Q142 133 141 127Q140 121 144 116Q148 112 155 109Q162 107 168 109Q175 111 180 116Q184 121 183 127Q182 133 172 135Q162 137 152 135Z" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="3"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M184 122Q182 134 172 136Q162 138 152 136Q142 134 141 128Q140 122 144 117Q148 112 155 110Q162 108 169 110Q176 112 183 120" />
+  <path
+    android:fillColor="@color/art_sage"
+    android:pathData="M157.2 104.8Q157.8 107.2 156.7 109.4Q155.6 111.6 153.8 112.4Q152.1 113.3 149.9 112.2Q147.8 111.2 146.8 108.9Q145.7 106.6 146.4 104.6Q147.1 102.7 149.3 101.6Q151.4 100.6 154 101.5Q156.5 102.3 157.2 104.8ZM176.9 104.7Q178 106.8 177.2 109.2Q176.3 111.6 173.8 112.3Q171.3 113 169.5 112.3Q167.6 111.6 166.7 109.4Q165.7 107.2 166.8 104.8Q167.9 102.3 169.7 101.9Q171.5 101.5 173.6 102Q175.8 102.5 176.9 104.7Z" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="2.5"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M152 101.9Q156.4 103.6 157.3 105.8Q158.2 108 157.2 110Q156.2 112.1 154.2 113Q152.1 113.9 149.9 113.2Q147.7 112.4 146.8 110.3Q146 108.2 146.9 106Q147.8 103.8 155.7 103.4M176.4 112.3Q171.9 113.8 169.9 113.1Q167.9 112.4 166.9 110.1Q166 107.9 166.9 105.9Q167.9 103.8 170 102.9Q172.1 102 174.2 102.9Q176.2 103.8 177.1 105.9Q178 108 172.4 113.7M144 131.9C142.3 131.6 135.3 128.6 133.9 130C132.6 131.3 136.9 138.4 135.9 140.1C134.9 141.7 129.2 139.9 127.9 139.9M179.8 131.9C181.5 131.5 188.7 128.5 190 129.8C191.4 131.1 187 138.1 188 139.8C188.9 141.5 194.6 140 195.9 140" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="3.6"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M153.2 107.8L153.5 108M172.9 107.8L173.2 108" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="1.4"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M154 121.9C155.3 122.6 159.3 126.1 162 126.1C164.6 126.1 168.7 122.7 170 122.1" />
+</vector>

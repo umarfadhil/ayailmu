@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- P6 DRAFT themed-icon layer (Android 13+): the one-colour silhouette art_app_icon_mono (:core:design), inset like
+     the foreground so it sits inside the 66 dp safe zone. The launcher tints it; only its alpha matters. -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/art_app_icon_mono"
+    android:inset="16%" />

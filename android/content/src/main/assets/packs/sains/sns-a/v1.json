@@ -1,0 +1,4588 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sns-a-pemula-0.3",
+    "subject": "sains",
+    "track": "sns-a",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Sains — Pemula (Dewasa)",
+      "en": "Science — Beginner (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-17 for subject + language review: needs a science reviewer, a health/medical reviewer for the health items, and the Indonesian and English language reviewers before any item is approved (docs/syllabus/03_SAINS.md, Adults Pemula units 1-5). Follow-up 12 picture pass 2 (2026-10-18): more pictures on cards and questions (MODULES_LEVELS_STORIES.md §8); same items, skills and order.",
+  "prompts": {
+    "P-TAP": {
+      "id": "Ketuk pada gambar.",
+      "en": "Tap on the picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban yang tepat.",
+      "en": "Choose the right answer."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-MYTH": {
+      "id": "Mitos atau fakta?",
+      "en": "Myth or fact?"
+    },
+    "P-MATCH": {
+      "id": "Pasangkan.",
+      "en": "Match them up."
+    },
+    "P-SORT": {
+      "id": "Kelompokkan.",
+      "en": "Sort into groups."
+    },
+    "P-ORDER": {
+      "id": "Urutkan.",
+      "en": "Put them in order."
+    },
+    "P-NUM": {
+      "id": "Masukkan angkanya.",
+      "en": "Enter the number."
+    },
+    "P-EST": {
+      "id": "Perkirakan.",
+      "en": "Make an estimate."
+    },
+    "P-STORY": {
+      "id": "Baca situasinya, lalu pilih.",
+      "en": "Read the situation, then choose."
+    },
+    "P-READ": {
+      "id": "Silakan baca dulu.",
+      "en": "Read this first."
+    },
+    "P-TRY": {
+      "id": "Coba di rumah",
+      "en": "Try at home"
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Correct. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Baik, kita lanjut.",
+      "en": "Good, let's continue."
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Tubuh & kesehatan dasar",
+        "en": "Body & basic health"
+      },
+      "sticker": "sticker_bicycle"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Gizi untuk orang dewasa",
+        "en": "Nutrition for adults"
+      },
+      "sticker": "sticker_star_fruit"
+    },
+    {
+      "unit": "03",
+      "title": {
+        "id": "Penyakit menular",
+        "en": "Infectious disease"
+      },
+      "sticker": "sticker_teapot"
+    },
+    {
+      "unit": "04",
+      "title": {
+        "id": "Energi di rumah",
+        "en": "Energy at home"
+      },
+      "sticker": "sticker_lantern"
+    },
+    {
+      "unit": "05",
+      "title": {
+        "id": "Cuaca & iklim Indonesia",
+        "en": "Weather & climate in Indonesia"
+      },
+      "sticker": "sticker_umbrella"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SNS-A-P-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Tubuh & kesehatan dasar",
+        "en": "Body & basic health"
+      },
+      "body": [
+        {
+          "id": "Tiga kebiasaan menopang hampir semua hal lain: tidur cukup (umumnya 7–9 jam semalam untuk orang dewasa), minum cukup air, dan bergerak. Kemenkes menganjurkan aktivitas fisik minimal 150 menit per minggu, misalnya 30 menit sehari selama 5 hari.",
+          "en": "Three habits hold up almost everything else: enough sleep (usually 7–9 hours a night for adults), enough water, and movement. Indonesia's Ministry of Health (Kemenkes) recommends at least 150 minutes of physical activity a week, for example 30 minutes a day on 5 days."
+        },
+        {
+          "id": "Tekanan darah ditulis dengan dua angka, misalnya 120/80 mmHg. Angka atas (sistolik) adalah tekanan saat jantung memompa; angka bawah (diastolik) adalah tekanan saat jantung beristirahat di antara detak. Hasil 140/90 mmHg atau lebih pada pengukuran berulang termasuk hipertensi.",
+          "en": "Blood pressure is written as two numbers, such as 120/80 mmHg. The top number (systolic) is the pressure while the heart pumps; the bottom number (diastolic) is the pressure while it rests between beats. Readings of 140/90 mmHg or higher on repeated measurements count as hypertension."
+        },
+        {
+          "id": "Unit ini berisi informasi umum, bukan pengganti pemeriksaan oleh dokter. Dalam keadaan gawat darurat medis, hubungi 119.",
+          "en": "This unit is general information, not a substitute for a doctor's examination. In a medical emergency, call 119."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SNS-A-P-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Gizi untuk orang dewasa",
+        "en": "Nutrition for adults"
+      },
+      "body": [
+        {
+          "id": "Pedoman Isi Piringku dari Kemenkes membagi piring makan: setengah piring untuk sayur dan buah (sayur lebih banyak), setengahnya lagi untuk makanan pokok dan lauk pauk (makanan pokok lebih banyak).",
+          "en": "The Ministry of Health's Isi Piringku (\"fill my plate\") guide splits the plate: half for vegetables and fruit (more vegetables), the other half for staples and protein dishes (more staple)."
+        },
+        {
+          "id": "Energi makanan dihitung dalam kilokalori (kkal). Satu gram karbohidrat atau protein memberi sekitar 4 kkal; satu gram lemak sekitar 9 kkal.",
+          "en": "Food energy is counted in kilocalories (kcal). A gram of carbohydrate or protein gives about 4 kcal; a gram of fat about 9 kcal."
+        },
+        {
+          "id": "Kemenkes menganjurkan batas per orang per hari: gula 50 g (4 sendok makan), garam 5 g (1 sendok teh), dan lemak 67 g (5 sendok makan minyak).",
+          "en": "Kemenkes recommends these daily limits per person: sugar 50 g (4 tablespoons), salt 5 g (1 teaspoon) and fat 67 g (5 tablespoons of oil)."
+        },
+        {
+          "id": "Saat membaca label, lihat takaran saji dan jumlah sajian per kemasan. Angka gizi di label biasanya untuk satu sajian, bukan satu kemasan.",
+          "en": "When you read a label, check the serving size and the number of servings per pack. The nutrition figures are usually per serving, not per pack."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SNS-A-P-03-S1",
+      "unit": "03",
+      "audience": "adults",
+      "title": {
+        "id": "Penyakit menular",
+        "en": "Infectious disease"
+      },
+      "body": [
+        {
+          "id": "Penyakit menular disebabkan kuman: bakteri, virus, jamur, atau parasit. Kuman bisa berpindah lewat percikan saat batuk dan bersin, lewat tangan dan benda yang tercemar, lewat makanan dan air yang tercemar, atau lewat gigitan nyamuk.",
+          "en": "Infectious diseases are caused by germs: bacteria, viruses, fungi or parasites. Germs can travel in droplets from coughs and sneezes, on hands and dirty surfaces, in contaminated food and water, or through mosquito bites."
+        },
+        {
+          "id": "Cuci tangan pakai sabun dengan air mengalir, terutama sebelum makan atau menyiapkan makanan dan sesudah dari toilet, mencegah banyak kasus diare dan infeksi saluran napas. Imunisasi melatih sistem kekebalan mengenali kuman tertentu tanpa harus mengalami penyakitnya lebih dulu.",
+          "en": "Washing your hands with soap under running water, especially before eating or preparing food and after using the toilet, prevents many cases of diarrhoea and respiratory infection. Vaccines train the immune system to recognise particular germs without having to go through the disease first."
+        },
+        {
+          "id": "Demam berdarah dengue (DBD) ditularkan nyamuk Aedes aegypti, yang bertelur di genangan air bersih. Kemenkes menganjurkan 3M Plus: menguras dan menutup tempat penampungan air, serta mendaur ulang barang bekas yang bisa menampung air, ditambah langkah lain seperti memakai losion antinyamuk dan kelambu.",
+          "en": "Dengue fever (DBD) is spread by the Aedes aegypti mosquito, which lays its eggs in still, clean water. Kemenkes recommends 3M Plus: drain and scrub water containers (menguras), cover them (menutup) and recycle junk that can hold water (mendaur ulang), plus extra steps such as mosquito repellent and bed nets."
+        },
+        {
+          "id": "Antibiotik bekerja melawan bakteri, bukan virus, dan sebaiknya hanya dipakai dengan resep dokter. Unit ini berisi informasi umum. Segera periksakan diri ke puskesmas atau rumah sakit bila demam tinggi tidak membaik atau muncul tanda bahaya; dalam keadaan gawat darurat, hubungi 119.",
+          "en": "Antibiotics work against bacteria, not viruses, and should only be used with a doctor's prescription. This unit is general information. See a puskesmas or hospital promptly if a high fever doesn't improve or warning signs appear; in an emergency, call 119."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SNS-A-P-04-S1",
+      "unit": "04",
+      "audience": "adults",
+      "title": {
+        "id": "Energi di rumah",
+        "en": "Energy at home"
+      },
+      "body": [
+        {
+          "id": "Watt (W) adalah daya: seberapa cepat sebuah alat memakai listrik saat menyala. Kilowatt-jam (kWh) adalah energi: daya dikali lama pemakaian. 1 kWh sama dengan 1.000 watt selama 1 jam, misalnya lampu LED 10 W yang menyala 100 jam.",
+          "en": "A watt (W) is power: how fast an appliance uses electricity while it's on. A kilowatt-hour (kWh) is energy: power multiplied by how long it runs. 1 kWh equals 1,000 watts for 1 hour, for example a 10 W LED bulb left on for 100 hours."
+        },
+        {
+          "id": "Rumus praktisnya: kWh = watt × jam ÷ 1.000. Tagihan dan token PLN dihitung dalam kWh, bukan watt. Tarif per kWh ditetapkan pemerintah dan bisa berubah; cek tarif terbaru di situs atau aplikasi resmi PLN.",
+          "en": "The handy formula: kWh = watts × hours ÷ 1,000. PLN bills and prepaid tokens are counted in kWh, not watts. The price per kWh is set by the government and can change; check the latest tariff on PLN's official website or app."
+        },
+        {
+          "id": "Daya tersambung, misalnya 900 VA atau 1.300 VA, adalah batas daya yang bisa dipakai bersamaan. Jika terlampaui, MCB di meteran turun dan listrik padam (\"njeglek\"). Itu berbeda dari jumlah kWh yang Anda pakai dalam sebulan.",
+          "en": "Your connected capacity, such as 900 VA or 1,300 VA, is the limit on how much power you can draw at the same time. Go over it and the circuit breaker (MCB) on the meter trips and the power cuts out. That is different from the number of kWh you use in a month."
+        },
+        {
+          "id": "Alat pemanas dan pendingin, seperti setrika, ketel listrik, rice cooker, dan AC, umumnya berdaya besar. Namun alat berdaya kecil pun bisa menghabiskan banyak energi bila menyala sepanjang hari.",
+          "en": "Heating and cooling appliances, such as irons, electric kettles, rice cookers and air conditioners, usually draw a lot of power. But even a low-power appliance can use a lot of energy if it runs all day."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SNS-A-P-05-S1",
+      "unit": "05",
+      "audience": "adults",
+      "title": {
+        "id": "Cuaca & iklim Indonesia",
+        "en": "Weather & climate in Indonesia"
+      },
+      "body": [
+        {
+          "id": "Sebagian besar wilayah Indonesia punya dua musim: musim hujan dan musim kemarau. Penggerak utamanya angin muson. Sekitar Desember–Februari, angin muson barat dari arah Asia membawa banyak uap air, sehingga hujan sering turun. Sekitar Juni–Agustus, angin muson timur dari arah Australia yang kering membawa kemarau.",
+          "en": "Most of Indonesia has two seasons: a rainy season and a dry season. The main driver is the monsoon. Around December–February, the west monsoon blowing from Asia brings plenty of moisture, so it rains often. Around June–August, the east monsoon from dry Australia brings the dry season."
+        },
+        {
+          "id": "Polanya tidak sama di semua tempat. Nusa Tenggara, terutama NTT, cenderung kering dengan kemarau panjang. Di Ambon dan sebagian Maluku, bulan-bulan terbasah justru biasanya jatuh sekitar pertengahan tahun.",
+          "en": "The pattern isn't the same everywhere. Nusa Tenggara, especially East Nusa Tenggara (NTT), tends to be dry with a long dry season. In Ambon and parts of Maluku, the wettest months usually come around the middle of the year instead."
+        },
+        {
+          "id": "El Niño adalah menghangatnya permukaan laut di Samudra Pasifik bagian tengah dan timur. Saat El Niño, hujan di banyak wilayah Indonesia cenderung berkurang, sehingga risiko kekeringan serta kebakaran hutan dan lahan naik. La Niña cenderung sebaliknya: hujan lebih banyak dan risiko banjir naik.",
+          "en": "El Niño is a warming of the sea surface in the central and eastern Pacific Ocean. During El Niño, rain over much of Indonesia tends to decrease, raising the risk of drought and of forest and land fires. La Niña tends to do the opposite: more rain and a higher risk of floods."
+        },
+        {
+          "id": "Pantau prakiraan dan peringatan dini resmi dari BMKG di bmkg.go.id atau aplikasi InfoBMKG. Saat banjir, jangan menerobos arus air, dan matikan listrik bila air mulai masuk rumah. Dalam keadaan darurat, hubungi 112.",
+          "en": "Follow the official forecasts and early warnings from BMKG (Indonesia's weather agency) at bmkg.go.id or in the InfoBMKG app. In a flood, don't try to cross moving water, and switch off the power if water starts coming into the house. In an emergency, call 112."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {
+    "R-SNSA-BP": {
+      "title": {
+        "id": "Membaca angka tensi",
+        "en": "Reading a blood-pressure result"
+      },
+      "body": [
+        {
+          "id": "Bu Rina mengukur tekanan darah di puskesmas. Hasilnya 130/85 mmHg.",
+          "en": "Bu Rina has her blood pressure taken at the puskesmas (community health centre). The result is 130/85 mmHg."
+        },
+        {
+          "id": "Angka 130 adalah tekanan sistolik, yaitu saat jantung memompa darah. Angka 85 adalah tekanan diastolik, yaitu saat jantung beristirahat sejenak di antara detak.",
+          "en": "130 is the systolic pressure, while the heart pumps blood. 85 is the diastolic pressure, while the heart rests briefly between beats."
+        },
+        {
+          "id": "Satu kali pengukuran belum cukup untuk menyebut seseorang hipertensi. Bila hasilnya 140/90 mmHg atau lebih pada beberapa kali pengukuran, itu termasuk hipertensi dan perlu dibicarakan dengan dokter.",
+          "en": "One reading isn't enough to say someone has hypertension. If the results are 140/90 mmHg or higher on several readings, that counts as hypertension and is worth discussing with a doctor."
+        },
+        {
+          "id": "Tekanan darah tinggi sering tidak terasa. Karena itu, ukurlah secara berkala.",
+          "en": "High blood pressure often has no symptoms. That is why regular checks matter."
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-SNSA-STROKE": {
+      "title": {
+        "id": "Sore di rumah Pak Darto",
+        "en": "An afternoon at Pak Darto's"
+      },
+      "body": [
+        {
+          "id": "Pak Darto, 58 tahun, sedang mengobrol dengan keluarganya. Tiba-tiba senyumnya tampak miring ke satu sisi dan bicaranya menjadi pelo.",
+          "en": "Pak Darto, 58, is chatting with his family. Suddenly his smile droops on one side and his speech becomes slurred."
+        },
+        {
+          "id": "Saat diminta mengangkat kedua tangan, tangan kirinya terkulai. Istrinya bertanya, \"Apa yang harus kita lakukan?\"",
+          "en": "When asked to raise both arms, his left arm drifts down. His wife asks, \"What should we do?\""
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-SNSA-LABEL": {
+      "title": {
+        "id": "Label sebungkus camilan",
+        "en": "A snack label"
+      },
+      "body": [
+        {
+          "id": "INFORMASI NILAI GIZI",
+          "en": "NUTRITION INFORMATION"
+        },
+        {
+          "id": "Takaran saji 30 g · Jumlah sajian per kemasan: 4",
+          "en": "Serving size 30 g · Servings per pack: 4"
+        },
+        {
+          "id": "Per sajian: energi total 150 kkal · lemak total 7 g · gula 8 g · natrium 120 mg",
+          "en": "Per serving: total energy 150 kcal · total fat 7 g · sugars 8 g · sodium 120 mg"
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-SNSA-DBD": {
+      "title": {
+        "id": "Demam hari keempat",
+        "en": "Day four of the fever"
+      },
+      "body": [
+        {
+          "id": "Dika, 9 tahun, demam tinggi sejak Senin. Ibunya memberinya banyak minum dan membiarkannya beristirahat.",
+          "en": "Dika, aged 9, has had a high fever since Monday. His mother gives him plenty to drink and lets him rest."
+        },
+        {
+          "id": "Kamis pagi demamnya turun dan ibunya lega. Namun, siangnya Dika mengeluh perutnya sangat sakit, muntah berkali-kali, dan gusinya sedikit berdarah. Tangannya terasa dingin dan ia tampak sangat lemas.",
+          "en": "On Thursday morning the fever drops and his mother is relieved. But by midday Dika complains of bad stomach pain, vomits several times and his gums bleed a little. His hands feel cold and he looks very weak."
+        },
+        {
+          "id": "Di kampung mereka, beberapa tetangga sedang dirawat karena DBD.",
+          "en": "Several neighbours in their kampung are in hospital with dengue."
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-SNSA-METER": {
+      "title": {
+        "id": "Catatan meteran Pak Hadi",
+        "en": "Pak Hadi's meter readings"
+      },
+      "body": [
+        {
+          "id": "Pak Hadi memakai listrik pascabayar dengan daya 1.300 VA. Setiap awal bulan ia mencatat angka di meterannya (stand meter).",
+          "en": "Pak Hadi has a 1,300 VA postpaid electricity connection. At the start of every month he writes down the reading on his meter."
+        },
+        {
+          "id": "1 Juli: 4.215 kWh · 1 Agustus: 4.395 kWh",
+          "en": "1 July: 4,215 kWh · 1 August: 4,395 kWh"
+        },
+        {
+          "id": "Untuk latihan ini, anggap tarifnya Rp1.500 per kWh, belum termasuk pajak dan biaya lain.",
+          "en": "For this exercise, assume the tariff is Rp1,500 per kWh, before taxes and other charges."
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-SNSA-WARN": {
+      "title": {
+        "id": "Peringatan dini cuaca",
+        "en": "A weather early warning"
+      },
+      "body": [
+        {
+          "id": "Pukul 13.10 WIB, Bu Lina membaca peringatan dini cuaca dari BMKG untuk kotanya:",
+          "en": "At 13:10 WIB (Western Indonesia Time), Bu Lina reads a BMKG weather early warning for her city:"
+        },
+        {
+          "id": "\"Waspada potensi hujan sedang hingga lebat yang dapat disertai kilat/petir dan angin kencang pada pukul 13.30 WIB. Kondisi ini diperkirakan masih dapat berlangsung hingga pukul 16.30 WIB.\"",
+          "en": "\"Be alert for moderate to heavy rain, possibly with lightning and strong winds, from 13:30 WIB. These conditions are expected to continue until about 16:30 WIB.\""
+        },
+        {
+          "id": "Bu Lina biasa menjemput anaknya pukul 14.00 naik motor, melewati jalan di tepi sungai yang sering tergenang.",
+          "en": "Bu Lina usually picks up her child at 14:00 by motorbike, along a riverside road that often floods."
+        }
+      ],
+      "review_status": "draft"
+    }
+  },
+  "items": [
+    {
+      "item_id": "SNS-A-P-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "estimate_slider",
+      "skills": [
+        "HLTH-HABITS"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-EST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kira-kira berapa jam tidur per malam yang dianjurkan untuk kebanyakan orang dewasa?",
+            "en": "Roughly how many hours of sleep a night are recommended for most adults?"
+          }
+        }
+      ],
+      "image": "sleep_moon",
+      "numeric": {
+        "value": 8,
+        "tolerance": 1,
+        "unit": {
+          "id": "jam",
+          "en": "hours"
+        }
+      },
+      "slider": {
+        "min": 3,
+        "max": 12,
+        "step": 0.5
+      },
+      "model_answer": {
+        "id": "Sekitar 7–9 jam semalam. Tidur cukup membantu daya ingat, suasana hati, dan daya tahan tubuh.",
+        "en": "About 7–9 hours a night. Enough sleep supports memory, mood and immunity."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "HLTH-HABITS"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urine berwarna kuning pucat biasanya menandakan tubuh cukup cairan.",
+            "en": "Pale yellow urine usually means your body has enough fluid."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Urine kuning pucat umumnya tanda cukup minum; urine kuning pekat bisa berarti tubuh perlu lebih banyak cairan.",
+        "en": "Pale yellow urine generally means you're drinking enough; dark yellow urine can mean your body needs more fluid."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "number_input",
+      "skills": [
+        "HLTH-HABITS"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Anda jalan cepat 30 menit sehari, 5 hari dalam seminggu. Berapa menit totalnya per minggu?",
+            "en": "You walk briskly for 30 minutes a day, 5 days a week. How many minutes is that per week?"
+          }
+        }
+      ],
+      "image": "pic_walk",
+      "numeric": {
+        "value": 150,
+        "tolerance": 0,
+        "unit": {
+          "id": "menit",
+          "en": "minutes"
+        }
+      },
+      "model_answer": {
+        "id": "30 × 5 = 150 menit, sesuai anjuran minimal aktivitas fisik per minggu.",
+        "en": "30 × 5 = 150 minutes, the recommended weekly minimum of physical activity."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "HLTH-HABITS"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana contoh aktivitas fisik intensitas sedang?",
+            "en": "Which is an example of moderate-intensity activity?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Duduk menonton televisi",
+            "en": "Sitting and watching TV"
+          },
+          "image": "pic_watch_tv"
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Jalan cepat sampai napas agak terengah, tetapi masih bisa bicara",
+            "en": "Walking briskly until you're a little out of breath but can still talk"
+          },
+          "image": "pic_walk",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Tidur siang 30 menit",
+            "en": "A 30-minute nap"
+          },
+          "image": "pic_sleep"
+        }
+      ],
+      "model_answer": {
+        "id": "Jalan cepat termasuk intensitas sedang: napas lebih cepat, tetapi Anda masih bisa bicara.",
+        "en": "Brisk walking is moderate intensity: you breathe faster but can still talk."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "HLTH-HABITS"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang membantu tidur malam, mana yang mengganggu?",
+            "en": "Which habits help night-time sleep, and which get in the way?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_help",
+          "text": {
+            "id": "Membantu tidur",
+            "en": "Helps sleep"
+          }
+        },
+        {
+          "id": "b_harm",
+          "text": {
+            "id": "Mengganggu tidur",
+            "en": "Disturbs sleep"
+          }
+        },
+        {
+          "id": "h1",
+          "text": {
+            "id": "Jam tidur dan bangun yang sama setiap hari",
+            "en": "Going to bed and getting up at the same times every day"
+          }
+        },
+        {
+          "id": "h2",
+          "text": {
+            "id": "Minum kopi pada sore atau malam hari",
+            "en": "Drinking coffee in the late afternoon or evening"
+          }
+        },
+        {
+          "id": "h3",
+          "text": {
+            "id": "Kamar yang gelap, tenang, dan sejuk",
+            "en": "A dark, quiet, cool bedroom"
+          }
+        },
+        {
+          "id": "h4",
+          "text": {
+            "id": "Menatap layar ponsel di tempat tidur sampai larut",
+            "en": "Scrolling your phone in bed until late"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "h1": "b_help",
+        "h2": "b_harm",
+        "h3": "b_help",
+        "h4": "b_harm"
+      },
+      "model_answer": {
+        "id": "Membantu tidur: jam tidur dan bangun yang tetap, kamar gelap, tenang, dan sejuk. Mengganggu tidur: kopi pada sore atau malam hari, menatap ponsel di tempat tidur sampai larut.",
+        "en": "Helps sleep: regular bed and wake times; a dark, quiet, cool room. Disturbs sleep: coffee in the late afternoon or evening; scrolling your phone in bed until late."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "mini_reading",
+      "skills": [
+        "HLTH-BP"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-READ",
+      "reading_id": "R-SNSA-BP",
+      "image": "pic_heart_organ",
+      "model_answer": {
+        "id": "Angka atas = sistolik (jantung memompa). Angka bawah = diastolik (jantung beristirahat). 140/90 mmHg atau lebih pada pengukuran berulang = hipertensi.",
+        "en": "Top number = systolic (heart pumping). Bottom number = diastolic (heart resting). 140/90 mmHg or more on repeated readings = hypertension."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "HLTH-BP"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pada hasil Bu Rina, 130/85 mmHg, apa arti angka 130?",
+            "en": "In Bu Rina's result of 130/85 mmHg, what does the 130 mean?"
+          }
+        }
+      ],
+      "reading_id": "R-SNSA-BP",
+      "options": [
+        {
+          "id": "sys",
+          "text": {
+            "id": "Tekanan saat jantung memompa (sistolik)",
+            "en": "Pressure while the heart pumps (systolic)"
+          },
+          "correct": true
+        },
+        {
+          "id": "pulse",
+          "text": {
+            "id": "Denyut nadi per menit",
+            "en": "Pulse, in beats per minute"
+          }
+        },
+        {
+          "id": "dia",
+          "text": {
+            "id": "Tekanan saat jantung beristirahat (diastolik)",
+            "en": "Pressure while the heart rests (diastolic)"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "130 adalah tekanan sistolik, yaitu tekanan saat jantung memompa.",
+        "en": "130 is the systolic pressure: the pressure while the heart pumps."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HLTH-BP"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Hasil 145/95 mmHg yang muncul pada beberapa kali pengukuran termasuk hipertensi.",
+            "en": "A result of 145/95 mmHg on several separate readings counts as hypertension."
+          }
+        }
+      ],
+      "reading_id": "R-SNSA-BP",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Hasil 140/90 mmHg atau lebih pada pengukuran berulang termasuk hipertensi, jadi sebaiknya dibicarakan dengan dokter.",
+        "en": "140/90 mmHg or higher on repeated readings counts as hypertension, so it's worth discussing with a doctor."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "story_choice",
+      "skills": [
+        "HLTH-HELP"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-STORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa langkah yang paling tepat?",
+            "en": "What is the best thing to do?"
+          }
+        }
+      ],
+      "reading_id": "R-SNSA-STROKE",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Beri teh hangat, lalu biarkan Pak Darto tidur dulu",
+            "en": "Give him some warm tea and let him sleep it off"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Tunggu sampai besok pagi, mungkin hanya masuk angin",
+            "en": "Wait until tomorrow morning; it's probably just a chill (masuk angin)"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Segera hubungi 119 atau bawa ke IGD terdekat, dan catat jam gejala mulai",
+            "en": "Call 119 or get him to the nearest emergency department right away, and note when the symptoms began"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Wajah mencong, lengan lemah, dan bicara pelo yang muncul mendadak bisa menjadi tanda stroke. Setiap menit berharga: hubungi 119 atau segera ke IGD, catat jam gejala mulai, dan jangan beri makan atau minum dulu.",
+        "en": "A sudden drooping face, weak arm and slurred speech can be signs of a stroke. Every minute counts: call 119 or go straight to the emergency department, note when the symptoms began, and don't give food or drink."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HLTH-BP"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kalau tidak pusing, berarti tekanan darah pasti normal.",
+            "en": "If you don't have a headache, your blood pressure must be normal."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Itu mitos. Hipertensi sering tidak menimbulkan keluhan apa pun, jadi cara untuk mengetahuinya adalah dengan mengukur tekanan darah.",
+        "en": "That's a myth. Hypertension often causes no symptoms at all, so the way to know is to have your blood pressure measured."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "HLTH-HELP"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan keadaan dengan langkah yang tepat.",
+            "en": "Match each situation with the right step."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "c1",
+          "text": {
+            "id": "Nyeri dada hebat, sesak napas, dan keringat dingin",
+            "en": "Severe chest pain, shortness of breath and a cold sweat"
+          }
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Batuk berdahak dua minggu atau lebih",
+            "en": "A cough with phlegm for two weeks or more"
+          }
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Tensi di rumah beberapa kali 150/95 mmHg, tanpa keluhan",
+            "en": "Home readings of 150/95 mmHg several times, with no symptoms"
+          }
+        },
+        {
+          "id": "a1",
+          "text": {
+            "id": "Hubungi 119 sekarang",
+            "en": "Call 119 now"
+          }
+        },
+        {
+          "id": "a2",
+          "text": {
+            "id": "Periksa ke puskesmas; perlu dicek apakah TBC",
+            "en": "Go to the puskesmas; it needs checking for TB"
+          }
+        },
+        {
+          "id": "a3",
+          "text": {
+            "id": "Buat janji dengan dokter untuk pemeriksaan",
+            "en": "Book a doctor's appointment for a check-up"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c1": "a1",
+        "c2": "a2",
+        "c3": "a3"
+      },
+      "model_answer": {
+        "id": "Nyeri dada hebat dengan sesak dan keringat dingin: hubungi 119 sekarang. Batuk berdahak dua minggu atau lebih: periksa ke puskesmas (perlu cek TBC). Tensi tinggi berulang tanpa keluhan: buat janji dengan dokter.",
+        "en": "Severe chest pain with breathlessness and a cold sweat: call 119 now. A cough with phlegm for two weeks or more: go to the puskesmas (a TB check is needed). Repeated high readings with no symptoms: book a doctor's appointment."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "HLTH-HELP"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-TRY",
+      "image": "pic_phone",
+      "model_answer": {
+        "id": "Simpan nomor 119 (gawat darurat medis) dan 112 (layanan panggilan darurat) di ponsel Anda dan di ponsel anggota keluarga. Catat juga alamat puskesmas dan IGD terdekat di tempat yang mudah dilihat.",
+        "en": "Save 119 (medical emergencies) and 112 (emergency call service) in your phone and in your family's phones. Write down the address of the nearest puskesmas and emergency department somewhere easy to see."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HLTH-BP",
+        "HLTH-HABITS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Banyak makan garam, jarang bergerak, dan merokok dapat menaikkan risiko tekanan darah tinggi.",
+            "en": "Eating a lot of salt, rarely moving and smoking can raise the risk of high blood pressure."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Garam berlebih, kurang gerak, dan merokok termasuk faktor risiko hipertensi yang bisa diubah.",
+        "en": "Too much salt, too little movement and smoking are risk factors for hypertension that can be changed."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "HLTH-HELP"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tetangga Anda tiba-tiba jatuh, tidak sadar, dan tidak bernapas normal. Apa langkah pertama?",
+            "en": "Your neighbour suddenly collapses, doesn't respond and isn't breathing normally. What is the first step?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Oleskan minyak angin ke hidungnya, lalu tunggu",
+            "en": "Rub balm under their nose and wait"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Beri minum air manis",
+            "en": "Give them a sweet drink"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Teriak minta tolong dan hubungi 119",
+            "en": "Shout for help and call 119"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Minta tolong orang di sekitar dan hubungi 119. Bila Anda pernah dilatih, mulailah pijat jantung (RJP) sambil menunggu bantuan datang.",
+        "en": "Shout for help and call 119. If you have been trained, start chest compressions (CPR) while you wait for help to arrive."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-01-015",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "HLTH-BP"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Booth J., \"A short history of blood pressure measurement\", Proceedings of the Royal Society of Medicine 70(11):793-799 (1977); Encyclopaedia Britannica, \"sphygmomanometer\".",
+      "model_answer": {
+        "id": "Mengapa tensi ditulis dalam \"mmHg\"? Hg adalah lambang air raksa. Alat tensi klasik membaca tekanan darah sebagai tinggi kolom air raksa dalam milimeter. Cara mengukurnya dengan manset dan stetoskop diperkenalkan dokter Rusia Nikolai Korotkov pada 1905.",
+        "en": "Why is blood pressure written in \"mmHg\"? Hg is the symbol for mercury. Classic blood-pressure meters read the pressure as the height of a mercury column in millimetres. Measuring it with a cuff and a stethoscope was introduced by the Russian doctor Nikolai Korotkov in 1905."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "NUTR-PLATE"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kelompokkan sesuai Isi Piringku.",
+            "en": "Sort these into the Isi Piringku groups."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_staple",
+          "text": {
+            "id": "Makanan pokok",
+            "en": "Staples"
+          }
+        },
+        {
+          "id": "b_protein",
+          "text": {
+            "id": "Lauk pauk",
+            "en": "Protein dishes"
+          }
+        },
+        {
+          "id": "b_veg",
+          "text": {
+            "id": "Sayur dan buah",
+            "en": "Vegetables and fruit"
+          }
+        },
+        {
+          "id": "f_tempe",
+          "text": {
+            "id": "Tempe",
+            "en": "Tempeh"
+          }
+        },
+        {
+          "id": "f_rice",
+          "text": {
+            "id": "Nasi",
+            "en": "Rice"
+          },
+          "image": "pic_rice_bowl"
+        },
+        {
+          "id": "f_spinach",
+          "text": {
+            "id": "Bayam",
+            "en": "Spinach"
+          }
+        },
+        {
+          "id": "f_fish",
+          "text": {
+            "id": "Ikan",
+            "en": "Fish"
+          },
+          "image": "pic_fish_dish"
+        },
+        {
+          "id": "f_papaya",
+          "text": {
+            "id": "Pepaya",
+            "en": "Papaya"
+          },
+          "image": "fruit_papaya"
+        },
+        {
+          "id": "f_cassava",
+          "text": {
+            "id": "Singkong",
+            "en": "Cassava"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "f_tempe": "b_protein",
+        "f_rice": "b_staple",
+        "f_spinach": "b_veg",
+        "f_fish": "b_protein",
+        "f_papaya": "b_veg",
+        "f_cassava": "b_staple"
+      },
+      "model_answer": {
+        "id": "Makanan pokok: nasi, singkong. Lauk pauk: tempe, ikan. Sayur dan buah: bayam, pepaya.",
+        "en": "Staples: rice, cassava. Protein dishes: tempeh, fish. Vegetables and fruit: spinach, papaya."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "NUTR-PLATE"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menurut Isi Piringku, berapa bagian piring sebaiknya diisi sayur dan buah?",
+            "en": "According to Isi Piringku, how much of the plate should be vegetables and fruit?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Seperempat piring",
+            "en": "A quarter of the plate"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Setengah piring",
+            "en": "Half the plate"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Sedikit saja, sebagai hiasan",
+            "en": "Just a little, as a garnish"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Setengah piring untuk sayur dan buah, dengan sayur lebih banyak daripada buah.",
+        "en": "Half the plate is vegetables and fruit, with more vegetables than fruit."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "NUTR-PLATE"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Agar sehat, nasi dan makanan pokok lain harus dihindari sama sekali.",
+            "en": "To be healthy, you must cut out rice and other staples completely."
+          }
+        }
+      ],
+      "image": "pic_rice_bowl",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Itu mitos. Makanan pokok tetap bagian dari Isi Piringku; kuncinya porsi yang pas dan piring yang seimbang.",
+        "en": "That's a myth. Staples are still part of Isi Piringku; the key is a sensible portion and a balanced plate."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "number_input",
+      "skills": [
+        "NUTR-LABEL"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sebuah camilan mengandung 10 g lemak. Satu gram lemak memberi sekitar 9 kkal. Berapa kkal yang berasal dari lemaknya?",
+            "en": "A snack contains 10 g of fat. One gram of fat gives about 9 kcal. How many kcal come from the fat?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 90,
+        "tolerance": 0,
+        "unit": {
+          "id": "kkal",
+          "en": "kcal"
+        }
+      },
+      "model_answer": {
+        "id": "10 × 9 = 90 kkal.",
+        "en": "10 × 9 = 90 kcal."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "NUTR-PLATE"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang segar atau diolah minimal, mana yang ultra-proses?",
+            "en": "Which foods are fresh or minimally processed, and which are ultra-processed?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_min",
+          "text": {
+            "id": "Segar atau diolah minimal",
+            "en": "Fresh or minimally processed"
+          }
+        },
+        {
+          "id": "b_upf",
+          "text": {
+            "id": "Ultra-proses",
+            "en": "Ultra-processed"
+          }
+        },
+        {
+          "id": "f_noodle",
+          "text": {
+            "id": "Mi instan",
+            "en": "Instant noodles"
+          }
+        },
+        {
+          "id": "f_egg",
+          "text": {
+            "id": "Telur",
+            "en": "Eggs"
+          }
+        },
+        {
+          "id": "f_sausage",
+          "text": {
+            "id": "Sosis kemasan",
+            "en": "Packaged sausages"
+          }
+        },
+        {
+          "id": "f_fish",
+          "text": {
+            "id": "Ikan segar",
+            "en": "Fresh fish"
+          }
+        },
+        {
+          "id": "f_soda",
+          "text": {
+            "id": "Minuman bersoda manis",
+            "en": "Sweet fizzy drinks"
+          }
+        },
+        {
+          "id": "f_spinach",
+          "text": {
+            "id": "Bayam",
+            "en": "Spinach"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "f_noodle": "b_upf",
+        "f_egg": "b_min",
+        "f_sausage": "b_upf",
+        "f_fish": "b_min",
+        "f_soda": "b_upf",
+        "f_spinach": "b_min"
+      },
+      "model_answer": {
+        "id": "Segar atau diolah minimal: telur, ikan segar, bayam. Ultra-proses: mi instan, sosis kemasan, minuman bersoda manis. Makanan ultra-proses tidak dilarang, tetapi sebaiknya tidak menjadi menu utama sehari-hari.",
+        "en": "Fresh or minimally processed: eggs, fresh fish, spinach. Ultra-processed: instant noodles, packaged sausages, sweet fizzy drinks. Ultra-processed food isn't forbidden, but it's best not to make it your everyday staple."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "mini_reading",
+      "skills": [
+        "NUTR-LABEL"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-READ",
+      "reading_id": "R-SNSA-LABEL",
+      "model_answer": {
+        "id": "Angka di label ini untuk satu sajian (30 g). Satu kemasan berisi 4 sajian.",
+        "en": "The figures on this label are per serving (30 g). One pack holds 4 servings."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "number_input",
+      "skills": [
+        "NUTR-LABEL"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Jika Anda menghabiskan satu kemasan camilan ini, berapa gram gula yang Anda makan?",
+            "en": "If you finish the whole pack of this snack, how many grams of sugar have you eaten?"
+          }
+        }
+      ],
+      "reading_id": "R-SNSA-LABEL",
+      "numeric": {
+        "value": 32,
+        "tolerance": 0,
+        "unit": {
+          "id": "gram",
+          "en": "grams"
+        }
+      },
+      "model_answer": {
+        "id": "8 g × 4 sajian = 32 g gula.",
+        "en": "8 g × 4 servings = 32 g of sugar."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "NUTR-LABEL"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Anda makan 2 sajian (60 g) camilan ini. Berapa energinya?",
+            "en": "You eat 2 servings (60 g) of this snack. How much energy is that?"
+          }
+        }
+      ],
+      "reading_id": "R-SNSA-LABEL",
+      "options": [
+        {
+          "id": "c",
+          "text": {
+            "id": "300 kkal",
+            "en": "300 kcal"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "600 kkal",
+            "en": "600 kcal"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "150 kkal",
+            "en": "150 kcal"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "150 kkal × 2 sajian = 300 kkal.",
+        "en": "150 kcal × 2 servings = 300 kcal."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "estimate_slider",
+      "skills": [
+        "NUTR-GGL"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-EST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kemenkes menganjurkan gula tidak lebih dari 50 g per orang per hari. Jika 1 sendok teh gula pasir kira-kira 4 g, kira-kira berapa sendok teh itu?",
+            "en": "Kemenkes recommends no more than 50 g of sugar per person per day. If 1 teaspoon of sugar is about 4 g, roughly how many teaspoons is that?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 12.5,
+        "tolerance": 1.5,
+        "unit": {
+          "id": "sendok teh",
+          "en": "teaspoons"
+        }
+      },
+      "slider": {
+        "min": 0,
+        "max": 30,
+        "step": 0.5
+      },
+      "model_answer": {
+        "id": "50 ÷ 4 ≈ 12,5 sendok teh, termasuk gula dalam teh manis, kue, dan minuman kemasan.",
+        "en": "50 ÷ 4 ≈ 12.5 teaspoons, including the sugar in sweet tea, cakes and packaged drinks."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "NUTR-GGL"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan dengan batas harian anjuran Kemenkes per orang.",
+            "en": "Match each with Kemenkes's recommended daily limit per person."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sugar",
+          "text": {
+            "id": "Gula",
+            "en": "Sugar"
+          }
+        },
+        {
+          "id": "salt",
+          "text": {
+            "id": "Garam",
+            "en": "Salt"
+          }
+        },
+        {
+          "id": "fat",
+          "text": {
+            "id": "Lemak",
+            "en": "Fat"
+          }
+        },
+        {
+          "id": "v50",
+          "text": {
+            "id": "50 g (4 sendok makan)",
+            "en": "50 g (4 tablespoons)"
+          }
+        },
+        {
+          "id": "v5",
+          "text": {
+            "id": "5 g (1 sendok teh)",
+            "en": "5 g (1 teaspoon)"
+          }
+        },
+        {
+          "id": "v67",
+          "text": {
+            "id": "67 g (5 sendok makan minyak)",
+            "en": "67 g (5 tablespoons of oil)"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "sugar": "v50",
+        "salt": "v5",
+        "fat": "v67"
+      },
+      "model_answer": {
+        "id": "Gula 50 g, garam 5 g, dan lemak 67 g per orang per hari.",
+        "en": "Sugar 50 g, salt 5 g and fat 67 g per person per day."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "NUTR-LABEL",
+        "NUTR-GGL"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Produk berlabel \"tanpa tambahan gula\" pasti tidak mengandung gula sama sekali.",
+            "en": "A product labelled \"no added sugar\" contains no sugar at all."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Itu mitos. \"Tanpa tambahan gula\" berarti tidak ada gula yang ditambahkan, tetapi produknya bisa tetap mengandung gula alami, misalnya dari susu atau buah. Cek baris \"gula\" pada label.",
+        "en": "That's a myth. \"No added sugar\" means no sugar was added, but the product can still contain natural sugars, for example from milk or fruit. Check the \"sugars\" line on the label."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "NUTR-LABEL"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-TRY",
+      "model_answer": {
+        "id": "Ambil satu makanan atau minuman kemasan di dapur. Temukan \"Informasi Nilai Gizi\", lalu hitung berapa gram gula jika Anda menghabiskan satu kemasan. Bandingkan dengan batas 50 g per hari.",
+        "en": "Pick up one packaged food or drink in your kitchen. Find the \"Nutrition Information\" panel and work out how many grams of sugar you'd eat if you finished the whole pack. Compare it with the 50 g daily limit."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "number_input",
+      "skills": [
+        "NUTR-LABEL",
+        "NUTR-GGL"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Label minuman botol: gula 12 g per sajian, 2 sajian per botol. Berapa gram gula dalam satu botol?",
+            "en": "A bottled drink's label says: sugars 12 g per serving, 2 servings per bottle. How many grams of sugar are in one bottle?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 24,
+        "tolerance": 0,
+        "unit": {
+          "id": "gram",
+          "en": "grams"
+        }
+      },
+      "model_answer": {
+        "id": "12 g × 2 = 24 g, hampir setengah dari batas gula harian 50 g.",
+        "en": "12 g × 2 = 24 g, almost half of the 50 g daily sugar limit."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "NUTR-PLATE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Piring makan siang mana yang paling sesuai dengan Isi Piringku?",
+            "en": "Which lunch plate fits Isi Piringku best?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Nasi, ikan bakar, sayur asem, dan potongan pepaya",
+            "en": "Rice, grilled fish, sayur asem (tamarind vegetable soup) and some papaya"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Nasi, mi goreng, dan kerupuk",
+            "en": "Rice, fried noodles and crackers"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Nasi dengan dua gorengan, tanpa sayur",
+            "en": "Rice with two fried snacks and no vegetables"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Nasi (makanan pokok), ikan bakar (lauk), sayur asem (sayur), dan pepaya (buah) membuat piring yang seimbang.",
+        "en": "Rice (staple), grilled fish (protein), sayur asem (vegetables) and papaya (fruit) make a balanced plate."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "NUTR-PLATE"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "pic_chicken",
+      "gem": true,
+      "source": "NobelPrize.org, \"The Nobel Prize in Physiology or Medicine 1929\" (Christiaan Eijkman, \"for his discovery of the antineuritic vitamin\") and Eijkman's Nobel lecture.",
+      "model_answer": {
+        "id": "Di Batavia pada akhir abad ke-19, dokter Christiaan Eijkman melihat ayam yang diberi beras putih (sosoh) jatuh sakit mirip beri-beri, sedangkan ayam yang diberi beras berkulit ari tetap sehat. Temuan ini membuka jalan menuju penemuan vitamin B1, dan Eijkman ikut meraih Hadiah Nobel Kedokteran 1929.",
+        "en": "In Batavia in the late 19th century, Dr Christiaan Eijkman saw that chickens fed polished white rice fell ill with a beriberi-like disease, while chickens fed rice with its bran stayed healthy. The finding opened the way to the discovery of vitamin B1, and Eijkman shared the 1929 Nobel Prize in Physiology or Medicine."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-03-001",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "INF-SPREAD"
+      ],
+      "pool": "PRACT",
+      "order": 25,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bagaimana penyakit ini terutama menular?",
+            "en": "How does each disease mainly spread?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_mosq",
+          "text": {
+            "id": "Lewat gigitan nyamuk",
+            "en": "Through mosquito bites"
+          }
+        },
+        {
+          "id": "b_air",
+          "text": {
+            "id": "Lewat udara (batuk, bersin)",
+            "en": "Through the air (coughs, sneezes)"
+          }
+        },
+        {
+          "id": "b_food",
+          "text": {
+            "id": "Lewat makanan atau air tercemar",
+            "en": "Through contaminated food or water"
+          }
+        },
+        {
+          "id": "d_dbd",
+          "text": {
+            "id": "Demam berdarah dengue (DBD)",
+            "en": "Dengue fever"
+          }
+        },
+        {
+          "id": "d_tb",
+          "text": {
+            "id": "TBC",
+            "en": "Tuberculosis (TB)"
+          }
+        },
+        {
+          "id": "d_typhoid",
+          "text": {
+            "id": "Tifus (demam tifoid)",
+            "en": "Typhoid fever"
+          }
+        },
+        {
+          "id": "d_malaria",
+          "text": {
+            "id": "Malaria",
+            "en": "Malaria"
+          }
+        },
+        {
+          "id": "d_measles",
+          "text": {
+            "id": "Campak",
+            "en": "Measles"
+          }
+        },
+        {
+          "id": "d_hepa",
+          "text": {
+            "id": "Hepatitis A",
+            "en": "Hepatitis A"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "d_dbd": "b_mosq",
+        "d_tb": "b_air",
+        "d_typhoid": "b_food",
+        "d_malaria": "b_mosq",
+        "d_measles": "b_air",
+        "d_hepa": "b_food"
+      },
+      "model_answer": {
+        "id": "Nyamuk: DBD dan malaria. Udara: TBC dan campak. Makanan atau air tercemar: tifus dan hepatitis A.",
+        "en": "Mosquitoes: dengue and malaria. Air: TB and measles. Contaminated food or water: typhoid and hepatitis A."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-03-002",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "INF-MEDS"
+      ],
+      "pool": "PRACT",
+      "order": 26,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Antibiotik bisa menyembuhkan flu dan pilek.",
+            "en": "Antibiotics can cure flu and colds."
+          }
+        }
+      ],
+      "image": "pic_medicine",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Itu mitos. Flu dan pilek disebabkan virus, sedangkan antibiotik hanya bekerja melawan bakteri. Memakai antibiotik tanpa perlu justru mendorong bakteri menjadi kebal (resisten).",
+        "en": "That's a myth. Flu and colds are caused by viruses, and antibiotics only work against bacteria. Taking antibiotics when they aren't needed helps bacteria become resistant."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-03-003",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "INF-SPREAD"
+      ],
+      "pool": "PRACT",
+      "order": 27,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan jenis kuman dengan contoh penyakit yang disebabkannya.",
+            "en": "Match each type of germ with an example of a disease it causes."
+          }
+        }
+      ],
+      "image": "sci_microscope",
+      "options": [
+        {
+          "id": "g_bac",
+          "text": {
+            "id": "Bakteri",
+            "en": "Bacteria"
+          }
+        },
+        {
+          "id": "g_vir",
+          "text": {
+            "id": "Virus",
+            "en": "Virus"
+          }
+        },
+        {
+          "id": "g_par",
+          "text": {
+            "id": "Parasit",
+            "en": "Parasite"
+          }
+        },
+        {
+          "id": "g_fun",
+          "text": {
+            "id": "Jamur",
+            "en": "Fungus"
+          }
+        },
+        {
+          "id": "e_tb",
+          "text": {
+            "id": "TBC",
+            "en": "TB"
+          }
+        },
+        {
+          "id": "e_measles",
+          "text": {
+            "id": "Campak",
+            "en": "Measles"
+          }
+        },
+        {
+          "id": "e_malaria",
+          "text": {
+            "id": "Malaria",
+            "en": "Malaria"
+          }
+        },
+        {
+          "id": "e_panu",
+          "text": {
+            "id": "Panu",
+            "en": "Panu (pale skin patches, tinea versicolor)"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "g_bac": "e_tb",
+        "g_vir": "e_measles",
+        "g_par": "e_malaria",
+        "g_fun": "e_panu"
+      },
+      "model_answer": {
+        "id": "TBC disebabkan bakteri, campak oleh virus, malaria oleh parasit Plasmodium, dan panu oleh jamur.",
+        "en": "TB is caused by bacteria, measles by a virus, malaria by the Plasmodium parasite and panu by a fungus."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-03-004",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "INF-SPREAD"
+      ],
+      "pool": "PRACT",
+      "order": 28,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kapan cuci tangan pakai sabun paling penting?",
+            "en": "When is washing your hands with soap most important?"
+          }
+        }
+      ],
+      "image": "wash_hands",
+      "options": [
+        {
+          "id": "dirty",
+          "text": {
+            "id": "Hanya ketika tangan terlihat kotor",
+            "en": "Only when your hands look dirty"
+          }
+        },
+        {
+          "id": "key",
+          "text": {
+            "id": "Sebelum makan atau menyiapkan makanan, dan sesudah dari toilet",
+            "en": "Before eating or preparing food, and after using the toilet"
+          },
+          "correct": true
+        },
+        {
+          "id": "morning",
+          "text": {
+            "id": "Cukup sekali sehari, saat mandi pagi",
+            "en": "Once a day is enough, when you bathe in the morning"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Kuman tidak terlihat. Waktu penting untuk cuci tangan pakai sabun antara lain sebelum makan, sebelum menyiapkan makanan, dan sesudah dari toilet.",
+        "en": "Germs are invisible. Key times to wash with soap include before eating, before preparing food and after using the toilet."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-03-005",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "INF-MEDS"
+      ],
+      "pool": "PRACT",
+      "order": 29,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Imunisasi melatih sistem kekebalan mengenali kuman tertentu, sehingga tubuh lebih siap melawannya bila suatu saat terpapar.",
+            "en": "Vaccination trains the immune system to recognise particular germs, so the body is better prepared if it meets them later."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Vaksin memperkenalkan kuman yang sudah dilemahkan atau dimatikan, atau bagian dari kuman, kepada sistem kekebalan, tanpa harus mengalami penyakit aslinya.",
+        "en": "A vaccine introduces a weakened or killed germ, or part of one, to the immune system without you having to go through the real disease."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-03-006",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "INF-MEDS"
+      ],
+      "pool": "PRACT",
+      "order": 30,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dokter meresepkan antibiotik untuk infeksi bakteri. Setelah dua hari Anda merasa jauh lebih baik. Apa yang sebaiknya dilakukan?",
+            "en": "A doctor prescribes antibiotics for a bacterial infection. After two days you feel much better. What should you do?"
+          }
+        }
+      ],
+      "image": "pic_medicine",
+      "options": [
+        {
+          "id": "stop",
+          "text": {
+            "id": "Berhenti minum dan menyimpan sisanya untuk sakit berikutnya",
+            "en": "Stop taking them and keep the rest for the next time you're ill"
+          }
+        },
+        {
+          "id": "follow",
+          "text": {
+            "id": "Mengikuti petunjuk dokter tentang cara dan lama minum obat; bertanya kepada dokter atau apoteker bila ragu",
+            "en": "Follow the doctor's instructions on how and for how long to take them; ask the doctor or pharmacist if you're unsure"
+          },
+          "correct": true
+        },
+        {
+          "id": "share",
+          "text": {
+            "id": "Memberikan sisanya kepada anggota keluarga yang sedang batuk",
+            "en": "Give the rest to a family member who has a cough"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Ikuti petunjuk dokter. Jangan menyimpan sisa antibiotik untuk dipakai sendiri nanti atau memberikannya kepada orang lain.",
+        "en": "Follow your doctor's instructions. Don't keep leftover antibiotics to use later or give them to anyone else."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-03-007",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "mini_reading",
+      "skills": [
+        "INF-DENGUE"
+      ],
+      "pool": "PRACT",
+      "order": 31,
+      "prompt_id": "P-READ",
+      "reading_id": "R-SNSA-DBD",
+      "image": "pic_fever",
+      "model_answer": {
+        "id": "Pada DBD, masa kritis sering datang justru saat demam turun, sekitar hari ke-3 sampai ke-7. Nyeri perut hebat, muntah terus-menerus, perdarahan seperti gusi berdarah, tangan dingin, dan sangat lemas adalah tanda bahaya.",
+        "en": "In dengue, the critical phase often comes just as the fever drops, around days 3 to 7. Severe stomach pain, persistent vomiting, bleeding such as from the gums, cold hands and extreme weakness are warning signs."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-03-008",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "story_choice",
+      "skills": [
+        "INF-DENGUE"
+      ],
+      "pool": "PRACT",
+      "order": 32,
+      "prompt_id": "P-STORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa langkah yang paling tepat bagi ibu Dika?",
+            "en": "What is the best thing for Dika's mother to do?"
+          }
+        }
+      ],
+      "reading_id": "R-SNSA-DBD",
+      "options": [
+        {
+          "id": "go",
+          "text": {
+            "id": "Segera membawanya ke puskesmas atau IGD rumah sakit",
+            "en": "Take him to the puskesmas or a hospital emergency department straight away"
+          },
+          "correct": true
+        },
+        {
+          "id": "wait",
+          "text": {
+            "id": "Menunggu di rumah, karena demamnya sudah turun",
+            "en": "Wait at home, since the fever has gone down"
+          }
+        },
+        {
+          "id": "herb",
+          "text": {
+            "id": "Memberinya jamu, lalu menunggu sampai besok",
+            "en": "Give him a herbal tonic and wait until tomorrow"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Nyeri perut hebat, muntah berulang, gusi berdarah, tangan dingin, dan sangat lemas adalah tanda bahaya DBD. Dika perlu segera diperiksa tenaga kesehatan; bila kondisinya memburuk di jalan, hubungi 119.",
+        "en": "Severe stomach pain, repeated vomiting, bleeding gums, cold hands and extreme weakness are dengue warning signs. Dika needs to see a health worker straight away; if he gets worse on the way, call 119."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-03-009",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "INF-DENGUE"
+      ],
+      "pool": "PRACT",
+      "order": 33,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pada DBD, begitu demam turun, pasien pasti sudah melewati masa bahaya.",
+            "en": "In dengue, once the fever drops the patient is definitely out of danger."
+          }
+        }
+      ],
+      "image": "pic_fever",
+      "reading_id": "R-SNSA-DBD",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Itu mitos. Masa kritis DBD sering dimulai justru saat demam turun, biasanya sekitar hari ke-3 sampai ke-7 sakit. Tetap awasi tanda bahaya.",
+        "en": "That's a myth. The critical phase of dengue often begins just as the fever drops, usually around days 3 to 7 of the illness. Keep watching for warning signs."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-03-010",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "INF-DENGUE"
+      ],
+      "pool": "PRACT",
+      "order": 34,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutkan siklus hidup nyamuk Aedes aegypti.",
+            "en": "Put the life cycle of the Aedes aegypti mosquito in order."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "l3",
+          "text": {
+            "id": "Kepompong (pupa) di air",
+            "en": "Pupa, in the water"
+          }
+        },
+        {
+          "id": "l1",
+          "text": {
+            "id": "Telur di dinding wadah air, dekat permukaan",
+            "en": "Eggs on the inside wall of a water container, near the waterline"
+          }
+        },
+        {
+          "id": "l4",
+          "text": {
+            "id": "Nyamuk dewasa terbang keluar",
+            "en": "The adult mosquito flies off"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "id": "Jentik (larva) di air",
+            "en": "Larvae (wrigglers) in the water"
+          }
+        }
+      ],
+      "solution": [
+        "l1",
+        "l2",
+        "l3",
+        "l4"
+      ],
+      "model_answer": {
+        "id": "Telur, jentik, kepompong, lalu nyamuk dewasa. Dalam cuaca hangat, siklus ini bisa selesai dalam sekitar 8–10 hari; karena itu tempat penampungan air dikuras setidaknya seminggu sekali.",
+        "en": "Egg, larva, pupa, then adult. In warm weather the whole cycle can take about 8–10 days, which is why water containers should be drained and scrubbed at least once a week."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-03-011",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "INF-DENGUE"
+      ],
+      "pool": "PRACT",
+      "order": 35,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang termasuk langkah 3M Plus untuk mencegah DBD?",
+            "en": "Which of these is part of 3M Plus for preventing dengue?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "tyre",
+          "text": {
+            "id": "Membiarkan ban bekas di halaman menampung air hujan",
+            "en": "Leaving old tyres in the yard to collect rainwater"
+          }
+        },
+        {
+          "id": "fog",
+          "text": {
+            "id": "Mengandalkan pengasapan (fogging) saja",
+            "en": "Relying on fogging alone"
+          }
+        },
+        {
+          "id": "cover",
+          "text": {
+            "id": "Menutup rapat tempat penampungan air",
+            "en": "Covering water containers tightly"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Menutup rapat tempat penampungan air termasuk 3M Plus. Pengasapan (fogging) hanya membunuh nyamuk dewasa, tidak membasmi jentik, jadi bukan pengganti 3M Plus.",
+        "en": "Covering water containers tightly is part of 3M Plus. Fogging only kills adult mosquitoes, not the larvae, so it is no substitute for 3M Plus."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-03-012",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "INF-DENGUE"
+      ],
+      "pool": "PRACT",
+      "order": 36,
+      "prompt_id": "P-TRY",
+      "model_answer": {
+        "id": "Jadilah jumantik (juru pemantau jentik) di rumah sendiri, 10 menit seminggu sekali. Periksa bak mandi, ember, vas bunga, tempat minum hewan, tatakan dispenser, pot, talang, dan barang bekas. Kuras dan sikat, tutup, atau singkirkan wadah yang berisi jentik.",
+        "en": "Be your own household jumantik (larva monitor) for 10 minutes once a week. Check the bak mandi (bathroom water tank), buckets, vases, pets' water bowls, the drip tray under the water dispenser, flowerpots, gutters and junk. Drain and scrub, cover or get rid of any container with larvae in it."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-03-013",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "INF-DENGUE",
+        "INF-SPREAD"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Nyamuk Aedes aegypti berkembang biak di genangan air bersih, misalnya di bak mandi, vas bunga, dan ban bekas yang terisi air hujan.",
+            "en": "Aedes aegypti mosquitoes breed in still, clean water, for example in a bak mandi, a flower vase or an old tyre full of rainwater."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Aedes aegypti lebih suka air yang relatif bersih dan tenang di wadah buatan manusia, bukan selokan yang kotor.",
+        "en": "Aedes aegypti prefers fairly clean, still water in man-made containers rather than dirty drains."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-03-014",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "INF-MEDS",
+        "INF-SPREAD"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Untuk penyakit mana antibiotik tidak menolong, karena penyebabnya virus?",
+            "en": "For which illness will antibiotics not help, because it's caused by a virus?"
+          }
+        }
+      ],
+      "image": "pic_medicine",
+      "options": [
+        {
+          "id": "tb",
+          "text": {
+            "id": "TBC",
+            "en": "TB"
+          }
+        },
+        {
+          "id": "typhoid",
+          "text": {
+            "id": "Tifus (demam tifoid)",
+            "en": "Typhoid fever"
+          }
+        },
+        {
+          "id": "cold",
+          "text": {
+            "id": "Pilek biasa (selesma)",
+            "en": "The common cold"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Pilek biasa disebabkan virus, jadi antibiotik tidak menolong. TBC dan tifus disebabkan bakteri dan diobati dengan antibiotik sesuai resep dokter.",
+        "en": "The common cold is caused by a virus, so antibiotics won't help. TB and typhoid are caused by bacteria and are treated with antibiotics prescribed by a doctor."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-03-015",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "INF-MEDS"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "sci_microscope",
+      "gem": true,
+      "source": "NobelPrize.org, \"The Nobel Prize in Physiology or Medicine 1945\" and Alexander Fleming's Nobel Lecture \"Penicillin\" (11 December 1945), which describes the 1928 mould plate and warns that underdosing can make microbes resistant; WHO fact sheet \"Antimicrobial resistance\" (who.int).",
+      "model_answer": {
+        "id": "Penisilin ditemukan secara kebetulan. Pada 1928, Alexander Fleming melihat jamur yang tumbuh di cawan biakan bakterinya membunuh bakteri di sekitarnya. Dalam pidato Nobel-nya pada 1945, Fleming sudah memperingatkan bahwa memakai penisilin dengan dosis kurang bisa membuat kuman menjadi kebal. Kini resistansi antimikroba menjadi masalah kesehatan dunia.",
+        "en": "Penicillin was discovered by accident. In 1928, Alexander Fleming noticed that a mould growing on one of his bacteria culture plates had killed the bacteria around it. In his 1945 Nobel lecture, Fleming already warned that taking too little penicillin could make germs resistant. Today antimicrobial resistance is a global health problem."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-04-001",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "EN-UNITS"
+      ],
+      "pool": "PRACT",
+      "order": 37,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pada label rice cooker tertulis \"350 W\". Apa artinya?",
+            "en": "A rice cooker's label says \"350 W\". What does that mean?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "month",
+          "text": {
+            "id": "Energi yang dipakainya dalam sebulan",
+            "en": "The energy it uses in a month"
+          }
+        },
+        {
+          "id": "power",
+          "text": {
+            "id": "Dayanya: seberapa cepat alat itu memakai listrik saat menyala",
+            "en": "Its power: how fast it uses electricity while it's on"
+          },
+          "correct": true
+        },
+        {
+          "id": "volt",
+          "text": {
+            "id": "Tegangan listrik di rumah",
+            "en": "The voltage of your home supply"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Watt menunjukkan daya. Energi yang dipakai (kWh) baru diketahui setelah daya dikalikan lama pemakaian.",
+        "en": "Watts show power. You only know the energy used (kWh) once you multiply the power by how long it runs."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-04-002",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "number_input",
+      "skills": [
+        "EN-UNITS"
+      ],
+      "pool": "PRACT",
+      "order": 38,
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Lampu LED 10 W menyala 10 jam setiap malam. Berapa watt-jam (Wh) energi yang dipakainya dalam satu malam?",
+            "en": "A 10 W LED bulb is on for 10 hours every night. How many watt-hours (Wh) does it use in one night?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 100,
+        "tolerance": 0,
+        "unit": {
+          "id": "Wh",
+          "en": "Wh"
+        }
+      },
+      "model_answer": {
+        "id": "10 W × 10 jam = 100 Wh, atau 0,1 kWh.",
+        "en": "10 W × 10 hours = 100 Wh, or 0.1 kWh."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-04-003",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "EN-SAVE",
+        "EN-UNITS"
+      ],
+      "pool": "PRACT",
+      "order": 39,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Alat yang dayanya kecil pasti hemat listrik, berapa lama pun ia menyala.",
+            "en": "A low-power appliance is always cheap to run, however long it stays on."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Itu mitos. Energi = daya × waktu. Alat berdaya kecil yang menyala berjam-jam, misalnya rice cooker pada mode menghangatkan seharian, bisa memakai lebih banyak energi daripada alat berdaya besar yang dipakai sebentar.",
+        "en": "That's a myth. Energy = power × time. A low-power appliance that runs for hours, such as a rice cooker left on keep-warm all day, can use more energy than a high-power appliance used briefly."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-04-004",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "number_input",
+      "skills": [
+        "EN-UNITS"
+      ],
+      "pool": "PRACT",
+      "order": 40,
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "AC yang menarik daya 800 W menyala 5 jam. Berapa kWh energi yang dipakainya?",
+            "en": "An air conditioner drawing 800 W runs for 5 hours. How many kWh does it use?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 4,
+        "tolerance": 0,
+        "unit": {
+          "id": "kWh",
+          "en": "kWh"
+        }
+      },
+      "model_answer": {
+        "id": "800 W × 5 jam = 4.000 Wh = 4 kWh.",
+        "en": "800 W × 5 hours = 4,000 Wh = 4 kWh."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-04-005",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "EN-SAVE",
+        "EN-UNITS"
+      ],
+      "pool": "PRACT",
+      "order": 41,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutkan dari energi harian yang paling kecil ke yang paling besar. Hitung watt × jam.",
+            "en": "Put these in order from the least energy per day to the most. Work out watts × hours."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a3",
+          "text": {
+            "id": "Kipas angin 40 W, menyala 15 jam",
+            "en": "A 40 W fan, on for 15 hours"
+          }
+        },
+        {
+          "id": "a1",
+          "text": {
+            "id": "Lampu LED 10 W, menyala 12 jam",
+            "en": "A 10 W LED bulb, on for 12 hours"
+          }
+        },
+        {
+          "id": "a4",
+          "text": {
+            "id": "Rice cooker pada mode menghangatkan 50 W, menyala 20 jam",
+            "en": "A rice cooker on keep-warm at 50 W, on for 20 hours"
+          }
+        },
+        {
+          "id": "a2",
+          "text": {
+            "id": "Setrika 350 W, dipakai 1 jam",
+            "en": "A 350 W iron, used for 1 hour"
+          }
+        }
+      ],
+      "solution": [
+        "a1",
+        "a2",
+        "a3",
+        "a4"
+      ],
+      "model_answer": {
+        "id": "Lampu 120 Wh, setrika 350 Wh, kipas angin 600 Wh, rice cooker 1.000 Wh. Alat berdaya kecil yang menyala lama bisa menjadi yang paling boros.",
+        "en": "Bulb 120 Wh, iron 350 Wh, fan 600 Wh, rice cooker 1,000 Wh. A low-power appliance that runs for a long time can end up using the most."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-04-006",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "mini_reading",
+      "skills": [
+        "EN-BILL"
+      ],
+      "pool": "PRACT",
+      "order": 42,
+      "prompt_id": "P-READ",
+      "reading_id": "R-SNSA-METER",
+      "model_answer": {
+        "id": "Pemakaian sebulan = stand meter akhir − stand meter awal. Biaya = pemakaian (kWh) × tarif per kWh.",
+        "en": "Monthly use = closing reading − opening reading. Cost = use (kWh) × price per kWh."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-04-007",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "number_input",
+      "skills": [
+        "EN-BILL"
+      ],
+      "pool": "PRACT",
+      "order": 43,
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Berapa kWh listrik yang dipakai Pak Hadi selama bulan Juli?",
+            "en": "How many kWh did Pak Hadi use during July?"
+          }
+        }
+      ],
+      "reading_id": "R-SNSA-METER",
+      "numeric": {
+        "value": 180,
+        "tolerance": 0,
+        "unit": {
+          "id": "kWh",
+          "en": "kWh"
+        }
+      },
+      "model_answer": {
+        "id": "4.395 − 4.215 = 180 kWh.",
+        "en": "4,395 − 4,215 = 180 kWh."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-04-008",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "EN-BILL"
+      ],
+      "pool": "PRACT",
+      "order": 44,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dengan tarif latihan Rp1.500 per kWh, berapa biaya pemakaian Pak Hadi bulan Juli, belum termasuk pajak?",
+            "en": "At the exercise tariff of Rp1,500 per kWh, how much does Pak Hadi's July use cost, before taxes?"
+          }
+        }
+      ],
+      "reading_id": "R-SNSA-METER",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Rp270.000",
+            "en": "Rp270,000"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Rp27.000",
+            "en": "Rp27,000"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Rp2.700.000",
+            "en": "Rp2,700,000"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "180 kWh × Rp1.500 = Rp270.000.",
+        "en": "180 kWh × Rp1,500 = Rp270,000."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-04-009",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "estimate_slider",
+      "skills": [
+        "EN-BILL",
+        "EN-UNITS"
+      ],
+      "pool": "PRACT",
+      "order": 45,
+      "prompt_id": "P-EST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kipas angin 40 W menyala 8 jam sehari selama 30 hari. Dengan tarif Rp1.500 per kWh, kira-kira berapa biayanya sebulan?",
+            "en": "A 40 W fan runs for 8 hours a day for 30 days. At Rp1,500 per kWh, roughly how much does that cost a month?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 14400,
+        "tolerance": 2000,
+        "unit": {
+          "id": "rupiah",
+          "en": "rupiah"
+        }
+      },
+      "slider": {
+        "min": 0,
+        "max": 50000,
+        "step": 500
+      },
+      "model_answer": {
+        "id": "40 W × 8 jam × 30 hari = 9.600 Wh = 9,6 kWh. 9,6 × Rp1.500 = Rp14.400.",
+        "en": "40 W × 8 hours × 30 days = 9,600 Wh = 9.6 kWh. 9.6 × Rp1,500 = Rp14,400."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-04-010",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "EN-BILL"
+      ],
+      "pool": "PRACT",
+      "order": 46,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Daya 1.300 VA berarti jatah pemakaian Anda 1.300 kWh per bulan.",
+            "en": "A 1,300 VA connection means your allowance is 1,300 kWh a month."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "1.300 VA adalah batas daya yang bisa dipakai bersamaan, bukan jatah energi bulanan. Jumlah kWh yang Anda pakai sebulan bergantung pada alat apa saja yang menyala dan berapa lama.",
+        "en": "1,300 VA is the limit on the power you can draw at once, not a monthly energy allowance. How many kWh you use in a month depends on which appliances run and for how long."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-04-011",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "EN-SAVE"
+      ],
+      "pool": "PRACT",
+      "order": 47,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana kebiasaan yang menghemat listrik, mana yang memboroskan?",
+            "en": "Which habits save electricity, and which waste it?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_save",
+          "text": {
+            "id": "Hemat",
+            "en": "Saves"
+          }
+        },
+        {
+          "id": "b_waste",
+          "text": {
+            "id": "Boros",
+            "en": "Wastes"
+          }
+        },
+        {
+          "id": "h1",
+          "text": {
+            "id": "Mengganti bohlam pijar dengan lampu LED",
+            "en": "Replacing incandescent bulbs with LEDs"
+          }
+        },
+        {
+          "id": "h2",
+          "text": {
+            "id": "Membiarkan pintu kulkas terbuka lama saat memilih makanan",
+            "en": "Leaving the fridge door open while you decide what to eat"
+          }
+        },
+        {
+          "id": "h3",
+          "text": {
+            "id": "Menutup pintu dan jendela saat AC menyala",
+            "en": "Closing doors and windows while the AC is on"
+          }
+        },
+        {
+          "id": "h4",
+          "text": {
+            "id": "Membiarkan rice cooker pada mode menghangatkan seharian",
+            "en": "Leaving the rice cooker on keep-warm all day"
+          }
+        },
+        {
+          "id": "h5",
+          "text": {
+            "id": "Menyetrika pakaian sekaligus dalam satu waktu",
+            "en": "Ironing all your clothes in one go"
+          }
+        },
+        {
+          "id": "h6",
+          "text": {
+            "id": "Membiarkan TV menyala tanpa ada yang menonton",
+            "en": "Leaving the TV on with nobody watching"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "h1": "b_save",
+        "h2": "b_waste",
+        "h3": "b_save",
+        "h4": "b_waste",
+        "h5": "b_save",
+        "h6": "b_waste"
+      },
+      "model_answer": {
+        "id": "Hemat: lampu LED, menutup ruangan ber-AC, menyetrika sekaligus. Boros: pintu kulkas terbuka lama, rice cooker menghangatkan seharian, TV menyala tanpa penonton.",
+        "en": "Saves: LED bulbs, keeping an air-conditioned room closed, ironing in one go. Wastes: a fridge door left open, a rice cooker on keep-warm all day, a TV on with no one watching."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-04-012",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "EN-UNITS"
+      ],
+      "pool": "PRACT",
+      "order": 48,
+      "prompt_id": "P-TRY",
+      "model_answer": {
+        "id": "Cari label daya (W) pada tiga alat di rumah, misalnya kipas angin, rice cooker, dan pompa air. Perkirakan berapa jam masing-masing menyala sehari, lalu hitung kWh-nya dengan rumus watt × jam ÷ 1.000. Alat mana yang paling banyak memakai energi?",
+        "en": "Find the power label (W) on three appliances at home, such as a fan, a rice cooker and a water pump. Estimate how many hours a day each one runs, then work out the kWh with watts × hours ÷ 1,000. Which one uses the most energy?"
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-04-013",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "EN-UNITS",
+        "EN-SAVE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang memakai energi paling banyak dalam sehari?",
+            "en": "Which uses the most energy in a day?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "fridge",
+          "text": {
+            "id": "Kulkas yang rata-rata menarik 40 W selama 24 jam",
+            "en": "A fridge drawing an average of 40 W for 24 hours"
+          },
+          "correct": true
+        },
+        {
+          "id": "lamp",
+          "text": {
+            "id": "Lampu LED 8 W yang menyala 10 jam",
+            "en": "An 8 W LED bulb on for 10 hours"
+          }
+        },
+        {
+          "id": "dryer",
+          "text": {
+            "id": "Pengering rambut 400 W yang dipakai 15 menit",
+            "en": "A 400 W hair dryer used for 15 minutes"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Kulkas: 40 W × 24 jam = 960 Wh. Lampu: 8 W × 10 jam = 80 Wh. Pengering rambut: 400 W × 0,25 jam = 100 Wh.",
+        "en": "Fridge: 40 W × 24 hours = 960 Wh. Bulb: 8 W × 10 hours = 80 Wh. Hair dryer: 400 W × 0.25 hours = 100 Wh."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-04-014",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "number_input",
+      "skills": [
+        "EN-BILL"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Stand meter awal bulan 2.050 kWh dan akhir bulan 2.170 kWh. Berapa kWh yang dipakai bulan itu?",
+            "en": "The meter read 2,050 kWh at the start of the month and 2,170 kWh at the end. How many kWh were used that month?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 120,
+        "tolerance": 0,
+        "unit": {
+          "id": "kWh",
+          "en": "kWh"
+        }
+      },
+      "model_answer": {
+        "id": "2.170 − 2.050 = 120 kWh.",
+        "en": "2,170 − 2,050 = 120 kWh."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-04-015",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "EN-SAVE"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "U.S. Department of Energy, Energy Saver: \"LED Lighting\" (residential LEDs use at least 75% less energy and last up to 25 times longer than incandescent lighting) and \"Lighting Choices to Save You Money\" (about 90% of a traditional incandescent bulb's energy is given off as heat), energy.gov/energysaver.",
+      "model_answer": {
+        "id": "Bohlam pijar model lama melepas sekitar 90% energinya sebagai panas, bukan cahaya. Itulah sebabnya bohlam itu terasa panas bila disentuh. Lampu LED memakai energi setidaknya 75% lebih sedikit untuk terang yang sama dan bisa bertahan hingga 25 kali lebih lama.",
+        "en": "Old-style incandescent bulbs give off about 90% of their energy as heat rather than light. That's why they feel hot to the touch. LED bulbs use at least 75% less energy for the same brightness and can last up to 25 times longer."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-05-001",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "CLIM-SEASON"
+      ],
+      "pool": "PRACT",
+      "order": 49,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Wilayah ini dikenal paling kering di Indonesia: kemaraunya panjang dan padang sabananya luas. Ketuk wilayahnya di peta.",
+            "en": "This region is known as the driest part of Indonesia: its dry season is long and it has wide savannas. Tap it on the map."
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "options": [
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          }
+        },
+        {
+          "id": "bali_nusa_tenggara",
+          "text": {
+            "id": "Bali dan Nusa Tenggara",
+            "en": "Bali and Nusa Tenggara"
+          },
+          "region": {
+            "x": 0.45,
+            "y": 0.78,
+            "w": 0.22,
+            "h": 0.12
+          },
+          "correct": true
+        },
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Nusa Tenggara, terutama NTT, adalah wilayah paling kering di Indonesia. Kemaraunya panjang dan musim hujannya singkat.",
+        "en": "Nusa Tenggara, especially NTT, is the driest part of Indonesia. Its dry season is long and its rainy season short."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-05-002",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "CLIM-SEASON"
+      ],
+      "pool": "PRACT",
+      "order": 50,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa penyebab utama pergantian musim hujan dan kemarau di sebagian besar Indonesia?",
+            "en": "What mainly causes the switch between the rainy and dry seasons across most of Indonesia?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "dist",
+          "text": {
+            "id": "Jarak Bumi ke Matahari yang berubah sepanjang tahun",
+            "en": "Earth's distance from the Sun changing through the year"
+          }
+        },
+        {
+          "id": "moon",
+          "text": {
+            "id": "Perubahan bentuk Bulan",
+            "en": "The changing phases of the Moon"
+          }
+        },
+        {
+          "id": "monsoon",
+          "text": {
+            "id": "Angin muson yang berganti arah kira-kira setiap setengah tahun",
+            "en": "Monsoon winds that switch direction roughly every six months"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Angin muson berganti arah: muson barat yang lembap membawa musim hujan, muson timur yang kering membawa kemarau. Jarak Bumi ke Matahari bukan penyebab musim.",
+        "en": "The monsoon switches direction: the moist west monsoon brings the rainy season and the dry east monsoon brings the dry season. Earth's distance from the Sun is not what causes the seasons."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-05-003",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "CLIM-SEASON"
+      ],
+      "pool": "PRACT",
+      "order": 51,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di sebagian besar Jawa, hujan paling banyak turun sekitar Desember–Februari. Namun di Ambon, puncak hujan justru biasanya sekitar Juni–Juli. Ketuk kepulauan tempat Ambon berada.",
+            "en": "Across most of Java, the heaviest rain falls around December–February. But in Ambon, the rain usually peaks around June–July. Tap the island group where Ambon is."
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "options": [
+        {
+          "id": "maluku",
+          "text": {
+            "id": "Maluku",
+            "en": "Maluku"
+          },
+          "region": {
+            "x": 0.66,
+            "y": 0.25,
+            "w": 0.1,
+            "h": 0.35
+          },
+          "correct": true
+        },
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          }
+        },
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Ambon ada di Kepulauan Maluku. BMKG menyebut pola ini pola hujan lokal: puncaknya berlawanan waktu dengan pola muson.",
+        "en": "Ambon is in the Maluku islands. BMKG calls this a local rainfall pattern: it peaks at the opposite time of year to the monsoon pattern."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-05-004",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "CLIM-SEASON"
+      ],
+      "pool": "PRACT",
+      "order": 52,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Musim hujan dan musim kemarau dimulai pada bulan yang sama di seluruh Indonesia.",
+            "en": "The rainy and dry seasons start in the same month all over Indonesia."
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Itu mitos. Awal musim berbeda dari satu daerah ke daerah lain, bahkan bisa berselisih beberapa bulan. Karena itu BMKG membuat prakiraan musim per zona musim.",
+        "en": "That's a myth. The seasons start at different times in different places, sometimes months apart. That's why BMKG forecasts the seasons zone by zone."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-05-005",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "CLIM-ENSO"
+      ],
+      "pool": "PRACT",
+      "order": 53,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bagi Indonesia, dampak mana yang biasa dikaitkan dengan El Niño, mana dengan La Niña?",
+            "en": "For Indonesia, which effects are usually linked to El Niño, and which to La Niña?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_nino",
+          "text": {
+            "id": "El Niño",
+            "en": "El Niño"
+          }
+        },
+        {
+          "id": "b_nina",
+          "text": {
+            "id": "La Niña",
+            "en": "La Niña"
+          }
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Kemarau lebih kering dan lebih panjang",
+            "en": "A drier, longer dry season"
+          }
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Curah hujan di atas normal",
+            "en": "Above-normal rainfall"
+          }
+        },
+        {
+          "id": "e3",
+          "text": {
+            "id": "Risiko kebakaran hutan dan lahan naik",
+            "en": "A higher risk of forest and land fires"
+          }
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Risiko banjir dan tanah longsor naik",
+            "en": "A higher risk of floods and landslides"
+          }
+        },
+        {
+          "id": "e5",
+          "text": {
+            "id": "Kekeringan dan gagal panen di sawah tadah hujan",
+            "en": "Drought and crop failure in rain-fed rice fields"
+          }
+        },
+        {
+          "id": "e6",
+          "text": {
+            "id": "Hujan masih sering turun pada musim kemarau (kemarau basah)",
+            "en": "Frequent rain even in the dry season (a \"wet dry season\")"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "e1": "b_nino",
+        "e2": "b_nina",
+        "e3": "b_nino",
+        "e4": "b_nina",
+        "e5": "b_nino",
+        "e6": "b_nina"
+      },
+      "model_answer": {
+        "id": "El Niño: kemarau lebih kering dan panjang, kebakaran hutan dan lahan, kekeringan dan gagal panen. La Niña: hujan di atas normal, banjir dan longsor, kemarau basah.",
+        "en": "El Niño: a drier, longer dry season, forest and land fires, drought and crop failure. La Niña: above-normal rain, floods and landslides, a wet dry season."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-05-006",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "CLIM-ENSO"
+      ],
+      "pool": "PRACT",
+      "order": 54,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutkan rantai sebab-akibat El Niño bagi Indonesia.",
+            "en": "Put El Niño's chain of cause and effect for Indonesia in order."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "c3",
+          "text": {
+            "id": "Hujan di banyak wilayah Indonesia berkurang",
+            "en": "Rain decreases over much of Indonesia"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Permukaan laut Pasifik bagian tengah dan timur menjadi lebih hangat dari biasanya",
+            "en": "The sea surface in the central and eastern Pacific becomes warmer than usual"
+          }
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Kemarau lebih kering; risiko kekeringan dan kebakaran lahan naik",
+            "en": "The dry season is drier; the risk of drought and land fires rises"
+          }
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Pusat pembentukan awan hujan bergeser ke timur, menjauhi Indonesia",
+            "en": "The main zone of rain-cloud formation shifts east, away from Indonesia"
+          }
+        }
+      ],
+      "solution": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "model_answer": {
+        "id": "Laut Pasifik tengah-timur menghangat, awan hujan bergeser menjauh, hujan di Indonesia berkurang, lalu kemarau makin kering.",
+        "en": "The central and eastern Pacific warms, rain clouds shift away, rain over Indonesia falls off, and the dry season gets drier."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-05-007",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "mini_reading",
+      "skills": [
+        "CLIM-WARN"
+      ],
+      "pool": "PRACT",
+      "order": 55,
+      "prompt_id": "P-READ",
+      "reading_id": "R-SNSA-WARN",
+      "image": "pic_storm",
+      "model_answer": {
+        "id": "Peringatan dini BMKG menyebut jenis cuaca, waktu mulainya, dan perkiraan lama berlangsungnya. Gunakan informasi itu untuk menyesuaikan rencana perjalanan.",
+        "en": "A BMKG early warning tells you the type of weather, when it starts and how long it's expected to last. Use it to adjust your travel plans."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-05-008",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "CLIM-WARN"
+      ],
+      "pool": "PRACT",
+      "order": 56,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menurut peringatan itu, sampai kira-kira pukul berapa kondisi cuaca ini bisa berlangsung?",
+            "en": "According to the warning, until about what time could these conditions last?"
+          }
+        }
+      ],
+      "reading_id": "R-SNSA-WARN",
+      "options": [
+        {
+          "id": "t1330",
+          "text": {
+            "id": "Pukul 13.30 WIB",
+            "en": "13:30 WIB"
+          }
+        },
+        {
+          "id": "t1630",
+          "text": {
+            "id": "Pukul 16.30 WIB",
+            "en": "16:30 WIB"
+          },
+          "correct": true
+        },
+        {
+          "id": "t1400",
+          "text": {
+            "id": "Pukul 14.00 WIB",
+            "en": "14:00 WIB"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Hujan diperkirakan mulai pukul 13.30 dan masih dapat berlangsung hingga sekitar pukul 16.30 WIB.",
+        "en": "The rain is expected from 13:30 and could continue until about 16:30 WIB."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-05-009",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "story_choice",
+      "skills": [
+        "CLIM-WARN"
+      ],
+      "pool": "PRACT",
+      "order": 57,
+      "prompt_id": "P-STORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa pilihan paling aman bagi Bu Lina?",
+            "en": "What is Bu Lina's safest choice?"
+          }
+        }
+      ],
+      "reading_id": "R-SNSA-WARN",
+      "options": [
+        {
+          "id": "rush",
+          "text": {
+            "id": "Berangkat lebih awal dan memacu motor supaya sampai sebelum hujan",
+            "en": "Leave early and ride fast to get there before the rain"
+          }
+        },
+        {
+          "id": "safe",
+          "text": {
+            "id": "Menghubungi sekolah, menunda penjemputan atau mencari rute lain, dan tidak menerobos genangan yang berarus",
+            "en": "Call the school, delay the pick-up or find another route, and not ride through flowing floodwater"
+          },
+          "correct": true
+        },
+        {
+          "id": "tree",
+          "text": {
+            "id": "Bila hujan petir turun di jalan, berteduh di bawah pohon besar",
+            "en": "If a thunderstorm starts on the way, shelter under a big tree"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Rencana yang lebih aman: hubungi sekolah, tunda penjemputan atau ubah rute, dan jangan menerobos air yang mengalir. Pohon besar bukan tempat berlindung yang aman saat ada petir.",
+        "en": "The safer plan: call the school, delay the pick-up or change the route, and never ride through moving water. A big tree is not a safe shelter when there's lightning."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-05-010",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "number_input",
+      "skills": [
+        "CLIM-WARN"
+      ],
+      "pool": "PRACT",
+      "order": 58,
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Curah hujan 1 mm berarti 1 liter air jatuh di setiap 1 m². Dalam sehari turun hujan 50 mm, yang menurut BMKG termasuk hujan lebat, di atap seluas 60 m². Berapa liter air yang jatuh ke atap itu?",
+            "en": "1 mm of rainfall means 1 litre of water falling on every square metre. In one day, 50 mm of rain falls (BMKG classes this as heavy rain) on a 60 m² roof. How many litres land on that roof?"
+          }
+        }
+      ],
+      "image": "pic_rain",
+      "numeric": {
+        "value": 3000,
+        "tolerance": 0,
+        "unit": {
+          "id": "liter",
+          "en": "litres"
+        }
+      },
+      "model_answer": {
+        "id": "50 mm × 60 m² = 3.000 liter, kira-kira sama dengan 15 drum berukuran 200 liter.",
+        "en": "50 mm × 60 m² = 3,000 litres, about the same as fifteen 200-litre drums."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-05-011",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "CLIM-WARN"
+      ],
+      "pool": "PRACT",
+      "order": 59,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Air banjir mulai masuk ke rumah Anda. Mana langkah yang tepat?",
+            "en": "Floodwater starts coming into your house. Which is the right step?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "mcb",
+          "text": {
+            "id": "Mematikan listrik dari MCB selagi lantai di dekatnya masih kering, lalu memindahkan dokumen penting ke tempat tinggi",
+            "en": "Switch off the power at the MCB while the floor near it is still dry, then move important documents somewhere high"
+          },
+          "correct": true
+        },
+        {
+          "id": "bike",
+          "text": {
+            "id": "Menyeberangi arus untuk memindahkan motor ke jalan raya",
+            "en": "Wade across the current to move the motorbike to the main road"
+          }
+        },
+        {
+          "id": "wait",
+          "text": {
+            "id": "Menunggu sampai air setinggi lutut, baru bertindak",
+            "en": "Wait until the water is knee-deep before doing anything"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Matikan listrik lebih dulu agar tidak tersengat, amankan dokumen, dan jangan menerobos arus. Bila keadaan membahayakan, ikuti arahan BPBD atau hubungi 112.",
+        "en": "Turn off the power first to avoid electric shocks, keep documents safe and don't wade through moving water. If you're in danger, follow the instructions of the BPBD (local disaster agency) or call 112."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-05-012",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "CLIM-WARN"
+      ],
+      "pool": "PRACT",
+      "order": 60,
+      "prompt_id": "P-TRY",
+      "model_answer": {
+        "id": "Pasang aplikasi InfoBMKG atau buka bmkg.go.id, lalu cari prakiraan cuaca untuk kecamatan Anda. Siapkan juga tas siaga bencana: salinan dokumen penting dalam plastik kedap air, senter, obat-obatan rutin, air minum, dan pengisi daya ponsel.",
+        "en": "Install the InfoBMKG app or open bmkg.go.id and look up the forecast for your district. Also pack a disaster go-bag: copies of important documents in a waterproof bag, a torch, your regular medicines, drinking water and a phone charger."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-05-013",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "CLIM-ENSO",
+        "CLIM-SEASON"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "BMKG mengumumkan El Niño diperkirakan berlangsung selama musim kemarau. Apa dampak yang paling mungkin bagi banyak wilayah Indonesia?",
+            "en": "BMKG announces that El Niño is expected to last through the dry season. What is the most likely effect on much of Indonesia?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "flood",
+          "text": {
+            "id": "Banjir lebih sering karena hujan bertambah",
+            "en": "More frequent floods because of extra rain"
+          }
+        },
+        {
+          "id": "cold",
+          "text": {
+            "id": "Suhu turun drastis di seluruh dataran rendah",
+            "en": "Temperatures plunge across the lowlands"
+          }
+        },
+        {
+          "id": "dry",
+          "text": {
+            "id": "Kemarau lebih kering, dengan risiko kekeringan dan kebakaran lahan yang lebih tinggi",
+            "en": "A drier dry season, with a higher risk of drought and land fires"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "El Niño biasanya mengurangi hujan di banyak wilayah Indonesia, sehingga kemarau lebih kering. Hujan berlebih lebih sering dikaitkan dengan La Niña.",
+        "en": "El Niño usually reduces rain over much of Indonesia, so the dry season is drier. Extra rain is more often linked to La Niña."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-05-014",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "CLIM-WARN"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Berteduh di bawah pohon besar yang berdiri sendiri adalah tempat yang aman saat hujan petir.",
+            "en": "Sheltering under a big, lone tree is a safe place to be during a thunderstorm."
+          }
+        }
+      ],
+      "image": "pic_storm",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Itu mitos. Petir cenderung menyambar benda yang tinggi, termasuk pohon. Lebih aman berlindung di dalam bangunan atau mobil yang tertutup.",
+        "en": "That's a myth. Lightning tends to strike tall objects, including trees. It's safer to shelter inside a building or a closed car."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-05-015",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "CLIM-SEASON"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "pic_mountain",
+      "gem": true,
+      "source": "Permana D.S., Thompson L.G. et al. (2019), \"Disappearance of the last tropical glaciers in the Western Pacific Warm Pool (Papua, Indonesia) appears imminent\", Proceedings of the National Academy of Sciences 116(52):26382-26388; Puncak Jaya height 4,884 m: Encyclopaedia Britannica, \"Jaya Peak\".",
+      "model_answer": {
+        "id": "Indonesia yang tropis punya es di puncak gunung! Di sekitar Puncak Jaya, Papua (4.884 m), terdapat gletser, salah satu dari sedikit gletser tropis di dunia. Penelitian BMKG bersama Ohio State University menunjukkan es ini menyusut sangat cepat dan diperkirakan segera hilang, tanda nyata iklim yang memanas.",
+        "en": "Tropical Indonesia has ice on a mountaintop! Around Puncak Jaya in Papua (4,884 m) there are glaciers, among the few tropical glaciers left in the world. Research by BMKG and Ohio State University shows the ice shrinking very fast and expected to disappear soon, a clear sign of a warming climate."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Jantung Anda berdetak 70 kali per menit. Berapa kali jantung berdetak dalam satu jam?",
+            "en": "Your heart beats 70 times a minute. How many times does it beat in one hour?"
+          }
+        }
+      ],
+      "image": "pic_heart_organ",
+      "numeric": {
+        "value": 4200,
+        "tolerance": 0,
+        "unit": {
+          "id": "kali",
+          "en": "times"
+        }
+      },
+      "model_answer": {
+        "id": "70 × 60 = 4.200 kali.",
+        "en": "70 × 60 = 4,200 times."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-DP-02",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya tidak berwarna, tidak berbau, dan tidak berkalori. Sekitar setengah atau lebih berat tubuh Anda adalah saya. Siapa saya?",
+            "en": "I have no colour, no smell and no calories. About half or more of your body weight is me. What am I?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "tea",
+          "text": {
+            "id": "Teh manis",
+            "en": "Sweet tea"
+          },
+          "image": "pic_tea_cup"
+        },
+        {
+          "id": "milk",
+          "text": {
+            "id": "Susu",
+            "en": "Milk"
+          },
+          "image": "pic_milk_glass"
+        },
+        {
+          "id": "water",
+          "text": {
+            "id": "Air putih",
+            "en": "Plain water"
+          },
+          "image": "drink_water",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Air putih.",
+        "en": "Plain water."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    },
+    {
+      "item_id": "SNS-A-P-DP-03",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Lima lampu LED 10 W menyala 8 jam setiap malam selama 30 hari. Berapa kWh energi yang dipakai?",
+            "en": "Five 10 W LED bulbs are on for 8 hours every night for 30 days. How many kWh do they use?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 12,
+        "tolerance": 0,
+        "unit": {
+          "id": "kWh",
+          "en": "kWh"
+        }
+      },
+      "model_answer": {
+        "id": "5 × 10 W × 8 jam × 30 hari = 12.000 Wh = 12 kWh.",
+        "en": "5 × 10 W × 8 hours × 30 days = 12,000 Wh = 12 kWh."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-pemula-0.3"
+    }
+  ]
+}

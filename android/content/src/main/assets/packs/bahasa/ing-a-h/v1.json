@@ -1,0 +1,1862 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "ing-a-h-0.1",
+    "subject": "bahasa",
+    "track": "ing-a-h",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id"
+    ],
+    "target_lang": "en",
+    "level": "mahir",
+    "title": {
+      "id": "Bahasa Inggris — Mahir (Dewasa)",
+      "en": "English — Advanced (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12) for review: needs a native English reviewer (listen to every clip in android/content/voice/en.levels.json and the reused ones in en.json) and the Indonesian and English language reviewers before any item is approved (docs/syllabus/01_BAHASA.md §B, Adults Mahir, starter units 01-02; builds on docs/syllabus/bahasa/en_pemula.md). American spelling throughout.",
+  "prompts": {
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-LISTEN": {
+      "id": "Dengar, lalu pilih gambarnya.",
+      "en": "Listen, then pick the picture."
+    },
+    "P-LISTEN-ANS": {
+      "id": "Dengar, lalu pilih artinya.",
+      "en": "Listen, then pick the meaning."
+    },
+    "P-MATCH": {
+      "id": "Hubungkan gambar dengan katanya.",
+      "en": "Connect each picture to its word."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke katanya.",
+      "en": "Drag each picture to its word."
+    },
+    "P-SORT": {
+      "id": "Seret ke keranjang yang tepat.",
+      "en": "Drag each card into a basket."
+    },
+    "P-BUILD": {
+      "id": "Susun kalimatnya.",
+      "en": "Build the sentence."
+    },
+    "P-FILL": {
+      "id": "Seret kata ke tempat kosong.",
+      "en": "Drag the word into the gap."
+    },
+    "P-REPLY": {
+      "id": "Pilih balasan yang pas.",
+      "en": "Pick the best reply."
+    },
+    "P-CORRECT": {
+      "id": "Pilih kalimat yang benar.",
+      "en": "Pick the correct sentence."
+    },
+    "P-FIX": {
+      "id": "Kalimat ini salah. Pilih perbaikannya.",
+      "en": "This is wrong. Pick the fix."
+    },
+    "P-READ": {
+      "id": "Baca percakapannya dulu.",
+      "en": "Read the conversation first."
+    },
+    "P-READ-TEXT": {
+      "id": "Baca teksnya dulu.",
+      "en": "Read the text first."
+    },
+    "P-ANSWER": {
+      "id": "Jawab sesuai percakapan.",
+      "en": "Answer from the conversation."
+    },
+    "P-ANSWER-TEXT": {
+      "id": "Jawab sesuai bacaan.",
+      "en": "Answer from the reading."
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Correct. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Baik, kita lanjut.",
+      "en": "Good, let's continue."
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Perjalanan",
+        "en": "Travel"
+      },
+      "sticker": "sticker_boat"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Pekerjaan & pengalaman",
+        "en": "Jobs & experience"
+      },
+      "sticker": "sticker_lantern"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "ING-A-H-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Perjalanan",
+        "en": "Travel"
+      },
+      "body": [
+        {
+          "id": "Di bandara dan hotel: check in, check out.",
+          "en": "At the airport and hotel: check in, check out."
+        },
+        {
+          "id": "Bertanya sopan: Could you tell me where the gate is?",
+          "en": "Ask politely: Could you tell me where the gate is?"
+        },
+        {
+          "id": "Perhatikan: where the gate is, bukan where is the gate.",
+          "en": "Note the order: where the gate is, not where is the gate."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "I'd like to check in, please.",
+          "gloss": {
+            "id": "Saya mau check-in.",
+            "en": "at a hotel or airport desk"
+          }
+        },
+        {
+          "target_text": "Could you tell me where the bank is?",
+          "gloss": {
+            "id": "Boleh tahu bank di mana?",
+            "en": "polite: the verb goes last"
+          }
+        },
+        {
+          "target_text": "Get off at the next stop.",
+          "gloss": {
+            "id": "Turun di halte berikutnya.",
+            "en": "get on / get off a bus or train"
+          }
+        },
+        {
+          "target_text": "Go past the bank.",
+          "gloss": {
+            "id": "Lewati bank.",
+            "en": "go past = walk by it"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "ING-A-H-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Pekerjaan & pengalaman",
+        "en": "Jobs & experience"
+      },
+      "body": [
+        {
+          "id": "Sudah selesai: I worked at a hotel in 2019.",
+          "en": "Finished: I worked at a hotel in 2019."
+        },
+        {
+          "id": "Sampai sekarang: I've worked here since 2021.",
+          "en": "Up to now: I've worked here since 2021."
+        },
+        {
+          "id": "Pernah: Have you ever…? Jangan: I ever…",
+          "en": "Experience: Have you ever…? Avoid: I ever…"
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "I'm a mechanic. I fix cars.",
+          "gloss": {
+            "id": "Saya montir. Saya memperbaiki mobil.",
+            "en": "a job and what you do"
+          }
+        },
+        {
+          "target_text": "I worked as a driver for five years.",
+          "gloss": {
+            "id": "Saya bekerja sebagai sopir selama lima tahun.",
+            "en": "finished: past simple"
+          }
+        },
+        {
+          "target_text": "I've been a nurse since 2018.",
+          "gloss": {
+            "id": "Saya menjadi perawat sejak 2018.",
+            "en": "still true: since + a year"
+          }
+        },
+        {
+          "target_text": "Have you ever been to Bali?",
+          "gloss": {
+            "id": "Anda pernah ke Bali?",
+            "en": "ever = pernah, in a question"
+          }
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {
+    "R-INGAH-01": {
+      "title": {
+        "id": "Boarding pass",
+        "en": "Boarding pass"
+      },
+      "target_text": "BOARDING PASS · Jakarta (CGK) → Denpasar (DPS)\nFlight 214 · 12 MAY · Gate 7\nBoarding 09:30 · Departure 10:05",
+      "body": [
+        {
+          "id": "Boarding pass Anda untuk penerbangan ke Bali.",
+          "en": "Your boarding pass for a flight to Bali."
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-INGAH-02": {
+      "title": {
+        "id": "Wawancara kerja",
+        "en": "A job interview"
+      },
+      "target_text": "Interviewer: Tell me about your work experience.\nMaya: I worked in a restaurant for two years. Then I moved to a hotel.\nInterviewer: How long have you worked at the hotel?\nMaya: Since 2022. I'm a chef there now.",
+      "body": [
+        {
+          "id": "Maya menjawab pertanyaan wawancara kerja.",
+          "en": "Maya answers questions at a job interview."
+        }
+      ],
+      "review_status": "draft"
+    }
+  },
+  "items": [
+    {
+      "item_id": "ING-A-H-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ENG-TRAVEL"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-MATCH",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p_airport",
+          "image": "pic_airport",
+          "text": {
+            "id": "bandara",
+            "en": "airport"
+          }
+        },
+        {
+          "id": "p_hotel",
+          "image": "pic_hotel",
+          "text": {
+            "id": "hotel",
+            "en": "hotel"
+          }
+        },
+        {
+          "id": "p_suitcase",
+          "image": "pic_suitcase",
+          "text": {
+            "id": "koper",
+            "en": "suitcase"
+          }
+        },
+        {
+          "id": "p_ticket",
+          "image": "pic_ticket",
+          "text": {
+            "id": "tiket",
+            "en": "ticket"
+          }
+        },
+        {
+          "id": "w_airport",
+          "target_text": "airport",
+          "audio": "en/airport"
+        },
+        {
+          "id": "w_hotel",
+          "target_text": "hotel",
+          "audio": "en/hotel"
+        },
+        {
+          "id": "w_suitcase",
+          "target_text": "suitcase",
+          "audio": "en/suitcase"
+        },
+        {
+          "id": "w_ticket",
+          "target_text": "ticket",
+          "audio": "en/ticket"
+        }
+      ],
+      "solution_pairs": {
+        "p_airport": "w_airport",
+        "p_hotel": "w_hotel",
+        "p_suitcase": "w_suitcase",
+        "p_ticket": "w_ticket"
+      },
+      "model_answer": {
+        "id": "airport = bandara, hotel, suitcase = koper, ticket = tiket.",
+        "en": "Airport, hotel, suitcase, ticket."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ENG-TRAVEL"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-LISTEN-ANS",
+      "audio": "en/id_like_to_check_out_please",
+      "options": [
+        {
+          "id": "book",
+          "text": {
+            "id": "Saya mau memesan kamar.",
+            "en": "I want to book a room."
+          }
+        },
+        {
+          "id": "out",
+          "text": {
+            "id": "Saya mau check-out dari hotel.",
+            "en": "I want to leave the hotel."
+          },
+          "correct": true
+        },
+        {
+          "id": "buy",
+          "text": {
+            "id": "Saya mau membeli tiket.",
+            "en": "I want to buy a ticket."
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Check out = keluar dari hotel dan membayar.",
+        "en": "Check out: you leave the hotel and pay."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ENG-ASKPOLITE"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-CORRECT",
+      "options": [
+        {
+          "id": "ok",
+          "target_text": "Could you tell me where the station is?",
+          "correct": true
+        },
+        {
+          "id": "bad_is_first",
+          "target_text": "Could you tell me where is the station?"
+        },
+        {
+          "id": "bad_no_verb",
+          "target_text": "Could you tell me where the station?"
+        }
+      ],
+      "model_answer": {
+        "id": "Pertanyaan sopan: where the station is (kata kerja di akhir).",
+        "en": "In a polite question, the verb goes last: where the station is."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "ENG-ASKPOLITE"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-BUILD",
+      "image": "pic_bank",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "t8",
+          "target_text": "is"
+        },
+        {
+          "id": "t6",
+          "target_text": "the"
+        },
+        {
+          "id": "t3",
+          "target_text": "tell"
+        },
+        {
+          "id": "t2",
+          "target_text": "you"
+        },
+        {
+          "id": "t5",
+          "target_text": "where"
+        },
+        {
+          "id": "t4",
+          "target_text": "me"
+        },
+        {
+          "id": "t1",
+          "target_text": "Could"
+        },
+        {
+          "id": "t7",
+          "target_text": "bank"
+        },
+        {
+          "id": "x1",
+          "target_text": "does"
+        }
+      ],
+      "solution": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8"
+      ],
+      "model_answer": {
+        "id": "Could you tell me where the bank is? Is di akhir.",
+        "en": "Could you tell me where the bank is? Is goes last."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-TRAVEL"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-PICK",
+      "target_text": "I'd like a room for two nights, please.",
+      "audio": "en/id_like_a_room_for_two_nights_please",
+      "options": [
+        {
+          "id": "p_restaurant",
+          "image": "pic_restaurant",
+          "text": {
+            "id": "restoran",
+            "en": "restaurant"
+          }
+        },
+        {
+          "id": "p_bank",
+          "image": "pic_bank",
+          "text": {
+            "id": "bank",
+            "en": "bank"
+          }
+        },
+        {
+          "id": "p_hotel",
+          "image": "pic_hotel",
+          "text": {
+            "id": "hotel",
+            "en": "hotel"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "A room for two nights = kamar untuk dua malam: di hotel.",
+        "en": "A room for two nights: you're at a hotel."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ENG-ASKPOLITE"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-LISTEN-ANS",
+      "audio": "en/go_past_the_bank_and_turn_left_at_the_bridge",
+      "options": [
+        {
+          "id": "swap",
+          "text": {
+            "id": "Lewati jembatan, lalu belok kiri di bank.",
+            "en": "Walk by the bridge, then go left at the bank."
+          }
+        },
+        {
+          "id": "right",
+          "text": {
+            "id": "Belok kanan di bank, lalu jalan lurus.",
+            "en": "Go right at the bank, then straight on."
+          }
+        },
+        {
+          "id": "ok",
+          "text": {
+            "id": "Lewati bank, lalu belok kiri di jembatan.",
+            "en": "Walk by the bank, then go left at the bridge."
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Go past the bank = lewati bank. Turn left at the bridge = belok kiri di jembatan.",
+        "en": "Go past the bank, then turn left at the bridge."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "ENG-TRAVEL"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_hotel",
+          "image": "pic_hotel",
+          "text": {
+            "id": "di hotel",
+            "en": "at a hotel"
+          }
+        },
+        {
+          "id": "b_bus",
+          "image": "pic_bus",
+          "text": {
+            "id": "di bus",
+            "en": "on a bus"
+          }
+        },
+        {
+          "id": "check_in",
+          "target_text": "check in",
+          "audio": "en/check_in"
+        },
+        {
+          "id": "get_off",
+          "target_text": "get off",
+          "audio": "en/get_off"
+        },
+        {
+          "id": "check_out",
+          "target_text": "check out",
+          "audio": "en/check_out"
+        },
+        {
+          "id": "fare",
+          "target_text": "pay the fare",
+          "audio": "en/pay_the_fare"
+        },
+        {
+          "id": "book",
+          "target_text": "book a room",
+          "audio": "en/book_a_room"
+        },
+        {
+          "id": "get_on",
+          "target_text": "get on",
+          "audio": "en/get_on"
+        }
+      ],
+      "solution_pairs": {
+        "check_in": "b_hotel",
+        "get_off": "b_bus",
+        "check_out": "b_hotel",
+        "fare": "b_bus",
+        "book": "b_hotel",
+        "get_on": "b_bus"
+      },
+      "model_answer": {
+        "id": "Di hotel: check in/out, book a room. Di bus: get on/off, pay the fare.",
+        "en": "Hotel: check in, check out, book a room. Bus: get on, get off, pay the fare."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "mini_reading",
+      "skills": [
+        "ENG-TICKET"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-READ-TEXT",
+      "image": "pic_ticket",
+      "reading_id": "R-INGAH-01",
+      "model_answer": {
+        "id": "Boarding = naik ke pesawat. Departure = pesawat berangkat.",
+        "en": "Boarding is when you get on; departure is when it leaves."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ENG-TICKET"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-ANSWER-TEXT",
+      "target_text": "What time does boarding start?",
+      "audio": "en/what_time_does_boarding_start",
+      "reading_id": "R-INGAH-01",
+      "options": [
+        {
+          "id": "c10_00",
+          "image": "clock_10_00",
+          "text": {
+            "id": "pukul 10.00",
+            "en": "10:00"
+          }
+        },
+        {
+          "id": "c9_30",
+          "image": "clock_9_30",
+          "text": {
+            "id": "pukul 9.30",
+            "en": "9:30"
+          },
+          "correct": true
+        },
+        {
+          "id": "c7_00",
+          "image": "clock_7_00",
+          "text": {
+            "id": "pukul 7.00",
+            "en": "7:00"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Boarding 09:30: naik pesawat pukul 09.30.",
+        "en": "Boarding starts at 9:30."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-TICKET"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-FILL",
+      "target_text": "The plane leaves from gate ___.",
+      "image": "pic_airport",
+      "reading_id": "R-INGAH-01",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "g2",
+          "target_text": "12"
+        },
+        {
+          "id": "g1",
+          "target_text": "7"
+        },
+        {
+          "id": "g3",
+          "target_text": "214"
+        }
+      ],
+      "solution": [
+        "g1"
+      ],
+      "model_answer": {
+        "id": "Gate 7. Angka 12 adalah tanggal, 214 nomor penerbangan.",
+        "en": "Gate 7. 12 is the date and 214 is the flight number."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ENG-TRAVEL"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/i_missed_my_bus_so_i_took_a_taxi",
+      "options": [
+        {
+          "id": "taxi",
+          "image": "pic_car",
+          "text": {
+            "id": "taksi (mobil)",
+            "en": "a taxi (car)"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_bus",
+          "image": "pic_bus",
+          "text": {
+            "id": "bus",
+            "en": "bus"
+          }
+        },
+        {
+          "id": "p_train",
+          "image": "pic_train",
+          "text": {
+            "id": "kereta",
+            "en": "train"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Ketinggalan bus, jadi naik taksi: so I took a taxi.",
+        "en": "I missed my bus, so I took a taxi: the taxi is the answer."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ENG-TRAVEL"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "pic_airport",
+      "gem": true,
+      "source": "Merriam-Webster, \"passport\" (etymology: Middle French passeport, from passer \"to pass\" + port \"port\"); Online Etymology Dictionary, \"passport\" (etymonline.com/word/passport: from French passeport, \"authorization to pass through a port\").",
+      "model_answer": {
+        "id": "Kata \"passport\" berasal dari bahasa Prancis passeport: passer \"melewati\" + port \"pelabuhan\". Dulu paspor adalah izin untuk melewati pelabuhan.",
+        "en": "\"Passport\" comes from French passeport: passer, \"to pass\", + port, \"harbor\". It was once a permit to pass through a port."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-TRAVEL"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "Can I leave my suitcase here?",
+      "audio": "en/can_i_leave_my_suitcase_here",
+      "options": [
+        {
+          "id": "p_suitcase",
+          "image": "pic_suitcase",
+          "text": {
+            "id": "koper",
+            "en": "suitcase"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_bag",
+          "image": "pic_bag",
+          "text": {
+            "id": "tas",
+            "en": "bag"
+          }
+        },
+        {
+          "id": "p_ticket",
+          "image": "pic_ticket",
+          "text": {
+            "id": "tiket",
+            "en": "ticket"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Suitcase = koper.",
+        "en": "A suitcase is a big bag for travel."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-ASKPOLITE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "Could you tell me where the post office ___?",
+      "image": "pic_post_office",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "g2",
+          "target_text": "does"
+        },
+        {
+          "id": "g1",
+          "target_text": "is"
+        },
+        {
+          "id": "g3",
+          "target_text": "are"
+        }
+      ],
+      "solution": [
+        "g1"
+      ],
+      "model_answer": {
+        "id": "Could you tell me where the post office is? Is di akhir.",
+        "en": "Could you tell me where the post office is?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-01-015",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "ENG-TICKET"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-ANSWER-TEXT",
+      "target_text": "The plane leaves at half past nine.",
+      "audio": "en/the_plane_leaves_at_half_past_nine",
+      "reading_id": "R-INGAH-01",
+      "options": [
+        {
+          "id": "yes",
+          "target_text": "Yes",
+          "audio": "en/yes"
+        },
+        {
+          "id": "no",
+          "target_text": "No",
+          "audio": "en/no",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "No: 09.30 itu waktu boarding. Pesawat berangkat pukul 10.05.",
+        "en": "No: 9:30 is boarding. The plane leaves at 10:05."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-JOBS"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-PICK",
+      "target_text": "I'm a chef at a hotel.",
+      "audio": "en/im_a_chef_at_a_hotel",
+      "options": [
+        {
+          "id": "p_farmer",
+          "image": "pic_farmer",
+          "text": {
+            "id": "petani",
+            "en": "farmer"
+          }
+        },
+        {
+          "id": "seller",
+          "image": "pic_seller",
+          "text": {
+            "id": "pedagang",
+            "en": "market seller"
+          }
+        },
+        {
+          "id": "p_chef",
+          "image": "pic_chef",
+          "text": {
+            "id": "koki",
+            "en": "chef"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Chef = koki.",
+        "en": "A chef cooks in a restaurant or a hotel."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ENG-JOBS"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_firefighter",
+          "image": "pic_firefighter",
+          "text": {
+            "id": "pemadam kebakaran",
+            "en": "firefighter"
+          }
+        },
+        {
+          "id": "p_police",
+          "image": "pic_police",
+          "text": {
+            "id": "polisi",
+            "en": "police officer"
+          }
+        },
+        {
+          "id": "p_pilot",
+          "image": "pic_pilot",
+          "text": {
+            "id": "pilot",
+            "en": "pilot"
+          }
+        },
+        {
+          "id": "p_mechanic",
+          "image": "pic_mechanic",
+          "text": {
+            "id": "montir",
+            "en": "mechanic"
+          }
+        },
+        {
+          "id": "w_firefighter",
+          "target_text": "firefighter",
+          "audio": "en/firefighter"
+        },
+        {
+          "id": "w_police",
+          "target_text": "police officer",
+          "audio": "en/police_officer"
+        },
+        {
+          "id": "w_pilot",
+          "target_text": "pilot",
+          "audio": "en/pilot"
+        },
+        {
+          "id": "w_mechanic",
+          "target_text": "mechanic",
+          "audio": "en/mechanic"
+        }
+      ],
+      "solution_pairs": {
+        "p_firefighter": "w_firefighter",
+        "p_police": "w_police",
+        "p_pilot": "w_pilot",
+        "p_mechanic": "w_mechanic"
+      },
+      "model_answer": {
+        "id": "firefighter = pemadam kebakaran, police officer = polisi, mechanic = montir.",
+        "en": "Firefighter, police officer, pilot, mechanic."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ENG-JOBS"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/i_grow_rice_and_vegetables",
+      "options": [
+        {
+          "id": "p_chef",
+          "image": "pic_chef",
+          "text": {
+            "id": "koki",
+            "en": "chef"
+          }
+        },
+        {
+          "id": "p_farmer",
+          "image": "pic_farmer",
+          "text": {
+            "id": "petani",
+            "en": "farmer"
+          },
+          "correct": true
+        },
+        {
+          "id": "seller",
+          "image": "pic_seller",
+          "text": {
+            "id": "pedagang",
+            "en": "market seller"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Menanam padi dan sayur: a farmer.",
+        "en": "Someone who grows rice and vegetables is a farmer."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "ENG-PERFECT",
+        "ENG-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_done",
+          "text": {
+            "id": "Sudah selesai",
+            "en": "Finished"
+          }
+        },
+        {
+          "id": "b_now",
+          "text": {
+            "id": "Masih sampai sekarang",
+            "en": "Still true now"
+          }
+        },
+        {
+          "id": "sby",
+          "target_text": "I worked in Surabaya in 2019.",
+          "audio": "en/i_worked_in_surabaya_in_2019"
+        },
+        {
+          "id": "lived",
+          "target_text": "I've lived here since 2020.",
+          "audio": "en/ive_lived_here_since_2020"
+        },
+        {
+          "id": "teacher",
+          "target_text": "She was a teacher for ten years.",
+          "audio": "en/she_was_a_teacher_for_ten_years"
+        },
+        {
+          "id": "pilot",
+          "target_text": "He's been a pilot since 2015.",
+          "audio": "en/hes_been_a_pilot_since_2015"
+        },
+        {
+          "id": "moved",
+          "target_text": "We moved to Bandung last year.",
+          "audio": "en/we_moved_to_bandung_last_year"
+        },
+        {
+          "id": "known",
+          "target_text": "They've known each other for years.",
+          "audio": "en/theyve_known_each_other_for_years"
+        }
+      ],
+      "solution_pairs": {
+        "sby": "b_done",
+        "lived": "b_now",
+        "teacher": "b_done",
+        "pilot": "b_now",
+        "moved": "b_done",
+        "known": "b_now"
+      },
+      "model_answer": {
+        "id": "Selesai: worked, was, moved. Masih: I've lived, he's been, they've known.",
+        "en": "Finished: worked, was, moved. Still true: I've lived, he's been, they've known."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-PERFECT"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-FILL",
+      "target_text": "I've been a chef ___ 2021.",
+      "image": "pic_chef",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "g2",
+          "target_text": "for"
+        },
+        {
+          "id": "g1",
+          "target_text": "since"
+        },
+        {
+          "id": "g3",
+          "target_text": "from"
+        }
+      ],
+      "solution": [
+        "g1"
+      ],
+      "model_answer": {
+        "id": "Since + titik waktu (2021). For + lama waktu (three years).",
+        "en": "Since + a point in time (2021); for + a length of time."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ENG-PERFECT"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-FIX",
+      "target_text": "I ever go to Bali.",
+      "options": [
+        {
+          "id": "bad_have_went",
+          "target_text": "I have went to Bali."
+        },
+        {
+          "id": "been",
+          "target_text": "I've been to Bali.",
+          "correct": true
+        },
+        {
+          "id": "bad_was_ever",
+          "target_text": "I was ever to Bali."
+        }
+      ],
+      "model_answer": {
+        "id": "Pernah ≠ ever. Pernah ke Bali = I've been to Bali.",
+        "en": "For experience, use have been: I've been to Bali."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "mini_reading",
+      "skills": [
+        "ENG-PERFECT"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-READ",
+      "image": "pic_hotel",
+      "reading_id": "R-INGAH-02",
+      "model_answer": {
+        "id": "Worked (selesai) di restoran; have worked (sampai sekarang) di hotel.",
+        "en": "Worked: the restaurant job is over. Have worked: the hotel job goes on."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ENG-JOBS"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-ANSWER",
+      "target_text": "What does Maya do now?",
+      "audio": "en/what_does_maya_do_now",
+      "reading_id": "R-INGAH-02",
+      "options": [
+        {
+          "id": "p_chef",
+          "image": "pic_chef",
+          "text": {
+            "id": "koki",
+            "en": "chef"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_driver",
+          "image": "pic_driver",
+          "text": {
+            "id": "sopir",
+            "en": "driver"
+          }
+        },
+        {
+          "id": "p_nurse",
+          "image": "pic_nurse",
+          "text": {
+            "id": "perawat",
+            "en": "nurse"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Maya sekarang koki di hotel: I'm a chef there now.",
+        "en": "Maya says: I'm a chef there now."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ENG-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/before_this_job_i_was_a_driver",
+      "options": [
+        {
+          "id": "p_pilot",
+          "image": "pic_pilot",
+          "text": {
+            "id": "pilot",
+            "en": "pilot"
+          }
+        },
+        {
+          "id": "p_chef",
+          "image": "pic_chef",
+          "text": {
+            "id": "koki",
+            "en": "chef"
+          }
+        },
+        {
+          "id": "p_driver",
+          "image": "pic_driver",
+          "text": {
+            "id": "sopir",
+            "en": "driver"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Before this job, I was a driver: dulu sopir.",
+        "en": "Before this job, I was a driver: that's in the past."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "ENG-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-BUILD",
+      "image": "pic_nurse",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "x1",
+          "target_text": "since"
+        },
+        {
+          "id": "t7",
+          "target_text": "five"
+        },
+        {
+          "id": "t4",
+          "target_text": "a"
+        },
+        {
+          "id": "t2",
+          "target_text": "worked"
+        },
+        {
+          "id": "t8",
+          "target_text": "years"
+        },
+        {
+          "id": "t1",
+          "target_text": "I"
+        },
+        {
+          "id": "t5",
+          "target_text": "nurse"
+        },
+        {
+          "id": "t6",
+          "target_text": "for"
+        },
+        {
+          "id": "t3",
+          "target_text": "as"
+        }
+      ],
+      "solution": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8"
+      ],
+      "model_answer": {
+        "id": "For five years = selama lima tahun (sudah selesai).",
+        "en": "For five years: a finished length of time."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ENG-PERFECT"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-LISTEN-ANS",
+      "audio": "en/have_you_ever_been_to_bali",
+      "options": [
+        {
+          "id": "now",
+          "text": {
+            "id": "Apakah Anda sedang di Bali?",
+            "en": "Are you in Bali now?"
+          }
+        },
+        {
+          "id": "when",
+          "text": {
+            "id": "Kapan Anda pergi ke Bali?",
+            "en": "When did you go to Bali?"
+          }
+        },
+        {
+          "id": "ever",
+          "text": {
+            "id": "Apakah Anda pernah ke Bali?",
+            "en": "Is Bali part of your experience?"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Have you ever…? = Apakah Anda pernah…?",
+        "en": "Have you ever…? asks about your experience."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-JOBS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "He's a firefighter.",
+      "audio": "en/hes_a_firefighter",
+      "options": [
+        {
+          "id": "p_police",
+          "image": "pic_police",
+          "text": {
+            "id": "polisi",
+            "en": "police officer"
+          }
+        },
+        {
+          "id": "p_firefighter",
+          "image": "pic_firefighter",
+          "text": {
+            "id": "pemadam kebakaran",
+            "en": "firefighter"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_mechanic",
+          "image": "pic_mechanic",
+          "text": {
+            "id": "montir",
+            "en": "mechanic"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Firefighter = pemadam kebakaran.",
+        "en": "A firefighter puts out fires."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ENG-PERFECT"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-REPLY",
+      "target_text": "How long have you lived here?",
+      "audio": "en/how_long_have_you_lived_here",
+      "options": [
+        {
+          "id": "for3",
+          "target_text": "For three years.",
+          "audio": "en/for_three_years",
+          "correct": true
+        },
+        {
+          "id": "ago",
+          "target_text": "Three years ago.",
+          "audio": "en/three_years_ago"
+        },
+        {
+          "id": "in2019",
+          "target_text": "In 2019.",
+          "audio": "en/in_2019"
+        }
+      ],
+      "model_answer": {
+        "id": "How long…? Jawab dengan for: For three years.",
+        "en": "How long? Answer with for: For three years."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-PAST"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "I ___ in Medan from 2015 to 2019.",
+      "image": "pic_house",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "g2",
+          "target_text": "have lived"
+        },
+        {
+          "id": "g1",
+          "target_text": "lived"
+        },
+        {
+          "id": "g3",
+          "target_text": "live"
+        }
+      ],
+      "solution": [
+        "g1"
+      ],
+      "model_answer": {
+        "id": "From 2015 to 2019: sudah selesai, jadi lived.",
+        "en": "From 2015 to 2019 is finished, so lived."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    },
+    {
+      "item_id": "ING-A-H-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kereta Anda berangkat pukul 09.30. Perjalanannya dua setengah jam. Anda tiba pukul berapa? Pilih jawaban bahasa Inggrisnya.",
+            "en": "Your train leaves at 9:30. The trip takes two and a half hours. What time do you arrive?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t12",
+          "target_text": "at twelve o'clock",
+          "audio": "en/at_twelve_oclock",
+          "correct": true
+        },
+        {
+          "id": "t1130",
+          "target_text": "at eleven thirty",
+          "audio": "en/at_eleven_thirty"
+        },
+        {
+          "id": "t1230",
+          "target_text": "at half past twelve",
+          "audio": "en/at_half_past_twelve"
+        }
+      ],
+      "model_answer": {
+        "id": "09.30 + 2 jam 30 menit = 12.00: at twelve o'clock.",
+        "en": "9:30 plus two and a half hours is twelve o'clock."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-h-0.1"
+    }
+  ]
+}

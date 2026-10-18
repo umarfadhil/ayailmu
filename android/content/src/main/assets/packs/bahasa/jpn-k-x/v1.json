@@ -1,0 +1,2090 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "jpn-k-x-0.1",
+    "subject": "bahasa",
+    "track": "jpn-k-x",
+    "level": "master",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "target_lang": "ja",
+    "title": {
+      "id": "Bahasa Jepang — Master (Anak)",
+      "en": "Japanese — Master (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, starter level: 2 units) for review: needs a native Japanese reviewer and the Indonesian and English language reviewers before any item is approved (docs/syllabus/bahasa/ja_levels.md, kids Master: hobbies & likes, feelings & describing). Voice clips: android/content/voice/ja.json and ja.levels.json (listening items stay hidden until recorded); every skill has a REMED item that needs no audio.",
+  "prompts": {
+    "P-CONNECT": {
+      "id": "Hubungkan pasangannya.",
+      "en": "Connect the pairs."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke katanya.",
+      "en": "Drag each picture to its word."
+    },
+    "P-PICK": {
+      "id": "Pilih gambarnya.",
+      "en": "Pick the picture."
+    },
+    "P-LISTEN-PIC": {
+      "id": "Dengar, lalu ketuk gambarnya.",
+      "en": "Listen, then tap the picture."
+    },
+    "P-LISTEN-MEAN": {
+      "id": "Dengar, lalu pilih artinya.",
+      "en": "Listen, then pick the meaning."
+    },
+    "P-BUILD": {
+      "id": "Susun hurufnya.",
+      "en": "Build the word."
+    },
+    "P-SENTENCE": {
+      "id": "Susun kalimatnya.",
+      "en": "Build the sentence."
+    },
+    "P-DIALOG": {
+      "id": "Urutkan percakapannya.",
+      "en": "Put the dialogue in order."
+    },
+    "P-SORT": {
+      "id": "Kelompokkan.",
+      "en": "Sort them."
+    },
+    "P-FILL": {
+      "id": "Isi yang kosong.",
+      "en": "Fill the gap."
+    },
+    "P-MEMORY": {
+      "id": "Cari pasangannya.",
+      "en": "Find the pairs."
+    },
+    "P-ANSWER": {
+      "id": "Pilih jawabannya.",
+      "en": "Pick the answer."
+    },
+    "P-REPLY": {
+      "id": "Pilih balasannya.",
+      "en": "Pick the reply."
+    },
+    "P-MATCH-PIC": {
+      "id": "Cocok dengan gambarnya?",
+      "en": "Does it match the picture?"
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Hobi & kesukaan",
+        "en": "Hobbies & likes"
+      },
+      "sticker": "sticker_cat"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Perasaan & menggambarkan",
+        "en": "Feelings & describing"
+      },
+      "sticker": "sticker_star_fruit"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "JPN-K-X-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Hobi & kesukaan",
+        "en": "Hobbies & likes"
+      },
+      "body": [
+        {
+          "id": "Aku suka …: 〜が すきです (ga suki desu). Pakai が, bukan を!",
+          "en": "I like …: 〜が すきです (ga suki desu). Use が, not を!"
+        },
+        {
+          "id": "Sangat suka: だいすきです (daisuki desu). Tidak suka: すきじゃないです (suki ja nai desu).",
+          "en": "Love: だいすきです (daisuki desu). Don't like: すきじゃないです (suki ja nai desu)."
+        },
+        {
+          "id": "Bertanya: なにが すきですか (nani ga suki desu ka)? = Kamu suka apa?",
+          "en": "Ask: なにが すきですか (nani ga suki desu ka)? = What do you like?"
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "サッカーが すきです。",
+          "gloss": {
+            "id": "Sakkā ga suki desu. = Aku suka sepak bola.",
+            "en": "Sakkā ga suki desu. = I like football."
+          }
+        },
+        {
+          "target_text": "わたしも すきです。",
+          "gloss": {
+            "id": "Watashi mo suki desu. = Aku juga suka.",
+            "en": "Watashi mo suki desu. = I like it too."
+          }
+        },
+        {
+          "target_text": "いっしょに しましょう！",
+          "gloss": {
+            "id": "Issho ni shimashō! = Ayo main bersama!",
+            "en": "Issho ni shimashō! = Let's do it together!"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "JPN-K-X-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Perasaan & menggambarkan",
+        "en": "Feelings & describing"
+      },
+      "body": [
+        {
+          "id": "Perasaan: うれしい (ureshii) senang, かなしい (kanashii) sedih.",
+          "en": "Feelings: うれしい (ureshii) happy, かなしい (kanashii) sad."
+        },
+        {
+          "id": "Ke teman: つかれた！(tsukareta) Ke guru lebih sopan: つかれました (tsukaremashita).",
+          "en": "To a friend: つかれた！(tsukareta) To a teacher, more polite: つかれました (tsukaremashita)."
+        },
+        {
+          "id": "Menggambarkan: ぞうは おおきいです (zō wa ōkii desu) = gajah itu besar.",
+          "en": "Describing: ぞうは おおきいです (zō wa ōkii desu) = elephants are big."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "おなかが すいた！",
+          "gloss": {
+            "id": "Onaka ga suita! = Aku lapar!",
+            "en": "Onaka ga suita! = I'm hungry!"
+          }
+        },
+        {
+          "target_text": "どうしたの？",
+          "gloss": {
+            "id": "Dō shita no? = Ada apa? (ke teman)",
+            "en": "Dō shita no? = What's wrong? (to a friend)"
+          }
+        },
+        {
+          "target_text": "おおきい · ちいさい",
+          "gloss": {
+            "id": "ōkii besar · chiisai kecil",
+            "en": "ōkii big · chiisai small"
+          }
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "JPN-K-X-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_football",
+          "image": "pic_football",
+          "text": {
+            "id": "sepak bola",
+            "en": "football"
+          }
+        },
+        {
+          "id": "pic_guitar",
+          "image": "pic_guitar",
+          "text": {
+            "id": "gitar",
+            "en": "guitar"
+          }
+        },
+        {
+          "id": "pic_dance",
+          "image": "pic_dance",
+          "text": {
+            "id": "menari",
+            "en": "dancing"
+          }
+        },
+        {
+          "id": "pic_badminton",
+          "image": "pic_badminton",
+          "text": {
+            "id": "bulu tangkis",
+            "en": "badminton"
+          }
+        },
+        {
+          "id": "w1",
+          "target_text": "ギター",
+          "romanization": "gitā",
+          "audio": "ja/gitaa"
+        },
+        {
+          "id": "w2",
+          "target_text": "ダンス",
+          "romanization": "dansu",
+          "audio": "ja/dansu"
+        },
+        {
+          "id": "w3",
+          "target_text": "バドミントン",
+          "romanization": "badominton",
+          "audio": "ja/badominton"
+        },
+        {
+          "id": "w0",
+          "target_text": "サッカー",
+          "romanization": "sakkā",
+          "audio": "ja/sakkaa"
+        }
+      ],
+      "solution_pairs": {
+        "pic_football": "w0",
+        "pic_guitar": "w1",
+        "pic_dance": "w2",
+        "pic_badminton": "w3"
+      },
+      "model_answer": {
+        "id": "サッカー sepak bola · ギター gitar · ダンス menari · バドミントン bulu tangkis",
+        "en": "サッカー football · ギター guitar · ダンス dance · バドミントン badminton"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "JPN-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/tsuri",
+      "options": [
+        {
+          "id": "pic_swim",
+          "image": "pic_swim",
+          "text": {
+            "id": "berenang",
+            "en": "swimming"
+          }
+        },
+        {
+          "id": "pic_fishing",
+          "image": "pic_fishing",
+          "text": {
+            "id": "memancing",
+            "en": "fishing"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_gardening",
+          "image": "pic_gardening",
+          "text": {
+            "id": "berkebun",
+            "en": "gardening"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "つり (tsuri) = memancing.",
+        "en": "つり (tsuri) = fishing."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "JPN-LIKE"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-SENTENCE",
+      "gesture": "drag",
+      "image": "pic_football",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku suka sepak bola.",
+            "en": "I like football."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s1",
+          "target_text": "が",
+          "romanization": "ga",
+          "audio": "ja/ga"
+        },
+        {
+          "id": "x0",
+          "target_text": "を",
+          "romanization": "o",
+          "audio": "ja/o"
+        },
+        {
+          "id": "s2",
+          "target_text": "すきです",
+          "romanization": "suki desu",
+          "audio": "ja/suki_desu"
+        },
+        {
+          "id": "s0",
+          "target_text": "サッカー",
+          "romanization": "sakkā",
+          "audio": "ja/sakkaa"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2"
+      ],
+      "model_answer": {
+        "id": "サッカーが すきです。(Sakkā ga suki desu.) すき memakai が.",
+        "en": "サッカーが すきです。(Sakkā ga suki desu.) すき takes が."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "memory_flip",
+      "skills": [
+        "JPN-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-MEMORY",
+      "options": [
+        {
+          "id": "pic_camera",
+          "image": "pic_camera",
+          "text": {
+            "id": "kamera",
+            "en": "camera"
+          }
+        },
+        {
+          "id": "w0",
+          "target_text": "しゃしん",
+          "romanization": "shashin",
+          "audio": "ja/shashin"
+        },
+        {
+          "id": "pic_swim",
+          "image": "pic_swim",
+          "text": {
+            "id": "berenang",
+            "en": "swimming"
+          }
+        },
+        {
+          "id": "w1",
+          "target_text": "おえかき",
+          "romanization": "oekaki",
+          "audio": "ja/oekaki"
+        },
+        {
+          "id": "pic_draw_paint",
+          "image": "pic_draw_paint",
+          "text": {
+            "id": "menggambar",
+            "en": "drawing"
+          }
+        },
+        {
+          "id": "w3",
+          "target_text": "うた",
+          "romanization": "uta",
+          "audio": "ja/uta"
+        },
+        {
+          "id": "w2",
+          "target_text": "すいえい",
+          "romanization": "suiei",
+          "audio": "ja/suiei"
+        },
+        {
+          "id": "pic_sing",
+          "image": "pic_sing",
+          "text": {
+            "id": "bernyanyi",
+            "en": "singing"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "pic_camera": "w0",
+        "pic_draw_paint": "w1",
+        "pic_swim": "w2",
+        "pic_sing": "w3"
+      },
+      "model_answer": {
+        "id": "しゃしん foto · おえかき menggambar · すいえい renang · うた lagu",
+        "en": "しゃしん photo · おえかき drawing · すいえい swimming · うた song"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-LIKE"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-FILL",
+      "target_text": "わたしは ＿＿が すきです。",
+      "romanization": "Watashi wa ___ ga suki desu.",
+      "gesture": "drag",
+      "image": "pic_guitar",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku suka …",
+            "en": "I like …"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "ダンス",
+          "romanization": "dansu",
+          "audio": "ja/dansu"
+        },
+        {
+          "id": "x1",
+          "target_text": "サッカー",
+          "romanization": "sakkā",
+          "audio": "ja/sakkaa"
+        },
+        {
+          "id": "c",
+          "target_text": "ギター",
+          "romanization": "gitā",
+          "audio": "ja/gitaa"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "わたしは ギターが すきです。(Watashi wa gitā ga suki desu.) = Aku suka gitar.",
+        "en": "わたしは ギターが すきです。(Watashi wa gitā ga suki desu.) = I like the guitar."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "JPN-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/badominton",
+      "options": [
+        {
+          "id": "pic_badminton",
+          "image": "pic_badminton",
+          "text": {
+            "id": "bulu tangkis",
+            "en": "badminton"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_football",
+          "image": "pic_football",
+          "text": {
+            "id": "sepak bola",
+            "en": "football"
+          }
+        },
+        {
+          "id": "pic_swim",
+          "image": "pic_swim",
+          "text": {
+            "id": "berenang",
+            "en": "swimming"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "バドミントン (badominton) = bulu tangkis.",
+        "en": "バドミントン (badominton) = badminton."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "JPN-LIKE"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-ANSWER",
+      "target_text": "なにが すきですか。",
+      "romanization": "Nani ga suki desu ka?",
+      "audio": "ja/nani_ga_suki_desu_ka",
+      "image": "pic_draw_paint",
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "サッカーが すきです。",
+          "romanization": "Sakkā ga suki desu.",
+          "audio": "ja/sakkaa_ga_suki_desu"
+        },
+        {
+          "id": "x1",
+          "target_text": "ダンスが すきです。",
+          "romanization": "Dansu ga suki desu.",
+          "audio": "ja/dansu_ga_suki_desu"
+        },
+        {
+          "id": "a",
+          "target_text": "おえかきが すきです。",
+          "romanization": "Oekaki ga suki desu.",
+          "audio": "ja/oekaki_ga_suki_desu",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "なにが すきですか？ — おえかきが すきです。(Oekaki ga suki desu.) = Aku suka menggambar.",
+        "en": "なにが すきですか？ — おえかきが すきです。(Oekaki ga suki desu.) = I like drawing."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "JPN-LIKE"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-LISTEN-MEAN",
+      "audio": "ja/sakkaa_wa_suki_ja_nai_desu",
+      "options": [
+        {
+          "id": "x0",
+          "text": {
+            "id": "Aku suka sepak bola.",
+            "en": "I like football."
+          }
+        },
+        {
+          "id": "x1",
+          "text": {
+            "id": "Aku main sepak bola.",
+            "en": "I play football."
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Aku tidak suka sepak bola.",
+            "en": "I don't like football."
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "サッカーは すきじゃないです (sakkā wa suki ja nai desu) = aku tidak suka sepak bola.",
+        "en": "サッカーは すきじゃないです (sakkā wa suki ja nai desu) = I don't like football."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "JPN-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_in",
+          "text": {
+            "id": "di dalam rumah",
+            "en": "inside"
+          },
+          "target_text": "いえの なか",
+          "romanization": "ie no naka",
+          "audio": "ja/ie_no_naka"
+        },
+        {
+          "id": "b_out",
+          "text": {
+            "id": "di luar",
+            "en": "outside"
+          },
+          "target_text": "そと",
+          "romanization": "soto",
+          "audio": "ja/soto"
+        },
+        {
+          "id": "pic_football",
+          "image": "pic_football",
+          "text": {
+            "id": "sepak bola",
+            "en": "football"
+          }
+        },
+        {
+          "id": "pic_draw_paint",
+          "image": "pic_draw_paint",
+          "text": {
+            "id": "menggambar",
+            "en": "drawing"
+          }
+        },
+        {
+          "id": "pic_watch_tv",
+          "image": "pic_watch_tv",
+          "text": {
+            "id": "menonton TV",
+            "en": "watching TV"
+          }
+        },
+        {
+          "id": "pic_fishing",
+          "image": "pic_fishing",
+          "text": {
+            "id": "memancing",
+            "en": "fishing"
+          }
+        },
+        {
+          "id": "pic_gardening",
+          "image": "pic_gardening",
+          "text": {
+            "id": "berkebun",
+            "en": "gardening"
+          }
+        },
+        {
+          "id": "pic_read",
+          "image": "pic_read",
+          "text": {
+            "id": "membaca",
+            "en": "reading"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "pic_draw_paint": "b_in",
+        "pic_read": "b_in",
+        "pic_watch_tv": "b_in",
+        "pic_football": "b_out",
+        "pic_fishing": "b_out",
+        "pic_gardening": "b_out"
+      },
+      "model_answer": {
+        "id": "いえの なか (ie no naka, di dalam): menggambar, membaca, menonton TV. そと (soto, di luar): sepak bola, memancing, berkebun.",
+        "en": "いえの なか (ie no naka, inside): drawing, reading, watching TV. そと (soto, outside): football, fishing, gardening."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "JPN-LIKE"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-DIALOG",
+      "gesture": "drag",
+      "image": "pic_friends",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ngobrol dengan teman baru.",
+            "en": "Talking with a new friend."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s0",
+          "target_text": "なにが すきですか。",
+          "romanization": "Nani ga suki desu ka?",
+          "audio": "ja/nani_ga_suki_desu_ka"
+        },
+        {
+          "id": "s2",
+          "target_text": "わたしも すきです。いっしょに しましょう！",
+          "romanization": "Watashi mo suki desu. Issho ni shimashō!",
+          "audio": "ja/watashi_mo_suki_desu_issho_ni_shimashoo"
+        },
+        {
+          "id": "s1",
+          "target_text": "サッカーが すきです。",
+          "romanization": "Sakkā ga suki desu.",
+          "audio": "ja/sakkaa_ga_suki_desu"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2"
+      ],
+      "model_answer": {
+        "id": "なにが すきですか → サッカーが すきです → わたしも すきです。いっしょに しましょう！",
+        "en": "なにが すきですか → サッカーが すきです → わたしも すきです。いっしょに しましょう！"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "JPN-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-PICK",
+      "target_text": "うたを うたいます",
+      "romanization": "uta o utaimasu",
+      "audio": "ja/uta_o_utaimasu",
+      "options": [
+        {
+          "id": "pic_dance",
+          "image": "pic_dance",
+          "text": {
+            "id": "menari",
+            "en": "dancing"
+          }
+        },
+        {
+          "id": "pic_sing",
+          "image": "pic_sing",
+          "text": {
+            "id": "bernyanyi",
+            "en": "singing"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_guitar",
+          "image": "pic_guitar",
+          "text": {
+            "id": "gitar",
+            "en": "guitar"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "うたを うたいます (uta o utaimasu) = bernyanyi.",
+        "en": "うたを うたいます (uta o utaimasu) = I sing a song."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "JPN-LIKE"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/gitaa_ga_daisuki_desu",
+      "options": [
+        {
+          "id": "pic_guitar",
+          "image": "pic_guitar",
+          "text": {
+            "id": "gitar",
+            "en": "guitar"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_radio",
+          "image": "pic_radio",
+          "text": {
+            "id": "radio",
+            "en": "radio"
+          }
+        },
+        {
+          "id": "pic_headphones",
+          "image": "pic_headphones",
+          "text": {
+            "id": "headphone",
+            "en": "headphones"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "ギターが だいすきです (gitā ga daisuki desu) = aku sangat suka gitar.",
+        "en": "ギターが だいすきです (gitā ga daisuki desu) = I love the guitar."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-LIKE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "ダンス＿＿ すきです。",
+      "romanization": "Dansu ___ suki desu.",
+      "gesture": "drag",
+      "image": "pic_dance",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku suka menari.",
+            "en": "I like dancing."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x1",
+          "target_text": "に",
+          "romanization": "ni",
+          "audio": "ja/ni"
+        },
+        {
+          "id": "x0",
+          "target_text": "を",
+          "romanization": "o",
+          "audio": "ja/o"
+        },
+        {
+          "id": "c",
+          "target_text": "が",
+          "romanization": "ga",
+          "audio": "ja/ga"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "ダンスが すきです。(Dansu ga suki desu.) すき memakai が.",
+        "en": "ダンスが すきです。(Dansu ga suki desu.) すき takes が."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "JPN-HOBBY"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "おえかき",
+      "romanization": "oekaki",
+      "audio": "ja/oekaki",
+      "options": [
+        {
+          "id": "pic_draw_paint",
+          "image": "pic_draw_paint",
+          "text": {
+            "id": "menggambar",
+            "en": "drawing"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_write",
+          "image": "pic_write",
+          "text": {
+            "id": "menulis",
+            "en": "writing"
+          }
+        },
+        {
+          "id": "pic_read",
+          "image": "pic_read",
+          "text": {
+            "id": "membaca",
+            "en": "reading"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "おえかき (oekaki) = menggambar.",
+        "en": "おえかき (oekaki) = drawing."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_happy",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          }
+        },
+        {
+          "id": "pic_sad",
+          "image": "pic_sad",
+          "text": {
+            "id": "sedih",
+            "en": "sad"
+          }
+        },
+        {
+          "id": "pic_tired",
+          "image": "pic_tired",
+          "text": {
+            "id": "lelah",
+            "en": "tired"
+          }
+        },
+        {
+          "id": "pic_hungry",
+          "image": "pic_hungry",
+          "text": {
+            "id": "lapar",
+            "en": "hungry"
+          }
+        },
+        {
+          "id": "w3",
+          "target_text": "おなかが すいた",
+          "romanization": "onaka ga suita",
+          "audio": "ja/onaka_ga_suita"
+        },
+        {
+          "id": "w0",
+          "target_text": "うれしい",
+          "romanization": "ureshii",
+          "audio": "ja/ureshii"
+        },
+        {
+          "id": "w1",
+          "target_text": "かなしい",
+          "romanization": "kanashii",
+          "audio": "ja/kanashii"
+        },
+        {
+          "id": "w2",
+          "target_text": "つかれた",
+          "romanization": "tsukareta",
+          "audio": "ja/tsukareta"
+        }
+      ],
+      "solution_pairs": {
+        "pic_happy": "w0",
+        "pic_sad": "w1",
+        "pic_tired": "w2",
+        "pic_hungry": "w3"
+      },
+      "model_answer": {
+        "id": "うれしい senang · かなしい sedih · つかれた capek · おなかが すいた lapar",
+        "en": "うれしい happy · かなしい sad · つかれた tired · おなかが すいた hungry"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-DESCRIBE"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "pic_tiger",
+          "image": "pic_tiger",
+          "text": {
+            "id": "harimau",
+            "en": "tiger"
+          }
+        },
+        {
+          "id": "pic_frog",
+          "image": "pic_frog",
+          "text": {
+            "id": "katak",
+            "en": "frog"
+          }
+        },
+        {
+          "id": "pic_turtle",
+          "image": "pic_turtle",
+          "text": {
+            "id": "kura-kura",
+            "en": "turtle"
+          }
+        },
+        {
+          "id": "pic_butterfly",
+          "image": "pic_butterfly",
+          "text": {
+            "id": "kupu-kupu",
+            "en": "butterfly"
+          }
+        },
+        {
+          "id": "w3",
+          "target_text": "ちょうちょ",
+          "romanization": "chōcho",
+          "audio": "ja/choocho"
+        },
+        {
+          "id": "w0",
+          "target_text": "とら",
+          "romanization": "tora",
+          "audio": "ja/tora"
+        },
+        {
+          "id": "w1",
+          "target_text": "かえる",
+          "romanization": "kaeru",
+          "audio": "ja/kaeru"
+        },
+        {
+          "id": "w2",
+          "target_text": "かめ",
+          "romanization": "kame",
+          "audio": "ja/kame"
+        }
+      ],
+      "solution_pairs": {
+        "pic_tiger": "w0",
+        "pic_frog": "w1",
+        "pic_turtle": "w2",
+        "pic_butterfly": "w3"
+      },
+      "model_answer": {
+        "id": "とら harimau · かえる katak · かめ kura-kura · ちょうちょ kupu-kupu",
+        "en": "とら tiger · かえる frog · かめ turtle · ちょうちょ butterfly"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "JPN-DESCRIBE"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/hebi",
+      "options": [
+        {
+          "id": "pic_frog",
+          "image": "pic_frog",
+          "text": {
+            "id": "katak",
+            "en": "frog"
+          }
+        },
+        {
+          "id": "pic_turtle",
+          "image": "pic_turtle",
+          "text": {
+            "id": "kura-kura",
+            "en": "turtle"
+          }
+        },
+        {
+          "id": "pic_snake",
+          "image": "pic_snake",
+          "text": {
+            "id": "ular",
+            "en": "snake"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "へび (hebi) = ular.",
+        "en": "へび (hebi) = snake."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "JPN-DESCRIBE"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_big",
+          "text": {
+            "id": "besar",
+            "en": "big"
+          },
+          "target_text": "おおきい",
+          "romanization": "ōkii",
+          "audio": "ja/ookii"
+        },
+        {
+          "id": "b_small",
+          "text": {
+            "id": "kecil",
+            "en": "small"
+          },
+          "target_text": "ちいさい",
+          "romanization": "chiisai",
+          "audio": "ja/chiisai"
+        },
+        {
+          "id": "pic_rabbit",
+          "image": "pic_rabbit",
+          "text": {
+            "id": "kelinci",
+            "en": "rabbit"
+          }
+        },
+        {
+          "id": "pic_butterfly",
+          "image": "pic_butterfly",
+          "text": {
+            "id": "kupu-kupu",
+            "en": "butterfly"
+          }
+        },
+        {
+          "id": "pic_elephant",
+          "image": "pic_elephant",
+          "text": {
+            "id": "gajah",
+            "en": "elephant"
+          }
+        },
+        {
+          "id": "pic_tiger",
+          "image": "pic_tiger",
+          "text": {
+            "id": "harimau",
+            "en": "tiger"
+          }
+        },
+        {
+          "id": "pic_frog",
+          "image": "pic_frog",
+          "text": {
+            "id": "katak",
+            "en": "frog"
+          }
+        },
+        {
+          "id": "pic_orangutan",
+          "image": "pic_orangutan",
+          "text": {
+            "id": "orang utan",
+            "en": "orangutan"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "pic_elephant": "b_big",
+        "pic_tiger": "b_big",
+        "pic_orangutan": "b_big",
+        "pic_frog": "b_small",
+        "pic_butterfly": "b_small",
+        "pic_rabbit": "b_small"
+      },
+      "model_answer": {
+        "id": "おおきい (ōkii, besar): gajah, harimau, orang utan. ちいさい (chiisai, kecil): katak, kupu-kupu, kelinci.",
+        "en": "おおきい (ōkii, big): elephant, tiger, orangutan. ちいさい (chiisai, small): frog, butterfly, rabbit."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "JPN-DESCRIBE"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-SENTENCE",
+      "gesture": "drag",
+      "image": "pic_elephant",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gajah itu besar.",
+            "en": "Elephants are big."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s0",
+          "target_text": "ぞう",
+          "romanization": "zō",
+          "audio": "ja/zoo"
+        },
+        {
+          "id": "x0",
+          "target_text": "ちいさいです",
+          "romanization": "chiisai desu",
+          "audio": "ja/chiisai_desu"
+        },
+        {
+          "id": "s2",
+          "target_text": "おおきいです",
+          "romanization": "ōkii desu",
+          "audio": "ja/ookii_desu"
+        },
+        {
+          "id": "s1",
+          "target_text": "は",
+          "romanization": "wa",
+          "audio": "ja/wa"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2"
+      ],
+      "model_answer": {
+        "id": "ぞうは おおきいです。(Zō wa ōkii desu.) = Gajah itu besar.",
+        "en": "ぞうは おおきいです。(Zō wa ōkii desu.) = Elephants are big."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "JPN-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-PICK",
+      "target_text": "かなしい",
+      "romanization": "kanashii",
+      "audio": "ja/kanashii",
+      "options": [
+        {
+          "id": "pic_happy",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          }
+        },
+        {
+          "id": "pic_sad",
+          "image": "pic_sad",
+          "text": {
+            "id": "sedih",
+            "en": "sad"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_tired",
+          "image": "pic_tired",
+          "text": {
+            "id": "lelah",
+            "en": "tired"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "かなしい (kanashii) = sedih.",
+        "en": "かなしい (kanashii) = sad."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "JPN-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-LISTEN-MEAN",
+      "audio": "ja/onaka_ga_suita",
+      "options": [
+        {
+          "id": "x0",
+          "text": {
+            "id": "Aku capek.",
+            "en": "I'm tired."
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Aku lapar.",
+            "en": "I'm hungry."
+          },
+          "correct": true
+        },
+        {
+          "id": "x1",
+          "text": {
+            "id": "Aku senang.",
+            "en": "I'm happy."
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "おなかが すいた (onaka ga suita) = aku lapar.",
+        "en": "おなかが すいた (onaka ga suita) = I'm hungry."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "JPN-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-REPLY",
+      "target_text": "どうしたの？",
+      "romanization": "Dō shita no?",
+      "audio": "ja/doo_shita_no",
+      "image": "pic_tired",
+      "options": [
+        {
+          "id": "a",
+          "target_text": "ちょっと つかれた。",
+          "romanization": "Chotto tsukareta.",
+          "audio": "ja/chotto_tsukareta",
+          "correct": true
+        },
+        {
+          "id": "x0",
+          "target_text": "おなかが すいた。",
+          "romanization": "Onaka ga suita.",
+          "audio": "ja/onaka_ga_suita"
+        },
+        {
+          "id": "x1",
+          "target_text": "うれしい！",
+          "romanization": "Ureshii!",
+          "audio": "ja/ureshii"
+        }
+      ],
+      "model_answer": {
+        "id": "どうしたの？ — ちょっと つかれた。(Chotto tsukareta.) = Aku agak capek.",
+        "en": "どうしたの？ — ちょっと つかれた。(Chotto tsukareta.) = I'm a bit tired."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-DESCRIBE"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-FILL",
+      "target_text": "ちょうちょは ＿＿です。",
+      "romanization": "Chōcho wa ___ desu.",
+      "gesture": "drag",
+      "image": "pic_butterfly",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kupu-kupu itu …",
+            "en": "Butterflies are …"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "おおきい",
+          "romanization": "ōkii",
+          "audio": "ja/ookii"
+        },
+        {
+          "id": "c",
+          "target_text": "ちいさい",
+          "romanization": "chiisai",
+          "audio": "ja/chiisai"
+        },
+        {
+          "id": "x1",
+          "target_text": "さむい",
+          "romanization": "samui",
+          "audio": "ja/samui"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "ちょうちょは ちいさいです。(Chōcho wa chiisai desu.) = Kupu-kupu itu kecil.",
+        "en": "ちょうちょは ちいさいです。(Chōcho wa chiisai desu.) = Butterflies are small."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "JPN-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/samui",
+      "options": [
+        {
+          "id": "pic_hot",
+          "image": "pic_hot",
+          "text": {
+            "id": "kepanasan",
+            "en": "feeling hot"
+          }
+        },
+        {
+          "id": "pic_happy",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          }
+        },
+        {
+          "id": "pic_cold",
+          "image": "pic_cold",
+          "text": {
+            "id": "kedinginan",
+            "en": "feeling cold"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "さむい (samui) = dingin.",
+        "en": "さむい (samui) = cold."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "JPN-DESCRIBE"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-MATCH-PIC",
+      "target_text": "ぞうは ちいさいです。",
+      "romanization": "Zō wa chiisai desu.",
+      "audio": "ja/zoo_wa_chiisai_desu",
+      "image": "pic_elephant",
+      "options": [
+        {
+          "id": "yes",
+          "text": {
+            "id": "Cocok",
+            "en": "It matches"
+          }
+        },
+        {
+          "id": "no",
+          "text": {
+            "id": "Tidak cocok",
+            "en": "It doesn't match"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Tidak cocok: ぞうは おおきいです (zō wa ōkii desu), gajah itu besar!",
+        "en": "It doesn't match: ぞうは おおきいです (zō wa ōkii desu), elephants are big!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "JPN-DESCRIBE"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-BUILD",
+      "audio": "ja/hebi",
+      "gesture": "drag",
+      "image": "pic_snake",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "hebi = ular",
+            "en": "hebi = snake"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t1",
+          "target_text": "び"
+        },
+        {
+          "id": "t0",
+          "target_text": "へ"
+        },
+        {
+          "id": "x0",
+          "target_text": "ひ"
+        }
+      ],
+      "solution": [
+        "t0",
+        "t1"
+      ],
+      "model_answer": {
+        "id": "へ + び = へび (hebi, ular). び = ひ + ゛.",
+        "en": "へ + び = へび (hebi, snake). び is ひ + ゛."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "JPN-FEEL"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "うれしい",
+      "romanization": "ureshii",
+      "audio": "ja/ureshii",
+      "options": [
+        {
+          "id": "pic_sad",
+          "image": "pic_sad",
+          "text": {
+            "id": "sedih",
+            "en": "sad"
+          }
+        },
+        {
+          "id": "pic_hungry",
+          "image": "pic_hungry",
+          "text": {
+            "id": "lapar",
+            "en": "hungry"
+          }
+        },
+        {
+          "id": "pic_happy",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "うれしい (ureshii) = senang.",
+        "en": "うれしい (ureshii) = happy."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-DESCRIBE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "とらは ＿＿です。",
+      "romanization": "Tora wa ___ desu.",
+      "gesture": "drag",
+      "image": "pic_tiger",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Harimau itu …",
+            "en": "Tigers are …"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "ちいさい",
+          "romanization": "chiisai",
+          "audio": "ja/chiisai"
+        },
+        {
+          "id": "x1",
+          "target_text": "さむい",
+          "romanization": "samui",
+          "audio": "ja/samui"
+        },
+        {
+          "id": "c",
+          "target_text": "おおきい",
+          "romanization": "ōkii",
+          "audio": "ja/ookii"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "とらは おおきいです。(Tora wa ōkii desu.) = Harimau itu besar.",
+        "en": "とらは おおきいです。(Tora wa ōkii desu.) = Tigers are big."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-02-015",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "JPN-FEEL"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Ono Masahiro (ed.), Nihongo Onomatope Jiten: Giongo, Gitaigo 4500 (Shogakukan, 2007), a dictionary of about 4,500 Japanese sound-symbolic words.",
+      "model_answer": {
+        "id": "Bahasa Jepang punya ribuan kata tiruan bunyi dan rasa, misalnya ドキドキ (dokidoki, deg-degan) dan ワクワク (wakuwaku, senang tak sabar). Satu kamus memuat sekitar 4.500 kata seperti ini!",
+        "en": "Japanese has thousands of sound-and-feeling words, like ドキドキ (dokidoki, heart pounding) and ワクワク (wakuwaku, excited). One dictionary lists about 4,500 of them!"
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    },
+    {
+      "item_id": "JPN-K-X-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku kecil, pandai melompat, dan suka hujan. Namaku juga berarti \"pulang\". Aku siapa?",
+            "en": "I'm small, I'm good at jumping and I love the rain. My name also means \"go home\". Who am I?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "target_text": "へび",
+          "romanization": "hebi",
+          "audio": "ja/hebi"
+        },
+        {
+          "id": "a",
+          "target_text": "かえる",
+          "romanization": "kaeru",
+          "audio": "ja/kaeru",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "target_text": "かめ",
+          "romanization": "kame",
+          "audio": "ja/kame"
+        }
+      ],
+      "model_answer": {
+        "id": "かえる (kaeru): katak! かえる juga berarti pulang (かえります).",
+        "en": "かえる (kaeru): a frog! かえる also means to go home (かえります)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-x-0.1"
+    }
+  ]
+}

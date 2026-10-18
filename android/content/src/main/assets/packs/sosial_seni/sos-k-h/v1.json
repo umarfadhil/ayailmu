@@ -1,0 +1,2158 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sos-k-h-0.1",
+    "subject": "sosial_seni",
+    "track": "sos-k-h",
+    "level": "mahir",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Sosial & Seni — Mahir (Anak)",
+      "en": "Social Studies & Arts — Advanced (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12 starter level, 2 units) for subject + language review: needs a social-studies reviewer, a cultural reviewer, and the Indonesian and English language reviewers before any item is approved (docs/syllabus/04_SOSIAL_SENI.md, Kids Mahir: unit 1 Kerajaan & jalur rempah (as trade geography) and unit 5 Ekonomi sederhana as starter units 01-02; unit 2 Menuju kemerdekaan left to Sejarah). Picture-first per INTERACTIONS_AUDIO.md §1 and MODULES_LEVELS_STORIES.md §8; values and history figures live in the Nilai and Sejarah modules.",
+  "prompts": {
+    "P-TAP": {
+      "id": "Ketuk tempatnya di peta.",
+      "en": "Tap the place on the map."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban yang tepat.",
+      "en": "Pick the right answer."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-CONNECT": {
+      "id": "Tarik garis ke pasangannya.",
+      "en": "Draw a line to each match."
+    },
+    "P-SORT": {
+      "id": "Seret ke keranjang yang tepat.",
+      "en": "Drag each into the right basket."
+    },
+    "P-ORDER": {
+      "id": "Seret ke urutan yang benar.",
+      "en": "Drag them into the right order."
+    },
+    "P-FILL": {
+      "id": "Seret ke bagian yang kosong.",
+      "en": "Drag into the gap."
+    },
+    "P-NUM": {
+      "id": "Tulis angkanya.",
+      "en": "Type the number."
+    },
+    "P-TRY": {
+      "id": "Coba di rumah",
+      "en": "Try at home"
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Sip, kita lanjut!",
+      "en": "Great, let's keep going!"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Jalur rempah",
+        "en": "The spice routes"
+      },
+      "sticker": "sticker_compass"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Ekonomi sederhana",
+        "en": "Simple economics"
+      },
+      "sticker": "sticker_mango"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SOS-K-H-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Jalur rempah",
+        "en": "The spice routes"
+      },
+      "body": [
+        {
+          "id": "Dahulu cengkih dan pala hanya tumbuh di Kepulauan Maluku. Pedagang dari negeri jauh datang mencarinya.",
+          "en": "Long ago, cloves and nutmeg grew only in the Maluku Islands. Traders came from faraway lands to find them."
+        },
+        {
+          "id": "Kapal layar berlayar mengikuti angin musim. Pelabuhan dan kerajaan pesisir, seperti Sriwijaya di Sumatra dan Majapahit di Jawa, menjadi ramai.",
+          "en": "Sailing ships followed the seasonal winds. Ports and coastal kingdoms, such as Srivijaya in Sumatra and Majapahit in Java, grew busy."
+        },
+        {
+          "id": "Lewat jalur rempah, barang, bahasa, dan cerita ikut berpindah antarbangsa.",
+          "en": "Along the spice routes, goods, languages and stories travelled between peoples too."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SOS-K-H-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Ekonomi sederhana",
+        "en": "Simple economics"
+      },
+      "body": [
+        {
+          "id": "Produsen membuat barang atau memberi jasa; konsumen memakainya. Petani produsen padi, dan kita konsumen saat makan nasi.",
+          "en": "Producers make goods or provide services; consumers use them. A farmer produces rice, and we are consumers when we eat it."
+        },
+        {
+          "id": "Barang bisa dipegang, seperti roti dan sepatu. Jasa adalah pekerjaan untuk orang lain, seperti mengajar dan memperbaiki motor.",
+          "en": "Goods are things you can hold, like bread and shoes. Services are work done for others, like teaching or fixing a motorbike."
+        },
+        {
+          "id": "Harga cenderung naik jika barangnya sedikit tetapi banyak yang mau membeli, dan turun jika barangnya melimpah.",
+          "en": "Prices tend to rise when there is little of something but many people want it, and fall when there is plenty."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "SOS-K-H-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "SPICE-WHERE"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Cengkih dan pala berasal dari sini.",
+            "en": "Cloves and nutmeg come from here."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          }
+        },
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          }
+        },
+        {
+          "id": "maluku",
+          "text": {
+            "id": "Maluku",
+            "en": "Maluku"
+          },
+          "region": {
+            "x": 0.66,
+            "y": 0.25,
+            "w": 0.1,
+            "h": 0.35
+          },
+          "correct": true
+        },
+        {
+          "id": "papua",
+          "text": {
+            "id": "Papua",
+            "en": "Papua"
+          },
+          "region": {
+            "x": 0.77,
+            "y": 0.25,
+            "w": 0.22,
+            "h": 0.45
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Cengkih dan pala tanaman asli Kepulauan Maluku.",
+        "en": "Cloves and nutmeg are native to the Maluku Islands."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "SPICE-TRADE"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rempah dibawa ke negeri jauh dengan…",
+            "en": "Spices travelled to faraway lands by…"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_car",
+          "text": {
+            "id": "mobil",
+            "en": "car"
+          },
+          "image": "pic_car"
+        },
+        {
+          "id": "pic_ship",
+          "text": {
+            "id": "kapal layar",
+            "en": "sailing ship"
+          },
+          "image": "pic_ship",
+          "correct": true
+        },
+        {
+          "id": "pic_train",
+          "text": {
+            "id": "kereta api",
+            "en": "train"
+          },
+          "image": "pic_train"
+        }
+      ],
+      "model_answer": {
+        "id": "Kapal layar membawa rempah menyeberangi samudra.",
+        "en": "Sailing ships carried spices across the oceans."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "SPICE-WHERE"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rempah → daerah penghasilnya.",
+            "en": "Spice → where it was grown."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s_clove",
+          "text": {
+            "id": "cengkih",
+            "en": "cloves"
+          }
+        },
+        {
+          "id": "s_nutmeg",
+          "text": {
+            "id": "pala",
+            "en": "nutmeg"
+          }
+        },
+        {
+          "id": "s_pepper",
+          "text": {
+            "id": "lada",
+            "en": "pepper"
+          }
+        },
+        {
+          "id": "p_banda",
+          "text": {
+            "id": "Kepulauan Banda (Maluku)",
+            "en": "The Banda Islands (Maluku)"
+          }
+        },
+        {
+          "id": "p_lampung",
+          "text": {
+            "id": "Lampung (Sumatra)",
+            "en": "Lampung (Sumatra)"
+          }
+        },
+        {
+          "id": "p_ternate",
+          "text": {
+            "id": "Ternate dan Tidore (Maluku Utara)",
+            "en": "Ternate and Tidore (North Maluku)"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "s_clove": "p_ternate",
+        "s_nutmeg": "p_banda",
+        "s_pepper": "p_lampung"
+      },
+      "model_answer": {
+        "id": "Cengkih dari Ternate dan Tidore, pala dari Banda, lada banyak ditanam di Lampung.",
+        "en": "Cloves from Ternate and Tidore, nutmeg from Banda, and pepper grown widely in Lampung."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "SPICE-TRADE"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sriwijaya berpusat di pulau ini.",
+            "en": "Srivijaya was centred on this island."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          },
+          "correct": true
+        },
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          }
+        },
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Sriwijaya berpusat di sekitar Palembang, Sumatra.",
+        "en": "Srivijaya was centred around Palembang, Sumatra."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "SPICE-WHERE"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-TF",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dahulu pala hanya tumbuh di Kepulauan Banda.",
+            "en": "Long ago, nutmeg grew only in the Banda Islands."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Pohon pala tanaman asli Kepulauan Banda di Maluku.",
+        "en": "The nutmeg tree is native to the Banda Islands."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "SPICE-TRADE"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Perjalanan cengkih.",
+            "en": "A clove's journey."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "o_pick",
+          "text": {
+            "id": "Dipetik dari pohon di Maluku",
+            "en": "Picked from the tree in Maluku"
+          },
+          "image": "pic_tree"
+        },
+        {
+          "id": "o_dry",
+          "text": {
+            "id": "Dijemur di bawah matahari",
+            "en": "Dried in the sun"
+          },
+          "image": "pic_sun"
+        },
+        {
+          "id": "o_sell",
+          "text": {
+            "id": "Dijual di pasar negeri jauh",
+            "en": "Sold at a market far away"
+          },
+          "image": "pic_market"
+        },
+        {
+          "id": "o_ship",
+          "text": {
+            "id": "Dibawa kapal ke pelabuhan besar",
+            "en": "Carried by ship to a big port"
+          },
+          "image": "pic_ship"
+        }
+      ],
+      "solution": [
+        "o_pick",
+        "o_dry",
+        "o_ship",
+        "o_sell"
+      ],
+      "model_answer": {
+        "id": "Dipetik, dijemur, dibawa kapal, lalu dijual di negeri jauh.",
+        "en": "Picked, dried, shipped, then sold in a faraway land."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "SPICE-TRADE"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-CHOOSE",
+      "image": "pic_wind",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kapal layar dulu menunggu apa?",
+            "en": "What did sailing ships wait for?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Angin musim yang berganti arah",
+            "en": "The seasonal wind to change direction"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Salju turun",
+            "en": "Snow to fall"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Bulan purnama saja",
+            "en": "Only the full moon"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Angin musim berganti arah kira-kira setiap setengah tahun, jadi pelaut menunggu angin yang tepat.",
+        "en": "The monsoon winds change direction about every half year, so sailors waited for the right wind."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "tap_hotspot",
+      "skills": [
+        "SPICE-TRADE"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Majapahit berpusat di pulau ini.",
+            "en": "Majapahit was centred on this island."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          }
+        },
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "bali_nusa_tenggara",
+          "text": {
+            "id": "Bali dan Nusa Tenggara",
+            "en": "Bali and Nusa Tenggara"
+          },
+          "region": {
+            "x": 0.45,
+            "y": 0.78,
+            "w": 0.22,
+            "h": 0.12
+          }
+        },
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Majapahit berpusat di Trowulan, Jawa Timur.",
+        "en": "Majapahit was centred at Trowulan, East Java."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "SPICE-TRADE"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Keluar dari atau masuk ke Nusantara?",
+            "en": "Going out of, or coming into, the islands?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_out",
+          "text": {
+            "id": "Dijual ke luar Nusantara",
+            "en": "Sold out of the islands"
+          }
+        },
+        {
+          "id": "b_in",
+          "text": {
+            "id": "Dibeli dari luar Nusantara",
+            "en": "Bought from abroad"
+          }
+        },
+        {
+          "id": "c_clove",
+          "text": {
+            "id": "cengkih dari Maluku",
+            "en": "cloves from Maluku"
+          }
+        },
+        {
+          "id": "c_cloth",
+          "text": {
+            "id": "kain dari India",
+            "en": "cloth from India"
+          }
+        },
+        {
+          "id": "c_sandal",
+          "text": {
+            "id": "kayu cendana dari Timor",
+            "en": "sandalwood from Timor"
+          }
+        },
+        {
+          "id": "c_porc",
+          "text": {
+            "id": "keramik dari Tiongkok",
+            "en": "porcelain from China"
+          }
+        },
+        {
+          "id": "c_nutmeg",
+          "text": {
+            "id": "pala dari Banda",
+            "en": "nutmeg from Banda"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c_clove": "b_out",
+        "c_cloth": "b_in",
+        "c_sandal": "b_out",
+        "c_porc": "b_in",
+        "c_nutmeg": "b_out"
+      },
+      "model_answer": {
+        "id": "Rempah dan cendana dijual ke luar. Kain dari India dan keramik dari Tiongkok dibeli pedagang Nusantara.",
+        "en": "Spices and sandalwood went out. Cloth from India and porcelain from China came in."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "SPICE-WHERE"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kepulauan Maluku dijuluki Kepulauan ____.",
+            "en": "The Maluku Islands were nicknamed the ____ Islands."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_spice",
+          "text": {
+            "id": "Rempah",
+            "en": "Spice"
+          }
+        },
+        {
+          "id": "t_snow",
+          "text": {
+            "id": "Salju",
+            "en": "Snow"
+          }
+        },
+        {
+          "id": "t_sand",
+          "text": {
+            "id": "Gurun",
+            "en": "Desert"
+          }
+        }
+      ],
+      "solution": [
+        "t_spice"
+      ],
+      "model_answer": {
+        "id": "Maluku dijuluki Kepulauan Rempah.",
+        "en": "Maluku was nicknamed the Spice Islands."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "SPICE-TRADE"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Alat penunjuk arah di laut?",
+            "en": "The tool for finding direction at sea?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_bag",
+          "text": {
+            "id": "tas",
+            "en": "bag"
+          },
+          "image": "pic_bag"
+        },
+        {
+          "id": "pic_pencil",
+          "text": {
+            "id": "pensil",
+            "en": "pencil"
+          },
+          "image": "pic_pencil"
+        },
+        {
+          "id": "hist_compass_old",
+          "text": {
+            "id": "kompas",
+            "en": "compass"
+          },
+          "image": "hist_compass_old",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Kompas menunjuk arah utara, jadi pelaut tahu arah di laut lepas.",
+        "en": "A compass points north, so sailors know their direction on the open sea."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "SPICE-WHERE"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-TRY",
+      "image": "map_indonesia",
+      "model_answer": {
+        "id": "Cari rempah di dapurmu: cengkih, pala, lada, atau kayu manis. Cium aromanya, lalu cari tahu dari daerah mana rempah itu berasal.",
+        "en": "Look for spices in your kitchen: cloves, nutmeg, pepper or cinnamon. Smell them, then find out which region each one comes from."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "SPICE-WHERE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pala dari Kepulauan Banda. Ketuk wilayahnya.",
+            "en": "Nutmeg is from the Banda Islands. Tap the region."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "maluku",
+          "text": {
+            "id": "Maluku",
+            "en": "Maluku"
+          },
+          "region": {
+            "x": 0.66,
+            "y": 0.25,
+            "w": 0.1,
+            "h": 0.35
+          },
+          "correct": true
+        },
+        {
+          "id": "papua",
+          "text": {
+            "id": "Papua",
+            "en": "Papua"
+          },
+          "region": {
+            "x": 0.77,
+            "y": 0.25,
+            "w": 0.22,
+            "h": 0.45
+          }
+        },
+        {
+          "id": "bali_nusa_tenggara",
+          "text": {
+            "id": "Bali dan Nusa Tenggara",
+            "en": "Bali and Nusa Tenggara"
+          },
+          "region": {
+            "x": 0.45,
+            "y": 0.78,
+            "w": 0.22,
+            "h": 0.12
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Kepulauan Banda ada di Maluku.",
+        "en": "The Banda Islands are in Maluku."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "SPICE-TRADE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "image": "pic_ship",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kerajaan pesisir menjadi kaya karena…",
+            "en": "Coastal kingdoms grew rich because…"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Mereka tidak pernah berdagang",
+            "en": "They never traded"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Laut di sana selalu beku",
+            "en": "The sea there was always frozen"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Pelabuhannya ramai pedagang",
+            "en": "Their ports were full of traders"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Pelabuhan yang ramai pedagang membuat kerajaan pesisir makmur.",
+        "en": "Ports full of traders made the coastal kingdoms prosperous."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-01-015",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "SPICE-WHERE"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Encyclopaedia Britannica, \"Treaty of Breda\" (1667) and \"Banda Islands\" (britannica.com); Giles Milton, Nathaniel's Nutmeg (1999).",
+      "model_answer": {
+        "id": "Pala pernah sangat berharga. Dalam Perjanjian Breda tahun 1667, Belanda tetap memegang Pulau Run di Banda, pulau kecil penghasil pala, sedangkan Inggris tetap memegang Manhattan, yang kini menjadi bagian kota New York.",
+        "en": "Nutmeg was once hugely valuable. In the Treaty of Breda of 1667, the Dutch kept Run, a tiny nutmeg island in Banda, while the English kept Manhattan, which is now part of New York City."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "ECO-CHAIN"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Barang atau jasa?",
+            "en": "Goods or services?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_goods",
+          "text": {
+            "id": "Barang",
+            "en": "Goods"
+          }
+        },
+        {
+          "id": "b_serv",
+          "text": {
+            "id": "Jasa",
+            "en": "Services"
+          }
+        },
+        {
+          "id": "c_bread",
+          "text": {
+            "id": "roti",
+            "en": "bread"
+          },
+          "image": "pic_bread"
+        },
+        {
+          "id": "c_mech",
+          "text": {
+            "id": "montir memperbaiki motor",
+            "en": "a mechanic fixing a motorbike"
+          },
+          "image": "pic_mechanic"
+        },
+        {
+          "id": "c_shoes",
+          "text": {
+            "id": "sepatu",
+            "en": "shoes"
+          },
+          "image": "pic_shoes"
+        },
+        {
+          "id": "c_teach",
+          "text": {
+            "id": "guru mengajar",
+            "en": "a teacher teaching"
+          },
+          "image": "pic_teacher"
+        },
+        {
+          "id": "c_rice",
+          "text": {
+            "id": "nasi",
+            "en": "rice"
+          },
+          "image": "pic_rice_bowl"
+        },
+        {
+          "id": "c_driver",
+          "text": {
+            "id": "sopir mengantar penumpang",
+            "en": "a driver taking passengers"
+          },
+          "image": "pic_driver"
+        }
+      ],
+      "solution_pairs": {
+        "c_bread": "b_goods",
+        "c_mech": "b_serv",
+        "c_shoes": "b_goods",
+        "c_teach": "b_serv",
+        "c_rice": "b_goods",
+        "c_driver": "b_serv"
+      },
+      "model_answer": {
+        "id": "Roti, sepatu, dan nasi adalah barang. Memperbaiki motor, mengajar, dan mengantar penumpang adalah jasa.",
+        "en": "Bread, shoes and rice are goods. Fixing motorbikes, teaching and driving passengers are services."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "ECO-CHAIN"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari sawah sampai ke meja makan.",
+            "en": "From the rice field to the table."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s_eat",
+          "text": {
+            "id": "Keluarga memasak dan makan nasi",
+            "en": "A family cooks and eats it"
+          },
+          "image": "pic_rice_bowl"
+        },
+        {
+          "id": "s_market",
+          "text": {
+            "id": "Pedagang menjual beras di pasar",
+            "en": "A trader sells the rice at the market"
+          },
+          "image": "pic_market"
+        },
+        {
+          "id": "s_mill",
+          "text": {
+            "id": "Padi digiling menjadi beras",
+            "en": "The rice is milled"
+          }
+        },
+        {
+          "id": "s_farm",
+          "text": {
+            "id": "Petani menanam dan memanen padi",
+            "en": "The farmer grows and harvests rice"
+          },
+          "image": "pic_farmer"
+        }
+      ],
+      "solution": [
+        "s_farm",
+        "s_mill",
+        "s_market",
+        "s_eat"
+      ],
+      "model_answer": {
+        "id": "Petani memanen, padi digiling, beras dijual di pasar, lalu dimasak di rumah.",
+        "en": "The farmer harvests, the rice is milled, sold at the market, then cooked at home."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ECO-CHAIN"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Siapa produsen ikan?",
+            "en": "Who produces the fish?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_doctor",
+          "text": {
+            "id": "dokter",
+            "en": "doctor"
+          },
+          "image": "pic_doctor"
+        },
+        {
+          "id": "pic_fisher",
+          "text": {
+            "id": "nelayan",
+            "en": "fisher"
+          },
+          "image": "pic_fisher",
+          "correct": true
+        },
+        {
+          "id": "pic_pilot",
+          "text": {
+            "id": "pilot",
+            "en": "pilot"
+          },
+          "image": "pic_pilot"
+        }
+      ],
+      "model_answer": {
+        "id": "Nelayan menangkap ikan, lalu menjualnya. Ia produsen ikan.",
+        "en": "A fisher catches fish and sells them: a producer of fish."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ECO-CHAIN"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Masalah → siapa yang memberi jasa?",
+            "en": "Problem → who provides the service?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "n_bike",
+          "text": {
+            "id": "Motor mogok",
+            "en": "The motorbike won't start"
+          }
+        },
+        {
+          "id": "n_fire",
+          "text": {
+            "id": "Ada kebakaran",
+            "en": "There's a fire"
+          }
+        },
+        {
+          "id": "n_sick",
+          "text": {
+            "id": "Badan demam",
+            "en": "You have a fever"
+          }
+        },
+        {
+          "id": "n_fly",
+          "text": {
+            "id": "Ingin terbang ke Makassar",
+            "en": "You want to fly to Makassar"
+          }
+        },
+        {
+          "id": "w_fire",
+          "text": {
+            "id": "pemadam kebakaran",
+            "en": "firefighter"
+          },
+          "image": "pic_firefighter"
+        },
+        {
+          "id": "w_doc",
+          "text": {
+            "id": "dokter",
+            "en": "doctor"
+          },
+          "image": "pic_doctor"
+        },
+        {
+          "id": "w_pilot",
+          "text": {
+            "id": "pilot",
+            "en": "pilot"
+          },
+          "image": "pic_pilot"
+        },
+        {
+          "id": "w_mech",
+          "text": {
+            "id": "montir",
+            "en": "mechanic"
+          },
+          "image": "pic_mechanic"
+        }
+      ],
+      "solution_pairs": {
+        "n_bike": "w_mech",
+        "n_fire": "w_fire",
+        "n_sick": "w_doc",
+        "n_fly": "w_pilot"
+      },
+      "model_answer": {
+        "id": "Montir memperbaiki motor, pemadam kebakaran memadamkan api, dokter mengobati, pilot menerbangkan pesawat.",
+        "en": "A mechanic fixes motorbikes, firefighters put out fires, a doctor treats the sick, a pilot flies planes."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "ECO-CHAIN"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-TF",
+      "image": "pic_rice_bowl",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saat makan nasi, kamu menjadi konsumen.",
+            "en": "When you eat rice, you are a consumer."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Konsumen adalah orang yang memakai barang atau jasa.",
+        "en": "A consumer is someone who uses goods or services."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "ECO-CHAIN"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "image": "pic_farmer",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Orang yang membuat barang disebut ____.",
+            "en": "Someone who makes goods is a ____."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_cons",
+          "text": {
+            "id": "konsumen",
+            "en": "consumer"
+          }
+        },
+        {
+          "id": "t_prod",
+          "text": {
+            "id": "produsen",
+            "en": "producer"
+          }
+        },
+        {
+          "id": "t_tour",
+          "text": {
+            "id": "turis",
+            "en": "tourist"
+          }
+        }
+      ],
+      "solution": [
+        "t_prod"
+      ],
+      "model_answer": {
+        "id": "Produsen membuat barang atau memberi jasa.",
+        "en": "Producers make goods or provide services."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ECO-MARKET"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-CHOOSE",
+      "image": "pic_rain",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Hujan terus, panen cabai sedikit. Harga cabai…?",
+            "en": "Endless rain, a small chilli harvest. Chilli prices…?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Cenderung naik",
+            "en": "Tend to rise"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Cenderung turun",
+            "en": "Tend to fall"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Pasti gratis",
+            "en": "Become free"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Barangnya sedikit, pembelinya tetap banyak: harga cenderung naik.",
+        "en": "Less to sell, just as many buyers: prices tend to rise."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "ECO-MARKET"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Belanja sayur di pasar.",
+            "en": "Buying vegetables at the market."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_home",
+          "text": {
+            "id": "Pulang membawa belanjaan",
+            "en": "Go home with the shopping"
+          },
+          "image": "pic_house"
+        },
+        {
+          "id": "t_pay",
+          "text": {
+            "id": "Membayar dengan uang kertas",
+            "en": "Pay with a banknote"
+          },
+          "image": "note_generic"
+        },
+        {
+          "id": "t_choose",
+          "text": {
+            "id": "Memilih sayur",
+            "en": "Choose the vegetables"
+          },
+          "image": "pic_vegetables"
+        },
+        {
+          "id": "t_change",
+          "text": {
+            "id": "Menerima uang kembalian",
+            "en": "Take the change"
+          },
+          "image": "coin_generic"
+        }
+      ],
+      "solution": [
+        "t_choose",
+        "t_pay",
+        "t_change",
+        "t_home"
+      ],
+      "model_answer": {
+        "id": "Pilih sayur, bayar dengan uang kertas, terima kembalian, lalu pulang membawa belanjaan.",
+        "en": "Choose the vegetables, pay with a note, take the change, then go home with the shopping."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "number_input",
+      "skills": [
+        "ECO-MARKET"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-NUM",
+      "image": "pic_tea_cup",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Modal Rp35.000. Terjual 20 gelas es teh, Rp3.000 per gelas. Untungnya?",
+            "en": "Costs Rp35,000. Sold 20 glasses of iced tea at Rp3,000 each. Profit?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 25000,
+        "tolerance": 0,
+        "unit": {
+          "id": "rupiah",
+          "en": "rupiah"
+        }
+      },
+      "model_answer": {
+        "id": "20 × Rp3.000 = Rp60.000. Rp60.000 − Rp35.000 = Rp25.000.",
+        "en": "20 × Rp3,000 = Rp60,000. Rp60,000 − Rp35,000 = Rp25,000."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "ECO-MARKET"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Harga cenderung naik atau turun?",
+            "en": "Prices tend to rise or fall?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_up",
+          "text": {
+            "id": "Harga cenderung naik",
+            "en": "Prices tend to rise"
+          }
+        },
+        {
+          "id": "b_down",
+          "text": {
+            "id": "Harga cenderung turun",
+            "en": "Prices tend to fall"
+          }
+        },
+        {
+          "id": "c_mango",
+          "text": {
+            "id": "Panen mangga melimpah",
+            "en": "A huge mango harvest"
+          }
+        },
+        {
+          "id": "c_chicken",
+          "text": {
+            "id": "Banyak orang membeli ayam menjelang hari raya",
+            "en": "Lots of people buy chicken before a holiday"
+          }
+        },
+        {
+          "id": "c_storm",
+          "text": {
+            "id": "Badai, nelayan tidak melaut",
+            "en": "A storm keeps fishers ashore"
+          }
+        },
+        {
+          "id": "c_veg",
+          "text": {
+            "id": "Banyak sekali penjual sayur di pasar",
+            "en": "Lots of vegetable sellers at the market"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c_mango": "b_down",
+        "c_chicken": "b_up",
+        "c_storm": "b_up",
+        "c_veg": "b_down"
+      },
+      "model_answer": {
+        "id": "Panen melimpah dan banyak penjual membuat harga turun. Banyak pembeli atau barang langka membuat harga naik.",
+        "en": "Big harvests and many sellers push prices down. Many buyers or scarce goods push prices up."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ECO-MARKET"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tempat menabung uang hasil jualan?",
+            "en": "Where to save the money from selling?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_bank",
+          "text": {
+            "id": "bank",
+            "en": "bank"
+          },
+          "image": "pic_bank",
+          "correct": true
+        },
+        {
+          "id": "pic_hotel",
+          "text": {
+            "id": "hotel",
+            "en": "hotel"
+          },
+          "image": "pic_hotel"
+        },
+        {
+          "id": "pic_library",
+          "text": {
+            "id": "perpustakaan",
+            "en": "library"
+          },
+          "image": "pic_library"
+        }
+      ],
+      "model_answer": {
+        "id": "Bank menyimpan uang dengan aman, misalnya untuk tabungan hasil berjualan.",
+        "en": "A bank keeps money safe, for example savings from selling."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ECO-MARKET"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-TRY",
+      "image": "pic_market",
+      "model_answer": {
+        "id": "Main warung-warungan! Buat label harga, siapkan uang mainan, lalu bergantian menjadi penjual dan pembeli. Catat untung atau ruginya.",
+        "en": "Play shop! Make price labels, get toy money ready, then take turns being seller and buyer. Write down any profit or loss."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ECO-CHAIN"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang memberi jasa?",
+            "en": "Which one provides a service?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_bread",
+          "text": {
+            "id": "roti",
+            "en": "bread"
+          },
+          "image": "pic_bread"
+        },
+        {
+          "id": "pic_shoes",
+          "text": {
+            "id": "sepatu",
+            "en": "shoes"
+          },
+          "image": "pic_shoes"
+        },
+        {
+          "id": "pic_mechanic",
+          "text": {
+            "id": "montir",
+            "en": "mechanic"
+          },
+          "image": "pic_mechanic",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Montir memberi jasa: ia memperbaiki kendaraan orang lain.",
+        "en": "A mechanic provides a service: fixing vehicles."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ECO-MARKET"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "image": "pic_orange_fruit",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Panen jeruk melimpah. Harga jeruk…?",
+            "en": "A huge orange harvest. Orange prices…?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Cenderung naik",
+            "en": "Tend to rise"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Cenderung turun",
+            "en": "Tend to fall"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Selalu tetap",
+            "en": "Never change"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Jeruk melimpah, penjual berebut pembeli: harga cenderung turun.",
+        "en": "Plenty of oranges, sellers competing for buyers: prices tend to fall."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    },
+    {
+      "item_id": "SOS-K-H-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku buah dari Banda. Bijiku jadi rempah yang harum. Siapa aku?",
+            "en": "I am a fruit from Banda. My seed is a fragrant spice. Who am I?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "clove",
+          "text": {
+            "id": "Cengkih",
+            "en": "Cloves"
+          }
+        },
+        {
+          "id": "nutmeg",
+          "text": {
+            "id": "Pala",
+            "en": "Nutmeg"
+          },
+          "correct": true
+        },
+        {
+          "id": "pepper",
+          "text": {
+            "id": "Lada",
+            "en": "Pepper"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Pala! Bijinya jadi rempah, dan daging buahnya bisa dibuat manisan.",
+        "en": "Nutmeg! Its seed is the spice, and the fruit's flesh can be candied."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-h-0.1"
+    }
+  ]
+}

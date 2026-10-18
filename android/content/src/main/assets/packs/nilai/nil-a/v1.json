@@ -1,0 +1,3443 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "nil-a-0.1",
+    "subject": "nilai",
+    "track": "nil-a",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "level": "pemula",
+    "title": {
+      "id": "Nilai — Pemula (Dewasa)",
+      "en": "Values — Beginner (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12) for review: needs a values/character-education reviewer (universal, cross-faith, non-partisan) and the Indonesian and English language reviewers before any item is approved (docs/content/MODULES_LEVELS_STORIES.md section 3, adults Pemula). Stories are original fiction; val_* scenes are being drawn.",
+  "prompts": {
+    "P-BEST": {
+      "id": "Mana yang paling membantu?",
+      "en": "Which helps most?"
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang paling tepat.",
+      "en": "Pick the best picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban terbaik.",
+      "en": "Choose the best answer."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-SORT": {
+      "id": "Kelompokkan gambarnya.",
+      "en": "Sort the pictures."
+    },
+    "P-MATCH": {
+      "id": "Pasangkan.",
+      "en": "Match them up."
+    },
+    "P-ORDER": {
+      "id": "Urutkan gambarnya.",
+      "en": "Put the pictures in order."
+    },
+    "P-MEMORY": {
+      "id": "Buka kartu, temukan pasangannya.",
+      "en": "Flip cards, find the pairs."
+    },
+    "P-STORY": {
+      "id": "Simak ceritanya.",
+      "en": "Watch the story."
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "That's it. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Baik, kita lanjut.",
+      "en": "Good, let's continue."
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Antre dan sopan santun",
+        "en": "Queues and courtesy"
+      },
+      "sticker": "sticker_leaf"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Jujur dalam hal kecil",
+        "en": "Honesty in small things"
+      },
+      "sticker": "sticker_shell"
+    },
+    {
+      "unit": "03",
+      "title": {
+        "id": "Menghargai kerja dan kebersihan bersama",
+        "en": "Valuing work and shared cleanliness"
+      },
+      "sticker": "sticker_angklung"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "NIL-A-P-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Antre dan sopan santun",
+        "en": "Queues and courtesy"
+      },
+      "body": [
+        {
+          "id": "Antre membuat layanan umum adil: yang datang lebih dulu dilayani lebih dulu.",
+          "en": "Queueing keeps public services fair: first come, first served."
+        },
+        {
+          "id": "Lansia, ibu hamil, penyandang disabilitas, dan keadaan darurat sering didahulukan — ikuti petunjuk petugas.",
+          "en": "Older people, pregnant women, people with disabilities and emergencies often go first — follow the staff's lead."
+        },
+        {
+          "id": "Salam, «permisi», «terima kasih», dan «maaf» membuat urusan lebih lancar.",
+          "en": "A greeting, \"excuse me\", \"thank you\" and \"sorry\" make everything run more smoothly."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "NIL-A-P-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Jujur dalam hal kecil",
+        "en": "Honesty in small things"
+      },
+      "body": [
+        {
+          "id": "Kejujuran sering diuji dalam hal kecil: kembalian lebih, barang temuan, atau janji kepada atasan.",
+          "en": "Honesty is often tested in small things: extra change, a found item, a promise to your manager."
+        },
+        {
+          "id": "Mengembalikan yang bukan hak kita menjaga kepercayaan, dan kepercayaan memudahkan semua urusan.",
+          "en": "Returning what isn't ours keeps trust, and trust makes everything easier."
+        },
+        {
+          "id": "Mengaku salah lebih awal biasanya lebih ringan daripada menutupinya.",
+          "en": "Owning up early is usually easier than covering up."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "NIL-A-P-03-S1",
+      "unit": "03",
+      "audience": "adults",
+      "title": {
+        "id": "Menghargai kerja dan kebersihan bersama",
+        "en": "Valuing work and shared cleanliness"
+      },
+      "body": [
+        {
+          "id": "Di balik nasi di piring, jalan yang bersih, dan paket yang sampai, ada kerja orang lain.",
+          "en": "Behind the rice on your plate, clean streets and delivered parcels is someone else's work."
+        },
+        {
+          "id": "Menghargai kerja: berterima kasih, tepat waktu, dan membayar sesuai kesepakatan.",
+          "en": "Valuing work: say thanks, be on time and pay what you agreed."
+        },
+        {
+          "id": "Fasilitas bersama tetap bersih jika setiap pemakai merapikan bekasnya sendiri.",
+          "en": "Shared spaces stay clean when everyone tidies up after themselves."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "stories": {
+    "ST-NIL-A-PUSKESMAS": {
+      "figure": "Bu Ratna (tokoh fiksi)",
+      "title": {
+        "id": "Antrean di puskesmas",
+        "en": "The queue at the puskesmas"
+      },
+      "source": "Cerita asli AyaIlmu (fiksi)",
+      "emblem": "pic_ticket",
+      "panels": [
+        {
+          "scene": "val_queue",
+          "caption": {
+            "id": "Pagi itu antrean di puskesmas panjang. Bu Ratna memegang nomor 27.",
+            "en": "The puskesmas queue was long that morning. Bu Ratna was holding number 27."
+          },
+          "narration": {
+            "id": "id/nil_puskesmas_01",
+            "en": "en/nil_puskesmas_01"
+          },
+          "layers": [
+            {
+              "art": "pic_ticket",
+              "x": 0.8,
+              "y": 0.1,
+              "w": 0.13,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "val_cut_queue",
+          "caption": {
+            "id": "Seorang bapak berjalan lurus ke loket. Beberapa orang mulai menggerutu.",
+            "en": "A man walked straight to the counter. A few people began to grumble."
+          },
+          "narration": {
+            "id": "id/nil_puskesmas_02",
+            "en": "en/nil_puskesmas_02"
+          },
+          "layers": [],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.06,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "val_listen",
+          "caption": {
+            "id": "Bu Ratna mendekat dan bertanya pelan. Ternyata bapak itu hanya menanyakan arah ke IGD.",
+            "en": "Bu Ratna went over and asked quietly. He only wanted directions to the emergency room."
+          },
+          "narration": {
+            "id": "id/nil_puskesmas_03",
+            "en": "en/nil_puskesmas_03"
+          },
+          "layers": []
+        },
+        {
+          "scene": "val_wait_turn",
+          "caption": {
+            "id": "Bu Ratna menunjukkan arahnya, lalu kembali duduk. Antrean pun tenang lagi.",
+            "en": "Bu Ratna showed him the way and sat back down. The queue settled again."
+          },
+          "narration": {
+            "id": "id/nil_puskesmas_04",
+            "en": "en/nil_puskesmas_04"
+          },
+          "layers": [
+            {
+              "art": "pic_ticket",
+              "x": 0.8,
+              "y": 0.1,
+              "w": 0.13
+            }
+          ]
+        }
+      ]
+    },
+    "ST-NIL-A-KEMBALIAN": {
+      "figure": "Pak Dodi (tokoh fiksi)",
+      "title": {
+        "id": "Kembalian lebih di warung",
+        "en": "Extra change at the warung"
+      },
+      "source": "Cerita asli AyaIlmu (fiksi)",
+      "emblem": "coin_generic",
+      "panels": [
+        {
+          "scene": "val_return_change",
+          "caption": {
+            "id": "Pak Dodi membeli beras dan minyak di warung Bu Sum. Ia membayar dengan uang Rp100.000.",
+            "en": "Pak Dodi bought rice and cooking oil at Bu Sum's warung. He paid with a Rp100,000 note."
+          },
+          "narration": {
+            "id": "id/nil_warung_kembalian_01",
+            "en": "en/nil_warung_kembalian_01"
+          },
+          "layers": [
+            {
+              "art": "math_money_notes",
+              "x": 0.78,
+              "y": 0.62,
+              "w": 0.16,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "val_calm_breath",
+          "caption": {
+            "id": "Di rumah, ia menghitung kembaliannya. Ternyata lebih Rp20.000.",
+            "en": "At home he counted his change. It was Rp20,000 too much."
+          },
+          "narration": {
+            "id": "id/nil_warung_kembalian_02",
+            "en": "en/nil_warung_kembalian_02"
+          },
+          "layers": [
+            {
+              "art": "math_money_notes",
+              "x": 0.7,
+              "y": 0.6,
+              "w": 0.18,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "coin_generic",
+              "x": 0.58,
+              "y": 0.7,
+              "w": 0.08,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "val_return_change",
+          "caption": {
+            "id": "Sore itu ia kembali ke warung dan mengembalikan uangnya.",
+            "en": "That afternoon he went back and returned the money."
+          },
+          "narration": {
+            "id": "id/nil_warung_kembalian_03",
+            "en": "en/nil_warung_kembalian_03"
+          },
+          "layers": [],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.06,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "val_say_thanks",
+          "caption": {
+            "id": "Bu Sum lega. «Pantas uang di laci kurang,» katanya sambil tersenyum.",
+            "en": "Bu Sum was relieved. \"So that's why the till was short,\" she said with a smile."
+          },
+          "narration": {
+            "id": "id/nil_warung_kembalian_04",
+            "en": "en/nil_warung_kembalian_04"
+          },
+          "layers": []
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "NIL-A-P-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-ANTRE"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Antrean di puskesmas panjang, dan Anda sedang terburu-buru.",
+            "en": "The queue at the puskesmas is long, and you're in a hurry."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "cut_queue",
+          "image": "val_cut_queue",
+          "text": {
+            "id": "Langsung maju ke loket",
+            "en": "Going straight to the counter"
+          }
+        },
+        {
+          "id": "queue",
+          "image": "val_queue",
+          "text": {
+            "id": "Mengambil nomor dan menunggu giliran",
+            "en": "Taking a number and waiting your turn"
+          },
+          "correct": true
+        },
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Menyela petugas yang sedang melayani orang lain",
+            "en": "Interrupting staff who are serving someone else"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Menunggu sesuai nomor adil bagi semua. Jika keadaan Anda darurat, katakan kepada petugas, jangan menyerobot.",
+        "en": "Waiting by number is fair to everyone. If it's an emergency, tell the staff rather than pushing in."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "NIL-ANTRE"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di layanan umum: mana yang membantu, mana yang kurang?",
+            "en": "At a public service: what helps, and what doesn't?"
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Membantu",
+            "en": "Helps"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Kurang membantu",
+            "en": "Doesn't help"
+          }
+        },
+        {
+          "id": "queue",
+          "image": "val_queue",
+          "text": {
+            "id": "Antre sesuai nomor",
+            "en": "Queueing by number"
+          }
+        },
+        {
+          "id": "cut_queue",
+          "image": "val_cut_queue",
+          "text": {
+            "id": "Menyerobot antrean",
+            "en": "Pushing into the queue"
+          }
+        },
+        {
+          "id": "give_seat",
+          "image": "val_give_seat",
+          "text": {
+            "id": "Memberi kursi kepada lansia di ruang tunggu",
+            "en": "Giving an older person your seat in the waiting room"
+          }
+        },
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Menyela orang yang sedang dilayani",
+            "en": "Butting in while someone is being served"
+          }
+        },
+        {
+          "id": "wait_turn",
+          "image": "val_wait_turn",
+          "text": {
+            "id": "Menunggu dipanggil dengan sabar",
+            "en": "Waiting patiently to be called"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "queue": "b_yes",
+        "cut_queue": "b_no",
+        "give_seat": "b_yes",
+        "interrupt": "b_no",
+        "wait_turn": "b_yes"
+      },
+      "model_answer": {
+        "id": "Membantu: antre, memberi kursi kepada lansia, sabar menunggu. Menyerobot dan menyela justru memperlambat semua orang.",
+        "en": "Helps: queueing, giving up a seat, waiting patiently. Pushing in and butting in slow everyone down."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "story",
+      "skills": [
+        "NIL-ANTRE"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-NIL-A-PUSKESMAS",
+      "model_answer": {
+        "id": "Bu Ratna bertanya dulu sebelum menilai, dan antrean kembali tenang.",
+        "en": "Bu Ratna asked before judging, and the queue calmed down."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-ANTRE"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-NIL-A-PUSKESMAS",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dalam cerita tadi, apa yang Bu Ratna lakukan lebih dulu?",
+            "en": "In the story, what did Bu Ratna do first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "listen",
+          "image": "val_listen",
+          "text": {
+            "id": "Bertanya dan mendengarkan",
+            "en": "Asking and listening"
+          },
+          "correct": true
+        },
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Ikut marah",
+            "en": "Getting angry too"
+          }
+        },
+        {
+          "id": "cut_queue",
+          "image": "val_cut_queue",
+          "text": {
+            "id": "Ikut maju ke loket",
+            "en": "Going up to the counter too"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Ia bertanya dulu. Ternyata tidak ada yang menyerobot — bapak itu hanya menanyakan arah.",
+        "en": "She asked first. Nobody was pushing in — the man only needed directions."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "NIL-ANTRE"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutan berobat di puskesmas.",
+            "en": "The steps of a visit to the puskesmas."
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "s3",
+          "image": "pic_doctor",
+          "text": {
+            "id": "Diperiksa dokter",
+            "en": "Seeing the doctor"
+          }
+        },
+        {
+          "id": "s1",
+          "image": "pic_ticket",
+          "text": {
+            "id": "Mengambil nomor antrean",
+            "en": "Taking a queue number"
+          }
+        },
+        {
+          "id": "s4",
+          "image": "pic_medicine",
+          "text": {
+            "id": "Mengambil obat",
+            "en": "Collecting medicine"
+          }
+        },
+        {
+          "id": "s2",
+          "image": "val_wait_turn",
+          "text": {
+            "id": "Menunggu dipanggil",
+            "en": "Waiting to be called"
+          }
+        }
+      ],
+      "solution": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "model_answer": {
+        "id": "Nomor, menunggu, diperiksa, lalu mengambil obat. Urutan yang jelas membuat layanan adil dan cepat.",
+        "en": "Number, wait, see the doctor, then collect medicine. A clear order keeps the service fair and quick."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "NIL-SOPAN"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan situasi dengan ucapan yang pas.",
+            "en": "Match each situation with the right words."
+          }
+        }
+      ],
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p1",
+          "image": "val_greet_neighbor",
+          "text": {
+            "id": "Bertemu tetangga di pagi hari",
+            "en": "Meeting a neighbour in the morning"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "val_say_thanks",
+          "text": {
+            "id": "Menerima bantuan",
+            "en": "Being helped"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "val_say_sorry",
+          "text": {
+            "id": "Tidak sengaja menyenggol orang",
+            "en": "Bumping into someone by accident"
+          }
+        },
+        {
+          "id": "p4",
+          "image": "pic_door",
+          "text": {
+            "id": "Masuk ke ruang kerja orang lain",
+            "en": "Entering someone else's office"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "«Selamat pagi, Bu!»",
+            "en": "\"Good morning!\""
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "«Terima kasih banyak, ya.»",
+            "en": "\"Thank you so much.\""
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "«Maaf, saya tidak sengaja.»",
+            "en": "\"Sorry, that was an accident.\""
+          }
+        },
+        {
+          "id": "t4",
+          "text": {
+            "id": "«Permisi, boleh saya masuk?»",
+            "en": "\"Excuse me, may I come in?\""
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3",
+        "p4": "t4"
+      },
+      "model_answer": {
+        "id": "Salam untuk menyapa, terima kasih saat dibantu, maaf saat keliru, permisi saat masuk.",
+        "en": "A greeting to say hello, thanks when helped, sorry when you slip up, excuse me when you come in."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "NIL-SOPAN"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Nama Anda salah ketik di formulir. Apa yang Anda katakan kepada petugas?",
+            "en": "Your name has been mistyped on a form. What do you say to the staff member?"
+          }
+        }
+      ],
+      "image": "pic_write",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "«Kok bisa salah? Lain kali teliti, dong!»",
+            "en": "\"How did that happen? Be more careful!\""
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Diam saja, nanti dibetulkan sendiri",
+            "en": "Say nothing and fix it yourself later"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "«Maaf, Bu, nama saya pakai huruf y. Bisa dibetulkan?»",
+            "en": "\"Sorry, my name is spelled with a y. Could you correct it?\""
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Sopan dan jelas memudahkan petugas membantu. Teguran ketus membuat suasana tegang, dan diam bisa menyulitkan urusan Anda nanti.",
+        "en": "Polite and clear makes it easy to help you. A sharp remark spoils the mood, and saying nothing can cause you trouble later."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "NIL-SOPAN"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di kantor kelurahan: mana yang sopan?",
+            "en": "At the village office: what's polite?"
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Sopan",
+            "en": "Polite"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Kurang sopan",
+            "en": "Not so polite"
+          }
+        },
+        {
+          "id": "greet_neighbor",
+          "image": "val_greet_neighbor",
+          "text": {
+            "id": "Menyapa petugas dengan salam",
+            "en": "Greeting the staff"
+          }
+        },
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Menyela penjelasan petugas",
+            "en": "Cutting into the staff member's explanation"
+          }
+        },
+        {
+          "id": "listen",
+          "image": "val_listen",
+          "text": {
+            "id": "Mendengarkan penjelasan sampai selesai",
+            "en": "Listening to the end of the explanation"
+          }
+        },
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Membentak karena menunggu lama",
+            "en": "Snapping because the wait was long"
+          }
+        },
+        {
+          "id": "say_thanks",
+          "image": "val_say_thanks",
+          "text": {
+            "id": "Berterima kasih setelah dilayani",
+            "en": "Saying thank you after being served"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "greet_neighbor": "b_yes",
+        "interrupt": "b_no",
+        "listen": "b_yes",
+        "angry_face": "b_no",
+        "say_thanks": "b_yes"
+      },
+      "model_answer": {
+        "id": "Sopan: menyapa, mendengarkan, berterima kasih. Menyela dan membentak justru membuat urusan lebih lama.",
+        "en": "Polite: greeting, listening, thanking. Cutting in and snapping only make things take longer."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "NIL-ANTRE"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di banyak layanan umum, lansia, ibu hamil, dan penyandang disabilitas boleh didahulukan.",
+            "en": "At many public services, older people, pregnant women and people with disabilities may be served first."
+          }
+        }
+      ],
+      "image": "val_give_seat",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Banyak layanan punya loket atau kursi prioritas. Mendahulukan mereka bukan menyerobot.",
+        "en": "Many services have priority counters or seats. Letting them go first isn't queue-jumping."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NIL-ANTRE"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bus berhenti di halte dan banyak penumpang akan turun.",
+            "en": "The bus stops and many passengers are getting off."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "cut_queue",
+          "image": "val_cut_queue",
+          "text": {
+            "id": "Langsung naik mendahului yang lain",
+            "en": "Pushing on ahead of everyone"
+          }
+        },
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Menggerutu dan mendorong",
+            "en": "Grumbling and shoving"
+          }
+        },
+        {
+          "id": "wait_turn",
+          "image": "val_wait_turn",
+          "text": {
+            "id": "Memberi jalan yang turun, lalu naik bergiliran",
+            "en": "Letting people off first, then boarding in turn"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Yang turun lebih dulu, lalu naik bergiliran: pintu tidak macet dan bus cepat berangkat.",
+        "en": "Off first, then on in turn: the doorway stays clear and the bus leaves sooner."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "NIL-SOPAN"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutan meminta bantuan di kantor layanan.",
+            "en": "The steps of asking for help at a service office."
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "s3",
+          "image": "val_listen",
+          "text": {
+            "id": "Menyampaikan keperluan dan mendengarkan",
+            "en": "Explaining what you need and listening"
+          }
+        },
+        {
+          "id": "s1",
+          "image": "pic_door",
+          "text": {
+            "id": "Mengetuk pintu dan permisi",
+            "en": "Knocking and saying excuse me"
+          }
+        },
+        {
+          "id": "s4",
+          "image": "val_say_thanks",
+          "text": {
+            "id": "Berterima kasih",
+            "en": "Saying thank you"
+          }
+        },
+        {
+          "id": "s2",
+          "image": "pic_wave_hello",
+          "text": {
+            "id": "Memberi salam",
+            "en": "Greeting"
+          }
+        }
+      ],
+      "solution": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "model_answer": {
+        "id": "Permisi, salam, sampaikan keperluan dan dengarkan, lalu berterima kasih.",
+        "en": "Excuse me, greet, explain and listen, then say thank you."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "NIL-ANTRE"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Cara antre di tempat yang berbeda.",
+            "en": "How queues work in different places."
+          }
+        }
+      ],
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p1",
+          "image": "pic_bank",
+          "text": {
+            "id": "Bank",
+            "en": "Bank"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "pic_bus",
+          "text": {
+            "id": "Halte bus",
+            "en": "Bus stop"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_hospital",
+          "text": {
+            "id": "Puskesmas atau rumah sakit",
+            "en": "Puskesmas or hospital"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Ambil nomor dari mesin, tunggu dipanggil",
+            "en": "Take a number from the machine and wait to be called"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Dahulukan yang turun, lalu naik bergiliran",
+            "en": "Let people off first, then board in turn"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Daftar di loket; yang gawat darurat didahulukan",
+            "en": "Register at the desk; emergencies go first"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3"
+      },
+      "model_answer": {
+        "id": "Setiap tempat punya cara antre sendiri. Ikuti nomor, giliran, atau petunjuk petugas.",
+        "en": "Every place has its own queue system. Follow the number, the turn or the staff's lead."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-ANTRE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Antrean ATM: orang di depan Anda lama sekali.",
+            "en": "At the ATM, the person in front is taking ages."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Menggerutu keras-keras",
+            "en": "Complaining loudly"
+          }
+        },
+        {
+          "id": "wait_turn",
+          "image": "val_wait_turn",
+          "text": {
+            "id": "Menunggu dengan sabar dan memberi jarak",
+            "en": "Waiting patiently at a polite distance"
+          },
+          "correct": true
+        },
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Mendekat dan menyela",
+            "en": "Stepping up and interrupting"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Memberi jarak menjaga privasi dan keamanan orang itu. Jika ada masalah, sampaikan kepada petugas bank.",
+        "en": "Keeping your distance protects their privacy and safety. If there's a problem, tell the bank staff."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NIL-SOPAN"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tetangga baru lewat di depan rumah Anda.",
+            "en": "A new neighbour walks past your house."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "greet_neighbor",
+          "image": "val_greet_neighbor",
+          "text": {
+            "id": "Menyapa dan memperkenalkan diri",
+            "en": "Saying hello and introducing yourself"
+          },
+          "correct": true
+        },
+        {
+          "id": "left_out",
+          "image": "val_left_out",
+          "text": {
+            "id": "Membiarkannya lewat tanpa sapaan",
+            "en": "Letting them pass without a word"
+          }
+        },
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Menatap dengan ketus",
+            "en": "Giving a cold stare"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Sapaan singkat membuka hubungan baik dengan tetangga baru.",
+        "en": "A short hello gets things off to a good start with a new neighbour."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-JUJUR-BARANG"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ketiganya baik, tetapi mana yang menunjukkan kejujuran?",
+            "en": "All three are good, but which one shows honesty?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "return_change",
+          "image": "val_return_change",
+          "text": {
+            "id": "Mengembalikan kelebihan kembalian",
+            "en": "Returning extra change"
+          },
+          "correct": true
+        },
+        {
+          "id": "save_water",
+          "image": "val_save_water",
+          "text": {
+            "id": "Menghemat air",
+            "en": "Saving water"
+          }
+        },
+        {
+          "id": "on_time",
+          "image": "val_on_time",
+          "text": {
+            "id": "Datang tepat waktu",
+            "en": "Arriving on time"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Mengembalikan kelebihan kembalian adalah jujur. Hemat air dan tepat waktu juga baik, tetapi itu nilai yang lain.",
+        "en": "Returning extra change is honesty. Saving water and being on time are good too, but they're different values."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "NIL-JUJUR-BARANG"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan situasi dengan langkah jujurnya.",
+            "en": "Match each situation with the honest step."
+          }
+        }
+      ],
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p1",
+          "image": "val_return_wallet",
+          "text": {
+            "id": "Menemukan dompet orang",
+            "en": "Finding someone's wallet"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "val_return_change",
+          "text": {
+            "id": "Kembalian terlalu banyak",
+            "en": "Too much change"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "val_borrow_return",
+          "text": {
+            "id": "Meminjam barang tetangga",
+            "en": "Borrowing a neighbour's things"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Serahkan ke petugas atau hubungi pemiliknya",
+            "en": "Hand it to staff or contact the owner"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Beri tahu kasir dan kembalikan lebihnya",
+            "en": "Tell the cashier and give back the extra"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Kembalikan tepat waktu dan dalam keadaan baik",
+            "en": "Return it on time and in good condition"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3"
+      },
+      "model_answer": {
+        "id": "Dompet: serahkan atau hubungi pemiliknya. Kembalian lebih: beri tahu kasir. Pinjaman: kembalikan tepat waktu dan utuh.",
+        "en": "Wallet: hand it in or contact the owner. Extra change: tell the cashier. Borrowed things: return them on time and intact."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "story",
+      "skills": [
+        "NIL-JUJUR-BARANG"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-NIL-A-KEMBALIAN",
+      "model_answer": {
+        "id": "Pak Dodi mengembalikan kelebihan Rp20.000, dan Bu Sum lega.",
+        "en": "Pak Dodi returned the extra Rp20,000, and Bu Sum was relieved."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "NIL-JUJUR-BARANG"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-CHOOSE",
+      "story_id": "ST-NIL-A-KEMBALIAN",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bagaimana jika warung Bu Sum sudah tutup saat Pak Dodi sadar?",
+            "en": "What if Bu Sum's warung had already closed when Pak Dodi noticed?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Anggap saja rezeki",
+            "en": "Treat it as a lucky windfall"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Belanjakan di warung lain",
+            "en": "Spend it at another shop"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Kembalikan besok saat warung buka",
+            "en": "Take it back tomorrow when it opens"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Kelebihan itu tetap milik Bu Sum. Menunda sehari tidak apa-apa, yang penting dikembalikan; bagi warung kecil, Rp20.000 bukan jumlah kecil.",
+        "en": "The extra is still Bu Sum's. A day's delay is fine as long as it goes back; for a small warung, Rp20,000 is not a small sum."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "NIL-JUJUR-BARANG"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana contoh jujur, mana contoh peduli?",
+            "en": "Which show honesty, and which show care?"
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_honest",
+          "text": {
+            "id": "Jujur",
+            "en": "Honesty"
+          }
+        },
+        {
+          "id": "b_care",
+          "text": {
+            "id": "Peduli",
+            "en": "Care"
+          }
+        },
+        {
+          "id": "return_wallet",
+          "image": "val_return_wallet",
+          "text": {
+            "id": "Menyerahkan dompet temuan",
+            "en": "Handing in a found wallet"
+          }
+        },
+        {
+          "id": "visit_sick",
+          "image": "val_visit_sick",
+          "text": {
+            "id": "Menjenguk tetangga yang sakit",
+            "en": "Visiting a sick neighbour"
+          }
+        },
+        {
+          "id": "tell_truth",
+          "image": "val_tell_truth",
+          "text": {
+            "id": "Berkata jujur walau tidak enak",
+            "en": "Telling the truth even when it's awkward"
+          }
+        },
+        {
+          "id": "help_cross",
+          "image": "val_help_cross",
+          "text": {
+            "id": "Membantu orang menyeberang",
+            "en": "Helping someone cross the road"
+          }
+        },
+        {
+          "id": "return_change",
+          "image": "val_return_change",
+          "text": {
+            "id": "Mengembalikan kembalian lebih",
+            "en": "Returning extra change"
+          }
+        },
+        {
+          "id": "give_seat",
+          "image": "val_give_seat",
+          "text": {
+            "id": "Memberi tempat duduk",
+            "en": "Giving up a seat"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "return_wallet": "b_honest",
+        "visit_sick": "b_care",
+        "tell_truth": "b_honest",
+        "help_cross": "b_care",
+        "return_change": "b_honest",
+        "give_seat": "b_care"
+      },
+      "model_answer": {
+        "id": "Jujur: dompet temuan, berkata jujur, kembalian lebih. Peduli: menjenguk, membantu menyeberang, memberi tempat duduk.",
+        "en": "Honesty: the found wallet, telling the truth, the extra change. Care: visiting, helping across, giving up a seat."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-JUJUR-BARANG"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang menunjukkan sikap amanah (bisa dipercaya)?",
+            "en": "Which one shows being trustworthy?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "share_food",
+          "image": "val_share_food",
+          "text": {
+            "id": "Berbagi makanan",
+            "en": "Sharing food"
+          }
+        },
+        {
+          "id": "borrow_return",
+          "image": "val_borrow_return",
+          "text": {
+            "id": "Mengembalikan barang pinjaman",
+            "en": "Returning something borrowed"
+          },
+          "correct": true
+        },
+        {
+          "id": "greet_neighbor",
+          "image": "val_greet_neighbor",
+          "text": {
+            "id": "Menyapa tetangga",
+            "en": "Greeting a neighbour"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Mengembalikan pinjaman tepat waktu membuat Anda dipercaya lagi lain kali.",
+        "en": "Returning what you borrow on time means people will trust you again next time."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "NIL-JUJUR-KATA"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Langkah meminta maaf setelah berbuat keliru.",
+            "en": "The steps of apologising after a mistake."
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "s3",
+          "image": "val_help_friend",
+          "text": {
+            "id": "Membantu memperbaiki",
+            "en": "Helping to put it right"
+          }
+        },
+        {
+          "id": "s1",
+          "image": "val_say_sorry",
+          "text": {
+            "id": "Mengakui kesalahan dan meminta maaf",
+            "en": "Owning up and apologising"
+          }
+        },
+        {
+          "id": "s4",
+          "image": "val_keep_promise",
+          "text": {
+            "id": "Menepati janji agar tak terulang",
+            "en": "Keeping your promise not to repeat it"
+          }
+        },
+        {
+          "id": "s2",
+          "image": "val_listen",
+          "text": {
+            "id": "Mendengarkan tanggapan orang itu",
+            "en": "Listening to how they feel about it"
+          }
+        }
+      ],
+      "solution": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "model_answer": {
+        "id": "Akui dan minta maaf, dengarkan, perbaiki, lalu buktikan dengan tindakan.",
+        "en": "Own up and apologise, listen, repair, then show it through what you do."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "NIL-JUJUR-KATA"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Anda lupa mengirim laporan yang dijanjikan kepada atasan.",
+            "en": "You forgot to send your manager the report you promised."
+          }
+        }
+      ],
+      "image": "val_tell_truth",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Bilang sudah dikirim, padahal belum",
+            "en": "Say it was sent when it wasn't"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Berterus terang, lalu kirim hari ini juga",
+            "en": "Be upfront and send it today"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Diam saja dan berharap tidak ditanya",
+            "en": "Keep quiet and hope nobody asks"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Berterus terang dan segera bertindak menjaga kepercayaan. Alasan palsu mudah ketahuan dan merusak kepercayaan lebih lama.",
+        "en": "Being upfront and acting fast keeps trust. A false excuse is easily found out and damages trust for longer."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "NIL-JUJUR-KATA"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dan nilainya.",
+            "en": "Match each picture to its value."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p1",
+          "image": "val_tell_truth",
+          "text": {
+            "id": "Berkata jujur",
+            "en": "Telling the truth"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "val_say_sorry",
+          "text": {
+            "id": "Meminta maaf",
+            "en": "Apologising"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "val_borrow_return",
+          "text": {
+            "id": "Mengembalikan pinjaman",
+            "en": "Returning a loan"
+          }
+        },
+        {
+          "id": "p4",
+          "image": "val_keep_promise",
+          "text": {
+            "id": "Menepati janji",
+            "en": "Keeping a promise"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Jujur",
+            "en": "Honest"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Berani mengaku",
+            "en": "Owning up"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Amanah",
+            "en": "Trustworthy"
+          }
+        },
+        {
+          "id": "t4",
+          "text": {
+            "id": "Tepat janji",
+            "en": "True to your word"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3",
+        "p4": "t4"
+      },
+      "model_answer": {
+        "id": "Jujur, berani mengaku, amanah, dan tepat janji: empat wajah kejujuran.",
+        "en": "Honest, owning up, trustworthy and true to your word: four sides of honesty."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NIL-JUJUR-KATA"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rekan kerja sedang menjelaskan kekeliruan dalam laporan Anda.",
+            "en": "A colleague is explaining a mistake in your report."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "listen",
+          "image": "val_listen",
+          "text": {
+            "id": "Mendengarkan sampai selesai",
+            "en": "Listening to the end"
+          },
+          "correct": true
+        },
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Menyela untuk membela diri",
+            "en": "Cutting in to defend yourself"
+          }
+        },
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Marah karena malu",
+            "en": "Getting angry out of embarrassment"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Mendengarkan sampai selesai membantu Anda memahami dan memperbaiki kekeliruan. Menyela atau marah membuat percakapan jadi pertengkaran.",
+        "en": "Listening to the end helps you understand and fix the mistake. Cutting in or getting angry turns it into an argument."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "NIL-JUJUR-KATA",
+        "NIL-JUJUR-BARANG"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Jujur soal uang dan barang, atau jujur dalam perkataan?",
+            "en": "Honest about money and things, or honest in words?"
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_things",
+          "text": {
+            "id": "Soal uang dan barang",
+            "en": "About money and things"
+          }
+        },
+        {
+          "id": "b_words",
+          "text": {
+            "id": "Dalam perkataan",
+            "en": "In what you say"
+          }
+        },
+        {
+          "id": "return_change",
+          "image": "val_return_change",
+          "text": {
+            "id": "Mengembalikan kembalian lebih",
+            "en": "Returning extra change"
+          }
+        },
+        {
+          "id": "tell_truth",
+          "image": "val_tell_truth",
+          "text": {
+            "id": "Mengatakan yang sebenarnya",
+            "en": "Saying what really happened"
+          }
+        },
+        {
+          "id": "borrow_return",
+          "image": "val_borrow_return",
+          "text": {
+            "id": "Mengembalikan pinjaman",
+            "en": "Returning a loan"
+          }
+        },
+        {
+          "id": "say_sorry",
+          "image": "val_say_sorry",
+          "text": {
+            "id": "Mengakui kesalahan",
+            "en": "Admitting a mistake"
+          }
+        },
+        {
+          "id": "return_wallet",
+          "image": "val_return_wallet",
+          "text": {
+            "id": "Menyerahkan dompet temuan",
+            "en": "Handing in a found wallet"
+          }
+        },
+        {
+          "id": "keep_promise",
+          "image": "val_keep_promise",
+          "text": {
+            "id": "Menepati kata-kata sendiri",
+            "en": "Keeping your word"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "return_change": "b_things",
+        "tell_truth": "b_words",
+        "borrow_return": "b_things",
+        "say_sorry": "b_words",
+        "return_wallet": "b_things",
+        "keep_promise": "b_words"
+      },
+      "model_answer": {
+        "id": "Uang dan barang: kembalian, pinjaman, dompet temuan. Perkataan: berkata benar, mengaku salah, menepati kata.",
+        "en": "Money and things: change, loans, a found wallet. Words: telling the truth, owning up, keeping your word."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "NIL-JUJUR-KATA"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan situasi dengan jawaban yang jujur.",
+            "en": "Match each situation with an honest reply."
+          }
+        }
+      ],
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p1",
+          "image": "pic_phone",
+          "text": {
+            "id": "Teman menelepon menanyakan posisi Anda",
+            "en": "A friend calls to ask where you are"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "pic_computer",
+          "text": {
+            "id": "Atasan menanyakan laporan",
+            "en": "Your manager asks about the report"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_doctor",
+          "text": {
+            "id": "Dokter bertanya soal minum obat",
+            "en": "The doctor asks about your medicine"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "«Maaf, saya baru berangkat.»",
+            "en": "\"Sorry, I've only just left.\""
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "«Belum selesai; besok pagi saya kirim.»",
+            "en": "\"It isn't finished; I'll send it tomorrow morning.\""
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "«Sejujurnya, saya sering lupa minum obat.»",
+            "en": "\"Honestly, I often forget to take it.\""
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3"
+      },
+      "model_answer": {
+        "id": "Jawaban jujur membantu orang lain membuat rencana yang tepat — terutama dokter, yang menyesuaikan pengobatan dengan kenyataan.",
+        "en": "Honest answers help others plan well — especially your doctor, who adjusts treatment to what really happens."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "NIL-JUJUR-BARANG"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Barang temuan di kantor boleh disimpan jika tidak ada yang mencarinya dalam sehari.",
+            "en": "A found item at work can be kept if nobody asks about it within a day."
+          }
+        }
+      ],
+      "image": "val_return_wallet",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Barang temuan tetap milik orang lain. Serahkan ke petugas atau bagian keamanan agar pemiliknya bisa menemukannya.",
+        "en": "A found item still belongs to someone. Hand it to staff or security so the owner can find it."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NIL-JUJUR-KATA"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang menunjukkan berani mengaku salah?",
+            "en": "Which one shows owning up to a mistake?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "on_time",
+          "image": "val_on_time",
+          "text": {
+            "id": "Datang tepat waktu",
+            "en": "Arriving on time"
+          }
+        },
+        {
+          "id": "kind_animal",
+          "image": "val_kind_animal",
+          "text": {
+            "id": "Menyayangi hewan",
+            "en": "Being kind to an animal"
+          }
+        },
+        {
+          "id": "say_sorry",
+          "image": "val_say_sorry",
+          "text": {
+            "id": "Mengakui kesalahan dan meminta maaf",
+            "en": "Owning up and apologising"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mengaku salah dan meminta maaf butuh keberanian — dan biasanya membuat masalah lebih cepat selesai.",
+        "en": "Owning up and apologising takes courage — and usually ends the problem sooner."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "NIL-JUJUR-BARANG"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Cohn, A., Maréchal, M. A., Tannenbaum, D., & Zünd, C. L. (2019). Civic honesty around the globe. Science, 365(6448), 70–73. doi:10.1126/science.aau8712",
+      "model_answer": {
+        "id": "Dalam percobaan di 355 kota di 40 negara, peneliti menyerahkan lebih dari 17.000 dompet «temuan» kepada petugas di berbagai kantor. Petugas lebih sering menghubungi pemilik dompet yang berisi uang (51%) daripada dompet tanpa uang (40%).",
+        "en": "In an experiment in 355 cities across 40 countries, researchers handed more than 17,000 \"found\" wallets to staff at front desks. Staff contacted the owner more often when the wallet had money in it (51%) than when it didn't (40%)."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-03-001",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "NIL-HARGAI"
+      ],
+      "pool": "PRACT",
+      "order": 25,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan pekerjaan dengan cara menghargainya.",
+            "en": "Match each job with a way to value it."
+          }
+        }
+      ],
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p1",
+          "image": "pic_driver",
+          "text": {
+            "id": "Pengemudi ojek atau taksi",
+            "en": "A motorbike-taxi or taxi driver"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "pic_cook",
+          "text": {
+            "id": "Juru masak warung",
+            "en": "A warung cook"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_farmer",
+          "text": {
+            "id": "Petani",
+            "en": "A farmer"
+          }
+        },
+        {
+          "id": "p4",
+          "image": "pic_mechanic",
+          "text": {
+            "id": "Montir",
+            "en": "A mechanic"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Siap di titik jemput saat ia tiba",
+            "en": "Be at the pick-up point when they arrive"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Pesan secukupnya dan habiskan",
+            "en": "Order what you'll eat and finish it"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Membeli hasil panen dengan harga wajar",
+            "en": "Pay a fair price for the harvest"
+          }
+        },
+        {
+          "id": "t4",
+          "text": {
+            "id": "Bayar sesuai harga yang disepakati",
+            "en": "Pay the price you agreed"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3",
+        "p4": "t4"
+      },
+      "model_answer": {
+        "id": "Menghargai kerja tidak harus mahal: tepat waktu, tidak membuang makanan, dan membayar dengan adil.",
+        "en": "Valuing someone's work needn't cost much: be on time, don't waste food, pay fairly."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-03-002",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-HARGAI"
+      ],
+      "pool": "PRACT",
+      "order": 26,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Petugas kebersihan baru saja mengepel lantai stasiun.",
+            "en": "A cleaner has just mopped the station floor."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "litter",
+          "image": "val_litter",
+          "text": {
+            "id": "Menjatuhkan bungkus makanan di lantai",
+            "en": "Dropping a food wrapper on the floor"
+          }
+        },
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Menyuruhnya cepat minggir",
+            "en": "Telling them to get out of the way"
+          }
+        },
+        {
+          "id": "say_thanks",
+          "image": "val_say_thanks",
+          "text": {
+            "id": "Berterima kasih dan lewat di sisi yang kering",
+            "en": "Saying thanks and walking on the dry side"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Lewat di sisi kering dan berterima kasih menghargai kerjanya. Mengotori lantai yang baru dipel membuatnya bekerja dua kali.",
+        "en": "Using the dry side and saying thanks values their work. Dirtying a freshly mopped floor makes them do it twice."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-03-003",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "NIL-HARGAI"
+      ],
+      "pool": "PRACT",
+      "order": 27,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tukang servis datang ke rumah: mana yang menghargai kerjanya?",
+            "en": "A repairer is coming to your home: what values their work?"
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Menghargai",
+            "en": "Values their work"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Kurang menghargai",
+            "en": "Doesn't value it"
+          }
+        },
+        {
+          "id": "on_time",
+          "image": "val_on_time",
+          "text": {
+            "id": "Ada di rumah sesuai jam janji",
+            "en": "Being home at the agreed time"
+          }
+        },
+        {
+          "id": "late",
+          "image": "val_late",
+          "text": {
+            "id": "Datang terlambat sehingga ia menunggu",
+            "en": "Turning up late and keeping them waiting"
+          }
+        },
+        {
+          "id": "listen",
+          "image": "val_listen",
+          "text": {
+            "id": "Mendengarkan penjelasannya",
+            "en": "Listening to their explanation"
+          }
+        },
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Memotong penjelasannya",
+            "en": "Cutting their explanation short"
+          }
+        },
+        {
+          "id": "say_thanks",
+          "image": "val_say_thanks",
+          "text": {
+            "id": "Berterima kasih setelah selesai",
+            "en": "Thanking them when they finish"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "on_time": "b_yes",
+        "late": "b_no",
+        "listen": "b_yes",
+        "interrupt": "b_no",
+        "say_thanks": "b_yes"
+      },
+      "model_answer": {
+        "id": "Waktu tukang adalah penghasilannya. Tepat waktu, mendengarkan, dan berterima kasih menghargai kerjanya.",
+        "en": "A tradesperson's time is their income. Being on time, listening and saying thanks value their work."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-03-004",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "NIL-HARGAI"
+      ],
+      "pool": "PRACT",
+      "order": 28,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menawar harga di pasar tradisional selalu tidak sopan.",
+            "en": "Bargaining at a traditional market is always rude."
+          }
+        }
+      ],
+      "image": "pic_market",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Menawar itu lazim di pasar. Yang penting wajar dan sopan, dan setelah sepakat, bayar sesuai harga itu.",
+        "en": "Bargaining is normal at the market. Keep it fair and polite, and once you agree, pay that price."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-03-005",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "NIL-HARGAI"
+      ],
+      "pool": "PRACT",
+      "order": 29,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Perjalanan sepiring nasi sampai ke meja.",
+            "en": "How a plate of rice reaches the table."
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "s3",
+          "image": "pic_cook",
+          "text": {
+            "id": "Juru masak memasak",
+            "en": "A cook cooks it"
+          }
+        },
+        {
+          "id": "s1",
+          "image": "pic_farmer",
+          "text": {
+            "id": "Petani menanam padi",
+            "en": "A farmer grows the rice"
+          }
+        },
+        {
+          "id": "s4",
+          "image": "pic_rice_bowl",
+          "text": {
+            "id": "Nasi siap dimakan",
+            "en": "The rice is ready to eat"
+          }
+        },
+        {
+          "id": "s2",
+          "image": "pic_seller",
+          "text": {
+            "id": "Penjual menjual beras",
+            "en": "A seller sells the rice"
+          }
+        }
+      ],
+      "solution": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "model_answer": {
+        "id": "Petani, penjual, juru masak: sepiring nasi melewati banyak tangan. Menghabiskannya menghargai kerja mereka.",
+        "en": "Farmer, seller, cook: a plate of rice passes through many hands. Finishing it honours their work."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-03-006",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-HARGAI"
+      ],
+      "pool": "PRACT",
+      "order": 30,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kurir mengantar paket Anda saat hujan deras.",
+            "en": "A courier delivers your parcel in heavy rain."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Marah karena kardusnya agak basah",
+            "en": "Getting angry because the box is a bit wet"
+          }
+        },
+        {
+          "id": "say_thanks",
+          "image": "val_say_thanks",
+          "text": {
+            "id": "Berterima kasih",
+            "en": "Thanking them"
+          },
+          "correct": true
+        },
+        {
+          "id": "phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "Menulis ulasan kasar di aplikasi",
+            "en": "Writing a harsh review in the app"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Kurir sudah berusaha di tengah hujan. Terima kasih menghargai usahanya; bila ada kerusakan, laporkan dengan sopan.",
+        "en": "The courier made the trip in the rain. Thanks values the effort; if something's damaged, report it politely."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-03-007",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "NIL-BERSIH"
+      ],
+      "pool": "PRACT",
+      "order": 31,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan tempat dengan cara menjaga kebersihannya.",
+            "en": "Match each place with how to keep it clean."
+          }
+        }
+      ],
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p1",
+          "image": "pic_park",
+          "text": {
+            "id": "Taman",
+            "en": "A park"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "pic_train",
+          "text": {
+            "id": "Kereta",
+            "en": "A train"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_beach",
+          "text": {
+            "id": "Pantai",
+            "en": "A beach"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Tempat sampah penuh? Bawa pulang sampah Anda",
+            "en": "Bin full? Take your rubbish home"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Simpan bungkus makanan sampai turun",
+            "en": "Keep your food wrapper until you get off"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Jangan tinggalkan botol plastik di pasir",
+            "en": "Don't leave plastic bottles on the sand"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3"
+      },
+      "model_answer": {
+        "id": "Di mana pun, sampah kita adalah tanggung jawab kita sampai masuk ke tempat sampah.",
+        "en": "Wherever you are, your rubbish is your job until it's in a bin."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-03-008",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NIL-BERSIH"
+      ],
+      "pool": "PRACT",
+      "order": 32,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Selesai makan di pujasera, tidak ada petugas di dekat meja.",
+            "en": "You've finished eating at a food court and no staff are nearby."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "clean_up",
+          "image": "val_clean_up",
+          "text": {
+            "id": "Merapikan dan membuang bekas makan sendiri",
+            "en": "Clearing up after yourself"
+          },
+          "correct": true
+        },
+        {
+          "id": "litter",
+          "image": "val_litter",
+          "text": {
+            "id": "Meninggalkan sampah di meja",
+            "en": "Leaving the rubbish on the table"
+          }
+        },
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Mengeluh mejanya kotor",
+            "en": "Complaining the tables are dirty"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Merapikan bekas sendiri membuat meja siap dipakai orang berikutnya.",
+        "en": "Clearing your own things leaves the table ready for the next person."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-03-009",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "NIL-BERSIH"
+      ],
+      "pool": "PRACT",
+      "order": 33,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sampah yang dibuang ke selokan dapat menyumbat saluran dan memicu banjir saat hujan deras.",
+            "en": "Rubbish thrown into drains can block them and cause flooding in heavy rain."
+          }
+        }
+      ],
+      "image": "val_throw_trash",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Saluran yang tersumbat membuat air meluap ke jalan dan rumah. Buang sampah di tempat sampah.",
+        "en": "Blocked drains make water overflow into streets and homes. Put rubbish in the bin."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-03-010",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "NIL-BERSIH",
+        "NIL-HARGAI"
+      ],
+      "pool": "PRACT",
+      "order": 34,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dan nilainya.",
+            "en": "Match each picture to its value."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p1",
+          "image": "val_throw_trash",
+          "text": {
+            "id": "Membuang sampah di tempatnya",
+            "en": "Putting rubbish in the bin"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "val_say_thanks",
+          "text": {
+            "id": "Berterima kasih",
+            "en": "Saying thank you"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "val_save_water",
+          "text": {
+            "id": "Menutup keran",
+            "en": "Turning off the tap"
+          }
+        },
+        {
+          "id": "p4",
+          "image": "val_queue",
+          "text": {
+            "id": "Antre",
+            "en": "Queueing"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Bersih",
+            "en": "Clean"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Menghargai",
+            "en": "Appreciative"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Hemat",
+            "en": "Thrifty"
+          }
+        },
+        {
+          "id": "t4",
+          "text": {
+            "id": "Tertib",
+            "en": "Orderly"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3",
+        "p4": "t4"
+      },
+      "model_answer": {
+        "id": "Bersih, menghargai, hemat, tertib: kebiasaan kecil yang membuat ruang bersama nyaman.",
+        "en": "Clean, appreciative, thrifty, orderly: small habits that make shared spaces pleasant."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-03-011",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NIL-BERSIH"
+      ],
+      "pool": "PRACT",
+      "order": 35,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Anda selesai memakai wastafel di toilet umum.",
+            "en": "You've finished at a public washbasin."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "save_water",
+          "image": "val_save_water",
+          "text": {
+            "id": "Menutup keran sampai rapat",
+            "en": "Turning the tap off fully"
+          },
+          "correct": true
+        },
+        {
+          "id": "litter",
+          "image": "val_litter",
+          "text": {
+            "id": "Membuang tisu ke lantai",
+            "en": "Dropping the tissue on the floor"
+          }
+        },
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Menggerutu karena sabunnya habis",
+            "en": "Grumbling because the soap has run out"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Keran yang rapat dan lantai yang bersih membuat toilet nyaman bagi pemakai berikutnya.",
+        "en": "A tap turned off and a clean floor keep the toilet pleasant for the next person."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-03-012",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "NIL-BERSIH",
+        "NIL-HARGAI"
+      ],
+      "pool": "PRACT",
+      "order": 36,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menghargai kerja orang, atau menjaga kebersihan?",
+            "en": "Valuing others' work, or keeping things clean?"
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_work",
+          "text": {
+            "id": "Menghargai kerja",
+            "en": "Valuing work"
+          }
+        },
+        {
+          "id": "b_clean",
+          "text": {
+            "id": "Menjaga kebersihan",
+            "en": "Keeping clean"
+          }
+        },
+        {
+          "id": "say_thanks",
+          "image": "val_say_thanks",
+          "text": {
+            "id": "Berterima kasih kepada kurir",
+            "en": "Thanking a courier"
+          }
+        },
+        {
+          "id": "throw_trash",
+          "image": "val_throw_trash",
+          "text": {
+            "id": "Membuang sampah di tempatnya",
+            "en": "Putting rubbish in the bin"
+          }
+        },
+        {
+          "id": "on_time",
+          "image": "val_on_time",
+          "text": {
+            "id": "Tepat waktu untuk janji dengan tukang",
+            "en": "Being on time for the repairer"
+          }
+        },
+        {
+          "id": "clean_up",
+          "image": "val_clean_up",
+          "text": {
+            "id": "Merapikan meja setelah makan",
+            "en": "Clearing the table after eating"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "say_thanks": "b_work",
+        "throw_trash": "b_clean",
+        "on_time": "b_work",
+        "clean_up": "b_clean"
+      },
+      "model_answer": {
+        "id": "Keduanya saling terkait: ruang yang bersih meringankan kerja petugas kebersihan.",
+        "en": "The two go together: clean spaces lighten the cleaners' work."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-03-013",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-HARGAI"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Montir menjelaskan kerusakan motor Anda.",
+            "en": "The mechanic is explaining what's wrong with your motorbike."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Memotong penjelasannya",
+            "en": "Cutting them off"
+          }
+        },
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Marah karena biayanya",
+            "en": "Getting angry about the cost"
+          }
+        },
+        {
+          "id": "listen",
+          "image": "val_listen",
+          "text": {
+            "id": "Mendengarkan dan bertanya bila belum jelas",
+            "en": "Listening and asking if anything's unclear"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mendengarkan menghargai keahliannya — dan Anda jadi paham apa yang Anda bayar.",
+        "en": "Listening values their skill — and you understand what you're paying for."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-03-014",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "NIL-BERSIH"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Jika tempat sampah penuh, sampah boleh ditaruh di sampingnya.",
+            "en": "If the bin is full, it's fine to leave rubbish next to it."
+          }
+        }
+      ],
+      "image": "val_throw_trash",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Sampah di samping tempat sampah mudah tercecer dan mengundang hewan. Bawa dulu sampai menemukan tempat sampah lain.",
+        "en": "Rubbish beside the bin gets scattered and attracts animals. Carry it until you find another bin."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    },
+    {
+      "item_id": "NIL-A-P-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Belanja Anda Rp37.500 dan Anda membayar Rp50.000. Kasir memberi kembalian Rp22.500. Berapa rupiah kelebihannya?",
+            "en": "Your shopping comes to Rp37,500 and you pay Rp50,000. The cashier gives you Rp22,500 change. How much extra did you get?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 10000,
+        "tolerance": 0,
+        "unit": {
+          "id": "rupiah",
+          "en": "rupiah"
+        }
+      },
+      "model_answer": {
+        "id": "Kembalian seharusnya Rp12.500, jadi lebihnya Rp10.000 — kembalikan kepada kasir.",
+        "en": "The change should be Rp12,500, so you got Rp10,000 extra — give it back to the cashier."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-0.1"
+    }
+  ]
+}

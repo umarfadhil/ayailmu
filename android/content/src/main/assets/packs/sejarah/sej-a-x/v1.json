@@ -1,0 +1,4122 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sej-a-x-0.1",
+    "subject": "sejarah",
+    "track": "sej-a-x",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "level": "master",
+    "title": {
+      "id": "Sejarah — Master (Dewasa)",
+      "en": "History — Master (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, Sejarah adults, Master). Needs a historian (every date, place and number against the story sources), a cultural/religious sensitivity reviewer, and the Indonesian and English language reviewers before any item is approved. Figures are drawn only as silhouettes and objects of their work (MODULES_LEVELS_STORIES.md section 4); captions contain no invented quotes.",
+  "prompts": {
+    "P-STORY": {
+      "id": "Simak kisahnya.",
+      "en": "Watch the story."
+    },
+    "P-ORDER": {
+      "id": "Urutkan kisahnya.",
+      "en": "Put the story in order."
+    },
+    "P-MATCH": {
+      "id": "Pasangkan gambar dan artinya.",
+      "en": "Match each picture to its meaning."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-SORT": {
+      "id": "Kelompokkan.",
+      "en": "Sort into groups."
+    },
+    "P-WHO": {
+      "id": "Kelompokkan menurut tokohnya.",
+      "en": "Sort by figure."
+    },
+    "P-VALUE": {
+      "id": "Mana yang sejalan?",
+      "en": "Which one fits?"
+    },
+    "P-READ": {
+      "id": "Silakan baca dulu.",
+      "en": "Read this first."
+    },
+    "P-SOURCE": {
+      "id": "Jawab dari sumbernya.",
+      "en": "Answer from the source."
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Correct. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Baik, kita lanjut.",
+      "en": "Good, let's continue."
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Tanpa kekerasan",
+        "en": "Without violence"
+      },
+      "sticker": "sticker_leaf"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Tulisan untuk semua",
+        "en": "Writing for everyone"
+      },
+      "sticker": "sticker_angklung"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SEJ-A-X-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Tanpa kekerasan",
+        "en": "Without violence"
+      },
+      "body": [
+        {
+          "id": "Gandhi memimpin perlawanan tanpa kekerasan di India. Mandela, setelah 27 tahun dipenjara, memilih perundingan dan rekonsiliasi untuk mengakhiri apartheid.",
+          "en": "Gandhi led non-violent resistance in India. Mandela, after 27 years in prison, chose negotiation and reconciliation to end apartheid."
+        },
+        {
+          "id": "Di unit ini Anda membaca sumber pendek dan melihat bahwa sejarah sering lebih rumit daripada satu julukan.",
+          "en": "In this unit you will read short sources and see that history is often more complex than a single label."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SEJ-A-X-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Tulisan untuk semua",
+        "en": "Writing for everyone"
+      },
+      "body": [
+        {
+          "id": "Raja Sejong membuat huruf yang mudah dipelajari rakyat Korea. Louis Braille membuat tulisan yang bisa dibaca dengan ujung jari.",
+          "en": "King Sejong created letters that ordinary Koreans could learn easily. Louis Braille created writing that can be read with a fingertip."
+        },
+        {
+          "id": "Kisah ketiga, Cut Nyak Dhien, menunjukkan kepemimpinan dan kepedulian hingga akhir hayatnya, termasuk mengajar warga di tempat pengasingannya.",
+          "en": "The third story, Cut Nyak Dhien, shows leadership and care to the end of her life, including teaching local people in exile."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {
+    "R-SEJ-A-X-GANDHI": {
+      "title": {
+        "id": "Mengapa garam?",
+        "en": "Why salt?"
+      },
+      "body": [
+        {
+          "id": "Pada masa itu, pemerintah kolonial Inggris menguasai pembuatan dan penjualan garam di India, dan memperoleh banyak pemasukan darinya.",
+          "en": "At the time the British colonial government controlled the making and selling of salt in India and earned a large income from it."
+        },
+        {
+          "id": "Hukum melarang orang India membuat atau menjual garam sendiri. Garam yang dikenai pajak itu mahal, dan pajaknya sangat memberatkan rakyat termiskin.",
+          "en": "The law barred Indians from making or selling their own salt. The taxed salt was expensive, and the tax hit the poorest people hardest."
+        },
+        {
+          "id": "Semua orang membutuhkan garam, sehingga mengambil garam di pantai menjadi tanda protes yang dipahami semua orang (diringkas).",
+          "en": "Everyone needs salt, so picking it up on the shore was a protest everyone could understand (summarised)."
+        },
+        {
+          "id": "Sumber: Britannica Kids, Salt March.",
+          "en": "Source: Britannica Kids, Salt March."
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-SEJ-A-X-MANDELA": {
+      "title": {
+        "id": "Alasan Nobel Perdamaian 1993",
+        "en": "The 1993 Nobel Peace Prize citation"
+      },
+      "body": [
+        {
+          "id": "Komite Nobel memberikan Hadiah Nobel Perdamaian 1993 kepada Nelson Mandela dan F.W. de Klerk «atas kerja mereka untuk mengakhiri rezim apartheid secara damai, dan untuk meletakkan dasar bagi Afrika Selatan baru yang demokratis» (terjemahan bebas).",
+          "en": "The Nobel Committee gave the 1993 Peace Prize to Nelson Mandela and F.W. de Klerk \"for their work for the peaceful termination of the apartheid regime, and for laying the foundations for a new democratic South Africa.\""
+        },
+        {
+          "id": "Mandela tidak selalu memilih cara tanpa kekerasan: sebelum ditangkap, ia ikut memimpin sayap bersenjata gerakannya. Hadiah 1993 diberikan untuk peralihan damai yang ia rundingkan setelah bebas.",
+          "en": "Mandela did not always choose non-violence: before his arrest he helped lead his movement's armed wing. The 1993 prize honoured the peaceful transition he negotiated after his release."
+        },
+        {
+          "id": "Sumber: nobelprize.org, Nelson Mandela – Facts dan Speed read (1993).",
+          "en": "Source: nobelprize.org, Nelson Mandela – Facts and Speed read (1993)."
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-SEJ-A-X-SEJONG": {
+      "title": {
+        "id": "Pengantar Hunminjeongeum",
+        "en": "The preface of the Hunminjeongeum"
+      },
+      "body": [
+        {
+          "id": "Dalam pengantar Hunminjeongeum (1446), Raja Sejong menjelaskan alasannya, kurang lebih seperti ini:",
+          "en": "In the preface of the Hunminjeongeum (1446), King Sejong explained his reasons, roughly like this:"
+        },
+        {
+          "id": "Bahasa negeri ini berbeda dari bahasa Tiongkok, sehingga tidak cocok ditulis dengan aksaranya. Karena itu banyak rakyat biasa tidak dapat menuliskan apa yang ingin mereka sampaikan.",
+          "en": "The speech of this country differs from Chinese and does not fit its characters. So many ordinary people cannot put into writing what they want to say."
+        },
+        {
+          "id": "Ia lalu membuat 28 huruf baru, agar setiap orang mudah mempelajarinya dan memakainya sehari-hari (diringkas, bukan kutipan langsung).",
+          "en": "So he made 28 new letters, so that everyone could learn them easily and use them every day (summarised, not a direct quotation)."
+        },
+        {
+          "id": "Sumber: UNESCO Memory of the World, berkas nominasi Hunmin Chongum (Republik Korea).",
+          "en": "Source: UNESCO Memory of the World, nomination file Hunmin Chongum (Republic of Korea)."
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-SEJ-A-X-BRAILLE": {
+      "title": {
+        "id": "Hari Braille Sedunia",
+        "en": "World Braille Day"
+      },
+      "body": [
+        {
+          "id": "Pada November 2018, Majelis Umum PBB menetapkan 4 Januari sebagai Hari Braille Sedunia (resolusi A/RES/73/161).",
+          "en": "In November 2018 the UN General Assembly proclaimed 4 January as World Braille Day (resolution A/RES/73/161)."
+        },
+        {
+          "id": "Menurut PBB, Konvensi Hak Penyandang Disabilitas memandang braille penting untuk pendidikan, kebebasan berpendapat, akses informasi, dan inklusi sosial (diringkas).",
+          "en": "According to the UN, the Convention on the Rights of Persons with Disabilities sees braille as essential for education, freedom of expression, access to information and social inclusion (summarised)."
+        },
+        {
+          "id": "Sumber: un.org, World Braille Day – Background.",
+          "en": "Source: un.org, World Braille Day – Background."
+        }
+      ],
+      "review_status": "draft"
+    }
+  },
+  "stories": {
+    "ST-A-GANDHI": {
+      "figure": "Mohandas Karamchand Gandhi (1869–1948)",
+      "title": {
+        "id": "Gandhi dan Pawai Garam",
+        "en": "Gandhi and the Salt March"
+      },
+      "source": "Britannica: Salt March; Britannica Kids: Salt March; History.com: Gandhi's first act of civil disobedience (7 June 1893); PBB (UN Indonesia): International Day of Non-Violence, A/RES/61/271",
+      "emblem": "hist_spinning_wheel",
+      "panels": [
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Mohandas Gandhi lahir di Porbandar, India, pada 2 Oktober 1869. Ia belajar hukum di London dan menjadi pengacara.",
+            "en": "Mohandas Gandhi was born in Porbandar, India, on 2 October 1869. He studied law in London and became a lawyer."
+          },
+          "narration": {
+            "id": "id/sej_a_gandhi_01",
+            "en": "en/sej_a_gandhi_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.16,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.62,
+              "y": 0.6,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Pada 1893 ia bekerja di Afrika Selatan. Di sana ia dipaksa turun dari gerbong kelas satu kereta api karena warna kulitnya.",
+            "en": "In 1893 he went to work in South Africa. There he was forced off a first-class train carriage because of the colour of his skin."
+          },
+          "narration": {
+            "id": "id/sej_a_gandhi_02",
+            "en": "en/sej_a_gandhi_02"
+          },
+          "layers": [
+            {
+              "art": "pic_train",
+              "x": 0.44,
+              "y": 0.3,
+              "w": 0.34,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.44,
+                    0.3
+                  ],
+                  [
+                    0.64,
+                    0.3
+                  ]
+                ],
+                "ms": 4000,
+                "delay_ms": 600
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.1,
+              "y": 0.3,
+              "w": 0.26
+            },
+            {
+              "art": "pic_suitcase",
+              "x": 0.26,
+              "y": 0.74,
+              "w": 0.11,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Gandhi memilih melawan ketidakadilan tanpa kekerasan. Ia menyebut caranya satyagraha, yang berarti berpegang teguh pada kebenaran.",
+            "en": "Gandhi chose to resist injustice without violence. He called his method satyagraha, meaning holding firmly to truth."
+          },
+          "narration": {
+            "id": "id/sej_a_gandhi_03",
+            "en": "en/sej_a_gandhi_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.14,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_sunrise",
+              "x": 0.58,
+              "y": 0.08,
+              "w": 0.32,
+              "motion": {
+                "type": "fade_in",
+                "ms": 900,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.04,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_village_java",
+          "caption": {
+            "id": "Kembali di India, ia mengajak rakyat memintal benang dan menenun kain sendiri. Roda pintal menjadi lambang kemandirian.",
+            "en": "Back in India, he urged people to spin thread and weave their own cloth. The spinning wheel became a symbol of self-reliance."
+          },
+          "narration": {
+            "id": "id/sej_a_gandhi_04",
+            "en": "en/sej_a_gandhi_04"
+          },
+          "layers": [
+            {
+              "art": "hist_spinning_wheel",
+              "x": 0.52,
+              "y": 0.4,
+              "w": 0.28,
+              "motion": {
+                "type": "sway",
+                "deg": 3,
+                "ms": 2400,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.16,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_desert_road",
+          "caption": {
+            "id": "Pada 12 Maret 1930 ia memulai Pawai Garam, berjalan kaki sekitar 385 km ke pantai Dandi. Di sana, pada 6 April, ia mengambil segenggam garam sebagai protes damai terhadap pajak garam.",
+            "en": "On 12 March 1930 he began the Salt March, walking about 385 km to the coast at Dandi. There, on 6 April, he picked up a handful of salt in peaceful protest against the salt tax."
+          },
+          "narration": {
+            "id": "id/sej_a_gandhi_05",
+            "en": "en/sej_a_gandhi_05"
+          },
+          "layers": [
+            {
+              "art": "hist_sandals_path",
+              "x": 0.4,
+              "y": 0.58,
+              "w": 0.3,
+              "motion": {
+                "type": "reveal",
+                "from": "left",
+                "ms": 2000
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.04,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.04,
+                    0.3
+                  ],
+                  [
+                    0.14,
+                    0.3
+                  ],
+                  [
+                    0.24,
+                    0.3
+                  ]
+                ],
+                "ms": 6000
+              }
+            },
+            {
+              "art": "hist_sil_traveler",
+              "x": 0.72,
+              "y": 0.32,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 800
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_sea",
+          "caption": {
+            "id": "India merdeka pada 1947, dan Gandhi wafat pada 30 Januari 1948. Hari lahirnya, 2 Oktober, kini diperingati PBB sebagai Hari Internasional Tanpa Kekerasan.",
+            "en": "India became independent in 1947, and Gandhi died on 30 January 1948. His birthday, 2 October, is now marked by the UN as the International Day of Non-Violence."
+          },
+          "narration": {
+            "id": "id/sej_a_gandhi_06",
+            "en": "en/sej_a_gandhi_06"
+          },
+          "layers": [
+            {
+              "art": "hist_sunrise",
+              "x": 0.36,
+              "y": 0.1,
+              "w": 0.32,
+              "motion": {
+                "type": "fade_in",
+                "ms": 900
+              }
+            },
+            {
+              "art": "hist_sandals_path",
+              "x": 0.34,
+              "y": 0.56,
+              "w": 0.32
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        }
+      ]
+    },
+    "ST-A-MANDELA": {
+      "figure": "Nelson Rolihlahla Mandela (1918–2013)",
+      "title": {
+        "id": "Mandela dan jalan rekonsiliasi",
+        "en": "Mandela and the road to reconciliation"
+      },
+      "source": "nobelprize.org: Nelson Mandela – Speed read (Peace 1993); UN General Assembly A/RES/64/13: Nelson Mandela International Day",
+      "emblem": "hist_handshake",
+      "panels": [
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Nelson Mandela lahir di Mvezo, Afrika Selatan, pada 18 Juli 1918. Ia kemudian menjadi pengacara di Johannesburg.",
+            "en": "Nelson Mandela was born in Mvezo, South Africa, on 18 July 1918. He later became a lawyer in Johannesburg."
+          },
+          "narration": {
+            "id": "id/sej_a_mandela_01",
+            "en": "en/sej_a_mandela_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_boy",
+              "x": 0.16,
+              "y": 0.44,
+              "w": 0.19,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.62,
+              "y": 0.6,
+              "w": 0.14,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Saat itu Afrika Selatan menjalankan apartheid, hukum yang memisahkan dan membeda-bedakan warga berdasarkan ras. Mandela menjadi salah satu pemimpin gerakan yang menentangnya.",
+            "en": "South Africa then had apartheid, laws that separated people and treated them unequally by race. Mandela became one of the leaders of the movement against it."
+          },
+          "narration": {
+            "id": "id/sej_a_mandela_02",
+            "en": "en/sej_a_mandela_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.14,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_sil_woman",
+              "x": 0.3,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.62,
+              "y": 0.3,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 600
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_sea",
+          "caption": {
+            "id": "Ia dipenjara dari 1962 hingga 1990, selama 27 tahun. Di penjara ia tetap belajar dan menjaga harapan.",
+            "en": "He was in prison from 1962 to 1990, 27 years in all. In prison he kept studying and kept hope alive."
+          },
+          "narration": {
+            "id": "id/sej_a_mandela_03",
+            "en": "en/sej_a_mandela_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sunrise",
+              "x": 0.36,
+              "y": 0.12,
+              "w": 0.3,
+              "motion": {
+                "type": "glow",
+                "ms": 3000,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.14,
+              "y": 0.62,
+              "w": 0.16,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.04,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Ia dibebaskan pada 11 Februari 1990. Ia memilih jalan perundingan dan rekonsiliasi, bukan balas dendam.",
+            "en": "He was freed on 11 February 1990. He chose negotiation and reconciliation, not revenge."
+          },
+          "narration": {
+            "id": "id/sej_a_mandela_04",
+            "en": "en/sej_a_mandela_04"
+          },
+          "layers": [
+            {
+              "art": "hist_handshake",
+              "x": 0.34,
+              "y": 0.3,
+              "w": 0.32,
+              "motion": {
+                "type": "fade_in",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_sunrise",
+              "x": 0.62,
+              "y": 0.06,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 900,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Pada 1993 ia menerima Nobel Perdamaian bersama F.W. de Klerk atas upaya mengakhiri apartheid secara damai. Pada 1994 ia menjadi presiden pertama Afrika Selatan yang dipilih secara demokratis oleh seluruh warga.",
+            "en": "In 1993 he shared the Nobel Peace Prize with F.W. de Klerk for working to end apartheid peacefully. In 1994 he became South Africa's first president elected democratically by all its citizens."
+          },
+          "narration": {
+            "id": "id/sej_a_mandela_05",
+            "en": "en/sej_a_mandela_05"
+          },
+          "layers": [
+            {
+              "art": "hist_handshake",
+              "x": 0.1,
+              "y": 0.4,
+              "w": 0.28
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.52,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_sil_woman",
+              "x": 0.7,
+              "y": 0.3,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_green_hills",
+          "caption": {
+            "id": "Mandela wafat pada 5 Desember 2013; hari lahirnya, 18 Juli, diperingati sebagai Hari Nelson Mandela Internasional. Kisahnya mengajak kita memilih dialog dan berani memaafkan.",
+            "en": "Mandela died on 5 December 2013; his birthday, 18 July, is marked as Nelson Mandela International Day. His story asks us to choose dialogue and have the courage to forgive."
+          },
+          "narration": {
+            "id": "id/sej_a_mandela_06",
+            "en": "en/sej_a_mandela_06"
+          },
+          "layers": [
+            {
+              "art": "hist_sunrise",
+              "x": 0.36,
+              "y": 0.08,
+              "w": 0.32,
+              "motion": {
+                "type": "fade_in",
+                "ms": 900
+              }
+            },
+            {
+              "art": "hist_handshake",
+              "x": 0.4,
+              "y": 0.52,
+              "w": 0.22,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        }
+      ]
+    },
+    "ST-A-SEJONG": {
+      "figure": "Raja Sejong Agung / King Sejong the Great (1397–1450)",
+      "title": {
+        "id": "Raja Sejong dan aksara Hangul",
+        "en": "King Sejong and the Hangul alphabet"
+      },
+      "source": "UNESCO Memory of the World: Hunmin Chongum (nomination file); World History Encyclopedia: Sejong the Great; Korea JoongAng Daily: This week in history (rain gauge)",
+      "emblem": "hist_sejong_scroll",
+      "panels": [
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Sejong menjadi raja keempat Dinasti Joseon di Korea pada 1418 dan memerintah hingga 1450. Pada 1420 ia mendirikan Jiphyeonjeon, «Balai Para Cendekia».",
+            "en": "Sejong became the fourth king of Korea's Joseon dynasty in 1418 and reigned until 1450. In 1420 he founded the Jiphyeonjeon, the \"Hall of Worthies\", for scholars."
+          },
+          "narration": {
+            "id": "id/sej_a_sejong_01",
+            "en": "en/sej_a_sejong_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.14,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.6,
+              "y": 0.58,
+              "w": 0.16,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_village_java",
+          "caption": {
+            "id": "Saat itu orang Korea menulis dengan aksara Tionghoa yang rumit dan butuh bertahun-tahun untuk dikuasai. Kebanyakan rakyat biasa tidak bisa menuliskan pikirannya.",
+            "en": "At the time Koreans wrote with Chinese characters, which took years to master. Most ordinary people could not put their thoughts into writing."
+          },
+          "narration": {
+            "id": "id/sej_a_sejong_02",
+            "en": "en/sej_a_sejong_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.1,
+              "y": 0.3,
+              "w": 0.26
+            },
+            {
+              "art": "hist_sil_woman",
+              "x": 0.26,
+              "y": 0.3,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_sejong_scroll",
+              "x": 0.58,
+              "y": 0.4,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 400
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_library_old",
+          "caption": {
+            "id": "Sejong merancang aksara baru yang sederhana. Pada 1443 ia menyelesaikan 28 huruf: 17 konsonan dan 11 vokal.",
+            "en": "Sejong designed a simple new script. In 1443 he completed 28 letters: 17 consonants and 11 vowels."
+          },
+          "narration": {
+            "id": "id/sej_a_sejong_03",
+            "en": "en/sej_a_sejong_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sejong_scroll",
+              "x": 0.3,
+              "y": 0.24,
+              "w": 0.4,
+              "motion": {
+                "type": "reveal",
+                "from": "left",
+                "ms": 1800
+              }
+            },
+            {
+              "art": "hist_sil_scholar",
+              "x": 0.06,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_library_old",
+          "caption": {
+            "id": "Sebagian pejabat menolak aksara baru itu. Sejong tetap melanjutkan, dan pada 1446 aksara itu diumumkan dalam buku Hunminjeongeum, «Bunyi yang Benar untuk Mengajar Rakyat».",
+            "en": "Some officials opposed the new script. Sejong carried on, and in 1446 it was proclaimed in the book Hunminjeongeum, \"The Correct Sounds for the Instruction of the People\"."
+          },
+          "narration": {
+            "id": "id/sej_a_sejong_04",
+            "en": "en/sej_a_sejong_04"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_scholar",
+              "x": 0.08,
+              "y": 0.3,
+              "w": 0.26
+            },
+            {
+              "art": "hist_sil_scholar",
+              "x": 0.24,
+              "y": 0.3,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_sejong_scroll",
+              "x": 0.56,
+              "y": 0.36,
+              "w": 0.3,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 500
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_green_hills",
+          "caption": {
+            "id": "Pada masa Sejong juga dibuat alat pengukur hujan yang seragam. Dengan alat itu, curah hujan di berbagai daerah bisa dicatat untuk pertanian.",
+            "en": "Sejong's reign also produced a standard rain gauge. With it, rainfall across the kingdom could be recorded for farming."
+          },
+          "narration": {
+            "id": "id/sej_a_sejong_05",
+            "en": "en/sej_a_sejong_05"
+          },
+          "layers": [
+            {
+              "art": "hist_rain_gauge",
+              "x": 0.5,
+              "y": 0.4,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "pic_rain",
+              "x": 0.44,
+              "y": 0.06,
+              "w": 0.24,
+              "motion": {
+                "type": "drift",
+                "dx": 0.0,
+                "dy": 0.03,
+                "ms": 2400,
+                "loop": true
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Kini aksara itu disebut Hangul dan dipakai jutaan orang; buku Hunminjeongeum tercatat dalam daftar Ingatan Dunia UNESCO. Kisahnya mengajak kita membuat ilmu mudah dijangkau semua orang.",
+            "en": "Today the script is called Hangul and used by millions; the Hunminjeongeum book is on UNESCO's Memory of the World register. His story asks us to make knowledge easy for everyone to reach."
+          },
+          "narration": {
+            "id": "id/sej_a_sejong_06",
+            "en": "en/sej_a_sejong_06"
+          },
+          "layers": [
+            {
+              "art": "hist_sunrise",
+              "x": 0.6,
+              "y": 0.06,
+              "w": 0.32,
+              "motion": {
+                "type": "fade_in",
+                "ms": 900
+              }
+            },
+            {
+              "art": "hist_sejong_scroll",
+              "x": 0.14,
+              "y": 0.44,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        }
+      ]
+    },
+    "ST-A-BRAILLE": {
+      "figure": "Louis Braille (1809–1852)",
+      "title": {
+        "id": "Louis Braille dan enam titik",
+        "en": "Louis Braille and the six dots"
+      },
+      "source": "Britannica: Louis Braille; un.org: World Braille Day – Background (A/RES/73/161)",
+      "emblem": "hist_braille_dots",
+      "panels": [
+        {
+          "scene": "hist_bg_village_java",
+          "caption": {
+            "id": "Louis Braille lahir di Coupvray, Prancis, pada 4 Januari 1809. Ayahnya membuat perlengkapan kuda dari kulit.",
+            "en": "Louis Braille was born in Coupvray, France, on 4 January 1809. His father made leather harness for horses."
+          },
+          "narration": {
+            "id": "id/sej_a_braille_01",
+            "en": "en/sej_a_braille_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_boy",
+              "x": 0.18,
+              "y": 0.46,
+              "w": 0.19,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "pic_horse",
+              "x": 0.56,
+              "y": 0.44,
+              "w": 0.24,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_room_lamp",
+          "caption": {
+            "id": "Pada usia tiga tahun, ia mengalami kecelakaan di bengkel ayahnya. Tak lama kemudian kedua matanya tidak dapat melihat lagi.",
+            "en": "At the age of three he had an accident in his father's workshop. Soon afterwards he lost the sight of both eyes."
+          },
+          "narration": {
+            "id": "id/sej_a_braille_02",
+            "en": "en/sej_a_braille_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_boy",
+              "x": 0.3,
+              "y": 0.46,
+              "w": 0.19,
+              "motion": {
+                "type": "fade_in",
+                "ms": 900
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.04,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_classroom_old",
+          "caption": {
+            "id": "Pada 1819, dengan beasiswa, ia masuk sekolah anak tunanetra di Paris. Buku untuk pembaca tunanetra saat itu memakai huruf timbul yang besar, berat, dan lambat dibaca.",
+            "en": "In 1819, on a scholarship, he entered the school for blind children in Paris. Books for blind readers then used large raised letters that were heavy and slow to read."
+          },
+          "narration": {
+            "id": "id/sej_a_braille_03",
+            "en": "en/sej_a_braille_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_boy",
+              "x": 0.12,
+              "y": 0.46,
+              "w": 0.19,
+              "motion": {
+                "type": "slide_in",
+                "from": "left",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.52,
+              "y": 0.48,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_classroom_old",
+          "caption": {
+            "id": "Charles Barbier, seorang mantan perwira, memperkenalkan tulisan titik timbul di sekolah itu. Louis menyederhanakannya menjadi sel enam titik yang muat di bawah satu ujung jari.",
+            "en": "Charles Barbier, a former army officer, showed the school a writing system of raised dots. Louis simplified it into a cell of six dots that fits under one fingertip."
+          },
+          "narration": {
+            "id": "id/sej_a_braille_04",
+            "en": "en/sej_a_braille_04"
+          },
+          "layers": [
+            {
+              "art": "hist_braille_dots",
+              "x": 0.4,
+              "y": 0.2,
+              "w": 0.2,
+              "motion": {
+                "type": "reveal",
+                "from": "left",
+                "ms": 1600
+              }
+            },
+            {
+              "art": "hist_sil_boy",
+              "x": 0.12,
+              "y": 0.46,
+              "w": 0.19
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.06,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_classroom_old",
+          "caption": {
+            "id": "Sejak 1826 ia mengajar di sekolah itu, dan pada 1829, di usia 20 tahun, ia menerbitkan caranya. Ia juga menyesuaikan sistemnya untuk menulis musik.",
+            "en": "From 1826 he taught at the school, and in 1829, aged 20, he published his method. He also adapted the system for writing music."
+          },
+          "narration": {
+            "id": "id/sej_a_braille_05",
+            "en": "en/sej_a_braille_05"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.06,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_sil_boy",
+              "x": 0.26,
+              "y": 0.46,
+              "w": 0.19,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 200
+              }
+            },
+            {
+              "art": "hist_sil_girl",
+              "x": 0.38,
+              "y": 0.46,
+              "w": 0.19,
+              "flip": true
+            },
+            {
+              "art": "hist_braille_book",
+              "x": 0.58,
+              "y": 0.48,
+              "w": 0.26,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Louis Braille wafat pada 1852, dan kini braille dipakai di seluruh dunia; 4 Januari diperingati sebagai Hari Braille Sedunia. Kisahnya mengajak kita merancang hal-hal yang bisa dipakai semua orang.",
+            "en": "Louis Braille died in 1852, and today braille is used all over the world; 4 January is World Braille Day. His story asks us to design things everyone can use."
+          },
+          "narration": {
+            "id": "id/sej_a_braille_06",
+            "en": "en/sej_a_braille_06"
+          },
+          "layers": [
+            {
+              "art": "hist_sunrise",
+              "x": 0.6,
+              "y": 0.06,
+              "w": 0.32,
+              "motion": {
+                "type": "fade_in",
+                "ms": 900
+              }
+            },
+            {
+              "art": "hist_braille_book",
+              "x": 0.16,
+              "y": 0.48,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        }
+      ]
+    },
+    "ST-A-CUT-NYAK-DHIEN": {
+      "figure": "Cut Nyak Dhien (1848–1908)",
+      "title": {
+        "id": "Cut Nyak Dhien: memimpin dan peduli",
+        "en": "Cut Nyak Dhien: leading and caring"
+      },
+      "source": "Keppres No. 106 Tahun 1964; Metro TV News: #OnThisDay Mengenang wafatnya Cut Nyak Dhien; detikEdu (2024): Cut Nyak Dien, putri bangsawan yang jadi Pahlawan Nasional; UIN Sunan Kalijaga (digilib 38063): Pengasingan Cut Nyak Dhien di Sumedang tahun 1906–1908",
+      "emblem": "hist_rumoh_aceh",
+      "panels": [
+        {
+          "scene": "hist_bg_hills_aceh",
+          "caption": {
+            "id": "Cut Nyak Dhien lahir pada 1848 di Lampadang, Aceh Besar, dalam keluarga bangsawan. Ia tumbuh dalam masyarakat yang taat beragama dan menjunjung adat.",
+            "en": "Cut Nyak Dhien was born in 1848 in Lampadang, Aceh Besar, into a noble family. She grew up in a community devoted to faith and custom."
+          },
+          "narration": {
+            "id": "id/sej_a_cut_nyak_dhien_01",
+            "en": "en/sej_a_cut_nyak_dhien_01"
+          },
+          "layers": [
+            {
+              "art": "hist_rumoh_aceh",
+              "x": 0.5,
+              "y": 0.3,
+              "w": 0.4,
+              "motion": {
+                "type": "slide_in",
+                "from": "right",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_sil_girl",
+              "x": 0.18,
+              "y": 0.44,
+              "w": 0.19,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_hills_aceh",
+          "caption": {
+            "id": "Sejak 1873, Aceh dilanda perang panjang melawan pemerintah kolonial Belanda. Banyak keluarga kehilangan rumah dan orang tercinta, termasuk Cut Nyak Dhien.",
+            "en": "From 1873 Aceh was caught in a long war with the Dutch colonial government. Many families lost homes and loved ones, Cut Nyak Dhien among them."
+          },
+          "narration": {
+            "id": "id/sej_a_cut_nyak_dhien_02",
+            "en": "en/sej_a_cut_nyak_dhien_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_woman_headscarf",
+              "x": 0.16,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 900
+              }
+            },
+            {
+              "art": "hist_rumoh_aceh",
+              "x": 0.58,
+              "y": 0.4,
+              "w": 0.3
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.04,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_hills_aceh",
+          "caption": {
+            "id": "Setelah suaminya, Teuku Umar, gugur pada 1899, ia sendiri memimpin rakyatnya. Ia menjaga kelompoknya tetap bersatu sambil berpindah-pindah di hutan dan pegunungan Aceh.",
+            "en": "After her husband Teuku Umar fell in 1899, she led her people herself. She kept her group together as they moved through the forests and mountains of Aceh."
+          },
+          "narration": {
+            "id": "id/sej_a_cut_nyak_dhien_03",
+            "en": "en/sej_a_cut_nyak_dhien_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_woman_headscarf",
+              "x": 0.08,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.08,
+                    0.3
+                  ],
+                  [
+                    0.24,
+                    0.3
+                  ],
+                  [
+                    0.4,
+                    0.3
+                  ]
+                ],
+                "ms": 6000
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.3,
+              "y": 0.32,
+              "w": 0.26,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.3,
+                    0.32
+                  ],
+                  [
+                    0.46,
+                    0.32
+                  ],
+                  [
+                    0.62,
+                    0.32
+                  ]
+                ],
+                "ms": 6000
+              }
+            },
+            {
+              "art": "hist_sil_woman",
+              "x": 0.48,
+              "y": 0.32,
+              "w": 0.26,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.48,
+                    0.32
+                  ],
+                  [
+                    0.64,
+                    0.32
+                  ],
+                  [
+                    0.8,
+                    0.32
+                  ]
+                ],
+                "ms": 6000
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_hills_aceh",
+          "caption": {
+            "id": "Bertahun-tahun di hutan membuatnya renta dan sakit: matanya rabun dan ia menderita encok. Pang Laot, pengikut setianya, iba melihat keadaannya dan pada 1905 memberitahukan tempatnya kepada Belanda.",
+            "en": "Years in the forest left her frail and ill, with failing eyes and painful joints. Pang Laot, her loyal follower, pitied her condition and in 1905 told the Dutch where she was."
+          },
+          "narration": {
+            "id": "id/sej_a_cut_nyak_dhien_04",
+            "en": "en/sej_a_cut_nyak_dhien_04"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_woman_headscarf",
+              "x": 0.2,
+              "y": 0.32,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 900
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.52,
+              "y": 0.32,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 900,
+                "delay_ms": 600
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.04,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_village_java",
+          "caption": {
+            "id": "Ia diasingkan ke Sumedang, Jawa Barat. Di sana ia mengajarkan agama kepada warga sekitar, yang menyebutnya «Ibu Perbu».",
+            "en": "She was exiled to Sumedang in West Java. There she taught religion to the local people, who called her \"Ibu Perbu\"."
+          },
+          "narration": {
+            "id": "id/sej_a_cut_nyak_dhien_05",
+            "en": "en/sej_a_cut_nyak_dhien_05"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_woman_headscarf",
+              "x": 0.12,
+              "y": 0.3,
+              "w": 0.26
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.36,
+              "y": 0.64,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_sil_woman",
+              "x": 0.56,
+              "y": 0.32,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_sil_girl",
+              "x": 0.74,
+              "y": 0.46,
+              "w": 0.19,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 600
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_village_java",
+          "caption": {
+            "id": "Cut Nyak Dhien wafat di Sumedang pada 6 November 1908 dan diangkat menjadi Pahlawan Nasional pada 1964. Kisahnya mengajak kita setia kepada sesama dan terus berbagi ilmu, bahkan di masa sulit.",
+            "en": "Cut Nyak Dhien died in Sumedang on 6 November 1908 and was named a National Hero in 1964. Her story asks us to stand by others and keep sharing knowledge, even in hard times."
+          },
+          "narration": {
+            "id": "id/sej_a_cut_nyak_dhien_06",
+            "en": "en/sej_a_cut_nyak_dhien_06"
+          },
+          "layers": [
+            {
+              "art": "hist_sunrise",
+              "x": 0.6,
+              "y": 0.06,
+              "w": 0.32,
+              "motion": {
+                "type": "fade_in",
+                "ms": 900
+              }
+            },
+            {
+              "art": "hist_rumoh_aceh",
+              "x": 0.1,
+              "y": 0.4,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "SEJ-A-X-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "story",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-A-GANDHI",
+      "model_answer": {
+        "id": "Gandhi melawan ketidakadilan tanpa kekerasan; Pawai Garam 1930 menjadi contohnya yang paling terkenal.",
+        "en": "Gandhi resisted injustice without violence; the 1930 Salt March is its best-known example."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-ORDER",
+      "story_id": "ST-A-GANDHI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling awal.",
+            "en": "Earliest first."
+          }
+        }
+      ],
+      "image": "hist_sandals_path",
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Pawai Garam (1930)",
+            "en": "The Salt March (1930)"
+          }
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Lahir di Porbandar (1869)",
+            "en": "Born in Porbandar (1869)"
+          }
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "India merdeka (1947)",
+            "en": "India becomes independent (1947)"
+          }
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Dipaksa turun dari kereta di Afrika Selatan (1893)",
+            "en": "Forced off a train in South Africa (1893)"
+          }
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "gesture": "drag",
+      "model_answer": {
+        "id": "1869, 1893, 1930, lalu 1947.",
+        "en": "1869, 1893, 1930, then 1947."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-A-GANDHI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Lambang kemandirian dalam gerakan Gandhi?",
+            "en": "The symbol of self-reliance in his movement?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_sewing_kit",
+          "image": "hist_sewing_kit",
+          "text": {
+            "id": "peralatan menjahit",
+            "en": "sewing kit"
+          }
+        },
+        {
+          "id": "hist_compass_old",
+          "image": "hist_compass_old",
+          "text": {
+            "id": "kompas kuno",
+            "en": "old compass"
+          }
+        },
+        {
+          "id": "hist_spinning_wheel",
+          "image": "hist_spinning_wheel",
+          "text": {
+            "id": "roda pintal",
+            "en": "spinning wheel"
+          },
+          "correct": true
+        },
+        {
+          "id": "hist_rain_gauge",
+          "image": "hist_rain_gauge",
+          "text": {
+            "id": "pengukur hujan",
+            "en": "rain gauge"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Roda pintal: memintal benang dan menenun kain sendiri.",
+        "en": "The spinning wheel: spin and weave your own."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-TF",
+      "story_id": "ST-A-GANDHI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dalam Pawai Garam, Gandhi berjalan kaki sekitar 385 km.",
+            "en": "On the Salt March, Gandhi walked about 385 km."
+          }
+        }
+      ],
+      "image": "hist_sandals_path",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Dari dekat Ahmedabad ke pantai Dandi, sekitar 385 km (240 mil).",
+        "en": "True. From near Ahmedabad to the coast at Dandi, about 385 km (240 miles)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "mini_reading",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-READ",
+      "story_id": "ST-A-GANDHI",
+      "reading_id": "R-SEJ-A-X-GANDHI",
+      "model_answer": {
+        "id": "Garam dikuasai dan dipajaki pemerintah kolonial; pajaknya paling memberatkan rakyat termiskin.",
+        "en": "Salt was controlled and taxed by the colonial government; the tax hit the poorest hardest."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-SOURCE",
+      "story_id": "ST-A-GANDHI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mengapa garam menjadi lambang protes?",
+            "en": "Why did salt become the symbol of protest?"
+          }
+        }
+      ],
+      "image": "hist_sandals_path",
+      "reading_id": "R-SEJ-A-X-GANDHI",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Garam adalah barang mewah bagi orang kaya",
+            "en": "Salt was a luxury for the rich"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Semua orang butuh garam, dan pajaknya memberatkan rakyat miskin",
+            "en": "Everyone needs salt, and the tax burdened the poor"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Garam hanya dipakai di kota-kota besar",
+            "en": "Salt was used only in big cities"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Semua orang membutuhkan garam, dan pajaknya paling memberatkan rakyat termiskin.",
+        "en": "Everyone needs salt, and the tax hit the poorest hardest."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-SORT",
+      "story_id": "ST-A-GANDHI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana cara tanpa kekerasan?",
+            "en": "Which are non-violent ways?"
+          }
+        }
+      ],
+      "image": "hist_spinning_wheel",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Cara tanpa kekerasan",
+            "en": "Non-violent"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Bukan cara tanpa kekerasan",
+            "en": "Not non-violent"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Berjalan bersama dalam protes damai",
+            "en": "Marching together in peaceful protest"
+          }
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Merusak milik orang lain",
+            "en": "Damaging other people's property"
+          }
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Menolak aturan tidak adil tanpa melukai siapa pun",
+            "en": "Refusing an unjust rule without hurting anyone"
+          }
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Membuat sendiri barang yang dibutuhkan",
+            "en": "Making what you need yourself"
+          }
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Membalas dengan kekerasan",
+            "en": "Hitting back with violence"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_yes",
+        "c2": "b_no",
+        "c3": "b_yes",
+        "c4": "b_yes",
+        "c5": "b_no"
+      },
+      "gesture": "drag",
+      "model_answer": {
+        "id": "Protes damai, menolak tanpa melukai, dan mandiri.",
+        "en": "Peaceful protest, refusing without harming, and self-reliance."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-A-MANDELA",
+      "model_answer": {
+        "id": "Setelah 27 tahun dipenjara, Mandela memilih rekonsiliasi dan menjadi presiden Afrika Selatan pada 1994.",
+        "en": "After 27 years in prison, Mandela chose reconciliation and became South Africa's president in 1994."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-ORDER",
+      "story_id": "ST-A-MANDELA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling awal.",
+            "en": "Earliest first."
+          }
+        }
+      ],
+      "image": "hist_handshake",
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Dibebaskan (1990)",
+            "en": "Released (1990)"
+          }
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Lahir di Mvezo (1918)",
+            "en": "Born in Mvezo (1918)"
+          }
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Menjadi presiden (1994)",
+            "en": "Becomes president (1994)"
+          }
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Dipenjara (1962)",
+            "en": "Imprisoned (1962)"
+          }
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "gesture": "drag",
+      "model_answer": {
+        "id": "1918, 1962, 1990, lalu 1994.",
+        "en": "1918, 1962, 1990, then 1994."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-A-MANDELA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gambar mana yang melambangkan rekonsiliasi?",
+            "en": "Which picture stands for reconciliation?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_handshake",
+          "image": "hist_handshake",
+          "text": {
+            "id": "berjabat tangan",
+            "en": "a handshake"
+          },
+          "correct": true
+        },
+        {
+          "id": "hist_sandals_path",
+          "image": "hist_sandals_path",
+          "text": {
+            "id": "jejak sandal di jalan",
+            "en": "sandal prints on a road"
+          }
+        },
+        {
+          "id": "hist_spinning_wheel",
+          "image": "hist_spinning_wheel",
+          "text": {
+            "id": "roda pintal",
+            "en": "spinning wheel"
+          }
+        },
+        {
+          "id": "hist_telescope",
+          "image": "hist_telescope",
+          "text": {
+            "id": "teropong",
+            "en": "telescope"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Jabat tangan: Mandela memilih berunding dan berdamai.",
+        "en": "A handshake: Mandela chose to negotiate and make peace."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-TF",
+      "story_id": "ST-A-MANDELA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mandela dipenjara selama 27 tahun sebelum dibebaskan pada 1990.",
+            "en": "Mandela spent 27 years in prison before his release in 1990."
+          }
+        }
+      ],
+      "image": "hist_sunrise",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Dari 1962 sampai 11 Februari 1990.",
+        "en": "True. From 1962 until 11 February 1990."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "mini_reading",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-READ",
+      "story_id": "ST-A-MANDELA",
+      "reading_id": "R-SEJ-A-X-MANDELA",
+      "model_answer": {
+        "id": "Nobel 1993 menghargai peralihan damai; sebelumnya Mandela juga pernah memimpin sayap bersenjata.",
+        "en": "The 1993 prize honoured a peaceful transition; earlier, Mandela had also led an armed wing."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-SOURCE",
+      "story_id": "ST-A-MANDELA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menurut teks, mana yang tepat?",
+            "en": "According to the text, which is right?"
+          }
+        }
+      ],
+      "image": "hist_handshake",
+      "reading_id": "R-SEJ-A-X-MANDELA",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Mandela tidak pernah terlibat gerakan bersenjata",
+            "en": "Mandela was never involved in an armed movement"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Hadiah 1993 diberikan kepada Mandela seorang diri",
+            "en": "The 1993 prize went to Mandela alone"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Hadiah 1993 menghargai peralihan damai yang ia rundingkan",
+            "en": "The 1993 prize honoured the peaceful transition he negotiated"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Teks menyebut hadiah itu untuk peralihan damai, dan diberikan bersama F.W. de Klerk.",
+        "en": "The text says the prize was for the peaceful transition, and was shared with F.W. de Klerk."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-VALUE",
+      "story_id": "ST-A-MANDELA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sikap mana yang sejalan dengan pilihannya?",
+            "en": "Which fits the choice he made?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "val_listen",
+          "image": "val_listen",
+          "text": {
+            "id": "mendengarkan dengan sungguh-sungguh",
+            "en": "listening carefully"
+          },
+          "correct": true
+        },
+        {
+          "id": "val_angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "marah dan membentak",
+            "en": "angry shouting"
+          }
+        },
+        {
+          "id": "val_interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "memotong pembicaraan orang lain",
+            "en": "interrupting others"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Mendengarkan: dialog dimulai dari mendengar pihak lain.",
+        "en": "Listening: dialogue starts with hearing the other side."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-01-015",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pawai Garam Gandhi terjadi sebelum Mandela lahir.",
+            "en": "Gandhi's Salt March took place before Mandela was born."
+          }
+        }
+      ],
+      "image": "hist_sandals_path",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Salah. Mandela lahir pada 1918; Pawai Garam terjadi pada 1930.",
+        "en": "False. Mandela was born in 1918; the Salt March was in 1930."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-01-016",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-WHO",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gambar ini milik kisah siapa?",
+            "en": "Whose story does each picture belong to?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_g",
+          "text": {
+            "id": "Gandhi",
+            "en": "Gandhi"
+          }
+        },
+        {
+          "id": "b_m",
+          "text": {
+            "id": "Mandela",
+            "en": "Mandela"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "roda pintal",
+            "en": "spinning wheel"
+          },
+          "image": "hist_spinning_wheel"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "berjabat tangan",
+            "en": "a handshake"
+          },
+          "image": "hist_handshake"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "jejak sandal di jalan",
+            "en": "sandal prints on a road"
+          },
+          "image": "hist_sandals_path"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_g",
+        "c2": "b_m",
+        "c3": "b_g"
+      },
+      "gesture": "drag",
+      "model_answer": {
+        "id": "Gandhi: roda pintal dan Pawai Garam. Mandela: jabat tangan rekonsiliasi.",
+        "en": "Gandhi: the spinning wheel and the Salt March. Mandela: the handshake of reconciliation."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-01-017",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-VALUE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Cara mana menyelesaikan beda pendapat?",
+            "en": "Which way settles a disagreement?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "val_angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "marah dan membentak",
+            "en": "angry shouting"
+          }
+        },
+        {
+          "id": "val_phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "menulis pesan yang menyakitkan",
+            "en": "sending an unkind message"
+          }
+        },
+        {
+          "id": "val_calm_breath",
+          "image": "val_calm_breath",
+          "text": {
+            "id": "menenangkan diri dulu",
+            "en": "calming down first"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Menenangkan diri dulu, lalu berbicara: jalan tanpa kekerasan dimulai dari diri sendiri.",
+        "en": "Calm down first, then talk: non-violence starts with yourself."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-01-018",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-SOURCE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Siapa yang paling terbebani pajak garam?",
+            "en": "Who did the salt tax burden most?"
+          }
+        }
+      ],
+      "image": "hist_sandals_path",
+      "reading_id": "R-SEJ-A-X-GANDHI",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Pedagang kaya",
+            "en": "Rich merchants"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Rakyat termiskin",
+            "en": "The poorest people"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Pegawai pemerintah",
+            "en": "Government officials"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Menurut sumbernya, pajak garam paling memberatkan rakyat termiskin.",
+        "en": "According to the source, the salt tax hit the poorest hardest."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "story",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-A-SEJONG",
+      "model_answer": {
+        "id": "Raja Sejong membuat aksara 28 huruf (1443) agar rakyat biasa bisa menulis; diumumkan pada 1446.",
+        "en": "King Sejong created a 28-letter script (1443) so ordinary people could write; it was proclaimed in 1446."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-ORDER",
+      "story_id": "ST-A-SEJONG",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling awal.",
+            "en": "Earliest first."
+          }
+        }
+      ],
+      "image": "hist_sejong_scroll",
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Menyelesaikan 28 huruf (1443)",
+            "en": "Completes 28 letters (1443)"
+          }
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Menjadi raja (1418)",
+            "en": "Becomes king (1418)"
+          }
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Mengumumkan Hunminjeongeum (1446)",
+            "en": "Proclaims the Hunminjeongeum (1446)"
+          }
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Mendirikan Balai Para Cendekia (1420)",
+            "en": "Founds the Hall of Worthies (1420)"
+          }
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "gesture": "drag",
+      "model_answer": {
+        "id": "1418, 1420, 1443, lalu 1446.",
+        "en": "1418, 1420, 1443, then 1446."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-MATCH",
+      "story_id": "ST-A-SEJONG",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gambar dan bagian kisahnya.",
+            "en": "Picture and part of the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p1",
+          "image": "hist_sejong_scroll",
+          "text": {
+            "id": "naskah Hunminjeongeum",
+            "en": "Hunminjeongeum scroll"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "hist_rain_gauge",
+          "text": {
+            "id": "pengukur hujan",
+            "en": "rain gauge"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "hist_book_stack",
+          "text": {
+            "id": "buku",
+            "en": "books"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Mencatat curah hujan untuk pertanian",
+            "en": "Recording rainfall for farming"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Balai Para Cendekia (1420)",
+            "en": "The Hall of Worthies (1420)"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Aksara baru diumumkan (1446)",
+            "en": "The new script proclaimed (1446)"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3"
+      },
+      "gesture": "connect",
+      "model_answer": {
+        "id": "Naskah Hunminjeongeum, pengukur hujan, dan buku para cendekia.",
+        "en": "The Hunminjeongeum, the rain gauge, and the scholars' books."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-TF",
+      "story_id": "ST-A-SEJONG",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aksara buatan Sejong awalnya terdiri atas 28 huruf.",
+            "en": "Sejong's script first had 28 letters."
+          }
+        }
+      ],
+      "image": "hist_sejong_scroll",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. 17 konsonan dan 11 vokal.",
+        "en": "True. 17 consonants and 11 vowels."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "mini_reading",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-READ",
+      "story_id": "ST-A-SEJONG",
+      "reading_id": "R-SEJ-A-X-SEJONG",
+      "model_answer": {
+        "id": "Sejong membuat 28 huruf agar rakyat biasa bisa menuliskan apa yang ingin mereka sampaikan.",
+        "en": "Sejong made 28 letters so ordinary people could write what they wanted to say."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-SOURCE",
+      "story_id": "ST-A-SEJONG",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Siapa yang terutama ingin dibantunya?",
+            "en": "Whom did he mainly want to help?"
+          }
+        }
+      ],
+      "image": "hist_sejong_scroll",
+      "reading_id": "R-SEJ-A-X-SEJONG",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Rakyat biasa yang tidak bisa menuliskan pikirannya",
+            "en": "Ordinary people who could not write their thoughts"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Para pejabat istana yang sudah pandai menulis",
+            "en": "Court officials who could already write"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Para pedagang asing",
+            "en": "Foreign merchants"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Pengantar itu menyebut rakyat biasa yang tidak dapat menuliskan apa yang ingin mereka sampaikan.",
+        "en": "The preface speaks of ordinary people unable to write what they wanted to say."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-SORT",
+      "story_id": "ST-A-SEJONG",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pemimpin yang memudahkan rakyat?",
+            "en": "A leader who makes things easier for people?"
+          }
+        }
+      ],
+      "image": "hist_sejong_scroll",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Sejalan dengan teladan Sejong",
+            "en": "Fits Sejong's example"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Tidak sejalan",
+            "en": "Does not fit"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Membuat aturan yang mudah dipahami",
+            "en": "Making rules easy to understand"
+          }
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Memakai istilah rumit agar orang bingung",
+            "en": "Using jargon to confuse people"
+          }
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Mendengar kesulitan rakyat biasa",
+            "en": "Listening to ordinary people's problems"
+          }
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Meneruskan gagasan baik walau ditentang",
+            "en": "Pursuing a good idea despite opposition"
+          }
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Menyimpan ilmu hanya untuk kalangan atas",
+            "en": "Keeping knowledge for the elite"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_yes",
+        "c2": "b_no",
+        "c3": "b_yes",
+        "c4": "b_yes",
+        "c5": "b_no"
+      },
+      "gesture": "drag",
+      "model_answer": {
+        "id": "Mudah dipahami, mendengar rakyat, dan teguh pada gagasan baik.",
+        "en": "Easy to understand, listening to people, and firm on good ideas."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-A-BRAILLE",
+      "model_answer": {
+        "id": "Louis Braille menyederhanakan tulisan titik timbul menjadi sel enam titik dan menerbitkannya pada 1829.",
+        "en": "Louis Braille simplified raised-dot writing into a six-dot cell and published it in 1829."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-ORDER",
+      "story_id": "ST-A-BRAILLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling awal.",
+            "en": "Earliest first."
+          }
+        }
+      ],
+      "image": "hist_braille_book",
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Mulai mengajar di sekolah itu (1826)",
+            "en": "Starts teaching at the school (1826)"
+          }
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Lahir di Coupvray (1809)",
+            "en": "Born in Coupvray (1809)"
+          }
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Menerbitkan caranya (1829)",
+            "en": "Publishes his method (1829)"
+          }
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Masuk sekolah tunanetra di Paris (1819)",
+            "en": "Enters the school for the blind in Paris (1819)"
+          }
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "gesture": "drag",
+      "model_answer": {
+        "id": "1809, 1819, 1826, lalu 1829.",
+        "en": "1809, 1819, 1826, then 1829."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-A-BRAILLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gambar mana yang menunjukkan sel braille?",
+            "en": "Which picture shows a braille cell?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_jupiter_moons",
+          "image": "hist_jupiter_moons",
+          "text": {
+            "id": "Jupiter dan bulan-bulannya",
+            "en": "Jupiter and its moons"
+          }
+        },
+        {
+          "id": "hist_sejong_scroll",
+          "image": "hist_sejong_scroll",
+          "text": {
+            "id": "naskah Hunminjeongeum",
+            "en": "Hunminjeongeum scroll"
+          }
+        },
+        {
+          "id": "hist_khwarizmi_board",
+          "image": "hist_khwarizmi_board",
+          "text": {
+            "id": "papan hitungan",
+            "en": "calculation board"
+          }
+        },
+        {
+          "id": "hist_braille_dots",
+          "image": "hist_braille_dots",
+          "text": {
+            "id": "sel braille enam titik",
+            "en": "six-dot braille cell"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Sel braille: enam titik timbul dalam dua kolom.",
+        "en": "A braille cell: six raised dots in two columns."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 25,
+      "prompt_id": "P-TF",
+      "story_id": "ST-A-BRAILLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Satu sel braille terdiri atas dua belas titik.",
+            "en": "A braille cell has twelve dots."
+          }
+        }
+      ],
+      "image": "hist_braille_dots",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Salah. Sel braille punya enam titik, sehingga muat di bawah satu ujung jari.",
+        "en": "False. A braille cell has six dots, so it fits under one fingertip."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "mini_reading",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "PRACT",
+      "order": 26,
+      "prompt_id": "P-READ",
+      "story_id": "ST-A-BRAILLE",
+      "reading_id": "R-SEJ-A-X-BRAILLE",
+      "model_answer": {
+        "id": "PBB menetapkan 4 Januari sebagai Hari Braille Sedunia pada November 2018.",
+        "en": "The UN proclaimed 4 January World Braille Day in November 2018."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "PRACT",
+      "order": 27,
+      "prompt_id": "P-SOURCE",
+      "story_id": "ST-A-BRAILLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menurut teks, mengapa braille penting?",
+            "en": "According to the text, why does braille matter?"
+          }
+        }
+      ],
+      "image": "hist_braille_book",
+      "reading_id": "R-SEJ-A-X-BRAILLE",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Agar buku lebih murah dicetak",
+            "en": "To make books cheaper to print"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Untuk pendidikan, berpendapat, informasi, dan inklusi sosial",
+            "en": "For education, expression, information and social inclusion"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Agar semua orang memakai huruf yang sama",
+            "en": "So that everyone uses the same letters"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "PBB menyebut braille penting untuk pendidikan, kebebasan berpendapat, akses informasi, dan inklusi.",
+        "en": "The UN calls braille essential for education, expression, access to information and inclusion."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "PRACT",
+      "order": 28,
+      "prompt_id": "P-VALUE",
+      "story_id": "ST-A-BRAILLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sikap mana yang sejalan dengan semangatnya?",
+            "en": "Which fits his spirit?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "val_left_out",
+          "image": "val_left_out",
+          "text": {
+            "id": "membiarkan seseorang tersisih",
+            "en": "leaving someone out"
+          }
+        },
+        {
+          "id": "val_phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "menulis pesan yang menyakitkan",
+            "en": "sending an unkind message"
+          }
+        },
+        {
+          "id": "val_include_friend",
+          "image": "val_include_friend",
+          "text": {
+            "id": "mengajak teman yang tersisih ikut serta",
+            "en": "including someone left out"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mengajak semua orang ikut serta, seperti braille membuka bacaan bagi tunanetra.",
+        "en": "Including everyone, as braille opened reading to blind people."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 29,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-A-CUT-NYAK-DHIEN",
+      "model_answer": {
+        "id": "Cut Nyak Dhien memimpin rakyatnya setelah 1899 dan, di pengasingan di Sumedang, mengajar warga.",
+        "en": "Cut Nyak Dhien led her people after 1899 and, in exile in Sumedang, taught the local people."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-016",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 30,
+      "prompt_id": "P-ORDER",
+      "story_id": "ST-A-CUT-NYAK-DHIEN",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling awal.",
+            "en": "Earliest first."
+          }
+        }
+      ],
+      "image": "hist_rumoh_aceh",
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Diasingkan ke Sumedang",
+            "en": "Exiled to Sumedang"
+          }
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Lahir di Lampadang, Aceh Besar (1848)",
+            "en": "Born in Lampadang, Aceh Besar (1848)"
+          }
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Wafat di Sumedang (1908)",
+            "en": "Dies in Sumedang (1908)"
+          }
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Memimpin rakyatnya setelah 1899",
+            "en": "Leads her people after 1899"
+          }
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "gesture": "drag",
+      "model_answer": {
+        "id": "1848, setelah 1899, pengasingan, lalu wafat pada 1908.",
+        "en": "1848, after 1899, exile, then her death in 1908."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-017",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 31,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-A-CUT-NYAK-DHIEN",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rumah tradisional mana latar kisah ini?",
+            "en": "Which traditional house sets this story?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "soc_rumah_gadang",
+          "image": "soc_rumah_gadang",
+          "text": {
+            "id": "rumah gadang",
+            "en": "rumah gadang"
+          }
+        },
+        {
+          "id": "hist_rumoh_aceh",
+          "image": "hist_rumoh_aceh",
+          "text": {
+            "id": "rumoh Aceh",
+            "en": "Acehnese rumoh"
+          },
+          "correct": true
+        },
+        {
+          "id": "soc_joglo",
+          "image": "soc_joglo",
+          "text": {
+            "id": "joglo",
+            "en": "joglo"
+          }
+        },
+        {
+          "id": "soc_tongkonan",
+          "image": "soc_tongkonan",
+          "text": {
+            "id": "tongkonan",
+            "en": "tongkonan"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Rumoh Aceh, rumah adat Aceh, tempat kisahnya bermula.",
+        "en": "The rumoh Aceh, the traditional house of Aceh, where her story begins."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-018",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 32,
+      "prompt_id": "P-TF",
+      "story_id": "ST-A-CUT-NYAK-DHIEN",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di Sumedang, warga menyebut Cut Nyak Dhien «Ibu Perbu».",
+            "en": "In Sumedang the local people called Cut Nyak Dhien \"Ibu Perbu\"."
+          }
+        }
+      ],
+      "image": "hist_bg_village_java",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Ia mengajarkan agama kepada warga sekitar, yang mengenalnya sebagai Ibu Perbu.",
+        "en": "True. She taught religion to local people, who knew her as Ibu Perbu."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-019",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 33,
+      "prompt_id": "P-MATCH",
+      "story_id": "ST-A-CUT-NYAK-DHIEN",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gambar dan bagian kisahnya.",
+            "en": "Picture and part of the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p1",
+          "image": "hist_rumoh_aceh",
+          "text": {
+            "id": "rumoh Aceh",
+            "en": "Acehnese rumoh"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "hist_bg_hills_aceh",
+          "text": {
+            "id": "hutan dan pegunungan Aceh",
+            "en": "the forests and hills of Aceh"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "hist_book_stack",
+          "text": {
+            "id": "buku",
+            "en": "books"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Bertahun-tahun memimpin rakyatnya",
+            "en": "Years of leading her people"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Mengajar warga di Sumedang",
+            "en": "Teaching local people in Sumedang"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Lahir di Aceh Besar",
+            "en": "Born in Aceh Besar"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3"
+      },
+      "gesture": "connect",
+      "model_answer": {
+        "id": "Rumoh Aceh, pegunungan tempat ia memimpin, dan buku untuk mengajar di Sumedang.",
+        "en": "The rumoh Aceh, the hills where she led, and books for teaching in Sumedang."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-020",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "PRACT",
+      "order": 34,
+      "prompt_id": "P-SORT",
+      "story_id": "ST-A-CUT-NYAK-DHIEN",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Seperti apa kepemimpinannya?",
+            "en": "What was her leadership like?"
+          }
+        }
+      ],
+      "image": "hist_rumoh_aceh",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Kepemimpinan Cut Nyak Dhien",
+            "en": "Cut Nyak Dhien's leadership"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Bukan teladannya",
+            "en": "Not her example"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Menjaga kelompok tetap bersatu",
+            "en": "Keeping the group together"
+          }
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Meninggalkan orang yang dipimpin saat sulit",
+            "en": "Abandoning your people in hard times"
+          }
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Tetap peduli walau sakit dan renta",
+            "en": "Still caring when ill and frail"
+          }
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Berbagi ilmu di tempat pengasingan",
+            "en": "Sharing knowledge in exile"
+          }
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Berhenti peduli karena keadaan berat",
+            "en": "Giving up on others when times are hard"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_yes",
+        "c2": "b_no",
+        "c3": "b_yes",
+        "c4": "b_yes",
+        "c5": "b_no"
+      },
+      "gesture": "drag",
+      "model_answer": {
+        "id": "Menyatukan, tetap peduli, dan berbagi ilmu.",
+        "en": "Keep people together, keep caring, and share knowledge."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-021",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling awal.",
+            "en": "Earliest first."
+          }
+        }
+      ],
+      "image": "hist_book_stack",
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Cut Nyak Dhien lahir (1848)",
+            "en": "Cut Nyak Dhien is born (1848)"
+          }
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Sejong menyelesaikan 28 huruf (1443)",
+            "en": "Sejong completes 28 letters (1443)"
+          }
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Cut Nyak Dhien wafat (1908)",
+            "en": "Cut Nyak Dhien dies (1908)"
+          }
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Louis Braille menerbitkan caranya (1829)",
+            "en": "Louis Braille publishes his method (1829)"
+          }
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "gesture": "drag",
+      "model_answer": {
+        "id": "1443, 1829, 1848, lalu 1908.",
+        "en": "1443, 1829, 1848, then 1908."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-022",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-WHO",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gambar ini milik kisah siapa?",
+            "en": "Whose story does each picture belong to?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_s",
+          "text": {
+            "id": "Raja Sejong",
+            "en": "King Sejong"
+          }
+        },
+        {
+          "id": "b_b",
+          "text": {
+            "id": "Louis Braille",
+            "en": "Louis Braille"
+          }
+        },
+        {
+          "id": "b_c",
+          "text": {
+            "id": "Cut Nyak Dhien",
+            "en": "Cut Nyak Dhien"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "naskah Hunminjeongeum",
+            "en": "Hunminjeongeum scroll"
+          },
+          "image": "hist_sejong_scroll"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "sel braille",
+            "en": "braille cell"
+          },
+          "image": "hist_braille_dots"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "rumoh Aceh",
+            "en": "Acehnese rumoh"
+          },
+          "image": "hist_rumoh_aceh"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "pengukur hujan",
+            "en": "rain gauge"
+          },
+          "image": "hist_rain_gauge"
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "buku braille",
+            "en": "braille book"
+          },
+          "image": "hist_braille_book"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_s",
+        "c2": "b_b",
+        "c3": "b_c",
+        "c4": "b_s",
+        "c5": "b_b"
+      },
+      "gesture": "drag",
+      "model_answer": {
+        "id": "Sejong: naskah dan pengukur hujan. Braille: sel dan buku braille. Cut Nyak Dhien: rumoh Aceh.",
+        "en": "Sejong: the scroll and the rain gauge. Braille: the cell and the braille book. Cut Nyak Dhien: the rumoh Aceh."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-023",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sejong dan Braille sama-sama membuat tulisan yang lebih mudah dipelajari.",
+            "en": "Sejong and Braille both made writing easier to learn."
+          }
+        }
+      ],
+      "image": "hist_braille_book",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Sejong untuk rakyat biasa, Braille untuk pembaca tunanetra.",
+        "en": "True. Sejong for ordinary people, Braille for blind readers."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-024",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-SOURCE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kapan PBB menetapkan Hari Braille Sedunia?",
+            "en": "When did the UN proclaim World Braille Day?"
+          }
+        }
+      ],
+      "image": "hist_braille_dots",
+      "reading_id": "R-SEJ-A-X-BRAILLE",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "November 2018",
+            "en": "November 2018"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Januari 1809",
+            "en": "January 1809"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "1829",
+            "en": "1829"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Pada November 2018, lewat resolusi A/RES/73/161.",
+        "en": "In November 2018, by resolution A/RES/73/161."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-02-025",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "hist_braille_dots",
+      "gem": true,
+      "source": "Britannica: Louis Braille (six-dot cell; adapted for music); hitungan kombinatorik 2^6 − 1 = 63",
+      "model_answer": {
+        "id": "Enam titik dalam satu sel braille dapat disusun menjadi 63 pola berbeda (2 pangkat 6, dikurangi sel kosong). Cukup untuk huruf, angka, tanda baca, dan not musik.",
+        "en": "The six dots of a braille cell can form 63 different patterns (2 to the power of 6, minus the empty cell). That is enough for letters, numbers, punctuation and musical notes."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    },
+    {
+      "item_id": "SEJ-A-X-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pawai Garam dimulai pada 12 Maret 1930 dan tiba di Dandi pada 5 April. Berapa hari perjalanannya?",
+            "en": "The Salt March began on 12 March 1930 and reached Dandi on 5 April. How many days did it take?"
+          }
+        }
+      ],
+      "image": "hist_sandals_path",
+      "numeric": {
+        "value": 24,
+        "tolerance": 0
+      },
+      "model_answer": {
+        "id": "Dari 12 Maret ke 31 Maret 19 hari, ditambah 5 hari di bulan April: 24 hari.",
+        "en": "12 to 31 March is 19 days, plus 5 days in April: 24 days."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-x-0.1"
+    }
+  ]
+}

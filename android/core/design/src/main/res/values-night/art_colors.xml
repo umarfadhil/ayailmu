@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Night variant of the illustration palette, drawn on night paper #1F1D1A. Same roles, readable in the dark:
+  - ink becomes a warm light line (#E6DED0), so it reads on night paper;
+  - paper becomes a slightly lighter night tone (#2A2724), so paper-filled shapes (eggs, pages) still separate;
+  - the colours are muted to mid tones, not lifted: they stand clear of night paper (3.9:1 or more) while the
+    light ink lines and hatching on top of them stay visible (about 2.4:1 to 3.2:1). Brighter fills would swallow
+    the faces and hatching drawn over them.
+  Keep in sync with NIGHT in art/tools/draw.py (used for the *_night contact sheets).
+-->
+<resources>
+  <color name="art_paper">#2A2724</color>
+  <color name="art_ink">#E6DED0</color>
+  <color name="art_clay">#B8654A</color>
+  <color name="art_ochre">#AD884B</color>
+  <color name="art_sage">#7E8C6B</color>
+  <color name="art_slate">#6F7F98</color>
+  <color name="art_blush">#B4857B</color>
+</resources>

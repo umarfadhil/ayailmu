@@ -1,0 +1,1826 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "ing-a-x-0.1",
+    "subject": "bahasa",
+    "track": "ing-a-x",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id"
+    ],
+    "target_lang": "en",
+    "level": "master",
+    "title": {
+      "id": "Bahasa Inggris — Master (Dewasa)",
+      "en": "English — Master (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12) for review: needs a native English reviewer (listen to every clip in android/content/voice/en.levels.json and the reused ones in en.json) and the Indonesian and English language reviewers before any item is approved (docs/syllabus/01_BAHASA.md §B, Adults Master, starter units 01-02; builds on docs/syllabus/bahasa/en_pemula.md). American spelling throughout.",
+  "prompts": {
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-LISTEN-ANS": {
+      "id": "Dengar, lalu pilih artinya.",
+      "en": "Listen, then pick the meaning."
+    },
+    "P-LISTEN-WHO": {
+      "id": "Dengar, lalu pilih lawan bicaranya.",
+      "en": "Listen: who are they talking to?"
+    },
+    "P-MATCH-MEAN": {
+      "id": "Hubungkan kata dengan artinya.",
+      "en": "Connect each word to its meaning."
+    },
+    "P-SORT": {
+      "id": "Seret ke keranjang yang tepat.",
+      "en": "Drag each card into a basket."
+    },
+    "P-BUILD": {
+      "id": "Susun kalimatnya.",
+      "en": "Build the sentence."
+    },
+    "P-ORDER-EMAIL": {
+      "id": "Urutkan bagian emailnya.",
+      "en": "Put the email in order."
+    },
+    "P-FILL": {
+      "id": "Seret kata ke tempat kosong.",
+      "en": "Drag the word into the gap."
+    },
+    "P-REPLY": {
+      "id": "Pilih balasan yang pas.",
+      "en": "Pick the best reply."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban yang tepat.",
+      "en": "Pick the right answer."
+    },
+    "P-FORMAL": {
+      "id": "Mana yang cocok untuk email kerja?",
+      "en": "Which suits a work email?"
+    },
+    "P-READ": {
+      "id": "Baca percakapannya dulu.",
+      "en": "Read the conversation first."
+    },
+    "P-READ-TEXT": {
+      "id": "Baca teksnya dulu.",
+      "en": "Read the text first."
+    },
+    "P-ANSWER": {
+      "id": "Jawab sesuai percakapan.",
+      "en": "Answer from the conversation."
+    },
+    "P-ANSWER-TEXT": {
+      "id": "Jawab sesuai bacaan.",
+      "en": "Answer from the reading."
+    },
+    "P-TRY": {
+      "id": "Coba hari ini",
+      "en": "Try it today"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Correct. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Baik, kita lanjut.",
+      "en": "Good, let's continue."
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Pendapat & nuansa",
+        "en": "Opinions & nuance"
+      },
+      "sticker": "sticker_book"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Email & permintaan sopan",
+        "en": "Emails & polite requests"
+      },
+      "sticker": "sticker_mango"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "ING-A-X-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Pendapat & nuansa",
+        "en": "Opinions & nuance"
+      },
+      "body": [
+        {
+          "id": "Pendapat: I think…, In my opinion…, I'm not sure.",
+          "en": "Opinions: I think…, In my opinion…, I'm not sure."
+        },
+        {
+          "id": "Setuju: I agree, bukan I am agree.",
+          "en": "To agree, say I agree, not I am agree."
+        },
+        {
+          "id": "Melunakkan: might, probably, seems, a bit.",
+          "en": "Softening: might, probably, seems, a bit."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "I see your point, but I'm not sure.",
+          "gloss": {
+            "id": "Saya paham maksud Anda, tapi saya ragu.",
+            "en": "polite disagreement"
+          }
+        },
+        {
+          "target_text": "It might rain later.",
+          "gloss": {
+            "id": "Mungkin nanti hujan.",
+            "en": "might = maybe, not certain"
+          }
+        },
+        {
+          "target_text": "Actually, I prefer tea.",
+          "gloss": {
+            "id": "Sebenarnya saya lebih suka teh.",
+            "en": "actually = sebenarnya, not aktual"
+          }
+        },
+        {
+          "target_text": "The price seems a bit high.",
+          "gloss": {
+            "id": "Harganya agak mahal, sepertinya.",
+            "en": "softer than: too expensive"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "ING-A-X-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Email & permintaan sopan",
+        "en": "Emails & polite requests"
+      },
+      "body": [
+        {
+          "id": "Permintaan sopan: Could you…? Would you mind…ing?",
+          "en": "Polite requests: Could you…? Would you mind…ing?"
+        },
+        {
+          "id": "Email kerja: sapaan, tujuan, permintaan, penutup.",
+          "en": "Work emails: greeting, purpose, request, closing."
+        },
+        {
+          "id": "Ke atasan lebih formal daripada ke teman.",
+          "en": "To a manager, be more formal than to a friend."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "Could you send me the report by Friday?",
+          "gloss": {
+            "id": "Bisa kirimkan laporannya paling lambat Jumat?",
+            "en": "a polite request"
+          }
+        },
+        {
+          "target_text": "Would you mind closing the door?",
+          "gloss": {
+            "id": "Boleh tolong tutup pintunya?",
+            "en": "would you mind + -ing"
+          }
+        },
+        {
+          "target_text": "I'm writing to ask about…",
+          "gloss": {
+            "id": "Saya menulis untuk menanyakan…",
+            "en": "the purpose of an email"
+          }
+        },
+        {
+          "target_text": "Best regards,",
+          "gloss": {
+            "id": "Salam,",
+            "en": "a common closing"
+          }
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {
+    "R-INGAX-01": {
+      "title": {
+        "id": "Rapat tim",
+        "en": "A team meeting"
+      },
+      "target_text": "Dewi: I think we should work from home on Fridays.\nArif: I see your point, but some clients might visit the office.\nDewi: That's true. Maybe half the team could stay in the office?\nArif: That sounds like a good idea.",
+      "body": [
+        {
+          "id": "Dewi dan Arif berdiskusi di rapat.",
+          "en": "Dewi and Arif discuss an idea at a meeting."
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-INGAX-02": {
+      "title": {
+        "id": "Email ke atasan",
+        "en": "An email to a manager"
+      },
+      "target_text": "Dear Mr. Hadi,\nI'm writing about the training on Monday. I have a doctor's appointment that morning.\nCould I join the afternoon session instead?\nBest regards, Sinta",
+      "body": [
+        {
+          "id": "Sinta menulis email kepada atasannya.",
+          "en": "Sinta writes an email to her manager."
+        }
+      ],
+      "review_status": "draft"
+    }
+  },
+  "items": [
+    {
+      "item_id": "ING-A-X-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-FILL",
+      "target_text": "I ___ with you.",
+      "image": "pic_friends",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "g3",
+          "target_text": "agreeing"
+        },
+        {
+          "id": "g2",
+          "target_text": "am agree"
+        },
+        {
+          "id": "g1",
+          "target_text": "agree"
+        }
+      ],
+      "solution": [
+        "g1"
+      ],
+      "model_answer": {
+        "id": "Agree sudah kata kerja: I agree, tanpa am.",
+        "en": "Agree is already a verb: I agree, with no am."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ENG-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-LISTEN-ANS",
+      "audio": "en/i_see_your_point_but_i_dont_agree",
+      "options": [
+        {
+          "id": "agree",
+          "text": {
+            "id": "Saya setuju sepenuhnya dengan Anda.",
+            "en": "I agree with you completely."
+          }
+        },
+        {
+          "id": "ok",
+          "text": {
+            "id": "Saya paham maksud Anda, tetapi saya tidak setuju.",
+            "en": "I understand you, but I think differently."
+          },
+          "correct": true
+        },
+        {
+          "id": "lost",
+          "text": {
+            "id": "Saya tidak mengerti maksud Anda.",
+            "en": "I don't understand what you mean."
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "I see your point, but… = paham, tetapi tidak setuju.",
+        "en": "I see your point, but… is a polite way to disagree."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "ENG-HEDGE"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-BUILD",
+      "image": "note_generic",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "t5",
+          "target_text": "bit"
+        },
+        {
+          "id": "t6",
+          "target_text": "high"
+        },
+        {
+          "id": "t4",
+          "target_text": "a"
+        },
+        {
+          "id": "t1",
+          "target_text": "The"
+        },
+        {
+          "id": "t3",
+          "target_text": "seems"
+        },
+        {
+          "id": "t2",
+          "target_text": "price"
+        },
+        {
+          "id": "x1",
+          "target_text": "very"
+        }
+      ],
+      "solution": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "model_answer": {
+        "id": "Seems + a bit = lebih halus daripada It's too expensive.",
+        "en": "Seems and a bit sound softer than It's too expensive."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ENG-TRICKY"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-MATCH-MEAN",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "w_actually",
+          "target_text": "actually",
+          "audio": "en/actually"
+        },
+        {
+          "id": "w_sensible",
+          "target_text": "sensible",
+          "audio": "en/sensible"
+        },
+        {
+          "id": "w_eventually",
+          "target_text": "eventually",
+          "audio": "en/eventually"
+        },
+        {
+          "id": "w_sensitive",
+          "target_text": "sensitive",
+          "audio": "en/sensitive"
+        },
+        {
+          "id": "m_actually",
+          "text": {
+            "id": "sebenarnya",
+            "en": "in fact"
+          }
+        },
+        {
+          "id": "m_sensible",
+          "text": {
+            "id": "masuk akal",
+            "en": "reasonable"
+          }
+        },
+        {
+          "id": "m_eventually",
+          "text": {
+            "id": "akhirnya",
+            "en": "in the end"
+          }
+        },
+        {
+          "id": "m_sensitive",
+          "text": {
+            "id": "peka",
+            "en": "easily affected"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "w_actually": "m_actually",
+        "w_sensible": "m_sensible",
+        "w_eventually": "m_eventually",
+        "w_sensitive": "m_sensitive"
+      },
+      "model_answer": {
+        "id": "Actually ≠ aktual, sensible ≠ sensitif, eventually ≠ mungkin.",
+        "en": "False friends: actually, sensible and eventually don't mean what they look like."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-TRICKY"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-PICK",
+      "target_text": "Can I charge my cell phone here?",
+      "audio": "en/can_i_charge_my_cell_phone_here",
+      "options": [
+        {
+          "id": "phone",
+          "image": "pic_phone",
+          "text": {
+            "id": "HP",
+            "en": "cell phone"
+          },
+          "correct": true
+        },
+        {
+          "id": "computer",
+          "image": "pic_computer",
+          "text": {
+            "id": "komputer",
+            "en": "computer"
+          }
+        },
+        {
+          "id": "tablet",
+          "image": "pic_tablet",
+          "text": {
+            "id": "tablet",
+            "en": "tablet"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Cell phone (AS) / mobile phone (Inggris). \"Handphone\" jarang dipakai.",
+        "en": "Cell phone (US) or mobile phone (UK); native speakers rarely say handphone."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "ENG-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_agree",
+          "target_text": "agree",
+          "audio": "en/agree"
+        },
+        {
+          "id": "b_disagree",
+          "target_text": "disagree",
+          "audio": "en/disagree"
+        },
+        {
+          "id": "exactly",
+          "target_text": "Exactly!",
+          "audio": "en/exactly"
+        },
+        {
+          "id": "not_sure",
+          "target_text": "I'm not so sure about that.",
+          "audio": "en/im_not_so_sure_about_that"
+        },
+        {
+          "id": "couldnt",
+          "target_text": "I couldn't agree more.",
+          "audio": "en/i_couldnt_agree_more"
+        },
+        {
+          "id": "differently",
+          "target_text": "I see it differently.",
+          "audio": "en/i_see_it_differently"
+        },
+        {
+          "id": "good_point",
+          "target_text": "That's a good point.",
+          "audio": "en/thats_a_good_point"
+        },
+        {
+          "id": "afraid",
+          "target_text": "I'm afraid I disagree.",
+          "audio": "en/im_afraid_i_disagree"
+        }
+      ],
+      "solution_pairs": {
+        "exactly": "b_agree",
+        "not_sure": "b_disagree",
+        "couldnt": "b_agree",
+        "differently": "b_disagree",
+        "good_point": "b_agree",
+        "afraid": "b_disagree"
+      },
+      "model_answer": {
+        "id": "I couldn't agree more = sangat setuju. I'm afraid I disagree = maaf, tidak setuju.",
+        "en": "I couldn't agree more means strong agreement; I'm afraid I disagree is polite."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "mini_reading",
+      "skills": [
+        "ENG-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-READ",
+      "image": "pic_computer",
+      "reading_id": "R-INGAX-01",
+      "model_answer": {
+        "id": "I see your point, but… lalu Maybe…? = berdiskusi dengan sopan.",
+        "en": "I see your point, but… and Maybe…? keep a discussion polite."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ENG-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-ANSWER",
+      "target_text": "Where does Dewi want to work on Fridays?",
+      "audio": "en/where_does_dewi_want_to_work_on_fridays",
+      "reading_id": "R-INGAX-01",
+      "options": [
+        {
+          "id": "p_hotel",
+          "image": "pic_hotel",
+          "text": {
+            "id": "hotel",
+            "en": "hotel"
+          }
+        },
+        {
+          "id": "p_school",
+          "image": "pic_school",
+          "text": {
+            "id": "sekolah",
+            "en": "school"
+          }
+        },
+        {
+          "id": "home",
+          "image": "pic_house",
+          "text": {
+            "id": "rumah",
+            "en": "at home"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Dewi ingin bekerja dari rumah: work from home.",
+        "en": "Dewi wants to work from home on Fridays."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ENG-HEDGE"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-LISTEN-ANS",
+      "audio": "en/it_might_rain_this_afternoon",
+      "options": [
+        {
+          "id": "will",
+          "text": {
+            "id": "Nanti siang pasti hujan.",
+            "en": "There will certainly be rain later today."
+          }
+        },
+        {
+          "id": "past",
+          "text": {
+            "id": "Tadi siang hujan.",
+            "en": "It rained earlier today."
+          }
+        },
+        {
+          "id": "might",
+          "text": {
+            "id": "Mungkin nanti siang hujan.",
+            "en": "Maybe there will be rain later today."
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Might = mungkin (tidak pasti).",
+        "en": "Might means maybe: it isn't certain."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-TRICKY"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-FILL",
+      "target_text": "___, I prefer tea.",
+      "image": "pic_tea_cup",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "g3",
+          "target_text": "Actual"
+        },
+        {
+          "id": "g1",
+          "target_text": "Actually"
+        },
+        {
+          "id": "g2",
+          "target_text": "Currently"
+        }
+      ],
+      "solution": [
+        "g1"
+      ],
+      "model_answer": {
+        "id": "Actually = sebenarnya. Aktual/terkini = current.",
+        "en": "Actually means in fact; for terkini, say current."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ENG-TRICKY"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-LISTEN-ANS",
+      "audio": "en/my_phone_is_dead",
+      "options": [
+        {
+          "id": "lost",
+          "text": {
+            "id": "HP saya hilang.",
+            "en": "I can't find my phone."
+          }
+        },
+        {
+          "id": "battery",
+          "text": {
+            "id": "Baterai HP saya habis.",
+            "en": "My phone's battery is empty."
+          },
+          "correct": true
+        },
+        {
+          "id": "new",
+          "text": {
+            "id": "HP saya baru.",
+            "en": "My phone is new."
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "My phone is dead = baterai HP saya habis.",
+        "en": "My phone is dead: the battery is empty."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ENG-OPINION"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-REPLY",
+      "target_text": "What do you think of the new schedule?",
+      "audio": "en/what_do_you_think_of_the_new_schedule",
+      "options": [
+        {
+          "id": "better",
+          "target_text": "I think it's better than the old one.",
+          "correct": true
+        },
+        {
+          "id": "bad_yes_i_think",
+          "target_text": "Yes, I think."
+        },
+        {
+          "id": "bad_am_agree",
+          "target_text": "I am agree."
+        }
+      ],
+      "model_answer": {
+        "id": "Pendapat: I think + kalimat lengkap.",
+        "en": "Give an opinion with I think + a full sentence."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ENG-TRICKY"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "target_text": "eventually",
+      "audio": "en/eventually",
+      "options": [
+        {
+          "id": "end",
+          "text": {
+            "id": "akhirnya (setelah lama)",
+            "en": "in the end"
+          },
+          "correct": true
+        },
+        {
+          "id": "maybe",
+          "text": {
+            "id": "mungkin",
+            "en": "maybe"
+          }
+        },
+        {
+          "id": "soon",
+          "text": {
+            "id": "segera",
+            "en": "soon"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Eventually = akhirnya, setelah lama. Bukan mungkin.",
+        "en": "Eventually means in the end, after a long time."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-HEDGE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "The meeting ___ start late, but I'm not sure.",
+      "image": "pic_computer",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "g3",
+          "target_text": "must"
+        },
+        {
+          "id": "g2",
+          "target_text": "will"
+        },
+        {
+          "id": "g1",
+          "target_text": "might"
+        }
+      ],
+      "solution": [
+        "g1"
+      ],
+      "model_answer": {
+        "id": "Tidak yakin, jadi might.",
+        "en": "You're not sure, so might."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-PICK",
+      "target_text": "Would you mind opening the window?",
+      "audio": "en/would_you_mind_opening_the_window",
+      "options": [
+        {
+          "id": "p_door",
+          "image": "pic_door",
+          "text": {
+            "id": "pintu",
+            "en": "door"
+          }
+        },
+        {
+          "id": "computer",
+          "image": "pic_computer",
+          "text": {
+            "id": "komputer",
+            "en": "computer"
+          }
+        },
+        {
+          "id": "p_window",
+          "image": "pic_window",
+          "text": {
+            "id": "jendela",
+            "en": "window"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Would you mind opening the window? = boleh tolong buka jendela?",
+        "en": "Would you mind opening the window? is a polite request."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "ENG-REGISTER"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_formal",
+          "image": "pic_computer",
+          "text": {
+            "id": "email ke atasan",
+            "en": "email to a manager"
+          }
+        },
+        {
+          "id": "b_casual",
+          "image": "pic_phone",
+          "text": {
+            "id": "chat dengan teman",
+            "en": "chat with a friend"
+          }
+        },
+        {
+          "id": "dear",
+          "target_text": "Dear Mr. Hadi,",
+          "audio": "en/dear_mr_hadi"
+        },
+        {
+          "id": "hey",
+          "target_text": "Hey! What's up?",
+          "audio": "en/hey_whats_up"
+        },
+        {
+          "id": "writing",
+          "target_text": "I'm writing to ask about the meeting.",
+          "audio": "en/im_writing_to_ask_about_the_meeting"
+        },
+        {
+          "id": "lunch",
+          "target_text": "Wanna grab lunch?",
+          "audio": "en/wanna_grab_lunch"
+        },
+        {
+          "id": "regards",
+          "target_text": "Best regards,",
+          "audio": "en/best_regards"
+        },
+        {
+          "id": "see_ya",
+          "target_text": "See ya!",
+          "audio": "en/see_ya"
+        }
+      ],
+      "solution_pairs": {
+        "dear": "b_formal",
+        "hey": "b_casual",
+        "writing": "b_formal",
+        "lunch": "b_casual",
+        "regards": "b_formal",
+        "see_ya": "b_casual"
+      },
+      "model_answer": {
+        "id": "Atasan: Dear…, I'm writing…, Best regards. Teman: Hey!, Wanna…?, See ya!",
+        "en": "Manager: Dear…, I'm writing…, Best regards. Friend: Hey!, Wanna…?, See ya!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ENG-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-LISTEN-ANS",
+      "audio": "en/could_you_call_me_back_later",
+      "options": [
+        {
+          "id": "me",
+          "text": {
+            "id": "Bisakah saya menelepon Anda nanti?",
+            "en": "May I phone you later?"
+          }
+        },
+        {
+          "id": "back",
+          "text": {
+            "id": "Bisa telepon saya lagi nanti?",
+            "en": "Please phone me again later."
+          },
+          "correct": true
+        },
+        {
+          "id": "earlier",
+          "text": {
+            "id": "Anda menelepon saya tadi?",
+            "en": "Did you phone me earlier?"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Call me back = telepon saya lagi.",
+        "en": "Call me back: you phone me again later."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-FILL",
+      "target_text": "Would you mind ___ the door?",
+      "image": "pic_door",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "g2",
+          "target_text": "close"
+        },
+        {
+          "id": "g3",
+          "target_text": "to close"
+        },
+        {
+          "id": "g1",
+          "target_text": "closing"
+        }
+      ],
+      "solution": [
+        "g1"
+      ],
+      "model_answer": {
+        "id": "Would you mind + -ing: closing.",
+        "en": "Would you mind is followed by -ing: closing."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "ENG-EMAIL"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-ORDER-EMAIL",
+      "image": "pic_computer",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "e1",
+          "target_text": "Dear Ms. Wijaya,",
+          "audio": "en/dear_ms_wijaya"
+        },
+        {
+          "id": "e3",
+          "target_text": "Could you send me the agenda by Thursday?",
+          "audio": "en/could_you_send_me_the_agenda_by_thursday"
+        },
+        {
+          "id": "e2",
+          "target_text": "I'm writing about our meeting next week.",
+          "audio": "en/im_writing_about_our_meeting_next_week"
+        },
+        {
+          "id": "e4",
+          "target_text": "Best regards, Andi",
+          "audio": "en/best_regards_andi"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "model_answer": {
+        "id": "Sapaan, tujuan, permintaan, penutup.",
+        "en": "Greeting, purpose, request, closing."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ENG-EMAIL"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-LISTEN-ANS",
+      "audio": "en/thanks_for_your_quick_reply",
+      "options": [
+        {
+          "id": "asap",
+          "text": {
+            "id": "Mohon balas secepatnya.",
+            "en": "Please answer as soon as you can."
+          }
+        },
+        {
+          "id": "thanks",
+          "text": {
+            "id": "Terima kasih atas balasan cepat Anda.",
+            "en": "I'm grateful you answered fast."
+          },
+          "correct": true
+        },
+        {
+          "id": "late",
+          "text": {
+            "id": "Maaf balasan saya terlambat.",
+            "en": "Sorry I answered late."
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Thanks for your quick reply = terima kasih atas balasan cepatnya.",
+        "en": "Thanks for your quick reply: they answered fast."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "mini_reading",
+      "skills": [
+        "ENG-EMAIL"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-READ-TEXT",
+      "image": "pic_computer",
+      "reading_id": "R-INGAX-02",
+      "model_answer": {
+        "id": "Tujuan, alasan singkat, permintaan sopan, penutup.",
+        "en": "Purpose, a short reason, a polite request, a closing."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ENG-EMAIL"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-ANSWER-TEXT",
+      "target_text": "Why can't Sinta come in the morning?",
+      "audio": "en/why_cant_sinta_come_in_the_morning",
+      "reading_id": "R-INGAX-02",
+      "options": [
+        {
+          "id": "p_doctor",
+          "image": "pic_doctor",
+          "text": {
+            "id": "dokter",
+            "en": "doctor"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_train",
+          "image": "pic_train",
+          "text": {
+            "id": "kereta",
+            "en": "train"
+          }
+        },
+        {
+          "id": "p_school",
+          "image": "pic_school",
+          "text": {
+            "id": "sekolah",
+            "en": "school"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Sinta ada janji dengan dokter pagi itu.",
+        "en": "Sinta has a doctor's appointment that morning."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "ENG-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-BUILD",
+      "image": "pic_computer",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "t8",
+          "target_text": "Friday"
+        },
+        {
+          "id": "x1",
+          "target_text": "to"
+        },
+        {
+          "id": "t7",
+          "target_text": "by"
+        },
+        {
+          "id": "t3",
+          "target_text": "send"
+        },
+        {
+          "id": "t1",
+          "target_text": "Could"
+        },
+        {
+          "id": "t5",
+          "target_text": "the"
+        },
+        {
+          "id": "t2",
+          "target_text": "you"
+        },
+        {
+          "id": "t6",
+          "target_text": "file"
+        },
+        {
+          "id": "t4",
+          "target_text": "me"
+        }
+      ],
+      "solution": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8"
+      ],
+      "model_answer": {
+        "id": "Could you + kata kerja dasar: Could you send…?",
+        "en": "Could you + the base verb: Could you send…?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-EMAIL"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-FILL",
+      "target_text": "I look forward to ___ from you.",
+      "image": "pic_write",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "g2",
+          "target_text": "hear"
+        },
+        {
+          "id": "g3",
+          "target_text": "heard"
+        },
+        {
+          "id": "g1",
+          "target_text": "hearing"
+        }
+      ],
+      "solution": [
+        "g1"
+      ],
+      "model_answer": {
+        "id": "Look forward to + -ing: hearing.",
+        "en": "Look forward to is followed by -ing: hearing."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ENG-REGISTER"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-LISTEN-WHO",
+      "audio": "en/wanna_grab_lunch",
+      "options": [
+        {
+          "id": "p_teacher",
+          "image": "pic_teacher",
+          "text": {
+            "id": "guru",
+            "en": "teacher"
+          }
+        },
+        {
+          "id": "p_doctor",
+          "image": "pic_doctor",
+          "text": {
+            "id": "dokter",
+            "en": "doctor"
+          }
+        },
+        {
+          "id": "friend",
+          "image": "pic_friends",
+          "text": {
+            "id": "teman",
+            "en": "a friend"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Wanna grab lunch? sangat santai: untuk teman.",
+        "en": "Wanna grab lunch? is very casual: for a friend."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ENG-EMAIL"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-TRY",
+      "image": "pic_computer",
+      "model_answer": {
+        "id": "Tulis email tiga baris untuk rekan kerja: sapaan, satu permintaan dengan \"Could you…?\", lalu \"Best regards\". Baca keras-keras sebelum dikirim.",
+        "en": "Write a three-line email to a colleague: a greeting, one request with \"Could you…?\", then \"Best regards\". Read it aloud before you send it."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ENG-REGISTER"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "note_generic",
+      "gem": true,
+      "source": "Merriam-Webster, \"salary\" (etymology: Latin salarium, \"money paid to Roman soldiers for salt\", from sal \"salt\"); Online Etymology Dictionary, \"salary\" (etymonline.com/word/salary: from Latin salarium, connected with sal \"salt\"; how exactly is uncertain).",
+      "model_answer": {
+        "id": "Kata \"salary\" (gaji) berasal dari bahasa Latin salarium, yang berkaitan dengan sal, \"garam\". Kamus Merriam-Webster menjelaskannya sebagai uang untuk prajurit Romawi membeli garam; rinciannya masih diperdebatkan.",
+        "en": "The word \"salary\" comes from Latin salarium, linked to sal, \"salt\". Merriam-Webster explains it as money paid to Roman soldiers for salt; historians still debate the details."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-REQUEST"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "Could you ___ me the report?",
+      "image": "pic_computer",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "g3",
+          "target_text": "to send"
+        },
+        {
+          "id": "g2",
+          "target_text": "sending"
+        },
+        {
+          "id": "g1",
+          "target_text": "send"
+        }
+      ],
+      "solution": [
+        "g1"
+      ],
+      "model_answer": {
+        "id": "Could you + kata kerja dasar: send.",
+        "en": "Could you + the base verb: send."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ENG-REGISTER"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FORMAL",
+      "options": [
+        {
+          "id": "asap",
+          "target_text": "Check this ASAP.",
+          "audio": "en/check_this_asap"
+        },
+        {
+          "id": "wanna",
+          "target_text": "Wanna check this?",
+          "audio": "en/wanna_check_this"
+        },
+        {
+          "id": "please",
+          "target_text": "Could you please check this?",
+          "audio": "en/could_you_please_check_this",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Untuk atasan: Could you please…? Sopan dan jelas.",
+        "en": "For a manager: Could you please…? Polite and clear."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-02-016",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-EMAIL"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "I'm writing ___ ask about the price.",
+      "image": "pic_write",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "g3",
+          "target_text": "about"
+        },
+        {
+          "id": "g1",
+          "target_text": "to"
+        },
+        {
+          "id": "g2",
+          "target_text": "for"
+        }
+      ],
+      "solution": [
+        "g1"
+      ],
+      "model_answer": {
+        "id": "I'm writing to + kata kerja: to ask.",
+        "en": "I'm writing to + a verb: to ask."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    },
+    {
+      "item_id": "ING-A-X-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang terdengar alami bagi penutur asli bahasa Inggris?",
+            "en": "Which one sounds natural to a native English speaker?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "bad_red_big",
+          "target_text": "a red big bag"
+        },
+        {
+          "id": "big_red",
+          "target_text": "a big red bag",
+          "correct": true
+        },
+        {
+          "id": "bad_bag_big",
+          "target_text": "a bag big red"
+        }
+      ],
+      "model_answer": {
+        "id": "A big red bag: ukuran dulu, baru warna. Penutur asli mengikuti urutan ini tanpa berpikir.",
+        "en": "A big red bag: size comes before color. Native speakers follow this order without thinking."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-a-x-0.1"
+    }
+  ]
+}

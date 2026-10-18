@@ -1,0 +1,454 @@
+{
+  "meta": {"schema_version": 1, "content_version": "mat-a-h-0.1", "subject": "matematika", "track": "mat-a-h", "level": "mahir", "mode": "casual", "audiences": ["adults"], "instruction_langs": ["id", "en"], "title": {"id": "Matematika — Mahir (Dewasa)", "en": "Mathematics — Advanced (Adults)"}},
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, Adults Mahir starter: syllabus units 1-2 of docs/syllabus/02_MATEMATIKA.md). Needs a math subject reviewer and both language reviewers (Indonesian, English) before anything is approved. Every answer is computed by the generator and re-checked by a script (scratchpad fu12/mat); prices and figures in questions are illustrative examples.",
+  "prompts": {
+    "P-NUM": {"id": "Hitung, lalu masukkan angkanya.", "en": "Work it out, enter the number."},
+    "P-CHOOSE": {"id": "Pilih jawaban yang tepat.", "en": "Choose the right answer."},
+    "P-TF": {"id": "Benar atau salah?", "en": "True or false?"},
+    "P-ESTIMATE": {"id": "Geser ke perkiraan Anda.", "en": "Slide to your estimate."},
+    "P-ORDER-SMALL": {"id": "Urutkan, mulai dari terkecil.", "en": "Order them, smallest first."},
+    "P-CONNECT": {"id": "Tarik garis ke pasangannya.", "en": "Draw a line to each match."},
+    "P-SORT": {"id": "Seret ke kelompok yang tepat.", "en": "Drag each into the right group."},
+    "P-FILL": {"id": "Seret ke bagian yang kosong.", "en": "Drag into the gap."},
+    "P-GEM": {"id": "Tahukah Anda?", "en": "Did you know?"},
+    "P-PUZZLE": {"id": "Teka-teki hari ini", "en": "Today's puzzle"}
+  },
+  "feedback": {
+    "FB-OK-MODEL": {"id": "Tepat. {model}", "en": "Right. {model}"},
+    "FB-NO-MODEL": {"id": "Belum tepat. Begini caranya: {model}", "en": "Not quite. Here's how: {model}"},
+    "FB-DONTKNOW": {"id": "Tidak apa-apa, begini caranya: {model}", "en": "No problem, here's how: {model}"},
+    "FB-GEM": {"id": "Permata ini masuk ke Kotak Permata Anda.", "en": "This gem goes into your Gem box."},
+    "FB-OK-PUZZLE": {"id": "Terpecahkan. {model}", "en": "Solved. {model}"},
+    "FB-NO-PUZZLE": {"id": "Belum tepat. Teka-teki ini memang menjebak banyak orang. {model}", "en": "Not quite. This one catches out lots of people. {model}"},
+    "FB-NO-LINEAR": {"id": "Belum tepat. Mulai dari biaya tetap, lalu tambahkan tarif × jumlahnya. {model}", "en": "Not quite. Start from the fixed charge, then add the rate × the amount. {model}"},
+    "FB-NO-GROWTH": {"id": "Belum tepat. Pertumbuhan persen dikalikan tiap periode, bukan ditambah. {model}", "en": "Not quite. Percentage growth multiplies each period; it doesn't add. {model}"},
+    "FB-NO-LOG": {"id": "Belum tepat. Pada skala log, satu langkah berarti dikali, bukan ditambah. {model}", "en": "Not quite. On a log scale, one step means multiplying, not adding. {model}"}
+  },
+  "units": [
+    {"unit": "01", "title": {"id": "Fungsi & grafik", "en": "Functions & graphs"}, "sticker": "sticker_bicycle"},
+    {"unit": "02", "title": {"id": "Eksponen & logaritma", "en": "Exponents & logs"}, "sticker": "sticker_leaf"}
+  ],
+  "screens": [
+    {
+      "screen_id": "MAT-A-H-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {"id": "Fungsi & grafik", "en": "Functions & graphs"},
+      "body": [
+        {"id": "Fungsi linear naik dengan jumlah tetap. Tarif ojek Rp10.000 + Rp2.500 per km: tiap km menambah Rp2.500.", "en": "A linear function grows by a fixed amount. An ojek fare of Rp10,000 + Rp2,500 per km: each km adds Rp2,500."},
+        {"id": "Fungsi eksponensial naik dengan faktor tetap: naik 10% per tahun berarti × 1,1 setiap tahun.", "en": "An exponential function grows by a fixed factor: 10% a year means × 1.1 every year."},
+        {"id": "Awalnya eksponensial tampak lambat, tetapi lama-lama ia selalu menyalip yang linear.", "en": "Exponential growth looks slow at first, but in the long run it always overtakes linear growth."}
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "MAT-A-H-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {"id": "Eksponen & logaritma", "en": "Exponents & logs"},
+      "body": [
+        {"id": "Aturan 72: waktu untuk menjadi dua kali lipat ≈ 72 : persen pertumbuhan. Tumbuh 8% per tahun → sekitar 9 tahun.", "en": "Rule of 72: doubling time ≈ 72 ÷ growth rate. Growing 8% a year → about 9 years."},
+        {"id": "Logaritma menghitung berapa kali kita mengali 10: log 1.000 = 3, karena 10 × 10 × 10 = 1.000.", "en": "A logarithm counts how many times you multiply by 10: log 1,000 = 3, because 10 × 10 × 10 = 1,000."},
+        {"id": "Skala log: magnitudo gempa naik 1 berarti getaran 10 kali lebih besar; suara naik 10 dB berarti intensitas 10 kali.", "en": "On a log scale, a rise of 1 in earthquake magnitude means 10 times the shaking; 10 dB louder means 10 times the sound intensity."}
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "MAT-A-H-01-001", "unit": "01", "audience": "adults", "level": "mahir", "step": 1, "type": "number_input", "skills": ["FUNC-LINEAR"], "pool": "PRACT", "order": 1, "prompt_id": "P-NUM",
+      "image": "pic_motorbike",
+      "help_lines": [{"word": "", "meaning": {"id": "Tarif ojek: Rp10.000 + Rp2.500 per km. Berapa tarif untuk 8 km?", "en": "Ojek fare: Rp10,000 + Rp2,500 per km. What is the fare for 8 km?"}}],
+      "numeric": {"value": 30000, "tolerance": 0, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "model_answer": {"id": "Rp10.000 + 8 × Rp2.500 = Rp10.000 + Rp20.000 = Rp30.000.", "en": "Rp10,000 + 8 × Rp2,500 = Rp10,000 + Rp20,000 = Rp30,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LINEAR", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-01-002", "unit": "01", "audience": "adults", "level": "mahir", "step": 1, "type": "number_input", "skills": ["FUNC-LINEAR"], "pool": "PRACT", "order": 2, "prompt_id": "P-NUM",
+      "image": "math_thermometer",
+      "help_lines": [{"word": "", "meaning": {"id": "°F = 1,8 × °C + 32. Berapa °F untuk 30 °C?", "en": "°F = 1.8 × °C + 32. What is 30 °C in °F?"}}],
+      "numeric": {"value": 86, "tolerance": 0, "unit": {"id": "°F", "en": "°F"}},
+      "model_answer": {"id": "1,8 × 30 + 32 = 54 + 32 = 86 °F.", "en": "1.8 × 30 + 32 = 54 + 32 = 86 °F."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LINEAR", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-01-003", "unit": "01", "audience": "adults", "level": "mahir", "step": 1, "type": "match_pairs", "skills": ["FUNC-LINEAR"], "pool": "PRACT", "order": 3, "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [{"word": "", "meaning": {"id": "Pasangkan °C dengan °F (°F = 1,8 × °C + 32).", "en": "Match °C with °F (°F = 1.8 × °C + 32)."}}],
+      "options": [
+        {"id": "c0", "text": {"id": "0 °C", "en": "0 °C"}},
+        {"id": "c10", "text": {"id": "10 °C", "en": "10 °C"}},
+        {"id": "c25", "text": {"id": "25 °C", "en": "25 °C"}},
+        {"id": "c100", "text": {"id": "100 °C", "en": "100 °C"}},
+        {"id": "f25", "text": {"id": "77 °F", "en": "77 °F"}},
+        {"id": "f10", "text": {"id": "50 °F", "en": "50 °F"}},
+        {"id": "f0", "text": {"id": "32 °F", "en": "32 °F"}},
+        {"id": "f100", "text": {"id": "212 °F", "en": "212 °F"}}
+      ],
+      "solution_pairs": {"c0": "f0", "c10": "f10", "c25": "f25", "c100": "f100"},
+      "model_answer": {"id": "0 °C → 32 °F; 10 °C → 50 °F; 25 °C → 77 °F; 100 °C → 212 °F.", "en": "0 °C → 32 °F; 10 °C → 50 °F; 25 °C → 77 °F; 100 °C → 212 °F."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LINEAR", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-01-004", "unit": "01", "audience": "adults", "level": "mahir", "step": 1, "type": "fill_blank", "skills": ["FUNC-LINEAR"], "pool": "PRACT", "order": 4, "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "image": "pic_bicycle",
+      "help_lines": [{"word": "", "meaning": {"id": "Sewa sepeda: 1 jam Rp15.000, 2 jam Rp25.000, 3 jam Rp35.000. Biaya = Rp5.000 + __ × jam.", "en": "Bike hire: 1 hour Rp15,000, 2 hours Rp25,000, 3 hours Rp35,000. Cost = Rp5,000 + __ × hours."}}],
+      "options": [
+        {"id": "c", "text": {"id": "Rp5.000", "en": "Rp5,000"}},
+        {"id": "a", "text": {"id": "Rp10.000", "en": "Rp10,000"}},
+        {"id": "b", "text": {"id": "Rp15.000", "en": "Rp15,000"}}
+      ],
+      "solution": ["a"],
+      "model_answer": {"id": "Tiap jam menambah Rp10.000. Cek: Rp5.000 + 3 × Rp10.000 = Rp35.000.", "en": "Each hour adds Rp10,000. Check: Rp5,000 + 3 × Rp10,000 = Rp35,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LINEAR", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-01-005", "unit": "01", "audience": "adults", "level": "mahir", "step": 1, "type": "choose", "skills": ["FUNC-LINEAR"], "pool": "PRACT", "order": 5, "prompt_id": "P-CHOOSE",
+      "image": "pic_phone",
+      "help_lines": [{"word": "", "meaning": {"id": "Paket A: Rp50.000 + Rp1.000 per GB. Paket B: Rp20.000 + Rp4.000 per GB. Mulai kapan paket A lebih murah?", "en": "Plan A: Rp50,000 + Rp1,000 per GB. Plan B: Rp20,000 + Rp4,000 per GB. When does plan A become cheaper?"}}],
+      "options": [
+        {"id": "b", "text": {"id": "Di atas 5 GB", "en": "Above 5 GB"}},
+        {"id": "a", "text": {"id": "Di atas 10 GB", "en": "Above 10 GB"}, "correct": true},
+        {"id": "c", "text": {"id": "Di atas 30 GB", "en": "Above 30 GB"}}
+      ],
+      "model_answer": {"id": "Keduanya sama mahal saat selisih biaya tetap Rp30.000 habis oleh selisih tarif Rp3.000 per GB: Rp30.000 : Rp3.000 = 10 GB. Di atas 10 GB, A lebih murah.", "en": "They cost the same once the Rp30,000 gap in fixed fees is used up by the Rp3,000 per GB gap: Rp30,000 ÷ Rp3,000 = 10 GB. Above 10 GB, A is cheaper."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LINEAR", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-01-006", "unit": "01", "audience": "adults", "level": "mahir", "step": 2, "type": "sort_buckets", "skills": ["GRAPH-SHAPE"], "pool": "PRACT", "order": 6, "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Bertambah dengan jumlah tetap atau dengan faktor tetap?", "en": "Growing by a fixed amount or by a fixed factor?"}}],
+      "options": [
+        {"id": "b_lin", "text": {"id": "Linear (tambah tetap)", "en": "Linear (fixed amount)"}},
+        {"id": "b_exp", "text": {"id": "Eksponensial (kali tetap)", "en": "Exponential (fixed factor)"}},
+        {"id": "s1", "text": {"id": "Tabungan bertambah Rp100.000 tiap bulan", "en": "Savings grow by Rp100,000 a month"}},
+        {"id": "s4", "text": {"id": "Tarif taksi per km", "en": "A taxi fare per km"}},
+        {"id": "s6", "text": {"id": "Gaji naik Rp200.000 tiap tahun", "en": "Salary rises Rp200,000 a year"}},
+        {"id": "s3", "text": {"id": "Bakteri membelah jadi dua tiap 20 menit", "en": "Bacteria split in two every 20 minutes"}},
+        {"id": "s5", "text": {"id": "Pengikut naik 10% tiap minggu", "en": "Followers grow 10% a week"}},
+        {"id": "s2", "text": {"id": "Harga naik 5% tiap tahun", "en": "Prices rise 5% a year"}}
+      ],
+      "solution_pairs": {"s1": "b_lin", "s2": "b_exp", "s3": "b_exp", "s4": "b_lin", "s5": "b_exp", "s6": "b_lin"},
+      "model_answer": {"id": "Linear: tabungan + Rp100.000 per bulan, tarif per km, gaji + Rp200.000 per tahun. Eksponensial: harga +5% per tahun, bakteri membelah dua, pengikut +10% per minggu.", "en": "Linear: savings + Rp100,000 a month, a per-km fare, salary + Rp200,000 a year. Exponential: prices +5% a year, bacteria splitting in two, followers +10% a week."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROWTH", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-01-007", "unit": "01", "audience": "adults", "level": "mahir", "step": 2, "type": "number_input", "skills": ["FUNC-EXP"], "pool": "PRACT", "order": 7, "prompt_id": "P-NUM",
+      "image": "pic_bank",
+      "help_lines": [{"word": "", "meaning": {"id": "Rp10.000.000 tumbuh 10% per tahun (bunga majemuk). Berapa nilainya setelah 2 tahun?", "en": "Rp10,000,000 grows 10% a year (compound). What is it worth after 2 years?"}}],
+      "numeric": {"value": 12100000, "tolerance": 0, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "model_answer": {"id": "Rp10.000.000 × 1,1 × 1,1 = Rp12.100.000.", "en": "Rp10,000,000 × 1.1 × 1.1 = Rp12,100,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROWTH", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-01-008", "unit": "01", "audience": "adults", "level": "mahir", "step": 2, "type": "estimate_slider", "skills": ["FUNC-EXP"], "pool": "PRACT", "order": 8, "prompt_id": "P-ESTIMATE",
+      "image": "pic_phone",
+      "help_lines": [{"word": "", "meaning": {"id": "Sebuah kabar dibagikan ulang sehingga pembacanya 3 kali lipat tiap jam. Mula-mula 100 orang. Kira-kira berapa setelah 5 jam?", "en": "A post gets reshared so its readers multiply by 3 every hour. It starts with 100 people. Roughly how many after 5 hours?"}}],
+      "numeric": {"value": 24300, "tolerance": 3000},
+      "slider": {"min": 0, "max": 50000, "step": 500},
+      "model_answer": {"id": "100 × 3 × 3 × 3 × 3 × 3 = 24.300 orang.", "en": "100 × 3 × 3 × 3 × 3 × 3 = 24,300 people."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROWTH", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-01-009", "unit": "01", "audience": "adults", "level": "mahir", "step": 2, "type": "choose", "skills": ["FUNC-EXP"], "pool": "PRACT", "order": 9, "prompt_id": "P-CHOOSE",
+      "image": "math_money_notes",
+      "help_lines": [{"word": "", "meaning": {"id": "Tawaran A: Rp1.000.000 per hari selama 30 hari. Tawaran B: Rp1 di hari pertama, lalu dua kali lipat tiap hari selama 30 hari. Mana yang totalnya lebih besar?", "en": "Offer A: Rp1,000,000 a day for 30 days. Offer B: Rp1 on day one, then doubling every day for 30 days. Which gives more in total?"}}],
+      "options": [
+        {"id": "A", "text": {"id": "Tawaran A", "en": "Offer A"}},
+        {"id": "B", "text": {"id": "Tawaran B", "en": "Offer B"}, "correct": true}
+      ],
+      "model_answer": {"id": "A: Rp30.000.000. B: 1 + 2 + 4 + … = 2³⁰ − 1 = Rp1.073.741.823, lebih dari Rp1 miliar.", "en": "A: Rp30,000,000. B: 1 + 2 + 4 + … = 2³⁰ − 1 = Rp1,073,741,823, over Rp1 billion."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROWTH", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-01-010", "unit": "01", "audience": "adults", "level": "mahir", "step": 2, "type": "order", "skills": ["FUNC-EXP"], "pool": "PRACT", "order": 10, "prompt_id": "P-ORDER-SMALL",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Mulai dari Rp1.000.000. Urutkan nilainya setelah 10 tahun.", "en": "Start with Rp1,000,000. Order the values after 10 years."}}],
+      "options": [
+        {"id": "c5", "text": {"id": "Naik 5% per tahun, majemuk", "en": "Up 5% a year, compound"}},
+        {"id": "s8", "text": {"id": "Bunga sederhana 8% per tahun", "en": "Simple interest 8% a year"}},
+        {"id": "c10", "text": {"id": "Naik 10% per tahun, majemuk", "en": "Up 10% a year, compound"}},
+        {"id": "lin", "text": {"id": "Tambah Rp100.000 per tahun", "en": "Plus Rp100,000 a year"}}
+      ],
+      "solution": ["c5", "s8", "lin", "c10"],
+      "model_answer": {"id": "Majemuk 5%: ±Rp1.628.895; sederhana 8%: Rp1.800.000; tambah Rp100.000 per tahun: Rp2.000.000; majemuk 10%: ±Rp2.593.742.", "en": "Compound 5%: about Rp1,628,895; simple 8%: Rp1,800,000; plus Rp100,000 a year: Rp2,000,000; compound 10%: about Rp2,593,742."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROWTH", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-01-011", "unit": "01", "audience": "adults", "level": "mahir", "step": 2, "type": "true_false", "skills": ["GRAPH-SHAPE"], "pool": "PRACT", "order": 11, "prompt_id": "P-TF",
+      "image": "math_bar_chart",
+      "help_lines": [{"word": "", "meaning": {"id": "Grafik batang tabungan Rp1.000.000 yang naik 10% per tahun: tiap batang lebih tinggi dengan selisih yang sama.", "en": "A bar chart of Rp1,000,000 savings growing 10% a year: each bar is taller by the same amount."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}, "correct": true}
+      ],
+      "model_answer": {"id": "Salah. Kenaikannya makin besar: Rp100.000, lalu Rp110.000, lalu Rp121.000. Itu ciri pertumbuhan eksponensial.", "en": "False. The rises keep growing: Rp100,000, then Rp110,000, then Rp121,000. That's the mark of exponential growth."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROWTH", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-01-012", "unit": "01", "audience": "adults", "level": "mahir", "step": 2, "type": "fill_blank", "skills": ["FUNC-EXP"], "pool": "PRACT", "order": 12, "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Inflasi 4% per tahun. Harga Rp50.000 setelah 3 tahun = Rp50.000 × __", "en": "Inflation is 4% a year. A Rp50,000 item after 3 years costs Rp50,000 × __"}}],
+      "options": [
+        {"id": "c", "text": {"id": "3 × 1,04", "en": "3 × 1.04"}},
+        {"id": "a", "text": {"id": "1,04³", "en": "1.04³"}},
+        {"id": "b", "text": {"id": "1,12", "en": "1.12"}}
+      ],
+      "solution": ["a"],
+      "model_answer": {"id": "Rp50.000 × 1,04³ ≈ Rp56.243, bukan Rp50.000 × 1,12 = Rp56.000: kenaikan tiap tahun dihitung dari harga yang sudah naik.", "en": "Rp50,000 × 1.04³ ≈ Rp56,243, not Rp50,000 × 1.12 = Rp56,000: each year's rise is on the already higher price."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROWTH", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-01-013", "unit": "01", "audience": "adults", "level": "mahir", "step": 1, "type": "number_input", "skills": ["FUNC-LINEAR"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "pic_car",
+      "help_lines": [{"word": "", "meaning": {"id": "Tarif taksi: Rp7.000 + Rp4.000 per km. Berapa tarif untuk 12 km?", "en": "Taxi fare: Rp7,000 + Rp4,000 per km. What is the fare for 12 km?"}}],
+      "numeric": {"value": 55000, "tolerance": 0, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "model_answer": {"id": "Rp7.000 + 12 × Rp4.000 = Rp7.000 + Rp48.000 = Rp55.000.", "en": "Rp7,000 + 12 × Rp4,000 = Rp7,000 + Rp48,000 = Rp55,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LINEAR", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-01-014", "unit": "01", "audience": "adults", "level": "mahir", "step": 2, "type": "number_input", "skills": ["FUNC-EXP"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "pic_bank",
+      "help_lines": [{"word": "", "meaning": {"id": "Rp2.000.000 tumbuh 5% per tahun (bunga majemuk). Berapa nilainya setelah 2 tahun?", "en": "Rp2,000,000 grows 5% a year (compound). What is it worth after 2 years?"}}],
+      "numeric": {"value": 2205000, "tolerance": 0, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "model_answer": {"id": "Rp2.000.000 × 1,05 × 1,05 = Rp2.205.000.", "en": "Rp2,000,000 × 1.05 × 1.05 = Rp2,205,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROWTH", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-01-015", "unit": "01", "audience": "adults", "level": "mahir", "step": 2, "type": "choose", "skills": ["GRAPH-SHAPE"], "pool": "REMED", "prompt_id": "P-CHOOSE",
+      "image": "math_bar_chart",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana yang tumbuh secara eksponensial?", "en": "Which one grows exponentially?"}}],
+      "options": [
+        {"id": "b", "text": {"id": "Naik 3% tiap bulan", "en": "Up 3% a month"}, "correct": true},
+        {"id": "a", "text": {"id": "Naik Rp50.000 tiap bulan", "en": "Up Rp50,000 a month"}},
+        {"id": "c", "text": {"id": "Tetap Rp500.000 tiap bulan", "en": "A flat Rp500,000 a month"}}
+      ],
+      "model_answer": {"id": "Naik 3% tiap bulan: kenaikannya dihitung dari jumlah yang makin besar, jadi makin cepat.", "en": "Up 3% a month: each rise is a percent of a growing amount, so it speeds up."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROWTH", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-02-001", "unit": "02", "audience": "adults", "level": "mahir", "step": 1, "type": "number_input", "skills": ["DOUBLING"], "pool": "PRACT", "order": 13, "prompt_id": "P-NUM",
+      "image": "pic_bank",
+      "help_lines": [{"word": "", "meaning": {"id": "Investasi tumbuh 6% per tahun. Kira-kira berapa tahun sampai nilainya dua kali lipat?", "en": "An investment grows 6% a year. Roughly how many years until it doubles?"}}],
+      "numeric": {"value": 12, "tolerance": 0.5, "unit": {"id": "tahun", "en": "years"}},
+      "model_answer": {"id": "Aturan 72: 72 : 6 = 12 tahun. Hitungan persisnya ≈ 11,9 tahun.", "en": "Rule of 72: 72 ÷ 6 = 12 years. The exact figure is ≈ 11.9 years."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROWTH", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-02-002", "unit": "02", "audience": "adults", "level": "mahir", "step": 1, "type": "match_pairs", "skills": ["DOUBLING"], "pool": "PRACT", "order": 14, "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [{"word": "", "meaning": {"id": "Pakai aturan 72. Pasangkan dengan waktu lipat dua.", "en": "Use the rule of 72. Match each with its doubling time."}}],
+      "options": [
+        {"id": "r3", "text": {"id": "3% per tahun", "en": "3% a year"}},
+        {"id": "r4", "text": {"id": "4% per tahun", "en": "4% a year"}},
+        {"id": "r9", "text": {"id": "9% per tahun", "en": "9% a year"}},
+        {"id": "r12", "text": {"id": "12% per tahun", "en": "12% a year"}},
+        {"id": "y3", "text": {"id": "24 tahun", "en": "24 years"}},
+        {"id": "y12", "text": {"id": "6 tahun", "en": "6 years"}},
+        {"id": "y9", "text": {"id": "8 tahun", "en": "8 years"}},
+        {"id": "y4", "text": {"id": "18 tahun", "en": "18 years"}}
+      ],
+      "solution_pairs": {"r3": "y3", "r4": "y4", "r9": "y9", "r12": "y12"},
+      "model_answer": {"id": "72 : 3 = 24; 72 : 4 = 18; 72 : 9 = 8; 72 : 12 = 6.", "en": "72 ÷ 3 = 24; 72 ÷ 4 = 18; 72 ÷ 9 = 8; 72 ÷ 12 = 6."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROWTH", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-02-003", "unit": "02", "audience": "adults", "level": "mahir", "step": 1, "type": "estimate_slider", "skills": ["DOUBLING"], "pool": "PRACT", "order": 15, "prompt_id": "P-ESTIMATE",
+      "image": "pic_market",
+      "help_lines": [{"word": "", "meaning": {"id": "Inflasi 3% per tahun. Kira-kira berapa tahun sampai harga barang menjadi dua kali lipat?", "en": "Inflation is 3% a year. Roughly how many years until prices double?"}}],
+      "numeric": {"value": 24, "tolerance": 3, "unit": {"id": "tahun", "en": "years"}},
+      "slider": {"min": 0, "max": 50, "step": 1},
+      "model_answer": {"id": "72 : 3 = 24 tahun (hitungan persisnya ≈ 23,4).", "en": "72 ÷ 3 = 24 years (the exact figure is ≈ 23.4)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROWTH", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-02-004", "unit": "02", "audience": "adults", "level": "mahir", "step": 1, "type": "order", "skills": ["POWERS-10"], "pool": "PRACT", "order": 16, "prompt_id": "P-ORDER-SMALL",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Ubah dulu ke bentuk yang sama.", "en": "Put them in the same form first."}}],
+      "options": [
+        {"id": "p5", "text": {"id": "10⁵", "en": "10⁵"}},
+        {"id": "p6", "text": {"id": "1 juta", "en": "1 million"}},
+        {"id": "p2", "text": {"id": "10²", "en": "10²"}},
+        {"id": "p3", "text": {"id": "1.000", "en": "1,000"}}
+      ],
+      "solution": ["p2", "p3", "p5", "p6"],
+      "model_answer": {"id": "10² = 100 < 1.000 = 10³ < 10⁵ = 100.000 < 1 juta = 10⁶.", "en": "10² = 100 < 1,000 = 10³ < 10⁵ = 100,000 < 1 million = 10⁶."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-02-005", "unit": "02", "audience": "adults", "level": "mahir", "step": 1, "type": "number_input", "skills": ["POWERS-10"], "pool": "PRACT", "order": 17, "prompt_id": "P-NUM",
+      "image": "math_money_notes",
+      "help_lines": [{"word": "", "meaning": {"id": "Rp1 triliun = Rp1 diikuti berapa angka nol?", "en": "Rp1 trillion = Rp1 followed by how many zeros?"}}],
+      "numeric": {"value": 12, "tolerance": 0},
+      "model_answer": {"id": "Ribu (3 nol), juta (6), miliar (9), triliun (12): Rp1.000.000.000.000.", "en": "Thousand (3 zeros), million (6), billion (9), trillion (12): Rp1,000,000,000,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-02-006", "unit": "02", "audience": "adults", "level": "mahir", "step": 1, "type": "fill_blank", "skills": ["POWERS-10"], "pool": "PRACT", "order": 18, "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "log 10.000 = __", "en": "log 10,000 = __"}}],
+      "options": [
+        {"id": "c", "text": {"id": "1.000", "en": "1,000"}},
+        {"id": "a", "text": {"id": "4", "en": "4"}},
+        {"id": "b", "text": {"id": "5", "en": "5"}}
+      ],
+      "solution": ["a"],
+      "model_answer": {"id": "10.000 = 10 × 10 × 10 × 10, jadi log 10.000 = 4.", "en": "10,000 = 10 × 10 × 10 × 10, so log 10,000 = 4."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOG", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-02-007", "unit": "02", "audience": "adults", "level": "mahir", "step": 2, "type": "choose", "skills": ["LOG-SCALE"], "pool": "PRACT", "order": 19, "prompt_id": "P-CHOOSE",
+      "help_lines": [{"word": "", "meaning": {"id": "Gempa M 7 dibanding M 5: amplitudo getarannya berapa kali?", "en": "An M 7 earthquake versus an M 5: how many times the shaking amplitude?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "2 kali", "en": "2 times"}},
+        {"id": "b", "text": {"id": "20 kali", "en": "20 times"}},
+        {"id": "c", "text": {"id": "100 kali", "en": "100 times"}, "correct": true}
+      ],
+      "model_answer": {"id": "Selisih 2 tingkat: 10 × 10 = 100 kali.", "en": "2 steps apart: 10 × 10 = 100 times."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOG", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-02-008", "unit": "02", "audience": "adults", "level": "mahir", "step": 2, "type": "sort_buckets", "skills": ["LOG-SCALE"], "pool": "PRACT", "order": 20, "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Skala logaritmik atau skala biasa?", "en": "Logarithmic scale or ordinary scale?"}}],
+      "options": [
+        {"id": "b_log", "text": {"id": "Logaritmik", "en": "Logarithmic"}},
+        {"id": "b_lin", "text": {"id": "Biasa (linear)", "en": "Ordinary (linear)"}},
+        {"id": "m", "text": {"id": "Magnitudo gempa", "en": "Earthquake magnitude"}},
+        {"id": "kmh", "text": {"id": "Kecepatan dalam km/jam", "en": "Speed in km/h"}},
+        {"id": "db", "text": {"id": "Desibel (dB)", "en": "Decibels (dB)"}},
+        {"id": "ph", "text": {"id": "pH air", "en": "Water pH"}},
+        {"id": "kg", "text": {"id": "Berat dalam kg", "en": "Weight in kg"}},
+        {"id": "tc", "text": {"id": "Suhu dalam °C", "en": "Temperature in °C"}}
+      ],
+      "solution_pairs": {"m": "b_log", "db": "b_log", "ph": "b_log", "tc": "b_lin", "kmh": "b_lin", "kg": "b_lin"},
+      "model_answer": {"id": "Logaritmik: magnitudo gempa, desibel, pH (satu langkah = dikali 10). Biasa: °C, km/jam, kg.", "en": "Logarithmic: earthquake magnitude, decibels, pH (one step = times 10). Ordinary: °C, km/h, kg."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOG", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-02-009", "unit": "02", "audience": "adults", "level": "mahir", "step": 2, "type": "number_input", "skills": ["LOG-SCALE"], "pool": "PRACT", "order": 21, "prompt_id": "P-NUM",
+      "image": "pic_headphones",
+      "help_lines": [{"word": "", "meaning": {"id": "Suara 90 dB dibanding 60 dB: intensitasnya berapa kali?", "en": "A 90 dB sound versus 60 dB: how many times the intensity?"}}],
+      "numeric": {"value": 1000, "tolerance": 0},
+      "model_answer": {"id": "Naik 30 dB = 3 × 10 dB, jadi 10 × 10 × 10 = 1.000 kali.", "en": "30 dB more = 3 × 10 dB, so 10 × 10 × 10 = 1,000 times."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOG", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-02-010", "unit": "02", "audience": "adults", "level": "mahir", "step": 2, "type": "true_false", "skills": ["LOG-SCALE"], "pool": "PRACT", "order": 22, "prompt_id": "P-TF",
+      "help_lines": [{"word": "", "meaning": {"id": "Getaran gempa M 8 hanya dua kali getaran gempa M 4.", "en": "The shaking of an M 8 quake is only twice that of an M 4 quake."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}, "correct": true}
+      ],
+      "model_answer": {"id": "Salah. Selisih 4 tingkat berarti 10⁴ = 10.000 kali getarannya.", "en": "False. 4 steps apart means 10⁴ = 10,000 times the shaking."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOG", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-02-011", "unit": "02", "audience": "adults", "level": "mahir", "step": 2, "type": "estimate_slider", "skills": ["LOG-SCALE"], "pool": "PRACT", "order": 23, "prompt_id": "P-ESTIMATE",
+      "help_lines": [{"word": "", "meaning": {"id": "Naik 1 magnitudo ≈ 32 kali energi. Gempa M 7 dibanding M 5: energinya kira-kira berapa kali?", "en": "A rise of 1 in magnitude ≈ 32 times the energy. M 7 versus M 5: roughly how many times the energy?"}}],
+      "numeric": {"value": 1000, "tolerance": 100},
+      "slider": {"min": 0, "max": 2000, "step": 10},
+      "model_answer": {"id": "32 × 32 = 1.024 ≈ 1.000. Persisnya 10³ = 1.000.", "en": "32 × 32 = 1,024 ≈ 1,000. Exactly, 10³ = 1,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOG", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-02-012", "unit": "02", "audience": "adults", "level": "mahir", "step": 2, "type": "match_pairs", "skills": ["LOG-SCALE"], "pool": "PRACT", "order": 24, "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [{"word": "", "meaning": {"id": "Pasangkan dengan kelipatannya.", "en": "Match each with its multiple."}}],
+      "options": [
+        {"id": "d10", "text": {"id": "+10 dB", "en": "+10 dB"}},
+        {"id": "d30", "text": {"id": "+30 dB", "en": "+30 dB"}},
+        {"id": "m2", "text": {"id": "+2 magnitudo (getaran)", "en": "+2 magnitude (shaking)"}},
+        {"id": "m4", "text": {"id": "+4 magnitudo (getaran)", "en": "+4 magnitude (shaking)"}},
+        {"id": "x1", "text": {"id": "× 10", "en": "× 10"}},
+        {"id": "x4", "text": {"id": "× 10.000", "en": "× 10,000"}},
+        {"id": "x3", "text": {"id": "× 1.000", "en": "× 1,000"}},
+        {"id": "x2", "text": {"id": "× 100", "en": "× 100"}}
+      ],
+      "solution_pairs": {"d10": "x1", "d30": "x3", "m2": "x2", "m4": "x4"},
+      "model_answer": {"id": "+10 dB → × 10; +30 dB → × 1.000; +2 magnitudo → × 100; +4 magnitudo → × 10.000.", "en": "+10 dB → × 10; +30 dB → × 1,000; +2 magnitude → × 100; +4 magnitude → × 10,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOG", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-02-013", "unit": "02", "audience": "adults", "level": "mahir", "step": 1, "type": "number_input", "skills": ["DOUBLING"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "pic_bank",
+      "help_lines": [{"word": "", "meaning": {"id": "Bunga 9% per tahun. Kira-kira berapa tahun sampai uang menjadi dua kali lipat?", "en": "Interest is 9% a year. Roughly how many years until the money doubles?"}}],
+      "numeric": {"value": 8, "tolerance": 0.5, "unit": {"id": "tahun", "en": "years"}},
+      "model_answer": {"id": "72 : 9 = 8 tahun.", "en": "72 ÷ 9 = 8 years."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-GROWTH", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-02-014", "unit": "02", "audience": "adults", "level": "mahir", "step": 1, "type": "fill_blank", "skills": ["POWERS-10"], "pool": "REMED", "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "1 miliar = 10 pangkat __", "en": "1 billion = 10 to the power __"}}],
+      "options": [
+        {"id": "a", "text": {"id": "9", "en": "9"}},
+        {"id": "c", "text": {"id": "12", "en": "12"}},
+        {"id": "b", "text": {"id": "6", "en": "6"}}
+      ],
+      "solution": ["a"],
+      "model_answer": {"id": "Ribu = 10³, juta = 10⁶, miliar = 10⁹.", "en": "Thousand = 10³, million = 10⁶, billion = 10⁹."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOG", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-02-015", "unit": "02", "audience": "adults", "level": "mahir", "step": 2, "type": "choose", "skills": ["LOG-SCALE"], "pool": "REMED", "prompt_id": "P-CHOOSE",
+      "image": "pic_headphones",
+      "help_lines": [{"word": "", "meaning": {"id": "Suara 70 dB dibanding 50 dB: intensitasnya berapa kali?", "en": "A 70 dB sound versus 50 dB: how many times the intensity?"}}],
+      "options": [
+        {"id": "b", "text": {"id": "20 kali", "en": "20 times"}},
+        {"id": "c", "text": {"id": "2 kali", "en": "2 times"}},
+        {"id": "a", "text": {"id": "100 kali", "en": "100 times"}, "correct": true}
+      ],
+      "model_answer": {"id": "Naik 20 dB = 2 × 10 dB, jadi 10 × 10 = 100 kali.", "en": "20 dB more = 2 × 10 dB, so 10 × 10 = 100 times."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOG", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-02-016", "unit": "02", "audience": "adults", "level": "mahir", "step": 2, "type": "info_card", "skills": ["POWERS-10"], "pool": "GEM", "gem": true, "prompt_id": "P-GEM",
+      "source": "John Napier, Mirifici Logarithmorum Canonis Descriptio (Edinburgh, 1614); Encyclopaedia Britannica, 'John Napier' and 'logarithm'.",
+      "model_answer": {"id": "Pada tahun 1614, John Napier dari Skotlandia menerbitkan tabel logaritma. Dengan tabel itu, perkalian angka besar bisa diganti penjumlahan, sehingga hitungan para astronom menjadi jauh lebih cepat.", "en": "In 1614, John Napier of Scotland published tables of logarithms. With them, multiplying big numbers could be replaced by adding, which made astronomers' calculations far faster."},
+      "feedback_ids": {"correct": "FB-GEM"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    },
+    {
+      "item_id": "MAT-A-H-DP-01", "unit": "01", "audience": "adults", "level": "mahir", "type": "daily_puzzle", "skills": ["PUZZLE"], "pool": "SPARE", "prompt_id": "P-PUZZLE",
+      "help_lines": [{"word": "", "meaning": {"id": "Setiap jam, jumlah orang yang tahu sebuah kabar menjadi 3 kali lipat. Mula-mula 2 orang. Setelah berapa jam jumlahnya pertama kali lebih dari 1.000?", "en": "Every hour, the number of people who know a rumour is multiplied by 3. It starts with 2 people. After how many hours does it first pass 1,000?"}}],
+      "numeric": {"value": 6, "tolerance": 0, "unit": {"id": "jam", "en": "hours"}},
+      "model_answer": {"id": "2 × 3⁵ = 486 (belum), 2 × 3⁶ = 1.458 (sudah lewat). Jadi 6 jam.", "en": "2 × 3⁵ = 486 (not yet), 2 × 3⁶ = 1,458 (past it). So 6 hours."},
+      "feedback_ids": {"correct": "FB-OK-PUZZLE", "wrong": "FB-NO-PUZZLE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-h-0.1"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 package id.petalytix.ayailmu.core.data
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
@@ -15,16 +16,30 @@ import id.petalytix.ayailmu.core.data.db.AyaDatabase
 import id.petalytix.ayailmu.core.data.export.ExportFiles
 import id.petalytix.ayailmu.core.data.repo.AndroidAssetSource
 import id.petalytix.ayailmu.core.data.repo.AnswerRepository
+import id.petalytix.ayailmu.core.data.repo.AppConfigRepository
 import id.petalytix.ayailmu.core.data.repo.AssetSource
+import id.petalytix.ayailmu.core.data.repo.ChallengeRepository
 import id.petalytix.ayailmu.core.data.repo.ContentRepository
 import id.petalytix.ayailmu.core.data.repo.DataResetter
+import id.petalytix.ayailmu.core.data.repo.MediaRepository
 import id.petalytix.ayailmu.core.data.repo.ProfileRepository
+import id.petalytix.ayailmu.core.data.repo.SurveyRepository
 import id.petalytix.ayailmu.core.data.settings.ActiveProfileStore
 import id.petalytix.ayailmu.core.data.settings.AppSettings
 import id.petalytix.ayailmu.core.data.settings.AppSettingsSerializer
+import id.petalytix.ayailmu.core.data.settings.DailyPuzzleStore
 import id.petalytix.ayailmu.core.data.settings.DataStoreActiveProfileStore
+import id.petalytix.ayailmu.core.data.settings.DataStoreDailyPuzzleStore
+import id.petalytix.ayailmu.core.data.settings.DataStoreDevOptionsStore
+import id.petalytix.ayailmu.core.data.settings.DataStoreProfileChoiceStore
 import id.petalytix.ayailmu.core.data.settings.DataStoreReminderStore
+import id.petalytix.ayailmu.core.data.settings.DataStoreSoundSettingsStore
+import id.petalytix.ayailmu.core.data.settings.DataStoreTrialStore
+import id.petalytix.ayailmu.core.data.settings.DevOptionsStore
+import id.petalytix.ayailmu.core.data.settings.ProfileChoiceStore
 import id.petalytix.ayailmu.core.data.settings.ReminderStore
+import id.petalytix.ayailmu.core.data.settings.SoundSettingsStore
+import id.petalytix.ayailmu.core.data.settings.TrialStore
 import id.petalytix.ayailmu.core.engine.Clock
 import id.petalytix.ayailmu.core.engine.IdGenerator
 import id.petalytix.ayailmu.core.engine.RngFactory
@@ -83,16 +98,63 @@ object DataModule {
 
     @Provides
     @Singleton
+    fun provideDailyPuzzleStore(store: DataStore<AppSettings>): DailyPuzzleStore = DataStoreDailyPuzzleStore(store)
+
+    @Provides
+    @Singleton
+    fun provideDevOptionsStore(store: DataStore<AppSettings>): DevOptionsStore = DataStoreDevOptionsStore(store)
+
+    @Provides
+    @Singleton
+    fun provideTrialStore(store: DataStore<AppSettings>): TrialStore = DataStoreTrialStore(store)
+
+    @Provides
+    @Singleton
+    fun provideSoundSettingsStore(store: DataStore<AppSettings>): SoundSettingsStore = DataStoreSoundSettingsStore(store)
+
+    /** Follow-up 12: module language/level choices and picture avatars per profile. */
+    @Provides
+    @Singleton
+    fun provideProfileChoiceStore(store: DataStore<AppSettings>): ProfileChoiceStore = DataStoreProfileChoiceStore(store)
+
+    @Provides
+    @Singleton
+    fun provideAppConfig(assets: AssetSource): AppConfigRepository = AppConfigRepository(assets)
+
+    @Provides
+    @Singleton
+    fun provideSurveyRepository(
+        db: AyaDatabase,
+        clock: Clock,
+        ids: IdGenerator,
+    ): SurveyRepository = SurveyRepository(db, clock, ids)
+
+    @Provides
+    @Singleton
+    fun provideChallengeRepository(
+        db: AyaDatabase,
+        clock: Clock,
+        ids: IdGenerator,
+    ): ChallengeRepository = ChallengeRepository(db, clock, ids)
+
+    @Provides
+    @Singleton
     fun provideAssetSource(
         @ApplicationContext context: Context,
     ): AssetSource = AndroidAssetSource(context)
+
+    /** Voice clip and stroke indexes (follow-up 11); an unreadable index is logged and treated as empty. */
+    @Provides
+    @Singleton
+    fun provideMediaRepository(assets: AssetSource): MediaRepository = MediaRepository(assets) { Log.w(MEDIA_LOG_TAG, it) }
 
     @Provides
     @Singleton
     fun provideContentRepository(
         assets: AssetSource,
         build: AppBuildInfo,
-    ): ContentRepository = ContentRepository(assets, build)
+        media: MediaRepository,
+    ): ContentRepository = ContentRepository(assets, build, media)
 
     @Provides
     @Singleton
@@ -118,5 +180,10 @@ object DataModule {
         db: AyaDatabase,
         active: ActiveProfileStore,
         reminders: ReminderStore,
-    ): DataResetter = DataResetter(db, active, reminders) { ExportFiles.clear(context) }
+        puzzles: DailyPuzzleStore,
+        trial: TrialStore,
+        choices: ProfileChoiceStore,
+    ): DataResetter = DataResetter(db, active, reminders, puzzles, trial, choices) { ExportFiles.clear(context) }
+
+    private const val MEDIA_LOG_TAG = "AyaIlmuMedia"
 }

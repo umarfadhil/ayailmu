@@ -1,0 +1,470 @@
+{
+  "meta": {"schema_version": 1, "content_version": "mat-k-m-0.1", "subject": "matematika", "track": "mat-k-m", "level": "menengah", "mode": "casual", "audiences": ["kids"], "instruction_langs": ["id", "en"], "title": {"id": "Matematika — Menengah (Anak)", "en": "Mathematics — Intermediate (Kids)"}},
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, Kids Menengah starter: syllabus units 1-2 of docs/syllabus/02_MATEMATIKA.md). Needs a math subject reviewer and both language reviewers (Indonesian, English) before anything is approved. Every answer is computed by the generator and re-checked by a script (scratchpad fu12/mat); prices and figures in questions are illustrative examples.",
+  "prompts": {
+    "P-PICK": {"id": "Pilih gambar yang tepat.", "en": "Pick the right picture."},
+    "P-NUM": {"id": "Tulis angkanya.", "en": "Type the number."},
+    "P-CHOOSE": {"id": "Pilih jawaban yang tepat.", "en": "Pick the right answer."},
+    "P-TF": {"id": "Benar atau salah?", "en": "True or false?"},
+    "P-ORDER-SMALL": {"id": "Urutkan, mulai dari terkecil.", "en": "Order them, smallest first."},
+    "P-FILL": {"id": "Seret ke bagian yang kosong.", "en": "Drag into the gap."},
+    "P-TILES": {"id": "Seret kepingan ke tempatnya.", "en": "Drag the tiles into place."},
+    "P-CONNECT": {"id": "Tarik garis ke pasangannya.", "en": "Draw a line to each match."},
+    "P-DRAG": {"id": "Seret gambar ke pasangannya.", "en": "Drag each picture to its match."},
+    "P-SORT": {"id": "Seret ke keranjang yang tepat.", "en": "Drag each into the right basket."},
+    "P-MEMORY": {"id": "Balik kartu, cari pasangannya.", "en": "Flip the cards, find pairs."},
+    "P-ESTIMATE": {"id": "Tebak, lalu geser.", "en": "Guess, then slide."},
+    "P-GEM": {"id": "Tahukah kamu?", "en": "Did you know?"},
+    "P-PUZZLE": {"id": "Teka-teki hari ini", "en": "Today's puzzle"}
+  },
+  "feedback": {
+    "FB-OK-MODEL": {"id": "Betul! {model}", "en": "That's right! {model}"},
+    "FB-NO-MODEL": {"id": "Belum tepat. Yuk, lihat lagi: {model}", "en": "Not quite. Let's look again: {model}"},
+    "FB-DONTKNOW": {"id": "Tidak apa-apa. Kita lihat bersama: {model}", "en": "That's okay. Let's look at it together: {model}"},
+    "FB-NO-ESTIMATE": {"id": "Belum terlalu dekat, tetapi menebak itu latihan yang bagus! {model}", "en": "Not that close yet, but guessing is great practice! {model}"},
+    "FB-GEM": {"id": "Permata ini masuk ke Kotak Permatamu.", "en": "This gem goes into your Gem box."},
+    "FB-PUZZLE-OK": {"id": "Hebat, teka-tekinya terpecahkan! {model}", "en": "Brilliant, you solved it! {model}"},
+    "FB-PUZZLE-NO": {"id": "Hampir! Teka-teki memang perlu dipikirkan pelan-pelan. {model}", "en": "Nearly! Puzzles need slow thinking. {model}"},
+    "FB-NO-REMAINDER": {"id": "Belum tepat. Bagi sama rata dulu, lalu hitung yang tersisa. {model}", "en": "Not quite. Share fairly first, then count what's left. {model}"},
+    "FB-NO-ROUND": {"id": "Belum tepat. Lihat angka tepat di kanan tempat pembulatan: 5 atau lebih, naik. {model}", "en": "Not quite. Look at the digit just right of the rounding place: 5 or more goes up. {model}"}
+  },
+  "units": [
+    {"unit": "01", "title": {"id": "Perkalian & pembagian", "en": "Multiply & divide"}, "sticker": "sticker_angklung"},
+    {"unit": "02", "title": {"id": "Bilangan besar", "en": "Big numbers"}, "sticker": "sticker_rice_field"}
+  ],
+  "screens": [
+    {
+      "screen_id": "MAT-K-M-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {"id": "Perkalian & pembagian", "en": "Multiply & divide"},
+      "body": [
+        {"id": "3 × 4 artinya 3 kelompok, isi 4: 4 + 4 + 4 = 12.", "en": "3 × 4 means 3 groups of 4: 4 + 4 + 4 = 12."},
+        {"id": "Membagi artinya berbagi sama rata: 12 : 3 = 4.", "en": "Dividing means sharing fairly: 12 ÷ 3 = 4."},
+        {"id": "Kalau ada yang tidak kebagian, itu sisa: 14 : 4 = 3 sisa 2.", "en": "Anything left over is the remainder: 14 ÷ 4 = 3 remainder 2."}
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "MAT-K-M-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {"id": "Bilangan besar", "en": "Big numbers"},
+      "body": [
+        {"id": "45.302 terdiri dari 4 puluh ribuan, 5 ribuan, 3 ratusan, 0 puluhan, dan 2 satuan.", "en": "45,302 is made of 4 ten-thousands, 5 thousands, 3 hundreds, 0 tens and 2 ones."},
+        {"id": "Membulatkan ke ribuan? Lihat angka ratusan: 5 atau lebih naik, kurang dari 5 tetap.", "en": "Rounding to thousands? Look at the hundreds digit: 5 or more goes up, less than 5 stays."},
+        {"id": "Memperkirakan: bulatkan dulu, baru hitung. 3.980 + 5.020 ≈ 4.000 + 5.000 = 9.000.", "en": "Estimating: round first, then work it out. 3,980 + 5,020 ≈ 4,000 + 5,000 = 9,000."}
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "MAT-K-M-01-001", "unit": "01", "audience": "kids", "level": "menengah", "step": 1, "type": "pick_image", "skills": ["MUL-ARRAY"], "pool": "PRACT", "order": 1, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana yang 3 × 4?", "en": "Which one shows 3 × 4?"}}],
+      "options": [
+        {"id": "groups_4x4", "image": "groups_4x4"},
+        {"id": "groups_3x4", "image": "groups_3x4", "correct": true},
+        {"id": "groups_3x5", "image": "groups_3x5"}
+      ],
+      "model_answer": {"id": "3 × 4 = 4 + 4 + 4 = 12: 3 kelompok, isi 4.", "en": "3 × 4 = 4 + 4 + 4 = 12: 3 groups of 4."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-01-002", "unit": "01", "audience": "kids", "level": "menengah", "step": 1, "type": "number_input", "skills": ["MUL-ARRAY"], "pool": "PRACT", "order": 2, "prompt_id": "P-NUM",
+      "image": "groups_5x4",
+      "help_lines": [{"word": "", "meaning": {"id": "5 kelompok, isi 4. Ada berapa kelereng?", "en": "5 groups of 4. How many marbles?"}}],
+      "numeric": {"value": 20, "tolerance": 0},
+      "model_answer": {"id": "5 × 4 = 20 kelereng.", "en": "5 × 4 = 20 marbles."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-01-003", "unit": "01", "audience": "kids", "level": "menengah", "step": 1, "type": "match_pairs", "skills": ["MUL-ARRAY"], "pool": "PRACT", "order": 3, "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Berapa kelereng di setiap gambar?", "en": "How many marbles in each picture?"}}],
+      "options": [
+        {"id": "g2x5", "image": "groups_2x5"},
+        {"id": "g4x3", "image": "groups_4x3"},
+        {"id": "g5x5", "image": "groups_5x5"},
+        {"id": "g3x2", "image": "groups_3x2"},
+        {"id": "n25", "text": {"id": "25", "en": "25"}},
+        {"id": "n12", "text": {"id": "12", "en": "12"}},
+        {"id": "n6", "text": {"id": "6", "en": "6"}},
+        {"id": "n10", "text": {"id": "10", "en": "10"}}
+      ],
+      "solution_pairs": {"g2x5": "n10", "g4x3": "n12", "g5x5": "n25", "g3x2": "n6"},
+      "model_answer": {"id": "2 × 5 = 10, 4 × 3 = 12, 5 × 5 = 25, 3 × 2 = 6.", "en": "2 × 5 = 10, 4 × 3 = 12, 5 × 5 = 25, 3 × 2 = 6."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-01-004", "unit": "01", "audience": "kids", "level": "menengah", "step": 1, "type": "memory_flip", "skills": ["MUL-ARRAY"], "pool": "PRACT", "order": 4, "prompt_id": "P-MEMORY",
+      "options": [
+        {"id": "q2", "text": {"id": "8 × 4", "en": "8 × 4"}},
+        {"id": "q4", "text": {"id": "7 × 7", "en": "7 × 7"}},
+        {"id": "q3", "text": {"id": "9 × 3", "en": "9 × 3"}},
+        {"id": "r4", "text": {"id": "49", "en": "49"}},
+        {"id": "q1", "text": {"id": "6 × 7", "en": "6 × 7"}},
+        {"id": "r1", "text": {"id": "42", "en": "42"}},
+        {"id": "r2", "text": {"id": "32", "en": "32"}},
+        {"id": "r3", "text": {"id": "27", "en": "27"}}
+      ],
+      "solution_pairs": {"q1": "r1", "q2": "r2", "q3": "r3", "q4": "r4"},
+      "model_answer": {"id": "6 × 7 = 42, 8 × 4 = 32, 9 × 3 = 27, 7 × 7 = 49.", "en": "6 × 7 = 42, 8 × 4 = 32, 9 × 3 = 27, 7 × 7 = 49."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-01-005", "unit": "01", "audience": "kids", "level": "menengah", "step": 1, "type": "tiles", "skills": ["MUL-ARRAY"], "pool": "PRACT", "order": 5, "prompt_id": "P-TILES",
+      "gesture": "drag",
+      "image": "pic_cake",
+      "help_lines": [{"word": "", "meaning": {"id": "4 kotak kue, tiap kotak isi 6. Berapa semua kuenya?", "en": "4 boxes of cakes, 6 in each box. How many cakes?"}}, {"word": "", "meaning": {"id": "Susun: kotak × isi = semua.", "en": "Build: boxes × per box = total."}}],
+      "options": [
+        {"id": "t_b", "text": {"id": "4", "en": "4"}},
+        {"id": "t_x", "text": {"id": "×", "en": "×"}},
+        {"id": "t_plus", "text": {"id": "+", "en": "+"}},
+        {"id": "t_20", "text": {"id": "20", "en": "20"}},
+        {"id": "t_eq", "text": {"id": "=", "en": "="}},
+        {"id": "t_n", "text": {"id": "6", "en": "6"}},
+        {"id": "t_p", "text": {"id": "24", "en": "24"}}
+      ],
+      "solution": ["t_b", "t_x", "t_n", "t_eq", "t_p"],
+      "model_answer": {"id": "4 × 6 = 24. Ada 24 kue.", "en": "4 × 6 = 24. There are 24 cakes."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-01-006", "unit": "01", "audience": "kids", "level": "menengah", "step": 1, "type": "true_false", "skills": ["MUL-ARRAY"], "pool": "PRACT", "order": 6, "prompt_id": "P-TF",
+      "help_lines": [{"word": "", "meaning": {"id": "7 × 8 sama dengan 8 × 7.", "en": "7 × 8 is the same as 8 × 7."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}, "correct": true},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}}
+      ],
+      "model_answer": {"id": "Benar. Urutan perkalian boleh ditukar: keduanya 56.", "en": "True. You can swap the order: both make 56."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-01-007", "unit": "01", "audience": "kids", "level": "menengah", "step": 2, "type": "pick_image", "skills": ["DIV-SHARE"], "pool": "PRACT", "order": 7, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "15 kelereng dibagi rata untuk 3 anak. Mana gambarnya?", "en": "15 marbles shared fairly among 3 children. Which picture?"}}],
+      "options": [
+        {"id": "groups_3x5", "image": "groups_3x5", "correct": true},
+        {"id": "groups_5x3", "image": "groups_5x3"},
+        {"id": "groups_3x4", "image": "groups_3x4"}
+      ],
+      "model_answer": {"id": "15 : 3 = 5. Ada 3 kelompok, masing-masing 5.", "en": "15 ÷ 3 = 5: 3 groups of 5 each."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-01-008", "unit": "01", "audience": "kids", "level": "menengah", "step": 2, "type": "number_input", "skills": ["DIV-SHARE"], "pool": "PRACT", "order": 8, "prompt_id": "P-NUM",
+      "image": "count_mango_18",
+      "help_lines": [{"word": "", "meaning": {"id": "18 mangga dibagi sama rata ke 6 keranjang. Tiap keranjang berapa?", "en": "18 mangoes shared equally into 6 baskets. How many in each?"}}],
+      "numeric": {"value": 3, "tolerance": 0},
+      "model_answer": {"id": "18 : 6 = 3, karena 6 × 3 = 18.", "en": "18 ÷ 6 = 3, because 6 × 3 = 18."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-01-009", "unit": "01", "audience": "kids", "level": "menengah", "step": 2, "type": "sort_buckets", "skills": ["DIV-REMAINDER"], "pool": "PRACT", "order": 9, "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Dibagi 4, ada sisanya atau tidak?", "en": "Divided by 4: is there a remainder?"}}],
+      "options": [
+        {"id": "b_none", "text": {"id": "Tanpa sisa", "en": "No remainder"}},
+        {"id": "b_rem", "text": {"id": "Ada sisa", "en": "A remainder"}},
+        {"id": "c20", "text": {"id": "20", "en": "20"}},
+        {"id": "c23", "text": {"id": "23", "en": "23"}},
+        {"id": "c18", "text": {"id": "18", "en": "18"}},
+        {"id": "c30", "text": {"id": "30", "en": "30"}},
+        {"id": "c28", "text": {"id": "28", "en": "28"}},
+        {"id": "c12", "text": {"id": "12", "en": "12"}}
+      ],
+      "solution_pairs": {"c12": "b_none", "c18": "b_rem", "c20": "b_none", "c23": "b_rem", "c28": "b_none", "c30": "b_rem"},
+      "model_answer": {"id": "Tanpa sisa: 12, 20, 28. Ada sisa: 18 (sisa 2), 23 (sisa 3), 30 (sisa 2).", "en": "No remainder: 12, 20, 28. A remainder: 18 (remainder 2), 23 (remainder 3), 30 (remainder 2)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-REMAINDER", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-01-010", "unit": "01", "audience": "kids", "level": "menengah", "step": 2, "type": "number_input", "skills": ["DIV-REMAINDER"], "pool": "PRACT", "order": 10, "prompt_id": "P-NUM",
+      "image": "count_egg_17",
+      "help_lines": [{"word": "", "meaning": {"id": "17 telur masuk ke wadah isi 5. Berapa telur yang sisa?", "en": "17 eggs go into trays of 5. How many eggs are left over?"}}],
+      "numeric": {"value": 2, "tolerance": 0},
+      "model_answer": {"id": "17 : 5 = 3 sisa 2: 3 wadah penuh dan 2 telur sisa.", "en": "17 ÷ 5 = 3 remainder 2: 3 full trays and 2 eggs left over."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-REMAINDER", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-01-011", "unit": "01", "audience": "kids", "level": "menengah", "step": 2, "type": "choose", "skills": ["DIV-REMAINDER"], "pool": "PRACT", "order": 11, "prompt_id": "P-CHOOSE",
+      "image": "pic_table",
+      "help_lines": [{"word": "", "meaning": {"id": "29 anak makan bersama. Satu meja muat 8 anak. Perlu berapa meja?", "en": "29 children eat together. One table seats 8. How many tables?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "3 meja", "en": "3 tables"}},
+        {"id": "c", "text": {"id": "5 meja", "en": "5 tables"}},
+        {"id": "b", "text": {"id": "4 meja", "en": "4 tables"}, "correct": true}
+      ],
+      "model_answer": {"id": "29 : 8 = 3 sisa 5. Sisa 5 anak perlu meja lagi, jadi 4 meja.", "en": "29 ÷ 8 = 3 remainder 5. The 5 left over need one more table, so 4 tables."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-REMAINDER", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-01-012", "unit": "01", "audience": "kids", "level": "menengah", "step": 2, "type": "fill_blank", "skills": ["DIV-SHARE"], "pool": "PRACT", "order": 12, "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "6 × 4 = 24, jadi 24 : 4 = __", "en": "6 × 4 = 24, so 24 ÷ 4 = __"}}],
+      "options": [
+        {"id": "x4", "text": {"id": "4", "en": "4"}},
+        {"id": "x6", "text": {"id": "6", "en": "6"}},
+        {"id": "x20", "text": {"id": "20", "en": "20"}}
+      ],
+      "solution": ["x6"],
+      "model_answer": {"id": "24 : 4 = 6, karena 6 × 4 = 24.", "en": "24 ÷ 4 = 6, because 6 × 4 = 24."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-01-013", "unit": "01", "audience": "kids", "level": "menengah", "step": 1, "type": "pick_image", "skills": ["MUL-ARRAY"], "pool": "REMED", "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana yang 4 × 5?", "en": "Which one shows 4 × 5?"}}],
+      "options": [
+        {"id": "groups_4x4", "image": "groups_4x4"},
+        {"id": "groups_5x5", "image": "groups_5x5"},
+        {"id": "groups_4x5", "image": "groups_4x5", "correct": true}
+      ],
+      "model_answer": {"id": "4 × 5 = 20: 4 kelompok, isi 5.", "en": "4 × 5 = 20: 4 groups of 5."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-01-014", "unit": "01", "audience": "kids", "level": "menengah", "step": 2, "type": "number_input", "skills": ["DIV-SHARE"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "groups_4x3",
+      "help_lines": [{"word": "", "meaning": {"id": "12 kelereng dibagi rata ke 4 anak. Tiap anak dapat berapa?", "en": "12 marbles shared fairly among 4 children. How many does each get?"}}],
+      "numeric": {"value": 3, "tolerance": 0},
+      "model_answer": {"id": "12 : 4 = 3. Lihat gambarnya: 4 kelompok, isi 3.", "en": "12 ÷ 4 = 3. Look: 4 groups of 3."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-01-015", "unit": "01", "audience": "kids", "level": "menengah", "step": 2, "type": "number_input", "skills": ["DIV-REMAINDER"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "count_marble_14",
+      "help_lines": [{"word": "", "meaning": {"id": "14 kelereng dibagi rata ke 4 anak. Berapa sisanya?", "en": "14 marbles shared fairly among 4 children. How many are left over?"}}],
+      "numeric": {"value": 2, "tolerance": 0},
+      "model_answer": {"id": "14 : 4 = 3 sisa 2. Tiap anak dapat 3, sisa 2.", "en": "14 ÷ 4 = 3 remainder 2. Each child gets 3, with 2 left over."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-REMAINDER", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-02-001", "unit": "02", "audience": "kids", "level": "menengah", "step": 1, "type": "tiles", "skills": ["PLACE-VALUE"], "pool": "PRACT", "order": 13, "prompt_id": "P-TILES",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Susun bilangan: empat puluh dua ribu tujuh ratus lima.", "en": "Build the number: forty-two thousand seven hundred and five."}}],
+      "options": [
+        {"id": "d0", "text": {"id": "0", "en": "0"}},
+        {"id": "d6", "text": {"id": "6", "en": "6"}},
+        {"id": "d4", "text": {"id": "4", "en": "4"}},
+        {"id": "d9", "text": {"id": "9", "en": "9"}},
+        {"id": "d5", "text": {"id": "5", "en": "5"}},
+        {"id": "d2", "text": {"id": "2", "en": "2"}},
+        {"id": "d7", "text": {"id": "7", "en": "7"}}
+      ],
+      "solution": ["d4", "d2", "d7", "d0", "d5"],
+      "model_answer": {"id": "Empat puluh dua ribu tujuh ratus lima = 42.705: 4 puluh ribuan, 2 ribuan, 7 ratusan, 0 puluhan, 5 satuan.", "en": "Forty-two thousand seven hundred and five = 42,705: 4 ten-thousands, 2 thousands, 7 hundreds, 0 tens, 5 ones."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-02-002", "unit": "02", "audience": "kids", "level": "menengah", "step": 1, "type": "match_pairs", "skills": ["PLACE-VALUE"], "pool": "PRACT", "order": 14, "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [{"word": "", "meaning": {"id": "Berapa nilai angka 7 di setiap bilangan?", "en": "What is the 7 worth in each number?"}}],
+      "options": [
+        {"id": "n0", "text": {"id": "17.250", "en": "17,250"}},
+        {"id": "n1", "text": {"id": "71.250", "en": "71,250"}},
+        {"id": "n2", "text": {"id": "12.750", "en": "12,750"}},
+        {"id": "n3", "text": {"id": "12.507", "en": "12,507"}},
+        {"id": "v3", "text": {"id": "7.000", "en": "7,000"}},
+        {"id": "v2", "text": {"id": "700", "en": "700"}},
+        {"id": "v4", "text": {"id": "70.000", "en": "70,000"}},
+        {"id": "v0", "text": {"id": "7", "en": "7"}}
+      ],
+      "solution_pairs": {"n0": "v3", "n1": "v4", "n2": "v2", "n3": "v0"},
+      "model_answer": {"id": "17.250 → 7.000; 71.250 → 70.000; 12.750 → 700; 12.507 → 7.", "en": "17,250 → 7,000; 71,250 → 70,000; 12,750 → 700; 12,507 → 7."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-02-003", "unit": "02", "audience": "kids", "level": "menengah", "step": 1, "type": "order", "skills": ["PLACE-VALUE"], "pool": "PRACT", "order": 15, "prompt_id": "P-ORDER-SMALL",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Bandingkan angka dari kiri.", "en": "Compare the digits from the left."}}],
+      "options": [
+        {"id": "o0", "text": {"id": "45.099", "en": "45,099"}},
+        {"id": "o1", "text": {"id": "45.910", "en": "45,910"}},
+        {"id": "o3", "text": {"id": "45.190", "en": "45,190"}},
+        {"id": "o2", "text": {"id": "54.019", "en": "54,019"}}
+      ],
+      "solution": ["o0", "o3", "o1", "o2"],
+      "model_answer": {"id": "45.099 < 45.190 < 45.910 < 54.019.", "en": "45,099 < 45,190 < 45,910 < 54,019."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-02-004", "unit": "02", "audience": "kids", "level": "menengah", "step": 1, "type": "number_input", "skills": ["PLACE-VALUE"], "pool": "PRACT", "order": 16, "prompt_id": "P-NUM",
+      "image": "math_money_notes",
+      "help_lines": [{"word": "", "meaning": {"id": "Ibu punya 3 lembar Rp20.000, 4 lembar Rp5.000, dan 2 koin Rp500. Berapa semuanya?", "en": "Mum has 3 notes of Rp20,000, 4 notes of Rp5,000 and 2 coins of Rp500. How much altogether?"}}],
+      "numeric": {"value": 81000, "tolerance": 0, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "model_answer": {"id": "3 × Rp20.000 + 4 × Rp5.000 + 2 × Rp500 = Rp81.000.", "en": "3 × Rp20,000 + 4 × Rp5,000 + 2 × Rp500 = Rp81,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-02-005", "unit": "02", "audience": "kids", "level": "menengah", "step": 1, "type": "true_false", "skills": ["PLACE-VALUE"], "pool": "PRACT", "order": 17, "prompt_id": "P-TF",
+      "help_lines": [{"word": "", "meaning": {"id": "Seratus ribu ditulis 100.000: ada 5 angka nol.", "en": "One hundred thousand is written 100,000: it has 5 zeros."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}, "correct": true},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}}
+      ],
+      "model_answer": {"id": "Benar: 100.000 adalah angka 1 yang diikuti 5 angka nol.", "en": "True: 100,000 is a 1 followed by 5 zeros."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-02-006", "unit": "02", "audience": "kids", "level": "menengah", "step": 1, "type": "fill_blank", "skills": ["PLACE-VALUE"], "pool": "PRACT", "order": 18, "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "60.000 + 4.000 + 300 + 8 = __", "en": "60,000 + 4,000 + 300 + 8 = __"}}],
+      "options": [
+        {"id": "x2", "text": {"id": "64.380", "en": "64,380"}},
+        {"id": "x1", "text": {"id": "64.308", "en": "64,308"}},
+        {"id": "x3", "text": {"id": "60.438", "en": "60,438"}}
+      ],
+      "solution": ["x1"],
+      "model_answer": {"id": "60.000 + 4.000 + 300 + 8 = 64.308. Tidak ada puluhan, jadi angka puluhannya 0.", "en": "60,000 + 4,000 + 300 + 8 = 64,308. There are no tens, so the tens digit is 0."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-02-007", "unit": "02", "audience": "kids", "level": "menengah", "step": 2, "type": "choose", "skills": ["ROUND"], "pool": "PRACT", "order": 19, "prompt_id": "P-CHOOSE",
+      "image": "math_number_line",
+      "help_lines": [{"word": "", "meaning": {"id": "Bulatkan 36.700 ke ribuan terdekat.", "en": "Round 36,700 to the nearest thousand."}}],
+      "options": [
+        {"id": "a", "text": {"id": "36.000", "en": "36,000"}},
+        {"id": "b", "text": {"id": "37.000", "en": "37,000"}, "correct": true},
+        {"id": "c", "text": {"id": "40.000", "en": "40,000"}}
+      ],
+      "model_answer": {"id": "Angka ratusannya 7 (5 atau lebih), jadi naik: 37.000.", "en": "The hundreds digit is 7 (5 or more), so round up: 37,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-ROUND", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-02-008", "unit": "02", "audience": "kids", "level": "menengah", "step": 2, "type": "sort_buckets", "skills": ["ROUND"], "pool": "PRACT", "order": 20, "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Dibulatkan ke ribuan: 8.000 atau 9.000?", "en": "Rounded to the nearest thousand: 8,000 or 9,000?"}}],
+      "options": [
+        {"id": "b8", "text": {"id": "8.000", "en": "8,000"}},
+        {"id": "b9", "text": {"id": "9.000", "en": "9,000"}},
+        {"id": "c8500", "text": {"id": "8.500", "en": "8,500"}},
+        {"id": "c9300", "text": {"id": "9.300", "en": "9,300"}},
+        {"id": "c8499", "text": {"id": "8.499", "en": "8,499"}},
+        {"id": "c8950", "text": {"id": "8.950", "en": "8,950"}},
+        {"id": "c7600", "text": {"id": "7.600", "en": "7,600"}},
+        {"id": "c8120", "text": {"id": "8.120", "en": "8,120"}}
+      ],
+      "solution_pairs": {"c8120": "b8", "c8499": "b8", "c8500": "b9", "c8950": "b9", "c7600": "b8", "c9300": "b9"},
+      "model_answer": {"id": "8.120 → 8.000; 8.499 → 8.000; 8.500 → 9.000; 8.950 → 9.000; 7.600 → 8.000; 9.300 → 9.000.", "en": "8,120 → 8,000; 8,499 → 8,000; 8,500 → 9,000; 8,950 → 9,000; 7,600 → 8,000; 9,300 → 9,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-ROUND", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-02-009", "unit": "02", "audience": "kids", "level": "menengah", "step": 2, "type": "estimate_slider", "skills": ["EST-BIG"], "pool": "PRACT", "order": 21, "prompt_id": "P-ESTIMATE",
+      "image": "math_number_line",
+      "help_lines": [{"word": "", "meaning": {"id": "Kira-kira berapa 19.800 + 30.150?", "en": "Roughly what is 19,800 + 30,150?"}}],
+      "numeric": {"value": 49950, "tolerance": 2000},
+      "slider": {"min": 0, "max": 100000, "step": 1000},
+      "model_answer": {"id": "19.800 ≈ 20.000 dan 30.150 ≈ 30.000, jadi sekitar 50.000 (persisnya 49.950).", "en": "19,800 ≈ 20,000 and 30,150 ≈ 30,000, so about 50,000 (exactly 49,950)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-ESTIMATE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-02-010", "unit": "02", "audience": "kids", "level": "menengah", "step": 2, "type": "number_input", "skills": ["ROUND"], "pool": "PRACT", "order": 22, "prompt_id": "P-NUM",
+      "image": "pic_school",
+      "help_lines": [{"word": "", "meaning": {"id": "Di sekolah ada 1.248 siswa. Bulatkan ke ratusan terdekat.", "en": "A school has 1,248 pupils. Round to the nearest hundred."}}],
+      "numeric": {"value": 1200, "tolerance": 0},
+      "model_answer": {"id": "Angka puluhannya 4 (kurang dari 5), jadi tetap: 1.200.", "en": "The tens digit is 4 (less than 5), so it stays: 1,200."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-ROUND", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-02-011", "unit": "02", "audience": "kids", "level": "menengah", "step": 2, "type": "choose", "skills": ["EST-BIG"], "pool": "PRACT", "order": 23, "prompt_id": "P-CHOOSE",
+      "image": "pic_book",
+      "help_lines": [{"word": "", "meaning": {"id": "Ada 4.950 buku, lalu datang 2.100 lagi. Kira-kira berapa sekarang?", "en": "There are 4,950 books, then 2,100 more arrive. About how many now?"}}],
+      "options": [
+        {"id": "b", "text": {"id": "sekitar 7.000", "en": "about 7,000"}, "correct": true},
+        {"id": "a", "text": {"id": "sekitar 6.000", "en": "about 6,000"}},
+        {"id": "c", "text": {"id": "sekitar 8.000", "en": "about 8,000"}}
+      ],
+      "model_answer": {"id": "4.950 ≈ 5.000 dan 2.100 ≈ 2.000, jadi sekitar 7.000 (persisnya 7.050).", "en": "4,950 ≈ 5,000 and 2,100 ≈ 2,000, so about 7,000 (exactly 7,050)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-02-012", "unit": "02", "audience": "kids", "level": "menengah", "step": 2, "type": "estimate_slider", "skills": ["EST-BIG"], "pool": "PRACT", "order": 24, "prompt_id": "P-ESTIMATE",
+      "image": "pic_train",
+      "help_lines": [{"word": "", "meaning": {"id": "Satu gerbong kereta memuat 198 orang. Ada 8 gerbong. Kira-kira berapa orang?", "en": "One train carriage holds 198 people. There are 8 carriages. About how many people?"}}],
+      "numeric": {"value": 1584, "tolerance": 150},
+      "slider": {"min": 0, "max": 3000, "step": 50},
+      "model_answer": {"id": "198 ≈ 200, jadi 200 × 8 = 1.600. Persisnya 1.584.", "en": "198 ≈ 200, so 200 × 8 = 1,600. Exactly 1,584."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-ESTIMATE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-02-013", "unit": "02", "audience": "kids", "level": "menengah", "step": 1, "type": "fill_blank", "skills": ["PLACE-VALUE"], "pool": "REMED", "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "30.000 + 5.000 + 20 + 9 = __", "en": "30,000 + 5,000 + 20 + 9 = __"}}],
+      "options": [
+        {"id": "x3", "text": {"id": "30.529", "en": "30,529"}},
+        {"id": "x1", "text": {"id": "35.029", "en": "35,029"}},
+        {"id": "x2", "text": {"id": "35.209", "en": "35,209"}}
+      ],
+      "solution": ["x1"],
+      "model_answer": {"id": "30.000 + 5.000 + 20 + 9 = 35.029. Tidak ada ratusan, jadi angka ratusannya 0.", "en": "30,000 + 5,000 + 20 + 9 = 35,029. There are no hundreds, so the hundreds digit is 0."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-02-014", "unit": "02", "audience": "kids", "level": "menengah", "step": 2, "type": "choose", "skills": ["ROUND"], "pool": "REMED", "prompt_id": "P-CHOOSE",
+      "image": "math_number_line",
+      "help_lines": [{"word": "", "meaning": {"id": "Bulatkan 52.400 ke ribuan terdekat.", "en": "Round 52,400 to the nearest thousand."}}],
+      "options": [
+        {"id": "a", "text": {"id": "52.000", "en": "52,000"}, "correct": true},
+        {"id": "b", "text": {"id": "53.000", "en": "53,000"}},
+        {"id": "c", "text": {"id": "50.000", "en": "50,000"}}
+      ],
+      "model_answer": {"id": "Angka ratusannya 4 (kurang dari 5), jadi tetap: 52.000.", "en": "The hundreds digit is 4 (less than 5), so it stays: 52,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-ROUND", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-02-015", "unit": "02", "audience": "kids", "level": "menengah", "step": 2, "type": "estimate_slider", "skills": ["EST-BIG"], "pool": "REMED", "prompt_id": "P-ESTIMATE",
+      "image": "math_number_line",
+      "help_lines": [{"word": "", "meaning": {"id": "Kira-kira berapa 41.200 − 19.900?", "en": "Roughly what is 41,200 − 19,900?"}}],
+      "numeric": {"value": 21300, "tolerance": 2000},
+      "slider": {"min": 0, "max": 50000, "step": 500},
+      "model_answer": {"id": "41.200 ≈ 41.000 dan 19.900 ≈ 20.000, jadi sekitar 21.000 (persisnya 21.300).", "en": "41,200 ≈ 41,000 and 19,900 ≈ 20,000, so about 21,000 (exactly 21,300)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-ESTIMATE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-02-016", "unit": "02", "audience": "kids", "level": "menengah", "step": 2, "type": "info_card", "skills": ["PLACE-VALUE"], "pool": "GEM", "gem": true, "prompt_id": "P-GEM",
+      "source": "Edward Kasner and James R. Newman, Mathematics and the Imagination (Simon & Schuster, 1940), chapter 'New Names for Old'; Encyclopaedia Britannica, 'googol'.",
+      "model_answer": {"id": "Satu googol adalah angka 1 diikuti 100 angka nol! Nama itu dibuat oleh Milton Sirotta, keponakan matematikawan Edward Kasner, saat ia berumur 9 tahun.", "en": "A googol is 1 followed by 100 zeros! The name was made up by Milton Sirotta, nephew of the mathematician Edward Kasner, when he was 9 years old."},
+      "feedback_ids": {"correct": "FB-GEM"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    },
+    {
+      "item_id": "MAT-K-M-DP-01", "unit": "01", "audience": "kids", "level": "menengah", "type": "daily_puzzle", "skills": ["PUZZLE"], "pool": "SPARE", "prompt_id": "P-PUZZLE",
+      "help_lines": [{"word": "", "meaning": {"id": "Aku kurang dari 30. Kalau dibagi 4, sisaku 3. Kalau dibagi 5, sisaku 4. Siapa aku?", "en": "I'm less than 30. Divided by 4, I leave 3. Divided by 5, I leave 4. Who am I?"}}],
+      "numeric": {"value": 19, "tolerance": 0},
+      "model_answer": {"id": "Aku 19: 19 : 4 = 4 sisa 3, dan 19 : 5 = 3 sisa 4.", "en": "I'm 19: 19 ÷ 4 = 4 remainder 3, and 19 ÷ 5 = 3 remainder 4."},
+      "feedback_ids": {"correct": "FB-PUZZLE-OK", "wrong": "FB-PUZZLE-NO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-m-0.1"
+    }
+  ]
+}

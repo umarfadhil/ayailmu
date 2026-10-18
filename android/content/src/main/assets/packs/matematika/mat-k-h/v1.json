@@ -1,0 +1,456 @@
+{
+  "meta": {"schema_version": 1, "content_version": "mat-k-h-0.1", "subject": "matematika", "track": "mat-k-h", "level": "mahir", "mode": "casual", "audiences": ["kids"], "instruction_langs": ["id", "en"], "title": {"id": "Matematika — Mahir (Anak)", "en": "Mathematics — Advanced (Kids)"}},
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, Kids Mahir starter: syllabus units 1-2 of docs/syllabus/02_MATEMATIKA.md). Needs a math subject reviewer and both language reviewers (Indonesian, English) before anything is approved. Every answer is computed by the generator and re-checked by a script (scratchpad fu12/mat); prices and figures in questions are illustrative examples.",
+  "prompts": {
+    "P-PICK": {"id": "Pilih gambar yang tepat.", "en": "Pick the right picture."},
+    "P-NUM": {"id": "Tulis angkanya.", "en": "Type the number."},
+    "P-CHOOSE": {"id": "Pilih jawaban yang tepat.", "en": "Pick the right answer."},
+    "P-TF": {"id": "Benar atau salah?", "en": "True or false?"},
+    "P-ORDER-SMALL": {"id": "Urutkan, mulai dari terkecil.", "en": "Order them, smallest first."},
+    "P-FILL": {"id": "Seret ke bagian yang kosong.", "en": "Drag into the gap."},
+    "P-CONNECT": {"id": "Tarik garis ke pasangannya.", "en": "Draw a line to each match."},
+    "P-DRAG": {"id": "Seret gambar ke pasangannya.", "en": "Drag each picture to its match."},
+    "P-SORT": {"id": "Seret ke keranjang yang tepat.", "en": "Drag each into the right basket."},
+    "P-ESTIMATE": {"id": "Tebak, lalu geser.", "en": "Guess, then slide."},
+    "P-TAP": {"id": "Ketuk bagian yang tepat.", "en": "Tap the right spot."},
+    "P-GEM": {"id": "Tahukah kamu?", "en": "Did you know?"},
+    "P-PUZZLE": {"id": "Teka-teki hari ini", "en": "Today's puzzle"}
+  },
+  "feedback": {
+    "FB-OK-MODEL": {"id": "Betul! {model}", "en": "That's right! {model}"},
+    "FB-NO-MODEL": {"id": "Belum tepat. Yuk, lihat lagi: {model}", "en": "Not quite. Let's look again: {model}"},
+    "FB-DONTKNOW": {"id": "Tidak apa-apa. Kita lihat bersama: {model}", "en": "That's okay. Let's look at it together: {model}"},
+    "FB-NO-ESTIMATE": {"id": "Belum terlalu dekat, tetapi menebak itu latihan yang bagus! {model}", "en": "Not that close yet, but guessing is great practice! {model}"},
+    "FB-GEM": {"id": "Permata ini masuk ke Kotak Permatamu.", "en": "This gem goes into your Gem box."},
+    "FB-PUZZLE-OK": {"id": "Hebat, teka-tekinya terpecahkan! {model}", "en": "Brilliant, you solved it! {model}"},
+    "FB-PUZZLE-NO": {"id": "Hampir! Teka-teki memang perlu dipikirkan pelan-pelan. {model}", "en": "Nearly! Puzzles need slow thinking. {model}"},
+    "FB-NO-DECIMAL": {"id": "Belum tepat. Samakan dulu banyak angka di belakang koma: 0,5 = 0,50. {model}", "en": "Not quite. Give them the same number of decimal places first: 0.5 = 0.50. {model}"},
+    "FB-NO-FRACTION": {"id": "Belum tepat. Penyebutnya harus sama dulu sebelum menjumlah atau mengurangi. {model}", "en": "Not quite. The bottoms must match before you add or subtract. {model}"}
+  },
+  "units": [
+    {"unit": "01", "title": {"id": "Desimal & persen", "en": "Decimals & percent"}, "sticker": "sticker_kite"},
+    {"unit": "02", "title": {"id": "Operasi pecahan", "en": "Fraction operations"}, "sticker": "sticker_star_fruit"}
+  ],
+  "screens": [
+    {
+      "screen_id": "MAT-K-H-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {"id": "Desimal & persen", "en": "Decimals & percent"},
+      "body": [
+        {"id": "Di belakang koma ada persepuluhan dan perseratusan. Pada 2,35, angka 3 bernilai 3 persepuluh dan angka 5 bernilai 5 perseratus.", "en": "After the decimal point come tenths and hundredths. In 2.35, the 3 is worth 3 tenths and the 5 is worth 5 hundredths."},
+        {"id": "Persen artinya per seratus: 1/4 = 0,25 = 25%.", "en": "Percent means per hundred: 1/4 = 0.25 = 25%."},
+        {"id": "Diskon 10% dari Rp50.000 adalah Rp5.000, jadi harganya menjadi Rp45.000.", "en": "10% off Rp50,000 is Rp5,000, so the price becomes Rp45,000."}
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "MAT-K-H-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {"id": "Operasi pecahan", "en": "Fraction operations"},
+      "body": [
+        {"id": "Penyebutnya sama? Jumlahkan pembilangnya saja: 1/8 + 3/8 = 4/8 = 1/2.", "en": "Same denominators? Just add the tops: 1/8 + 3/8 = 4/8 = 1/2."},
+        {"id": "Penyebutnya berbeda? Samakan dulu: 1/2 + 1/4 = 2/4 + 1/4 = 3/4.", "en": "Different denominators? Make them the same first: 1/2 + 1/4 = 2/4 + 1/4 = 3/4."},
+        {"id": "Mengali pecahan: atas × atas, bawah × bawah. 1/2 × 1/2 = 1/4, yaitu setengah dari setengah.", "en": "Multiplying fractions: top × top, bottom × bottom. 1/2 × 1/2 = 1/4, which is half of a half."}
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "MAT-K-H-01-001", "unit": "01", "audience": "kids", "level": "mahir", "step": 1, "type": "order", "skills": ["DEC-PLACE"], "pool": "PRACT", "order": 1, "prompt_id": "P-ORDER-SMALL",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Angka yang lebih panjang belum tentu lebih besar.", "en": "A longer number isn't always bigger."}}],
+      "options": [
+        {"id": "d1", "text": {"id": "0,45", "en": "0.45"}},
+        {"id": "d0", "text": {"id": "0,5", "en": "0.5"}},
+        {"id": "d3", "text": {"id": "0,54", "en": "0.54"}},
+        {"id": "d2", "text": {"id": "0,405", "en": "0.405"}}
+      ],
+      "solution": ["d2", "d1", "d0", "d3"],
+      "model_answer": {"id": "0,405 < 0,45 < 0,5 < 0,54: samakan dulu jadi tiga angka di belakang koma (0,500; 0,450; …).", "en": "0.405 < 0.45 < 0.5 < 0.54: give them all three decimal places first (0.500; 0.450; …)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-DECIMAL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-01-002", "unit": "01", "audience": "kids", "level": "mahir", "step": 1, "type": "number_input", "skills": ["DEC-PLACE"], "pool": "PRACT", "order": 2, "prompt_id": "P-NUM",
+      "image": "math_ruler",
+      "help_lines": [{"word": "", "meaning": {"id": "Pensil ini panjangnya 12 cm 7 mm. Tulis dalam cm.", "en": "This pencil is 12 cm 7 mm long. Write it in cm."}}],
+      "numeric": {"value": 12.7, "tolerance": 0, "unit": {"id": "cm", "en": "cm"}},
+      "model_answer": {"id": "7 mm = 0,7 cm, jadi panjangnya 12,7 cm.", "en": "7 mm = 0.7 cm, so it is 12.7 cm long."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-DECIMAL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-01-003", "unit": "01", "audience": "kids", "level": "mahir", "step": 1, "type": "pick_image", "skills": ["FDP-CONVERT"], "pool": "PRACT", "order": 3, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana yang sama dengan 0,75?", "en": "Which one equals 0.75?"}}],
+      "options": [
+        {"id": "frac_1_4", "image": "frac_1_4"},
+        {"id": "frac_3_4", "image": "frac_3_4", "correct": true},
+        {"id": "frac_2_3", "image": "frac_2_3"}
+      ],
+      "model_answer": {"id": "0,75 = 75/100 = 3/4: tiga dari empat bagian.", "en": "0.75 = 75/100 = 3/4: three of four parts."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-01-004", "unit": "01", "audience": "kids", "level": "mahir", "step": 1, "type": "match_pairs", "skills": ["FDP-CONVERT"], "pool": "PRACT", "order": 4, "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Pasangkan gambar dengan persennya.", "en": "Match each picture to its percent."}}],
+      "options": [
+        {"id": "f12", "image": "frac_1_2"},
+        {"id": "f14", "image": "frac_1_4"},
+        {"id": "f34", "image": "frac_3_4"},
+        {"id": "f18", "image": "frac_1_8"},
+        {"id": "p18", "text": {"id": "12,5%", "en": "12.5%"}},
+        {"id": "p14", "text": {"id": "25%", "en": "25%"}},
+        {"id": "p34", "text": {"id": "75%", "en": "75%"}},
+        {"id": "p12", "text": {"id": "50%", "en": "50%"}}
+      ],
+      "solution_pairs": {"f12": "p12", "f14": "p14", "f34": "p34", "f18": "p18"},
+      "model_answer": {"id": "1/2 = 50%, 1/4 = 25%, 3/4 = 75%, 1/8 = 12,5%.", "en": "1/2 = 50%, 1/4 = 25%, 3/4 = 75%, 1/8 = 12.5%."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-01-005", "unit": "01", "audience": "kids", "level": "mahir", "step": 1, "type": "tap_hotspot", "skills": ["FDP-CONVERT"], "pool": "PRACT", "order": 5, "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [{"word": "", "meaning": {"id": "Lebih dari separuh (lebih dari 50%) penduduk Indonesia tinggal di pulau ini. Ketuk pulaunya.", "en": "More than half (over 50%) of Indonesia's people live on this island. Tap it."}}],
+      "options": [
+        {"id": "sumatra", "text": {"id": "Sumatra", "en": "Sumatra"}, "region": {"x": 0.02, "y": 0.05, "w": 0.22, "h": 0.55}},
+        {"id": "kalimantan", "text": {"id": "Kalimantan", "en": "Kalimantan"}, "region": {"x": 0.28, "y": 0.08, "w": 0.2, "h": 0.4}},
+        {"id": "jawa", "text": {"id": "Jawa", "en": "Java"}, "region": {"x": 0.24, "y": 0.62, "w": 0.2, "h": 0.14}, "correct": true},
+        {"id": "sulawesi", "text": {"id": "Sulawesi", "en": "Sulawesi"}, "region": {"x": 0.5, "y": 0.2, "w": 0.14, "h": 0.4}}
+      ],
+      "model_answer": {"id": "Jawa. Menurut Sensus Penduduk 2020, sekitar 56 dari 100 orang Indonesia tinggal di Jawa.", "en": "Java. According to the 2020 Population Census, about 56 in every 100 Indonesians live on Java."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-01-006", "unit": "01", "audience": "kids", "level": "mahir", "step": 1, "type": "sort_buckets", "skills": ["FDP-CONVERT"], "pool": "PRACT", "order": 6, "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Sama dengan 1/2 atau tidak?", "en": "Equal to 1/2 or not?"}}],
+      "options": [
+        {"id": "b_eq", "text": {"id": "Sama dengan 1/2", "en": "Equal to 1/2"}},
+        {"id": "b_no", "text": {"id": "Tidak sama", "en": "Not equal"}},
+        {"id": "c3", "text": {"id": "5/10", "en": "5/10"}},
+        {"id": "c2", "text": {"id": "50%", "en": "50%"}},
+        {"id": "c4", "text": {"id": "0,05", "en": "0.05"}},
+        {"id": "c1", "text": {"id": "0,5", "en": "0.5"}},
+        {"id": "c5", "text": {"id": "5%", "en": "5%"}},
+        {"id": "c6", "text": {"id": "2/4", "en": "2/4"}}
+      ],
+      "solution_pairs": {"c1": "b_eq", "c2": "b_eq", "c3": "b_eq", "c4": "b_no", "c5": "b_no", "c6": "b_eq"},
+      "model_answer": {"id": "Sama dengan 1/2: 0,5, 50%, 5/10, 2/4. Tidak sama: 0,05, 5% (itu 5 perseratus).", "en": "Equal to 1/2: 0.5, 50%, 5/10, 2/4. Not equal: 0.05, 5% (that's 5 hundredths)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-01-007", "unit": "01", "audience": "kids", "level": "mahir", "step": 1, "type": "true_false", "skills": ["DEC-PLACE"], "pool": "PRACT", "order": 7, "prompt_id": "P-TF",
+      "help_lines": [{"word": "", "meaning": {"id": "0,7 lebih besar dari 0,65.", "en": "0.7 is bigger than 0.65."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}, "correct": true},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}}
+      ],
+      "model_answer": {"id": "Benar. 0,7 = 0,70, dan 0,70 lebih dari 0,65.", "en": "True. 0.7 = 0.70, and 0.70 is more than 0.65."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-DECIMAL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-01-008", "unit": "01", "audience": "kids", "level": "mahir", "step": 2, "type": "number_input", "skills": ["PCT-DISCOUNT"], "pool": "PRACT", "order": 8, "prompt_id": "P-NUM",
+      "image": "pic_shoes",
+      "help_lines": [{"word": "", "meaning": {"id": "Sepatu Rp120.000, diskon 25%. Berapa harganya sekarang?", "en": "Shoes cost Rp120,000, with 25% off. What's the price now?"}}],
+      "numeric": {"value": 90000, "tolerance": 0, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "model_answer": {"id": "25% × Rp120.000 = Rp30.000. Rp120.000 − Rp30.000 = Rp90.000.", "en": "25% × Rp120,000 = Rp30,000. Rp120,000 − Rp30,000 = Rp90,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-01-009", "unit": "01", "audience": "kids", "level": "mahir", "step": 2, "type": "estimate_slider", "skills": ["PCT-DISCOUNT"], "pool": "PRACT", "order": 9, "prompt_id": "P-ESTIMATE",
+      "image": "pic_bag",
+      "help_lines": [{"word": "", "meaning": {"id": "Tas Rp79.000, diskon 30%. Kira-kira berapa harganya?", "en": "A bag costs Rp79,000, with 30% off. Roughly what's the price?"}}],
+      "numeric": {"value": 55300, "tolerance": 3000, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "slider": {"min": 0, "max": 100000, "step": 500},
+      "model_answer": {"id": "Bulatkan: 30% × Rp80.000 = Rp24.000, jadi sekitar Rp56.000 (persisnya Rp55.300).", "en": "Round it: 30% × Rp80,000 = Rp24,000, so about Rp56,000 (exactly Rp55,300)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-ESTIMATE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-01-010", "unit": "01", "audience": "kids", "level": "mahir", "step": 2, "type": "fill_blank", "skills": ["PCT-DISCOUNT"], "pool": "PRACT", "order": 10, "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "10% dari Rp35.000 = __", "en": "10% of Rp35,000 = __"}}],
+      "options": [
+        {"id": "c", "text": {"id": "Rp10.000", "en": "Rp10,000"}},
+        {"id": "b", "text": {"id": "Rp350", "en": "Rp350"}},
+        {"id": "a", "text": {"id": "Rp3.500", "en": "Rp3,500"}}
+      ],
+      "solution": ["a"],
+      "model_answer": {"id": "10% = 1/10, jadi Rp35.000 : 10 = Rp3.500.", "en": "10% = 1/10, so Rp35,000 ÷ 10 = Rp3,500."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-01-011", "unit": "01", "audience": "kids", "level": "mahir", "step": 2, "type": "choose", "skills": ["PCT-DISCOUNT"], "pool": "PRACT", "order": 11, "prompt_id": "P-CHOOSE",
+      "image": "pic_book",
+      "help_lines": [{"word": "", "meaning": {"id": "Toko A: buku Rp40.000, diskon 20%. Toko B: buku yang sama Rp36.000, tanpa diskon. Mana lebih murah?", "en": "Shop A: a book at Rp40,000 with 20% off. Shop B: the same book at Rp36,000, no discount. Which is cheaper?"}}],
+      "options": [
+        {"id": "b", "text": {"id": "Toko B", "en": "Shop B"}},
+        {"id": "a", "text": {"id": "Toko A", "en": "Shop A"}, "correct": true}
+      ],
+      "model_answer": {"id": "Toko A: Rp40.000 − Rp8.000 = Rp32.000, lebih murah dari Rp36.000.", "en": "Shop A: Rp40,000 − Rp8,000 = Rp32,000, cheaper than Rp36,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-01-012", "unit": "01", "audience": "kids", "level": "mahir", "step": 2, "type": "number_input", "skills": ["FDP-CONVERT"], "pool": "PRACT", "order": 12, "prompt_id": "P-NUM",
+      "image": "pic_write",
+      "help_lines": [{"word": "", "meaning": {"id": "Sinta menjawab benar 17 dari 20 soal. Berapa persen?", "en": "Sinta got 17 out of 20 questions right. What percent is that?"}}],
+      "numeric": {"value": 85, "tolerance": 0, "unit": {"id": "%", "en": "%"}},
+      "model_answer": {"id": "17/20 = 85/100 = 85%.", "en": "17/20 = 85/100 = 85%."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-01-013", "unit": "01", "audience": "kids", "level": "mahir", "step": 1, "type": "order", "skills": ["DEC-PLACE"], "pool": "REMED", "prompt_id": "P-ORDER-SMALL",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Bandingkan persepuluhannya dulu.", "en": "Compare the tenths first."}}],
+      "options": [
+        {"id": "d3", "text": {"id": "1,5", "en": "1.5"}},
+        {"id": "d1", "text": {"id": "1,15", "en": "1.15"}},
+        {"id": "d2", "text": {"id": "1,05", "en": "1.05"}},
+        {"id": "d0", "text": {"id": "1,2", "en": "1.2"}}
+      ],
+      "solution": ["d2", "d1", "d0", "d3"],
+      "model_answer": {"id": "1,05 < 1,15 < 1,2 < 1,5.", "en": "1.05 < 1.15 < 1.2 < 1.5."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-DECIMAL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-01-014", "unit": "01", "audience": "kids", "level": "mahir", "step": 1, "type": "pick_image", "skills": ["FDP-CONVERT"], "pool": "REMED", "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana yang sama dengan 25%?", "en": "Which one equals 25%?"}}],
+      "options": [
+        {"id": "frac_1_4", "image": "frac_1_4", "correct": true},
+        {"id": "frac_1_2", "image": "frac_1_2"},
+        {"id": "frac_3_4", "image": "frac_3_4"}
+      ],
+      "model_answer": {"id": "25% = 25/100 = 1/4.", "en": "25% = 25/100 = 1/4."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-01-015", "unit": "01", "audience": "kids", "level": "mahir", "step": 2, "type": "number_input", "skills": ["PCT-DISCOUNT"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "pic_shirt",
+      "help_lines": [{"word": "", "meaning": {"id": "Baju Rp60.000, diskon 10%. Berapa harganya sekarang?", "en": "A shirt costs Rp60,000, with 10% off. What's the price now?"}}],
+      "numeric": {"value": 54000, "tolerance": 0, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "model_answer": {"id": "10% × Rp60.000 = Rp6.000. Rp60.000 − Rp6.000 = Rp54.000.", "en": "10% × Rp60,000 = Rp6,000. Rp60,000 − Rp6,000 = Rp54,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-02-001", "unit": "02", "audience": "kids", "level": "mahir", "step": 1, "type": "pick_image", "skills": ["FRAC-ADD"], "pool": "PRACT", "order": 13, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "1/2 + 1/4 = ?", "en": "1/2 + 1/4 = ?"}}],
+      "options": [
+        {"id": "frac_1_3", "image": "frac_1_3"},
+        {"id": "frac_1_2", "image": "frac_1_2"},
+        {"id": "frac_3_4", "image": "frac_3_4", "correct": true}
+      ],
+      "model_answer": {"id": "1/2 = 2/4, jadi 2/4 + 1/4 = 3/4. Bukan 2/6!", "en": "1/2 = 2/4, so 2/4 + 1/4 = 3/4. Not 2/6!"},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-FRACTION", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-02-002", "unit": "02", "audience": "kids", "level": "mahir", "step": 1, "type": "pick_image", "skills": ["FRAC-ADD"], "pool": "PRACT", "order": 14, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "1/8 + 1/8 = ?", "en": "1/8 + 1/8 = ?"}}],
+      "options": [
+        {"id": "frac_1_8", "image": "frac_1_8"},
+        {"id": "frac_1_2", "image": "frac_1_2"},
+        {"id": "frac_1_4", "image": "frac_1_4", "correct": true}
+      ],
+      "model_answer": {"id": "1/8 + 1/8 = 2/8 = 1/4. Penyebutnya tetap 8, bukan 16.", "en": "1/8 + 1/8 = 2/8 = 1/4. The bottom stays 8, not 16."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-FRACTION", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-02-003", "unit": "02", "audience": "kids", "level": "mahir", "step": 1, "type": "fill_blank", "skills": ["FRAC-ADD"], "pool": "PRACT", "order": 15, "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "2/5 + 1/5 = __", "en": "2/5 + 1/5 = __"}}],
+      "options": [
+        {"id": "c", "text": {"id": "2/5", "en": "2/5"}},
+        {"id": "a", "text": {"id": "3/5", "en": "3/5"}},
+        {"id": "b", "text": {"id": "3/10", "en": "3/10"}}
+      ],
+      "solution": ["a"],
+      "model_answer": {"id": "2/5 + 1/5 = 3/5: penyebutnya sama, jadi jumlahkan pembilangnya saja.", "en": "2/5 + 1/5 = 3/5: same bottoms, so just add the tops."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-FRACTION", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-02-004", "unit": "02", "audience": "kids", "level": "mahir", "step": 1, "type": "pick_image", "skills": ["FRAC-SUB"], "pool": "PRACT", "order": 16, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "3/4 − 1/4 = ?", "en": "3/4 − 1/4 = ?"}}],
+      "options": [
+        {"id": "frac_1_4", "image": "frac_1_4"},
+        {"id": "frac_1_2", "image": "frac_1_2", "correct": true},
+        {"id": "frac_2_3", "image": "frac_2_3"}
+      ],
+      "model_answer": {"id": "3/4 − 1/4 = 2/4 = 1/2.", "en": "3/4 − 1/4 = 2/4 = 1/2."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-FRACTION", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-02-005", "unit": "02", "audience": "kids", "level": "mahir", "step": 1, "type": "match_pairs", "skills": ["FRAC-ADD", "FRAC-SUB"], "pool": "PRACT", "order": 17, "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [{"word": "", "meaning": {"id": "Pasangkan dengan hasilnya.", "en": "Match each with its answer."}}],
+      "options": [
+        {"id": "q0", "text": {"id": "1/2 + 1/3", "en": "1/2 + 1/3"}},
+        {"id": "q1", "text": {"id": "1 − 1/3", "en": "1 − 1/3"}},
+        {"id": "q2", "text": {"id": "1/4 + 1/2", "en": "1/4 + 1/2"}},
+        {"id": "q3", "text": {"id": "1/2 − 1/8", "en": "1/2 − 1/8"}},
+        {"id": "r2", "text": {"id": "3/4", "en": "3/4"}},
+        {"id": "r3", "text": {"id": "3/8", "en": "3/8"}},
+        {"id": "r1", "text": {"id": "2/3", "en": "2/3"}},
+        {"id": "r0", "text": {"id": "5/6", "en": "5/6"}}
+      ],
+      "solution_pairs": {"q0": "r0", "q1": "r1", "q2": "r2", "q3": "r3"},
+      "model_answer": {"id": "1/2 + 1/3 = 5/6; 1 − 1/3 = 2/3; 1/4 + 1/2 = 3/4; 1/2 − 1/8 = 3/8.", "en": "1/2 + 1/3 = 5/6; 1 − 1/3 = 2/3; 1/4 + 1/2 = 3/4; 1/2 − 1/8 = 3/8."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-FRACTION", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-02-006", "unit": "02", "audience": "kids", "level": "mahir", "step": 1, "type": "choose", "skills": ["FRAC-SUB"], "pool": "PRACT", "order": 18, "prompt_id": "P-CHOOSE",
+      "image": "pic_cake",
+      "help_lines": [{"word": "", "meaning": {"id": "Ibu membuat satu loyang kue. Adik makan 1/3, kakak makan 1/4. Berapa sisanya?", "en": "Mum bakes one tray of cake. The younger child eats 1/3, the older one eats 1/4. How much is left?"}}],
+      "options": [
+        {"id": "x", "text": {"id": "5/12", "en": "5/12"}, "correct": true},
+        {"id": "y", "text": {"id": "2/7", "en": "2/7"}},
+        {"id": "z", "text": {"id": "7/12", "en": "7/12"}}
+      ],
+      "model_answer": {"id": "Dimakan 1/3 + 1/4 = 4/12 + 3/12 = 7/12. Sisanya 1 − 7/12 = 5/12.", "en": "Eaten: 1/3 + 1/4 = 4/12 + 3/12 = 7/12. Left: 1 − 7/12 = 5/12."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-FRACTION", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-02-007", "unit": "02", "audience": "kids", "level": "mahir", "step": 1, "type": "true_false", "skills": ["FRAC-ADD"], "pool": "PRACT", "order": 19, "prompt_id": "P-TF",
+      "help_lines": [{"word": "", "meaning": {"id": "1/3 + 1/3 = 2/6", "en": "1/3 + 1/3 = 2/6"}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}, "correct": true}
+      ],
+      "model_answer": {"id": "Salah. 1/3 + 1/3 = 2/3. Penyebutnya tetap 3; yang dijumlah hanya pembilangnya.", "en": "False. 1/3 + 1/3 = 2/3. The bottom stays 3; only the tops are added."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-FRACTION", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-02-008", "unit": "02", "audience": "kids", "level": "mahir", "step": 2, "type": "pick_image", "skills": ["FRAC-MUL"], "pool": "PRACT", "order": 20, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "1/2 × 2/3 = ?", "en": "1/2 × 2/3 = ?"}}],
+      "options": [
+        {"id": "frac_1_3", "image": "frac_1_3", "correct": true},
+        {"id": "frac_2_3", "image": "frac_2_3"},
+        {"id": "frac_1_2", "image": "frac_1_2"}
+      ],
+      "model_answer": {"id": "1/2 × 2/3 = 2/6 = 1/3: setengah dari dua pertiga.", "en": "1/2 × 2/3 = 2/6 = 1/3: half of two thirds."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-02-009", "unit": "02", "audience": "kids", "level": "mahir", "step": 2, "type": "number_input", "skills": ["FRAC-MUL"], "pool": "PRACT", "order": 21, "prompt_id": "P-NUM",
+      "image": "count_mango_12",
+      "help_lines": [{"word": "", "meaning": {"id": "2/3 dari 12 mangga = ?", "en": "2/3 of 12 mangoes = ?"}}],
+      "numeric": {"value": 8, "tolerance": 0},
+      "model_answer": {"id": "12 : 3 = 4, lalu 4 × 2 = 8 mangga.", "en": "12 ÷ 3 = 4, then 4 × 2 = 8 mangoes."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-02-010", "unit": "02", "audience": "kids", "level": "mahir", "step": 2, "type": "number_input", "skills": ["FRAC-MUL"], "pool": "PRACT", "order": 22, "prompt_id": "P-NUM",
+      "image": "math_money_notes",
+      "help_lines": [{"word": "", "meaning": {"id": "Uang sakumu Rp20.000. Sebanyak 3/4 kamu tabung. Berapa rupiah yang ditabung?", "en": "Your pocket money is Rp20,000. You save 3/4 of it. How many rupiah do you save?"}}],
+      "numeric": {"value": 15000, "tolerance": 0, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "model_answer": {"id": "Rp20.000 : 4 = Rp5.000, lalu Rp5.000 × 3 = Rp15.000.", "en": "Rp20,000 ÷ 4 = Rp5,000, then Rp5,000 × 3 = Rp15,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-02-011", "unit": "02", "audience": "kids", "level": "mahir", "step": 2, "type": "sort_buckets", "skills": ["FRAC-MUL"], "pool": "PRACT", "order": 23, "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Hasilnya kurang atau lebih dari 1/2?", "en": "Is the answer less or more than 1/2?"}}],
+      "options": [
+        {"id": "b_less", "text": {"id": "Kurang dari 1/2", "en": "Less than 1/2"}},
+        {"id": "b_more", "text": {"id": "Lebih dari 1/2", "en": "More than 1/2"}},
+        {"id": "c3", "text": {"id": "3/4 × 1", "en": "3/4 × 1"}},
+        {"id": "c5", "text": {"id": "3 × 1/4", "en": "3 × 1/4"}},
+        {"id": "c1", "text": {"id": "3/4 × 1/2", "en": "3/4 × 1/2"}},
+        {"id": "c4", "text": {"id": "1/3 × 3/4", "en": "1/3 × 3/4"}},
+        {"id": "c0", "text": {"id": "1/2 × 1/2", "en": "1/2 × 1/2"}},
+        {"id": "c2", "text": {"id": "2 × 1/3", "en": "2 × 1/3"}}
+      ],
+      "solution_pairs": {"c0": "b_less", "c1": "b_less", "c2": "b_more", "c3": "b_more", "c4": "b_less", "c5": "b_more"},
+      "model_answer": {"id": "1/2 × 1/2 = 1/4; 3/4 × 1/2 = 3/8; 2 × 1/3 = 2/3; 3/4 × 1 = 3/4; 1/3 × 3/4 = 1/4; 3 × 1/4 = 3/4.", "en": "1/2 × 1/2 = 1/4; 3/4 × 1/2 = 3/8; 2 × 1/3 = 2/3; 3/4 × 1 = 3/4; 1/3 × 3/4 = 1/4; 3 × 1/4 = 3/4."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-02-012", "unit": "02", "audience": "kids", "level": "mahir", "step": 2, "type": "estimate_slider", "skills": ["FRAC-MUL"], "pool": "PRACT", "order": 24, "prompt_id": "P-ESTIMATE",
+      "image": "math_ruler",
+      "help_lines": [{"word": "", "meaning": {"id": "Pita 95 cm. Kamu ambil 2/3-nya. Kira-kira berapa cm?", "en": "A ribbon is 95 cm long. You take 2/3 of it. Roughly how many cm?"}}],
+      "numeric": {"value": 63.33, "tolerance": 4, "unit": {"id": "cm", "en": "cm"}},
+      "slider": {"min": 0, "max": 100, "step": 1},
+      "model_answer": {"id": "95 ≈ 96, dan 96 : 3 × 2 = 64. Jadi sekitar 64 cm (tepatnya sekitar 63,3 cm).", "en": "95 ≈ 96, and 96 ÷ 3 × 2 = 64. So about 64 cm (more precisely, about 63.3 cm)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-ESTIMATE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-02-013", "unit": "02", "audience": "kids", "level": "mahir", "step": 1, "type": "pick_image", "skills": ["FRAC-ADD"], "pool": "REMED", "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "1/4 + 1/4 = ?", "en": "1/4 + 1/4 = ?"}}],
+      "options": [
+        {"id": "frac_1_4", "image": "frac_1_4"},
+        {"id": "frac_1_8", "image": "frac_1_8"},
+        {"id": "frac_1_2", "image": "frac_1_2", "correct": true}
+      ],
+      "model_answer": {"id": "1/4 + 1/4 = 2/4 = 1/2.", "en": "1/4 + 1/4 = 2/4 = 1/2."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-FRACTION", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-02-014", "unit": "02", "audience": "kids", "level": "mahir", "step": 1, "type": "pick_image", "skills": ["FRAC-SUB"], "pool": "REMED", "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "1 − 1/4 = ?", "en": "1 − 1/4 = ?"}}],
+      "options": [
+        {"id": "frac_1_4", "image": "frac_1_4"},
+        {"id": "frac_3_4", "image": "frac_3_4", "correct": true},
+        {"id": "frac_1_2", "image": "frac_1_2"}
+      ],
+      "model_answer": {"id": "1 = 4/4, jadi 4/4 − 1/4 = 3/4.", "en": "1 = 4/4, so 4/4 − 1/4 = 3/4."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-FRACTION", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-02-015", "unit": "02", "audience": "kids", "level": "mahir", "step": 2, "type": "pick_image", "skills": ["FRAC-MUL"], "pool": "REMED", "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Setengah dari 1/2 kue = ?", "en": "Half of 1/2 of a cake = ?"}}],
+      "options": [
+        {"id": "frac_1_2", "image": "frac_1_2"},
+        {"id": "frac_1_4", "image": "frac_1_4", "correct": true},
+        {"id": "frac_3_4", "image": "frac_3_4"}
+      ],
+      "model_answer": {"id": "1/2 × 1/2 = 1/4.", "en": "1/2 × 1/2 = 1/4."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-02-016", "unit": "02", "audience": "kids", "level": "mahir", "step": 2, "type": "info_card", "skills": ["FRAC-ADD"], "pool": "GEM", "gem": true, "prompt_id": "P-GEM",
+      "source": "The British Museum, Rhind Mathematical Papyrus (EA 10057 and EA 10058); Encyclopaedia Britannica, 'Rhind papyrus'.",
+      "model_answer": {"id": "Orang Mesir kuno hampir selalu menulis pecahan sebagai jumlah pecahan berpembilang 1, misalnya 3/4 = 1/2 + 1/4. Contohnya ada di Papirus Rhind, yang disalin juru tulis Ahmes sekitar tahun 1550 SM.", "en": "The ancient Egyptians almost always wrote fractions as sums of fractions with 1 on top, like 3/4 = 1/2 + 1/4. You can see this in the Rhind Papyrus, copied by the scribe Ahmes around 1550 BCE."},
+      "feedback_ids": {"correct": "FB-GEM"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    },
+    {
+      "item_id": "MAT-K-H-DP-01", "unit": "01", "audience": "kids", "level": "mahir", "type": "daily_puzzle", "skills": ["PUZZLE"], "pool": "SPARE", "prompt_id": "P-PUZZLE",
+      "help_lines": [{"word": "", "meaning": {"id": "Setengah dari sepertiga sebuah bilangan adalah 5. Berapa bilangannya?", "en": "Half of a third of a number is 5. What is the number?"}}],
+      "numeric": {"value": 30, "tolerance": 0},
+      "model_answer": {"id": "Setengah dari sepertiga = 1/6. Jadi bilangannya 5 × 6 = 30.", "en": "Half of a third is 1/6. So the number is 5 × 6 = 30."},
+      "feedback_ids": {"correct": "FB-PUZZLE-OK", "wrong": "FB-PUZZLE-NO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-h-0.1"
+    }
+  ]
+}

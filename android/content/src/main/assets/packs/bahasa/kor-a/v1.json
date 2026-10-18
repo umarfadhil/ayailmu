@@ -1,0 +1,4581 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "kor-a-pemula-0.1",
+    "subject": "bahasa",
+    "track": "kor-a",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "target_lang": "ko",
+    "title": {
+      "id": "Bahasa Korea — Pemula (Dewasa)",
+      "en": "Korean — Beginner (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 11) for language review: needs a native Korean reviewer (hangul, Revised Romanization, naturalness, every voice clip) and the Indonesian and English reviewers before any item is approved (docs/syllabus/bahasa/ko_pemula.md, Adults Pemula units 01-05). Picture-first; audio_match items stay hidden until the ko/* clips exist (android/content/voice/ko.json).",
+  "prompts": {
+    "P-TRACE": {
+      "id": "Telusuri hurufnya.",
+      "en": "Trace the letter."
+    },
+    "P-LISTEN": {
+      "id": "Dengar, lalu pilih.",
+      "en": "Listen, then choose."
+    },
+    "P-LISTEN-PIC": {
+      "id": "Dengar, lalu ketuk gambarnya.",
+      "en": "Listen, then tap the picture."
+    },
+    "P-PICK": {
+      "id": "Pilih gambarnya.",
+      "en": "Pick the picture."
+    },
+    "P-MATCH-PIC": {
+      "id": "Pasangkan gambar dan katanya.",
+      "en": "Match each picture to its word."
+    },
+    "P-MATCH": {
+      "id": "Pasangkan.",
+      "en": "Match them up."
+    },
+    "P-BUILD": {
+      "id": "Susun hurufnya.",
+      "en": "Build the syllable."
+    },
+    "P-BUILD-WORD": {
+      "id": "Susun katanya.",
+      "en": "Build the word."
+    },
+    "P-FILL": {
+      "id": "Isi yang kosong.",
+      "en": "Fill the gap."
+    },
+    "P-SORT": {
+      "id": "Kelompokkan.",
+      "en": "Sort them."
+    },
+    "P-ORDER": {
+      "id": "Urutkan.",
+      "en": "Put them in order."
+    },
+    "P-MEMORY": {
+      "id": "Buka kartu, cari pasangannya.",
+      "en": "Flip cards, find the pairs."
+    },
+    "P-COUNT": {
+      "id": "Ada berapa?",
+      "en": "How many are there?"
+    },
+    "P-TAP": {
+      "id": "Ketuk bagiannya.",
+      "en": "Tap the right part."
+    },
+    "P-WHO": {
+      "id": "Siapa yang memakai kata ini?",
+      "en": "Who uses these words?"
+    },
+    "P-TRY": {
+      "id": "Coba di rumah",
+      "en": "Try at home"
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    },
+    "P-REPLY": {
+      "id": "Pilih jawaban yang cocok.",
+      "en": "Pick the best reply."
+    },
+    "P-LEAVING": {
+      "id": "Anda pamit pulang. Bilang apa?",
+      "en": "You're leaving. What do you say?"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Correct. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-TRACE": {
+      "id": "Bagus. {model}",
+      "en": "Well done. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Baik, kita lanjut.",
+      "en": "Good, let's continue."
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Vokal hangul & salam",
+        "en": "Hangul vowels & greetings"
+      },
+      "sticker": "sticker_book"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Konsonan hangul & angka",
+        "en": "Hangul consonants & numbers"
+      },
+      "sticker": "sticker_compass"
+    },
+    {
+      "unit": "03",
+      "title": {
+        "id": "Blok suku kata & keluarga",
+        "en": "Syllable blocks & family"
+      },
+      "sticker": "sticker_lantern"
+    },
+    {
+      "unit": "04",
+      "title": {
+        "id": "Makanan & minuman",
+        "en": "Food & drink"
+      },
+      "sticker": "sticker_teapot"
+    },
+    {
+      "unit": "05",
+      "title": {
+        "id": "Tempat & bepergian",
+        "en": "Places & getting around"
+      },
+      "sticker": "sticker_bicycle"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "KOR-A-P-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Vokal & salam sopan",
+        "en": "Vowels & polite greetings"
+      },
+      "body": [
+        {
+          "id": "10 vokal dasar: garis panjangnya berdiri │ atau berbaring ─. Garis pendek kedua menambah bunyi y.",
+          "en": "10 basic vowels: the long line stands │ or lies ─. A second short stroke adds a y sound."
+        },
+        {
+          "id": "Suku kata yang diawali vokal memakai ㅇ yang tidak berbunyi: ㅏ → 아 (a), ㅗ → 오 (o).",
+          "en": "A syllable that starts with a vowel takes a silent ㅇ: ㅏ → 아 (a), ㅗ → 오 (o)."
+        },
+        {
+          "id": "Salam aman untuk siapa saja: 안녕하세요 (annyeonghaseyo). Terima kasih: 감사합니다 (gamsahamnida).",
+          "en": "A safe hello for anyone: 안녕하세요 (annyeonghaseyo). Thank you: 감사합니다 (gamsahamnida)."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "아",
+          "gloss": {
+            "id": "a",
+            "en": "a"
+          }
+        },
+        {
+          "target_text": "어",
+          "gloss": {
+            "id": "eo",
+            "en": "eo"
+          }
+        },
+        {
+          "target_text": "오",
+          "gloss": {
+            "id": "o",
+            "en": "o"
+          }
+        },
+        {
+          "target_text": "으",
+          "gloss": {
+            "id": "eu",
+            "en": "eu"
+          }
+        },
+        {
+          "target_text": "감사합니다",
+          "gloss": {
+            "id": "gamsahamnida · terima kasih",
+            "en": "gamsahamnida · thank you"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "KOR-A-P-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Konsonan & dua sistem angka",
+        "en": "Consonants & two number systems"
+      },
+      "body": [
+        {
+          "id": "Konsonan di kiri vokal berdiri (나 na) atau di atas vokal berbaring (노 no).",
+          "en": "A consonant goes left of a standing vowel (나 na) or above a lying one (노 no)."
+        },
+        {
+          "id": "Angka asli 하나, 둘, 셋 (hana, dul, set) untuk menghitung benda dan umur.",
+          "en": "Native numbers 하나, 둘, 셋 (hana, dul, set) count things and age."
+        },
+        {
+          "id": "Angka Sino 일, 이, 삼 (il, i, sam) untuk uang, tanggal, dan telepon; 0 dibaca 공 (gong).",
+          "en": "Sino-Korean 일, 이, 삼 (il, i, sam) are for money, dates and phones; 0 is read 공 (gong)."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "나",
+          "gloss": {
+            "id": "na",
+            "en": "na"
+          }
+        },
+        {
+          "target_text": "노",
+          "gloss": {
+            "id": "no",
+            "en": "no"
+          }
+        },
+        {
+          "target_text": "셋",
+          "gloss": {
+            "id": "set · 3 benda",
+            "en": "set · 3 things"
+          }
+        },
+        {
+          "target_text": "삼",
+          "gloss": {
+            "id": "sam · 3 (uang, tanggal)",
+            "en": "sam · 3 (money, dates)"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "KOR-A-P-03-S1",
+      "unit": "03",
+      "audience": "adults",
+      "title": {
+        "id": "Blok suku kata",
+        "en": "Syllable blocks"
+      },
+      "body": [
+        {
+          "id": "Satu blok = satu suku kata. Huruf ketiga di bawah: 받침 (batchim), seperti ㅂ di 집 (jip).",
+          "en": "One block = one syllable. A third letter at the bottom is a 받침 (batchim): ㅂ in 집 (jip)."
+        },
+        {
+          "id": "ㅋ ㅌ ㅍ ㅊ berhembus; ㄲ ㄸ ㅃ ㅆ ㅉ tegang: 달 (dal), 탈 (tal), 딸 (ttal).",
+          "en": "ㅋ ㅌ ㅍ ㅊ have a puff; ㄲ ㄸ ㅃ ㅆ ㅉ are tight: 달 (dal), 탈 (tal), 딸 (ttal)."
+        },
+        {
+          "id": "받침 bisa berubah bunyi: 옷 (ot, baju) ditulis dengan ㅅ, tetapi dibaca t.",
+          "en": "A 받침 can change its sound: 옷 (ot, clothes) is spelled with ㅅ but read t."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "달",
+          "gloss": {
+            "id": "dal · bulan",
+            "en": "dal · moon"
+          }
+        },
+        {
+          "target_text": "탈",
+          "gloss": {
+            "id": "tal · topeng",
+            "en": "tal · mask"
+          }
+        },
+        {
+          "target_text": "딸",
+          "gloss": {
+            "id": "ttal · anak perempuan",
+            "en": "ttal · daughter"
+          }
+        },
+        {
+          "target_text": "집",
+          "gloss": {
+            "id": "jip · rumah",
+            "en": "jip · house"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "KOR-A-P-03-S2",
+      "unit": "03",
+      "audience": "adults",
+      "title": {
+        "id": "Keluarga & perkenalan",
+        "en": "Family & introductions"
+      },
+      "body": [
+        {
+          "id": "Sopan: 어머니 (eomeoni) ibu, 아버지 (abeoji) ayah. Akrab: 엄마 (eomma), 아빠 (appa).",
+          "en": "Polite: 어머니 (eomeoni) mother, 아버지 (abeoji) father. Casual: 엄마 (eomma), 아빠 (appa)."
+        },
+        {
+          "id": "Kakak: perempuan bilang 언니 (eonni), 오빠 (oppa); laki-laki bilang 누나 (nuna), 형 (hyeong).",
+          "en": "Older siblings: women say 언니 (eonni), 오빠 (oppa); men say 누나 (nuna), 형 (hyeong)."
+        },
+        {
+          "id": "Perkenalan: 저는 인도네시아 사람이에요 (jeoneun indonesia saramieyo), saya orang Indonesia.",
+          "en": "Introducing yourself: 저는 인도네시아 사람이에요 (jeoneun indonesia saramieyo), I'm Indonesian."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "어머니",
+          "gloss": {
+            "id": "eomeoni · ibu",
+            "en": "eomeoni · mother"
+          }
+        },
+        {
+          "target_text": "아버지",
+          "gloss": {
+            "id": "abeoji · ayah",
+            "en": "abeoji · father"
+          }
+        },
+        {
+          "target_text": "저는",
+          "gloss": {
+            "id": "jeoneun · saya (sebagai topik)",
+            "en": "jeoneun · I (as the topic)"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "KOR-A-P-04-S1",
+      "unit": "04",
+      "audience": "adults",
+      "title": {
+        "id": "Makan, minum & memesan",
+        "en": "Eating, drinking & ordering"
+      },
+      "body": [
+        {
+          "id": "Pesan dengan: benda + 주세요 (juseyo). 커피 하나 주세요 (keopi hana juseyo) = satu kopi, ya.",
+          "en": "Order with: item + 주세요 (juseyo). 커피 하나 주세요 (keopi hana juseyo) = one coffee, please."
+        },
+        {
+          "id": "Tanya harga: 얼마예요? (eolmayeyo?) Minta tagihan: 계산해 주세요 (gyesanhae juseyo).",
+          "en": "Ask the price: 얼마예요? (eolmayeyo?) Ask for the bill: 계산해 주세요 (gyesanhae juseyo)."
+        },
+        {
+          "id": "Sebelum makan: 잘 먹겠습니다 (jal meokgetseumnida), kira-kira \"selamat makan\".",
+          "en": "Before eating: 잘 먹겠습니다 (jal meokgetseumnida), roughly \"I'll enjoy this meal\"."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "밥",
+          "gloss": {
+            "id": "bap · nasi",
+            "en": "bap · rice"
+          }
+        },
+        {
+          "target_text": "물",
+          "gloss": {
+            "id": "mul · air",
+            "en": "mul · water"
+          }
+        },
+        {
+          "target_text": "주세요",
+          "gloss": {
+            "id": "juseyo · tolong beri",
+            "en": "juseyo · please give me"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "KOR-A-P-05-S1",
+      "unit": "05",
+      "audience": "adults",
+      "title": {
+        "id": "Tempat & bepergian",
+        "en": "Places & getting around"
+      },
+      "body": [
+        {
+          "id": "Tanya tempat: ___ 어디예요? (eodiyeyo?) Contoh: 화장실 어디예요? (hwajangsil eodiyeyo?)",
+          "en": "Ask where: ___ 어디예요? (eodiyeyo?) For example: 화장실 어디예요? (hwajangsil eodiyeyo?)"
+        },
+        {
+          "id": "Jawabannya: 여기 (yeogi) di sini, 저기 (jeogi) di sana. Memanggil orang: 저기요 (jeogiyo)!",
+          "en": "Answers: 여기 (yeogi) here, 저기 (jeogi) over there. To get attention: 저기요 (jeogiyo)!"
+        },
+        {
+          "id": "Di taksi, tunjukkan alamat dan bilang 여기로 가 주세요 (yeogiro ga juseyo).",
+          "en": "In a taxi, show the address and say 여기로 가 주세요 (yeogiro ga juseyo)."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "역",
+          "gloss": {
+            "id": "yeok · stasiun",
+            "en": "yeok · station"
+          }
+        },
+        {
+          "target_text": "병원",
+          "gloss": {
+            "id": "byeongwon · rumah sakit",
+            "en": "byeongwon · hospital"
+          }
+        },
+        {
+          "target_text": "저기",
+          "gloss": {
+            "id": "jeogi · di sana",
+            "en": "jeogi · over there"
+          }
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "KOR-A-P-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-V"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅏ",
+      "romanization": "a",
+      "audio": "ko/a",
+      "trace": "hangul_a",
+      "model_answer": {
+        "id": "ㅏ = a, seperti a dalam \"mata\".",
+        "en": "ㅏ = a, as in \"spa\"."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-V"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅓ",
+      "romanization": "eo",
+      "audio": "ko/eo",
+      "trace": "hangul_eo",
+      "model_answer": {
+        "id": "ㅓ = eo: mirip o, tetapi mulut lebih terbuka dan bibir tidak bulat.",
+        "en": "ㅓ = eo: like o, but with the mouth more open and the lips unrounded."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-GREET"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_wave_hello",
+          "image": "pic_wave_hello",
+          "text": {
+            "id": "melambai halo",
+            "en": "waving hello"
+          }
+        },
+        {
+          "id": "pic_thanks",
+          "image": "pic_thanks",
+          "text": {
+            "id": "berterima kasih",
+            "en": "saying thank you"
+          }
+        },
+        {
+          "id": "pic_sorry",
+          "image": "pic_sorry",
+          "text": {
+            "id": "minta maaf",
+            "en": "saying sorry"
+          }
+        },
+        {
+          "id": "pic_yes_nod",
+          "image": "pic_yes_nod",
+          "text": {
+            "id": "mengangguk ya",
+            "en": "nodding yes"
+          }
+        },
+        {
+          "id": "w_annyeonghaseyo",
+          "target_text": "안녕하세요",
+          "romanization": "annyeonghaseyo",
+          "audio": "ko/annyeonghaseyo"
+        },
+        {
+          "id": "w_gamsahamnida",
+          "target_text": "감사합니다",
+          "romanization": "gamsahamnida",
+          "audio": "ko/gamsahamnida"
+        },
+        {
+          "id": "w_joesonghamnida",
+          "target_text": "죄송합니다",
+          "romanization": "joesonghamnida",
+          "audio": "ko/joesonghamnida"
+        },
+        {
+          "id": "w_ne",
+          "target_text": "네",
+          "romanization": "ne",
+          "audio": "ko/ne"
+        }
+      ],
+      "solution_pairs": {
+        "pic_wave_hello": "w_annyeonghaseyo",
+        "pic_thanks": "w_gamsahamnida",
+        "pic_sorry": "w_joesonghamnida",
+        "pic_yes_nod": "w_ne"
+      },
+      "model_answer": {
+        "id": "안녕하세요 (annyeonghaseyo) halo, 감사합니다 (gamsahamnida) terima kasih, 죄송합니다 (joesonghamnida) mohon maaf, 네 (ne) ya.",
+        "en": "안녕하세요 (annyeonghaseyo) hello, 감사합니다 (gamsahamnida) thank you, 죄송합니다 (joesonghamnida) I'm sorry, 네 (ne) yes."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-V"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅗ",
+      "romanization": "o",
+      "audio": "ko/o",
+      "trace": "hangul_o",
+      "model_answer": {
+        "id": "ㅗ = o dengan bibir bulat, seperti o dalam \"toko\".",
+        "en": "ㅗ = o with rounded lips, a pure o."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-V"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅜ",
+      "romanization": "u",
+      "audio": "ko/u",
+      "trace": "hangul_u",
+      "model_answer": {
+        "id": "ㅜ = u, seperti u dalam \"susu\".",
+        "en": "ㅜ = u, as in \"blue\"."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-HANGUL-V"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-LISTEN",
+      "audio": "ko/o",
+      "options": [
+        {
+          "id": "j_eo",
+          "target_text": "ㅓ"
+        },
+        {
+          "id": "j_o",
+          "target_text": "ㅗ",
+          "correct": true
+        },
+        {
+          "id": "j_u",
+          "target_text": "ㅜ"
+        }
+      ],
+      "model_answer": {
+        "id": "Itu 오 (o): bibir bulat. 어 (eo) diucapkan tanpa membulatkan bibir.",
+        "en": "That was 오 (o): rounded lips. 어 (eo) is said with unrounded lips."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-V"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅡ",
+      "romanization": "eu",
+      "audio": "ko/eu",
+      "trace": "hangul_eu",
+      "model_answer": {
+        "id": "ㅡ = eu: bibir ditarik datar, lidah agak ke belakang.",
+        "en": "ㅡ = eu: lips spread flat, tongue pulled back."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-V"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅣ",
+      "romanization": "i",
+      "audio": "ko/i",
+      "trace": "hangul_i",
+      "model_answer": {
+        "id": "ㅣ = i, seperti i dalam \"kita\".",
+        "en": "ㅣ = i, as in \"ski\"."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "KOR-HANGUL-V"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-PICK",
+      "target_text": "아이",
+      "romanization": "ai",
+      "audio": "ko/ai",
+      "options": [
+        {
+          "id": "pic_boy",
+          "image": "pic_boy",
+          "text": {
+            "id": "anak laki-laki",
+            "en": "boy"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_man",
+          "image": "pic_man",
+          "text": {
+            "id": "laki-laki dewasa",
+            "en": "man"
+          }
+        },
+        {
+          "id": "pic_woman",
+          "image": "pic_woman",
+          "text": {
+            "id": "perempuan dewasa",
+            "en": "woman"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "아이 (ai) = anak: dua vokal, masing-masing dengan ㅇ.",
+        "en": "아이 (ai) = child: two vowels, each with its ㅇ."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-V"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅇ",
+      "romanization": "ng",
+      "audio": "ko/ieung",
+      "trace": "hangul_ng",
+      "model_answer": {
+        "id": "ㅇ tidak berbunyi di awal suku kata; di bawah, bunyinya ng.",
+        "en": "ㅇ is silent at the start of a syllable; at the bottom it says ng."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "KOR-HANGUL-V"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_stand",
+          "text": {
+            "id": "Berdiri │",
+            "en": "Standing │"
+          }
+        },
+        {
+          "id": "b_lie",
+          "text": {
+            "id": "Berbaring ─",
+            "en": "Lying down ─"
+          }
+        },
+        {
+          "id": "j_eo",
+          "target_text": "ㅓ",
+          "romanization": "eo"
+        },
+        {
+          "id": "j_eu",
+          "target_text": "ㅡ",
+          "romanization": "eu"
+        },
+        {
+          "id": "j_i",
+          "target_text": "ㅣ",
+          "romanization": "i"
+        },
+        {
+          "id": "j_o",
+          "target_text": "ㅗ",
+          "romanization": "o"
+        },
+        {
+          "id": "j_a",
+          "target_text": "ㅏ",
+          "romanization": "a"
+        },
+        {
+          "id": "j_u",
+          "target_text": "ㅜ",
+          "romanization": "u"
+        }
+      ],
+      "solution_pairs": {
+        "j_eo": "b_stand",
+        "j_eu": "b_lie",
+        "j_i": "b_stand",
+        "j_o": "b_lie",
+        "j_a": "b_stand",
+        "j_u": "b_lie"
+      },
+      "model_answer": {
+        "id": "Berdiri: ㅏ ㅓ ㅣ. Berbaring: ㅗ ㅜ ㅡ.",
+        "en": "Standing: ㅏ ㅓ ㅣ. Lying down: ㅗ ㅜ ㅡ."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-V"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅑ",
+      "romanization": "ya",
+      "audio": "ko/ya",
+      "trace": "hangul_ya",
+      "model_answer": {
+        "id": "Garis pendek kedua menambah bunyi y: ㅑ = ya.",
+        "en": "A second short stroke adds a y: ㅑ = ya."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-V"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅕ",
+      "romanization": "yeo",
+      "audio": "ko/yeo",
+      "trace": "hangul_yeo",
+      "model_answer": {
+        "id": "ㅕ = yeo.",
+        "en": "ㅕ = yeo."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "KOR-HANGUL-V"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-BUILD-WORD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bunyinya: uyu",
+            "en": "It sounds like: uyu"
+          }
+        }
+      ],
+      "image": "pic_milk_glass",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "s_yo",
+          "target_text": "요"
+        },
+        {
+          "id": "s_u",
+          "target_text": "우"
+        },
+        {
+          "id": "s_o",
+          "target_text": "오"
+        },
+        {
+          "id": "s_yu",
+          "target_text": "유"
+        }
+      ],
+      "solution": [
+        "s_u",
+        "s_yu"
+      ],
+      "model_answer": {
+        "id": "우 + 유 = 우유 (uyu), susu.",
+        "en": "우 + 유 = 우유 (uyu), milk."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-015",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-V"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅛ",
+      "romanization": "yo",
+      "audio": "ko/yo",
+      "trace": "hangul_yo",
+      "model_answer": {
+        "id": "ㅛ = yo.",
+        "en": "ㅛ = yo."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-016",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-V"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅠ",
+      "romanization": "yu",
+      "audio": "ko/yu",
+      "trace": "hangul_yu",
+      "model_answer": {
+        "id": "ㅠ = yu.",
+        "en": "ㅠ = yu."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-017",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "KOR-GREET"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-LEAVING",
+      "image": "pic_wave_bye",
+      "options": [
+        {
+          "id": "w_annyeonghi_gaseyo",
+          "target_text": "안녕히 가세요",
+          "romanization": "annyeonghi gaseyo",
+          "audio": "ko/annyeonghi_gaseyo"
+        },
+        {
+          "id": "w_annyeonghaseyo",
+          "target_text": "안녕하세요",
+          "romanization": "annyeonghaseyo",
+          "audio": "ko/annyeonghaseyo"
+        },
+        {
+          "id": "w_annyeonghi_gyeseyo",
+          "target_text": "안녕히 계세요",
+          "romanization": "annyeonghi gyeseyo",
+          "audio": "ko/annyeonghi_gyeseyo",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Yang pergi bilang 안녕히 계세요 (annyeonghi gyeseyo); yang tinggal bilang 안녕히 가세요 (annyeonghi gaseyo).",
+        "en": "The one leaving says 안녕히 계세요 (annyeonghi gyeseyo); the one staying says 안녕히 가세요 (annyeonghi gaseyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-018",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-GREET"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/joesonghamnida",
+      "options": [
+        {
+          "id": "pic_thanks",
+          "image": "pic_thanks",
+          "text": {
+            "id": "berterima kasih",
+            "en": "saying thank you"
+          }
+        },
+        {
+          "id": "pic_wave_bye",
+          "image": "pic_wave_bye",
+          "text": {
+            "id": "melambai pamit",
+            "en": "waving goodbye"
+          }
+        },
+        {
+          "id": "pic_sorry",
+          "image": "pic_sorry",
+          "text": {
+            "id": "minta maaf",
+            "en": "saying sorry"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "죄송합니다 (joesonghamnida) = mohon maaf, bentuk sopan.",
+        "en": "죄송합니다 (joesonghamnida) = I'm sorry, polite form."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-019",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "KOR-HANGUL-V"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_stand",
+          "text": {
+            "id": "Berdiri │",
+            "en": "Standing │"
+          }
+        },
+        {
+          "id": "b_lie",
+          "text": {
+            "id": "Berbaring ─",
+            "en": "Lying down ─"
+          }
+        },
+        {
+          "id": "j_yeo",
+          "target_text": "ㅕ",
+          "romanization": "yeo"
+        },
+        {
+          "id": "j_yu",
+          "target_text": "ㅠ",
+          "romanization": "yu"
+        },
+        {
+          "id": "j_ya",
+          "target_text": "ㅑ",
+          "romanization": "ya"
+        },
+        {
+          "id": "j_yo",
+          "target_text": "ㅛ",
+          "romanization": "yo"
+        },
+        {
+          "id": "j_i",
+          "target_text": "ㅣ",
+          "romanization": "i"
+        },
+        {
+          "id": "j_eu",
+          "target_text": "ㅡ",
+          "romanization": "eu"
+        }
+      ],
+      "solution_pairs": {
+        "j_yeo": "b_stand",
+        "j_yu": "b_lie",
+        "j_ya": "b_stand",
+        "j_yo": "b_lie",
+        "j_i": "b_stand",
+        "j_eu": "b_lie"
+      },
+      "model_answer": {
+        "id": "Berdiri: ㅑ ㅕ ㅣ. Berbaring: ㅛ ㅠ ㅡ.",
+        "en": "Standing: ㅑ ㅕ ㅣ. Lying down: ㅛ ㅠ ㅡ."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-020",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "KOR-GREET"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-REPLY",
+      "target_text": "안녕하세요",
+      "romanization": "annyeonghaseyo",
+      "audio": "ko/annyeonghaseyo",
+      "options": [
+        {
+          "id": "w_joesonghamnida",
+          "target_text": "죄송합니다",
+          "romanization": "joesonghamnida",
+          "audio": "ko/joesonghamnida"
+        },
+        {
+          "id": "w_ne_annyeonghaseyo",
+          "target_text": "네, 안녕하세요",
+          "romanization": "ne, annyeonghaseyo",
+          "audio": "ko/ne_annyeonghaseyo",
+          "correct": true
+        },
+        {
+          "id": "w_annyeonghi_gyeseyo",
+          "target_text": "안녕히 계세요",
+          "romanization": "annyeonghi gyeseyo",
+          "audio": "ko/annyeonghi_gyeseyo"
+        }
+      ],
+      "model_answer": {
+        "id": "Balas salam dengan 네, 안녕하세요 (ne, annyeonghaseyo).",
+        "en": "Answer a hello with 네, 안녕하세요 (ne, annyeonghaseyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-01-021",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "KOR-HANGUL-V"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Hunminjeongeum Haerye (1446), postface by Jeong In-ji: a wise man can learn the letters before the morning is over, a slow one within ten days; UNESCO Memory of the World Register, 'Hunminjeongum Manuscript' (inscribed 1997); Encyclopaedia Britannica, 'Hangul'.",
+      "model_answer": {
+        "id": "Hangul diumumkan tahun 1446 dalam naskah Hunminjeongeum, \"bunyi yang benar untuk mengajar rakyat\". Penutupnya berkata: orang cerdas menguasainya sebelum pagi usai, yang lambat dalam sepuluh hari.",
+        "en": "Hangul was proclaimed in 1446 in Hunminjeongeum, \"the correct sounds for instructing the people\". Its afterword says a clever person learns it before the morning is over, a slow one within ten days."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-C"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㄱ",
+      "romanization": "g",
+      "audio": "ko/giyeok",
+      "trace": "hangul_g",
+      "model_answer": {
+        "id": "ㄱ = 기역 (giyeok): g di awal suku kata, k di akhir.",
+        "en": "ㄱ = 기역 (giyeok): g at the start of a syllable, k at the end."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-C"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㄴ",
+      "romanization": "n",
+      "audio": "ko/nieun",
+      "trace": "hangul_n",
+      "model_answer": {
+        "id": "ㄴ = 니은 (nieun): n, seperti 나 (na).",
+        "en": "ㄴ = 니은 (nieun): n, as in 나 (na)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-HANGUL-C"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_tree",
+          "image": "pic_tree",
+          "text": {
+            "id": "pohon",
+            "en": "tree"
+          }
+        },
+        {
+          "id": "pic_sea",
+          "image": "pic_sea",
+          "text": {
+            "id": "laut",
+            "en": "sea"
+          }
+        },
+        {
+          "id": "map_indonesia",
+          "image": "map_indonesia",
+          "text": {
+            "id": "peta",
+            "en": "map"
+          }
+        },
+        {
+          "id": "pic_juice",
+          "image": "pic_juice",
+          "text": {
+            "id": "jus",
+            "en": "juice"
+          }
+        },
+        {
+          "id": "w_namu",
+          "target_text": "나무",
+          "romanization": "namu",
+          "audio": "ko/namu"
+        },
+        {
+          "id": "w_bada",
+          "target_text": "바다",
+          "romanization": "bada",
+          "audio": "ko/bada"
+        },
+        {
+          "id": "w_jido",
+          "target_text": "지도",
+          "romanization": "jido",
+          "audio": "ko/jido"
+        },
+        {
+          "id": "w_juseu",
+          "target_text": "주스",
+          "romanization": "juseu",
+          "audio": "ko/juseu"
+        }
+      ],
+      "solution_pairs": {
+        "pic_tree": "w_namu",
+        "pic_sea": "w_bada",
+        "map_indonesia": "w_jido",
+        "pic_juice": "w_juseu"
+      },
+      "model_answer": {
+        "id": "나무 (namu) pohon, 바다 (bada) laut, 지도 (jido) peta, 주스 (juseu) jus.",
+        "en": "나무 (namu) tree, 바다 (bada) sea, 지도 (jido) map, 주스 (juseu) juice."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-C"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㄷ",
+      "romanization": "d",
+      "audio": "ko/digeut",
+      "trace": "hangul_d",
+      "model_answer": {
+        "id": "ㄷ = 디귿 (digeut): d di awal, t di akhir.",
+        "en": "ㄷ = 디귿 (digeut): d at the start, t at the end."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-C"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㄹ",
+      "romanization": "r",
+      "audio": "ko/rieul",
+      "trace": "hangul_r",
+      "model_answer": {
+        "id": "ㄹ = 리을 (rieul): r ringan di antara vokal, l di akhir. Jangan digetarkan.",
+        "en": "ㄹ = 리을 (rieul): a light r between vowels, l at the end. Never rolled."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-HANGUL-C"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/namu",
+      "options": [
+        {
+          "id": "pic_tree",
+          "image": "pic_tree",
+          "text": {
+            "id": "pohon",
+            "en": "tree"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_sea",
+          "image": "pic_sea",
+          "text": {
+            "id": "laut",
+            "en": "sea"
+          }
+        },
+        {
+          "id": "map_indonesia",
+          "image": "map_indonesia",
+          "text": {
+            "id": "peta",
+            "en": "map"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "나무 (namu) = pohon.",
+        "en": "나무 (namu) = tree."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-C"
+      ],
+      "pool": "PRACT",
+      "order": 25,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅁ",
+      "romanization": "m",
+      "audio": "ko/mieum",
+      "trace": "hangul_m",
+      "model_answer": {
+        "id": "ㅁ = 미음 (mieum): m, seperti 마 (ma).",
+        "en": "ㅁ = 미음 (mieum): m, as in 마 (ma)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-C"
+      ],
+      "pool": "PRACT",
+      "order": 26,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅅ",
+      "romanization": "s",
+      "audio": "ko/siot",
+      "trace": "hangul_s",
+      "model_answer": {
+        "id": "ㅅ = 시옷 (siot): s; sebelum ㅣ terdengar seperti \"sy\".",
+        "en": "ㅅ = 시옷 (siot): s; before ㅣ it sounds like \"sh\"."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-NUM-NATIVE"
+      ],
+      "pool": "PRACT",
+      "order": 27,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "count_egg_2",
+          "image": "count_egg_2",
+          "text": {
+            "id": "2 telur",
+            "en": "2 eggs"
+          }
+        },
+        {
+          "id": "count_egg_4",
+          "image": "count_egg_4",
+          "text": {
+            "id": "4 telur",
+            "en": "4 eggs"
+          }
+        },
+        {
+          "id": "count_egg_6",
+          "image": "count_egg_6",
+          "text": {
+            "id": "6 telur",
+            "en": "6 eggs"
+          }
+        },
+        {
+          "id": "count_egg_8",
+          "image": "count_egg_8",
+          "text": {
+            "id": "8 telur",
+            "en": "8 eggs"
+          }
+        },
+        {
+          "id": "count_egg_10",
+          "image": "count_egg_10",
+          "text": {
+            "id": "10 telur",
+            "en": "10 eggs"
+          }
+        },
+        {
+          "id": "w_dul",
+          "target_text": "둘",
+          "romanization": "dul",
+          "audio": "ko/dul"
+        },
+        {
+          "id": "w_net",
+          "target_text": "넷",
+          "romanization": "net",
+          "audio": "ko/net"
+        },
+        {
+          "id": "w_yeoseot",
+          "target_text": "여섯",
+          "romanization": "yeoseot",
+          "audio": "ko/yeoseot"
+        },
+        {
+          "id": "w_yeodeol",
+          "target_text": "여덟",
+          "romanization": "yeodeol",
+          "audio": "ko/yeodeol"
+        },
+        {
+          "id": "w_yeol",
+          "target_text": "열",
+          "romanization": "yeol",
+          "audio": "ko/yeol"
+        }
+      ],
+      "solution_pairs": {
+        "count_egg_2": "w_dul",
+        "count_egg_4": "w_net",
+        "count_egg_6": "w_yeoseot",
+        "count_egg_8": "w_yeodeol",
+        "count_egg_10": "w_yeol"
+      },
+      "model_answer": {
+        "id": "둘 (dul) 2, 넷 (net) 4, 여섯 (yeoseot) 6, 여덟 (yeodeol) 8, 열 (yeol) 10.",
+        "en": "둘 (dul) 2, 넷 (net) 4, 여섯 (yeoseot) 6, 여덟 (yeodeol) 8, 열 (yeol) 10."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-C"
+      ],
+      "pool": "PRACT",
+      "order": 28,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅂ",
+      "romanization": "b",
+      "audio": "ko/bieup",
+      "trace": "hangul_b",
+      "model_answer": {
+        "id": "ㅂ = 비읍 (bieup): b di awal, p di akhir.",
+        "en": "ㅂ = 비읍 (bieup): b at the start, p at the end."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-C"
+      ],
+      "pool": "PRACT",
+      "order": 29,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅈ",
+      "romanization": "j",
+      "audio": "ko/jieut",
+      "trace": "hangul_j",
+      "model_answer": {
+        "id": "ㅈ = 지읒 (jieut): j, seperti 자 (ja).",
+        "en": "ㅈ = 지읒 (jieut): j, as in 자 (ja)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "KOR-NUM-NATIVE"
+      ],
+      "pool": "PRACT",
+      "order": 30,
+      "prompt_id": "P-COUNT",
+      "image": "count_marble_3",
+      "options": [
+        {
+          "id": "w_set",
+          "target_text": "셋",
+          "romanization": "set",
+          "audio": "ko/set",
+          "correct": true
+        },
+        {
+          "id": "w_dul",
+          "target_text": "둘",
+          "romanization": "dul",
+          "audio": "ko/dul"
+        },
+        {
+          "id": "w_net",
+          "target_text": "넷",
+          "romanization": "net",
+          "audio": "ko/net"
+        }
+      ],
+      "model_answer": {
+        "id": "Tiga kelereng: 셋 (set). Benda dihitung dengan angka asli.",
+        "en": "Three marbles: 셋 (set). Things are counted with native numbers."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-C"
+      ],
+      "pool": "PRACT",
+      "order": 31,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅎ",
+      "romanization": "h",
+      "audio": "ko/hieut",
+      "trace": "hangul_h",
+      "model_answer": {
+        "id": "ㅎ = 히읗 (hieut): h, seperti 하나 (hana).",
+        "en": "ㅎ = 히읗 (hieut): h, as in 하나 (hana)."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-NUM-SINO"
+      ],
+      "pool": "PRACT",
+      "order": 32,
+      "prompt_id": "P-MATCH",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "w_il",
+          "target_text": "일",
+          "romanization": "il",
+          "audio": "ko/il"
+        },
+        {
+          "id": "w_sam",
+          "target_text": "삼",
+          "romanization": "sam",
+          "audio": "ko/sam"
+        },
+        {
+          "id": "w_o",
+          "target_text": "오",
+          "romanization": "o",
+          "audio": "ko/o"
+        },
+        {
+          "id": "w_chil",
+          "target_text": "칠",
+          "romanization": "chil",
+          "audio": "ko/chil"
+        },
+        {
+          "id": "w_sip",
+          "target_text": "십",
+          "romanization": "sip",
+          "audio": "ko/sip"
+        },
+        {
+          "id": "d1",
+          "text": {
+            "id": "1",
+            "en": "1"
+          }
+        },
+        {
+          "id": "d3",
+          "text": {
+            "id": "3",
+            "en": "3"
+          }
+        },
+        {
+          "id": "d5",
+          "text": {
+            "id": "5",
+            "en": "5"
+          }
+        },
+        {
+          "id": "d7",
+          "text": {
+            "id": "7",
+            "en": "7"
+          }
+        },
+        {
+          "id": "d10",
+          "text": {
+            "id": "10",
+            "en": "10"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "w_il": "d1",
+        "w_sam": "d3",
+        "w_o": "d5",
+        "w_chil": "d7",
+        "w_sip": "d10"
+      },
+      "model_answer": {
+        "id": "일 (il) 1, 삼 (sam) 3, 오 (o) 5, 칠 (chil) 7, 십 (sip) 10.",
+        "en": "일 (il) 1, 삼 (sam) 3, 오 (o) 5, 칠 (chil) 7, 십 (sip) 10."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-NUM-SINO"
+      ],
+      "pool": "PRACT",
+      "order": 33,
+      "prompt_id": "P-LISTEN",
+      "audio": "ko/gongilgong",
+      "options": [
+        {
+          "id": "n101",
+          "text": {
+            "id": "101",
+            "en": "101"
+          }
+        },
+        {
+          "id": "n100",
+          "text": {
+            "id": "100",
+            "en": "100"
+          }
+        },
+        {
+          "id": "n010",
+          "text": {
+            "id": "010",
+            "en": "010"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "공일공 (gongilgong) = 010, awal nomor ponsel di Korea.",
+        "en": "공일공 (gongilgong) = 010, how Korean mobile numbers begin."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-016",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "KOR-NUM-NATIVE",
+        "KOR-NUM-SINO"
+      ],
+      "pool": "PRACT",
+      "order": 34,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_native",
+          "text": {
+            "id": "Benda & umur",
+            "en": "Things & age"
+          }
+        },
+        {
+          "id": "b_sino",
+          "text": {
+            "id": "Uang & telepon",
+            "en": "Money & phones"
+          }
+        },
+        {
+          "id": "w_hana",
+          "target_text": "하나",
+          "romanization": "hana",
+          "audio": "ko/hana"
+        },
+        {
+          "id": "w_i",
+          "target_text": "이",
+          "romanization": "i",
+          "audio": "ko/i"
+        },
+        {
+          "id": "w_ahop",
+          "target_text": "아홉",
+          "romanization": "ahop",
+          "audio": "ko/ahop"
+        },
+        {
+          "id": "w_pal",
+          "target_text": "팔",
+          "romanization": "pal",
+          "audio": "ko/pal"
+        },
+        {
+          "id": "w_ilgop",
+          "target_text": "일곱",
+          "romanization": "ilgop",
+          "audio": "ko/ilgop"
+        },
+        {
+          "id": "w_yuk",
+          "target_text": "육",
+          "romanization": "yuk",
+          "audio": "ko/yuk"
+        }
+      ],
+      "solution_pairs": {
+        "w_hana": "b_native",
+        "w_i": "b_sino",
+        "w_ahop": "b_native",
+        "w_pal": "b_sino",
+        "w_ilgop": "b_native",
+        "w_yuk": "b_sino"
+      },
+      "model_answer": {
+        "id": "Benda & umur: 하나, 일곱, 아홉 (hana, ilgop, ahop). Uang & telepon: 이, 육, 팔 (i, yuk, pal).",
+        "en": "Things & age: 하나, 일곱, 아홉 (hana, ilgop, ahop). Money & phones: 이, 육, 팔 (i, yuk, pal)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-017",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "KOR-HANGUL-C"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "바다",
+      "romanization": "bada",
+      "audio": "ko/bada",
+      "options": [
+        {
+          "id": "pic_mountain",
+          "image": "pic_mountain",
+          "text": {
+            "id": "gunung",
+            "en": "mountain"
+          }
+        },
+        {
+          "id": "pic_sea",
+          "image": "pic_sea",
+          "text": {
+            "id": "laut",
+            "en": "sea"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_tree",
+          "image": "pic_tree",
+          "text": {
+            "id": "pohon",
+            "en": "tree"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "바다 (bada) = laut.",
+        "en": "바다 (bada) = sea."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-018",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "KOR-NUM-NATIVE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-COUNT",
+      "image": "count_egg_5",
+      "options": [
+        {
+          "id": "w_net",
+          "target_text": "넷",
+          "romanization": "net",
+          "audio": "ko/net"
+        },
+        {
+          "id": "w_daseot",
+          "target_text": "다섯",
+          "romanization": "daseot",
+          "audio": "ko/daseot",
+          "correct": true
+        },
+        {
+          "id": "w_yeoseot",
+          "target_text": "여섯",
+          "romanization": "yeoseot",
+          "audio": "ko/yeoseot"
+        }
+      ],
+      "model_answer": {
+        "id": "Lima butir telur: 다섯 (daseot). Benda dihitung dengan angka asli.",
+        "en": "Five eggs: 다섯 (daseot). Things are counted with native numbers."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-019",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-NUM-SINO"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-MATCH",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "w_i",
+          "target_text": "이",
+          "romanization": "i",
+          "audio": "ko/i"
+        },
+        {
+          "id": "w_sa",
+          "target_text": "사",
+          "romanization": "sa",
+          "audio": "ko/sa"
+        },
+        {
+          "id": "w_yuk",
+          "target_text": "육",
+          "romanization": "yuk",
+          "audio": "ko/yuk"
+        },
+        {
+          "id": "w_pal",
+          "target_text": "팔",
+          "romanization": "pal",
+          "audio": "ko/pal"
+        },
+        {
+          "id": "w_gu",
+          "target_text": "구",
+          "romanization": "gu",
+          "audio": "ko/gu"
+        },
+        {
+          "id": "d2",
+          "text": {
+            "id": "2",
+            "en": "2"
+          }
+        },
+        {
+          "id": "d4",
+          "text": {
+            "id": "4",
+            "en": "4"
+          }
+        },
+        {
+          "id": "d6",
+          "text": {
+            "id": "6",
+            "en": "6"
+          }
+        },
+        {
+          "id": "d8",
+          "text": {
+            "id": "8",
+            "en": "8"
+          }
+        },
+        {
+          "id": "d9",
+          "text": {
+            "id": "9",
+            "en": "9"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "w_i": "d2",
+        "w_sa": "d4",
+        "w_yuk": "d6",
+        "w_pal": "d8",
+        "w_gu": "d9"
+      },
+      "model_answer": {
+        "id": "이 (i) 2, 사 (sa) 4, 육 (yuk) 6, 팔 (pal) 8, 구 (gu) 9.",
+        "en": "이 (i) 2, 사 (sa) 4, 육 (yuk) 6, 팔 (pal) 8, 구 (gu) 9."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-02-020",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "KOR-HANGUL-C"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Hunminjeongeum Haerye (1446), chapter Jejahae ('Explanation of the design of the letters'): ㄱ ㄴ ㅁ ㅅ ㅇ modelled on the tongue, mouth, teeth and throat; vowels built from heaven (·), earth (ㅡ) and human (ㅣ); Encyclopaedia Britannica, 'Hangul'; National Institute of Korean Language (korean.go.kr).",
+      "model_answer": {
+        "id": "Hunminjeongeum menjelaskan desainnya: ㄱ, ㄴ, ㅁ, ㅅ, ㅇ meniru lidah, mulut, gigi, dan tenggorokan. Vokal dibangun dari tiga unsur: titik (langit), ㅡ (bumi), dan ㅣ (manusia).",
+        "en": "Hunminjeongeum explains its design: ㄱ, ㄴ, ㅁ, ㅅ and ㅇ copy the tongue, mouth, teeth and throat. Vowels are built from three parts: a dot (heaven), ㅡ (earth) and ㅣ (human)."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-03-001",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-STRONG"
+      ],
+      "pool": "PRACT",
+      "order": 35,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅋ",
+      "romanization": "k",
+      "audio": "ko/kieuk",
+      "trace": "hangul_k",
+      "model_answer": {
+        "id": "ㅋ = 키읔 (kieuk): k dengan hembusan napas kuat.",
+        "en": "ㅋ = 키읔 (kieuk): k with a strong puff of air."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-03-002",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-STRONG"
+      ],
+      "pool": "PRACT",
+      "order": 36,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅌ",
+      "romanization": "t",
+      "audio": "ko/tieut",
+      "trace": "hangul_t",
+      "model_answer": {
+        "id": "ㅌ = 티읕 (tieut): t dengan hembusan.",
+        "en": "ㅌ = 티읕 (tieut): t with a puff of air."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-03-003",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-HANGUL-STRONG"
+      ],
+      "pool": "PRACT",
+      "order": 37,
+      "prompt_id": "P-LISTEN",
+      "audio": "ko/ttal",
+      "options": [
+        {
+          "id": "s_ttal",
+          "target_text": "딸",
+          "correct": true
+        },
+        {
+          "id": "s_dal",
+          "target_text": "달"
+        },
+        {
+          "id": "s_tal",
+          "target_text": "탈"
+        }
+      ],
+      "model_answer": {
+        "id": "Itu 딸 (ttal), anak perempuan: ㄸ tegang. 달 (dal) bulan, 탈 (tal) topeng.",
+        "en": "That was 딸 (ttal), daughter: a tight ㄸ. 달 (dal) is moon, 탈 (tal) is mask."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-03-004",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-STRONG"
+      ],
+      "pool": "PRACT",
+      "order": 38,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅍ",
+      "romanization": "p",
+      "audio": "ko/pieup",
+      "trace": "hangul_p",
+      "model_answer": {
+        "id": "ㅍ = 피읖 (pieup): p dengan hembusan.",
+        "en": "ㅍ = 피읖 (pieup): p with a puff of air."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-03-005",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "KOR-HANGUL-STRONG"
+      ],
+      "pool": "PRACT",
+      "order": 39,
+      "prompt_id": "P-TRACE",
+      "target_text": "ㅊ",
+      "romanization": "ch",
+      "audio": "ko/chieut",
+      "trace": "hangul_ch",
+      "model_answer": {
+        "id": "ㅊ = 치읓 (chieut): ch dengan hembusan.",
+        "en": "ㅊ = 치읓 (chieut): ch with a puff of air."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACE",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-03-006",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "KOR-SYLLABLE"
+      ],
+      "pool": "PRACT",
+      "order": 40,
+      "prompt_id": "P-BUILD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bunyinya: jip",
+            "en": "It sounds like: jip"
+          }
+        }
+      ],
+      "image": "pic_house",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "j_ch",
+          "target_text": "ㅊ"
+        },
+        {
+          "id": "j_b",
+          "target_text": "ㅂ"
+        },
+        {
+          "id": "j_j",
+          "target_text": "ㅈ"
+        },
+        {
+          "id": "j_i",
+          "target_text": "ㅣ"
+        },
+        {
+          "id": "j_m",
+          "target_text": "ㅁ"
+        }
+      ],
+      "solution": [
+        "j_j",
+        "j_i",
+        "j_b"
+      ],
+      "model_answer": {
+        "id": "ㅈ + ㅣ + ㅂ = 집 (jip), rumah.",
+        "en": "ㅈ + ㅣ + ㅂ = 집 (jip), house."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-03-007",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "KOR-SYLLABLE"
+      ],
+      "pool": "PRACT",
+      "order": 41,
+      "prompt_id": "P-TAP",
+      "image": "body_child",
+      "target_text": "발",
+      "romanization": "bal",
+      "audio": "ko/bal",
+      "options": [
+        {
+          "id": "hand",
+          "text": {
+            "id": "tangan",
+            "en": "hand"
+          },
+          "region": {
+            "x": 0.06,
+            "y": 0.46,
+            "w": 0.14,
+            "h": 0.1
+          }
+        },
+        {
+          "id": "ear",
+          "text": {
+            "id": "telinga",
+            "en": "ear"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.11,
+            "w": 0.09,
+            "h": 0.1
+          }
+        },
+        {
+          "id": "foot",
+          "text": {
+            "id": "kaki",
+            "en": "foot"
+          },
+          "region": {
+            "x": 0.54,
+            "y": 0.89,
+            "w": 0.2,
+            "h": 0.08
+          },
+          "correct": true
+        },
+        {
+          "id": "eyes",
+          "text": {
+            "id": "mata",
+            "en": "eyes"
+          },
+          "region": {
+            "x": 0.36,
+            "y": 0.1,
+            "w": 0.28,
+            "h": 0.07
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "발 (bal) = kaki. ㄹ sebagai 받침 dibaca l.",
+        "en": "발 (bal) = foot. ㄹ as a 받침 is read l."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-03-008",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "KOR-SYLLABLE"
+      ],
+      "pool": "PRACT",
+      "order": 42,
+      "prompt_id": "P-TRY",
+      "model_answer": {
+        "id": "Tulis nama Anda dengan hangul. Budi = 부디 (budi), Rina = 리나 (rina); bunyi akhir masuk 받침: Intan = 인탄 (intan).",
+        "en": "Write your name in hangul. Budi = 부디 (budi), Rina = 리나 (rina); a final sound goes in the 받침: Intan = 인탄 (intan)."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-03-009",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-FAMILY"
+      ],
+      "pool": "PRACT",
+      "order": 43,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "fam_mother",
+          "image": "fam_mother",
+          "text": {
+            "id": "ibu",
+            "en": "mother"
+          }
+        },
+        {
+          "id": "fam_father",
+          "image": "fam_father",
+          "text": {
+            "id": "ayah",
+            "en": "father"
+          }
+        },
+        {
+          "id": "pic_boy",
+          "image": "pic_boy",
+          "text": {
+            "id": "anak laki-laki",
+            "en": "boy"
+          }
+        },
+        {
+          "id": "pic_girl",
+          "image": "pic_girl",
+          "text": {
+            "id": "anak perempuan",
+            "en": "girl"
+          }
+        },
+        {
+          "id": "w_eomeoni",
+          "target_text": "어머니",
+          "romanization": "eomeoni",
+          "audio": "ko/eomeoni"
+        },
+        {
+          "id": "w_abeoji",
+          "target_text": "아버지",
+          "romanization": "abeoji",
+          "audio": "ko/abeoji"
+        },
+        {
+          "id": "w_adeul",
+          "target_text": "아들",
+          "romanization": "adeul",
+          "audio": "ko/adeul"
+        },
+        {
+          "id": "w_ttal",
+          "target_text": "딸",
+          "romanization": "ttal",
+          "audio": "ko/ttal"
+        }
+      ],
+      "solution_pairs": {
+        "fam_mother": "w_eomeoni",
+        "fam_father": "w_abeoji",
+        "pic_boy": "w_adeul",
+        "pic_girl": "w_ttal"
+      },
+      "model_answer": {
+        "id": "어머니 (eomeoni) ibu, 아버지 (abeoji) ayah, 아들 (adeul) anak laki-laki, 딸 (ttal) anak perempuan.",
+        "en": "어머니 (eomeoni) mother, 아버지 (abeoji) father, 아들 (adeul) son, 딸 (ttal) daughter."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-03-010",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-FAMILY"
+      ],
+      "pool": "PRACT",
+      "order": 44,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/harabeoji",
+      "options": [
+        {
+          "id": "fam_father",
+          "image": "fam_father",
+          "text": {
+            "id": "ayah",
+            "en": "father"
+          }
+        },
+        {
+          "id": "pic_man",
+          "image": "pic_man",
+          "text": {
+            "id": "laki-laki dewasa",
+            "en": "man"
+          }
+        },
+        {
+          "id": "fam_grandfather",
+          "image": "fam_grandfather",
+          "text": {
+            "id": "kakek",
+            "en": "grandfather"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "할아버지 (harabeoji) = kakek. 받침 ㄹ pindah ke suku kata berikutnya: ha-ra-beo-ji.",
+        "en": "할아버지 (harabeoji) = grandfather. The ㄹ slides into the next syllable: ha-ra-beo-ji."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-03-011",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "KOR-FAMILY"
+      ],
+      "pool": "PRACT",
+      "order": 45,
+      "prompt_id": "P-WHO",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_women",
+          "image": "pic_woman",
+          "text": {
+            "id": "Diucapkan perempuan",
+            "en": "Said by women"
+          }
+        },
+        {
+          "id": "b_men",
+          "image": "pic_man",
+          "text": {
+            "id": "Diucapkan laki-laki",
+            "en": "Said by men"
+          }
+        },
+        {
+          "id": "w_oppa",
+          "target_text": "오빠",
+          "romanization": "oppa",
+          "audio": "ko/oppa"
+        },
+        {
+          "id": "w_nuna",
+          "target_text": "누나",
+          "romanization": "nuna",
+          "audio": "ko/nuna"
+        },
+        {
+          "id": "w_eonni",
+          "target_text": "언니",
+          "romanization": "eonni",
+          "audio": "ko/eonni"
+        },
+        {
+          "id": "w_hyeong",
+          "target_text": "형",
+          "romanization": "hyeong",
+          "audio": "ko/hyeong"
+        }
+      ],
+      "solution_pairs": {
+        "w_oppa": "b_women",
+        "w_nuna": "b_men",
+        "w_eonni": "b_women",
+        "w_hyeong": "b_men"
+      },
+      "model_answer": {
+        "id": "Perempuan: 언니 (eonni), 오빠 (oppa). Laki-laki: 누나 (nuna), 형 (hyeong).",
+        "en": "Women: 언니 (eonni), 오빠 (oppa). Men: 누나 (nuna), 형 (hyeong)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-03-012",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-FAMILY"
+      ],
+      "pool": "PRACT",
+      "order": 46,
+      "prompt_id": "P-FILL",
+      "target_text": "저는 인도네시아 사람___",
+      "romanization": "jeoneun indonesia saram___",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_yeyo",
+          "target_text": "예요",
+          "romanization": "yeyo",
+          "audio": "ko/yeyo"
+        },
+        {
+          "id": "w_ieyo",
+          "target_text": "이에요",
+          "romanization": "ieyo",
+          "audio": "ko/ieyo"
+        }
+      ],
+      "solution": [
+        "w_ieyo"
+      ],
+      "model_answer": {
+        "id": "사람 (saram) diakhiri ㅁ, jadi 사람이에요 (saramieyo): saya orang Indonesia.",
+        "en": "사람 (saram) ends in ㅁ, so it's 사람이에요 (saramieyo): I'm Indonesian."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-03-013",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "KOR-HANGUL-STRONG"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "커피",
+      "romanization": "keopi",
+      "audio": "ko/keopi",
+      "options": [
+        {
+          "id": "pic_tea_cup",
+          "image": "pic_tea_cup",
+          "text": {
+            "id": "secangkir teh",
+            "en": "cup of tea"
+          }
+        },
+        {
+          "id": "pic_milk_glass",
+          "image": "pic_milk_glass",
+          "text": {
+            "id": "susu",
+            "en": "milk"
+          }
+        },
+        {
+          "id": "pic_coffee_cup",
+          "image": "pic_coffee_cup",
+          "text": {
+            "id": "secangkir kopi",
+            "en": "cup of coffee"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "커피 (keopi): ㅋ dan ㅍ, dua huruf berhembus.",
+        "en": "커피 (keopi): ㅋ and ㅍ, two puffed letters."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-03-014",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "KOR-SYLLABLE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-BUILD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bunyinya: mun",
+            "en": "It sounds like: mun"
+          }
+        }
+      ],
+      "image": "pic_door",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "j_o",
+          "target_text": "ㅗ"
+        },
+        {
+          "id": "j_n",
+          "target_text": "ㄴ"
+        },
+        {
+          "id": "j_u",
+          "target_text": "ㅜ"
+        },
+        {
+          "id": "j_m",
+          "target_text": "ㅁ"
+        }
+      ],
+      "solution": [
+        "j_m",
+        "j_u",
+        "j_n"
+      ],
+      "model_answer": {
+        "id": "ㅁ + ㅜ + ㄴ = 문 (mun), pintu.",
+        "en": "ㅁ + ㅜ + ㄴ = 문 (mun), door."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-03-015",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "KOR-FAMILY"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "할머니",
+      "romanization": "halmeoni",
+      "audio": "ko/halmeoni",
+      "options": [
+        {
+          "id": "fam_mother",
+          "image": "fam_mother",
+          "text": {
+            "id": "ibu",
+            "en": "mother"
+          }
+        },
+        {
+          "id": "fam_grandmother",
+          "image": "fam_grandmother",
+          "text": {
+            "id": "nenek",
+            "en": "grandmother"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_woman",
+          "image": "pic_woman",
+          "text": {
+            "id": "perempuan dewasa",
+            "en": "woman"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "할머니 (halmeoni) = nenek.",
+        "en": "할머니 (halmeoni) = grandmother."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-03-016",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "KOR-SYLLABLE"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Choe Sang-Hun, 'South Korea's Latest Export: Its Alphabet', The New York Times, 11 September 2009 (children of the Cia-Cia minority in Baubau began hangul lessons in July 2009); Park Si-soo, 'Indonesian Tribe Picks Hangeul as Writing System', The Korea Times, 6 August 2009; Lee Tae-hoon, 'Hangeul didn't become Cia Cia's official writing', The Korea Times, 6 October 2010 (taught in two Baubau schools; never an official script).",
+      "model_answer": {
+        "id": "Sejak 2009, sebagian murid di Kota Baubau, Sulawesi Tenggara, belajar menulis bahasa Cia-Cia dengan hangul. Hangul bukan aksara resmi di sana, tetapi bunyi bahasa daerah kita pun muat dalam blok hangul.",
+        "en": "Since 2009, some pupils in Baubau, Southeast Sulawesi, have learned to write the Cia-Cia language in hangul. It is not an official script there, but the sounds of an Indonesian language fit hangul blocks."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-04-001",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 47,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_rice_bowl",
+          "image": "pic_rice_bowl",
+          "text": {
+            "id": "semangkuk nasi",
+            "en": "bowl of rice"
+          }
+        },
+        {
+          "id": "pic_noodle_bowl",
+          "image": "pic_noodle_bowl",
+          "text": {
+            "id": "semangkuk mi",
+            "en": "bowl of noodles"
+          }
+        },
+        {
+          "id": "pic_fish_dish",
+          "image": "pic_fish_dish",
+          "text": {
+            "id": "ikan masak",
+            "en": "cooked fish"
+          }
+        },
+        {
+          "id": "pic_vegetables",
+          "image": "pic_vegetables",
+          "text": {
+            "id": "sayur",
+            "en": "vegetables"
+          }
+        },
+        {
+          "id": "w_bap",
+          "target_text": "밥",
+          "romanization": "bap",
+          "audio": "ko/bap"
+        },
+        {
+          "id": "w_guksu",
+          "target_text": "국수",
+          "romanization": "guksu",
+          "audio": "ko/guksu"
+        },
+        {
+          "id": "w_saengseon",
+          "target_text": "생선",
+          "romanization": "saengseon",
+          "audio": "ko/saengseon"
+        },
+        {
+          "id": "w_chaeso",
+          "target_text": "채소",
+          "romanization": "chaeso",
+          "audio": "ko/chaeso"
+        }
+      ],
+      "solution_pairs": {
+        "pic_rice_bowl": "w_bap",
+        "pic_noodle_bowl": "w_guksu",
+        "pic_fish_dish": "w_saengseon",
+        "pic_vegetables": "w_chaeso"
+      },
+      "model_answer": {
+        "id": "밥 (bap) nasi, 국수 (guksu) mi, 생선 (saengseon) ikan, 채소 (chaeso) sayur.",
+        "en": "밥 (bap) rice, 국수 (guksu) noodles, 생선 (saengseon) fish, 채소 (chaeso) vegetables."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-04-002",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "memory_flip",
+      "skills": [
+        "KOR-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 48,
+      "prompt_id": "P-MEMORY",
+      "options": [
+        {
+          "id": "pic_kimchi",
+          "image": "pic_kimchi",
+          "text": {
+            "id": "kimchi",
+            "en": "kimchi"
+          }
+        },
+        {
+          "id": "pic_dumplings",
+          "image": "pic_dumplings",
+          "text": {
+            "id": "pangsit",
+            "en": "dumplings"
+          }
+        },
+        {
+          "id": "drink_water",
+          "image": "drink_water",
+          "text": {
+            "id": "air putih",
+            "en": "water"
+          }
+        },
+        {
+          "id": "pic_tea_cup",
+          "image": "pic_tea_cup",
+          "text": {
+            "id": "secangkir teh",
+            "en": "cup of tea"
+          }
+        },
+        {
+          "id": "w_gimchi",
+          "target_text": "김치",
+          "romanization": "gimchi",
+          "audio": "ko/gimchi"
+        },
+        {
+          "id": "w_mandu",
+          "target_text": "만두",
+          "romanization": "mandu",
+          "audio": "ko/mandu"
+        },
+        {
+          "id": "w_mul",
+          "target_text": "물",
+          "romanization": "mul",
+          "audio": "ko/mul"
+        },
+        {
+          "id": "w_cha",
+          "target_text": "차",
+          "romanization": "cha",
+          "audio": "ko/cha"
+        }
+      ],
+      "solution_pairs": {
+        "pic_kimchi": "w_gimchi",
+        "pic_dumplings": "w_mandu",
+        "drink_water": "w_mul",
+        "pic_tea_cup": "w_cha"
+      },
+      "model_answer": {
+        "id": "김치 (gimchi), 만두 (mandu) pangsit, 물 (mul) air, 차 (cha) teh.",
+        "en": "김치 (gimchi) kimchi, 만두 (mandu) dumplings, 물 (mul) water, 차 (cha) tea."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-04-003",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 49,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/saengseon",
+      "options": [
+        {
+          "id": "pic_fish_dish",
+          "image": "pic_fish_dish",
+          "text": {
+            "id": "ikan masak",
+            "en": "cooked fish"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_chicken_dish",
+          "image": "pic_chicken_dish",
+          "text": {
+            "id": "ayam goreng",
+            "en": "fried chicken"
+          }
+        },
+        {
+          "id": "pic_rice_bowl",
+          "image": "pic_rice_bowl",
+          "text": {
+            "id": "semangkuk nasi",
+            "en": "bowl of rice"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "생선 (saengseon) = ikan sebagai makanan.",
+        "en": "생선 (saengseon) = fish as food."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-04-004",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "KOR-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 50,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_food",
+          "target_text": "음식",
+          "romanization": "eumsik",
+          "audio": "ko/eumsik"
+        },
+        {
+          "id": "b_drink",
+          "target_text": "음료",
+          "romanization": "eumnyo",
+          "audio": "ko/eumnyo"
+        },
+        {
+          "id": "pic_tea_cup",
+          "image": "pic_tea_cup",
+          "text": {
+            "id": "secangkir teh",
+            "en": "cup of tea"
+          }
+        },
+        {
+          "id": "pic_rice_bowl",
+          "image": "pic_rice_bowl",
+          "text": {
+            "id": "semangkuk nasi",
+            "en": "bowl of rice"
+          }
+        },
+        {
+          "id": "pic_coffee_cup",
+          "image": "pic_coffee_cup",
+          "text": {
+            "id": "secangkir kopi",
+            "en": "cup of coffee"
+          }
+        },
+        {
+          "id": "pic_dumplings",
+          "image": "pic_dumplings",
+          "text": {
+            "id": "pangsit",
+            "en": "dumplings"
+          }
+        },
+        {
+          "id": "drink_water",
+          "image": "drink_water",
+          "text": {
+            "id": "air putih",
+            "en": "water"
+          }
+        },
+        {
+          "id": "pic_kimchi",
+          "image": "pic_kimchi",
+          "text": {
+            "id": "kimchi",
+            "en": "kimchi"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "pic_tea_cup": "b_drink",
+        "pic_rice_bowl": "b_food",
+        "pic_coffee_cup": "b_drink",
+        "pic_dumplings": "b_food",
+        "drink_water": "b_drink",
+        "pic_kimchi": "b_food"
+      },
+      "model_answer": {
+        "id": "음식 (eumsik): nasi, pangsit, kimchi. 음료 (eumnyo): teh, kopi, air.",
+        "en": "음식 (eumsik), food: rice, dumplings, kimchi. 음료 (eumnyo), drinks: tea, coffee, water."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-04-005",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "KOR-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 51,
+      "prompt_id": "P-PICK",
+      "target_text": "치킨",
+      "romanization": "chikin",
+      "audio": "ko/chikin",
+      "options": [
+        {
+          "id": "pic_chicken_dish",
+          "image": "pic_chicken_dish",
+          "text": {
+            "id": "ayam goreng",
+            "en": "fried chicken"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_chicken",
+          "image": "pic_chicken",
+          "text": {
+            "id": "ayam",
+            "en": "chicken"
+          }
+        },
+        {
+          "id": "pic_fish_dish",
+          "image": "pic_fish_dish",
+          "text": {
+            "id": "ikan masak",
+            "en": "cooked fish"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "치킨 (chikin) = ayam goreng. Ayam hidup disebut 닭 (dak).",
+        "en": "치킨 (chikin) = fried chicken. A live chicken is 닭 (dak)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-04-006",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "KOR-JUSEYO"
+      ],
+      "pool": "PRACT",
+      "order": 52,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_ocheon_wonieyo",
+          "target_text": "오천 원이에요.",
+          "romanization": "ocheon wonieyo.",
+          "audio": "ko/ocheon_wonieyo"
+        },
+        {
+          "id": "w_gamsahamnida",
+          "target_text": "감사합니다",
+          "audio": "ko/gamsahamnida",
+          "romanization": "gamsahamnida"
+        },
+        {
+          "id": "w_eoseo_oseyo",
+          "target_text": "어서 오세요.",
+          "romanization": "eoseo oseyo.",
+          "audio": "ko/eoseo_oseyo"
+        },
+        {
+          "id": "w_keopi_hana_juseyo",
+          "target_text": "커피 하나 주세요.",
+          "romanization": "keopi hana juseyo.",
+          "audio": "ko/keopi_hana_juseyo"
+        }
+      ],
+      "solution": [
+        "w_eoseo_oseyo",
+        "w_keopi_hana_juseyo",
+        "w_ocheon_wonieyo",
+        "w_gamsahamnida"
+      ],
+      "model_answer": {
+        "id": "Penjual menyambut (어서 오세요), Anda memesan, penjual menyebut harga, Anda berterima kasih.",
+        "en": "The seller welcomes you (어서 오세요), you order, they give the price, you say thanks."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-04-007",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-JUSEYO"
+      ],
+      "pool": "PRACT",
+      "order": 53,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/mul_juseyo",
+      "options": [
+        {
+          "id": "pic_coffee_cup",
+          "image": "pic_coffee_cup",
+          "text": {
+            "id": "secangkir kopi",
+            "en": "cup of coffee"
+          }
+        },
+        {
+          "id": "pic_rice_bowl",
+          "image": "pic_rice_bowl",
+          "text": {
+            "id": "semangkuk nasi",
+            "en": "bowl of rice"
+          }
+        },
+        {
+          "id": "drink_water",
+          "image": "drink_water",
+          "text": {
+            "id": "air putih",
+            "en": "water"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "물 주세요 (mul juseyo) = minta air.",
+        "en": "물 주세요 (mul juseyo) = water, please."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-04-008",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "KOR-JUSEYO"
+      ],
+      "pool": "PRACT",
+      "order": 54,
+      "prompt_id": "P-REPLY",
+      "target_text": "얼마예요?",
+      "romanization": "eolmayeyo?",
+      "audio": "ko/eolmayeyo",
+      "options": [
+        {
+          "id": "w_gyesanhae_juseyo",
+          "target_text": "계산해 주세요.",
+          "romanization": "gyesanhae juseyo.",
+          "audio": "ko/gyesanhae_juseyo"
+        },
+        {
+          "id": "w_ocheon_wonieyo",
+          "target_text": "오천 원이에요.",
+          "romanization": "ocheon wonieyo.",
+          "audio": "ko/ocheon_wonieyo",
+          "correct": true
+        },
+        {
+          "id": "w_ne_annyeonghaseyo",
+          "target_text": "네, 안녕하세요",
+          "audio": "ko/ne_annyeonghaseyo",
+          "romanization": "ne, annyeonghaseyo"
+        }
+      ],
+      "model_answer": {
+        "id": "얼마예요? (eolmayeyo?) = berapa? Jawabnya harga: 오천 원이에요 (ocheon wonieyo), 5.000 won.",
+        "en": "얼마예요? (eolmayeyo?) = how much? The answer is a price: 오천 원이에요 (ocheon wonieyo), 5,000 won."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-04-009",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 55,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/jal_meokgetseumnida",
+      "options": [
+        {
+          "id": "pic_sleep",
+          "image": "pic_sleep",
+          "text": {
+            "id": "tidur",
+            "en": "sleeping"
+          }
+        },
+        {
+          "id": "pic_eat",
+          "image": "pic_eat",
+          "text": {
+            "id": "makan",
+            "en": "eating"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_wave_bye",
+          "image": "pic_wave_bye",
+          "text": {
+            "id": "melambai pamit",
+            "en": "waving goodbye"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "잘 먹겠습니다 (jal meokgetseumnida) diucapkan sebelum makan.",
+        "en": "잘 먹겠습니다 (jal meokgetseumnida) is said just before eating."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-04-010",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "KOR-FOOD"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "국수",
+      "romanization": "guksu",
+      "audio": "ko/guksu",
+      "options": [
+        {
+          "id": "pic_noodle_bowl",
+          "image": "pic_noodle_bowl",
+          "text": {
+            "id": "semangkuk mi",
+            "en": "bowl of noodles"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_rice_bowl",
+          "image": "pic_rice_bowl",
+          "text": {
+            "id": "semangkuk nasi",
+            "en": "bowl of rice"
+          }
+        },
+        {
+          "id": "pic_soup",
+          "image": "pic_soup",
+          "text": {
+            "id": "sup",
+            "en": "soup"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "국수 (guksu) = mi.",
+        "en": "국수 (guksu) = noodles."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-04-011",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-JUSEYO"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "image": "pic_juice",
+      "target_text": "주스 하나 ___",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_ieyo",
+          "target_text": "이에요",
+          "audio": "ko/ieyo",
+          "romanization": "ieyo"
+        },
+        {
+          "id": "w_juseyo",
+          "target_text": "주세요",
+          "romanization": "juseyo",
+          "audio": "ko/juseyo"
+        },
+        {
+          "id": "w_yeyo",
+          "target_text": "예요",
+          "audio": "ko/yeyo",
+          "romanization": "yeyo"
+        }
+      ],
+      "solution": [
+        "w_juseyo"
+      ],
+      "model_answer": {
+        "id": "주스 하나 주세요 (juseu hana juseyo) = jusnya satu, ya.",
+        "en": "주스 하나 주세요 (juseu hana juseyo) = one juice, please."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-05-001",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-TRANSPORT"
+      ],
+      "pool": "PRACT",
+      "order": 56,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_train",
+          "image": "pic_train",
+          "text": {
+            "id": "kereta",
+            "en": "train"
+          }
+        },
+        {
+          "id": "pic_plane",
+          "image": "pic_plane",
+          "text": {
+            "id": "pesawat",
+            "en": "plane"
+          }
+        },
+        {
+          "id": "pic_car",
+          "image": "pic_car",
+          "text": {
+            "id": "mobil",
+            "en": "car"
+          }
+        },
+        {
+          "id": "pic_bicycle",
+          "image": "pic_bicycle",
+          "text": {
+            "id": "sepeda",
+            "en": "bicycle"
+          }
+        },
+        {
+          "id": "w_gicha",
+          "target_text": "기차",
+          "romanization": "gicha",
+          "audio": "ko/gicha"
+        },
+        {
+          "id": "w_bihaenggi",
+          "target_text": "비행기",
+          "romanization": "bihaenggi",
+          "audio": "ko/bihaenggi"
+        },
+        {
+          "id": "w_cha",
+          "target_text": "차",
+          "audio": "ko/cha",
+          "romanization": "cha"
+        },
+        {
+          "id": "w_jajeongeo",
+          "target_text": "자전거",
+          "romanization": "jajeongeo",
+          "audio": "ko/jajeongeo"
+        }
+      ],
+      "solution_pairs": {
+        "pic_train": "w_gicha",
+        "pic_plane": "w_bihaenggi",
+        "pic_car": "w_cha",
+        "pic_bicycle": "w_jajeongeo"
+      },
+      "model_answer": {
+        "id": "기차 (gicha) kereta, 비행기 (bihaenggi) pesawat, 차 mobil (juga berarti teh!), 자전거 (jajeongeo) sepeda.",
+        "en": "기차 (gicha) train, 비행기 (bihaenggi) plane, 차 car (it also means tea!), 자전거 (jajeongeo) bicycle."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-05-002",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-TRANSPORT"
+      ],
+      "pool": "PRACT",
+      "order": 57,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/bihaenggi",
+      "options": [
+        {
+          "id": "pic_ship",
+          "image": "pic_ship",
+          "text": {
+            "id": "kapal",
+            "en": "ship"
+          }
+        },
+        {
+          "id": "pic_train",
+          "image": "pic_train",
+          "text": {
+            "id": "kereta",
+            "en": "train"
+          }
+        },
+        {
+          "id": "pic_plane",
+          "image": "pic_plane",
+          "text": {
+            "id": "pesawat",
+            "en": "plane"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "비행기 (bihaenggi) = pesawat.",
+        "en": "비행기 (bihaenggi) = plane."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-05-003",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "KOR-TRANSPORT"
+      ],
+      "pool": "PRACT",
+      "order": 58,
+      "prompt_id": "P-PICK",
+      "target_text": "오토바이",
+      "romanization": "otobai",
+      "audio": "ko/otobai",
+      "options": [
+        {
+          "id": "pic_bicycle",
+          "image": "pic_bicycle",
+          "text": {
+            "id": "sepeda",
+            "en": "bicycle"
+          }
+        },
+        {
+          "id": "pic_car",
+          "image": "pic_car",
+          "text": {
+            "id": "mobil",
+            "en": "car"
+          }
+        },
+        {
+          "id": "pic_motorbike",
+          "image": "pic_motorbike",
+          "text": {
+            "id": "sepeda motor",
+            "en": "motorbike"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "오토바이 (otobai) = sepeda motor, kata serapan.",
+        "en": "오토바이 (otobai) = motorbike, a loanword."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-05-004",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-TRANSPORT"
+      ],
+      "pool": "PRACT",
+      "order": 59,
+      "prompt_id": "P-FILL",
+      "image": "pic_car",
+      "target_text": "여기로 가 ___",
+      "romanization": "yeogiro ga ___",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_ieyo",
+          "target_text": "이에요",
+          "audio": "ko/ieyo"
+        },
+        {
+          "id": "w_yeyo",
+          "target_text": "예요",
+          "audio": "ko/yeyo"
+        },
+        {
+          "id": "w_juseyo",
+          "target_text": "주세요",
+          "audio": "ko/juseyo"
+        }
+      ],
+      "solution": [
+        "w_juseyo"
+      ],
+      "model_answer": {
+        "id": "여기로 가 주세요 (yeogiro ga juseyo) = tolong ke sini, sambil menunjukkan alamat.",
+        "en": "여기로 가 주세요 (yeogiro ga juseyo) = please go here, while showing the address."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-05-005",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 60,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "pic_hospital",
+          "image": "pic_hospital",
+          "text": {
+            "id": "rumah sakit",
+            "en": "hospital"
+          }
+        },
+        {
+          "id": "pic_market",
+          "image": "pic_market",
+          "text": {
+            "id": "pasar",
+            "en": "market"
+          }
+        },
+        {
+          "id": "pic_park",
+          "image": "pic_park",
+          "text": {
+            "id": "taman",
+            "en": "park"
+          }
+        },
+        {
+          "id": "pic_station",
+          "image": "pic_station",
+          "text": {
+            "id": "stasiun",
+            "en": "station"
+          }
+        },
+        {
+          "id": "w_byeongwon",
+          "target_text": "병원",
+          "romanization": "byeongwon",
+          "audio": "ko/byeongwon"
+        },
+        {
+          "id": "w_sijang",
+          "target_text": "시장",
+          "romanization": "sijang",
+          "audio": "ko/sijang"
+        },
+        {
+          "id": "w_gongwon",
+          "target_text": "공원",
+          "romanization": "gongwon",
+          "audio": "ko/gongwon"
+        },
+        {
+          "id": "w_yeok",
+          "target_text": "역",
+          "romanization": "yeok",
+          "audio": "ko/yeok"
+        }
+      ],
+      "solution_pairs": {
+        "pic_hospital": "w_byeongwon",
+        "pic_market": "w_sijang",
+        "pic_park": "w_gongwon",
+        "pic_station": "w_yeok"
+      },
+      "model_answer": {
+        "id": "병원 (byeongwon) rumah sakit, 시장 (sijang) pasar, 공원 (gongwon) taman, 역 (yeok) stasiun.",
+        "en": "병원 (byeongwon) hospital, 시장 (sijang) market, 공원 (gongwon) park, 역 (yeok) station."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-05-006",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 61,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/sijang",
+      "options": [
+        {
+          "id": "pic_hospital",
+          "image": "pic_hospital",
+          "text": {
+            "id": "rumah sakit",
+            "en": "hospital"
+          }
+        },
+        {
+          "id": "pic_market",
+          "image": "pic_market",
+          "text": {
+            "id": "pasar",
+            "en": "market"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_school",
+          "image": "pic_school",
+          "text": {
+            "id": "sekolah",
+            "en": "school"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "시장 (sijang) = pasar.",
+        "en": "시장 (sijang) = market."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-05-007",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "KOR-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 62,
+      "prompt_id": "P-REPLY",
+      "target_text": "화장실 어디예요?",
+      "romanization": "hwajangsil eodiyeyo?",
+      "audio": "ko/hwajangsil_eodiyeyo",
+      "options": [
+        {
+          "id": "w_jeogiyeyo",
+          "target_text": "저기예요.",
+          "romanization": "jeogiyeyo.",
+          "audio": "ko/jeogiyeyo",
+          "correct": true
+        },
+        {
+          "id": "w_ocheon_wonieyo",
+          "target_text": "오천 원이에요.",
+          "audio": "ko/ocheon_wonieyo",
+          "romanization": "ocheon wonieyo."
+        },
+        {
+          "id": "w_keopi_hana_juseyo",
+          "target_text": "커피 하나 주세요.",
+          "audio": "ko/keopi_hana_juseyo",
+          "romanization": "keopi hana juseyo."
+        }
+      ],
+      "model_answer": {
+        "id": "화장실 어디예요? (hwajangsil eodiyeyo?) = toiletnya di mana? Jawab: 저기예요 (jeogiyeyo), di sana.",
+        "en": "화장실 어디예요? (hwajangsil eodiyeyo?) = where's the restroom? Answer: 저기예요 (jeogiyeyo), over there."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-05-008",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "KOR-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 63,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_jeogiyeyo",
+          "target_text": "저기예요.",
+          "romanization": "jeogiyeyo.",
+          "audio": "ko/jeogiyeyo"
+        },
+        {
+          "id": "w_jeogiyo",
+          "target_text": "저기요.",
+          "romanization": "jeogiyo.",
+          "audio": "ko/jeogiyo"
+        },
+        {
+          "id": "w_gamsahamnida",
+          "target_text": "감사합니다",
+          "audio": "ko/gamsahamnida",
+          "romanization": "gamsahamnida"
+        },
+        {
+          "id": "w_byeongwon_eodiyeyo",
+          "target_text": "병원 어디예요?",
+          "romanization": "byeongwon eodiyeyo?",
+          "audio": "ko/byeongwon_eodiyeyo"
+        }
+      ],
+      "solution": [
+        "w_jeogiyo",
+        "w_byeongwon_eodiyeyo",
+        "w_jeogiyeyo",
+        "w_gamsahamnida"
+      ],
+      "model_answer": {
+        "id": "Panggil dulu (저기요), tanya tempatnya, dengar jawabannya, lalu berterima kasih.",
+        "en": "First get attention (저기요), ask where, hear the answer, then say thanks."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-05-009",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "KOR-TRANSPORT"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "자전거",
+      "romanization": "jajeongeo",
+      "audio": "ko/jajeongeo",
+      "options": [
+        {
+          "id": "pic_bicycle",
+          "image": "pic_bicycle",
+          "text": {
+            "id": "sepeda",
+            "en": "bicycle"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_motorbike",
+          "image": "pic_motorbike",
+          "text": {
+            "id": "sepeda motor",
+            "en": "motorbike"
+          }
+        },
+        {
+          "id": "pic_car",
+          "image": "pic_car",
+          "text": {
+            "id": "mobil",
+            "en": "car"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "자전거 (jajeongeo) = sepeda.",
+        "en": "자전거 (jajeongeo) = bicycle."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-05-010",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "KOR-PLACE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "병원",
+      "romanization": "byeongwon",
+      "audio": "ko/byeongwon",
+      "options": [
+        {
+          "id": "pic_market",
+          "image": "pic_market",
+          "text": {
+            "id": "pasar",
+            "en": "market"
+          }
+        },
+        {
+          "id": "pic_park",
+          "image": "pic_park",
+          "text": {
+            "id": "taman",
+            "en": "park"
+          }
+        },
+        {
+          "id": "pic_hospital",
+          "image": "pic_hospital",
+          "text": {
+            "id": "rumah sakit",
+            "en": "hospital"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "병원 (byeongwon) = rumah sakit.",
+        "en": "병원 (byeongwon) = hospital."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "target_text": "삼 + 사 = ?",
+      "romanization": "sam + sa = ?",
+      "options": [
+        {
+          "id": "w_pal",
+          "target_text": "팔",
+          "romanization": "pal",
+          "audio": "ko/pal"
+        },
+        {
+          "id": "w_chil",
+          "target_text": "칠",
+          "romanization": "chil",
+          "audio": "ko/chil",
+          "correct": true
+        },
+        {
+          "id": "w_yuk",
+          "target_text": "육",
+          "romanization": "yuk",
+          "audio": "ko/yuk"
+        }
+      ],
+      "model_answer": {
+        "id": "삼 + 사 = 칠 (chil): 3 + 4 = 7.",
+        "en": "삼 + 사 = 칠 (chil): 3 + 4 = 7."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    },
+    {
+      "item_id": "KOR-A-P-DP-02",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang sama dibaca dari belakang?",
+            "en": "Which reads the same backwards?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "w_jajeongeo",
+          "target_text": "자전거",
+          "romanization": "jajeongeo",
+          "audio": "ko/jajeongeo"
+        },
+        {
+          "id": "w_gireogi",
+          "target_text": "기러기",
+          "romanization": "gireogi",
+          "audio": "ko/gireogi",
+          "correct": true
+        },
+        {
+          "id": "w_otobai",
+          "target_text": "오토바이",
+          "romanization": "otobai",
+          "audio": "ko/otobai"
+        }
+      ],
+      "model_answer": {
+        "id": "기러기 (gireogi, angsa liar): gi-reo-gi, dari belakang tetap sama.",
+        "en": "기러기 (gireogi, wild goose): gi-reo-gi, the same backwards."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-pemula-0.1"
+    }
+  ]
+}

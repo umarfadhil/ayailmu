@@ -1,0 +1,2094 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "kor-a-h-0.1",
+    "subject": "bahasa",
+    "track": "kor-a-h",
+    "level": "mahir",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "target_lang": "ko",
+    "title": {
+      "id": "Bahasa Korea — Mahir (Dewasa)",
+      "en": "Korean — Advanced (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, starter level: 2 units) for language review: needs a native Korean reviewer (hangul, Revised Romanization, naturalness, register, every voice clip) and the Indonesian and English reviewers before any item is approved (docs/syllabus/bahasa/ko_levels.md, Adults Mahir units 01-02). Picture-first; audio_match items stay hidden until their ko/* clips exist (android/content/voice/ko.json and ko.levels.json); every skill has a REMED item that needs no audio.",
+  "prompts": {
+    "P-LISTEN-PIC": {
+      "id": "Dengar, lalu ketuk gambarnya.",
+      "en": "Listen, then tap the picture."
+    },
+    "P-PICK": {
+      "id": "Pilih gambarnya.",
+      "en": "Pick the picture."
+    },
+    "P-READ": {
+      "id": "Baca, lalu pilih gambarnya.",
+      "en": "Read it, then pick the picture."
+    },
+    "P-MATCH-PIC": {
+      "id": "Pasangkan gambar dan katanya.",
+      "en": "Match each picture to its word."
+    },
+    "P-MATCH": {
+      "id": "Pasangkan.",
+      "en": "Match them up."
+    },
+    "P-BUILD-SAY": {
+      "id": "Susun kalimatnya.",
+      "en": "Build the sentence."
+    },
+    "P-FILL": {
+      "id": "Isi yang kosong.",
+      "en": "Fill the gap."
+    },
+    "P-SORT": {
+      "id": "Kelompokkan.",
+      "en": "Sort them."
+    },
+    "P-ORDER-TIME": {
+      "id": "Urutkan dari pagi ke malam.",
+      "en": "Order from morning to night."
+    },
+    "P-ORDER-TALK": {
+      "id": "Urutkan percakapannya.",
+      "en": "Put the talk in order."
+    },
+    "P-MEMORY": {
+      "id": "Buka kartu, cari pasangannya.",
+      "en": "Flip cards, find the pairs."
+    },
+    "P-REPLY": {
+      "id": "Pilih jawaban yang cocok.",
+      "en": "Pick the best reply."
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Correct. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Arah & transportasi",
+        "en": "Directions & transport"
+      },
+      "sticker": "sticker_boat"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Cuaca & cerita kemarin",
+        "en": "Weather & last weekend"
+      },
+      "sticker": "sticker_rice_field"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "KOR-A-H-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Dari mana, ke mana?",
+        "en": "From where, to where?"
+      },
+      "body": [
+        {
+          "id": "Dari … sampai …: 여기에서 공항까지 (yeogieseo gonghangkkaji). Naik: 지하철을 타요 (jihacheoreul tayo).",
+          "en": "From … to …: 여기에서 공항까지 (yeogieseo gonghangkkaji). Take: 지하철을 타요 (jihacheoreul tayo)."
+        },
+        {
+          "id": "Berapa lama? 얼마나 걸려요? (eolmana geollyeoyo?) → 삼십 분 걸려요 (samsip bun geollyeoyo).",
+          "en": "How long? 얼마나 걸려요? (eolmana geollyeoyo?) → 삼십 분 걸려요 (samsip bun geollyeoyo)."
+        },
+        {
+          "id": "Arah: 왼쪽 (oenjjok), 오른쪽 (oreunjjok), 쭉 가세요 (jjuk gaseyo). Pindah jalur: 갈아타세요 (garataseyo).",
+          "en": "Directions: 왼쪽 (oenjjok), 오른쪽 (oreunjjok), 쭉 가세요 (jjuk gaseyo). Change lines: 갈아타세요 (garataseyo)."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "공항",
+          "gloss": {
+            "id": "gonghang · bandara",
+            "en": "gonghang · airport"
+          }
+        },
+        {
+          "target_text": "지하철",
+          "gloss": {
+            "id": "jihacheol · kereta bawah tanah",
+            "en": "jihacheol · subway"
+          }
+        },
+        {
+          "target_text": "택시",
+          "gloss": {
+            "id": "taeksi · taksi",
+            "en": "taeksi · taxi"
+          }
+        },
+        {
+          "target_text": "표",
+          "gloss": {
+            "id": "pyo · tiket",
+            "en": "pyo · ticket"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "KOR-A-H-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Cuaca & bentuk lampau",
+        "en": "Weather & the past tense"
+      },
+      "body": [
+        {
+          "id": "Cuaca: 맑아요 (malgayo) cerah, 흐려요 (heuryeoyo) mendung, 비가 와요 (biga wayo) hujan, 눈이 와요 (nuni wayo) bersalju.",
+          "en": "Weather: 맑아요 (malgayo) clear, 흐려요 (heuryeoyo) cloudy, 비가 와요 (biga wayo) raining, 눈이 와요 (nuni wayo) snowing."
+        },
+        {
+          "id": "Lampau: 가요 (gayo) → 갔어요 (gasseoyo), 먹어요 (meogeoyo) → 먹었어요 (meogeosseoyo), 해요 (haeyo) → 했어요 (haesseoyo).",
+          "en": "Past: 가요 (gayo) → 갔어요 (gasseoyo), 먹어요 (meogeoyo) → 먹었어요 (meogeosseoyo), 해요 (haeyo) → 했어요 (haesseoyo)."
+        },
+        {
+          "id": "주말에 뭐 했어요? (jumare mwo haesseoyo?) = apa kegiatan Anda akhir pekan lalu?",
+          "en": "주말에 뭐 했어요? (jumare mwo haesseoyo?) = what did you do at the weekend?"
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "어제",
+          "gloss": {
+            "id": "eoje · kemarin",
+            "en": "eoje · yesterday"
+          }
+        },
+        {
+          "target_text": "주말",
+          "gloss": {
+            "id": "jumal · akhir pekan",
+            "en": "jumal · weekend"
+          }
+        },
+        {
+          "target_text": "날씨",
+          "gloss": {
+            "id": "nalssi · cuaca",
+            "en": "nalssi · weather"
+          }
+        },
+        {
+          "target_text": "친구",
+          "gloss": {
+            "id": "chingu · teman",
+            "en": "chingu · friend"
+          }
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "KOR-A-H-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-ROUTE"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_airport",
+          "image": "pic_airport",
+          "text": {
+            "id": "bandara",
+            "en": "airport"
+          }
+        },
+        {
+          "id": "pic_hotel",
+          "image": "pic_hotel",
+          "text": {
+            "id": "hotel",
+            "en": "hotel"
+          }
+        },
+        {
+          "id": "pic_bank",
+          "image": "pic_bank",
+          "text": {
+            "id": "bank",
+            "en": "bank"
+          }
+        },
+        {
+          "id": "pic_post_office",
+          "image": "pic_post_office",
+          "text": {
+            "id": "kantor pos",
+            "en": "post office"
+          }
+        },
+        {
+          "id": "w_gonghang",
+          "target_text": "공항",
+          "romanization": "gonghang",
+          "audio": "ko/gonghang"
+        },
+        {
+          "id": "w_hotel",
+          "target_text": "호텔",
+          "romanization": "hotel",
+          "audio": "ko/hotel"
+        },
+        {
+          "id": "w_eunhaeng",
+          "target_text": "은행",
+          "romanization": "eunhaeng",
+          "audio": "ko/eunhaeng"
+        },
+        {
+          "id": "w_ucheguk",
+          "target_text": "우체국",
+          "romanization": "ucheguk",
+          "audio": "ko/ucheguk"
+        }
+      ],
+      "solution_pairs": {
+        "pic_airport": "w_gonghang",
+        "pic_hotel": "w_hotel",
+        "pic_bank": "w_eunhaeng",
+        "pic_post_office": "w_ucheguk"
+      },
+      "model_answer": {
+        "id": "공항 (gonghang) bandara, 호텔 (hotel) hotel, 은행 (eunhaeng) bank, 우체국 (ucheguk) kantor pos.",
+        "en": "공항 (gonghang) airport, 호텔 (hotel) hotel, 은행 (eunhaeng) bank, 우체국 (ucheguk) post office."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-ROUTE"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/gonghang",
+      "options": [
+        {
+          "id": "pic_park",
+          "image": "pic_park",
+          "text": {
+            "id": "taman",
+            "en": "park"
+          }
+        },
+        {
+          "id": "pic_airport",
+          "image": "pic_airport",
+          "text": {
+            "id": "bandara",
+            "en": "airport"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_hotel",
+          "image": "pic_hotel",
+          "text": {
+            "id": "hotel",
+            "en": "hotel"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "공항 (gonghang) = bandara. Hati-hati: 공원 (gongwon) = taman.",
+        "en": "공항 (gonghang) = airport. Careful: 공원 (gongwon) = park."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-WAY"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-MATCH",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "glyph_arrow_left",
+          "image": "glyph_arrow_left",
+          "text": {
+            "id": "panah ke kiri",
+            "en": "arrow pointing left"
+          }
+        },
+        {
+          "id": "glyph_arrow_right",
+          "image": "glyph_arrow_right",
+          "text": {
+            "id": "panah ke kanan",
+            "en": "arrow pointing right"
+          }
+        },
+        {
+          "id": "glyph_arrow_straight",
+          "image": "glyph_arrow_straight",
+          "text": {
+            "id": "panah lurus ke depan",
+            "en": "arrow pointing straight ahead"
+          }
+        },
+        {
+          "id": "w_oenjjogeuro_gaseyo",
+          "target_text": "왼쪽으로 가세요.",
+          "romanization": "oenjjogeuro gaseyo.",
+          "audio": "ko/oenjjogeuro_gaseyo"
+        },
+        {
+          "id": "w_oreunjjogeuro_gaseyo",
+          "target_text": "오른쪽으로 가세요.",
+          "romanization": "oreunjjogeuro gaseyo.",
+          "audio": "ko/oreunjjogeuro_gaseyo"
+        },
+        {
+          "id": "w_jjuk_gaseyo",
+          "target_text": "쭉 가세요",
+          "romanization": "jjuk gaseyo",
+          "audio": "ko/jjuk_gaseyo"
+        }
+      ],
+      "solution_pairs": {
+        "glyph_arrow_left": "w_oenjjogeuro_gaseyo",
+        "glyph_arrow_right": "w_oreunjjogeuro_gaseyo",
+        "glyph_arrow_straight": "w_jjuk_gaseyo"
+      },
+      "model_answer": {
+        "id": "왼쪽으로 가세요 (oenjjogeuro gaseyo) ke kiri, 오른쪽으로 가세요 (oreunjjogeuro gaseyo) ke kanan, 쭉 가세요 (jjuk gaseyo) lurus.",
+        "en": "왼쪽으로 가세요 (oenjjogeuro gaseyo) go left, 오른쪽으로 가세요 (oreunjjogeuro gaseyo) go right, 쭉 가세요 (jjuk gaseyo) straight on."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-ROUTE"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-FILL",
+      "image": "pic_plane",
+      "target_text": "여기___ 공항까지 얼마나 걸려요?",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_kkaji",
+          "target_text": "까지",
+          "romanization": "kkaji"
+        },
+        {
+          "id": "p_eseo",
+          "target_text": "에서",
+          "romanization": "eseo"
+        },
+        {
+          "id": "p_e",
+          "target_text": "에",
+          "romanization": "e"
+        }
+      ],
+      "solution": [
+        "p_eseo"
+      ],
+      "romanization": "yeogi___ gonghangkkaji eolmana geollyeoyo?",
+      "model_answer": {
+        "id": "Dari: 에서 (eseo); sampai: 까지 (kkaji). 여기에서 공항까지 얼마나 걸려요? (yeogieseo gonghangkkaji eolmana geollyeoyo?)",
+        "en": "From: 에서 (eseo); to: 까지 (kkaji). 여기에서 공항까지 얼마나 걸려요? (yeogieseo gonghangkkaji eolmana geollyeoyo?)"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-WAY"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/oenjjogeuro_gaseyo",
+      "options": [
+        {
+          "id": "glyph_arrow_left",
+          "image": "glyph_arrow_left",
+          "text": {
+            "id": "panah ke kiri",
+            "en": "arrow pointing left"
+          },
+          "correct": true
+        },
+        {
+          "id": "glyph_arrow_right",
+          "image": "glyph_arrow_right",
+          "text": {
+            "id": "panah ke kanan",
+            "en": "arrow pointing right"
+          }
+        },
+        {
+          "id": "glyph_arrow_straight",
+          "image": "glyph_arrow_straight",
+          "text": {
+            "id": "panah lurus ke depan",
+            "en": "arrow pointing straight ahead"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "왼쪽으로 가세요 (oenjjogeuro gaseyo) = silakan ke kiri.",
+        "en": "왼쪽으로 가세요 (oenjjogeuro gaseyo) = go left."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "KOR-ROUTE"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-REPLY",
+      "image": "pic_train",
+      "target_text": "얼마나 걸려요?",
+      "options": [
+        {
+          "id": "w_samman_wonieyo",
+          "target_text": "삼만 원이에요.",
+          "romanization": "samman wonieyo.",
+          "audio": "ko/samman_wonieyo"
+        },
+        {
+          "id": "w_gichareul_taseyo",
+          "target_text": "기차를 타세요.",
+          "romanization": "gichareul taseyo.",
+          "audio": "ko/gichareul_taseyo"
+        },
+        {
+          "id": "w_samsip_bun_geollyeoyo",
+          "target_text": "삼십 분 걸려요.",
+          "romanization": "samsip bun geollyeoyo.",
+          "audio": "ko/samsip_bun_geollyeoyo",
+          "correct": true
+        }
+      ],
+      "romanization": "eolmana geollyeoyo?",
+      "audio": "ko/eolmana_geollyeoyo",
+      "model_answer": {
+        "id": "얼마나 걸려요? (eolmana geollyeoyo?) menanyakan lamanya: 삼십 분 걸려요 (samsip bun geollyeoyo).",
+        "en": "얼마나 걸려요? (eolmana geollyeoyo?) asks how long: 삼십 분 걸려요 (samsip bun geollyeoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "KOR-ROUTE"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-MEMORY",
+      "options": [
+        {
+          "id": "pic_ticket",
+          "image": "pic_ticket",
+          "text": {
+            "id": "tiket",
+            "en": "ticket"
+          }
+        },
+        {
+          "id": "pic_suitcase",
+          "image": "pic_suitcase",
+          "text": {
+            "id": "koper",
+            "en": "suitcase"
+          }
+        },
+        {
+          "id": "pic_map_paper",
+          "image": "pic_map_paper",
+          "text": {
+            "id": "peta",
+            "en": "map"
+          }
+        },
+        {
+          "id": "pic_traffic_light",
+          "image": "pic_traffic_light",
+          "text": {
+            "id": "lampu lalu lintas",
+            "en": "traffic lights"
+          }
+        },
+        {
+          "id": "w_pyo",
+          "target_text": "표",
+          "romanization": "pyo",
+          "audio": "ko/pyo"
+        },
+        {
+          "id": "w_jim",
+          "target_text": "짐",
+          "romanization": "jim",
+          "audio": "ko/jim"
+        },
+        {
+          "id": "w_jido",
+          "target_text": "지도",
+          "romanization": "jido",
+          "audio": "ko/jido"
+        },
+        {
+          "id": "w_sinhodeung",
+          "target_text": "신호등",
+          "romanization": "sinhodeung",
+          "audio": "ko/sinhodeung"
+        }
+      ],
+      "solution_pairs": {
+        "pic_ticket": "w_pyo",
+        "pic_suitcase": "w_jim",
+        "pic_map_paper": "w_jido",
+        "pic_traffic_light": "w_sinhodeung"
+      },
+      "model_answer": {
+        "id": "표 (pyo) tiket, 짐 (jim) barang bawaan, 지도 (jido) peta, 신호등 (sinhodeung) lampu lalu lintas.",
+        "en": "표 (pyo) ticket, 짐 (jim) luggage, 지도 (jido) map, 신호등 (sinhodeung) traffic lights."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "KOR-ROUTE"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_ride",
+          "target_text": "타요",
+          "romanization": "tayo",
+          "audio": "ko/tayo"
+        },
+        {
+          "id": "b_go",
+          "target_text": "가요",
+          "romanization": "gayo",
+          "audio": "ko/gayo"
+        },
+        {
+          "id": "pic_bus",
+          "image": "pic_bus",
+          "text": {
+            "id": "bus",
+            "en": "bus"
+          }
+        },
+        {
+          "id": "pic_airport",
+          "image": "pic_airport",
+          "text": {
+            "id": "bandara",
+            "en": "airport"
+          }
+        },
+        {
+          "id": "pic_train",
+          "image": "pic_train",
+          "text": {
+            "id": "kereta",
+            "en": "train"
+          }
+        },
+        {
+          "id": "pic_hotel",
+          "image": "pic_hotel",
+          "text": {
+            "id": "hotel",
+            "en": "hotel"
+          }
+        },
+        {
+          "id": "pic_bicycle",
+          "image": "pic_bicycle",
+          "text": {
+            "id": "sepeda",
+            "en": "bicycle"
+          }
+        },
+        {
+          "id": "pic_bank",
+          "image": "pic_bank",
+          "text": {
+            "id": "bank",
+            "en": "bank"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "pic_bus": "b_ride",
+        "pic_airport": "b_go",
+        "pic_train": "b_ride",
+        "pic_hotel": "b_go",
+        "pic_bicycle": "b_ride",
+        "pic_bank": "b_go"
+      },
+      "model_answer": {
+        "id": "Kendaraan + 타요 (tayo): bus, kereta, sepeda. Tempat + 가요 (gayo): bandara, hotel, bank.",
+        "en": "Vehicles + 타요 (tayo): bus, train, bicycle. Places + 가요 (gayo): airport, hotel, bank."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "KOR-WAY"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-ORDER-TALK",
+      "image": "pic_bank",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_jjuk_gaseyo_oreunjjoge_isseoyo",
+          "target_text": "쭉 가세요. 오른쪽에 있어요.",
+          "romanization": "jjuk gaseyo. oreunjjoge isseoyo.",
+          "audio": "ko/jjuk_gaseyo_oreunjjoge_isseoyo"
+        },
+        {
+          "id": "w_gamsahamnida",
+          "target_text": "감사합니다",
+          "romanization": "gamsahamnida",
+          "audio": "ko/gamsahamnida"
+        },
+        {
+          "id": "w_jeogiyo",
+          "target_text": "저기요.",
+          "romanization": "jeogiyo.",
+          "audio": "ko/jeogiyo"
+        },
+        {
+          "id": "w_eunhaengi_eodie_isseoyo",
+          "target_text": "은행이 어디에 있어요?",
+          "romanization": "eunhaengi eodie isseoyo?",
+          "audio": "ko/eunhaengi_eodie_isseoyo"
+        }
+      ],
+      "solution": [
+        "w_jeogiyo",
+        "w_eunhaengi_eodie_isseoyo",
+        "w_jjuk_gaseyo_oreunjjoge_isseoyo",
+        "w_gamsahamnida"
+      ],
+      "model_answer": {
+        "id": "Panggil dengan 저기요 (jeogiyo), tanya, dengar arahnya, lalu berterima kasih.",
+        "en": "Get attention with 저기요 (jeogiyo), ask, hear the way, then say thanks."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "KOR-ROUTE"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-BUILD-SAY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Naik kereta di stasiun.",
+            "en": "Take the train at the station."
+          }
+        }
+      ],
+      "image": "pic_station",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_taseyo",
+          "target_text": "타세요",
+          "romanization": "taseyo",
+          "audio": "ko/taseyo"
+        },
+        {
+          "id": "w_gichareul",
+          "target_text": "기차를",
+          "romanization": "gichareul",
+          "audio": "ko/gichareul"
+        },
+        {
+          "id": "w_yeogeseo",
+          "target_text": "역에서",
+          "romanization": "yeogeseo",
+          "audio": "ko/yeogeseo"
+        },
+        {
+          "id": "w_beoseureul",
+          "target_text": "버스를",
+          "romanization": "beoseureul",
+          "audio": "ko/beoseureul"
+        }
+      ],
+      "solution": [
+        "w_yeogeseo",
+        "w_gichareul",
+        "w_taseyo"
+      ],
+      "model_answer": {
+        "id": "역에서 기차를 타세요 (yeogeseo gichareul taseyo) = naik kereta di stasiun.",
+        "en": "역에서 기차를 타세요 (yeogeseo gichareul taseyo) = take the train at the station."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "KOR-WAY"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-PICK",
+      "target_text": "다리를 건너세요.",
+      "options": [
+        {
+          "id": "pic_traffic_light",
+          "image": "pic_traffic_light",
+          "text": {
+            "id": "lampu lalu lintas",
+            "en": "traffic lights"
+          }
+        },
+        {
+          "id": "pic_station",
+          "image": "pic_station",
+          "text": {
+            "id": "stasiun",
+            "en": "station"
+          }
+        },
+        {
+          "id": "pic_bridge",
+          "image": "pic_bridge",
+          "text": {
+            "id": "jembatan",
+            "en": "bridge"
+          },
+          "correct": true
+        }
+      ],
+      "romanization": "darireul geonneoseyo.",
+      "audio": "ko/darireul_geonneoseyo",
+      "model_answer": {
+        "id": "다리 (dari) = jembatan (juga 'kaki'!). 건너세요 (geonneoseyo) = seberangi.",
+        "en": "다리 (dari) = bridge (also 'leg'!). 건너세요 (geonneoseyo) = cross."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-ROUTE"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/pyo_du_jang_juseyo",
+      "options": [
+        {
+          "id": "pic_suitcase",
+          "image": "pic_suitcase",
+          "text": {
+            "id": "koper",
+            "en": "suitcase"
+          }
+        },
+        {
+          "id": "pic_ticket",
+          "image": "pic_ticket",
+          "text": {
+            "id": "tiket",
+            "en": "ticket"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_map_paper",
+          "image": "pic_map_paper",
+          "text": {
+            "id": "peta",
+            "en": "map"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "표 두 장 주세요 (pyo du jang juseyo) = minta dua tiket. 장 (jang) untuk lembaran.",
+        "en": "표 두 장 주세요 (pyo du jang juseyo) = two tickets, please. 장 (jang) counts sheets."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-ROUTE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "image": "pic_hotel",
+      "target_text": "공항에서 호텔___ 삼십 분 걸려요.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_eseo",
+          "target_text": "에서",
+          "romanization": "eseo"
+        },
+        {
+          "id": "p_kkaji",
+          "target_text": "까지",
+          "romanization": "kkaji"
+        },
+        {
+          "id": "p_e",
+          "target_text": "에",
+          "romanization": "e"
+        }
+      ],
+      "solution": [
+        "p_kkaji"
+      ],
+      "romanization": "gonghangeseo hotel___ samsip bun geollyeoyo.",
+      "model_answer": {
+        "id": "Sampai: 까지 (kkaji). 공항에서 호텔까지 삼십 분 걸려요 (gonghangeseo hotelkkaji samsip bun geollyeoyo).",
+        "en": "To: 까지 (kkaji). 공항에서 호텔까지 삼십 분 걸려요 (gonghangeseo hotelkkaji samsip bun geollyeoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "KOR-WAY"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "오른쪽으로 가세요.",
+      "options": [
+        {
+          "id": "glyph_arrow_right",
+          "image": "glyph_arrow_right",
+          "text": {
+            "id": "panah ke kanan",
+            "en": "arrow pointing right"
+          },
+          "correct": true
+        },
+        {
+          "id": "glyph_arrow_left",
+          "image": "glyph_arrow_left",
+          "text": {
+            "id": "panah ke kiri",
+            "en": "arrow pointing left"
+          }
+        },
+        {
+          "id": "glyph_arrow_straight",
+          "image": "glyph_arrow_straight",
+          "text": {
+            "id": "panah lurus ke depan",
+            "en": "arrow pointing straight ahead"
+          }
+        }
+      ],
+      "romanization": "oreunjjogeuro gaseyo.",
+      "audio": "ko/oreunjjogeuro_gaseyo",
+      "model_answer": {
+        "id": "오른쪽으로 가세요 (oreunjjogeuro gaseyo) = silakan ke kanan.",
+        "en": "오른쪽으로 가세요 (oreunjjogeuro gaseyo) = go right."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-WEATHER"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_sun",
+          "image": "pic_sun",
+          "text": {
+            "id": "matahari",
+            "en": "sun"
+          }
+        },
+        {
+          "id": "pic_cloud",
+          "image": "pic_cloud",
+          "text": {
+            "id": "awan",
+            "en": "cloud"
+          }
+        },
+        {
+          "id": "pic_rain",
+          "image": "pic_rain",
+          "text": {
+            "id": "hujan",
+            "en": "rain"
+          }
+        },
+        {
+          "id": "pic_snow",
+          "image": "pic_snow",
+          "text": {
+            "id": "salju",
+            "en": "snow"
+          }
+        },
+        {
+          "id": "w_malgayo",
+          "target_text": "맑아요",
+          "romanization": "malgayo",
+          "audio": "ko/malgayo"
+        },
+        {
+          "id": "w_heuryeoyo",
+          "target_text": "흐려요",
+          "romanization": "heuryeoyo",
+          "audio": "ko/heuryeoyo"
+        },
+        {
+          "id": "w_biga_wayo",
+          "target_text": "비가 와요",
+          "romanization": "biga wayo",
+          "audio": "ko/biga_wayo"
+        },
+        {
+          "id": "w_nuni_wayo",
+          "target_text": "눈이 와요",
+          "romanization": "nuni wayo",
+          "audio": "ko/nuni_wayo"
+        }
+      ],
+      "solution_pairs": {
+        "pic_sun": "w_malgayo",
+        "pic_cloud": "w_heuryeoyo",
+        "pic_rain": "w_biga_wayo",
+        "pic_snow": "w_nuni_wayo"
+      },
+      "model_answer": {
+        "id": "맑아요 (malgayo) cerah, 흐려요 (heuryeoyo) mendung, 비가 와요 (biga wayo) hujan, 눈이 와요 (nuni wayo) bersalju.",
+        "en": "맑아요 (malgayo) clear, 흐려요 (heuryeoyo) cloudy, 비가 와요 (biga wayo) raining, 눈이 와요 (nuni wayo) snowing."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-WEATHER"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/barami_mani_bureoyo",
+      "options": [
+        {
+          "id": "pic_wind",
+          "image": "pic_wind",
+          "text": {
+            "id": "angin",
+            "en": "wind"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_sun",
+          "image": "pic_sun",
+          "text": {
+            "id": "matahari",
+            "en": "sun"
+          }
+        },
+        {
+          "id": "pic_snow",
+          "image": "pic_snow",
+          "text": {
+            "id": "salju",
+            "en": "snow"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "바람이 많이 불어요 (barami mani bureoyo) = anginnya kencang.",
+        "en": "바람이 많이 불어요 (barami mani bureoyo) = it's very windy."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-WEATHER"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "pic_spring_blossom",
+          "image": "pic_spring_blossom",
+          "text": {
+            "id": "bunga musim semi",
+            "en": "spring blossom"
+          }
+        },
+        {
+          "id": "pic_beach",
+          "image": "pic_beach",
+          "text": {
+            "id": "pantai",
+            "en": "beach"
+          }
+        },
+        {
+          "id": "pic_autumn_leaves",
+          "image": "pic_autumn_leaves",
+          "text": {
+            "id": "daun musim gugur",
+            "en": "autumn leaves"
+          }
+        },
+        {
+          "id": "pic_snowman",
+          "image": "pic_snowman",
+          "text": {
+            "id": "boneka salju",
+            "en": "snowman"
+          }
+        },
+        {
+          "id": "w_bom",
+          "target_text": "봄",
+          "romanization": "bom",
+          "audio": "ko/bom"
+        },
+        {
+          "id": "w_yeoreum",
+          "target_text": "여름",
+          "romanization": "yeoreum",
+          "audio": "ko/yeoreum"
+        },
+        {
+          "id": "w_gaeul",
+          "target_text": "가을",
+          "romanization": "gaeul",
+          "audio": "ko/gaeul"
+        },
+        {
+          "id": "w_gyeoul",
+          "target_text": "겨울",
+          "romanization": "gyeoul",
+          "audio": "ko/gyeoul"
+        }
+      ],
+      "solution_pairs": {
+        "pic_spring_blossom": "w_bom",
+        "pic_beach": "w_yeoreum",
+        "pic_autumn_leaves": "w_gaeul",
+        "pic_snowman": "w_gyeoul"
+      },
+      "model_answer": {
+        "id": "봄 (bom) semi, 여름 (yeoreum) panas, 가을 (gaeul) gugur, 겨울 (gyeoul) dingin.",
+        "en": "봄 (bom) spring, 여름 (yeoreum) summer, 가을 (gaeul) autumn, 겨울 (gyeoul) winter."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-FILL",
+      "image": "pic_market",
+      "target_text": "어제 시장에 ___.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_gayo",
+          "target_text": "가요",
+          "romanization": "gayo",
+          "audio": "ko/gayo"
+        },
+        {
+          "id": "w_gasseoyo",
+          "target_text": "갔어요",
+          "romanization": "gasseoyo",
+          "audio": "ko/gasseoyo"
+        },
+        {
+          "id": "w_gaseyo",
+          "target_text": "가세요",
+          "romanization": "gaseyo",
+          "audio": "ko/gaseyo"
+        }
+      ],
+      "solution": [
+        "w_gasseoyo"
+      ],
+      "romanization": "eoje sijange ___.",
+      "model_answer": {
+        "id": "어제 (eoje) menuntut bentuk lampau: 어제 시장에 갔어요 (eoje sijange gasseoyo).",
+        "en": "어제 (eoje) needs the past: 어제 시장에 갔어요 (eoje sijange gasseoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "KOR-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_asseoyo",
+          "target_text": "았어요",
+          "romanization": "asseoyo"
+        },
+        {
+          "id": "b_eosseoyo",
+          "target_text": "었어요",
+          "romanization": "eosseoyo"
+        },
+        {
+          "id": "w_meogeoyo",
+          "target_text": "먹어요",
+          "romanization": "meogeoyo",
+          "audio": "ko/meogeoyo"
+        },
+        {
+          "id": "w_gayo",
+          "target_text": "가요",
+          "romanization": "gayo",
+          "audio": "ko/gayo"
+        },
+        {
+          "id": "w_ilgeoyo",
+          "target_text": "읽어요",
+          "romanization": "ilgeoyo",
+          "audio": "ko/ilgeoyo"
+        },
+        {
+          "id": "w_mannayo",
+          "target_text": "만나요",
+          "romanization": "mannayo",
+          "audio": "ko/mannayo"
+        },
+        {
+          "id": "w_masyeoyo",
+          "target_text": "마셔요",
+          "romanization": "masyeoyo",
+          "audio": "ko/masyeoyo"
+        },
+        {
+          "id": "w_wayo",
+          "target_text": "와요",
+          "romanization": "wayo",
+          "audio": "ko/wayo"
+        }
+      ],
+      "solution_pairs": {
+        "w_meogeoyo": "b_eosseoyo",
+        "w_gayo": "b_asseoyo",
+        "w_ilgeoyo": "b_eosseoyo",
+        "w_mannayo": "b_asseoyo",
+        "w_masyeoyo": "b_eosseoyo",
+        "w_wayo": "b_asseoyo"
+      },
+      "model_answer": {
+        "id": "ㅏ/ㅗ: 갔어요 (gasseoyo), 왔어요 (wasseoyo), 만났어요 (mannasseoyo). Lainnya: 먹었어요 (meogeosseoyo), 읽었어요 (ilgeosseoyo), 마셨어요 (masyeosseoyo).",
+        "en": "ㅏ/ㅗ: 갔어요 (gasseoyo), 왔어요 (wasseoyo), 만났어요 (mannasseoyo). Others: 먹었어요 (meogeosseoyo), 읽었어요 (ilgeosseoyo), 마셨어요 (masyeosseoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/jumare_chingureul_mannasseoyo",
+      "options": [
+        {
+          "id": "pic_teacher",
+          "image": "pic_teacher",
+          "text": {
+            "id": "guru",
+            "en": "teacher"
+          }
+        },
+        {
+          "id": "pic_doctor",
+          "image": "pic_doctor",
+          "text": {
+            "id": "dokter",
+            "en": "doctor"
+          }
+        },
+        {
+          "id": "pic_friends",
+          "image": "pic_friends",
+          "text": {
+            "id": "teman-teman",
+            "en": "friends"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "주말에 친구를 만났어요 (jumare chingureul mannasseoyo) = akhir pekan saya bertemu teman.",
+        "en": "주말에 친구를 만났어요 (jumare chingureul mannasseoyo) = I met a friend at the weekend."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "KOR-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-BUILD-SAY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kemarin saya makan di restoran.",
+            "en": "I ate at a restaurant yesterday."
+          }
+        }
+      ],
+      "image": "pic_restaurant",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_meogeosseoyo",
+          "target_text": "먹었어요",
+          "romanization": "meogeosseoyo",
+          "audio": "ko/meogeosseoyo"
+        },
+        {
+          "id": "w_sikdangeseo",
+          "target_text": "식당에서",
+          "romanization": "sikdangeseo",
+          "audio": "ko/sikdangeseo"
+        },
+        {
+          "id": "w_meogeoyo",
+          "target_text": "먹어요",
+          "romanization": "meogeoyo",
+          "audio": "ko/meogeoyo"
+        },
+        {
+          "id": "w_eoje",
+          "target_text": "어제",
+          "romanization": "eoje",
+          "audio": "ko/eoje"
+        }
+      ],
+      "solution": [
+        "w_eoje",
+        "w_sikdangeseo",
+        "w_meogeosseoyo"
+      ],
+      "model_answer": {
+        "id": "어제 식당에서 먹었어요 (eoje sikdangeseo meogeosseoyo) = kemarin saya makan di restoran.",
+        "en": "어제 식당에서 먹었어요 (eoje sikdangeseo meogeosseoyo) = I ate at a restaurant yesterday."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "KOR-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-REPLY",
+      "image": "pic_mountain",
+      "target_text": "주말에 뭐 했어요?",
+      "options": [
+        {
+          "id": "w_sane_gayo",
+          "target_text": "산에 가요.",
+          "romanization": "sane gayo.",
+          "audio": "ko/sane_gayo"
+        },
+        {
+          "id": "w_sane_gasseoyo",
+          "target_text": "산에 갔어요.",
+          "romanization": "sane gasseoyo.",
+          "audio": "ko/sane_gasseoyo",
+          "correct": true
+        },
+        {
+          "id": "w_ne_haesseoyo",
+          "target_text": "네, 했어요.",
+          "romanization": "ne, haesseoyo.",
+          "audio": "ko/ne_haesseoyo"
+        }
+      ],
+      "romanization": "jumare mwo haesseoyo?",
+      "audio": "ko/jumare_mwo_haesseoyo",
+      "model_answer": {
+        "id": "Pertanyaan lampau, jawaban lampau: 산에 갔어요 (sane gasseoyo).",
+        "en": "A past question takes a past answer: 산에 갔어요 (sane gasseoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "KOR-WEATHER"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_hot",
+          "target_text": "더워요",
+          "romanization": "deowoyo",
+          "audio": "ko/deowoyo"
+        },
+        {
+          "id": "b_cold",
+          "target_text": "추워요",
+          "romanization": "chuwoyo",
+          "audio": "ko/chuwoyo"
+        },
+        {
+          "id": "pic_snowman",
+          "image": "pic_snowman",
+          "text": {
+            "id": "boneka salju",
+            "en": "snowman"
+          }
+        },
+        {
+          "id": "pic_swim",
+          "image": "pic_swim",
+          "text": {
+            "id": "berenang",
+            "en": "swimming"
+          }
+        },
+        {
+          "id": "pic_jacket",
+          "image": "pic_jacket",
+          "text": {
+            "id": "jaket",
+            "en": "jacket"
+          }
+        },
+        {
+          "id": "pic_beach",
+          "image": "pic_beach",
+          "text": {
+            "id": "pantai",
+            "en": "beach"
+          }
+        },
+        {
+          "id": "pic_snow",
+          "image": "pic_snow",
+          "text": {
+            "id": "salju",
+            "en": "snow"
+          }
+        },
+        {
+          "id": "pic_sun",
+          "image": "pic_sun",
+          "text": {
+            "id": "matahari",
+            "en": "sun"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "pic_snowman": "b_cold",
+        "pic_swim": "b_hot",
+        "pic_jacket": "b_cold",
+        "pic_beach": "b_hot",
+        "pic_snow": "b_cold",
+        "pic_sun": "b_hot"
+      },
+      "model_answer": {
+        "id": "추워요 (chuwoyo): boneka salju, jaket, salju. 더워요 (deowoyo): berenang, pantai, matahari.",
+        "en": "추워요 (chuwoyo): snowman, jacket, snow. 더워요 (deowoyo): swimming, beach, sun."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/eoje_biga_mani_wasseoyo",
+      "options": [
+        {
+          "id": "pic_snow",
+          "image": "pic_snow",
+          "text": {
+            "id": "salju",
+            "en": "snow"
+          }
+        },
+        {
+          "id": "pic_rain",
+          "image": "pic_rain",
+          "text": {
+            "id": "hujan",
+            "en": "rain"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_sun",
+          "image": "pic_sun",
+          "text": {
+            "id": "matahari",
+            "en": "sun"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "어제 비가 많이 왔어요 (eoje biga mani wasseoyo) = kemarin hujan deras.",
+        "en": "어제 비가 많이 왔어요 (eoje biga mani wasseoyo) = it rained a lot yesterday."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "KOR-WEATHER"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-READ",
+      "target_text": "눈이 와요",
+      "options": [
+        {
+          "id": "pic_snow",
+          "image": "pic_snow",
+          "text": {
+            "id": "salju",
+            "en": "snow"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_rain",
+          "image": "pic_rain",
+          "text": {
+            "id": "hujan",
+            "en": "rain"
+          }
+        },
+        {
+          "id": "pic_cloud",
+          "image": "pic_cloud",
+          "text": {
+            "id": "awan",
+            "en": "cloud"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "눈이 와요 (nuni wayo) = turun salju.",
+        "en": "눈이 와요 (nuni wayo) = it's snowing."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "KOR-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-ORDER-TIME",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_jeonyeoge_undonghaesseoyo",
+          "target_text": "저녁에 운동했어요.",
+          "romanization": "jeonyeoge undonghaesseoyo.",
+          "audio": "ko/jeonyeoge_undonghaesseoyo"
+        },
+        {
+          "id": "w_achime_ireonasseoyo",
+          "target_text": "아침에 일어났어요.",
+          "romanization": "achime ireonasseoyo.",
+          "audio": "ko/achime_ireonasseoyo"
+        },
+        {
+          "id": "w_yeolhan_sie_jasseoyo",
+          "target_text": "열한 시에 잤어요.",
+          "romanization": "yeolhan sie jasseoyo.",
+          "audio": "ko/yeolhan_sie_jasseoyo"
+        },
+        {
+          "id": "w_hoesae_gasseoyo",
+          "target_text": "회사에 갔어요.",
+          "romanization": "hoesae gasseoyo.",
+          "audio": "ko/hoesae_gasseoyo"
+        }
+      ],
+      "solution": [
+        "w_achime_ireonasseoyo",
+        "w_hoesae_gasseoyo",
+        "w_jeonyeoge_undonghaesseoyo",
+        "w_yeolhan_sie_jasseoyo"
+      ],
+      "model_answer": {
+        "id": "Bangun, ke kantor, olahraga sore, tidur jam 11: 열한 시에 잤어요 (yeolhan sie jasseoyo).",
+        "en": "Up, to the office, exercise in the evening, bed at 11: 열한 시에 잤어요 (yeolhan sie jasseoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "KOR-WEATHER"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "가을",
+      "options": [
+        {
+          "id": "pic_spring_blossom",
+          "image": "pic_spring_blossom",
+          "text": {
+            "id": "bunga musim semi",
+            "en": "spring blossom"
+          }
+        },
+        {
+          "id": "pic_snowman",
+          "image": "pic_snowman",
+          "text": {
+            "id": "boneka salju",
+            "en": "snowman"
+          }
+        },
+        {
+          "id": "pic_autumn_leaves",
+          "image": "pic_autumn_leaves",
+          "text": {
+            "id": "daun musim gugur",
+            "en": "autumn leaves"
+          },
+          "correct": true
+        }
+      ],
+      "romanization": "gaeul",
+      "audio": "ko/gaeul",
+      "model_answer": {
+        "id": "가을 (gaeul) = musim gugur.",
+        "en": "가을 (gaeul) = autumn."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-PAST"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "image": "pic_coffee_cup",
+      "target_text": "어제 커피를 많이 ___.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_masyeoyo",
+          "target_text": "마셔요",
+          "romanization": "masyeoyo",
+          "audio": "ko/masyeoyo"
+        },
+        {
+          "id": "w_masiseyo",
+          "target_text": "마시세요",
+          "romanization": "masiseyo",
+          "audio": "ko/masiseyo"
+        },
+        {
+          "id": "w_masyeosseoyo",
+          "target_text": "마셨어요",
+          "romanization": "masyeosseoyo",
+          "audio": "ko/masyeosseoyo"
+        }
+      ],
+      "solution": [
+        "w_masyeosseoyo"
+      ],
+      "romanization": "eoje keopireul mani ___.",
+      "model_answer": {
+        "id": "마셔요 (masyeoyo) → 마셨어요 (masyeosseoyo): 어제 커피를 많이 마셨어요 (eoje keopireul mani masyeosseoyo).",
+        "en": "마셔요 (masyeoyo) → 마셨어요 (masyeosseoyo): 어제 커피를 많이 마셨어요 (eoje keopireul mani masyeosseoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "KOR-PAST"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Hunminjeongeum Haerye (1446), chapter Jejahae: ㆍ ㅗ ㅏ ㅛ ㅑ are 'yang' vowels, ㅡ ㅜ ㅓ ㅠ ㅕ 'yin' vowels, ㅣ neutral; Ho-min Sohn, The Korean Language (Cambridge University Press, 1999), on vowel harmony in verb endings (-아/-어); National Institute of Korean Language (korean.go.kr), Standard Korean grammar of -았/-었-.",
+      "model_answer": {
+        "id": "Kenapa 갔어요 (gasseoyo) tetapi 먹었어요 (meogeosseoyo)? Hunminjeongeum (1446) sudah membagi vokal: ㅏ ㅗ 'terang', ㅓ ㅜ 'gelap'. Pilihan 았/었 hari ini masih mengikuti pembagian itu.",
+        "en": "Why 갔어요 (gasseoyo) but 먹었어요 (meogeosseoyo)? Hunminjeongeum (1446) already split the vowels: ㅏ ㅗ 'bright', ㅓ ㅜ 'dark'. Today's choice of 았/었 still follows that split."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    },
+    {
+      "item_id": "KOR-A-H-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "target_text": "그저께 → 어제 → 오늘 → ?",
+      "options": [
+        {
+          "id": "w_jumal",
+          "target_text": "주말",
+          "romanization": "jumal",
+          "audio": "ko/jumal"
+        },
+        {
+          "id": "w_achim",
+          "target_text": "아침",
+          "romanization": "achim",
+          "audio": "ko/achim"
+        },
+        {
+          "id": "w_naeil",
+          "target_text": "내일",
+          "romanization": "naeil",
+          "audio": "ko/naeil",
+          "correct": true
+        }
+      ],
+      "romanization": "geujeokke → eoje → oneul → ?",
+      "model_answer": {
+        "id": "Setelah 오늘 (oneul) datang 내일 (naeil), besok.",
+        "en": "After 오늘 (oneul) comes 내일 (naeil), tomorrow."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-h-0.1"
+    }
+  ]
+}

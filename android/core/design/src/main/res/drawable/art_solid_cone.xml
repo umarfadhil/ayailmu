@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- solid_cone: DRAFT art authored as code by art/tools/draw.py (ART_DIRECTION section 6). Placeholder until a human illustrator redraws or approves it (section 7). Generated: do not edit by hand. -->
+<!-- Texture slot: the app composites the shared paper-grain overlay above this drawing; no grain is baked in. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+  android:width="240dp"
+  android:height="240dp"
+  android:viewportWidth="240"
+  android:viewportHeight="240">
+  <path
+    android:fillColor="@color/art_clay"
+    android:fillAlpha="0.85"
+    android:pathData="M125.6 30.5L129.8 39.4L133.9 48.7L137.6 57.9L141.8 66.5L145.6 76.1L149.8 85.7L153.9 94.4L157.9 104.1L162 112.5L166 122.2L169.6 131.5L173.7 140.9L177.5 149.3L181.3 158.3L185.6 168.1L189.2 177.1L193.7 186.1L191.7 191.6L186.4 196.2L177.3 200.1L165.3 203.1L151.9 205.9L135.9 207.3L119.8 208L103.3 207.8L87.8 205.8L73.6 203.4L61.4 200.2L52.9 195.9L47.7 191.1L45.2 186.1L50.1 177.5L54.7 167.7L59.3 159.1L64.2 149.9L68.9 140.7L74.3 131.5L78.8 122.3L83.5 113.4L88.2 103.8L93.2 94.8L97.1 85.4L102.4 76.3L106.5 66.8L111.2 58.2L116.5 48.6L121.4 39.3Z" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="1.1"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:strokeAlpha="0.5"
+    android:pathData="M179.6 157.3L190.2 187.1M151.9 94.4L187.5 190.5M128.6 41.7L184.3 193.6M125.3 45.4L180.5 196.1M126.5 59.7L176.5 197.7M127.4 74.1L173.5 199.5M128.4 92.3L167.8 200.1M129.4 107.2L164.3 201.5M130.2 122.1L159.4 202.6M131.8 139L155 204.1M133.3 155.9L150.7 203.3M133.4 169.4L146.7 204.6M134.8 184.8L142.2 205.6M135.7 199.4L138.5 206.1" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="3"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M124.7 29.4C111.2 55.1 96.8 81.3 83.6 107.1C70.4 133 57.1 159.8 44.2 185.8M123.3 28C134.7 54.2 145.9 81.4 157.6 107.4C169.3 133.5 181 160.5 192.3 186.7M44.1 185Q49 193.8 56.9 197.5Q64.7 201.3 77 203.7Q89.3 206.1 103.8 206.9Q118.3 207.8 132.6 207.1Q146.9 206.5 159.2 203.8Q171.4 201.1 179.1 197.7Q186.8 194.2 191.8 185" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="1.1"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:strokeAlpha="0.4"
+    android:pathData="M50.9 176.6Q67.2 170.2 79.1 167.9Q90.9 165.5 104.3 164.9Q117.7 164.2 131.5 164.8Q145.2 165.5 157 167.7Q168.8 169.9 184.8 177" />
+</vector>

@@ -1,0 +1,900 @@
+{
+  "lang": "en",
+  "clips": [
+    {
+      "key": "en/animals",
+      "text": "animals",
+      "note": "Indonesian: hewan-hewan"
+    },
+    {
+      "key": "en/anything_to_drink",
+      "text": "Anything to drink?",
+      "note": "Indonesian: minumnya apa? Server's question."
+    },
+    {
+      "key": "en/apple",
+      "text": "apple",
+      "note": "Indonesian: apel"
+    },
+    {
+      "key": "en/baby",
+      "text": "baby",
+      "note": "Indonesian: bayi"
+    },
+    {
+      "key": "en/ball",
+      "text": "ball",
+      "note": "Indonesian: bola"
+    },
+    {
+      "key": "en/banana",
+      "text": "banana",
+      "note": "Indonesian: pisang"
+    },
+    {
+      "key": "en/bicycle",
+      "text": "bicycle",
+      "note": "Indonesian: sepeda"
+    },
+    {
+      "key": "en/bird",
+      "text": "bird",
+      "note": "Indonesian: burung"
+    },
+    {
+      "key": "en/black",
+      "text": "black",
+      "note": "Indonesian: hitam"
+    },
+    {
+      "key": "en/blue",
+      "text": "blue",
+      "note": "Indonesian: biru"
+    },
+    {
+      "key": "en/book",
+      "text": "book",
+      "note": "Indonesian: buku"
+    },
+    {
+      "key": "en/bread",
+      "text": "bread",
+      "note": "Indonesian: roti"
+    },
+    {
+      "key": "en/brother",
+      "text": "brother",
+      "note": "Indonesian: kakak/adik laki-laki"
+    },
+    {
+      "key": "en/brown",
+      "text": "brown",
+      "note": "Indonesian: cokelat"
+    },
+    {
+      "key": "en/by_bus",
+      "text": "By bus.",
+      "note": "Indonesian: naik bus. Answers 'how', not 'where'."
+    },
+    {
+      "key": "en/bye",
+      "text": "Bye!",
+      "note": "Indonesian: Dah!"
+    },
+    {
+      "key": "en/cat",
+      "text": "cat",
+      "note": "Indonesian: kucing"
+    },
+    {
+      "key": "en/chair",
+      "text": "chair",
+      "note": "Indonesian: kursi"
+    },
+    {
+      "key": "en/chicken",
+      "text": "chicken",
+      "note": "Indonesian: ayam"
+    },
+    {
+      "key": "en/coffee",
+      "text": "coffee",
+      "note": "Indonesian: kopi"
+    },
+    {
+      "key": "en/cow",
+      "text": "cow",
+      "note": "Indonesian: sapi"
+    },
+    {
+      "key": "en/dad",
+      "text": "dad",
+      "note": "Indonesian: ayah"
+    },
+    {
+      "key": "en/daughter",
+      "text": "daughter",
+      "note": "Indonesian: anak perempuan. The 'gh' is silent: DAW-ter."
+    },
+    {
+      "key": "en/do_you_like_spicy_food",
+      "text": "Do you like spicy food?",
+      "note": "Indonesian: suka makanan pedas? Rising question intonation."
+    },
+    {
+      "key": "en/doctor",
+      "text": "doctor",
+      "note": "Indonesian: dokter"
+    },
+    {
+      "key": "en/dog",
+      "text": "dog",
+      "note": "Indonesian: anjing"
+    },
+    {
+      "key": "en/dogs",
+      "text": "dogs",
+      "note": "Indonesian: anjing-anjing"
+    },
+    {
+      "key": "en/door",
+      "text": "door",
+      "note": "Indonesian: pintu"
+    },
+    {
+      "key": "en/drink",
+      "text": "drink",
+      "note": "Indonesian: minuman"
+    },
+    {
+      "key": "en/drinks",
+      "text": "drinks",
+      "note": "Indonesian: minuman (jamak)"
+    },
+    {
+      "key": "en/duck",
+      "text": "duck",
+      "note": "Indonesian: bebek"
+    },
+    {
+      "key": "en/ear",
+      "text": "ear",
+      "note": "Indonesian: telinga"
+    },
+    {
+      "key": "en/eggs",
+      "text": "eggs",
+      "note": "Indonesian: telur-telur"
+    },
+    {
+      "key": "en/eight",
+      "text": "eight",
+      "note": "Indonesian: delapan"
+    },
+    {
+      "key": "en/eighty_five_thousand_rupiah",
+      "text": "eighty-five thousand rupiah",
+      "note": "Indonesian: delapan puluh lima ribu rupiah (Rp85.000)."
+    },
+    {
+      "key": "en/elephant",
+      "text": "elephant",
+      "note": "Indonesian: gajah"
+    },
+    {
+      "key": "en/eleven",
+      "text": "eleven",
+      "note": "Indonesian: sebelas"
+    },
+    {
+      "key": "en/excuse_me_where_is_the_bus_station",
+      "text": "Excuse me, where is the bus station?",
+      "note": "Indonesian: permisi, terminal bus di mana?"
+    },
+    {
+      "key": "en/excuse_me_where_is_the_hospital",
+      "text": "Excuse me, where is the hospital?",
+      "note": "Indonesian: permisi, rumah sakit di mana? Polite."
+    },
+    {
+      "key": "en/eye",
+      "text": "eye",
+      "note": "Indonesian: mata"
+    },
+    {
+      "key": "en/father",
+      "text": "father",
+      "note": "Indonesian: ayah"
+    },
+    {
+      "key": "en/fifteen",
+      "text": "fifteen",
+      "note": "Indonesian: lima belas (15). Stress the end: fif-TEEN."
+    },
+    {
+      "key": "en/fifteen_thousand_rupiah",
+      "text": "fifteen thousand rupiah",
+      "note": "Indonesian: lima belas ribu rupiah (Rp15.000)."
+    },
+    {
+      "key": "en/fifty",
+      "text": "fifty",
+      "note": "Indonesian: lima puluh (50). Stress the start: FIF-ty."
+    },
+    {
+      "key": "en/fish",
+      "text": "fish",
+      "note": "Indonesian: ikan"
+    },
+    {
+      "key": "en/five",
+      "text": "five",
+      "note": "Indonesian: lima"
+    },
+    {
+      "key": "en/five_hundred",
+      "text": "five hundred",
+      "note": "Indonesian: lima ratus (500). No -s on hundred."
+    },
+    {
+      "key": "en/five_thousand",
+      "text": "five thousand",
+      "note": "Indonesian: lima ribu (5.000). No -s on thousand."
+    },
+    {
+      "key": "en/food",
+      "text": "food",
+      "note": "Indonesian: makanan"
+    },
+    {
+      "key": "en/foot",
+      "text": "foot",
+      "note": "Indonesian: kaki (the foot). Plural is 'feet'."
+    },
+    {
+      "key": "en/forty",
+      "text": "forty",
+      "note": "Indonesian: empat puluh (40). Stress the start: FOR-ty. Spelled without 'u'."
+    },
+    {
+      "key": "en/four",
+      "text": "four",
+      "note": "Indonesian: empat"
+    },
+    {
+      "key": "en/fourteen",
+      "text": "fourteen",
+      "note": "Indonesian: empat belas (14). Stress the end: four-TEEN."
+    },
+    {
+      "key": "en/friends",
+      "text": "friends",
+      "note": "Indonesian: teman-teman"
+    },
+    {
+      "key": "en/good_evening",
+      "text": "Good evening!",
+      "note": "Indonesian: selamat malam (greeting on arrival in the evening)."
+    },
+    {
+      "key": "en/good_morning",
+      "text": "Good morning!",
+      "note": "Indonesian: Selamat pagi!"
+    },
+    {
+      "key": "en/good_night",
+      "text": "Good night!",
+      "note": "Indonesian: selamat tidur / pamit malam. Said when leaving at night or going to bed, not as a greeting."
+    },
+    {
+      "key": "en/goodbye",
+      "text": "Goodbye!",
+      "note": "Indonesian: Sampai jumpa!"
+    },
+    {
+      "key": "en/grandfather",
+      "text": "grandfather",
+      "note": "Indonesian: kakek"
+    },
+    {
+      "key": "en/grandma",
+      "text": "grandma",
+      "note": "Indonesian: nenek"
+    },
+    {
+      "key": "en/grandmother",
+      "text": "grandmother",
+      "note": "Indonesian: nenek"
+    },
+    {
+      "key": "en/grandpa",
+      "text": "grandpa",
+      "note": "Indonesian: kakek"
+    },
+    {
+      "key": "en/green",
+      "text": "green",
+      "note": "Indonesian: hijau"
+    },
+    {
+      "key": "en/hand",
+      "text": "hand",
+      "note": "Indonesian: tangan"
+    },
+    {
+      "key": "en/happy",
+      "text": "happy",
+      "note": "Indonesian: senang"
+    },
+    {
+      "key": "en/have_a_nice_day",
+      "text": "Have a nice day!",
+      "note": "Indonesian: Semoga hari Anda menyenangkan!"
+    },
+    {
+      "key": "en/he",
+      "text": "he",
+      "note": "Indonesian: dia (laki-laki)"
+    },
+    {
+      "key": "en/he_is_my_brother",
+      "text": "He is my brother.",
+      "note": "Indonesian: dia saudara laki-lakiku."
+    },
+    {
+      "key": "en/hello",
+      "text": "Hello!",
+      "note": "Indonesian: Halo!"
+    },
+    {
+      "key": "en/her_name_is_sari",
+      "text": "Her name is Sari.",
+      "note": "Indonesian: namanya Sari (perempuan). Clear 'her'."
+    },
+    {
+      "key": "en/hi",
+      "text": "Hi!",
+      "note": "Indonesian: Hai!"
+    },
+    {
+      "key": "en/hi_how_are_you",
+      "text": "Hi! How are you?",
+      "note": "Indonesian: Hai! Apa kabar? Friendly, rising at the end."
+    },
+    {
+      "key": "en/his_name_is_andi",
+      "text": "His name is Andi.",
+      "note": "Indonesian: namanya Andi (laki-laki)."
+    },
+    {
+      "key": "en/horse",
+      "text": "horse",
+      "note": "Indonesian: kuda"
+    },
+    {
+      "key": "en/how_much_is_the_coffee",
+      "text": "How much is the coffee?",
+      "note": "Indonesian: kopinya berapa? Falling question intonation."
+    },
+    {
+      "key": "en/hungry",
+      "text": "hungry",
+      "note": "Indonesian: lapar"
+    },
+    {
+      "key": "en/husband",
+      "text": "husband",
+      "note": "Indonesian: suami"
+    },
+    {
+      "key": "en/i_like_juice",
+      "text": "I like juice.",
+      "note": "Indonesian: aku suka jus. Happy tone."
+    },
+    {
+      "key": "en/i_like_tea",
+      "text": "I like tea.",
+      "note": "Indonesian: saya suka teh."
+    },
+    {
+      "key": "en/i_take_an_ojek",
+      "text": "I take an ojek.",
+      "note": "Indonesian: saya naik ojek. Say 'ojek' the Indonesian way: OH-jek."
+    },
+    {
+      "key": "en/iced_tea_please",
+      "text": "Iced tea, please.",
+      "note": "Indonesian: es teh, ya."
+    },
+    {
+      "key": "en/im_a_doctor",
+      "text": "I'm a doctor.",
+      "note": "Indonesian: saya dokter. Note the 'a'."
+    },
+    {
+      "key": "en/im_a_teacher",
+      "text": "I'm a teacher.",
+      "note": "Indonesian: saya guru. Note the 'a'."
+    },
+    {
+      "key": "en/im_fine_thanks_and_you",
+      "text": "I'm fine, thanks. And you?",
+      "note": "Indonesian: Baik, terima kasih. Anda? Stress 'you' at the end."
+    },
+    {
+      "key": "en/im_good_thank_you",
+      "text": "I'm good, thank you.",
+      "note": "Indonesian: saya baik, terima kasih. Relaxed, friendly."
+    },
+    {
+      "key": "en/im_happy",
+      "text": "I'm happy.",
+      "note": "Indonesian: aku senang. Cheerful, simple."
+    },
+    {
+      "key": "en/im_hungry",
+      "text": "I'm hungry!",
+      "note": "Indonesian: aku lapar!"
+    },
+    {
+      "key": "en/im_sorry",
+      "text": "I'm sorry.",
+      "note": "Indonesian: Saya minta maaf."
+    },
+    {
+      "key": "en/im_tired",
+      "text": "I'm tired.",
+      "note": "Indonesian: aku capek. A little sleepy voice is fine."
+    },
+    {
+      "key": "en/its_fifty_thousand_rupiah",
+      "text": "It's fifty thousand rupiah.",
+      "note": "Indonesian: lima puluh ribu rupiah. Clear FIF-ty."
+    },
+    {
+      "key": "en/its_near_the_hospital",
+      "text": "It's near the hospital.",
+      "note": "Indonesian: dekat rumah sakit."
+    },
+    {
+      "key": "en/its_near_the_park",
+      "text": "It's near the park.",
+      "note": "Indonesian: dekat taman."
+    },
+    {
+      "key": "en/its_next_to_the_school",
+      "text": "It's next to the school.",
+      "note": "Indonesian: di sebelah sekolah."
+    },
+    {
+      "key": "en/its_ten_oclock",
+      "text": "It's ten o'clock.",
+      "note": "Indonesian: jam sepuluh. Answers 'what time', not 'where'."
+    },
+    {
+      "key": "en/its_thirteen_thousand_rupiah",
+      "text": "It's thirteen thousand rupiah.",
+      "note": "Indonesian: tiga belas ribu rupiah. Clear thir-TEEN."
+    },
+    {
+      "key": "en/juice",
+      "text": "juice",
+      "note": "Indonesian: jus"
+    },
+    {
+      "key": "en/kite",
+      "text": "kite",
+      "note": "Indonesian: layang-layang"
+    },
+    {
+      "key": "en/lets_meet_at_the_park",
+      "text": "Let's meet at the park.",
+      "note": "Indonesian: ketemu di taman, yuk. Friendly."
+    },
+    {
+      "key": "en/mango",
+      "text": "mango",
+      "note": "Indonesian: mangga"
+    },
+    {
+      "key": "en/market",
+      "text": "market",
+      "note": "Indonesian: pasar"
+    },
+    {
+      "key": "en/milk",
+      "text": "milk",
+      "note": "Indonesian: susu"
+    },
+    {
+      "key": "en/mom",
+      "text": "mom",
+      "note": "Indonesian: ibu. American 'mom' (British 'mum')."
+    },
+    {
+      "key": "en/monkey",
+      "text": "monkey",
+      "note": "Indonesian: monyet"
+    },
+    {
+      "key": "en/moon",
+      "text": "moon",
+      "note": "Indonesian: bulan (di langit)."
+    },
+    {
+      "key": "en/mother",
+      "text": "mother",
+      "note": "Indonesian: ibu"
+    },
+    {
+      "key": "en/motorbike",
+      "text": "motorbike",
+      "note": "Indonesian: sepeda motor"
+    },
+    {
+      "key": "en/nice_to_meet_you",
+      "text": "Nice to meet you.",
+      "note": "Indonesian: Senang berkenalan dengan Anda."
+    },
+    {
+      "key": "en/nice_to_meet_you_too",
+      "text": "Nice to meet you, too.",
+      "note": "Indonesian: senang berkenalan juga. Stress 'too'."
+    },
+    {
+      "key": "en/nine",
+      "text": "nine",
+      "note": "Indonesian: sembilan"
+    },
+    {
+      "key": "en/no",
+      "text": "No",
+      "note": "Indonesian: tidak / bukan. A plain, friendly 'no' (answer word)."
+    },
+    {
+      "key": "en/noodles",
+      "text": "noodles",
+      "note": "Indonesian: mi"
+    },
+    {
+      "key": "en/noon",
+      "text": "noon",
+      "note": "Indonesian: tengah hari (12.00)."
+    },
+    {
+      "key": "en/nose",
+      "text": "nose",
+      "note": "Indonesian: hidung"
+    },
+    {
+      "key": "en/one",
+      "text": "one",
+      "note": "Indonesian: satu"
+    },
+    {
+      "key": "en/orange",
+      "text": "orange",
+      "note": "Indonesian: oranye (the color) and also jeruk (the fruit): one word, one clip."
+    },
+    {
+      "key": "en/park",
+      "text": "park",
+      "note": "Indonesian: taman"
+    },
+    {
+      "key": "en/pencil",
+      "text": "pencil",
+      "note": "Indonesian: pensil"
+    },
+    {
+      "key": "en/pens",
+      "text": "pens",
+      "note": "Indonesian: pulpen-pulpen"
+    },
+    {
+      "key": "en/pink",
+      "text": "pink",
+      "note": "Indonesian: merah muda"
+    },
+    {
+      "key": "en/places",
+      "text": "places",
+      "note": "Indonesian: tempat-tempat"
+    },
+    {
+      "key": "en/plane",
+      "text": "plane",
+      "note": "Indonesian: pesawat"
+    },
+    {
+      "key": "en/purple",
+      "text": "purple",
+      "note": "Indonesian: ungu"
+    },
+    {
+      "key": "en/rabbit",
+      "text": "rabbit",
+      "note": "Indonesian: kelinci"
+    },
+    {
+      "key": "en/red",
+      "text": "red",
+      "note": "Indonesian: merah"
+    },
+    {
+      "key": "en/rice",
+      "text": "rice",
+      "note": "Indonesian: nasi"
+    },
+    {
+      "key": "en/sad",
+      "text": "sad",
+      "note": "Indonesian: sedih"
+    },
+    {
+      "key": "en/school",
+      "text": "school",
+      "note": "Indonesian: sekolah"
+    },
+    {
+      "key": "en/see_you_later",
+      "text": "See you later!",
+      "note": "Indonesian: Sampai nanti!"
+    },
+    {
+      "key": "en/seven",
+      "text": "seven",
+      "note": "Indonesian: tujuh"
+    },
+    {
+      "key": "en/she",
+      "text": "she",
+      "note": "Indonesian: dia (perempuan)"
+    },
+    {
+      "key": "en/she_is_my_sister",
+      "text": "She is my sister.",
+      "note": "Indonesian: dia saudara perempuanku."
+    },
+    {
+      "key": "en/shes_from_bali",
+      "text": "She's from Bali.",
+      "note": "Indonesian: dia dari Bali."
+    },
+    {
+      "key": "en/shes_from_bandung",
+      "text": "She's from Bandung.",
+      "note": "Indonesian: dia dari Bandung."
+    },
+    {
+      "key": "en/shes_from_medan",
+      "text": "She's from Medan.",
+      "note": "Indonesian: dia dari Medan."
+    },
+    {
+      "key": "en/ship",
+      "text": "ship",
+      "note": "Indonesian: kapal"
+    },
+    {
+      "key": "en/shoes",
+      "text": "shoes",
+      "note": "Indonesian: sepatu"
+    },
+    {
+      "key": "en/sister",
+      "text": "sister",
+      "note": "Indonesian: kakak/adik perempuan"
+    },
+    {
+      "key": "en/six",
+      "text": "six",
+      "note": "Indonesian: enam"
+    },
+    {
+      "key": "en/sixteen",
+      "text": "sixteen",
+      "note": "Indonesian: enam belas (16). Stress the end: six-TEEN."
+    },
+    {
+      "key": "en/sixty",
+      "text": "sixty",
+      "note": "Indonesian: enam puluh (60). Stress the start: SIX-ty."
+    },
+    {
+      "key": "en/son",
+      "text": "son",
+      "note": "Indonesian: anak laki-laki"
+    },
+    {
+      "key": "en/soon",
+      "text": "soon",
+      "note": "Indonesian: segera."
+    },
+    {
+      "key": "en/sorry",
+      "text": "Sorry!",
+      "note": "Indonesian: Maaf!"
+    },
+    {
+      "key": "en/soup",
+      "text": "soup",
+      "note": "Indonesian: sup"
+    },
+    {
+      "key": "en/station",
+      "text": "station",
+      "note": "Indonesian: stasiun"
+    },
+    {
+      "key": "en/tea",
+      "text": "tea",
+      "note": "Indonesian: teh"
+    },
+    {
+      "key": "en/teacher",
+      "text": "teacher",
+      "note": "Indonesian: guru"
+    },
+    {
+      "key": "en/ten",
+      "text": "ten",
+      "note": "Indonesian: sepuluh"
+    },
+    {
+      "key": "en/thank_you",
+      "text": "Thank you!",
+      "note": "Indonesian: Terima kasih!"
+    },
+    {
+      "key": "en/the_cat_is_in_the_box",
+      "text": "The cat is in the box.",
+      "note": "Indonesian: kucing itu di dalam kotak. Slight stress on 'in'."
+    },
+    {
+      "key": "en/the_cat_is_on_the_box",
+      "text": "The cat is on the box.",
+      "note": "Indonesian: kucing itu di atas kotak. Slight stress on 'on'."
+    },
+    {
+      "key": "en/the_cat_is_under_the_table",
+      "text": "The cat is under the table.",
+      "note": "Indonesian: kucing itu di bawah meja. Slight stress on 'under'."
+    },
+    {
+      "key": "en/things",
+      "text": "things",
+      "note": "Indonesian: benda-benda"
+    },
+    {
+      "key": "en/thirteen",
+      "text": "thirteen",
+      "note": "Indonesian: tiga belas (13). Stress the end: thir-TEEN, with a long 'ee'; must sound clearly different from en/thirty."
+    },
+    {
+      "key": "en/this_is_my_mom",
+      "text": "This is my mom.",
+      "note": "Indonesian: ini ibuku. Warm, introducing someone."
+    },
+    {
+      "key": "en/three",
+      "text": "three",
+      "note": "Indonesian: tiga"
+    },
+    {
+      "key": "en/tired",
+      "text": "tired",
+      "note": "Indonesian: capek"
+    },
+    {
+      "key": "en/tono_has_two_children",
+      "text": "Tono has two children.",
+      "note": "Indonesian: Tono punya dua anak. Clear final 's' in 'has'."
+    },
+    {
+      "key": "en/train",
+      "text": "train",
+      "note": "Indonesian: kereta"
+    },
+    {
+      "key": "en/transportation",
+      "text": "transportation",
+      "note": "Indonesian: transportasi. American English: transportation."
+    },
+    {
+      "key": "en/turn_right",
+      "text": "Turn right.",
+      "note": "Indonesian: belok kanan. Clear 'r' in right."
+    },
+    {
+      "key": "en/twelve",
+      "text": "twelve",
+      "note": "Indonesian: dua belas"
+    },
+    {
+      "key": "en/twenty_five_thousand_rupiah",
+      "text": "twenty-five thousand rupiah",
+      "note": "Indonesian: dua puluh lima ribu rupiah (Rp25.000)."
+    },
+    {
+      "key": "en/two",
+      "text": "two",
+      "note": "Indonesian: dua"
+    },
+    {
+      "key": "en/vegetables",
+      "text": "vegetables",
+      "note": "Indonesian: sayur"
+    },
+    {
+      "key": "en/water",
+      "text": "water",
+      "note": "Indonesian: air putih"
+    },
+    {
+      "key": "en/watermelon",
+      "text": "watermelon",
+      "note": "Indonesian: semangka"
+    },
+    {
+      "key": "en/what_drink_does_the_customer_want",
+      "text": "What drink does the customer want?",
+      "note": "Indonesian: pembeli mau minum apa?"
+    },
+    {
+      "key": "en/what_is_next_to_the_station",
+      "text": "What is next to the station?",
+      "note": "Indonesian: apa yang ada di sebelah stasiun?"
+    },
+    {
+      "key": "en/where_is_rina_from",
+      "text": "Where is Rina from?",
+      "note": "Indonesian: Rina dari mana? Falling question intonation."
+    },
+    {
+      "key": "en/where_is_the_market",
+      "text": "Where is the market?",
+      "note": "Indonesian: pasarnya di mana?"
+    },
+    {
+      "key": "en/white",
+      "text": "white",
+      "note": "Indonesian: putih"
+    },
+    {
+      "key": "en/wife",
+      "text": "wife",
+      "note": "Indonesian: istri"
+    },
+    {
+      "key": "en/yellow",
+      "text": "yellow",
+      "note": "Indonesian: kuning"
+    },
+    {
+      "key": "en/yes",
+      "text": "Yes",
+      "note": "Indonesian: ya. A plain, friendly 'yes' (answer word)."
+    },
+    {
+      "key": "en/yes_i_am",
+      "text": "Yes, I am.",
+      "note": "Indonesian: ya, betul (reply to 'Are you...?'). Good English, but the wrong reply in this item."
+    },
+    {
+      "key": "en/yes_it_is",
+      "text": "Yes, it is.",
+      "note": "Indonesian: ya, betul. Short answer."
+    },
+    {
+      "key": "en/yes_please",
+      "text": "Yes, please.",
+      "note": "Indonesian: ya, boleh / ya, mau. Accepting an offer."
+    },
+    {
+      "key": "en/youre_welcome",
+      "text": "You're welcome.",
+      "note": "Indonesian: sama-sama. Warm."
+    }
+  ]
+}

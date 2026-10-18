@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- glyph_connect: DRAFT art authored as code by art/tools/draw.py (ART_DIRECTION section 6). Placeholder until a human illustrator redraws or approves it (section 7). Generated: do not edit by hand. -->
+<!-- Texture slot: the app composites the shared paper-grain overlay above this drawing; no grain is baked in. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+  android:width="240dp"
+  android:height="240dp"
+  android:viewportWidth="240"
+  android:viewportHeight="240">
+  <path
+    android:strokeColor="@color/art_sage"
+    android:strokeWidth="13"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:strokeAlpha="0.88"
+    android:pathData="M52.9 156.4Q92.2 146.9 104.2 127.6Q116.3 108.2 137.6 105.4Q158.8 102.7 193.5 85" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="4"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M51.5 158.4Q91.6 147.1 103.7 127.9Q115.9 108.7 136.6 105.8Q157.4 102.8 193 86.4" />
+  <path
+    android:fillColor="@color/art_clay"
+    android:pathData="M67.7 151.3Q69.4 156.3 67.7 161.2Q65.9 166.2 61.4 169.2Q56.8 172.2 52 172.2Q47.2 172.2 42.7 169.5Q38.2 166.7 36.6 161.3Q35 155.9 36.6 151Q38.2 146 42.3 143.2Q46.5 140.4 51.8 140.3Q57 140.2 61.5 143.2Q66 146.3 67.7 151.3Z" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="4"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M58.1 174.7Q44.8 173.1 40.5 168.6Q36.2 164 36.3 157.6Q36.3 151.1 40.9 146.6Q45.5 142 52.2 142.2Q58.9 142.3 63.2 147.1Q67.5 151.9 67.7 158.2Q68 164.5 58.7 173.7" />
+  <path
+    android:fillColor="@color/art_clay"
+    android:pathData="M205.2 73.4Q207.1 78.6 205.3 83.4Q203.5 88.1 199.2 91.2Q194.8 94.2 190 94.3Q185.2 94.3 180.7 91.4Q176.3 88.5 174.6 83.4Q172.9 78.4 174.5 73.2Q176.1 68.1 180.7 64.9Q185.2 61.7 190.1 62.2Q195 62.6 199.1 65.4Q203.3 68.1 205.2 73.4Z" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="4"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M175.9 89.2Q173.2 77.4 176.5 71.9Q179.8 66.3 185.7 64.7Q191.6 63.2 197.1 66.1Q202.7 69 205 75Q207.3 81.1 204.8 87Q202.3 93 196.2 94.8Q190 96.5 178.5 92.2" />
+</vector>

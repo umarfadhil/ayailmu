@@ -7,6 +7,7 @@ import id.petalytix.ayailmu.core.model.AnswerEvent
 import id.petalytix.ayailmu.core.model.Audience
 import id.petalytix.ayailmu.core.model.ErrorTag
 import id.petalytix.ayailmu.core.model.Lang
+import id.petalytix.ayailmu.core.model.LocalizedText
 import id.petalytix.ayailmu.core.model.Outcome
 import id.petalytix.ayailmu.core.model.Pool
 import id.petalytix.ayailmu.core.model.Response
@@ -113,6 +114,8 @@ data class Env(
     val timeOnItemMs: Long,
     val hintUsed: Boolean = false,
     val ids: IdGenerator = UuidIdGenerator,
+    /** The learner used «Laporkan soal» on this item before answering (Trial_App_Spec §10 `report_flag`). */
+    val reportFlag: Boolean = false,
 )
 
 data class SubmitResult(
@@ -173,12 +176,35 @@ object Session {
         )
     }
 
-    private val TEMPLATE = Regex("\\{(\\w+)}")
+    // Both braces escaped: Android's ICU regex rejects a bare "}" that the JVM accepts (CR-KT-9).
+    private val TEMPLATE = Regex("\\{(\\w+)\\}")
 
     private fun fill(
         template: String,
         vars: Map<String, String?>,
     ): String = TEMPLATE.replace(template) { m -> vars[m.groupValues[1]].orEmpty() }
+
+    /**
+     * Feedback lines for a scored item, with the pack's templates filled in ({model}, {benar}, ...). Shared by
+     * sessions and by the practice-only modes (daily puzzle, speed round) that score without saving an event.
+     */
+    fun feedbackMessages(
+        item: Item,
+        feedbackIds: List<String>,
+        templates: Map<String, LocalizedText>,
+        lang: Lang,
+    ): List<String> {
+        val correctOption = item.options.firstOrNull { it.correct }?.let { it.text?.resolve(lang) ?: it.targetText }
+        val vars =
+            mapOf(
+                "kalimat" to item.targetText,
+                "model" to item.modelAnswer?.resolve(lang),
+                "kata" to item.targetText,
+                "makna" to item.wordMeaning?.resolve(lang),
+                "benar" to correctOption,
+            )
+        return feedbackIds.mapNotNull { templates[it]?.resolve(lang) }.map { fill(it, vars) }
+    }
 
     /**
      * Scores the current item and returns the new state plus one answer event. Returns event=null (and the
@@ -228,6 +254,7 @@ object Session {
                 freshEvidence = !seenBefore && !env.hintUsed && evidenceCapable,
                 timeOnItemMs = maxOf(0L, env.timeOnItemMs),
                 audioStatus = response.audioStatus,
+                reportFlag = env.reportFlag,
                 reviewStatus = item.reviewStatus,
                 synthetic = item.itemId.startsWith("DEMO-"),
                 itemType = item.type,
@@ -258,16 +285,7 @@ object Session {
             }
         }
 
-        val correctOption = item.options.firstOrNull { it.correct }?.let { it.text?.resolve(s.lang) ?: it.targetText }
-        val vars =
-            mapOf(
-                "kalimat" to item.targetText,
-                "model" to item.modelAnswer?.resolve(s.lang),
-                "kata" to item.targetText,
-                "makna" to item.wordMeaning?.resolve(s.lang),
-                "benar" to correctOption,
-            )
-        val messages = score.feedbackIds.mapNotNull { env.content.feedback[it]?.resolve(s.lang) }.map { fill(it, vars) }
+        val messages = feedbackMessages(item, score.feedbackIds, env.content.feedback, s.lang)
 
         val newQueue = s.queue.subList(0, s.index + 1) + inserts + s.queue.subList(s.index + 1, s.queue.size)
         return SubmitResult(

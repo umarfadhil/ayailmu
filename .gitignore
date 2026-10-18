@@ -39,9 +39,13 @@ android/.idea/
 android/*.iml
 android/**/*.iml
 android/local.properties
+android/**/.idea/
+android/**/.gradle/
+android/**/local.properties
 android/.kotlin/
 android/captures/
 android/**/*.hprof
 android/app/release/
 android/app/debug/
 *.keystore
+__pycache__/

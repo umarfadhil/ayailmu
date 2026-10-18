@@ -1,13 +1,20 @@
 package id.petalytix.ayailmu.core.data
 
 import id.petalytix.ayailmu.core.data.db.AyaDatabase
-import id.petalytix.ayailmu.core.data.repo.AnswerRepository
 import id.petalytix.ayailmu.core.data.repo.ARABIC_SCALE_MAX
+import id.petalytix.ayailmu.core.data.repo.AnswerRepository
+import id.petalytix.ayailmu.core.data.repo.ChallengeRepository
 import id.petalytix.ayailmu.core.data.repo.ContentRepository
 import id.petalytix.ayailmu.core.data.repo.DataResetter
 import id.petalytix.ayailmu.core.data.repo.ProfileRepository
+import id.petalytix.ayailmu.core.data.repo.SurveyRepository
 import id.petalytix.ayailmu.core.data.settings.InMemoryActiveProfileStore
+import id.petalytix.ayailmu.core.data.settings.InMemoryDailyPuzzleStore
+import id.petalytix.ayailmu.core.data.settings.InMemoryProfileChoiceStore
 import id.petalytix.ayailmu.core.data.settings.InMemoryReminderStore
+import id.petalytix.ayailmu.core.data.settings.InMemoryTrialStore
+import id.petalytix.ayailmu.core.data.settings.ModuleChoice
+import id.petalytix.ayailmu.core.data.settings.PuzzleMark
 import id.petalytix.ayailmu.core.data.settings.ReminderSetting
 import id.petalytix.ayailmu.core.engine.CountingIdGenerator
 import id.petalytix.ayailmu.core.engine.SaveResult
@@ -30,6 +37,7 @@ import org.robolectric.annotation.Config
 import kotlin.random.Random
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -153,16 +161,47 @@ class DatabaseTest {
         }
 
     @Test
-    fun `delete-all clears every table, the active profile and the reminder`() =
+    fun `surveys and finished challenges belong to their profile and go with it`() =
         runTest {
-            profiles.create("A", ProfileKind.ADULT, Lang.ID)
+            val surveys = SurveyRepository(db, clock, ids)
+            val challenges = ChallengeRepository(db, clock, ids)
+            val a = profiles.create("A", ProfileKind.ADULT, Lang.ID)
+            val b = profiles.create("B", ProfileKind.ADULT, Lang.ID)
+            surveys.save(a.id, "arab", "background", mapOf("e_b1" to listOf("tpa", "self"), "e_b4" to listOf("15")), "0.6.0")
+            surveys.save(b.id, "arab", "day7", emptyMap(), "0.6.0")
+            challenges.complete(a.id, "mat", "01")
+            challenges.complete(b.id, "mat", "02")
+            assertEquals(mapOf("e_b1" to listOf("tpa", "self"), "e_b4" to listOf("15")), surveys.forProfile(a.id).single().answers)
+            assertEquals(listOf("01"), challenges.observe(a.id).first().map { it.unit })
+            profiles.delete(b.id)
+            assertEquals(listOf(a.id), surveys.all().map { it.profileId })
+            assertEquals(listOf(a.id), challenges.all().map { it.profileId })
+            DataResetter(db, active, null, null) {}.deleteAll()
+            assertTrue(surveys.all().isEmpty() && challenges.all().isEmpty())
+        }
+
+    @Test
+    fun `delete-all clears every table, the active profile, the reminder, the puzzle marks, the trial switches and the choices`() =
+        runTest {
+            val a = profiles.create("A", ProfileKind.ADULT, Lang.ID)
             val reminders = InMemoryReminderStore(ReminderSetting(enabled = true, hour = 7, minute = 30))
+            val puzzles = InMemoryDailyPuzzleStore().apply { mark(a.id, PuzzleMark("2026-10-17", "MAT-K-P-DP-01", "correct")) }
+            val trial = InMemoryTrialStore(tester = true).apply { snoozeSurvey(a.id, "2026-10-17") }
+            val choices =
+                InMemoryProfileChoiceStore().apply {
+                    choose(a.id, "BHS", ModuleChoice(language = "ko", level = "M"))
+                    setAvatar(a.id, "pic_cat")
+                }
             var filesCleared = false
-            DataResetter(db, active, reminders) { filesCleared = true }.deleteAll()
+            DataResetter(db, active, reminders, puzzles, trial, choices) { filesCleared = true }.deleteAll()
             assertTrue(profiles.all().isEmpty())
             assertTrue(answers.allEvents().isEmpty())
             assertNull(active.activeId.first())
             assertEquals(ReminderSetting(), reminders.reminder.first())
+            assertTrue(puzzles.marks.first().isEmpty())
+            assertFalse(trial.testerUnlock.first())
+            assertTrue(trial.surveySnoozed.first().isEmpty())
+            assertTrue(choices.choices.first().isEmpty() && choices.avatars.first().isEmpty())
             assertTrue(filesCleared)
         }
 

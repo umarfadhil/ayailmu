@@ -1,0 +1,3481 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sej-a-h-0.1",
+    "subject": "sejarah",
+    "track": "sej-a-h",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "level": "mahir",
+    "title": {
+      "id": "Sejarah — Mahir (Dewasa)",
+      "en": "History — Advanced (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, Sejarah adults, Mahir). Needs a historian (every date, place and number against the story sources), a cultural/religious sensitivity reviewer, and the Indonesian and English language reviewers before any item is approved. Figures are drawn only as silhouettes and objects of their work (MODULES_LEVELS_STORIES.md section 4); captions contain no invented quotes.",
+  "prompts": {
+    "P-STORY": {
+      "id": "Simak kisahnya.",
+      "en": "Watch the story."
+    },
+    "P-ORDER": {
+      "id": "Urutkan kisahnya.",
+      "en": "Put the story in order."
+    },
+    "P-MATCH": {
+      "id": "Pasangkan gambar dan artinya.",
+      "en": "Match each picture to its meaning."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-SORT": {
+      "id": "Kelompokkan.",
+      "en": "Sort into groups."
+    },
+    "P-WHO": {
+      "id": "Kelompokkan menurut tokohnya.",
+      "en": "Sort by figure."
+    },
+    "P-READ": {
+      "id": "Silakan baca dulu.",
+      "en": "Read this first."
+    },
+    "P-SOURCE": {
+      "id": "Jawab dari sumbernya.",
+      "en": "Answer from the source."
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Correct. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Baik, kita lanjut.",
+      "en": "Good, let's continue."
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Tekun meneliti",
+        "en": "Patient research"
+      },
+      "sticker": "sticker_star_fruit"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Terbang",
+        "en": "Flight"
+      },
+      "sticker": "sticker_kite"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SEJ-A-H-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Tekun meneliti",
+        "en": "Patient research"
+      },
+      "body": [
+        {
+          "id": "Galileo mengamati langit malam demi malam. Marie Curie mengolah berton-ton bijih selama bertahun-tahun.",
+          "en": "Galileo watched the sky night after night. Marie Curie processed tons of ore for years."
+        },
+        {
+          "id": "Di unit ini Anda juga membaca sumber pendek: catatan Galileo dan alasan resmi Komite Nobel.",
+          "en": "In this unit you will also read short sources: Galileo's report and the Nobel Committee's official citation."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SEJ-A-H-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Terbang",
+        "en": "Flight"
+      },
+      "body": [
+        {
+          "id": "Pada 1903, Wright bersaudara terbang 12 detik dengan pesawat bermesin. Puluhan tahun kemudian, B.J. Habibie membantu membuat pesawat lebih ringan dan aman.",
+          "en": "In 1903 the Wright brothers flew a powered aircraft for 12 seconds. Decades later, B.J. Habibie helped make aircraft lighter and safer."
+        },
+        {
+          "id": "Keduanya menguji, mengukur, dan menguji lagi. Anda juga akan membaca catatan penerbangan 1903 dan Keputusan Presiden tentang Hari Kebangkitan Teknologi Nasional.",
+          "en": "Both tested, measured and tested again. You will also read the 1903 flight record and the presidential decree on National Technology Awakening Day."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {
+    "R-SEJ-A-H-GALILEO": {
+      "title": {
+        "id": "Catatan Galileo tentang Jupiter",
+        "en": "Galileo's notes on Jupiter"
+      },
+      "body": [
+        {
+          "id": "Galileo melaporkan pengamatannya dalam buku Sidereus Nuncius («Pesan dari Bintang-Bintang», 1610). Isinya, secara ringkas:",
+          "en": "Galileo reported his observations in the book Sidereus Nuncius (\"The Starry Messenger\", 1610). In brief:"
+        },
+        {
+          "id": "Pada 7 Januari 1610 ia melihat tiga «bintang kecil» di dekat Jupiter. Malam berikutnya, posisi ketiganya sudah berubah. Beberapa hari kemudian ia melihat empat.",
+          "en": "On 7 January 1610 he saw three \"little stars\" near Jupiter. The next night their positions had changed. A few days later he saw four."
+        },
+        {
+          "id": "Karena titik-titik itu selalu ikut bersama Jupiter sambil berpindah posisi, ia menyimpulkan bahwa mereka beredar mengelilingi Jupiter, seperti Bulan mengelilingi Bumi.",
+          "en": "Because the dots always travelled with Jupiter while changing places, he concluded that they circle Jupiter, as the Moon circles the Earth."
+        },
+        {
+          "id": "Sumber: Galileo Galilei, Sidereus Nuncius (Venesia, 1610), diringkas.",
+          "en": "Source: Galileo Galilei, Sidereus Nuncius (Venice, 1610), summarised."
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-SEJ-A-H-CURIE": {
+      "title": {
+        "id": "Alasan Nobel Kimia 1911",
+        "en": "The 1911 Nobel Prize in Chemistry citation"
+      },
+      "body": [
+        {
+          "id": "Setiap Hadiah Nobel disertai alasan resmi. Untuk Nobel Kimia 1911, hadiah diberikan kepada Marie Curie:",
+          "en": "Every Nobel Prize comes with an official citation. The 1911 Nobel Prize in Chemistry went to Marie Curie:"
+        },
+        {
+          "id": "«sebagai pengakuan atas jasanya bagi kemajuan ilmu kimia melalui penemuan unsur radium dan polonium, melalui pemisahan radium, dan penelitian tentang sifat serta senyawa unsur yang luar biasa ini» (terjemahan bebas).",
+          "en": "\"in recognition of her services to the advancement of chemistry by the discovery of the elements radium and polonium, by the isolation of radium and the study of the nature and compounds of this remarkable element.\""
+        },
+        {
+          "id": "Sumber: nobelprize.org, The Nobel Prize in Chemistry 1911.",
+          "en": "Source: nobelprize.org, The Nobel Prize in Chemistry 1911."
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-SEJ-A-H-WRIGHT": {
+      "title": {
+        "id": "Catatan 17 Desember 1903",
+        "en": "The record of 17 December 1903"
+      },
+      "body": [
+        {
+          "id": "Hari itu Wright bersaudara melakukan empat penerbangan di dekat Kitty Hawk, Carolina Utara. Dua di antaranya, diringkas:",
+          "en": "That day the Wright brothers made four flights near Kitty Hawk, North Carolina. Two of them, in brief:"
+        },
+        {
+          "id": "Penerbangan pertama, pukul 10.35: Orville sebagai pilot, 12 detik, sekitar 37 meter.",
+          "en": "First flight, 10:35 a.m.: Orville at the controls, 12 seconds, about 37 metres (120 feet)."
+        },
+        {
+          "id": "Penerbangan keempat: Wilbur sebagai pilot, 59 detik, sekitar 260 meter.",
+          "en": "Fourth flight: Wilbur at the controls, 59 seconds, about 260 metres (852 feet)."
+        },
+        {
+          "id": "Sumber: History.com, First airplane flies (17 Desember 1903); National Park Service, The Road to the First Flight.",
+          "en": "Source: History.com, First airplane flies (17 December 1903); National Park Service, The Road to the First Flight."
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-SEJ-A-H-HABIBIE": {
+      "title": {
+        "id": "Keppres No. 71 Tahun 1995",
+        "en": "Presidential Decree No. 71 of 1995"
+      },
+      "body": [
+        {
+          "id": "Keputusan Presiden ini menimbang bahwa keberhasilan uji terbang pertama pesawat N-250 buatan IPTN pada 10 Agustus 1995 merupakan prestasi putra-putri bangsa yang membanggakan di bidang teknologi (diringkas).",
+          "en": "The decree notes that the first successful test flight of the N-250, built by IPTN, on 10 August 1995 was a proud achievement by the nation's own people in technology (summarised)."
+        },
+        {
+          "id": "Bunyi keputusannya: «Tanggal 10 Agustus ditetapkan sebagai Hari Kebangkitan Teknologi Nasional.»",
+          "en": "Its decision reads: \"10 August is designated as National Technology Awakening Day\" (translation)."
+        },
+        {
+          "id": "Sumber: Keputusan Presiden Republik Indonesia Nomor 71 Tahun 1995 (peraturan.go.id).",
+          "en": "Source: Presidential Decree of the Republic of Indonesia No. 71 of 1995 (peraturan.go.id)."
+        }
+      ],
+      "review_status": "draft"
+    }
+  },
+  "stories": {
+    "ST-A-GALILEO": {
+      "figure": "Galileo Galilei (1564–1642)",
+      "title": {
+        "id": "Galileo dan bulan-bulan Jupiter",
+        "en": "Galileo and the moons of Jupiter"
+      },
+      "source": "HAO/UCAR: Galileo Galilei (1564–1642); Galileo, Sidereus Nuncius (1610); Astronomy.com: Jan. 7, 1610, Galileo sees four moons of Jupiter",
+      "emblem": "hist_telescope",
+      "panels": [
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Galileo Galilei lahir di Pisa, Italia, pada 15 Februari 1564. Ia suka menguji gagasan dengan percobaan dan pengukuran.",
+            "en": "Galileo Galilei was born in Pisa, Italy, on 15 February 1564. He liked to test ideas with experiments and measurements."
+          },
+          "narration": {
+            "id": "id/sej_a_galileo_01",
+            "en": "en/sej_a_galileo_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.16,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.62,
+              "y": 0.6,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_night_sky",
+          "caption": {
+            "id": "Pada masanya, banyak orang yakin bahwa semua benda langit beredar mengelilingi Bumi. Galileo ingin melihat langit dengan lebih jelas.",
+            "en": "In his time many people believed every heavenly body circled the Earth. Galileo wanted to see the sky more clearly."
+          },
+          "narration": {
+            "id": "id/sej_a_galileo_02",
+            "en": "en/sej_a_galileo_02"
+          },
+          "layers": [
+            {
+              "art": "pic_moon",
+              "x": 0.66,
+              "y": 0.12,
+              "w": 0.14,
+              "motion": {
+                "type": "glow",
+                "ms": 2400,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.12,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.04,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_night_sky",
+          "caption": {
+            "id": "Pada 1609 ia membuat teropong sendiri dan mengarahkannya ke langit. Ia melihat gunung dan lembah di Bulan.",
+            "en": "In 1609 he built his own telescope and pointed it at the sky. He saw mountains and valleys on the Moon."
+          },
+          "narration": {
+            "id": "id/sej_a_galileo_03",
+            "en": "en/sej_a_galileo_03"
+          },
+          "layers": [
+            {
+              "art": "hist_telescope",
+              "x": 0.2,
+              "y": 0.42,
+              "w": 0.24,
+              "motion": {
+                "type": "slide_in",
+                "from": "left",
+                "ms": 800
+              }
+            },
+            {
+              "art": "pic_moon",
+              "x": 0.62,
+              "y": 0.12,
+              "w": 0.16,
+              "motion": {
+                "type": "zoom",
+                "scale_from": 1.0,
+                "scale_to": 1.1,
+                "ms": 5000
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_night_sky",
+          "caption": {
+            "id": "Mulai 7 Januari 1610, ia mengamati Jupiter malam demi malam dan menggambar titik-titik terang di dekatnya. Titik-titik itu berpindah: empat bulan sedang mengelilingi Jupiter.",
+            "en": "From 7 January 1610 he watched Jupiter night after night, drawing the bright dots beside it. The dots moved: four moons were circling Jupiter."
+          },
+          "narration": {
+            "id": "id/sej_a_galileo_04",
+            "en": "en/sej_a_galileo_04"
+          },
+          "layers": [
+            {
+              "art": "hist_jupiter_moons",
+              "x": 0.3,
+              "y": 0.2,
+              "w": 0.4,
+              "motion": {
+                "type": "reveal",
+                "from": "left",
+                "ms": 2000
+              }
+            },
+            {
+              "art": "hist_notebook",
+              "x": 0.7,
+              "y": 0.62,
+              "w": 0.16,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 600
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Temuannya mendukung gagasan bahwa Bumi beredar mengelilingi Matahari, gagasan yang ditentang banyak orang. Pada 1633 ia diadili di Roma dan harus tinggal di rumah sampai akhir hayatnya.",
+            "en": "His findings supported the idea that the Earth goes around the Sun, an idea many people opposed. In 1633 he was tried in Rome and confined to his home for the rest of his life."
+          },
+          "narration": {
+            "id": "id/sej_a_galileo_05",
+            "en": "en/sej_a_galileo_05"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.14,
+              "y": 0.3,
+              "w": 0.26
+            },
+            {
+              "art": "hist_globe_old",
+              "x": 0.6,
+              "y": 0.4,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_room_lamp",
+          "caption": {
+            "id": "Di dalam rumah pun ia terus menulis; bukunya tentang gerak terbit pada 1638. Galileo wafat pada 8 Januari 1642, meninggalkan teladan: amati dengan teliti, catat, dan uji lagi.",
+            "en": "Even confined at home he kept writing; his book on motion came out in 1638. Galileo died on 8 January 1642, leaving an example: observe carefully, record, and test again."
+          },
+          "narration": {
+            "id": "id/sej_a_galileo_06",
+            "en": "en/sej_a_galileo_06"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.12,
+              "y": 0.3,
+              "w": 0.26
+            },
+            {
+              "art": "hist_quill",
+              "x": 0.56,
+              "y": 0.56,
+              "w": 0.1,
+              "motion": {
+                "type": "sway",
+                "deg": 4,
+                "ms": 2400,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.64,
+              "y": 0.62,
+              "w": 0.16,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.04,
+            "ms": 5000
+          }
+        }
+      ]
+    },
+    "ST-A-CURIE": {
+      "figure": "Marie Skłodowska-Curie (1867–1934)",
+      "title": {
+        "id": "Marie Curie dan radium",
+        "en": "Marie Curie and radium"
+      },
+      "source": "nobelprize.org: Marie Curie – Facts (Physics 1903) dan The Nobel Prize in Chemistry 1911; History.com: Curies isolate radium; The Christian Science Monitor (2011): Why her papers are still radioactive",
+      "emblem": "hist_curie_flask",
+      "panels": [
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Maria Skłodowska lahir di Warsawa, kini di Polandia, pada 7 November 1867. Pada 1891 ia pindah ke Paris untuk kuliah di Sorbonne.",
+            "en": "Maria Skłodowska was born in Warsaw, in today's Poland, on 7 November 1867. In 1891 she moved to Paris to study at the Sorbonne."
+          },
+          "narration": {
+            "id": "id/sej_a_curie_01",
+            "en": "en/sej_a_curie_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_woman",
+              "x": 0.14,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "slide_in",
+                "from": "left",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.62,
+              "y": 0.6,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_lab",
+          "caption": {
+            "id": "Pada 1896, para ilmuwan menemukan bahwa uranium memancarkan sinar yang tak terlihat. Marie ingin tahu dari mana sinar itu berasal, dan apakah unsur lain juga begitu.",
+            "en": "In 1896 scientists found that uranium gives off invisible rays. Marie wanted to know where the rays came from, and whether other elements did the same."
+          },
+          "narration": {
+            "id": "id/sej_a_curie_02",
+            "en": "en/sej_a_curie_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_scientist",
+              "x": 0.12,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_curie_flask",
+              "x": 0.6,
+              "y": 0.44,
+              "w": 0.13,
+              "motion": {
+                "type": "glow",
+                "ms": 2400,
+                "loop": true
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.04,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_lab",
+          "caption": {
+            "id": "Bersama suaminya, Pierre Curie, ia meneliti bijih uranium bernama pitchblende. Pada 1898 mereka mengumumkan dua unsur baru: polonium dan radium.",
+            "en": "With her husband Pierre Curie she studied a uranium ore called pitchblende. In 1898 they announced two new elements: polonium and radium."
+          },
+          "narration": {
+            "id": "id/sej_a_curie_03",
+            "en": "en/sej_a_curie_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_scientist",
+              "x": 0.08,
+              "y": 0.3,
+              "w": 0.26
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.26,
+              "y": 0.3,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_curie_flask",
+              "x": 0.62,
+              "y": 0.44,
+              "w": 0.13,
+              "motion": {
+                "type": "glow",
+                "ms": 2400,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_notebook",
+              "x": 0.74,
+              "y": 0.64,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 500
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_lab",
+          "caption": {
+            "id": "Untuk membuktikannya, mereka mengolah berton-ton bijih di laboratorium yang sederhana. Pada 1902 Marie berhasil memperoleh sepersepuluh gram radium klorida murni.",
+            "en": "To prove it, they processed tons of ore in a simple laboratory. In 1902 Marie obtained one-tenth of a gram of pure radium chloride."
+          },
+          "narration": {
+            "id": "id/sej_a_curie_04",
+            "en": "en/sej_a_curie_04"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_scientist",
+              "x": 0.1,
+              "y": 0.3,
+              "w": 0.26
+            },
+            {
+              "art": "hist_curie_flask",
+              "x": 0.5,
+              "y": 0.4,
+              "w": 0.13,
+              "motion": {
+                "type": "glow",
+                "ms": 2000,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_notebook",
+              "x": 0.68,
+              "y": 0.62,
+              "w": 0.16
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.08,
+            "ms": 6000
+          }
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Ia meraih Nobel Fisika 1903 bersama Pierre Curie dan Henri Becquerel, lalu Nobel Kimia 1911. Ia orang pertama yang meraih dua Hadiah Nobel.",
+            "en": "She shared the 1903 Nobel Prize in Physics with Pierre Curie and Henri Becquerel, then won the 1911 Nobel Prize in Chemistry. She was the first person to win two Nobel Prizes."
+          },
+          "narration": {
+            "id": "id/sej_a_curie_05",
+            "en": "en/sej_a_curie_05"
+          },
+          "layers": [
+            {
+              "art": "hist_sunrise",
+              "x": 0.6,
+              "y": 0.06,
+              "w": 0.32,
+              "motion": {
+                "type": "fade_in",
+                "ms": 900
+              }
+            },
+            {
+              "art": "hist_sil_woman",
+              "x": 0.16,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_lab",
+          "caption": {
+            "id": "Marie Curie wafat pada 4 Juli 1934, kemungkinan karena paparan radiasi selama bertahun-tahun. Kisahnya mengajak kita tekun meneliti sekaligus menjaga keselamatan.",
+            "en": "Marie Curie died on 4 July 1934, probably from years of exposure to radiation. Her story asks us to research patiently and with care for safety."
+          },
+          "narration": {
+            "id": "id/sej_a_curie_06",
+            "en": "en/sej_a_curie_06"
+          },
+          "layers": [
+            {
+              "art": "hist_notebook",
+              "x": 0.36,
+              "y": 0.48,
+              "w": 0.24,
+              "motion": {
+                "type": "fade_in",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_curie_flask",
+              "x": 0.68,
+              "y": 0.44,
+              "w": 0.13
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        }
+      ]
+    },
+    "ST-A-WRIGHT": {
+      "figure": "Wilbur Wright (1867–1912) dan Orville Wright (1871–1948)",
+      "title": {
+        "id": "Wright bersaudara dan penerbangan pertama",
+        "en": "The Wright brothers and the first flight"
+      },
+      "source": "National Park Service (Wright Brothers National Memorial): The Road to the First Flight; History.com: First airplane flies (December 17, 1903)",
+      "emblem": "hist_wright_flyer",
+      "panels": [
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Wilbur dan Orville Wright adalah kakak beradik dari Dayton, Ohio, Amerika Serikat. Pada 1892 mereka membuka toko sepeda.",
+            "en": "Wilbur and Orville Wright were brothers from Dayton, Ohio, in the United States. In 1892 they opened a bicycle shop."
+          },
+          "narration": {
+            "id": "id/sej_a_wright_01",
+            "en": "en/sej_a_wright_01"
+          },
+          "layers": [
+            {
+              "art": "hist_bicycle_shop",
+              "x": 0.46,
+              "y": 0.24,
+              "w": 0.44,
+              "motion": {
+                "type": "slide_in",
+                "from": "right",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.08,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 200
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.24,
+              "y": 0.3,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 400
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Usaha sepeda melatih ketelitian mereka, dan keuntungannya membiayai percobaan terbang. Masalah terbesarnya: bagaimana mengendalikan pesawat di udara?",
+            "en": "Bicycle work sharpened their skills, and its profits paid for their flying experiments. The big problem: how do you control a machine in the air?"
+          },
+          "narration": {
+            "id": "id/sej_a_wright_02",
+            "en": "en/sej_a_wright_02"
+          },
+          "layers": [
+            {
+              "art": "hist_bicycle_shop",
+              "x": 0.08,
+              "y": 0.26,
+              "w": 0.4
+            },
+            {
+              "art": "hist_notebook",
+              "x": 0.6,
+              "y": 0.5,
+              "w": 0.22,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_sky_field",
+          "caption": {
+            "id": "Wilbur mengamati burung dan mendapat gagasan memuntir ujung sayap untuk menjaga keseimbangan. Sejak 1900 mereka menguji pesawat layang di Kitty Hawk, Carolina Utara.",
+            "en": "Wilbur watched birds and got the idea of twisting the wingtips to keep balance. From 1900 they tested gliders at Kitty Hawk, North Carolina."
+          },
+          "narration": {
+            "id": "id/sej_a_wright_03",
+            "en": "en/sej_a_wright_03"
+          },
+          "layers": [
+            {
+              "art": "pic_bird",
+              "x": 0.6,
+              "y": 0.14,
+              "w": 0.11,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.6,
+                    0.14
+                  ],
+                  [
+                    0.7,
+                    0.1
+                  ],
+                  [
+                    0.8,
+                    0.14
+                  ]
+                ],
+                "ms": 5000
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.12,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_sky_field",
+          "caption": {
+            "id": "Pesawat layang 1901 tidak terangkat sesuai perhitungan, jadi mereka membuat terowongan angin dan menguji sekitar 200 bentuk sayap. Pada 1902 mereka melakukan ratusan luncuran.",
+            "en": "Their 1901 glider did not lift as the figures predicted, so they built a wind tunnel and tested about 200 wing shapes. In 1902 they made hundreds of glides."
+          },
+          "narration": {
+            "id": "id/sej_a_wright_04",
+            "en": "en/sej_a_wright_04"
+          },
+          "layers": [
+            {
+              "art": "hist_notebook",
+              "x": 0.1,
+              "y": 0.46,
+              "w": 0.24,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_wright_flyer",
+              "x": 0.5,
+              "y": 0.24,
+              "w": 0.3,
+              "motion": {
+                "type": "drift",
+                "dx": 0.02,
+                "dy": 0.01,
+                "ms": 4000,
+                "loop": true
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_sky_field",
+          "caption": {
+            "id": "Pada 17 Desember 1903, Orville menerbangkan pesawat bermesin mereka selama 12 detik sejauh sekitar 37 meter. Pada penerbangan keempat hari itu, Wilbur terbang 59 detik sejauh sekitar 260 meter.",
+            "en": "On 17 December 1903 Orville flew their powered aircraft for 12 seconds, about 37 metres (120 feet). On the fourth flight that day Wilbur flew for 59 seconds, about 260 metres (852 feet)."
+          },
+          "narration": {
+            "id": "id/sej_a_wright_05",
+            "en": "en/sej_a_wright_05"
+          },
+          "layers": [
+            {
+              "art": "hist_wright_flyer",
+              "x": 0.06,
+              "y": 0.5,
+              "w": 0.3,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.06,
+                    0.5
+                  ],
+                  [
+                    0.3,
+                    0.4
+                  ],
+                  [
+                    0.56,
+                    0.36
+                  ],
+                  [
+                    0.66,
+                    0.38
+                  ]
+                ],
+                "ms": 6000
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.72,
+              "y": 0.36,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_sky_field",
+          "caption": {
+            "id": "Penerbangan singkat itu membuka zaman pesawat terbang. Kisah mereka mengajak kita belajar dari kegagalan dan menguji lagi dengan data sendiri.",
+            "en": "That short flight opened the age of the aeroplane. Their story asks us to learn from failure and test again with our own data."
+          },
+          "narration": {
+            "id": "id/sej_a_wright_06",
+            "en": "en/sej_a_wright_06"
+          },
+          "layers": [
+            {
+              "art": "hist_sunrise",
+              "x": 0.6,
+              "y": 0.06,
+              "w": 0.32,
+              "motion": {
+                "type": "fade_in",
+                "ms": 900
+              }
+            },
+            {
+              "art": "pic_plane",
+              "x": 0.1,
+              "y": 0.2,
+              "w": 0.18,
+              "motion": {
+                "type": "drift",
+                "dx": 0.04,
+                "dy": -0.02,
+                "ms": 5000,
+                "loop": true
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        }
+      ]
+    },
+    "ST-A-HABIBIE": {
+      "figure": "Bacharuddin Jusuf Habibie (1936–2019)",
+      "title": {
+        "id": "Habibie dan pesawat N-250",
+        "en": "Habibie and the N-250"
+      },
+      "source": "Kompas.id (2019): Mr Crack and his message for the nation; detikInet: Julukan Mr Crack BJ Habibie; Wikipedia: B. J. Habibie; Keppres No. 71 Tahun 1995 tentang Hari Kebangkitan Teknologi Nasional",
+      "emblem": "hist_habibie_plane",
+      "panels": [
+        {
+          "scene": "hist_bg_harbor",
+          "caption": {
+            "id": "B.J. Habibie lahir di Parepare, Sulawesi Selatan, pada 25 Juni 1936. Ia belajar teknik penerbangan di Aachen, Jerman, dan meraih gelar doktor pada 1965.",
+            "en": "B.J. Habibie was born in Parepare, South Sulawesi, on 25 June 1936. He studied aeronautical engineering in Aachen, Germany, and earned his doctorate in 1965."
+          },
+          "narration": {
+            "id": "id/sej_a_habibie_01",
+            "en": "en/sej_a_habibie_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_boy",
+              "x": 0.16,
+              "y": 0.44,
+              "w": 0.19,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.62,
+              "y": 0.6,
+              "w": 0.14,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_sky_field",
+          "caption": {
+            "id": "Badan pesawat bisa retak sedikit demi sedikit karena terus dipakai. Saat itu, insinyur sulit menghitung bagaimana retakan kecil merambat.",
+            "en": "An aircraft's body can crack little by little through constant use. At the time engineers found it hard to calculate how small cracks spread."
+          },
+          "narration": {
+            "id": "id/sej_a_habibie_02",
+            "en": "en/sej_a_habibie_02"
+          },
+          "layers": [
+            {
+              "art": "hist_habibie_plane",
+              "x": 0.3,
+              "y": 0.24,
+              "w": 0.4,
+              "motion": {
+                "type": "zoom",
+                "scale_from": 1.0,
+                "scale_to": 1.08,
+                "ms": 5000
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.06,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_lab",
+          "caption": {
+            "id": "Saat bekerja di industri pesawat di Jerman, Habibie ikut mengembangkan perhitungan rambatan retak. Karena itu ia dijuluki «Mr. Crack».",
+            "en": "While working in Germany's aircraft industry, Habibie helped develop ways to calculate how cracks spread. That earned him the nickname \"Mr Crack\"."
+          },
+          "narration": {
+            "id": "id/sej_a_habibie_03",
+            "en": "en/sej_a_habibie_03"
+          },
+          "layers": [
+            {
+              "art": "hist_blueprint",
+              "x": 0.4,
+              "y": 0.22,
+              "w": 0.4,
+              "motion": {
+                "type": "reveal",
+                "from": "left",
+                "ms": 1800
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.08,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_sky_field",
+          "caption": {
+            "id": "Dengan retakan yang bisa dihitung, pesawat dapat dirancang lebih ringan namun tetap aman.",
+            "en": "Once cracks could be calculated, aircraft could be designed lighter while staying safe."
+          },
+          "narration": {
+            "id": "id/sej_a_habibie_04",
+            "en": "en/sej_a_habibie_04"
+          },
+          "layers": [
+            {
+              "art": "pic_plane",
+              "x": 0.2,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "drift",
+                "dx": 0.05,
+                "dy": -0.02,
+                "ms": 5000,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_blueprint",
+              "x": 0.62,
+              "y": 0.52,
+              "w": 0.28,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_sky_field",
+          "caption": {
+            "id": "Pada 1974 ia pulang ke Indonesia untuk membangun industri pesawat, yang kini bernama PT Dirgantara Indonesia. Pada 10 Agustus 1995, pesawat N-250 Gatotkaca buatan IPTN terbang perdana di Bandung.",
+            "en": "In 1974 he returned to Indonesia to build an aircraft industry, now PT Dirgantara Indonesia. On 10 August 1995 the N-250 Gatotkaca, built by IPTN, made its first flight in Bandung."
+          },
+          "narration": {
+            "id": "id/sej_a_habibie_05",
+            "en": "en/sej_a_habibie_05"
+          },
+          "layers": [
+            {
+              "art": "hist_habibie_plane",
+              "x": 0.06,
+              "y": 0.56,
+              "w": 0.3,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.06,
+                    0.56
+                  ],
+                  [
+                    0.28,
+                    0.44
+                  ],
+                  [
+                    0.5,
+                    0.32
+                  ],
+                  [
+                    0.64,
+                    0.24
+                  ]
+                ],
+                "ms": 6000
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.72,
+              "y": 0.36,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_sky_field",
+          "caption": {
+            "id": "Tanggal itu kini diperingati sebagai Hari Kebangkitan Teknologi Nasional. Habibie wafat pada 11 September 2019; kisahnya mengajak kita menguasai ilmu dan memakainya untuk negeri.",
+            "en": "That date is now marked as National Technology Awakening Day. Habibie died on 11 September 2019; his story asks us to master knowledge and use it for our country."
+          },
+          "narration": {
+            "id": "id/sej_a_habibie_06",
+            "en": "en/sej_a_habibie_06"
+          },
+          "layers": [
+            {
+              "art": "hist_sunrise",
+              "x": 0.6,
+              "y": 0.06,
+              "w": 0.32,
+              "motion": {
+                "type": "fade_in",
+                "ms": 900
+              }
+            },
+            {
+              "art": "hist_habibie_plane",
+              "x": 0.12,
+              "y": 0.3,
+              "w": 0.3,
+              "motion": {
+                "type": "drift",
+                "dx": 0.03,
+                "dy": -0.01,
+                "ms": 5000,
+                "loop": true
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "SEJ-A-H-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "story",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-A-GALILEO",
+      "model_answer": {
+        "id": "Galileo mengamati Jupiter malam demi malam pada 1610 dan menemukan empat bulannya.",
+        "en": "Galileo watched Jupiter night after night in 1610 and found four of its moons."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-ORDER",
+      "story_id": "ST-A-GALILEO",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling awal.",
+            "en": "Earliest first."
+          }
+        }
+      ],
+      "image": "hist_telescope",
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Menemukan empat bulan Jupiter (1610)",
+            "en": "Finds four moons of Jupiter (1610)"
+          }
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Lahir di Pisa (1564)",
+            "en": "Born in Pisa (1564)"
+          }
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Diadili di Roma (1633)",
+            "en": "Tried in Rome (1633)"
+          }
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Membuat teropong sendiri (1609)",
+            "en": "Builds his own telescope (1609)"
+          }
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "gesture": "drag",
+      "model_answer": {
+        "id": "1564, 1609, 1610, lalu 1633.",
+        "en": "1564, 1609, 1610, then 1633."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-MATCH",
+      "story_id": "ST-A-GALILEO",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gambar dan temuannya.",
+            "en": "Picture and discovery."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p1",
+          "image": "hist_telescope",
+          "text": {
+            "id": "teropong",
+            "en": "telescope"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "hist_jupiter_moons",
+          "text": {
+            "id": "Jupiter dan bulan-bulannya",
+            "en": "Jupiter and its moons"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_moon",
+          "text": {
+            "id": "Bulan",
+            "en": "the Moon"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Empat bulan Jupiter (1610)",
+            "en": "Four moons of Jupiter (1610)"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Gunung dan lembah di Bulan",
+            "en": "Mountains and valleys on the Moon"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Teropong buatan sendiri (1609)",
+            "en": "His own telescope (1609)"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3"
+      },
+      "gesture": "connect",
+      "model_answer": {
+        "id": "Teropong buatan sendiri, bulan-bulan Jupiter, dan permukaan Bulan yang bergunung.",
+        "en": "His own telescope, Jupiter's moons, and the Moon's mountains."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-TF",
+      "story_id": "ST-A-GALILEO",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Setelah diadili pada 1633, Galileo berhenti menulis.",
+            "en": "After his 1633 trial, Galileo stopped writing."
+          }
+        }
+      ],
+      "image": "hist_quill",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Salah. Ia terus menulis; bukunya tentang gerak terbit pada 1638.",
+        "en": "False. He kept writing; his book on motion came out in 1638."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "mini_reading",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-READ",
+      "story_id": "ST-A-GALILEO",
+      "reading_id": "R-SEJ-A-H-GALILEO",
+      "model_answer": {
+        "id": "Galileo melihat titik-titik di dekat Jupiter berpindah dari malam ke malam dan menyimpulkan bahwa itu bulan-bulan Jupiter.",
+        "en": "Galileo saw the dots near Jupiter move from night to night and concluded they were Jupiter's moons."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-SOURCE",
+      "story_id": "ST-A-GALILEO",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menurut catatan itu, apa buktinya?",
+            "en": "According to the notes, what was the evidence?"
+          }
+        }
+      ],
+      "image": "hist_jupiter_moons",
+      "reading_id": "R-SEJ-A-H-GALILEO",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Titik-titik itu yang paling terang di langit",
+            "en": "The dots were the brightest in the sky"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Titik-titik itu berpindah posisi, tetapi selalu ikut bersama Jupiter",
+            "en": "The dots changed places but always stayed with Jupiter"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Ia cukup mengamatinya satu malam",
+            "en": "One night of watching was enough"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Titik-titik itu berpindah tetapi selalu bersama Jupiter, jadi mereka mengelilingi Jupiter.",
+        "en": "The dots moved but stayed with Jupiter, so they must circle it."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-SORT",
+      "story_id": "ST-A-GALILEO",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Cara kerja ilmiah ala Galileo?",
+            "en": "Working like a scientist, as Galileo did?"
+          }
+        }
+      ],
+      "image": "hist_notebook",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Cara kerja ilmiah",
+            "en": "Scientific habit"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Bukan cara ilmiah",
+            "en": "Not scientific"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Mengamati berulang kali",
+            "en": "Observing again and again"
+          }
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Percaya tanpa memeriksa",
+            "en": "Believing without checking"
+          }
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Mencatat dan menggambar hasil pengamatan",
+            "en": "Recording and drawing what you see"
+          }
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Menguji gagasan dengan bukti",
+            "en": "Testing ideas against evidence"
+          }
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Berhenti setelah sekali mencoba",
+            "en": "Stopping after one try"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_yes",
+        "c2": "b_no",
+        "c3": "b_yes",
+        "c4": "b_yes",
+        "c5": "b_no"
+      },
+      "gesture": "drag",
+      "model_answer": {
+        "id": "Amati berulang, catat, dan uji dengan bukti.",
+        "en": "Observe repeatedly, record, and test with evidence."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-A-CURIE",
+      "model_answer": {
+        "id": "Marie Curie menemukan polonium dan radium (1898) dan menjadi orang pertama peraih dua Nobel.",
+        "en": "Marie Curie discovered polonium and radium (1898) and was the first person to win two Nobel Prizes."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-ORDER",
+      "story_id": "ST-A-CURIE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling awal.",
+            "en": "Earliest first."
+          }
+        }
+      ],
+      "image": "hist_curie_flask",
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Nobel Fisika (1903)",
+            "en": "Nobel Prize in Physics (1903)"
+          }
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Kuliah di Sorbonne, Paris (1891)",
+            "en": "Studies at the Sorbonne, Paris (1891)"
+          }
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Nobel Kimia (1911)",
+            "en": "Nobel Prize in Chemistry (1911)"
+          }
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Mengumumkan polonium dan radium (1898)",
+            "en": "Announces polonium and radium (1898)"
+          }
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "gesture": "drag",
+      "model_answer": {
+        "id": "1891, 1898, 1903, lalu 1911.",
+        "en": "1891, 1898, 1903, then 1911."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-A-CURIE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Benda mana yang dekat dengan kerjanya?",
+            "en": "Which object belongs to her work?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_telescope",
+          "image": "hist_telescope",
+          "text": {
+            "id": "teropong",
+            "en": "telescope"
+          }
+        },
+        {
+          "id": "hist_spinning_wheel",
+          "image": "hist_spinning_wheel",
+          "text": {
+            "id": "roda pintal",
+            "en": "spinning wheel"
+          }
+        },
+        {
+          "id": "hist_curie_flask",
+          "image": "hist_curie_flask",
+          "text": {
+            "id": "labu laboratorium",
+            "en": "laboratory flask"
+          },
+          "correct": true
+        },
+        {
+          "id": "hist_wright_flyer",
+          "image": "hist_wright_flyer",
+          "text": {
+            "id": "pesawat terbang awal",
+            "en": "early aeroplane"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Labu laboratorium: ia memisahkan radium dari berton-ton bijih.",
+        "en": "A laboratory flask: she isolated radium from tons of ore."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-TF",
+      "story_id": "ST-A-CURIE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Marie Curie adalah orang pertama yang meraih dua Hadiah Nobel.",
+            "en": "Marie Curie was the first person to win two Nobel Prizes."
+          }
+        }
+      ],
+      "image": "hist_notebook",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Nobel Fisika 1903 dan Nobel Kimia 1911.",
+        "en": "True. Physics in 1903 and Chemistry in 1911."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "mini_reading",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-READ",
+      "story_id": "ST-A-CURIE",
+      "reading_id": "R-SEJ-A-H-CURIE",
+      "model_answer": {
+        "id": "Nobel Kimia 1911 menghargai penemuan radium dan polonium, pemisahan radium, dan penelitian sifatnya.",
+        "en": "The 1911 Chemistry prize honoured the discovery of radium and polonium, the isolation of radium and the study of its nature."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-SOURCE",
+      "story_id": "ST-A-CURIE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Selain penemuan, apa lagi yang dihargai?",
+            "en": "Besides the discovery, what else was honoured?"
+          }
+        }
+      ],
+      "image": "hist_curie_flask",
+      "reading_id": "R-SEJ-A-H-CURIE",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Penemuan sinar yang dipancarkan uranium",
+            "en": "Discovering the rays given off by uranium"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Pembangunan rumah sakit di Paris",
+            "en": "Building a hospital in Paris"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Pemisahan radium dan penelitian sifat serta senyawanya",
+            "en": "Isolating radium and studying its nature and compounds"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Alasan resmi menyebut pemisahan radium serta penelitian sifat dan senyawanya.",
+        "en": "The citation names the isolation of radium and the study of its nature and compounds."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-SORT",
+      "story_id": "ST-A-CURIE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa pelajaran dari kisahnya?",
+            "en": "What does her story teach?"
+          }
+        }
+      ],
+      "image": "hist_curie_flask",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Pelajaran dari kisah ini",
+            "en": "A lesson from this story"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Bukan pelajarannya",
+            "en": "Not the lesson"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Mengulang percobaan selama bertahun-tahun",
+            "en": "Repeating experiments for years"
+          }
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Menyerah karena alatnya sederhana",
+            "en": "Giving up because the lab is simple"
+          }
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Bekerja sama dengan rekan",
+            "en": "Working with colleagues"
+          }
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Menjaga keselamatan saat meneliti",
+            "en": "Keeping safe while researching"
+          }
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Mengabaikan bahaya demi cepat selesai",
+            "en": "Ignoring danger to finish faster"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_yes",
+        "c2": "b_no",
+        "c3": "b_yes",
+        "c4": "b_yes",
+        "c5": "b_no"
+      },
+      "gesture": "drag",
+      "model_answer": {
+        "id": "Tekun, bekerja sama, dan menjaga keselamatan.",
+        "en": "Persevere, work together, and stay safe."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-01-015",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Galileo menemukan bulan-bulan Jupiter lebih dari 250 tahun sebelum radium ditemukan.",
+            "en": "Galileo found Jupiter's moons more than 250 years before radium was discovered."
+          }
+        }
+      ],
+      "image": "hist_jupiter_moons",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. 1898 − 1610 = 288 tahun.",
+        "en": "True. 1898 − 1610 = 288 years."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-01-016",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-WHO",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gambar ini milik kisah siapa?",
+            "en": "Whose story does each picture belong to?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_g",
+          "text": {
+            "id": "Galileo",
+            "en": "Galileo"
+          }
+        },
+        {
+          "id": "b_c",
+          "text": {
+            "id": "Marie Curie",
+            "en": "Marie Curie"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "teropong",
+            "en": "telescope"
+          },
+          "image": "hist_telescope"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "labu laboratorium",
+            "en": "laboratory flask"
+          },
+          "image": "hist_curie_flask"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Jupiter dan bulan-bulannya",
+            "en": "Jupiter and its moons"
+          },
+          "image": "hist_jupiter_moons"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_g",
+        "c2": "b_c",
+        "c3": "b_g"
+      },
+      "gesture": "drag",
+      "model_answer": {
+        "id": "Galileo: teropong dan bulan Jupiter. Curie: labu laboratorium.",
+        "en": "Galileo: the telescope and Jupiter's moons. Curie: the laboratory flask."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-01-017",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Galileo dan Curie sama-sama mencatat hasil pengamatan dengan teliti.",
+            "en": "Galileo and Curie both recorded their observations carefully."
+          }
+        }
+      ],
+      "image": "hist_notebook",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Catatan yang teliti membuat temuan bisa diperiksa orang lain.",
+        "en": "True. Careful records let others check the findings."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-01-018",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-SOURCE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kapan Galileo pertama melihat titik itu?",
+            "en": "When did Galileo first see the dots?"
+          }
+        }
+      ],
+      "image": "hist_jupiter_moons",
+      "reading_id": "R-SEJ-A-H-GALILEO",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "7 Januari 1610",
+            "en": "7 January 1610"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "15 Februari 1564",
+            "en": "15 February 1564"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "1633",
+            "en": "1633"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Pada 7 Januari 1610, menurut Sidereus Nuncius.",
+        "en": "On 7 January 1610, according to Sidereus Nuncius."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "story",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-A-WRIGHT",
+      "model_answer": {
+        "id": "Wright bersaudara menguji ratusan kali, lalu terbang dengan pesawat bermesin pada 17 Desember 1903.",
+        "en": "The Wright brothers tested hundreds of times, then flew a powered aircraft on 17 December 1903."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-ORDER",
+      "story_id": "ST-A-WRIGHT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling awal.",
+            "en": "Earliest first."
+          }
+        }
+      ],
+      "image": "hist_wright_flyer",
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Membuat terowongan angin (1901)",
+            "en": "Build a wind tunnel (1901)"
+          }
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Membuka toko sepeda (1892)",
+            "en": "Open a bicycle shop (1892)"
+          }
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Terbang dengan pesawat bermesin (1903)",
+            "en": "Fly a powered aircraft (1903)"
+          }
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Menguji pesawat layang di Kitty Hawk (1900)",
+            "en": "Test gliders at Kitty Hawk (1900)"
+          }
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "gesture": "drag",
+      "model_answer": {
+        "id": "1892, 1900, 1901, lalu 1903.",
+        "en": "1892, 1900, 1901, then 1903."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-MATCH",
+      "story_id": "ST-A-WRIGHT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gambar dan bagian kisahnya.",
+            "en": "Picture and part of the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p1",
+          "image": "hist_bicycle_shop",
+          "text": {
+            "id": "toko sepeda",
+            "en": "bicycle shop"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "pic_bird",
+          "text": {
+            "id": "burung",
+            "en": "bird"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "hist_wright_flyer",
+          "text": {
+            "id": "pesawat Wright",
+            "en": "the Wright Flyer"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Gagasan memuntir ujung sayap",
+            "en": "The idea of twisting the wingtips"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Terbang 12 detik pada 1903",
+            "en": "A 12-second flight in 1903"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Usaha yang membiayai percobaan",
+            "en": "The business that paid for the experiments"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3"
+      },
+      "gesture": "connect",
+      "model_answer": {
+        "id": "Toko sepeda membiayai, burung memberi gagasan, dan pesawatnya terbang pada 1903.",
+        "en": "The bicycle shop paid, birds gave the idea, and the Flyer flew in 1903."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-TF",
+      "story_id": "ST-A-WRIGHT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Wright bersaudara hanya memakai data sayap dari buku orang lain dan tidak pernah mengujinya sendiri.",
+            "en": "The Wright brothers only used other people's wing data and never tested it themselves."
+          }
+        }
+      ],
+      "image": "hist_blueprint",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Salah. Data lama tidak cocok, jadi mereka membuat terowongan angin dan menguji sekitar 200 bentuk sayap.",
+        "en": "False. The old data didn't match, so they built a wind tunnel and tested about 200 wing shapes."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "mini_reading",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-READ",
+      "story_id": "ST-A-WRIGHT",
+      "reading_id": "R-SEJ-A-H-WRIGHT",
+      "model_answer": {
+        "id": "Penerbangan pertama: Orville, 12 detik. Penerbangan keempat: Wilbur, 59 detik.",
+        "en": "First flight: Orville, 12 seconds. Fourth flight: Wilbur, 59 seconds."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-SOURCE",
+      "story_id": "ST-A-WRIGHT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Berapa kali lebih lama penerbangan keempat?",
+            "en": "How many times longer was the fourth flight?"
+          }
+        }
+      ],
+      "image": "hist_wright_flyer",
+      "reading_id": "R-SEJ-A-H-WRIGHT",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Sekitar 2 kali",
+            "en": "About 2 times"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Sekitar 10 kali",
+            "en": "About 10 times"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Sekitar 5 kali",
+            "en": "About 5 times"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "59 : 12 ≈ 4,9, jadi sekitar 5 kali lebih lama.",
+        "en": "59 ÷ 12 ≈ 4.9, so about 5 times longer."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-SORT",
+      "story_id": "ST-A-WRIGHT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Cara mereka memecahkan masalah?",
+            "en": "How did they solve problems?"
+          }
+        }
+      ],
+      "image": "hist_bicycle_shop",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Cara Wright bersaudara",
+            "en": "The Wrights' way"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Bukan cara mereka",
+            "en": "Not their way"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Mengamati alam, misalnya burung",
+            "en": "Watching nature, such as birds"
+          }
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Berhenti setelah sekali gagal",
+            "en": "Stopping after one failure"
+          }
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Membuat alat uji sendiri",
+            "en": "Building their own test equipment"
+          }
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Mencoba ratusan kali",
+            "en": "Trying hundreds of times"
+          }
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Menebak tanpa mengukur",
+            "en": "Guessing without measuring"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_yes",
+        "c2": "b_no",
+        "c3": "b_yes",
+        "c4": "b_yes",
+        "c5": "b_no"
+      },
+      "gesture": "drag",
+      "model_answer": {
+        "id": "Mengamati alam, membuat alat uji, dan mencoba ratusan kali.",
+        "en": "Watch nature, build your own tests, and try hundreds of times."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-A-HABIBIE",
+      "model_answer": {
+        "id": "Habibie dijuluki «Mr. Crack» dan memimpin pembangunan industri pesawat; N-250 terbang perdana pada 10 Agustus 1995.",
+        "en": "Habibie, nicknamed \"Mr Crack\", led the building of an aircraft industry; the N-250 first flew on 10 August 1995."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-ORDER",
+      "story_id": "ST-A-HABIBIE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling awal.",
+            "en": "Earliest first."
+          }
+        }
+      ],
+      "image": "hist_habibie_plane",
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Pulang untuk membangun industri pesawat (1974)",
+            "en": "Returns to build an aircraft industry (1974)"
+          }
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Lahir di Parepare (1936)",
+            "en": "Born in Parepare (1936)"
+          }
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "N-250 terbang perdana (1995)",
+            "en": "The N-250's first flight (1995)"
+          }
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Meraih gelar doktor di Jerman (1965)",
+            "en": "Earns his doctorate in Germany (1965)"
+          }
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "gesture": "drag",
+      "model_answer": {
+        "id": "1936, 1965, 1974, lalu 1995.",
+        "en": "1936, 1965, 1974, then 1995."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-A-HABIBIE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana gambar rancangan teknik pesawat?",
+            "en": "Which is an aircraft engineering drawing?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_blueprint",
+          "image": "hist_blueprint",
+          "text": {
+            "id": "gambar rancangan teknik",
+            "en": "engineering blueprint"
+          },
+          "correct": true
+        },
+        {
+          "id": "hist_kartini_letters",
+          "image": "hist_kartini_letters",
+          "text": {
+            "id": "surat-surat",
+            "en": "letters"
+          }
+        },
+        {
+          "id": "hist_sejong_scroll",
+          "image": "hist_sejong_scroll",
+          "text": {
+            "id": "gulungan naskah",
+            "en": "scroll"
+          }
+        },
+        {
+          "id": "hist_route_map",
+          "image": "hist_route_map",
+          "text": {
+            "id": "peta rute",
+            "en": "route map"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Gambar rancangan teknik: Habibie menghitung bagaimana retakan merambat.",
+        "en": "The engineering blueprint: Habibie calculated how cracks spread."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 25,
+      "prompt_id": "P-TF",
+      "story_id": "ST-A-HABIBIE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Hari Kebangkitan Teknologi Nasional mengenang terbang perdana N-250 pada 10 Agustus 1995.",
+            "en": "National Technology Awakening Day marks the N-250's first flight on 10 August 1995."
+          }
+        }
+      ],
+      "image": "hist_habibie_plane",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Tanggalnya ditetapkan lewat Keppres No. 71 Tahun 1995.",
+        "en": "True. The date was set by Presidential Decree No. 71 of 1995."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "mini_reading",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "PRACT",
+      "order": 26,
+      "prompt_id": "P-READ",
+      "story_id": "ST-A-HABIBIE",
+      "reading_id": "R-SEJ-A-H-HABIBIE",
+      "model_answer": {
+        "id": "Keppres No. 71 Tahun 1995 menetapkan 10 Agustus sebagai Hari Kebangkitan Teknologi Nasional.",
+        "en": "Decree No. 71 of 1995 made 10 August National Technology Awakening Day."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "PRACT",
+      "order": 27,
+      "prompt_id": "P-SOURCE",
+      "story_id": "ST-A-HABIBIE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menurut Keppres, mengapa 10 Agustus?",
+            "en": "Why 10 August, according to the decree?"
+          }
+        }
+      ],
+      "image": "hist_habibie_plane",
+      "reading_id": "R-SEJ-A-H-HABIBIE",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Hari lahir B.J. Habibie",
+            "en": "B.J. Habibie's birthday"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Hari uji terbang pertama N-250 yang berhasil (1995)",
+            "en": "The day of the N-250's first successful test flight (1995)"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Hari Habibie pulang ke Indonesia",
+            "en": "The day Habibie returned to Indonesia"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Keppres menimbang keberhasilan uji terbang pertama N-250 pada 10 Agustus 1995.",
+        "en": "The decree cites the N-250's first successful test flight on 10 August 1995."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "PRACT",
+      "order": 28,
+      "prompt_id": "P-SORT",
+      "story_id": "ST-A-HABIBIE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang bisa kita teladani?",
+            "en": "What can we learn from him?"
+          }
+        }
+      ],
+      "image": "hist_habibie_plane",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Teladan Habibie",
+            "en": "Habibie's example"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Bukan teladannya",
+            "en": "Not his example"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Belajar sungguh-sungguh sampai tuntas",
+            "en": "Studying thoroughly to the end"
+          }
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Puas dengan hasil seadanya",
+            "en": "Settling for whatever result"
+          }
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Memecahkan masalah dengan perhitungan",
+            "en": "Solving problems with calculation"
+          }
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Memakai ilmu untuk membangun negeri",
+            "en": "Using knowledge to build the country"
+          }
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Menghindari soal yang sulit",
+            "en": "Avoiding hard problems"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_yes",
+        "c2": "b_no",
+        "c3": "b_yes",
+        "c4": "b_yes",
+        "c5": "b_no"
+      },
+      "gesture": "drag",
+      "model_answer": {
+        "id": "Belajar tuntas, berhitung teliti, dan membangun negeri.",
+        "en": "Study thoroughly, calculate carefully, and build the country."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling awal.",
+            "en": "Earliest first."
+          }
+        }
+      ],
+      "image": "pic_plane",
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Habibie pulang ke Indonesia (1974)",
+            "en": "Habibie returns to Indonesia (1974)"
+          }
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Wright bersaudara terbang (1903)",
+            "en": "The Wright brothers fly (1903)"
+          }
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "N-250 terbang perdana (1995)",
+            "en": "The N-250's first flight (1995)"
+          }
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Habibie lahir (1936)",
+            "en": "Habibie is born (1936)"
+          }
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "gesture": "drag",
+      "model_answer": {
+        "id": "1903, 1936, 1974, lalu 1995.",
+        "en": "1903, 1936, 1974, then 1995."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-02-016",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-WHO",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gambar ini milik kisah siapa?",
+            "en": "Whose story does each picture belong to?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_w",
+          "text": {
+            "id": "Wright bersaudara",
+            "en": "The Wright brothers"
+          }
+        },
+        {
+          "id": "b_h",
+          "text": {
+            "id": "B.J. Habibie",
+            "en": "B.J. Habibie"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "pesawat Wright",
+            "en": "the Wright Flyer"
+          },
+          "image": "hist_wright_flyer"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "pesawat N-250",
+            "en": "the N-250"
+          },
+          "image": "hist_habibie_plane"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "gambar rancangan teknik",
+            "en": "engineering blueprint"
+          },
+          "image": "hist_blueprint"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "toko sepeda",
+            "en": "bicycle shop"
+          },
+          "image": "hist_bicycle_shop"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_w",
+        "c2": "b_h",
+        "c3": "b_h",
+        "c4": "b_w"
+      },
+      "gesture": "drag",
+      "model_answer": {
+        "id": "Wright: pesawat 1903 dan toko sepeda. Habibie: N-250 dan rancangan teknik.",
+        "en": "The Wrights: the 1903 Flyer and the bicycle shop. Habibie: the N-250 and the blueprint."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-02-017",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kedua kisah menunjukkan bahwa terbang yang aman lahir dari pengujian dan perhitungan yang teliti.",
+            "en": "Both stories show that safe flight comes from careful testing and calculation."
+          }
+        }
+      ],
+      "image": "pic_plane",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Wright menguji ratusan kali; Habibie menghitung rambatan retak.",
+        "en": "True. The Wrights tested hundreds of times; Habibie calculated how cracks spread."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-02-018",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "HIST-SOURCE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-SOURCE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Siapa pilot penerbangan pertama?",
+            "en": "Who flew the first flight?"
+          }
+        }
+      ],
+      "image": "hist_wright_flyer",
+      "reading_id": "R-SEJ-A-H-WRIGHT",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Orville",
+            "en": "Orville"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Wilbur",
+            "en": "Wilbur"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Mereka berdua bersama-sama",
+            "en": "Both of them together"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Orville, selama 12 detik. Wilbur menerbangkan penerbangan keempat.",
+        "en": "Orville, for 12 seconds. Wilbur flew the fourth flight."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-01-019",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "hist_notebook",
+      "gem": true,
+      "source": "The Christian Science Monitor (7 November 2011): Marie Curie: Why her papers are still radioactive",
+      "model_answer": {
+        "id": "Buku catatan Marie Curie masih mengandung radioaktivitas. Naskahnya di Perpustakaan Nasional Prancis disimpan dalam kotak berlapis timbal, dan pembacanya harus memakai pakaian pelindung.",
+        "en": "Marie Curie's notebooks are still radioactive. Her manuscripts at the National Library of France are kept in lead-lined boxes, and readers must wear protective clothing."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    },
+    {
+      "item_id": "SEJ-A-H-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Marie Curie lahir pada 1867 dan meraih Nobel keduanya pada 1911. Berapa tahun selisihnya?",
+            "en": "Marie Curie was born in 1867 and won her second Nobel Prize in 1911. How many years apart is that?"
+          }
+        }
+      ],
+      "image": "hist_curie_flask",
+      "numeric": {
+        "value": 44,
+        "tolerance": 0
+      },
+      "model_answer": {
+        "id": "1911 − 1867 = 44 tahun.",
+        "en": "1911 − 1867 = 44 years."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-h-0.1"
+    }
+  ]
+}

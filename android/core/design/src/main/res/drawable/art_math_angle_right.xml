@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- math_angle_right: DRAFT art authored as code by art/tools/draw.py (ART_DIRECTION section 6). Placeholder until a human illustrator redraws or approves it (section 7). Generated: do not edit by hand. -->
+<!-- Texture slot: the app composites the shared paper-grain overlay above this drawing; no grain is baked in. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+  android:width="240dp"
+  android:height="240dp"
+  android:viewportWidth="240"
+  android:viewportHeight="240">
+  <path
+    android:fillColor="@color/art_sage"
+    android:fillAlpha="0.25"
+    android:pathData="M63 140Q62 95 69 102Q77 109 85 117Q92 125 100 132Q108 139 116 147Q123 154 131 162Q138 169 146 176Q154 184 109 185Q64 186 63 140Z" />
+  <path
+    android:strokeColor="@color/art_ochre"
+    android:strokeWidth="12"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:strokeAlpha="0.75"
+    android:pathData="M66 187L216 183" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="3"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M64 186C114 184 164 183 214 182M203.8 188.1L214 181.8L203.5 176.4" />
+  <path
+    android:strokeColor="@color/art_ochre"
+    android:strokeWidth="12"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:strokeAlpha="0.75"
+    android:pathData="M66 186L62 34" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="3"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M64 186C63 161 62 135 62 110C62 85 61 59 60 34M66.2 44.1L60.2 33.8L54.3 44.4" />
+  <path
+    android:fillColor="@color/art_clay"
+    android:fillAlpha="0.6"
+    android:pathData="M64 161L88 161L88 184L64 186Z" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="2.5"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M88 185L88 162L63 162" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="8"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M64 185.8L64.3 186" />
+</vector>

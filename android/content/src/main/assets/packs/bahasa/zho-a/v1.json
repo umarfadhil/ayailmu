@@ -1,0 +1,4199 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "zho-a-pemula-0.1",
+    "subject": "bahasa",
+    "track": "zho-a",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "target_lang": "zh",
+    "title": {
+      "id": "Bahasa Mandarin — Pemula (Dewasa)",
+      "en": "Mandarin Chinese — Beginner (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 11) for review: needs a native Mandarin (Putonghua) reviewer plus the Indonesian and English language reviewers before any item is approved (docs/syllabus/bahasa/zh_pemula.md, Adults Pemula units 01-05). Clips: android/content/voice/zh.json (items that need a missing clip stay hidden). Pinyin is written with citation tones (no tone sandhi marked).",
+  "prompts": {
+    "P-LISTEN": {
+      "id": "Dengar, lalu pilih.",
+      "en": "Listen, then pick."
+    },
+    "P-LISTEN-PIC": {
+      "id": "Dengar, lalu ketuk gambarnya.",
+      "en": "Listen, then tap the picture."
+    },
+    "P-TONE": {
+      "id": "Nada yang mana?",
+      "en": "Which tone is it?"
+    },
+    "P-SOUND": {
+      "id": "Dibaca seperti apa?",
+      "en": "How is it said?"
+    },
+    "P-TRACE": {
+      "id": "Tulis mengikuti garisnya.",
+      "en": "Trace it, stroke by stroke."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-CONNECT": {
+      "id": "Tarik garis ke pasangannya.",
+      "en": "Draw a line to its partner."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke katanya.",
+      "en": "Drag each picture to its word."
+    },
+    "P-SORT": {
+      "id": "Seret ke keranjang yang tepat.",
+      "en": "Drag into the right basket."
+    },
+    "P-BUILD": {
+      "id": "Susun kalimatnya.",
+      "en": "Build the sentence."
+    },
+    "P-MEMORY": {
+      "id": "Buka kartu, cari pasangannya.",
+      "en": "Flip cards, find the pairs."
+    },
+    "P-MEANING": {
+      "id": "Apa artinya?",
+      "en": "What does it mean?"
+    },
+    "P-REPLY": {
+      "id": "Apa jawabannya?",
+      "en": "What's the reply?"
+    },
+    "P-FILL": {
+      "id": "Isi yang kosong.",
+      "en": "Fill the gap."
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-TRACED": {
+      "id": "Rapi! {model}",
+      "en": "Neat! {model}"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Nada, pinyin & salam",
+        "en": "Tones, pinyin & greetings"
+      },
+      "sticker": "sticker_lantern"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Angka 1–10",
+        "en": "Numbers 1–10"
+      },
+      "sticker": "sticker_star_fruit"
+    },
+    {
+      "unit": "03",
+      "title": {
+        "id": "Keluarga & orang",
+        "en": "Family & people"
+      },
+      "sticker": "sticker_umbrella"
+    },
+    {
+      "unit": "04",
+      "title": {
+        "id": "Makan & memesan",
+        "en": "Eating & ordering"
+      },
+      "sticker": "sticker_teapot"
+    },
+    {
+      "unit": "05",
+      "title": {
+        "id": "Tempat & bepergian",
+        "en": "Places & getting around"
+      },
+      "sticker": "sticker_bicycle"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "ZHO-A-P-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Nada, pinyin & salam",
+        "en": "Tones, pinyin & greetings"
+      },
+      "body": [
+        {
+          "id": "Empat nada mengubah arti: 妈 mā = ibu, 马 mǎ = kuda.",
+          "en": "Four tones change the meaning: 妈 mā = mum, 马 mǎ = horse."
+        },
+        {
+          "id": "Jebakan pinyin: c dibaca ts, q mirip c, x mirip sy; zh, ch, sh dengan lidah melengkung.",
+          "en": "Pinyin traps: c sounds like ts, q like ch, x like a soft sh; zh, ch, sh: tongue curled back."
+        },
+        {
+          "id": "Nada 3 + nada 3: yang pertama jadi naik. 你好 nǐ hǎo terdengar ní hǎo.",
+          "en": "Tone 3 + tone 3: the first one rises. 你好 nǐ hǎo sounds like ní hǎo."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "你好",
+          "gloss": {
+            "id": "nǐ hǎo — halo",
+            "en": "nǐ hǎo — hello"
+          }
+        },
+        {
+          "target_text": "谢谢",
+          "gloss": {
+            "id": "xièxie — terima kasih",
+            "en": "xièxie — thank you"
+          }
+        },
+        {
+          "target_text": "对不起",
+          "gloss": {
+            "id": "duìbuqǐ — maaf",
+            "en": "duìbuqǐ — sorry"
+          }
+        },
+        {
+          "target_text": "我叫…",
+          "gloss": {
+            "id": "wǒ jiào… — nama saya…",
+            "en": "wǒ jiào… — my name is…"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "ZHO-A-P-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Angka 1–10",
+        "en": "Numbers 1–10"
+      },
+      "body": [
+        {
+          "id": "Sesudah 十 shí tinggal digabung: 十一 shíyī = 11, 二十 èrshí = 20.",
+          "en": "After 十 shí, just combine: 十一 shíyī = 11, 二十 èrshí = 20."
+        },
+        {
+          "id": "Dua barang: 两个 liǎng gè, bukan 二个 èr gè. 个 gè adalah kata satuan umum.",
+          "en": "Two things: 两个 liǎng gè, not 二个 èr gè. 个 gè is the general measure word."
+        },
+        {
+          "id": "Di nomor telepon, 一 yī sering dibaca yāo.",
+          "en": "In phone numbers, 一 yī is often read yāo."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "一 二 三 四 五",
+          "gloss": {
+            "id": "yī èr sān sì wǔ = 1–5",
+            "en": "yī èr sān sì wǔ = 1–5"
+          }
+        },
+        {
+          "target_text": "六 七 八 九 十",
+          "gloss": {
+            "id": "liù qī bā jiǔ shí = 6–10",
+            "en": "liù qī bā jiǔ shí = 6–10"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "ZHO-A-P-03-S1",
+      "unit": "03",
+      "audience": "adults",
+      "title": {
+        "id": "Keluarga & orang",
+        "en": "Family & people"
+      },
+      "body": [
+        {
+          "id": "Seperti kakak/adik: 哥哥 gēge, 姐姐 jiějie lebih tua; 弟弟 dìdi, 妹妹 mèimei lebih muda.",
+          "en": "Like kakak/adik: 哥哥 gēge, 姐姐 jiějie are older; 弟弟 dìdi, 妹妹 mèimei are younger."
+        },
+        {
+          "id": "爷爷 yéye, 奶奶 nǎinai = orang tua ayah; orang tua ibu: 外公 wàigōng, 外婆 wàipó.",
+          "en": "爷爷 yéye, 奶奶 nǎinai = Dad's parents; Mum's are 外公 wàigōng, 外婆 wàipó."
+        },
+        {
+          "id": "Anggota keluarga dihitung dengan 口 kǒu: 我家有四口人。 Wǒ jiā yǒu sì kǒu rén.",
+          "en": "Family members are counted with 口 kǒu: 我家有四口人。 Wǒ jiā yǒu sì kǒu rén."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "他 / 她",
+          "gloss": {
+            "id": "tā / tā — dia (laki-laki / perempuan): bunyinya sama",
+            "en": "tā / tā — he / she: same sound"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "ZHO-A-P-04-S1",
+      "unit": "04",
+      "audience": "adults",
+      "title": {
+        "id": "Makan & memesan",
+        "en": "Eating & ordering"
+      },
+      "body": [
+        {
+          "id": "Memesan: 我要… wǒ yào… Tanya harga: 多少钱？ Duōshao qián?",
+          "en": "To order: 我要… wǒ yào… To ask the price: 多少钱？ Duōshao qián?"
+        },
+        {
+          "id": "Kata satuan: 一杯茶 yī bēi chá = secangkir teh, 一碗面条 yī wǎn miàntiáo = semangkuk mi.",
+          "en": "Measure words: 一杯茶 yī bēi chá = a cup of tea, 一碗面条 yī wǎn miàntiáo = a bowl of noodles."
+        },
+        {
+          "id": "Tulisan 清真 qīngzhēn berarti halal.",
+          "en": "The sign 清真 qīngzhēn means halal."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "喝汤",
+          "gloss": {
+            "id": "hē tāng — sup itu 'diminum', bukan 'dimakan'",
+            "en": "hē tāng — you 'drink' soup, not 'eat' it"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "ZHO-A-P-05-S1",
+      "unit": "05",
+      "audience": "adults",
+      "title": {
+        "id": "Tempat & bepergian",
+        "en": "Places & getting around"
+      },
+      "body": [
+        {
+          "id": "Bertanya arah: 请问，…在哪儿？ Qǐngwèn, … zài nǎr? = Permisi, … di mana?",
+          "en": "Asking the way: 请问，…在哪儿？ Qǐngwèn, … zài nǎr? = Excuse me, where is …?"
+        },
+        {
+          "id": "坐 zuò (duduk) untuk bus, kereta, pesawat; 骑 qí untuk sepeda dan motor.",
+          "en": "坐 zuò (sit) for buses, trains and planes; 骑 qí (ride) for bikes and motorbikes."
+        },
+        {
+          "id": "Kereta = 火车 huǒchē, 'kendaraan api', dari zaman kereta uap.",
+          "en": "A train is 火车 huǒchē, a 'fire vehicle', from the days of steam."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "入口 / 出口",
+          "gloss": {
+            "id": "rùkǒu / chūkǒu — pintu masuk / pintu keluar",
+            "en": "rùkǒu / chūkǒu — entrance / exit"
+          }
+        },
+        {
+          "target_text": "上车 / 下车",
+          "gloss": {
+            "id": "shàng chē / xià chē — naik / turun",
+            "en": "shàng chē / xià chē — get on / get off"
+          }
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "items": [
+    {
+      "item_id": "ZHO-A-P-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-TONE"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-TONE",
+      "audio": "zh/ma2",
+      "options": [
+        {
+          "id": "a1",
+          "target_text": "mā"
+        },
+        {
+          "id": "a2",
+          "target_text": "má",
+          "correct": true
+        },
+        {
+          "id": "a3",
+          "target_text": "mǎ"
+        },
+        {
+          "id": "a4",
+          "target_text": "mà"
+        }
+      ],
+      "model_answer": {
+        "id": "má: nada 2, naik seperti bertanya. Bukan mǎ, nada 3!",
+        "en": "má: tone 2, rising like a question. Not mǎ, tone 3!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "gesture": "connect",
+      "skills": [
+        "ZHO-TONE"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-CONNECT",
+      "options": [
+        {
+          "id": "t1",
+          "target_text": "ā"
+        },
+        {
+          "id": "t2",
+          "target_text": "á"
+        },
+        {
+          "id": "t3",
+          "target_text": "ǎ"
+        },
+        {
+          "id": "t4",
+          "target_text": "à"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "nada 2: naik",
+            "en": "tone 2: rising"
+          }
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "nada 4: turun tajam",
+            "en": "tone 4: falling"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "nada 1: tinggi, datar",
+            "en": "tone 1: high, flat"
+          }
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "nada 3: turun-naik",
+            "en": "tone 3: dipping"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "t1": "c1",
+        "t2": "c2",
+        "t3": "c3",
+        "t4": "c4"
+      },
+      "model_answer": {
+        "id": "ā datar, á naik, ǎ turun-naik, à turun tajam.",
+        "en": "ā is flat, á rises, ǎ dips and rises, à falls."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-PINYIN"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-LISTEN",
+      "audio": "zh/chi",
+      "options": [
+        {
+          "id": "s_qi",
+          "target_text": "qī"
+        },
+        {
+          "id": "s_chi",
+          "target_text": "chī",
+          "correct": true
+        },
+        {
+          "id": "s_ci",
+          "target_text": "cī"
+        }
+      ],
+      "model_answer": {
+        "id": "吃 chī = makan. ch: lidah melengkung ke belakang.",
+        "en": "吃 chī = to eat. ch: curl your tongue back."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "gesture": "connect",
+      "skills": [
+        "ZHO-PINYIN"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-CONNECT",
+      "options": [
+        {
+          "id": "k_c",
+          "target_text": "c"
+        },
+        {
+          "id": "k_q",
+          "target_text": "q"
+        },
+        {
+          "id": "k_x",
+          "target_text": "x"
+        },
+        {
+          "id": "k_zh",
+          "target_text": "zh"
+        },
+        {
+          "id": "v_x",
+          "text": {
+            "id": "sy (bukan ks)",
+            "en": "a soft sh (not ks)"
+          }
+        },
+        {
+          "id": "v_zh",
+          "text": {
+            "id": "j, lidah melengkung",
+            "en": "j, tongue curled"
+          }
+        },
+        {
+          "id": "v_c",
+          "text": {
+            "id": "ts (bukan c Indonesia)",
+            "en": "ts, as in 'cats'"
+          }
+        },
+        {
+          "id": "v_q",
+          "text": {
+            "id": "c, dengan embusan napas",
+            "en": "ch, with a puff of air"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "k_c": "v_c",
+        "k_q": "v_q",
+        "k_x": "v_x",
+        "k_zh": "v_zh"
+      },
+      "model_answer": {
+        "id": "c = ts, q ≈ c, x ≈ sy, zh ≈ j dengan lidah melengkung.",
+        "en": "c = ts, q ≈ ch, x ≈ soft sh, zh ≈ j with a curled tongue."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-PINYIN"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-LISTEN",
+      "audio": "zh/yu",
+      "options": [
+        {
+          "id": "s_yu",
+          "target_text": "yú",
+          "correct": true
+        },
+        {
+          "id": "s_wu",
+          "target_text": "wú"
+        },
+        {
+          "id": "s_you",
+          "target_text": "yóu"
+        }
+      ],
+      "model_answer": {
+        "id": "鱼 yú = ikan. Di sini u dibaca ü: bibir bulat, lidah bilang i.",
+        "en": "鱼 yú = fish. Here u is ü: round your lips and say ee."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-GREET"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-DRAG",
+      "options": [
+        {
+          "id": "l1",
+          "image": "pic_wave_hello"
+        },
+        {
+          "id": "l2",
+          "image": "pic_thanks"
+        },
+        {
+          "id": "l3",
+          "image": "pic_sorry"
+        },
+        {
+          "id": "l4",
+          "image": "pic_wave_bye"
+        },
+        {
+          "id": "r_zai_jian",
+          "target_text": "再见",
+          "romanization": "zàijiàn",
+          "audio": "zh/zaijian"
+        },
+        {
+          "id": "r_ni_hao",
+          "target_text": "你好",
+          "romanization": "nǐ hǎo",
+          "audio": "zh/ni_hao"
+        },
+        {
+          "id": "r_dui_bu_qi",
+          "target_text": "对不起",
+          "romanization": "duìbuqǐ",
+          "audio": "zh/duibuqi"
+        },
+        {
+          "id": "r_xie_xie",
+          "target_text": "谢谢",
+          "romanization": "xièxie",
+          "audio": "zh/xiexie"
+        }
+      ],
+      "solution_pairs": {
+        "l1": "r_ni_hao",
+        "l2": "r_xie_xie",
+        "l3": "r_dui_bu_qi",
+        "l4": "r_zai_jian"
+      },
+      "model_answer": {
+        "id": "你好 nǐ hǎo halo, 谢谢 xièxie terima kasih, 对不起 duìbuqǐ maaf, 再见 zàijiàn sampai jumpa.",
+        "en": "你好 nǐ hǎo hello, 谢谢 xièxie thank you, 对不起 duìbuqǐ sorry, 再见 zàijiàn goodbye."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "ZHO-GREET"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-TRACE",
+      "target_text": "好",
+      "romanization": "hǎo",
+      "audio": "zh/hao",
+      "trace": "hanzi_hao",
+      "model_answer": {
+        "id": "好 hǎo = baik. 你好 nǐ hǎo, harfiah 'kamu baik', berarti halo.",
+        "en": "好 hǎo = good. 你好 nǐ hǎo, literally 'you good', means hello."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ZHO-GREET"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-REPLY",
+      "target_text": "谢谢",
+      "romanization": "xièxie",
+      "audio": "zh/xiexie",
+      "options": [
+        {
+          "id": "w_dui_bu_qi",
+          "target_text": "对不起",
+          "romanization": "duìbuqǐ",
+          "audio": "zh/duibuqi"
+        },
+        {
+          "id": "w_zai_jian",
+          "target_text": "再见",
+          "romanization": "zàijiàn",
+          "audio": "zh/zaijian"
+        },
+        {
+          "id": "w_bu_ke_qi",
+          "target_text": "不客气",
+          "romanization": "bù kèqi",
+          "audio": "zh/bu_keqi",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "谢谢 xièxie! — 不客气 bù kèqi = sama-sama.",
+        "en": "谢谢 xièxie! — 不客气 bù kèqi = you're welcome."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "ZHO-INTRO"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-TRACE",
+      "target_text": "我",
+      "romanization": "wǒ",
+      "audio": "zh/wo",
+      "trace": "hanzi_wo",
+      "model_answer": {
+        "id": "我 wǒ = saya.",
+        "en": "我 wǒ = I, me."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "tiles",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-INTRO"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-BUILD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Siapa nama Anda?",
+            "en": "What's your name?"
+          }
+        }
+      ],
+      "image": "pic_wave_hello",
+      "options": [
+        {
+          "id": "t_ming_zi",
+          "target_text": "名字",
+          "romanization": "míngzi",
+          "audio": "zh/mingzi"
+        },
+        {
+          "id": "t_jiao",
+          "target_text": "叫",
+          "romanization": "jiào",
+          "audio": "zh/jiao"
+        },
+        {
+          "id": "t_ni",
+          "target_text": "你",
+          "romanization": "nǐ",
+          "audio": "zh/ni"
+        },
+        {
+          "id": "t_shen_me",
+          "target_text": "什么",
+          "romanization": "shénme",
+          "audio": "zh/shenme"
+        }
+      ],
+      "solution": [
+        "t_ni",
+        "t_jiao",
+        "t_shen_me",
+        "t_ming_zi"
+      ],
+      "model_answer": {
+        "id": "你叫什么名字？ Nǐ jiào shénme míngzi? = Siapa nama Anda?",
+        "en": "你叫什么名字？ Nǐ jiào shénme míngzi? = What's your name?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "ZHO-INTRO"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-TRACE",
+      "target_text": "中",
+      "romanization": "zhōng",
+      "audio": "zh/zhong",
+      "trace": "hanzi_zhong",
+      "model_answer": {
+        "id": "中 zhōng = tengah. 中国 Zhōngguó = Tiongkok, 中文 Zhōngwén = bahasa Tionghoa.",
+        "en": "中 zhōng = middle. 中国 Zhōngguó = China, 中文 Zhōngwén = Chinese."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ZHO-TONE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TONE",
+      "target_text": "妈",
+      "romanization": "mā",
+      "audio": "zh/ma1",
+      "options": [
+        {
+          "id": "n1",
+          "text": {
+            "id": "nada 1",
+            "en": "tone 1"
+          },
+          "correct": true
+        },
+        {
+          "id": "n2",
+          "text": {
+            "id": "nada 2",
+            "en": "tone 2"
+          }
+        },
+        {
+          "id": "n3",
+          "text": {
+            "id": "nada 3",
+            "en": "tone 3"
+          }
+        },
+        {
+          "id": "n4",
+          "text": {
+            "id": "nada 4",
+            "en": "tone 4"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "妈 mā (ibu): garis datar di atas a = nada 1, tinggi dan datar.",
+        "en": "妈 mā (mum): the flat line over a = tone 1, high and level."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ZHO-PINYIN"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-SOUND",
+      "target_text": "鱼",
+      "romanization": "yú",
+      "audio": "zh/yu",
+      "options": [
+        {
+          "id": "o_u",
+          "text": {
+            "id": "u, seperti di 'buku'",
+            "en": "u, as in 'food'"
+          }
+        },
+        {
+          "id": "o_i",
+          "text": {
+            "id": "i, seperti di 'ikan'",
+            "en": "i, as in 'see'"
+          }
+        },
+        {
+          "id": "o_v",
+          "text": {
+            "id": "ü: bibir bulat, lidah bilang i",
+            "en": "ü: round lips, tongue says ee"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Sesudah j, q, x, y, huruf u dibaca ü: 鱼 yú, 去 qù.",
+        "en": "After j, q, x, y, the letter u is ü: 鱼 yú, 去 qù."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ZHO-GREET"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-REPLY",
+      "target_text": "对不起",
+      "romanization": "duìbuqǐ",
+      "audio": "zh/duibuqi",
+      "options": [
+        {
+          "id": "w_ni_hao",
+          "target_text": "你好",
+          "romanization": "nǐ hǎo",
+          "audio": "zh/ni_hao"
+        },
+        {
+          "id": "w_mei_guan_xi",
+          "target_text": "没关系",
+          "romanization": "méi guānxi",
+          "audio": "zh/mei_guanxi",
+          "correct": true
+        },
+        {
+          "id": "w_zai_jian",
+          "target_text": "再见",
+          "romanization": "zàijiàn",
+          "audio": "zh/zaijian"
+        }
+      ],
+      "model_answer": {
+        "id": "对不起 duìbuqǐ! — 没关系 méi guānxi = tidak apa-apa.",
+        "en": "对不起 duìbuqǐ! — 没关系 méi guānxi = that's okay."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-01-015",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "tiles",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-INTRO"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-BUILD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Nama saya Wang Ming.",
+            "en": "My name is Wang Ming."
+          }
+        }
+      ],
+      "image": "pic_man",
+      "options": [
+        {
+          "id": "t_jiao",
+          "target_text": "叫",
+          "romanization": "jiào",
+          "audio": "zh/jiao"
+        },
+        {
+          "id": "t_wang_ming",
+          "target_text": "王明",
+          "romanization": "Wáng Míng",
+          "audio": "zh/wang_ming"
+        },
+        {
+          "id": "t_ni",
+          "target_text": "你",
+          "romanization": "nǐ",
+          "audio": "zh/ni"
+        },
+        {
+          "id": "t_wo",
+          "target_text": "我",
+          "romanization": "wǒ",
+          "audio": "zh/wo"
+        }
+      ],
+      "solution": [
+        "t_wo",
+        "t_jiao",
+        "t_wang_ming"
+      ],
+      "model_answer": {
+        "id": "我叫王明。 Wǒ jiào Wáng Míng. = Nama saya Wang Ming.",
+        "en": "我叫王明。 Wǒ jiào Wáng Míng. = My name is Wang Ming."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-01-016",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "ZHO-PINYIN"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "model_answer": {
+        "id": "Pinyin disahkan di Tiongkok pada 11 Februari 1958. Zhou Youguang, ekonom yang memimpin penyusunannya, wafat pada 2017 dalam usia 111 tahun.",
+        "en": "Pinyin was approved in China on 11 February 1958. Zhou Youguang, the economist who led its design, died in 2017 aged 111."
+      },
+      "gem": true,
+      "source": "NPR, \"Zhou Youguang, Architect Of A Bridge Between Languages, Dies At 111\" (14 January 2017: pinyin was adopted by China in 1958; Zhou led the committee that created it); Wikipedia, \"Pinyin\" (approved by the 5th Session of the 1st National People's Congress on 11 February 1958).",
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "ZHO-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-TRACE",
+      "image": "count_marble_1",
+      "target_text": "一",
+      "romanization": "yī",
+      "audio": "zh/yi",
+      "trace": "hanzi_yi",
+      "model_answer": {
+        "id": "一 yī = 1.",
+        "en": "一 yī = 1."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "ZHO-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-TRACE",
+      "image": "count_marble_2",
+      "target_text": "二",
+      "romanization": "èr",
+      "audio": "zh/er",
+      "trace": "hanzi_er",
+      "model_answer": {
+        "id": "二 èr = 2.",
+        "en": "二 èr = 2."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-DRAG",
+      "options": [
+        {
+          "id": "l1",
+          "image": "count_egg_3"
+        },
+        {
+          "id": "l2",
+          "image": "count_egg_1"
+        },
+        {
+          "id": "l3",
+          "image": "count_egg_5"
+        },
+        {
+          "id": "l4",
+          "image": "count_egg_2"
+        },
+        {
+          "id": "r_yi",
+          "target_text": "一",
+          "romanization": "yī",
+          "audio": "zh/yi"
+        },
+        {
+          "id": "r_er",
+          "target_text": "二",
+          "romanization": "èr",
+          "audio": "zh/er"
+        },
+        {
+          "id": "r_san",
+          "target_text": "三",
+          "romanization": "sān",
+          "audio": "zh/san"
+        },
+        {
+          "id": "r_wu",
+          "target_text": "五",
+          "romanization": "wǔ",
+          "audio": "zh/wu"
+        }
+      ],
+      "solution_pairs": {
+        "l1": "r_san",
+        "l2": "r_yi",
+        "l3": "r_wu",
+        "l4": "r_er"
+      },
+      "model_answer": {
+        "id": "一 yī 1, 二 èr 2, 三 sān 3, 五 wǔ 5.",
+        "en": "一 yī 1, 二 èr 2, 三 sān 3, 五 wǔ 5."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "ZHO-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-TRACE",
+      "image": "count_marble_3",
+      "target_text": "三",
+      "romanization": "sān",
+      "audio": "zh/san",
+      "trace": "hanzi_san",
+      "model_answer": {
+        "id": "三 sān = 3.",
+        "en": "三 sān = 3."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "ZHO-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-TRACE",
+      "image": "count_marble_4",
+      "target_text": "四",
+      "romanization": "sì",
+      "audio": "zh/si",
+      "trace": "hanzi_si",
+      "model_answer": {
+        "id": "四 sì = 4. Bunyi s, bukan sh.",
+        "en": "四 sì = 4. An s, not sh."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "zh/si",
+      "options": [
+        {
+          "id": "p2",
+          "image": "count_egg_10"
+        },
+        {
+          "id": "p1",
+          "image": "count_egg_4",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "四 sì = 4; 十 shí = 10. Beda s/sh dan nadanya.",
+        "en": "四 sì = 4; 十 shí = 10: s vs sh, and the tone."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "fill_blank",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "二 èr + 三 sān = ＿",
+            "en": "二 èr + 三 sān = ＿"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_liu",
+          "target_text": "六",
+          "romanization": "liù",
+          "audio": "zh/liu"
+        },
+        {
+          "id": "t_wu",
+          "target_text": "五",
+          "romanization": "wǔ",
+          "audio": "zh/wu"
+        },
+        {
+          "id": "t_si",
+          "target_text": "四",
+          "romanization": "sì",
+          "audio": "zh/si"
+        }
+      ],
+      "solution": [
+        "t_wu"
+      ],
+      "model_answer": {
+        "id": "二 èr + 三 sān = 五 wǔ (2 + 3 = 5).",
+        "en": "二 èr + 三 sān = 五 wǔ (2 + 3 = 5)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "ZHO-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-TRACE",
+      "image": "count_marble_5",
+      "target_text": "五",
+      "romanization": "wǔ",
+      "audio": "zh/wu",
+      "trace": "hanzi_wu",
+      "model_answer": {
+        "id": "五 wǔ = 5.",
+        "en": "五 wǔ = 5."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "ZHO-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-TRACE",
+      "image": "count_marble_6",
+      "target_text": "六",
+      "romanization": "liù",
+      "audio": "zh/liu",
+      "trace": "hanzi_liu",
+      "model_answer": {
+        "id": "六 liù = 6.",
+        "en": "六 liù = 6."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "tiles",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-MEASURE"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-BUILD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya mau dua.",
+            "en": "I'd like two."
+          }
+        }
+      ],
+      "image": "count_mango_2",
+      "options": [
+        {
+          "id": "t_ge",
+          "target_text": "个",
+          "romanization": "gè",
+          "audio": "zh/ge"
+        },
+        {
+          "id": "t_wo",
+          "target_text": "我",
+          "romanization": "wǒ",
+          "audio": "zh/wo"
+        },
+        {
+          "id": "t_er",
+          "target_text": "二",
+          "romanization": "èr",
+          "audio": "zh/er"
+        },
+        {
+          "id": "t_liang",
+          "target_text": "两",
+          "romanization": "liǎng",
+          "audio": "zh/liang"
+        },
+        {
+          "id": "t_yao",
+          "target_text": "要",
+          "romanization": "yào",
+          "audio": "zh/yao"
+        }
+      ],
+      "solution": [
+        "t_wo",
+        "t_yao",
+        "t_liang",
+        "t_ge"
+      ],
+      "model_answer": {
+        "id": "我要两个。 Wǒ yào liǎng gè. 两 liǎng, bukan 二 èr.",
+        "en": "我要两个。 Wǒ yào liǎng gè. 两 liǎng, not 二 èr."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "ZHO-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-TRACE",
+      "image": "count_marble_7",
+      "target_text": "七",
+      "romanization": "qī",
+      "audio": "zh/qi1",
+      "trace": "hanzi_qi",
+      "model_answer": {
+        "id": "七 qī = 7.",
+        "en": "七 qī = 7."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "ZHO-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-TRACE",
+      "image": "count_marble_8",
+      "target_text": "八",
+      "romanization": "bā",
+      "audio": "zh/ba",
+      "trace": "hanzi_ba",
+      "model_answer": {
+        "id": "八 bā = 8.",
+        "en": "八 bā = 8."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "zh/ershi",
+      "options": [
+        {
+          "id": "p1",
+          "image": "count_marble_20",
+          "correct": true
+        },
+        {
+          "id": "p2",
+          "image": "count_marble_12"
+        },
+        {
+          "id": "p3",
+          "image": "count_marble_2"
+        }
+      ],
+      "model_answer": {
+        "id": "二十 èrshí = 2 × 10 = 20. 十二 shí'èr = 12.",
+        "en": "二十 èrshí = 2 × 10 = 20. 十二 shí'èr = 12."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "gesture": "connect",
+      "skills": [
+        "ZHO-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 25,
+      "prompt_id": "P-CONNECT",
+      "options": [
+        {
+          "id": "l1",
+          "target_text": "十二",
+          "romanization": "shí'èr",
+          "audio": "zh/shier"
+        },
+        {
+          "id": "l2",
+          "target_text": "二十",
+          "romanization": "èrshí",
+          "audio": "zh/ershi"
+        },
+        {
+          "id": "l3",
+          "target_text": "十五",
+          "romanization": "shíwǔ",
+          "audio": "zh/shiwu"
+        },
+        {
+          "id": "l4",
+          "target_text": "五十",
+          "romanization": "wǔshí",
+          "audio": "zh/wushi"
+        },
+        {
+          "id": "d15",
+          "text": {
+            "id": "15",
+            "en": "15"
+          }
+        },
+        {
+          "id": "d50",
+          "text": {
+            "id": "50",
+            "en": "50"
+          }
+        },
+        {
+          "id": "d20",
+          "text": {
+            "id": "20",
+            "en": "20"
+          }
+        },
+        {
+          "id": "d12",
+          "text": {
+            "id": "12",
+            "en": "12"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "l1": "d12",
+        "l2": "d20",
+        "l3": "d15",
+        "l4": "d50"
+      },
+      "model_answer": {
+        "id": "十二 shí'èr 12, 二十 èrshí 20, 十五 shíwǔ 15, 五十 wǔshí 50.",
+        "en": "十二 shí'èr 12, 二十 èrshí 20, 十五 shíwǔ 15, 五十 wǔshí 50."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "ZHO-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 26,
+      "prompt_id": "P-TRACE",
+      "image": "count_marble_9",
+      "target_text": "九",
+      "romanization": "jiǔ",
+      "audio": "zh/jiu",
+      "trace": "hanzi_jiu",
+      "model_answer": {
+        "id": "九 jiǔ = 9.",
+        "en": "九 jiǔ = 9."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-016",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "ZHO-NUM"
+      ],
+      "pool": "PRACT",
+      "order": 27,
+      "prompt_id": "P-TRACE",
+      "image": "count_marble_10",
+      "target_text": "十",
+      "romanization": "shí",
+      "audio": "zh/shi2",
+      "trace": "hanzi_shi",
+      "model_answer": {
+        "id": "十 shí = 10. 十一 shíyī = 11.",
+        "en": "十 shí = 10. 十一 shíyī = 11."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-017",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ZHO-NUM"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "十二",
+      "romanization": "shí'èr",
+      "audio": "zh/shier",
+      "options": [
+        {
+          "id": "p1",
+          "image": "count_marble_12",
+          "correct": true
+        },
+        {
+          "id": "p2",
+          "image": "count_marble_20"
+        },
+        {
+          "id": "p3",
+          "image": "count_marble_2"
+        }
+      ],
+      "model_answer": {
+        "id": "十二 shí'èr = 10 + 2 = 12. 二十 èrshí = 20.",
+        "en": "十二 shí'èr = 10 + 2 = 12. 二十 èrshí = 20."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-018",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-MEASURE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menghitung: 一 yī, ＿, 三 sān",
+            "en": "Counting: 一 yī, ＿, 三 sān"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_liang",
+          "target_text": "两",
+          "romanization": "liǎng",
+          "audio": "zh/liang"
+        },
+        {
+          "id": "t_er",
+          "target_text": "二",
+          "romanization": "èr",
+          "audio": "zh/er"
+        }
+      ],
+      "solution": [
+        "t_er"
+      ],
+      "model_answer": {
+        "id": "Menghitung: 一 yī, 二 èr, 三 sān. Sebelum 个 gè: 两 liǎng.",
+        "en": "Counting: 一 yī, 二 èr, 三 sān. Before 个 gè: 两 liǎng."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-02-019",
+      "unit": "02",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ZHO-NUM"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "model_answer": {
+        "id": "Angka 8 (八 bā) dianggap membawa untung karena bunyinya mirip 发 fā, 'makmur'. Olimpiade Beijing dibuka pukul 20.08 pada 8-8-2008.",
+        "en": "8 (八 bā) counts as lucky because it sounds like 发 fā, 'to prosper'. The Beijing Olympics opened at 8:08 pm on 8/8/2008."
+      },
+      "gem": true,
+      "source": "NPR, \"Olympics Open With Spotlight On Chinese Culture\" (8 August 2008: the ceremony began at 8:08 p.m. on the eighth day of the eighth month of 2008; eight is a lucky number in China); NPR, \"8-8-08, A Lucky Day For Weddings\" (August 2008: ba sounds like fa, 'prosperous').",
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-03-001",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-FAMILY"
+      ],
+      "pool": "PRACT",
+      "order": 28,
+      "prompt_id": "P-DRAG",
+      "options": [
+        {
+          "id": "l1",
+          "image": "fam_father"
+        },
+        {
+          "id": "l2",
+          "image": "fam_mother"
+        },
+        {
+          "id": "l3",
+          "image": "fam_grandfather"
+        },
+        {
+          "id": "l4",
+          "image": "fam_grandmother"
+        },
+        {
+          "id": "r_nai_nai",
+          "target_text": "奶奶",
+          "romanization": "nǎinai",
+          "audio": "zh/nainai"
+        },
+        {
+          "id": "r_ma_ma",
+          "target_text": "妈妈",
+          "romanization": "māma",
+          "audio": "zh/mama"
+        },
+        {
+          "id": "r_ba_ba",
+          "target_text": "爸爸",
+          "romanization": "bàba",
+          "audio": "zh/baba"
+        },
+        {
+          "id": "r_ye_ye",
+          "target_text": "爷爷",
+          "romanization": "yéye",
+          "audio": "zh/yeye"
+        }
+      ],
+      "solution_pairs": {
+        "l1": "r_ba_ba",
+        "l2": "r_ma_ma",
+        "l3": "r_ye_ye",
+        "l4": "r_nai_nai"
+      },
+      "model_answer": {
+        "id": "爸爸 bàba ayah, 妈妈 māma ibu, 爷爷 yéye kakek, 奶奶 nǎinai nenek.",
+        "en": "爸爸 bàba dad, 妈妈 māma mum, 爷爷 yéye grandpa, 奶奶 nǎinai grandma."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-03-002",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "ZHO-PEOPLE"
+      ],
+      "pool": "PRACT",
+      "order": 29,
+      "prompt_id": "P-TRACE",
+      "image": "pic_man",
+      "target_text": "人",
+      "romanization": "rén",
+      "audio": "zh/ren",
+      "trace": "hanzi_ren",
+      "model_answer": {
+        "id": "人 rén = orang.",
+        "en": "人 rén = person."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-03-003",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "gesture": "connect",
+      "skills": [
+        "ZHO-FAMILY"
+      ],
+      "pool": "PRACT",
+      "order": 30,
+      "prompt_id": "P-CONNECT",
+      "options": [
+        {
+          "id": "l1",
+          "image": "fam_brother",
+          "text": {
+            "id": "kakak laki-laki",
+            "en": "older brother"
+          }
+        },
+        {
+          "id": "l2",
+          "image": "fam_sister",
+          "text": {
+            "id": "kakak perempuan",
+            "en": "older sister"
+          }
+        },
+        {
+          "id": "l3",
+          "image": "pic_boy",
+          "text": {
+            "id": "adik laki-laki",
+            "en": "younger brother"
+          }
+        },
+        {
+          "id": "l4",
+          "image": "pic_girl",
+          "text": {
+            "id": "adik perempuan",
+            "en": "younger sister"
+          }
+        },
+        {
+          "id": "r_di_di",
+          "target_text": "弟弟",
+          "romanization": "dìdi",
+          "audio": "zh/didi"
+        },
+        {
+          "id": "r_ge_ge",
+          "target_text": "哥哥",
+          "romanization": "gēge",
+          "audio": "zh/gege"
+        },
+        {
+          "id": "r_mei_mei",
+          "target_text": "妹妹",
+          "romanization": "mèimei",
+          "audio": "zh/meimei"
+        },
+        {
+          "id": "r_jie_jie",
+          "target_text": "姐姐",
+          "romanization": "jiějie",
+          "audio": "zh/jiejie"
+        }
+      ],
+      "solution_pairs": {
+        "l1": "r_ge_ge",
+        "l2": "r_jie_jie",
+        "l3": "r_di_di",
+        "l4": "r_mei_mei"
+      },
+      "model_answer": {
+        "id": "哥哥 gēge, 姐姐 jiějie: kakak. 弟弟 dìdi, 妹妹 mèimei: adik.",
+        "en": "哥哥 gēge, 姐姐 jiějie: older. 弟弟 dìdi, 妹妹 mèimei: younger."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-03-004",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-FAMILY"
+      ],
+      "pool": "PRACT",
+      "order": 31,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "zh/meimei",
+      "options": [
+        {
+          "id": "p2",
+          "image": "fam_sister",
+          "text": {
+            "id": "kakak perempuan",
+            "en": "older sister"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "fam_mother"
+        },
+        {
+          "id": "p1",
+          "image": "pic_girl",
+          "text": {
+            "id": "adik perempuan",
+            "en": "younger sister"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "妹妹 mèimei = adik perempuan.",
+        "en": "妹妹 mèimei = younger sister."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-03-005",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "ZHO-FAMILY"
+      ],
+      "pool": "PRACT",
+      "order": 32,
+      "prompt_id": "P-TRACE",
+      "image": "pic_mouth",
+      "target_text": "口",
+      "romanization": "kǒu",
+      "audio": "zh/kou",
+      "trace": "hanzi_kou",
+      "model_answer": {
+        "id": "口 kǒu = mulut; juga kata satuan untuk anggota keluarga.",
+        "en": "口 kǒu = mouth; also the measure word for family members."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-03-006",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "tiles",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-FAMILY"
+      ],
+      "pool": "PRACT",
+      "order": 33,
+      "prompt_id": "P-BUILD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Keluarga saya ada empat orang.",
+            "en": "There are four of us."
+          }
+        }
+      ],
+      "image": "pic_house",
+      "options": [
+        {
+          "id": "t_kou",
+          "target_text": "口",
+          "romanization": "kǒu",
+          "audio": "zh/kou"
+        },
+        {
+          "id": "t_wo_jia",
+          "target_text": "我家",
+          "romanization": "wǒ jiā",
+          "audio": "zh/wo_jia"
+        },
+        {
+          "id": "t_ren",
+          "target_text": "人",
+          "romanization": "rén",
+          "audio": "zh/ren"
+        },
+        {
+          "id": "t_you",
+          "target_text": "有",
+          "romanization": "yǒu",
+          "audio": "zh/you"
+        },
+        {
+          "id": "t_si",
+          "target_text": "四",
+          "romanization": "sì",
+          "audio": "zh/si"
+        }
+      ],
+      "solution": [
+        "t_wo_jia",
+        "t_you",
+        "t_si",
+        "t_kou",
+        "t_ren"
+      ],
+      "model_answer": {
+        "id": "我家有四口人。 Wǒ jiā yǒu sì kǒu rén. = Keluarga saya ada empat orang.",
+        "en": "我家有四口人。 Wǒ jiā yǒu sì kǒu rén. = There are four of us."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-03-007",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "ZHO-PEOPLE"
+      ],
+      "pool": "PRACT",
+      "order": 34,
+      "prompt_id": "P-TRACE",
+      "image": "pic_big",
+      "target_text": "大",
+      "romanization": "dà",
+      "audio": "zh/da",
+      "trace": "hanzi_da",
+      "model_answer": {
+        "id": "大 dà = besar. 大学 dàxué = universitas.",
+        "en": "大 dà = big. 大学 dàxué = university."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-03-008",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-PEOPLE"
+      ],
+      "pool": "PRACT",
+      "order": 35,
+      "prompt_id": "P-DRAG",
+      "options": [
+        {
+          "id": "l1",
+          "image": "pic_teacher"
+        },
+        {
+          "id": "l2",
+          "image": "pic_doctor"
+        },
+        {
+          "id": "l3",
+          "image": "pic_friends"
+        },
+        {
+          "id": "l4",
+          "image": "pic_girl"
+        },
+        {
+          "id": "r_yi_sheng",
+          "target_text": "医生",
+          "romanization": "yīshēng",
+          "audio": "zh/yisheng"
+        },
+        {
+          "id": "r_nv_hai",
+          "target_text": "女孩",
+          "romanization": "nǚhái",
+          "audio": "zh/nvhai"
+        },
+        {
+          "id": "r_lao_shi",
+          "target_text": "老师",
+          "romanization": "lǎoshī",
+          "audio": "zh/laoshi"
+        },
+        {
+          "id": "r_peng_you",
+          "target_text": "朋友",
+          "romanization": "péngyou",
+          "audio": "zh/pengyou"
+        }
+      ],
+      "solution_pairs": {
+        "l1": "r_lao_shi",
+        "l2": "r_yi_sheng",
+        "l3": "r_peng_you",
+        "l4": "r_nv_hai"
+      },
+      "model_answer": {
+        "id": "老师 lǎoshī guru, 医生 yīshēng dokter, 朋友 péngyou teman, 女孩 nǚhái anak perempuan.",
+        "en": "老师 lǎoshī teacher, 医生 yīshēng doctor, 朋友 péngyou friend, 女孩 nǚhái girl."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-03-009",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "ZHO-PEOPLE"
+      ],
+      "pool": "PRACT",
+      "order": 36,
+      "prompt_id": "P-TRACE",
+      "image": "pic_small",
+      "target_text": "小",
+      "romanization": "xiǎo",
+      "audio": "zh/xiao",
+      "trace": "hanzi_xiao",
+      "model_answer": {
+        "id": "小 xiǎo = kecil. 小孩 xiǎohái = anak kecil.",
+        "en": "小 xiǎo = small. 小孩 xiǎohái = child."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-03-010",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-PEOPLE"
+      ],
+      "pool": "PRACT",
+      "order": 37,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "zh/yisheng",
+      "options": [
+        {
+          "id": "p2",
+          "image": "pic_teacher"
+        },
+        {
+          "id": "p1",
+          "image": "pic_doctor",
+          "correct": true
+        },
+        {
+          "id": "p3",
+          "image": "pic_friends"
+        }
+      ],
+      "model_answer": {
+        "id": "医生 yīshēng = dokter.",
+        "en": "医生 yīshēng = doctor."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-03-011",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ZHO-FAMILY"
+      ],
+      "pool": "PRACT",
+      "order": 38,
+      "prompt_id": "P-REPLY",
+      "target_text": "你有兄弟姐妹吗？",
+      "romanization": "Nǐ yǒu xiōngdì jiěmèi ma?",
+      "audio": "zh/ni_you_xiongdi_jiemei_ma",
+      "options": [
+        {
+          "id": "w_wo_jiao_wang_ming",
+          "target_text": "我叫王明。",
+          "romanization": "Wǒ jiào Wáng Míng.",
+          "audio": "zh/wo_jiao_wang_ming"
+        },
+        {
+          "id": "w_wo_you_yi_ge_ge_ge",
+          "target_text": "我有一个哥哥。",
+          "romanization": "Wǒ yǒu yī gè gēge.",
+          "audio": "zh/wo_you_yi_ge_gege",
+          "correct": true
+        },
+        {
+          "id": "w_wo_shi_lao_shi",
+          "target_text": "我是老师。",
+          "romanization": "Wǒ shì lǎoshī.",
+          "audio": "zh/wo_shi_laoshi"
+        }
+      ],
+      "model_answer": {
+        "id": "我有一个哥哥。 Wǒ yǒu yī gè gēge. = Saya punya satu kakak laki-laki.",
+        "en": "我有一个哥哥。 Wǒ yǒu yī gè gēge. = I have an older brother."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-03-012",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ZHO-FAMILY"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "爷爷",
+      "romanization": "yéye",
+      "audio": "zh/yeye",
+      "options": [
+        {
+          "id": "p1",
+          "image": "fam_grandfather",
+          "correct": true
+        },
+        {
+          "id": "p2",
+          "image": "fam_father"
+        },
+        {
+          "id": "p3",
+          "image": "fam_baby"
+        }
+      ],
+      "model_answer": {
+        "id": "爷爷 yéye = kakek, ayah dari ayah.",
+        "en": "爷爷 yéye = grandpa, Dad's father."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-03-013",
+      "unit": "03",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ZHO-PEOPLE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "老师",
+      "romanization": "lǎoshī",
+      "audio": "zh/laoshi",
+      "options": [
+        {
+          "id": "p2",
+          "image": "pic_doctor"
+        },
+        {
+          "id": "p3",
+          "image": "pic_man"
+        },
+        {
+          "id": "p1",
+          "image": "pic_teacher",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "老师 lǎoshī = guru.",
+        "en": "老师 lǎoshī = teacher."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-04-001",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 39,
+      "prompt_id": "P-DRAG",
+      "options": [
+        {
+          "id": "l1",
+          "image": "pic_rice_bowl"
+        },
+        {
+          "id": "l2",
+          "image": "pic_noodle_bowl"
+        },
+        {
+          "id": "l3",
+          "image": "pic_dumplings"
+        },
+        {
+          "id": "l4",
+          "image": "pic_vegetables"
+        },
+        {
+          "id": "r_jiao_zi",
+          "target_text": "饺子",
+          "romanization": "jiǎozi",
+          "audio": "zh/jiaozi"
+        },
+        {
+          "id": "r_mi_fan",
+          "target_text": "米饭",
+          "romanization": "mǐfàn",
+          "audio": "zh/mifan"
+        },
+        {
+          "id": "r_shu_cai",
+          "target_text": "蔬菜",
+          "romanization": "shūcài",
+          "audio": "zh/shucai"
+        },
+        {
+          "id": "r_mian_tiao",
+          "target_text": "面条",
+          "romanization": "miàntiáo",
+          "audio": "zh/miantiao"
+        }
+      ],
+      "solution_pairs": {
+        "l1": "r_mi_fan",
+        "l2": "r_mian_tiao",
+        "l3": "r_jiao_zi",
+        "l4": "r_shu_cai"
+      },
+      "model_answer": {
+        "id": "米饭 mǐfàn nasi, 面条 miàntiáo mi, 饺子 jiǎozi jiaozi, 蔬菜 shūcài sayur.",
+        "en": "米饭 mǐfàn rice, 面条 miàntiáo noodles, 饺子 jiǎozi dumplings, 蔬菜 shūcài vegetables."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-04-002",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "ZHO-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 40,
+      "prompt_id": "P-TRACE",
+      "image": "drink_water",
+      "target_text": "水",
+      "romanization": "shuǐ",
+      "audio": "zh/shui",
+      "trace": "hanzi_shui",
+      "model_answer": {
+        "id": "水 shuǐ = air. 喝水 hē shuǐ = minum air.",
+        "en": "水 shuǐ = water. 喝水 hē shuǐ = to drink water."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-04-003",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 41,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "zh/kafei",
+      "options": [
+        {
+          "id": "p2",
+          "image": "pic_tea_cup"
+        },
+        {
+          "id": "p3",
+          "image": "pic_juice"
+        },
+        {
+          "id": "p1",
+          "image": "pic_coffee_cup",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "咖啡 kāfēi = kopi.",
+        "en": "咖啡 kāfēi = coffee."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-04-004",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "memory_flip",
+      "skills": [
+        "ZHO-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 42,
+      "prompt_id": "P-MEMORY",
+      "options": [
+        {
+          "id": "m1",
+          "image": "pic_tea_cup"
+        },
+        {
+          "id": "m2",
+          "image": "pic_soup"
+        },
+        {
+          "id": "m3",
+          "image": "pic_fish_dish"
+        },
+        {
+          "id": "m4",
+          "image": "pic_chicken_dish"
+        },
+        {
+          "id": "c_tang",
+          "target_text": "汤",
+          "romanization": "tāng",
+          "audio": "zh/tang"
+        },
+        {
+          "id": "c_yu",
+          "target_text": "鱼",
+          "romanization": "yú",
+          "audio": "zh/yu"
+        },
+        {
+          "id": "c_ji_rou",
+          "target_text": "鸡肉",
+          "romanization": "jīròu",
+          "audio": "zh/jirou"
+        },
+        {
+          "id": "c_cha",
+          "target_text": "茶",
+          "romanization": "chá",
+          "audio": "zh/cha"
+        }
+      ],
+      "solution_pairs": {
+        "m1": "c_cha",
+        "m2": "c_tang",
+        "m3": "c_yu",
+        "m4": "c_ji_rou"
+      },
+      "model_answer": {
+        "id": "茶 chá teh, 汤 tāng sup, 鱼 yú ikan, 鸡肉 jīròu daging ayam.",
+        "en": "茶 chá tea, 汤 tāng soup, 鱼 yú fish, 鸡肉 jīròu chicken."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-04-005",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "ZHO-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 43,
+      "prompt_id": "P-TRACE",
+      "target_text": "火",
+      "romanization": "huǒ",
+      "audio": "zh/huo",
+      "trace": "hanzi_huo",
+      "model_answer": {
+        "id": "火 huǒ = api. 火锅 huǒguō = hotpot (steamboat).",
+        "en": "火 huǒ = fire. 火锅 huǒguō = hot pot."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-04-006",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-FOOD"
+      ],
+      "pool": "PRACT",
+      "order": 44,
+      "prompt_id": "P-SORT",
+      "options": [
+        {
+          "id": "b_chi",
+          "target_text": "吃",
+          "romanization": "chī",
+          "audio": "zh/chi"
+        },
+        {
+          "id": "b_he",
+          "target_text": "喝",
+          "romanization": "hē",
+          "audio": "zh/he"
+        },
+        {
+          "id": "f1",
+          "image": "pic_soup"
+        },
+        {
+          "id": "f2",
+          "image": "pic_bread"
+        },
+        {
+          "id": "f3",
+          "image": "pic_coffee_cup"
+        },
+        {
+          "id": "f4",
+          "image": "pic_noodle_bowl"
+        },
+        {
+          "id": "f5",
+          "image": "pic_juice"
+        },
+        {
+          "id": "f6",
+          "image": "pic_egg_fried"
+        }
+      ],
+      "solution_pairs": {
+        "f1": "b_he",
+        "f2": "b_chi",
+        "f3": "b_he",
+        "f4": "b_chi",
+        "f5": "b_he",
+        "f6": "b_chi"
+      },
+      "model_answer": {
+        "id": "Sup masuk 喝 hē: dalam Mandarin, sup 'diminum'.",
+        "en": "Soup goes with 喝 hē: in Mandarin you 'drink' soup."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-04-007",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "tiles",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-ORDER"
+      ],
+      "pool": "PRACT",
+      "order": 45,
+      "prompt_id": "P-BUILD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya mau secangkir teh.",
+            "en": "I'd like a cup of tea."
+          }
+        }
+      ],
+      "image": "pic_tea_cup",
+      "options": [
+        {
+          "id": "t_cha",
+          "target_text": "茶",
+          "romanization": "chá",
+          "audio": "zh/cha"
+        },
+        {
+          "id": "t_wo",
+          "target_text": "我",
+          "romanization": "wǒ",
+          "audio": "zh/wo"
+        },
+        {
+          "id": "t_yi_bei",
+          "target_text": "一杯",
+          "romanization": "yī bēi",
+          "audio": "zh/yi_bei"
+        },
+        {
+          "id": "t_yao",
+          "target_text": "要",
+          "romanization": "yào",
+          "audio": "zh/yao"
+        }
+      ],
+      "solution": [
+        "t_wo",
+        "t_yao",
+        "t_yi_bei",
+        "t_cha"
+      ],
+      "model_answer": {
+        "id": "我要一杯茶。 Wǒ yào yī bēi chá. = Saya mau secangkir teh.",
+        "en": "我要一杯茶。 Wǒ yào yī bēi chá. = I'd like a cup of tea."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-04-008",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ZHO-ORDER"
+      ],
+      "pool": "PRACT",
+      "order": 46,
+      "prompt_id": "P-REPLY",
+      "target_text": "你要什么？",
+      "romanization": "Nǐ yào shénme?",
+      "audio": "zh/ni_yao_shenme",
+      "options": [
+        {
+          "id": "w_duo_shao_qian",
+          "target_text": "多少钱？",
+          "romanization": "Duōshao qián?",
+          "audio": "zh/duoshao_qian"
+        },
+        {
+          "id": "w_wo_yao_yi_wan_mian_tiao",
+          "target_text": "我要一碗面条。",
+          "romanization": "Wǒ yào yī wǎn miàntiáo.",
+          "audio": "zh/wo_yao_yi_wan_miantiao",
+          "correct": true
+        },
+        {
+          "id": "w_bu_ke_qi",
+          "target_text": "不客气",
+          "romanization": "bù kèqi",
+          "audio": "zh/bu_keqi"
+        }
+      ],
+      "model_answer": {
+        "id": "我要一碗面条。 Wǒ yào yī wǎn miàntiáo. = Saya mau semangkuk mi.",
+        "en": "我要一碗面条。 Wǒ yào yī wǎn miàntiáo. = A bowl of noodles, please."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-04-009",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-ORDER"
+      ],
+      "pool": "PRACT",
+      "order": 47,
+      "prompt_id": "P-LISTEN",
+      "audio": "zh/duoshao_qian",
+      "options": [
+        {
+          "id": "o_price",
+          "text": {
+            "id": "Berapa harganya?",
+            "en": "How much is it?"
+          },
+          "correct": true
+        },
+        {
+          "id": "o_what",
+          "text": {
+            "id": "Mau pesan apa?",
+            "en": "What would you like?"
+          }
+        },
+        {
+          "id": "o_tasty",
+          "text": {
+            "id": "Enak sekali!",
+            "en": "It's delicious!"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "多少钱？ Duōshao qián? = Berapa harganya?",
+        "en": "多少钱？ Duōshao qián? = How much is it?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-04-010",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "tiles",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-ORDER"
+      ],
+      "pool": "PRACT",
+      "order": 48,
+      "prompt_id": "P-BUILD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya tidak makan daging babi.",
+            "en": "I don't eat pork."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_chi",
+          "target_text": "吃",
+          "romanization": "chī",
+          "audio": "zh/chi"
+        },
+        {
+          "id": "t_zhu_rou",
+          "target_text": "猪肉",
+          "romanization": "zhūròu",
+          "audio": "zh/zhurou"
+        },
+        {
+          "id": "t_wo",
+          "target_text": "我",
+          "romanization": "wǒ",
+          "audio": "zh/wo"
+        },
+        {
+          "id": "t_bu",
+          "target_text": "不",
+          "romanization": "bù",
+          "audio": "zh/bu"
+        }
+      ],
+      "solution": [
+        "t_wo",
+        "t_bu",
+        "t_chi",
+        "t_zhu_rou"
+      ],
+      "model_answer": {
+        "id": "我不吃猪肉。 Wǒ bù chī zhūròu. = Saya tidak makan daging babi.",
+        "en": "我不吃猪肉。 Wǒ bù chī zhūròu. = I don't eat pork."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-04-011",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ZHO-ORDER"
+      ],
+      "pool": "PRACT",
+      "order": 49,
+      "prompt_id": "P-MEANING",
+      "target_text": "清真",
+      "romanization": "qīngzhēn",
+      "audio": "zh/qingzhen",
+      "options": [
+        {
+          "id": "o_halal",
+          "text": {
+            "id": "halal",
+            "en": "halal"
+          },
+          "correct": true
+        },
+        {
+          "id": "o_spicy",
+          "text": {
+            "id": "pedas",
+            "en": "spicy"
+          }
+        },
+        {
+          "id": "o_closed",
+          "text": {
+            "id": "tutup",
+            "en": "closed"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "清真 qīngzhēn = halal. Cari tulisan ini di rumah makan.",
+        "en": "清真 qīngzhēn = halal. Look for it on restaurant signs."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-04-012",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-ORDER"
+      ],
+      "pool": "PRACT",
+      "order": 50,
+      "prompt_id": "P-LISTEN",
+      "audio": "zh/mai",
+      "options": [
+        {
+          "id": "o_buy",
+          "text": {
+            "id": "membeli",
+            "en": "to buy"
+          },
+          "correct": true
+        },
+        {
+          "id": "o_sell",
+          "text": {
+            "id": "menjual",
+            "en": "to sell"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "买 mǎi (nada 3) = membeli; 卖 mài (nada 4) = menjual.",
+        "en": "买 mǎi (tone 3) = to buy; 卖 mài (tone 4) = to sell."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-04-013",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ZHO-FOOD"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "米饭",
+      "romanization": "mǐfàn",
+      "audio": "zh/mifan",
+      "options": [
+        {
+          "id": "p2",
+          "image": "pic_noodle_bowl"
+        },
+        {
+          "id": "p3",
+          "image": "pic_bread"
+        },
+        {
+          "id": "p1",
+          "image": "pic_rice_bowl",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "米饭 mǐfàn = nasi.",
+        "en": "米饭 mǐfàn = rice."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-04-014",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ZHO-ORDER"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-REPLY",
+      "target_text": "多少钱？",
+      "romanization": "Duōshao qián?",
+      "audio": "zh/duoshao_qian",
+      "options": [
+        {
+          "id": "w_xie_xie",
+          "target_text": "谢谢",
+          "romanization": "xièxie",
+          "audio": "zh/xiexie"
+        },
+        {
+          "id": "w_shi_kuai",
+          "target_text": "十块。",
+          "romanization": "Shí kuài.",
+          "audio": "zh/shi_kuai",
+          "correct": true
+        },
+        {
+          "id": "w_zai_jian",
+          "target_text": "再见",
+          "romanization": "zàijiàn",
+          "audio": "zh/zaijian"
+        }
+      ],
+      "model_answer": {
+        "id": "十块。 Shí kuài. = Sepuluh yuan.",
+        "en": "十块。 Shí kuài. = Ten yuan."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-04-015",
+      "unit": "04",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ZHO-FOOD"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "model_answer": {
+        "id": "Mi, tahu, bakpao, dan bihun masuk ke bahasa Indonesia dari bahasa Hokkien, bukan Mandarin. Tahu dari Hokkien tāu-hū; Mandarin-nya 豆腐 dòufu.",
+        "en": "Mi, tahu, bakpao and bihun came into Indonesian from Hokkien, not Mandarin. Tahu is Hokkien tāu-hū; in Mandarin it's 豆腐 dòufu."
+      },
+      "gem": true,
+      "source": "Wikipedia, \"List of Chinese loanwords in Indonesian\" (entries mi 麵 mī, tahu 豆腐 tāu-hū, bakpao 肉包 bah-pâu, bihun 米粉 bí-hún, all Hokkien), which cites J. S. Badudu, Kamus Kata-Kata Serapan Asing dalam Bahasa Indonesia (Kompas, 2003) and KBBI (Balai Pustaka, 1999).",
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-05-001",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 51,
+      "prompt_id": "P-DRAG",
+      "options": [
+        {
+          "id": "l1",
+          "image": "pic_hospital"
+        },
+        {
+          "id": "l2",
+          "image": "pic_school"
+        },
+        {
+          "id": "l3",
+          "image": "pic_market"
+        },
+        {
+          "id": "l4",
+          "image": "pic_park"
+        },
+        {
+          "id": "r_shi_chang",
+          "target_text": "市场",
+          "romanization": "shìchǎng",
+          "audio": "zh/shichang"
+        },
+        {
+          "id": "r_yi_yuan",
+          "target_text": "医院",
+          "romanization": "yīyuàn",
+          "audio": "zh/yiyuan"
+        },
+        {
+          "id": "r_gong_yuan",
+          "target_text": "公园",
+          "romanization": "gōngyuán",
+          "audio": "zh/gongyuan"
+        },
+        {
+          "id": "r_xue_xiao",
+          "target_text": "学校",
+          "romanization": "xuéxiào",
+          "audio": "zh/xuexiao"
+        }
+      ],
+      "solution_pairs": {
+        "l1": "r_yi_yuan",
+        "l2": "r_xue_xiao",
+        "l3": "r_shi_chang",
+        "l4": "r_gong_yuan"
+      },
+      "model_answer": {
+        "id": "医院 yīyuàn rumah sakit, 学校 xuéxiào sekolah, 市场 shìchǎng pasar, 公园 gōngyuán taman.",
+        "en": "医院 yīyuàn hospital, 学校 xuéxiào school, 市场 shìchǎng market, 公园 gōngyuán park."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-05-002",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "ZHO-TRANSPORT"
+      ],
+      "pool": "PRACT",
+      "order": 52,
+      "prompt_id": "P-TRACE",
+      "image": "pos_cat_above",
+      "target_text": "上",
+      "romanization": "shàng",
+      "audio": "zh/shang",
+      "trace": "hanzi_shang",
+      "model_answer": {
+        "id": "上 shàng = atas, naik. 上车 shàng chē = naik kendaraan.",
+        "en": "上 shàng = up. 上车 shàng chē = to get on."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-05-003",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "ZHO-TRANSPORT"
+      ],
+      "pool": "PRACT",
+      "order": 53,
+      "prompt_id": "P-TRACE",
+      "image": "pos_cat_below",
+      "target_text": "下",
+      "romanization": "xià",
+      "audio": "zh/xia",
+      "trace": "hanzi_xia",
+      "model_answer": {
+        "id": "下 xià = bawah, turun. 下车 xià chē = turun.",
+        "en": "下 xià = down. 下车 xià chē = to get off."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-05-004",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "tiles",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 54,
+      "prompt_id": "P-BUILD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Permisi, stasiun kereta di mana?",
+            "en": "Excuse me, where's the station?"
+          }
+        }
+      ],
+      "image": "pic_station",
+      "options": [
+        {
+          "id": "t_nar",
+          "target_text": "哪儿",
+          "romanization": "nǎr",
+          "audio": "zh/nar"
+        },
+        {
+          "id": "t_qing_wen",
+          "target_text": "请问",
+          "romanization": "qǐngwèn",
+          "audio": "zh/qingwen"
+        },
+        {
+          "id": "t_zai",
+          "target_text": "在",
+          "romanization": "zài",
+          "audio": "zh/zai"
+        },
+        {
+          "id": "t_huo_che_zhan",
+          "target_text": "火车站",
+          "romanization": "huǒchēzhàn",
+          "audio": "zh/huochezhan"
+        }
+      ],
+      "solution": [
+        "t_qing_wen",
+        "t_huo_che_zhan",
+        "t_zai",
+        "t_nar"
+      ],
+      "model_answer": {
+        "id": "请问，火车站在哪儿？ Qǐngwèn, huǒchēzhàn zài nǎr? = Permisi, stasiun kereta di mana?",
+        "en": "请问，火车站在哪儿？ Qǐngwèn, huǒchēzhàn zài nǎr? = Excuse me, where's the station?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-05-005",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ZHO-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 55,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "zh/yiyuan",
+      "options": [
+        {
+          "id": "p2",
+          "image": "pic_school"
+        },
+        {
+          "id": "p1",
+          "image": "pic_hospital",
+          "correct": true
+        },
+        {
+          "id": "p3",
+          "image": "pic_market"
+        }
+      ],
+      "model_answer": {
+        "id": "医院 yīyuàn = rumah sakit.",
+        "en": "医院 yīyuàn = hospital."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-05-006",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ZHO-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 56,
+      "prompt_id": "P-MEANING",
+      "target_text": "出口",
+      "romanization": "chūkǒu",
+      "audio": "zh/chukou",
+      "options": [
+        {
+          "id": "o_exit",
+          "text": {
+            "id": "pintu keluar",
+            "en": "exit"
+          },
+          "correct": true
+        },
+        {
+          "id": "o_in",
+          "text": {
+            "id": "pintu masuk",
+            "en": "entrance"
+          }
+        },
+        {
+          "id": "o_wc",
+          "text": {
+            "id": "toilet",
+            "en": "toilet"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "出口 chūkǒu = keluar; 入口 rùkǒu = masuk. Keduanya punya 口 kǒu.",
+        "en": "出口 chūkǒu = exit; 入口 rùkǒu = entrance. Both have 口 kǒu."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-05-007",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "trace",
+      "skills": [
+        "ZHO-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 57,
+      "prompt_id": "P-TRACE",
+      "image": "pic_mountain",
+      "target_text": "山",
+      "romanization": "shān",
+      "audio": "zh/shan",
+      "trace": "hanzi_shan",
+      "model_answer": {
+        "id": "山 shān = gunung. 火山 huǒshān = gunung berapi.",
+        "en": "山 shān = mountain. 火山 huǒshān = volcano."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-05-008",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "gesture": "connect",
+      "skills": [
+        "ZHO-TRANSPORT"
+      ],
+      "pool": "PRACT",
+      "order": 58,
+      "prompt_id": "P-CONNECT",
+      "options": [
+        {
+          "id": "l1",
+          "image": "pic_train"
+        },
+        {
+          "id": "l2",
+          "image": "pic_plane"
+        },
+        {
+          "id": "l3",
+          "image": "pic_bus"
+        },
+        {
+          "id": "l4",
+          "image": "pic_bicycle"
+        },
+        {
+          "id": "r_fei_ji",
+          "target_text": "飞机",
+          "romanization": "fēijī",
+          "audio": "zh/feiji"
+        },
+        {
+          "id": "r_zi_xing_che",
+          "target_text": "自行车",
+          "romanization": "zìxíngchē",
+          "audio": "zh/zixingche"
+        },
+        {
+          "id": "r_huo_che",
+          "target_text": "火车",
+          "romanization": "huǒchē",
+          "audio": "zh/huoche"
+        },
+        {
+          "id": "r_gong_jiao_che",
+          "target_text": "公交车",
+          "romanization": "gōngjiāochē",
+          "audio": "zh/gongjiaoche"
+        }
+      ],
+      "solution_pairs": {
+        "l1": "r_huo_che",
+        "l2": "r_fei_ji",
+        "l3": "r_gong_jiao_che",
+        "l4": "r_zi_xing_che"
+      },
+      "model_answer": {
+        "id": "火车 huǒchē kereta, 飞机 fēijī pesawat, 公交车 gōngjiāochē bus, 自行车 zìxíngchē sepeda.",
+        "en": "火车 huǒchē train, 飞机 fēijī plane, 公交车 gōngjiāochē bus, 自行车 zìxíngchē bicycle."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-05-009",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-TRANSPORT"
+      ],
+      "pool": "PRACT",
+      "order": 59,
+      "prompt_id": "P-SORT",
+      "options": [
+        {
+          "id": "b_zuo",
+          "target_text": "坐",
+          "romanization": "zuò",
+          "audio": "zh/zuo"
+        },
+        {
+          "id": "b_qi",
+          "target_text": "骑",
+          "romanization": "qí",
+          "audio": "zh/qi2"
+        },
+        {
+          "id": "v1",
+          "image": "pic_bus"
+        },
+        {
+          "id": "v2",
+          "image": "pic_bicycle"
+        },
+        {
+          "id": "v3",
+          "image": "pic_train"
+        },
+        {
+          "id": "v4",
+          "image": "pic_motorbike"
+        },
+        {
+          "id": "v5",
+          "image": "pic_plane"
+        },
+        {
+          "id": "v6",
+          "image": "pic_horse"
+        }
+      ],
+      "solution_pairs": {
+        "v1": "b_zuo",
+        "v2": "b_qi",
+        "v3": "b_zuo",
+        "v4": "b_qi",
+        "v5": "b_zuo",
+        "v6": "b_qi"
+      },
+      "model_answer": {
+        "id": "坐 zuò: bus, kereta, pesawat. 骑 qí: sepeda, motor, kuda.",
+        "en": "坐 zuò: bus, train, plane. 骑 qí: bike, motorbike, horse."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-05-010",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "ZHO-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 60,
+      "prompt_id": "P-TRACE",
+      "image": "pic_sun",
+      "target_text": "日",
+      "romanization": "rì",
+      "audio": "zh/ri",
+      "trace": "hanzi_ri",
+      "model_answer": {
+        "id": "日 rì = matahari, hari. 日本 Rìběn = Jepang.",
+        "en": "日 rì = sun, day. 日本 Rìběn = Japan."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-05-011",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "ZHO-TRANSPORT"
+      ],
+      "pool": "PRACT",
+      "order": 61,
+      "prompt_id": "P-TRACE",
+      "image": "sleep_moon",
+      "target_text": "月",
+      "romanization": "yuè",
+      "audio": "zh/yue",
+      "trace": "hanzi_yue",
+      "model_answer": {
+        "id": "月 yuè = bulan. 月台 yuètái = peron stasiun.",
+        "en": "月 yuè = moon, month. 月台 yuètái = railway platform."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-05-012",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "tiles",
+      "gesture": "drag",
+      "skills": [
+        "ZHO-TRANSPORT"
+      ],
+      "pool": "PRACT",
+      "order": 62,
+      "prompt_id": "P-BUILD",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya ke Shanghai naik kereta.",
+            "en": "I'm going to Shanghai by train."
+          }
+        }
+      ],
+      "image": "pic_train",
+      "options": [
+        {
+          "id": "t_shang_hai",
+          "target_text": "上海",
+          "romanization": "Shànghǎi",
+          "audio": "zh/shanghai"
+        },
+        {
+          "id": "t_zuo",
+          "target_text": "坐",
+          "romanization": "zuò",
+          "audio": "zh/zuo"
+        },
+        {
+          "id": "t_qu",
+          "target_text": "去",
+          "romanization": "qù",
+          "audio": "zh/qu"
+        },
+        {
+          "id": "t_huo_che",
+          "target_text": "火车",
+          "romanization": "huǒchē",
+          "audio": "zh/huoche"
+        },
+        {
+          "id": "t_wo",
+          "target_text": "我",
+          "romanization": "wǒ",
+          "audio": "zh/wo"
+        }
+      ],
+      "solution": [
+        "t_wo",
+        "t_zuo",
+        "t_huo_che",
+        "t_qu",
+        "t_shang_hai"
+      ],
+      "model_answer": {
+        "id": "我坐火车去上海。 Wǒ zuò huǒchē qù Shànghǎi. = Saya ke Shanghai naik kereta.",
+        "en": "我坐火车去上海。 Wǒ zuò huǒchē qù Shànghǎi. = I'm going to Shanghai by train."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-05-013",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "trace",
+      "skills": [
+        "ZHO-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 63,
+      "prompt_id": "P-TRACE",
+      "image": "pic_tree",
+      "target_text": "木",
+      "romanization": "mù",
+      "audio": "zh/mu",
+      "trace": "hanzi_mu",
+      "model_answer": {
+        "id": "木 mù = kayu, pohon. 木 + 木 = 林 lín, hutan kecil.",
+        "en": "木 mù = wood, tree. 木 + 木 = 林 lín, woods."
+      },
+      "feedback_ids": {
+        "correct": "FB-TRACED",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-05-014",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ZHO-PLACE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "学校",
+      "romanization": "xuéxiào",
+      "audio": "zh/xuexiao",
+      "options": [
+        {
+          "id": "p2",
+          "image": "pic_hospital"
+        },
+        {
+          "id": "p3",
+          "image": "pic_park"
+        },
+        {
+          "id": "p1",
+          "image": "pic_school",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "学校 xuéxiào = sekolah.",
+        "en": "学校 xuéxiào = school."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-05-015",
+      "unit": "05",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ZHO-TRANSPORT"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "火车",
+      "romanization": "huǒchē",
+      "audio": "zh/huoche",
+      "options": [
+        {
+          "id": "p2",
+          "image": "pic_car"
+        },
+        {
+          "id": "p3",
+          "image": "pic_bus"
+        },
+        {
+          "id": "p1",
+          "image": "pic_train",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "火车 huǒchē = kereta api.",
+        "en": "火车 huǒchē = train."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "五 wǔ × 二 èr = ?",
+            "en": "五 wǔ × 二 èr = ?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "q_qi",
+          "target_text": "七",
+          "romanization": "qī",
+          "audio": "zh/qi1"
+        },
+        {
+          "id": "q_shi",
+          "target_text": "十",
+          "romanization": "shí",
+          "audio": "zh/shi2",
+          "correct": true
+        },
+        {
+          "id": "q_san",
+          "target_text": "三",
+          "romanization": "sān",
+          "audio": "zh/san"
+        }
+      ],
+      "model_answer": {
+        "id": "五 wǔ × 二 èr = 十 shí (5 × 2 = 10).",
+        "en": "五 wǔ × 二 èr = 十 shí (5 × 2 = 10)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    },
+    {
+      "item_id": "ZHO-A-P-DP-02",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "人 rén + 木 mù = 休 xiū = ?",
+            "en": "人 rén + 木 mù = 休 xiū = ?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "o_rest",
+          "text": {
+            "id": "beristirahat",
+            "en": "to rest"
+          },
+          "correct": true
+        },
+        {
+          "id": "o_run",
+          "text": {
+            "id": "berlari",
+            "en": "to run"
+          }
+        },
+        {
+          "id": "o_plant",
+          "text": {
+            "id": "menanam",
+            "en": "to plant"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "休 xiū = beristirahat: orang bersandar di pohon.",
+        "en": "休 xiū = to rest: a person leaning on a tree."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "zho-a-pemula-0.1"
+    }
+  ]
+}

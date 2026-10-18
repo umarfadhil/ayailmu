@@ -1,0 +1,2452 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "nil-a-h-0.1",
+    "subject": "nilai",
+    "track": "nil-a-h",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "level": "mahir",
+    "title": {
+      "id": "Nilai — Mahir (Dewasa)",
+      "en": "Values — Advanced (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12) for review: needs a values/character-education reviewer (universal, cross-faith, non-partisan) and the Indonesian and English language reviewers before any item is approved (docs/content/MODULES_LEVELS_STORIES.md section 3, adults Mahir). Stories are original fiction; val_* scenes are being drawn.",
+  "prompts": {
+    "P-BEST": {
+      "id": "Mana yang paling membantu?",
+      "en": "Which helps most?"
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang paling tepat.",
+      "en": "Pick the best picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban terbaik.",
+      "en": "Choose the best answer."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-SORT": {
+      "id": "Kelompokkan gambarnya.",
+      "en": "Sort the pictures."
+    },
+    "P-MATCH": {
+      "id": "Pasangkan.",
+      "en": "Match them up."
+    },
+    "P-ORDER": {
+      "id": "Urutkan gambarnya.",
+      "en": "Put the pictures in order."
+    },
+    "P-MEMORY": {
+      "id": "Buka kartu, temukan pasangannya.",
+      "en": "Flip cards, find the pairs."
+    },
+    "P-STORY": {
+      "id": "Simak ceritanya.",
+      "en": "Watch the story."
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "That's it. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Baik, kita lanjut.",
+      "en": "Good, let's continue."
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Integritas dan adil",
+        "en": "Integrity and fairness"
+      },
+      "sticker": "sticker_compass"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Empati dan mengelola emosi",
+        "en": "Empathy and managing emotions"
+      },
+      "sticker": "sticker_lantern"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "NIL-A-H-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Integritas dan adil",
+        "en": "Integrity and fairness"
+      },
+      "body": [
+        {
+          "id": "Integritas: berbuat benar juga saat tidak ada yang melihat.",
+          "en": "Integrity: doing the right thing even when no one is watching."
+        },
+        {
+          "id": "Di tempat kerja, itu berarti jujur soal waktu, uang, data, dan kesalahan.",
+          "en": "At work, that means honesty about time, money, data and mistakes."
+        },
+        {
+          "id": "Adil tidak selalu sama rata: kadang sesuai giliran, kadang sesuai kebutuhan, selalu dengan aturan yang jelas.",
+          "en": "Fair isn't always equal: sometimes by turn, sometimes by need, always with clear rules."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "NIL-A-H-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Empati dan mengelola emosi",
+        "en": "Empathy and managing emotions"
+      },
+      "body": [
+        {
+          "id": "Empati: berusaha memahami perasaan orang lain sebelum menilai.",
+          "en": "Empathy: trying to understand how others feel before judging."
+        },
+        {
+          "id": "Emosi itu wajar. Yang bisa kita atur adalah tindakan kita saat merasakannya.",
+          "en": "Emotions are normal. What we can manage is what we do while feeling them."
+        },
+        {
+          "id": "Cara sederhana: tarik napas pelan, namai perasaannya, lalu pilih tanggapan.",
+          "en": "A simple method: breathe slowly, name the feeling, then choose your response."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "stories": {
+    "ST-NIL-A-H-LAPORAN": {
+      "figure": "Sari dan Dimas (tokoh fiksi)",
+      "title": {
+        "id": "Angka yang terhitung dua kali",
+        "en": "The figure counted twice"
+      },
+      "source": "Cerita asli AyaIlmu (fiksi)",
+      "emblem": "math_bar_chart",
+      "panels": [
+        {
+          "scene": "val_teamwork",
+          "caption": {
+            "id": "Sari memeriksa laporan penjualan buatan Dimas sebelum dikirim ke atasan.",
+            "en": "Sari was checking Dimas's sales report before it went to their manager."
+          },
+          "narration": {
+            "id": "id/nil_laporan_rekan_01",
+            "en": "en/nil_laporan_rekan_01"
+          },
+          "layers": [
+            {
+              "art": "pic_computer",
+              "x": 0.76,
+              "y": 0.58,
+              "w": 0.18,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "val_calm_breath",
+          "caption": {
+            "id": "Ada angka yang terhitung dua kali. Target tim jadi tampak tercapai.",
+            "en": "One figure had been counted twice. It made the team look as if it had hit its target."
+          },
+          "narration": {
+            "id": "id/nil_laporan_rekan_02",
+            "en": "en/nil_laporan_rekan_02"
+          },
+          "layers": [
+            {
+              "art": "math_bar_chart",
+              "x": 0.72,
+              "y": 0.08,
+              "w": 0.22,
+              "motion": {
+                "type": "glow",
+                "ms": 2400,
+                "loop": true
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.06,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "val_listen",
+          "caption": {
+            "id": "Sari mengajak Dimas bicara berdua dan menunjukkan angkanya dengan tenang.",
+            "en": "Sari asked Dimas for a quiet word and calmly showed him the figure."
+          },
+          "narration": {
+            "id": "id/nil_laporan_rekan_03",
+            "en": "en/nil_laporan_rekan_03"
+          },
+          "layers": [
+            {
+              "art": "pic_computer",
+              "x": 0.76,
+              "y": 0.58,
+              "w": 0.18
+            }
+          ]
+        },
+        {
+          "scene": "val_tell_truth",
+          "caption": {
+            "id": "Dimas memperbaikinya dan memberi tahu atasan sendiri. Atasan berterima kasih karena tahu lebih awal.",
+            "en": "Dimas corrected it and told the manager himself. The manager was grateful to know early."
+          },
+          "narration": {
+            "id": "id/nil_laporan_rekan_04",
+            "en": "en/nil_laporan_rekan_04"
+          },
+          "layers": [
+            {
+              "art": "math_bar_chart",
+              "x": 0.74,
+              "y": 0.08,
+              "w": 0.2,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ST-NIL-A-H-PELANGGAN": {
+      "figure": "Rina (tokoh fiksi)",
+      "title": {
+        "id": "Pelanggan yang marah",
+        "en": "The angry customer"
+      },
+      "source": "Cerita asli AyaIlmu (fiksi)",
+      "emblem": "val_calm_breath",
+      "panels": [
+        {
+          "scene": "val_angry_face",
+          "caption": {
+            "id": "Seorang pelanggan membentak Rina karena pesanannya salah.",
+            "en": "A customer snapped at Rina because his order was wrong."
+          },
+          "narration": {
+            "id": "id/nil_pelanggan_marah_01",
+            "en": "en/nil_pelanggan_marah_01"
+          },
+          "layers": [
+            {
+              "art": "pic_noodle_bowl",
+              "x": 0.74,
+              "y": 0.62,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.06,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "val_calm_breath",
+          "caption": {
+            "id": "Rina menarik napas pelan dua kali sebelum menjawab.",
+            "en": "Rina took two slow breaths before answering."
+          },
+          "narration": {
+            "id": "id/nil_pelanggan_marah_02",
+            "en": "en/nil_pelanggan_marah_02"
+          },
+          "layers": []
+        },
+        {
+          "scene": "val_listen",
+          "caption": {
+            "id": "«Saya mengerti Bapak kesal, saya ganti sekarang,» kata Rina. Pelanggan itu mulai tenang.",
+            "en": "\"I understand you're upset, sir — I'll replace it now,\" said Rina. The customer began to calm down."
+          },
+          "narration": {
+            "id": "id/nil_pelanggan_marah_03",
+            "en": "en/nil_pelanggan_marah_03"
+          },
+          "layers": [
+            {
+              "art": "pic_noodle_bowl",
+              "x": 0.74,
+              "y": 0.62,
+              "w": 0.14,
+              "motion": {
+                "type": "slide_in",
+                "from": "right",
+                "ms": 600
+              }
+            }
+          ]
+        },
+        {
+          "scene": "val_help_friend",
+          "caption": {
+            "id": "Saat istirahat, Rina bercerita kepada rekannya. Menceritakan perasaannya membuatnya lebih lega.",
+            "en": "On her break, Rina told a colleague about it. Putting her feelings into words helped her feel lighter."
+          },
+          "narration": {
+            "id": "id/nil_pelanggan_marah_04",
+            "en": "en/nil_pelanggan_marah_04"
+          },
+          "layers": [
+            {
+              "art": "pic_tea_cup",
+              "x": 0.06,
+              "y": 0.64,
+              "w": 0.1,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "NIL-A-H-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "story",
+      "skills": [
+        "NIL-INTEGRITAS"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-NIL-A-H-LAPORAN",
+      "model_answer": {
+        "id": "Sari bicara dulu dengan Dimas; Dimas memperbaiki laporannya dan memberi tahu atasan sendiri.",
+        "en": "Sari spoke to Dimas first; he corrected the report and told the manager himself."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "NIL-INTEGRITAS"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-CHOOSE",
+      "story_id": "ST-NIL-A-H-LAPORAN",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bagaimana jika Dimas menolak memperbaikinya?",
+            "en": "What if Dimas had refused to correct it?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Diam saja, toh bukan laporan Sari",
+            "en": "Say nothing — it isn't Sari's report"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Sampaikan ke atasan dengan fakta, tanpa menjelekkan Dimas",
+            "en": "Raise it with the manager, sticking to the facts and not running Dimas down"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Ceritakan ke rekan lain agar Dimas malu",
+            "en": "Tell other colleagues so Dimas is embarrassed"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Data yang salah bisa menyesatkan keputusan tim. Menyampaikan fakta kepada yang berwenang menjaga integritas; mempermalukan Dimas tidak memperbaiki apa pun.",
+        "en": "Wrong data can mislead the team's decisions. Taking the facts to the right person protects integrity; shaming Dimas fixes nothing."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "NIL-INTEGRITAS"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan urusan kerja dengan sikap berintegritas.",
+            "en": "Match each part of work with the honest practice."
+          }
+        }
+      ],
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p1",
+          "image": "math_money_notes",
+          "text": {
+            "id": "Uang perjalanan dinas",
+            "en": "Travel expenses"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "clock_8_00",
+          "text": {
+            "id": "Jam masuk kerja",
+            "en": "Start time"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "math_bar_chart",
+          "text": {
+            "id": "Laporan angka",
+            "en": "Figures in a report"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Klaim sesuai kuitansi asli",
+            "en": "Claim only what the real receipts show"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Isi absen sesuai jam datang sebenarnya",
+            "en": "Clock in at the time you actually arrive"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Laporkan apa adanya, termasuk yang buruk",
+            "en": "Report them as they are, including the bad ones"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3"
+      },
+      "model_answer": {
+        "id": "Uang, waktu, dan data: tiga tempat integritas paling sering diuji di kantor.",
+        "en": "Money, time and data: the three places integrity is tested most at work."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "NIL-INTEGRITAS"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saat atasan sedang cuti: mana yang berintegritas?",
+            "en": "While the manager is on leave: which show integrity?"
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Berintegritas",
+            "en": "Shows integrity"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Belum berintegritas",
+            "en": "Lacks integrity"
+          }
+        },
+        {
+          "id": "on_time",
+          "image": "val_on_time",
+          "text": {
+            "id": "Tetap datang tepat waktu",
+            "en": "Still arriving on time"
+          }
+        },
+        {
+          "id": "copy_answer",
+          "image": "val_copy_answer",
+          "text": {
+            "id": "Menyalin pekerjaan rekan dan mengakuinya",
+            "en": "Copying a colleague's work and taking the credit"
+          }
+        },
+        {
+          "id": "tell_truth",
+          "image": "val_tell_truth",
+          "text": {
+            "id": "Melaporkan kendala apa adanya",
+            "en": "Reporting problems honestly"
+          }
+        },
+        {
+          "id": "late",
+          "image": "val_late",
+          "text": {
+            "id": "Datang siang karena tak ada yang memeriksa",
+            "en": "Coming in late because no one's checking"
+          }
+        },
+        {
+          "id": "return_wallet",
+          "image": "val_return_wallet",
+          "text": {
+            "id": "Menyerahkan barang temuan ke bagian umum",
+            "en": "Handing found items to the office"
+          }
+        },
+        {
+          "id": "cut_queue",
+          "image": "val_cut_queue",
+          "text": {
+            "id": "Memakai «orang dalam» agar urusan didahulukan",
+            "en": "Using an inside contact to jump the queue"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "on_time": "b_yes",
+        "copy_answer": "b_no",
+        "tell_truth": "b_yes",
+        "late": "b_no",
+        "return_wallet": "b_yes",
+        "cut_queue": "b_no"
+      },
+      "model_answer": {
+        "id": "Integritas tidak bergantung pada siapa yang mengawasi. Yang benar tetap benar saat atasan cuti.",
+        "en": "Integrity doesn't depend on who's watching. Right stays right when the boss is away."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-INTEGRITAS"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Setelah perjalanan dinas, uang muka Anda bersisa Rp150.000.",
+            "en": "After a work trip, you have Rp150,000 left from your cash advance."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "return_change",
+          "image": "val_return_change",
+          "text": {
+            "id": "Mengembalikan sisanya ke bagian keuangan",
+            "en": "Returning the rest to finance"
+          },
+          "correct": true
+        },
+        {
+          "id": "share_food",
+          "image": "val_share_food",
+          "text": {
+            "id": "Memakai sisanya untuk mentraktir tim",
+            "en": "Using it to treat the team"
+          }
+        },
+        {
+          "id": "late",
+          "image": "val_late",
+          "text": {
+            "id": "Menunda pengembalian sampai ditanya",
+            "en": "Holding on to it until someone asks"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Uang muka adalah uang kantor. Mentraktir tim terasa baik, tetapi tetap memakai uang yang bukan hak Anda.",
+        "en": "A cash advance is the company's money. Treating the team feels generous, but it still spends money that isn't yours."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "memory_flip",
+      "skills": [
+        "NIL-INTEGRITAS"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dan nilainya.",
+            "en": "Match each picture to its value."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p1",
+          "image": "val_tell_truth",
+          "text": {
+            "id": "Berkata jujur",
+            "en": "Telling the truth"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "val_on_time",
+          "text": {
+            "id": "Datang tepat waktu",
+            "en": "Arriving on time"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "val_teamwork",
+          "text": {
+            "id": "Bekerja dalam tim",
+            "en": "Working as a team"
+          }
+        },
+        {
+          "id": "p4",
+          "image": "val_help_friend",
+          "text": {
+            "id": "Membantu rekan",
+            "en": "Helping a colleague"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Jujur",
+            "en": "Honest"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Disiplin",
+            "en": "Disciplined"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Kerja sama",
+            "en": "Cooperative"
+          }
+        },
+        {
+          "id": "t4",
+          "text": {
+            "id": "Peduli",
+            "en": "Caring"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3",
+        "p4": "t4"
+      },
+      "model_answer": {
+        "id": "Jujur, disiplin, kerja sama, peduli: integritas sehari-hari di tempat kerja.",
+        "en": "Honest, disciplined, cooperative, caring: everyday integrity at work."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "NIL-ADIL"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang adil, mana yang kurang adil?",
+            "en": "Which are fair, and which aren't?"
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Adil",
+            "en": "Fair"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Kurang adil",
+            "en": "Unfair"
+          }
+        },
+        {
+          "id": "wait_turn",
+          "image": "val_wait_turn",
+          "text": {
+            "id": "Melayani sesuai nomor antrean",
+            "en": "Serving people by queue number"
+          }
+        },
+        {
+          "id": "cut_queue",
+          "image": "val_cut_queue",
+          "text": {
+            "id": "Mendahulukan kenalan",
+            "en": "Letting friends go first"
+          }
+        },
+        {
+          "id": "include_friend",
+          "image": "val_include_friend",
+          "text": {
+            "id": "Memberi kesempatan bicara kepada anggota baru",
+            "en": "Giving a new member a chance to speak"
+          }
+        },
+        {
+          "id": "left_out",
+          "image": "val_left_out",
+          "text": {
+            "id": "Tidak mengajak rekan yang berbeda pendapat",
+            "en": "Leaving out a colleague who disagrees"
+          }
+        },
+        {
+          "id": "listen",
+          "image": "val_listen",
+          "text": {
+            "id": "Mendengar kedua pihak sebelum memutuskan",
+            "en": "Hearing both sides before deciding"
+          }
+        },
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Memotong penjelasan satu pihak",
+            "en": "Cutting off one side's explanation"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "wait_turn": "b_yes",
+        "cut_queue": "b_no",
+        "include_friend": "b_yes",
+        "left_out": "b_no",
+        "listen": "b_yes",
+        "interrupt": "b_no"
+      },
+      "model_answer": {
+        "id": "Adil berarti aturan yang sama untuk semua dan kesempatan yang sama untuk didengar.",
+        "en": "Fair means the same rules for everyone and the same chance to be heard."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "NIL-ADIL"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kantor punya lima kursi ergonomis untuk 20 karyawan. Bagaimana membaginya?",
+            "en": "The office has five ergonomic chairs for 20 staff. How should they be shared?"
+          }
+        }
+      ],
+      "image": "pic_chair",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Undi untuk semua karyawan",
+            "en": "Hold a draw for everyone"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Berikan kepada yang paling senior",
+            "en": "Give them to the most senior staff"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Utamakan yang punya surat dokter untuk keluhan punggung, dengan aturan terbuka",
+            "en": "Priority to staff with a doctor's note for back problems, under open rules"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Undian adil caranya, tetapi tidak melihat kebutuhan; senioritas tidak terkait kebutuhan. Mengutamakan yang paling membutuhkan, dengan aturan terbuka, paling adil.",
+        "en": "A draw is fair in method but ignores need; seniority has nothing to do with need. Priority by need, under open rules, is fairest."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "NIL-ADIL"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutan menengahi dua rekan yang berselisih.",
+            "en": "The steps of helping two colleagues settle a dispute."
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "s3",
+          "image": "val_teamwork",
+          "text": {
+            "id": "Mencari jalan keluar bersama",
+            "en": "Working out a solution together"
+          }
+        },
+        {
+          "id": "s1",
+          "image": "val_calm_breath",
+          "text": {
+            "id": "Menenangkan suasana",
+            "en": "Calming things down"
+          }
+        },
+        {
+          "id": "s4",
+          "image": "hist_handshake",
+          "text": {
+            "id": "Menyepakati dan berjabat tangan",
+            "en": "Agreeing and shaking hands"
+          }
+        },
+        {
+          "id": "s2",
+          "image": "val_listen",
+          "text": {
+            "id": "Mendengarkan kedua pihak",
+            "en": "Hearing both sides"
+          }
+        }
+      ],
+      "solution": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "model_answer": {
+        "id": "Tenangkan dulu, dengarkan keduanya, cari jalan keluar bersama, lalu sepakati.",
+        "en": "Calm things first, hear both, find a solution together, then agree on it."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NIL-ADIL"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di rapat, satu rekan jarang mendapat kesempatan bicara.",
+            "en": "In meetings, one colleague rarely gets a chance to speak."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Memotongnya saat mulai bicara",
+            "en": "Cutting in when they start"
+          }
+        },
+        {
+          "id": "left_out",
+          "image": "val_left_out",
+          "text": {
+            "id": "Tidak mengajaknya ke rapat berikutnya",
+            "en": "Not inviting them next time"
+          }
+        },
+        {
+          "id": "include_friend",
+          "image": "val_include_friend",
+          "text": {
+            "id": "Mengundangnya menyampaikan pendapat",
+            "en": "Inviting their view"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Memberi giliran bicara kepada yang jarang didengar membuat keputusan lebih adil — dan sering lebih baik.",
+        "en": "Giving the floor to someone rarely heard makes decisions fairer — and often better."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "NIL-ADIL"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan situasi dengan cara adilnya.",
+            "en": "Match each situation with its fair approach."
+          }
+        }
+      ],
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p1",
+          "image": "val_queue",
+          "text": {
+            "id": "Antrean layanan",
+            "en": "A service queue"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "val_give_seat",
+          "text": {
+            "id": "Kursi terbatas di ruang tunggu",
+            "en": "Few seats in a waiting room"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "val_teamwork",
+          "text": {
+            "id": "Tugas tim",
+            "en": "Team tasks"
+          }
+        },
+        {
+          "id": "p4",
+          "image": "val_share_food",
+          "text": {
+            "id": "Makanan hasil patungan",
+            "en": "Food everyone chipped in for"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Layani sesuai nomor urut",
+            "en": "Serve in number order"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Dahulukan yang paling membutuhkan",
+            "en": "Put those in most need first"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Bagi sesuai kemampuan dan beban kerja",
+            "en": "Share by skill and workload"
+          }
+        },
+        {
+          "id": "t4",
+          "text": {
+            "id": "Bagi sama rata",
+            "en": "Split it equally"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3",
+        "p4": "t4"
+      },
+      "model_answer": {
+        "id": "Adil punya beberapa wajah: giliran, kebutuhan, kemampuan, atau sama rata — pilih yang sesuai situasinya.",
+        "en": "Fairness has several faces: turns, need, ability or equal shares — choose the one that fits."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NIL-ADIL"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Satu kelompok mendapat semua tugas berat. Gambar mana yang menunjukkan pembagian adil?",
+            "en": "One group gets all the heavy jobs. Which picture shows a fair split?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "left_heavy",
+          "image": "balance_left_heavy",
+          "text": {
+            "id": "Timbangan berat ke kiri",
+            "en": "A scale tipped to the left"
+          }
+        },
+        {
+          "id": "even",
+          "image": "balance_even",
+          "text": {
+            "id": "Timbangan seimbang",
+            "en": "A balanced scale"
+          },
+          "correct": true
+        },
+        {
+          "id": "right_heavy",
+          "image": "balance_right_heavy",
+          "text": {
+            "id": "Timbangan berat ke kanan",
+            "en": "A scale tipped to the right"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Pembagian yang adil membuat beban seimbang, sesuai kemampuan tiap kelompok.",
+        "en": "A fair split balances the load, in line with each group's capacity."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "NIL-INTEGRITAS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Hadiah dari rekanan yang menunggu keputusan kontrak dari Anda boleh diterima asal nilainya kecil.",
+            "en": "A gift from a supplier awaiting your contract decision is fine to accept if it's small."
+          }
+        }
+      ],
+      "image": "math_money_notes",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Hadiah dari pihak yang menunggu keputusan Anda bisa memengaruhi penilaian. Tolak dengan sopan atau laporkan sesuai aturan kantor.",
+        "en": "A gift from someone awaiting your decision can sway your judgement. Decline politely or report it under your workplace rules."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "NIL-ADIL"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Adil atau kurang adil?",
+            "en": "Fair or unfair?"
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Adil",
+            "en": "Fair"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Kurang adil",
+            "en": "Unfair"
+          }
+        },
+        {
+          "id": "wait_turn",
+          "image": "val_wait_turn",
+          "text": {
+            "id": "Melayani sesuai giliran",
+            "en": "Serving people in turn"
+          }
+        },
+        {
+          "id": "cut_queue",
+          "image": "val_cut_queue",
+          "text": {
+            "id": "Mendahulukan kenalan",
+            "en": "Letting friends go first"
+          }
+        },
+        {
+          "id": "include_friend",
+          "image": "val_include_friend",
+          "text": {
+            "id": "Mengajak semua anggota berpendapat",
+            "en": "Asking every member for their view"
+          }
+        },
+        {
+          "id": "left_out",
+          "image": "val_left_out",
+          "text": {
+            "id": "Mengabaikan anggota yang pendiam",
+            "en": "Ignoring the quiet member"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "wait_turn": "b_yes",
+        "cut_queue": "b_no",
+        "include_friend": "b_yes",
+        "left_out": "b_no"
+      },
+      "model_answer": {
+        "id": "Giliran yang sama dan suara yang sama untuk semua: itulah dasar keadilan di tim.",
+        "en": "Equal turns and an equal voice for everyone: that's the basis of fairness in a team."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-EMPATI"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rekan kerja baru saja kehilangan orang tuanya.",
+            "en": "A colleague has just lost a parent."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "listen",
+          "image": "val_listen",
+          "text": {
+            "id": "Hadir dan mendengarkan",
+            "en": "Being there and listening"
+          },
+          "correct": true
+        },
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Memotong ceritanya dengan nasihat panjang",
+            "en": "Cutting in with long advice"
+          }
+        },
+        {
+          "id": "left_out",
+          "image": "val_left_out",
+          "text": {
+            "id": "Menghindarinya karena canggung",
+            "en": "Avoiding them because it feels awkward"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Saat berduka, kehadiran dan telinga yang mendengar sering lebih berarti daripada nasihat.",
+        "en": "In grief, being there and listening often means more than advice."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "NIL-EMPATI"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan perasaan dengan tanggapan yang berempati.",
+            "en": "Match each feeling with an empathetic reply."
+          }
+        }
+      ],
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p1",
+          "image": "pic_sad",
+          "text": {
+            "id": "Rekan tampak sedih",
+            "en": "A colleague looks sad"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "pic_tired",
+          "text": {
+            "id": "Rekan tampak sangat lelah",
+            "en": "A colleague looks exhausted"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_happy",
+          "text": {
+            "id": "Rekan baru dapat kabar baik",
+            "en": "A colleague just got good news"
+          }
+        },
+        {
+          "id": "p4",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Rekan tampak kesal",
+            "en": "A colleague looks upset"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "«Mau cerita? Saya dengarkan.»",
+            "en": "\"Want to talk? I'm listening.\""
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "«Istirahat sebentar, biar saya bantu yang ini.»",
+            "en": "\"Take a short break — let me help with this.\""
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "«Selamat! Ikut senang mendengarnya.»",
+            "en": "\"Congratulations! I'm so pleased for you.\""
+          }
+        },
+        {
+          "id": "t4",
+          "text": {
+            "id": "«Sepertinya Anda kesal. Ada yang bisa saya bantu?»",
+            "en": "\"You seem upset. Can I help with anything?\""
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3",
+        "p4": "t4"
+      },
+      "model_answer": {
+        "id": "Empati dimulai dari melihat perasaan orang lain, lalu menanggapinya dengan tepat.",
+        "en": "Empathy starts with noticing someone's feelings, then responding to them well."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "NIL-EMPATI"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang menunjukkan empati?",
+            "en": "Which show empathy?"
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Berempati",
+            "en": "Empathetic"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Kurang empati",
+            "en": "Lacking empathy"
+          }
+        },
+        {
+          "id": "visit_sick",
+          "image": "val_visit_sick",
+          "text": {
+            "id": "Menjenguk rekan yang dirawat",
+            "en": "Visiting a colleague in hospital"
+          }
+        },
+        {
+          "id": "phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "Menertawakan musibah orang di media sosial",
+            "en": "Laughing at someone's misfortune online"
+          }
+        },
+        {
+          "id": "help_friend",
+          "image": "val_help_friend",
+          "text": {
+            "id": "Membantu rekan yang kewalahan",
+            "en": "Helping a swamped colleague"
+          }
+        },
+        {
+          "id": "left_out",
+          "image": "val_left_out",
+          "text": {
+            "id": "Membiarkan rekan baru makan sendirian",
+            "en": "Leaving a new colleague to eat alone"
+          }
+        },
+        {
+          "id": "include_friend",
+          "image": "val_include_friend",
+          "text": {
+            "id": "Mengajak rekan baru bergabung",
+            "en": "Inviting a new colleague to join in"
+          }
+        },
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Memotong cerita orang yang sedang sedih",
+            "en": "Cutting off someone who's upset"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "visit_sick": "b_yes",
+        "phone_unkind": "b_no",
+        "help_friend": "b_yes",
+        "left_out": "b_no",
+        "include_friend": "b_yes",
+        "interrupt": "b_no"
+      },
+      "model_answer": {
+        "id": "Empati tampak dari tindakan: hadir, membantu, mengajak, dan tidak menertawakan kesulitan orang.",
+        "en": "Empathy shows in actions: being there, helping, including, and never laughing at someone's trouble."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-EMPATI"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tetangga baru pindah dari daerah lain dan belum kenal siapa pun.",
+            "en": "A new neighbour has moved from another region and knows no one."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "greet_neighbor",
+          "image": "val_greet_neighbor",
+          "text": {
+            "id": "Menyapa dan menawarkan bantuan",
+            "en": "Saying hello and offering help"
+          },
+          "correct": true
+        },
+        {
+          "id": "left_out",
+          "image": "val_left_out",
+          "text": {
+            "id": "Menunggu ia menyapa lebih dulu",
+            "en": "Waiting for them to make the first move"
+          }
+        },
+        {
+          "id": "phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "Membicarakannya di grup warga",
+            "en": "Gossiping about them in the residents' group"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Pindah ke tempat baru bisa terasa sepi. Sapaan dan tawaran bantuan membuatnya merasa diterima.",
+        "en": "Moving somewhere new can be lonely. A greeting and an offer of help make them feel welcome."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "NIL-EMPATI"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Berempati berarti selalu menyetujui pendapat orang lain.",
+            "en": "Being empathetic means always agreeing with the other person."
+          }
+        }
+      ],
+      "image": "val_listen",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Anda bisa memahami perasaan seseorang tanpa menyetujui pendapatnya.",
+        "en": "You can understand someone's feelings without agreeing with their view."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-EMPATI",
+        "NIL-EMOSI"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kasir yang tampak lelah salah menghitung belanjaan Anda.",
+            "en": "A tired-looking cashier gets your total wrong."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Menegurnya dengan keras",
+            "en": "Telling them off loudly"
+          }
+        },
+        {
+          "id": "phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "Mengunggah keluhan dengan fotonya",
+            "en": "Posting a complaint with their photo"
+          }
+        },
+        {
+          "id": "calm_breath",
+          "image": "val_calm_breath",
+          "text": {
+            "id": "Tetap tenang dan menunjukkan kekeliruannya dengan ramah",
+            "en": "Staying calm and kindly pointing out the error"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Kekeliruan kecil bisa diperbaiki dengan ramah. Teguran keras atau unggahan memperburuk hari orang yang sudah lelah.",
+        "en": "A small mistake can be fixed kindly. A telling-off or a post makes a tired person's day worse."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "NIL-EMOSI"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-NIL-A-H-PELANGGAN",
+      "model_answer": {
+        "id": "Rina menenangkan diri, mengakui kekesalan pelanggan, memperbaiki pesanannya, lalu bercerita kepada rekan.",
+        "en": "Rina calmed herself, acknowledged the customer's frustration, fixed the order, then talked it over with a colleague."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NIL-EMOSI"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-NIL-A-H-PELANGGAN",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang Rina lakukan sebelum menjawab pelanggan?",
+            "en": "What did Rina do before answering the customer?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Membalas dengan marah",
+            "en": "Snapping back"
+          }
+        },
+        {
+          "id": "calm_breath",
+          "image": "val_calm_breath",
+          "text": {
+            "id": "Menarik napas pelan",
+            "en": "Taking slow breaths"
+          },
+          "correct": true
+        },
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Memotong omongan pelanggan",
+            "en": "Talking over the customer"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Dua tarikan napas pelan memberi jeda, sehingga Rina bisa memilih jawaban, bukan sekadar bereaksi.",
+        "en": "Two slow breaths gave her a pause, so she could choose her reply instead of just reacting."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "NIL-EMOSI"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saat marah memuncak: urutkan langkahnya.",
+            "en": "When anger rises: put the steps in order."
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "s3",
+          "image": "val_listen",
+          "text": {
+            "id": "Bicara dan mendengarkan setelah tenang",
+            "en": "Talk and listen once calm"
+          }
+        },
+        {
+          "id": "s1",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Sadari: «Saya sedang marah»",
+            "en": "Notice: \"I'm angry\""
+          }
+        },
+        {
+          "id": "s2",
+          "image": "val_calm_breath",
+          "text": {
+            "id": "Tarik napas pelan",
+            "en": "Breathe slowly"
+          }
+        }
+      ],
+      "solution": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "model_answer": {
+        "id": "Sadari, tarik napas, baru bicara. Jeda singkat mencegah kata-kata yang nanti disesali.",
+        "en": "Notice, breathe, then talk. A short pause prevents words you'd regret."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "NIL-EMOSI"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saat kesal: mana yang menenangkan, mana yang memperbesar marah?",
+            "en": "When you're upset: what calms you, and what fans the anger?"
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_calm",
+          "text": {
+            "id": "Menenangkan",
+            "en": "Calms you"
+          }
+        },
+        {
+          "id": "b_fuel",
+          "text": {
+            "id": "Memperbesar marah",
+            "en": "Fans the anger"
+          }
+        },
+        {
+          "id": "calm_breath",
+          "image": "val_calm_breath",
+          "text": {
+            "id": "Menarik napas pelan",
+            "en": "Slow breathing"
+          }
+        },
+        {
+          "id": "phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "Langsung membalas pesan dengan marah",
+            "en": "Firing back an angry message"
+          }
+        },
+        {
+          "id": "walk",
+          "image": "pic_walk",
+          "text": {
+            "id": "Berjalan sebentar menjauh",
+            "en": "Taking a short walk"
+          }
+        },
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Memotong sambil meninggikan suara",
+            "en": "Cutting in with a raised voice"
+          }
+        },
+        {
+          "id": "drink_water",
+          "image": "drink_water",
+          "text": {
+            "id": "Minum air",
+            "en": "Drinking some water"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "calm_breath": "b_calm",
+        "phone_unkind": "b_fuel",
+        "walk": "b_calm",
+        "interrupt": "b_fuel",
+        "drink_water": "b_calm"
+      },
+      "model_answer": {
+        "id": "Napas pelan, jalan sebentar, dan minum air memberi jeda. Membalas saat panas biasanya memperbesar masalah.",
+        "en": "Slow breaths, a short walk and a glass of water give you a pause. Replying in the heat of the moment usually makes things worse."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "NIL-EMOSI"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pukul 22.00, Anda membaca surel bernada kasar dari rekan kerja.",
+            "en": "At 10 p.m. you read a harsh-sounding email from a colleague."
+          }
+        }
+      ],
+      "image": "pic_computer",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Balas malam ini juga dengan nada yang sama",
+            "en": "Reply tonight in the same tone"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Simpan draf balasan, kirim besok setelah tenang",
+            "en": "Save a draft reply and send it tomorrow once calm"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Teruskan ke seluruh tim agar mereka tahu",
+            "en": "Forward it to the whole team so they know"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Membalas saat tenang membuat pesan Anda lebih jelas dan adil. Membalas dengan nada sama atau meneruskannya memperluas konflik.",
+        "en": "Replying when calm makes your message clearer and fairer. Matching the tone or forwarding it spreads the conflict."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "NIL-EMOSI",
+        "NIL-EMPATI"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan wajah dengan nama perasaannya.",
+            "en": "Match each face with the feeling's name."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p1",
+          "image": "pic_happy",
+          "text": {
+            "id": "Wajah tersenyum",
+            "en": "A smiling face"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "pic_sad",
+          "text": {
+            "id": "Wajah murung",
+            "en": "A downcast face"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_tired",
+          "text": {
+            "id": "Wajah mengantuk",
+            "en": "A drowsy face"
+          }
+        },
+        {
+          "id": "p4",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Wajah cemberut",
+            "en": "A scowling face"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Senang",
+            "en": "Happy"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Sedih",
+            "en": "Sad"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Lelah",
+            "en": "Tired"
+          }
+        },
+        {
+          "id": "t4",
+          "text": {
+            "id": "Marah",
+            "en": "Angry"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3",
+        "p4": "t4"
+      },
+      "model_answer": {
+        "id": "Menamai perasaan — senang, sedih, lelah, marah — adalah langkah pertama mengelolanya.",
+        "en": "Naming feelings — happy, sad, tired, angry — is the first step to managing them."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-EMPATI"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rekan menangis setelah rapat.",
+            "en": "A colleague is in tears after a meeting."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "listen",
+          "image": "val_listen",
+          "text": {
+            "id": "Mengajaknya ke tempat tenang dan mendengarkan",
+            "en": "Taking them somewhere quiet and listening"
+          },
+          "correct": true
+        },
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Langsung menasihati panjang lebar",
+            "en": "Launching straight into advice"
+          }
+        },
+        {
+          "id": "phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "Menceritakannya di grup",
+            "en": "Telling the group chat about it"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Tempat tenang dan telinga yang mendengar membantu lebih dulu; nasihat bisa menunggu sampai ia siap.",
+        "en": "A quiet place and a listening ear help first; advice can wait until they're ready."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "NIL-EMOSI"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Memendam semua perasaan tanpa pernah membicarakannya adalah cara terbaik mengelola emosi.",
+            "en": "Bottling up every feeling and never talking about it is the best way to manage emotions."
+          }
+        }
+      ],
+      "image": "val_calm_breath",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Menamai dan membicarakan perasaan dengan orang yang tepat biasanya lebih membantu daripada memendamnya.",
+        "en": "Naming feelings and talking them over with the right person usually helps more than bottling them up."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "NIL-EMOSI"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Lieberman, M. D., Eisenberger, N. I., Crockett, M. J., Tom, S. M., Pfeifer, J. H., & Way, B. M. (2007). Putting feelings into words: Affect labeling disrupts amygdala activity in response to affective stimuli. Psychological Science, 18(5), 421–428.",
+      "model_answer": {
+        "id": "Dalam sebuah studi pencitraan otak, orang yang menamai emosi pada foto wajah («marah», «takut») menunjukkan aktivitas amigdala yang lebih rendah. Amigdala adalah bagian otak yang berperan dalam reaksi emosi.",
+        "en": "In a brain-imaging study, people who put a name to the emotion in photos of faces (\"angry\", \"scared\") showed less activity in the amygdala, a part of the brain involved in emotional reactions."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    },
+    {
+      "item_id": "NIL-A-H-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Empat rekan makan bersama; tagihan Rp240.000 dibagi rata. Andi membayar semuanya dulu. Berapa rupiah total yang harus ia terima dari tiga rekannya?",
+            "en": "Four colleagues eat together and split the Rp240,000 bill equally. Andi pays it all first. How much should he get back in total from the other three?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 180000,
+        "tolerance": 0,
+        "unit": {
+          "id": "rupiah",
+          "en": "rupiah"
+        }
+      },
+      "model_answer": {
+        "id": "Rp240.000 : 4 = Rp60.000 per orang; 3 × Rp60.000 = Rp180.000.",
+        "en": "Rp240,000 ÷ 4 = Rp60,000 each; 3 × Rp60,000 = Rp180,000."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-h-0.1"
+    }
+  ]
+}

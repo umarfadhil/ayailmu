@@ -1,0 +1,4927 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sos-k-pemula-0.4",
+    "subject": "sosial_seni",
+    "track": "sos-k",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Sosial & Seni — Pemula (Anak)",
+      "en": "Social Studies & Arts — Beginner (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-17 for subject + language review: needs a social-studies reviewer, a cultural reviewer, and the Indonesian and English language reviewers before any item is approved (docs/syllabus/04_SOSIAL_SENI.md, Kids Pemula units 1-5). Follow-up 11 picture pass (2026-10-18): shorter prompts, gestures on match_pairs, more picture-led items (INTERACTIONS_AUDIO.md §1); same items, skills and order. Follow-up 12 picture pass 2 (2026-10-18): more pictures on cards and questions (MODULES_LEVELS_STORIES.md §8); same items, skills and order.",
+  "prompts": {
+    "P-TAP": {
+      "id": "Ketuk gambarnya.",
+      "en": "Tap the picture."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban yang tepat.",
+      "en": "Pick the right answer."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-MATCH": {
+      "id": "Pasangkan.",
+      "en": "Match them up."
+    },
+    "P-CONNECT": {
+      "id": "Tarik garis ke pasangannya.",
+      "en": "Draw a line to each match."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke pasangannya.",
+      "en": "Drag each picture to its match."
+    },
+    "P-SORT": {
+      "id": "Seret ke keranjang yang tepat.",
+      "en": "Drag each into the right basket."
+    },
+    "P-ORDER": {
+      "id": "Seret ke urutan yang benar.",
+      "en": "Drag them into the right order."
+    },
+    "P-FILL": {
+      "id": "Seret ke bagian yang kosong.",
+      "en": "Drag into the gap."
+    },
+    "P-NUM": {
+      "id": "Tulis angkanya.",
+      "en": "Type the number."
+    },
+    "P-MEMORY": {
+      "id": "Balik kartu, cari pasangannya.",
+      "en": "Flip the cards, find pairs."
+    },
+    "P-STORY": {
+      "id": "Baca ceritanya, lalu pilih.",
+      "en": "Read the story, then choose."
+    },
+    "P-TRY": {
+      "id": "Coba di rumah",
+      "en": "Try at home"
+    },
+    "P-MAKE": {
+      "id": "Buat sendiri",
+      "en": "Make it yourself"
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    },
+    "P-TILES": {
+      "id": "Seret kepingan ke tempatnya.",
+      "en": "Drag the tiles into place."
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Sip, kita lanjut!",
+      "en": "Great, let's keep going!"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Aku & keluargaku",
+        "en": "Me & my family"
+      },
+      "sticker": "sticker_teapot"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Sekolah & tetangga",
+        "en": "School & neighbours"
+      },
+      "sticker": "sticker_angklung"
+    },
+    {
+      "unit": "03",
+      "title": {
+        "id": "Peta pertamaku",
+        "en": "My first map"
+      },
+      "sticker": "sticker_compass"
+    },
+    {
+      "unit": "04",
+      "title": {
+        "id": "Warna & bentuk dalam seni",
+        "en": "Colour & shape in art"
+      },
+      "sticker": "sticker_kite"
+    },
+    {
+      "unit": "05",
+      "title": {
+        "id": "Bunyi & irama",
+        "en": "Sound & rhythm"
+      },
+      "sticker": "sticker_drum"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SOS-K-P-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Aku & keluargaku",
+        "en": "Me & my family"
+      },
+      "body": [
+        {
+          "id": "Keluarga saling menyayangi. Setiap keluarga berbeda, dan semuanya keluarga.",
+          "en": "Families love and look after each other. Every family is different, and all are families."
+        },
+        {
+          "id": "Orang tua ayah dan ibu: kakek dan nenek. Saudara lebih tua: kakak; lebih muda: adik.",
+          "en": "Your parents' parents: kakek and nenek. Older sibling: kakak; younger: adik."
+        },
+        {
+          "id": "Aturan rumah membuat semua nyaman. Kamu juga bisa membantu.",
+          "en": "Home rules help everyone feel comfortable. You can help too."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SOS-K-P-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Sekolah & tetangga",
+        "en": "School & neighbours"
+      },
+      "body": [
+        {
+          "id": "Guru mengajar, petugas UKS merawat, satpam menjaga, petugas kebersihan membersihkan.",
+          "en": "Teachers teach, UKS staff care for us, guards keep us safe, cleaners keep school clean."
+        },
+        {
+          "id": "Tetangga yang baik saling menyapa dan menolong.",
+          "en": "Good neighbours greet and help each other."
+        },
+        {
+          "id": "Gotong royong: bekerja bersama, seperti kerja bakti. Anak-anak bisa membantu dengan aman.",
+          "en": "Gotong royong: working together, like a clean-up day. Children can help safely."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SOS-K-P-03-S1",
+      "unit": "03",
+      "audience": "kids",
+      "title": {
+        "id": "Peta pertamaku",
+        "en": "My first map"
+      },
+      "body": [
+        {
+          "id": "Peta = gambar suatu tempat dilihat dari atas, seperti mata burung.",
+          "en": "A map shows a place from above, the way a bird sees it."
+        },
+        {
+          "id": "Kiri, kanan, atas, bawah, dekat, jauh. Berhadapan? Tangan kanan temanmu di sisi kirimu.",
+          "en": "Left, right, above, below, near, far. Facing a friend? Their right hand is on your left."
+        },
+        {
+          "id": "Simbol peta: kotak = rumah, dua garis = jalan, garis biru = sungai.",
+          "en": "Map symbols: box = house, two lines = road, blue line = river."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SOS-K-P-04-S1",
+      "unit": "04",
+      "audience": "kids",
+      "title": {
+        "id": "Warna & bentuk dalam seni",
+        "en": "Colour & shape in art"
+      },
+      "body": [
+        {
+          "id": "Warna primer: merah, kuning, biru. Putih membuat warna lebih muda.",
+          "en": "Primary colours: red, yellow, blue. White makes a colour lighter."
+        },
+        {
+          "id": "Merah + kuning = jingga, kuning + biru = hijau, merah + biru = ungu.",
+          "en": "Red + yellow = orange, yellow + blue = green, red + blue = purple."
+        },
+        {
+          "id": "Bentuk sederhana bisa menjadi gambar: matahari, rumah, layang-layang.",
+          "en": "Simple shapes make pictures: a sun, a house, a kite."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SOS-K-P-05-S1",
+      "unit": "05",
+      "audience": "kids",
+      "title": {
+        "id": "Bunyi & irama",
+        "en": "Sound & rhythm"
+      },
+      "body": [
+        {
+          "id": "Bunyi bisa keras (guntur) atau pelan (bisikan). Jaga telingamu.",
+          "en": "Sounds can be loud (thunder) or soft (a whisper). Look after your ears."
+        },
+        {
+          "id": "Bunyi juga bisa cepat atau lambat. Lagu pengantar tidur itu lambat.",
+          "en": "Sounds can be fast or slow, too. A lullaby is slow."
+        },
+        {
+          "id": "Irama: pola bunyi dan diam, misalnya tepuk – tepuk – diam.",
+          "en": "Rhythm: a pattern of sound and silence, like clap – clap – rest."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {
+    "R-SOSK-NENEK": {
+      "title": {
+        "id": "Belanjaan Nenek",
+        "en": "Grandma's shopping"
+      },
+      "body": [
+        {
+          "id": "Sore itu Nenek pulang dari pasar. Tangannya penuh tas belanjaan.",
+          "en": "One afternoon Grandma comes home from the market. Her hands are full of shopping bags."
+        },
+        {
+          "id": "Raka sedang asyik menonton kartun di ruang tengah.",
+          "en": "Raka is busy watching cartoons in the living room."
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-SOSK-MALAM": {
+      "title": {
+        "id": "Malam di kampung",
+        "en": "Night-time in the kampung"
+      },
+      "body": [
+        {
+          "id": "Sudah pukul sembilan malam. Doni ingin bermain gendang keras-keras.",
+          "en": "It's nine o'clock at night. Doni wants to play his drum really loudly."
+        },
+        {
+          "id": "Di sebelah rumah, bayi Bu Wati baru saja tertidur.",
+          "en": "Next door, Bu Wati's baby has just fallen asleep."
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-SOSK-DIRIGEN": {
+      "title": {
+        "id": "Latihan musik di kelas",
+        "en": "Music practice in class"
+      },
+      "body": [
+        {
+          "id": "Anak-anak kelas 2 berlatih musik. Ada yang memegang kentongan bambu, ada yang memegang botol berisi beras.",
+          "en": "Class 2 is practising music. Some children hold bamboo kentongan, and some hold bottles filled with rice."
+        },
+        {
+          "id": "Bu Guru berkata, \"Kalau tanganku terangkat tinggi, mainkan dengan keras. Kalau tanganku turun rendah, mainkan dengan pelan.\"",
+          "en": "The teacher says, \"When my hand is up high, play loudly. When my hand is down low, play softly.\""
+        }
+      ],
+      "review_status": "draft"
+    }
+  },
+  "items": [
+    {
+      "item_id": "SOS-K-P-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "FAM-MEMBERS"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana Kakek? (ayah dari ayah atau ibumu)",
+            "en": "Which is Grandfather? (your dad's or mum's father)"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "fam_father",
+          "image": "fam_father"
+        },
+        {
+          "id": "fam_grandfather",
+          "image": "fam_grandfather",
+          "correct": true
+        },
+        {
+          "id": "fam_brother",
+          "image": "fam_brother"
+        }
+      ],
+      "model_answer": {
+        "id": "Kakek adalah ayah dari ayah atau ibu kita.",
+        "en": "Grandfather is our dad's or our mum's father."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "FAM-MEMBERS"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Arti → panggilannya.",
+            "en": "Meaning → family word."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "d_old",
+          "text": {
+            "id": "Saudara yang lebih tua",
+            "en": "An older brother or sister"
+          }
+        },
+        {
+          "id": "d_young",
+          "text": {
+            "id": "Saudara yang lebih muda",
+            "en": "A younger brother or sister"
+          }
+        },
+        {
+          "id": "d_gma",
+          "text": {
+            "id": "Ibu dari ayah atau ibuku",
+            "en": "My dad's or mum's mother"
+          }
+        },
+        {
+          "id": "d_uncle",
+          "text": {
+            "id": "Saudara laki-laki ayah atau ibuku",
+            "en": "My dad's or mum's brother"
+          }
+        },
+        {
+          "id": "w_kakak",
+          "text": {
+            "id": "Kakak",
+            "en": "Kakak (older sibling)"
+          }
+        },
+        {
+          "id": "w_adik",
+          "text": {
+            "id": "Adik",
+            "en": "Adik (younger sibling)"
+          }
+        },
+        {
+          "id": "w_nenek",
+          "text": {
+            "id": "Nenek",
+            "en": "Grandmother"
+          }
+        },
+        {
+          "id": "w_paman",
+          "text": {
+            "id": "Paman",
+            "en": "Uncle"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "d_old": "w_kakak",
+        "d_young": "w_adik",
+        "d_gma": "w_nenek",
+        "d_uncle": "w_paman"
+      },
+      "model_answer": {
+        "id": "Kakak lebih tua, adik lebih muda, nenek ibu orang tuamu, paman saudara laki-laki orang tuamu.",
+        "en": "Kakak is older, adik is younger, Grandmother is your parent's mother, Uncle is your parent's brother."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "number_input",
+      "skills": [
+        "FAM-MEMBERS"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dita tinggal dengan Nenek, Ibu, dan 2 adik. Berapa orang, termasuk Dita?",
+            "en": "Dita lives with Grandma, Mum and 2 younger siblings. How many people, counting Dita?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 5,
+        "tolerance": 0,
+        "unit": {
+          "id": "orang",
+          "en": "people"
+        }
+      },
+      "model_answer": {
+        "id": "Nenek, Ibu, dua adik, dan Dita sendiri: 5 orang.",
+        "en": "Grandmother, Mum, two younger siblings and Dita herself: 5 people."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "FAM-MEMBERS"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Setiap keluarga pasti terdiri atas ayah, ibu, dan anak.",
+            "en": "Every family is always a dad, a mum and children."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Keluarga berbeda-beda: ada yang dengan ibu saja, ayah saja, atau kakek-nenek. Yang penting saling menyayangi.",
+        "en": "Families differ: some live with just Mum, just Dad or grandparents. What matters is caring for each other."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "FAM-MEMBERS"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Siapa yang paling muda?",
+            "en": "Who is the youngest?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "fam_baby",
+          "image": "fam_baby",
+          "correct": true
+        },
+        {
+          "id": "fam_sister",
+          "image": "fam_sister"
+        },
+        {
+          "id": "fam_grandmother",
+          "image": "fam_grandmother"
+        }
+      ],
+      "model_answer": {
+        "id": "Adik bayi adalah anggota keluarga yang paling muda.",
+        "en": "The baby is the youngest in the family."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "FAM-MEMBERS"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling tua.",
+            "en": "Oldest first."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "o_mum",
+          "text": {
+            "id": "Ibu",
+            "en": "Mum"
+          },
+          "image": "fam_mother"
+        },
+        {
+          "id": "o_baby",
+          "text": {
+            "id": "Adik bayi",
+            "en": "Baby"
+          },
+          "image": "fam_baby"
+        },
+        {
+          "id": "o_kakek",
+          "text": {
+            "id": "Kakek",
+            "en": "Grandfather"
+          },
+          "image": "fam_grandfather"
+        },
+        {
+          "id": "o_kakak",
+          "text": {
+            "id": "Kakak",
+            "en": "Big brother or sister"
+          },
+          "image": "fam_brother"
+        }
+      ],
+      "solution": [
+        "o_kakek",
+        "o_mum",
+        "o_kakak",
+        "o_baby"
+      ],
+      "model_answer": {
+        "id": "Kakek, Ibu, Kakak, lalu Adik bayi.",
+        "en": "Grandfather, Mum, big brother or sister, then the baby."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "FAM-ROLES"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku bisa bantu, atau tugas orang dewasa?",
+            "en": "Can I help, or is it a grown-up job?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_me",
+          "text": {
+            "id": "Aku bisa membantu",
+            "en": "I can help"
+          }
+        },
+        {
+          "id": "b_adult",
+          "text": {
+            "id": "Tugas orang dewasa",
+            "en": "Grown-up jobs"
+          }
+        },
+        {
+          "id": "j1",
+          "text": {
+            "id": "Merapikan mainan",
+            "en": "Tidying up toys"
+          },
+          "image": "pic_tidy_room"
+        },
+        {
+          "id": "j2",
+          "text": {
+            "id": "Memasak di atas kompor",
+            "en": "Cooking on the stove"
+          },
+          "image": "pic_cook"
+        },
+        {
+          "id": "j3",
+          "text": {
+            "id": "Menyiram tanaman",
+            "en": "Watering the plants"
+          },
+          "image": "pic_gardening"
+        },
+        {
+          "id": "j4",
+          "text": {
+            "id": "Memotong dengan pisau tajam",
+            "en": "Cutting with a sharp knife"
+          }
+        },
+        {
+          "id": "j5",
+          "text": {
+            "id": "Membawa piring ke tempat cuci",
+            "en": "Taking plates to the sink"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "j1": "b_me",
+        "j2": "b_adult",
+        "j3": "b_me",
+        "j4": "b_adult",
+        "j5": "b_me"
+      },
+      "model_answer": {
+        "id": "Kamu bisa merapikan mainan, menyiram tanaman, membawa piring. Kompor dan pisau tajam untuk orang dewasa.",
+        "en": "You can tidy toys, water plants and carry plates. The stove and sharp knives are for grown-ups."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "story_choice",
+      "skills": [
+        "FAM-ROLES"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-STORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang sebaiknya Raka lakukan?",
+            "en": "What would be a kind thing for Raka to do?"
+          }
+        }
+      ],
+      "reading_id": "R-SOSK-NENEK",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Terus menonton sampai kartunnya selesai",
+            "en": "Keep watching until the cartoon ends"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Bertanya apakah Nenek membelikannya jajan",
+            "en": "Ask whether Grandma bought him a snack"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Berhenti sebentar dan membantu Nenek membawa tas yang ringan",
+            "en": "Pause and help Grandma carry a light bag"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Raka bisa berhenti sebentar dan membantu Nenek. Kartunnya bisa ditonton lagi nanti.",
+        "en": "Raka can pause for a moment and help Grandma. The cartoon can wait."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "FAM-RULES"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aturan → alasannya.",
+            "en": "Rule → its reason."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "r1",
+          "text": {
+            "id": "Cuci tangan sebelum makan",
+            "en": "Wash your hands before eating"
+          },
+          "image": "wash_hands"
+        },
+        {
+          "id": "r2",
+          "text": {
+            "id": "Rapikan mainan setelah bermain",
+            "en": "Put toys away after playing"
+          },
+          "image": "pic_tidy_room"
+        },
+        {
+          "id": "r3",
+          "text": {
+            "id": "Pamit sebelum pergi keluar",
+            "en": "Say where you're going before you go out"
+          },
+          "image": "pic_wave_bye"
+        },
+        {
+          "id": "w1",
+          "text": {
+            "id": "Supaya kuman tidak masuk ke mulut",
+            "en": "So germs don't get into your mouth"
+          }
+        },
+        {
+          "id": "w2",
+          "text": {
+            "id": "Supaya tidak ada yang tersandung",
+            "en": "So nobody trips over them"
+          }
+        },
+        {
+          "id": "w3",
+          "text": {
+            "id": "Supaya keluarga tahu kamu di mana",
+            "en": "So your family knows where you are"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "r1": "w1",
+        "r2": "w2",
+        "r3": "w3"
+      },
+      "model_answer": {
+        "id": "Cuci tangan: kuman tidak masuk. Rapikan mainan: tidak ada yang tersandung. Pamit: keluarga tahu kamu di mana.",
+        "en": "Wash hands: no germs in. Tidy toys: nobody trips. Say where you go: family knows where you are."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "FAM-RULES"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aturan Sari: tidur pukul delapan malam. Mengapa?",
+            "en": "Sari's rule: bed at eight o'clock. Why?"
+          }
+        }
+      ],
+      "image": "sleep_moon",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Supaya tidak perlu sikat gigi",
+            "en": "So she needn't brush her teeth"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Supaya tidak boleh bermain lagi",
+            "en": "So she can never play again"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Supaya cukup istirahat dan segar besok",
+            "en": "So she rests and feels fresh tomorrow"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Aturan jam tidur membantu Sari cukup istirahat dan segar untuk sekolah besok.",
+        "en": "A bedtime rule helps Sari get enough rest and feel fresh for school tomorrow."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "FAM-RULES"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Anak-anak juga boleh ikut membicarakan aturan rumah bersama keluarga.",
+            "en": "Children can also join in talking about home rules with their family."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Aturan rumah bisa dibicarakan bersama. Kamu boleh menyampaikan pendapatmu dengan sopan.",
+        "en": "Home rules can be talked over together. You can share your ideas politely."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "FAM-MEMBERS"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-MAKE",
+      "image": "pic_tree",
+      "model_answer": {
+        "id": "Gambar pohon keluargamu! Tulis nama orang yang tinggal bersamamu atau yang kamu sayangi, lalu hias sesukamu. Setiap pohon keluarga berbeda, dan semuanya indah.",
+        "en": "Draw your family tree! Write the names of the people you live with or love, then decorate it however you like. Every family tree is different, and every one is lovely."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "FAM-MEMBERS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana Nenek? (ibu dari ayah atau ibumu)",
+            "en": "Which is Grandmother? (your dad's or mum's mother)"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "fam_mother",
+          "image": "fam_mother"
+        },
+        {
+          "id": "fam_grandmother",
+          "image": "fam_grandmother",
+          "correct": true
+        },
+        {
+          "id": "fam_sister",
+          "image": "fam_sister"
+        }
+      ],
+      "model_answer": {
+        "id": "Nenek adalah ibu dari ayah atau ibu kita.",
+        "en": "Grandmother is our dad's or our mum's mother."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "FAM-RULES",
+        "FAM-ROLES"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aturan Bima: habis makan, piring dibawa ke tempat cuci. Bima melakukan apa?",
+            "en": "Bima's rule: after eating, plates go to the sink. What does Bima do?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Membawa piringnya ke tempat cuci",
+            "en": "Takes his plate to the sink"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Meninggalkan piring di meja",
+            "en": "Leaves his plate on the table"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Menyembunyikan piring di bawah kursi",
+            "en": "Hides his plate under a chair"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Bima membawa piringnya ke tempat cuci: ikut aturan sekaligus membantu.",
+        "en": "Bima takes his plate to the sink: following the rule and helping."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-01-015",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "FAM-MEMBERS"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Encyclopaedia Britannica, \"Mancala\" (britannica.com/topic/mancala).",
+      "model_answer": {
+        "id": "Congklak, yang sering dimainkan bersama kakak, adik, atau nenek, termasuk keluarga permainan \"mancala\". Permainan sejenis, dengan lubang dan biji, sudah dimainkan berabad-abad di Afrika, Asia, dan Timur Tengah dengan nama yang berbeda-beda.",
+        "en": "Congklak, often played with brothers, sisters or grandparents, belongs to the \"mancala\" family of games. Games like it, with pits and seeds, have been played for centuries across Africa, Asia and the Middle East under many different names."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "COMM-JOBS"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pekerjaan → tempat kerjanya.",
+            "en": "Job → where it's done."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "j_teacher",
+          "text": {
+            "id": "Guru",
+            "en": "Teacher"
+          }
+        },
+        {
+          "id": "j_nurse",
+          "text": {
+            "id": "Perawat",
+            "en": "Nurse"
+          }
+        },
+        {
+          "id": "j_farmer",
+          "text": {
+            "id": "Petani",
+            "en": "Farmer"
+          }
+        },
+        {
+          "id": "j_fisher",
+          "text": {
+            "id": "Nelayan",
+            "en": "Fisher"
+          }
+        },
+        {
+          "id": "p_school",
+          "text": {
+            "id": "Sekolah",
+            "en": "School"
+          },
+          "image": "pic_school"
+        },
+        {
+          "id": "p_puskesmas",
+          "text": {
+            "id": "Puskesmas",
+            "en": "Puskesmas (community health centre)"
+          },
+          "image": "pic_hospital"
+        },
+        {
+          "id": "p_sawah",
+          "text": {
+            "id": "Sawah",
+            "en": "Rice field"
+          },
+          "image": "sticker_rice_field"
+        },
+        {
+          "id": "p_sea",
+          "text": {
+            "id": "Laut",
+            "en": "The sea"
+          },
+          "image": "pic_sea"
+        }
+      ],
+      "solution_pairs": {
+        "j_teacher": "p_school",
+        "j_nurse": "p_puskesmas",
+        "j_farmer": "p_sawah",
+        "j_fisher": "p_sea"
+      },
+      "model_answer": {
+        "id": "Guru di sekolah, perawat di puskesmas, petani di sawah, dan nelayan di laut.",
+        "en": "Teachers at school, nurses at the puskesmas, farmers in the rice fields and fishers at sea."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "COMM-JOBS"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Perutmu sakit di sekolah. Minta tolong ke siapa?",
+            "en": "Your tummy hurts at school. Who do you ask?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Guru atau petugas UKS",
+            "en": "A teacher or the UKS staff"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Teman yang sedang main bola",
+            "en": "A friend playing football"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Tidak bilang siapa-siapa",
+            "en": "Nobody, keep it to myself"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Guru atau petugas UKS akan membantu. Memberi tahu orang dewasa itu berani.",
+        "en": "A teacher or the UKS staff will help. Telling a grown-up is brave."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "memory_flip",
+      "skills": [
+        "COMM-JOBS"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pekerjaan dan alatnya.",
+            "en": "Jobs and their tools."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "j_farmer",
+          "text": {
+            "id": "Petani",
+            "en": "Farmer"
+          }
+        },
+        {
+          "id": "j_fisher",
+          "text": {
+            "id": "Nelayan",
+            "en": "Fisher"
+          }
+        },
+        {
+          "id": "j_doctor",
+          "text": {
+            "id": "Dokter",
+            "en": "Doctor"
+          }
+        },
+        {
+          "id": "j_carpenter",
+          "text": {
+            "id": "Tukang kayu",
+            "en": "Carpenter"
+          }
+        },
+        {
+          "id": "t_hoe",
+          "text": {
+            "id": "Cangkul",
+            "en": "Hoe"
+          }
+        },
+        {
+          "id": "t_net",
+          "text": {
+            "id": "Jala",
+            "en": "Fishing net"
+          }
+        },
+        {
+          "id": "t_steth",
+          "text": {
+            "id": "Stetoskop",
+            "en": "Stethoscope"
+          }
+        },
+        {
+          "id": "t_saw",
+          "text": {
+            "id": "Gergaji",
+            "en": "Saw"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "j_farmer": "t_hoe",
+        "j_fisher": "t_net",
+        "j_doctor": "t_steth",
+        "j_carpenter": "t_saw"
+      },
+      "model_answer": {
+        "id": "Petani: cangkul. Nelayan: jala. Dokter: stetoskop. Tukang kayu: gergaji.",
+        "en": "Farmer: hoe. Fisher: net. Doctor: stethoscope. Carpenter: saw."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "COMM-JOBS"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Petugas kebersihan, satpam, dan penjaga kantin juga bagian dari keluarga besar sekolah.",
+            "en": "Cleaners, security guards and canteen staff are part of the school community, too."
+          }
+        }
+      ],
+      "image": "pic_school",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Mereka menjaga sekolah aman, bersih, dan nyaman. Ucapkan terima kasih, ya.",
+        "en": "They keep school safe, clean and comfortable. Say thank you!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "COMM-JOBS"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di sekolah atau di sekitar rumah?",
+            "en": "At school or around home?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_school",
+          "text": {
+            "id": "Di sekolah",
+            "en": "At school"
+          },
+          "image": "pic_school"
+        },
+        {
+          "id": "b_home",
+          "text": {
+            "id": "Di sekitar rumah",
+            "en": "Around home"
+          },
+          "image": "pic_house"
+        },
+        {
+          "id": "x1",
+          "text": {
+            "id": "Ketua RT",
+            "en": "The RT head (neighbourhood leader)"
+          }
+        },
+        {
+          "id": "x2",
+          "text": {
+            "id": "Guru kelas",
+            "en": "The class teacher"
+          }
+        },
+        {
+          "id": "x3",
+          "text": {
+            "id": "Tukang sayur keliling",
+            "en": "The travelling vegetable seller"
+          }
+        },
+        {
+          "id": "x4",
+          "text": {
+            "id": "Petugas perpustakaan sekolah",
+            "en": "The school librarian"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "x1": "b_home",
+        "x2": "b_school",
+        "x3": "b_home",
+        "x4": "b_school"
+      },
+      "model_answer": {
+        "id": "Di sekolah: guru kelas, petugas perpustakaan sekolah. Di sekitar rumah: Ketua RT, tukang sayur keliling.",
+        "en": "At school: the class teacher, the school librarian. Around home: the RT head, the travelling vegetable seller."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "COMM-JOBS"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Orang yang bertugas menjaga keamanan sekolah disebut ____.",
+            "en": "The person whose job is to keep the school safe is the ____."
+          }
+        }
+      ],
+      "image": "pic_school",
+      "options": [
+        {
+          "id": "t_farmer",
+          "text": {
+            "id": "petani",
+            "en": "farmer"
+          }
+        },
+        {
+          "id": "t_guard",
+          "text": {
+            "id": "satpam",
+            "en": "security guard"
+          }
+        },
+        {
+          "id": "t_fisher",
+          "text": {
+            "id": "nelayan",
+            "en": "fisher"
+          }
+        }
+      ],
+      "solution": [
+        "t_guard"
+      ],
+      "model_answer": {
+        "id": "Satpam menjaga keamanan sekolah.",
+        "en": "The security guard keeps the school safe."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "tap_hotspot",
+      "skills": [
+        "COMM-GOTONG"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pak RT menempel pengumuman kerja bakti. Di mana?",
+            "en": "The RT head puts up a clean-up notice. Where?"
+          }
+        }
+      ],
+      "image": "scene_kampung_shapes",
+      "options": [
+        {
+          "id": "roof",
+          "text": {
+            "id": "atap",
+            "en": "roof"
+          },
+          "region": {
+            "x": 0.3,
+            "y": 0.2,
+            "w": 0.36,
+            "h": 0.22
+          }
+        },
+        {
+          "id": "kite",
+          "text": {
+            "id": "layang-layang",
+            "en": "kite"
+          },
+          "region": {
+            "x": 0.74,
+            "y": 0.06,
+            "w": 0.16,
+            "h": 0.26
+          }
+        },
+        {
+          "id": "board",
+          "text": {
+            "id": "papan pengumuman",
+            "en": "noticeboard"
+          },
+          "region": {
+            "x": 0.72,
+            "y": 0.56,
+            "w": 0.22,
+            "h": 0.18
+          },
+          "correct": true
+        },
+        {
+          "id": "sun",
+          "text": {
+            "id": "matahari",
+            "en": "sun"
+          },
+          "region": {
+            "x": 0.06,
+            "y": 0.06,
+            "w": 0.18,
+            "h": 0.24
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Pengumuman ditempel di papan pengumuman supaya semua warga bisa membacanya.",
+        "en": "Notices go on the noticeboard so all the neighbours can read them."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "story_choice",
+      "skills": [
+        "COMM-NEIGHBOUR"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-STORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang sebaiknya Doni lakukan?",
+            "en": "What would be best for Doni to do?"
+          }
+        }
+      ],
+      "reading_id": "R-SOSK-MALAM",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Bermain gendang sekeras-kerasnya",
+            "en": "Play the drum as loudly as he can"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Mengetuk pintu Bu Wati untuk mengajak mendengarkan",
+            "en": "Knock on Bu Wati's door and invite them to listen"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Menyimpan gendangnya dan bermain lagi besok siang",
+            "en": "Put the drum away and play again tomorrow afternoon"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Bermain lagi besok siang, supaya bayi tetangga bisa tidur nyenyak.",
+        "en": "Play again tomorrow afternoon, so the baby next door can sleep."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "COMM-NEIGHBOUR"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Senang atau terganggu?",
+            "en": "Happy or bothered?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_happy",
+          "text": {
+            "id": "Membuat tetangga senang",
+            "en": "Makes neighbours happy"
+          },
+          "image": "pic_happy"
+        },
+        {
+          "id": "b_bother",
+          "text": {
+            "id": "Membuat tetangga terganggu",
+            "en": "Bothers neighbours"
+          },
+          "image": "pic_sad"
+        },
+        {
+          "id": "n1",
+          "text": {
+            "id": "Menyapa sambil tersenyum",
+            "en": "Saying hello with a smile"
+          },
+          "image": "val_greet_neighbor"
+        },
+        {
+          "id": "n2",
+          "text": {
+            "id": "Membuang sampah ke halaman tetangga",
+            "en": "Throwing rubbish into a neighbour's yard"
+          },
+          "image": "val_litter"
+        },
+        {
+          "id": "n3",
+          "text": {
+            "id": "Berteriak-teriak saat malam",
+            "en": "Shouting at night"
+          }
+        },
+        {
+          "id": "n4",
+          "text": {
+            "id": "Membantu membawakan barang",
+            "en": "Helping carry their things"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "n1": "b_happy",
+        "n2": "b_bother",
+        "n3": "b_bother",
+        "n4": "b_happy"
+      },
+      "model_answer": {
+        "id": "Senang: menyapa sambil tersenyum, membantu membawakan barang. Terganggu: membuang sampah ke halaman, berteriak malam.",
+        "en": "Happy: a smiling hello, helping carry things. Bothered: rubbish in their yard, shouting at night."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "COMM-GOTONG"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gotong royong hanya untuk orang dewasa. Anak-anak tidak bisa ikut.",
+            "en": "Gotong royong is only for grown-ups. Children can't join in."
+          }
+        }
+      ],
+      "image": "pic_friends",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Anak-anak bisa ikut dengan cara kecil yang aman, misalnya memungut sampah plastik.",
+        "en": "Children can join in small, safe ways, like picking up plastic litter."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "COMM-GOTONG"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kerja bakti: cara aman untuk membantu?",
+            "en": "Clean-up day: a safe way to help?"
+          }
+        }
+      ],
+      "image": "val_gotong_royong",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Membakar tumpukan sampah sendirian",
+            "en": "Burning a pile of rubbish on your own"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Membawakan air minum untuk yang bekerja",
+            "en": "Bringing drinking water to the workers"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Masuk ke selokan yang dalam",
+            "en": "Climbing into a deep drain"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Membawakan air minum: aman dan berarti. Pekerjaan berbahaya untuk orang dewasa.",
+        "en": "Bringing drinking water: safe and useful. Risky jobs are for grown-ups."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "COMM-GOTONG"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutan kerja bakti.",
+            "en": "The clean-up day, in order."
+          }
+        }
+      ],
+      "image": "val_gotong_royong",
+      "options": [
+        {
+          "id": "k2",
+          "text": {
+            "id": "Warga berkumpul membawa sapu dan cangkul",
+            "en": "Neighbours gather with brooms and hoes"
+          }
+        },
+        {
+          "id": "k4",
+          "text": {
+            "id": "Makan bersama, lalu pulang",
+            "en": "Eat together, then go home"
+          }
+        },
+        {
+          "id": "k1",
+          "text": {
+            "id": "Pak RT mengumumkan jadwal",
+            "en": "The RT head announces the day"
+          }
+        },
+        {
+          "id": "k3",
+          "text": {
+            "id": "Membersihkan jalan dan selokan bersama",
+            "en": "Clean the street and drains together"
+          }
+        }
+      ],
+      "solution": [
+        "k1",
+        "k2",
+        "k3",
+        "k4"
+      ],
+      "model_answer": {
+        "id": "Pengumuman, berkumpul, membersihkan bersama, lalu makan bersama.",
+        "en": "Announcement, gathering, cleaning together, then eating together."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "COMM-JOBS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Siapa yang bekerja menanam padi di sawah?",
+            "en": "Who works planting rice in the rice fields?"
+          }
+        }
+      ],
+      "image": "sticker_rice_field",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Nelayan",
+            "en": "Fisher"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Petani",
+            "en": "Farmer"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Pustakawan",
+            "en": "Librarian"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Petani menanam padi di sawah.",
+        "en": "Farmers plant rice in the rice fields."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "COMM-NEIGHBOUR",
+        "COMM-GOTONG"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menolong tetangga membawa barang adalah contoh hidup rukun.",
+            "en": "Helping a neighbour carry things is being a good neighbour."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Saling menolong membuat hidup bertetangga rukun. Itulah semangat gotong royong.",
+        "en": "Helping each other keeps neighbours living happily together. That's the spirit of gotong royong."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-02-015",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "COMM-GOTONG"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "sticker_angklung",
+      "gem": true,
+      "source": "UNESCO Intangible Cultural Heritage, \"Indonesian Angklung\" (Representative List, inscribed 2010; ich.unesco.org).",
+      "model_answer": {
+        "id": "Angklung, alat musik bambu dari Jawa Barat, masuk daftar Warisan Budaya Takbenda UNESCO pada 2010. Satu angklung biasanya membunyikan satu nada, jadi lagu dimainkan bersama: setiap orang menggoyangkan angklungnya pada gilirannya. Seperti gotong royong!",
+        "en": "The angklung, a bamboo instrument from West Java, joined UNESCO's Intangible Cultural Heritage list in 2010. One angklung usually plays one note, so a song is played together: everyone shakes theirs on their turn. Just like gotong royong!"
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-03-001",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "MAP-POSITION"
+      ],
+      "pool": "PRACT",
+      "order": 25,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kucing di kanan kotak.",
+            "en": "The cat to the right of the box."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pos_cat_right",
+          "image": "pos_cat_right",
+          "correct": true
+        },
+        {
+          "id": "pos_cat_left",
+          "image": "pos_cat_left"
+        },
+        {
+          "id": "pos_cat_above",
+          "image": "pos_cat_above"
+        }
+      ],
+      "model_answer": {
+        "id": "Kucing duduk di sebelah kanan kotak, kalau kita melihat gambarnya.",
+        "en": "The cat is sitting to the right of the box, as you look at the picture."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-03-002",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "MAP-POSITION"
+      ],
+      "pool": "PRACT",
+      "order": 26,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang di kiri atas rumah?",
+            "en": "What is up and to the left of the house?"
+          }
+        }
+      ],
+      "image": "scene_kampung_shapes",
+      "options": [
+        {
+          "id": "kite",
+          "text": {
+            "id": "layang-layang",
+            "en": "kite"
+          },
+          "region": {
+            "x": 0.74,
+            "y": 0.06,
+            "w": 0.16,
+            "h": 0.26
+          }
+        },
+        {
+          "id": "board",
+          "text": {
+            "id": "papan pengumuman",
+            "en": "noticeboard"
+          },
+          "region": {
+            "x": 0.72,
+            "y": 0.56,
+            "w": 0.22,
+            "h": 0.18
+          }
+        },
+        {
+          "id": "sun",
+          "text": {
+            "id": "matahari",
+            "en": "sun"
+          },
+          "region": {
+            "x": 0.06,
+            "y": 0.06,
+            "w": 0.18,
+            "h": 0.24
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Matahari ada di sebelah kiri atas rumah. Layang-layang ada di sebelah kanan atas.",
+        "en": "The sun is up and to the left of the house. The kite is up and to the right."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-03-003",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "MAP-POSITION"
+      ],
+      "pool": "PRACT",
+      "order": 27,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rani dan Budi berhadapan. Rani mengangkat tangan kanan. Dari Budi, tangan itu di sisi mana?",
+            "en": "Rani and Budi face each other. Rani raises her right hand. For Budi, which side is it on?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Di sisi kanan Budi",
+            "en": "On Budi's right side"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Di belakang punggung Budi",
+            "en": "Behind Budi's back"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Di sisi kiri Budi",
+            "en": "On Budi's left side"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Di sisi kiri Budi. Coba praktikkan bersama temanmu!",
+        "en": "On Budi's left side. Try it with a friend!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-03-004",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "MAP-POSITION"
+      ],
+      "pool": "PRACT",
+      "order": 28,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Matahari di sebelah kiri rumah.",
+            "en": "The sun is to the left of the house."
+          }
+        }
+      ],
+      "image": "scene_kampung_shapes",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Matahari ada di sebelah kiri rumah, sedangkan papan pengumuman ada di sebelah kanan.",
+        "en": "The sun is to the left of the house, and the noticeboard is to the right."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-03-005",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "MAP-POSITION"
+      ],
+      "pool": "PRACT",
+      "order": 29,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang tepat di bawah layang-layang?",
+            "en": "What is right below the kite?"
+          }
+        }
+      ],
+      "image": "scene_kampung_shapes",
+      "options": [
+        {
+          "id": "sun",
+          "text": {
+            "id": "matahari",
+            "en": "sun"
+          },
+          "region": {
+            "x": 0.06,
+            "y": 0.06,
+            "w": 0.18,
+            "h": 0.24
+          }
+        },
+        {
+          "id": "board",
+          "text": {
+            "id": "papan pengumuman",
+            "en": "noticeboard"
+          },
+          "region": {
+            "x": 0.72,
+            "y": 0.56,
+            "w": 0.22,
+            "h": 0.18
+          },
+          "correct": true
+        },
+        {
+          "id": "roof",
+          "text": {
+            "id": "atap",
+            "en": "roof"
+          },
+          "region": {
+            "x": 0.3,
+            "y": 0.2,
+            "w": 0.36,
+            "h": 0.22
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Papan pengumuman ada tepat di bawah layang-layang.",
+        "en": "The noticeboard is right below the kite."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-03-006",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "MAP-DISTANCE"
+      ],
+      "pool": "PRACT",
+      "order": 30,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dekat atau jauh dari rumah?",
+            "en": "Near or far from home?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_near",
+          "text": {
+            "id": "Dekat dengan rumah",
+            "en": "Near home"
+          }
+        },
+        {
+          "id": "b_far",
+          "text": {
+            "id": "Jauh dari rumah",
+            "en": "Far from home"
+          }
+        },
+        {
+          "id": "x1",
+          "text": {
+            "id": "Rumah tetangga sebelah",
+            "en": "The house next door"
+          }
+        },
+        {
+          "id": "x2",
+          "text": {
+            "id": "Rumah Nenek di kota lain, 5 jam naik bus",
+            "en": "Grandma's house in another town, 5 hours by bus"
+          }
+        },
+        {
+          "id": "x3",
+          "text": {
+            "id": "Warung di ujung gang",
+            "en": "The warung (small shop) at the end of the lane"
+          }
+        },
+        {
+          "id": "x4",
+          "text": {
+            "id": "Pantai di pulau lain, semalam naik kapal",
+            "en": "A beach on another island, a night away by boat"
+          }
+        },
+        {
+          "id": "x5",
+          "text": {
+            "id": "Kamar mandi di rumahmu",
+            "en": "The bathroom in your home"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "x1": "b_near",
+        "x2": "b_far",
+        "x3": "b_near",
+        "x4": "b_far",
+        "x5": "b_near"
+      },
+      "model_answer": {
+        "id": "Dekat: rumah tetangga, warung, kamar mandi. Jauh: rumah Nenek di kota lain, pantai di pulau lain.",
+        "en": "Near: next door, the warung, your bathroom. Far: Grandma's in another town, a beach on another island."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-03-007",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "tap_hotspot",
+      "skills": [
+        "MAP-READ"
+      ],
+      "pool": "PRACT",
+      "order": 31,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Burung melihat rumah dari atas. Bagian apa yang paling banyak terlihat?",
+            "en": "A bird looks down on the house. Which part does it see most?"
+          }
+        }
+      ],
+      "image": "scene_kampung_shapes",
+      "options": [
+        {
+          "id": "wall",
+          "text": {
+            "id": "dinding dan pintu",
+            "en": "wall and door"
+          },
+          "region": {
+            "x": 0.34,
+            "y": 0.44,
+            "w": 0.28,
+            "h": 0.37
+          }
+        },
+        {
+          "id": "roof",
+          "text": {
+            "id": "atap",
+            "en": "roof"
+          },
+          "region": {
+            "x": 0.3,
+            "y": 0.2,
+            "w": 0.36,
+            "h": 0.22
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Atapnya. Karena itu, di peta rumah digambar sebagai kotak kecil.",
+        "en": "The roof. That's why a map shows a house as a small box."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-03-008",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "MAP-DISTANCE"
+      ],
+      "pool": "PRACT",
+      "order": 32,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Jalan kaki dari rumah Tono: sekolah 15 menit, warung 2 menit, lapangan 10 menit, pos ronda 5 menit. Mulai dari yang terdekat.",
+            "en": "Walking from Tono's house: school 15 min, warung 2 min, field 10 min, watch post 5 min. Nearest first."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "o_field",
+          "text": {
+            "id": "Lapangan",
+            "en": "The playing field"
+          }
+        },
+        {
+          "id": "o_warung",
+          "text": {
+            "id": "Warung",
+            "en": "The warung (small shop)"
+          }
+        },
+        {
+          "id": "o_school",
+          "text": {
+            "id": "Sekolah",
+            "en": "School"
+          }
+        },
+        {
+          "id": "o_pos",
+          "text": {
+            "id": "Pos ronda",
+            "en": "The neighbourhood watch post"
+          }
+        }
+      ],
+      "solution": [
+        "o_warung",
+        "o_pos",
+        "o_field",
+        "o_school"
+      ],
+      "model_answer": {
+        "id": "Warung (2 menit), pos ronda (5 menit), lapangan (10 menit), lalu sekolah (15 menit).",
+        "en": "The warung (2 minutes), the neighbourhood watch post (5 minutes), the playing field (10 minutes), then school (15 minutes)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-03-009",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "MAP-READ"
+      ],
+      "pool": "PRACT",
+      "order": 33,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Simbol peta → artinya.",
+            "en": "Map symbol → what it means."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s_box",
+          "text": {
+            "id": "Kotak kecil",
+            "en": "A small square"
+          }
+        },
+        {
+          "id": "s_blue",
+          "text": {
+            "id": "Garis biru berkelok-kelok",
+            "en": "A wiggly blue line"
+          }
+        },
+        {
+          "id": "s_two",
+          "text": {
+            "id": "Dua garis sejajar",
+            "en": "Two parallel lines"
+          }
+        },
+        {
+          "id": "s_trees",
+          "text": {
+            "id": "Gambar pohon kecil-kecil",
+            "en": "Lots of tiny trees"
+          }
+        },
+        {
+          "id": "m_house",
+          "text": {
+            "id": "Rumah",
+            "en": "A house"
+          },
+          "image": "pic_house"
+        },
+        {
+          "id": "m_river",
+          "text": {
+            "id": "Sungai",
+            "en": "A river"
+          },
+          "image": "pic_river"
+        },
+        {
+          "id": "m_road",
+          "text": {
+            "id": "Jalan",
+            "en": "A road"
+          }
+        },
+        {
+          "id": "m_garden",
+          "text": {
+            "id": "Kebun atau hutan",
+            "en": "A garden or a forest"
+          },
+          "image": "pic_forest"
+        }
+      ],
+      "solution_pairs": {
+        "s_box": "m_house",
+        "s_blue": "m_river",
+        "s_two": "m_road",
+        "s_trees": "m_garden"
+      },
+      "model_answer": {
+        "id": "Kotak kecil: rumah. Garis biru berkelok: sungai. Dua garis sejajar: jalan. Pohon kecil: kebun atau hutan.",
+        "en": "Small square: house. Wiggly blue line: river. Two parallel lines: road. Tiny trees: garden or forest."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-03-010",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "MAP-READ"
+      ],
+      "pool": "PRACT",
+      "order": 34,
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gambar suatu tempat yang dilihat dari atas disebut ____.",
+            "en": "A picture of a place seen from above is a ____."
+          }
+        }
+      ],
+      "image": "pic_bird",
+      "options": [
+        {
+          "id": "t_cal",
+          "text": {
+            "id": "kalender",
+            "en": "calendar"
+          }
+        },
+        {
+          "id": "t_map",
+          "text": {
+            "id": "peta",
+            "en": "map"
+          }
+        },
+        {
+          "id": "t_song",
+          "text": {
+            "id": "lagu",
+            "en": "song"
+          }
+        }
+      ],
+      "solution": [
+        "t_map"
+      ],
+      "model_answer": {
+        "id": "Peta adalah gambar suatu tempat yang dilihat dari atas.",
+        "en": "A map is a picture of a place seen from above."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-03-011",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "MAP-READ"
+      ],
+      "pool": "PRACT",
+      "order": 35,
+      "prompt_id": "P-MAKE",
+      "image": "pic_bed",
+      "model_answer": {
+        "id": "Buat peta kamarmu! Bayangkan kamu burung yang melihat kamarmu dari atas. Gambar kotak untuk kasur dan lemari, tandai pintu dan jendela, lalu buat keterangan kecil di pojok kertas. Tunjukkan petamu kepada keluargamu.",
+        "en": "Make a map of your room! Imagine you're a bird looking down on it. Draw boxes for the bed and cupboard, mark the door and window, then add a small key in the corner. Show your map to your family."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-03-012",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "MAP-POSITION"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kucing di kiri kotak.",
+            "en": "The cat to the left of the box."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pos_cat_left",
+          "image": "pos_cat_left",
+          "correct": true
+        },
+        {
+          "id": "pos_cat_right",
+          "image": "pos_cat_right"
+        },
+        {
+          "id": "pos_cat_inside",
+          "image": "pos_cat_inside"
+        }
+      ],
+      "model_answer": {
+        "id": "Kucing duduk di sebelah kiri kotak, kalau kita melihat gambarnya.",
+        "en": "The cat is sitting to the left of the box, as you look at the picture."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-03-013",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "MAP-DISTANCE",
+        "MAP-READ"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di peta, warung tepat di samping rumah Ayu; kantor pos di ujung lain. Mana yang lebih dekat?",
+            "en": "On the map, the warung is right next to Ayu's house; the post office is at the far end. Which is nearer?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Warung",
+            "en": "The warung"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Kantor pos",
+            "en": "The post office"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Sama jauhnya",
+            "en": "They are just as far"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Warung, karena di peta letaknya tepat di samping rumah Ayu.",
+        "en": "The warung: on the map it's right next to Ayu's house."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-03-014",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "MAP-READ"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "sticker_compass",
+      "gem": true,
+      "source": "Encyclopaedia Britannica, \"Shen Kuo\" (Mengxi bitan / Dream Pool Essays, 1088, describes the magnetic needle) and \"compass (navigational instrument)\" (britannica.com).",
+      "model_answer": {
+        "id": "Kompas adalah alat penunjuk arah. Lebih dari 900 tahun yang lalu, ilmuwan Tiongkok bernama Shen Kuo sudah menulis tentang jarum bermagnet yang selalu menunjuk ke arah utara dan selatan. Para pelaut lalu memakainya supaya tidak tersesat di laut.",
+        "en": "A compass shows us which way is which. More than 900 years ago, a Chinese scientist called Shen Kuo wrote about a magnetised needle that always points north and south. Sailors then used it so they would not get lost at sea."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-04-001",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ART-COLOUR"
+      ],
+      "pool": "PRACT",
+      "order": 36,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana kelompok warna primer?",
+            "en": "Which group shows the primary colours?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Merah, hijau, ungu",
+            "en": "Red, green, purple"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Jingga, hijau, ungu",
+            "en": "Orange, green, purple"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Merah, kuning, biru",
+            "en": "Red, yellow, blue"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Merah, kuning, dan biru adalah warna primer. Dari ketiganya kita bisa mencampur banyak warna lain.",
+        "en": "Red, yellow and blue are the primary colours. We can mix lots of other colours from them."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-04-002",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ART-MIX"
+      ],
+      "pool": "PRACT",
+      "order": 37,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Campuran → hasilnya.",
+            "en": "Mix → the colour it makes."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m_ry",
+          "text": {
+            "id": "Merah + kuning",
+            "en": "Red + yellow"
+          }
+        },
+        {
+          "id": "m_yb",
+          "text": {
+            "id": "Kuning + biru",
+            "en": "Yellow + blue"
+          }
+        },
+        {
+          "id": "m_rb",
+          "text": {
+            "id": "Merah + biru",
+            "en": "Red + blue"
+          }
+        },
+        {
+          "id": "m_rw",
+          "text": {
+            "id": "Merah + putih",
+            "en": "Red + white"
+          }
+        },
+        {
+          "id": "r_orange",
+          "text": {
+            "id": "Jingga",
+            "en": "Orange"
+          },
+          "image": "pic_color_orange"
+        },
+        {
+          "id": "r_green",
+          "text": {
+            "id": "Hijau",
+            "en": "Green"
+          },
+          "image": "pic_color_green"
+        },
+        {
+          "id": "r_purple",
+          "text": {
+            "id": "Ungu",
+            "en": "Purple"
+          },
+          "image": "pic_color_purple"
+        },
+        {
+          "id": "r_pink",
+          "text": {
+            "id": "Merah muda",
+            "en": "Pink"
+          },
+          "image": "pic_color_pink"
+        }
+      ],
+      "solution_pairs": {
+        "m_ry": "r_orange",
+        "m_yb": "r_green",
+        "m_rb": "r_purple",
+        "m_rw": "r_pink"
+      },
+      "model_answer": {
+        "id": "Merah + kuning = jingga, kuning + biru = hijau, merah + biru = ungu, dan merah + putih = merah muda.",
+        "en": "Red + yellow = orange, yellow + blue = green, red + blue = purple, and red + white = pink."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-04-003",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "ART-COLOUR"
+      ],
+      "pool": "PRACT",
+      "order": 38,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Hijau adalah warna primer.",
+            "en": "Green is a primary colour."
+          }
+        }
+      ],
+      "image": "pic_color_green",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Hijau adalah warna campuran: kuning ditambah biru.",
+        "en": "Green is a mixed colour: yellow plus blue."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-04-004",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "ART-MIX"
+      ],
+      "pool": "PRACT",
+      "order": 39,
+      "prompt_id": "P-TILES",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Susun: merah + … = ungu.",
+            "en": "Build it: red + … = purple."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "c_blue",
+          "text": {
+            "id": "biru",
+            "en": "blue"
+          },
+          "image": "pic_color_blue"
+        },
+        {
+          "id": "eq",
+          "text": {
+            "id": "=",
+            "en": "="
+          }
+        },
+        {
+          "id": "c_red",
+          "text": {
+            "id": "merah",
+            "en": "red"
+          },
+          "image": "pic_color_red"
+        },
+        {
+          "id": "c_green",
+          "text": {
+            "id": "hijau",
+            "en": "green"
+          },
+          "image": "pic_color_green"
+        },
+        {
+          "id": "plus",
+          "text": {
+            "id": "+",
+            "en": "+"
+          }
+        },
+        {
+          "id": "c_purple",
+          "text": {
+            "id": "ungu",
+            "en": "purple"
+          },
+          "image": "pic_color_purple"
+        },
+        {
+          "id": "c_yellow",
+          "text": {
+            "id": "kuning",
+            "en": "yellow"
+          },
+          "image": "pic_color_yellow"
+        }
+      ],
+      "solution": [
+        "c_red",
+        "plus",
+        "c_blue",
+        "eq",
+        "c_purple"
+      ],
+      "model_answer": {
+        "id": "Merah + biru = ungu.",
+        "en": "Red + blue = purple."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-04-005",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "ART-COLOUR"
+      ],
+      "pool": "PRACT",
+      "order": 40,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Primer atau campuran?",
+            "en": "Primary or mixed?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_pri",
+          "text": {
+            "id": "Warna primer",
+            "en": "Primary colours"
+          }
+        },
+        {
+          "id": "b_mix",
+          "text": {
+            "id": "Warna campuran",
+            "en": "Mixed colours"
+          }
+        },
+        {
+          "id": "w1",
+          "text": {
+            "id": "Merah",
+            "en": "Red"
+          },
+          "image": "pic_color_red"
+        },
+        {
+          "id": "w2",
+          "text": {
+            "id": "Hijau",
+            "en": "Green"
+          },
+          "image": "pic_color_green"
+        },
+        {
+          "id": "w3",
+          "text": {
+            "id": "Biru",
+            "en": "Blue"
+          },
+          "image": "pic_color_blue"
+        },
+        {
+          "id": "w4",
+          "text": {
+            "id": "Jingga",
+            "en": "Orange"
+          },
+          "image": "pic_color_orange"
+        },
+        {
+          "id": "w5",
+          "text": {
+            "id": "Kuning",
+            "en": "Yellow"
+          },
+          "image": "pic_color_yellow"
+        },
+        {
+          "id": "w6",
+          "text": {
+            "id": "Ungu",
+            "en": "Purple"
+          },
+          "image": "pic_color_purple"
+        }
+      ],
+      "solution_pairs": {
+        "w1": "b_pri",
+        "w2": "b_mix",
+        "w3": "b_pri",
+        "w4": "b_mix",
+        "w5": "b_pri",
+        "w6": "b_mix"
+      },
+      "model_answer": {
+        "id": "Warna primer: merah, kuning, biru. Warna campuran: jingga, hijau, ungu.",
+        "en": "Primary colours: red, yellow, blue. Mixed colours: orange, green, purple."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-04-006",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "ART-MIX"
+      ],
+      "pool": "PRACT",
+      "order": 41,
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dodi mencampur cat kuning dan biru untuk daun. Jadinya ____.",
+            "en": "Dodi mixes yellow and blue paint for a leaf. He gets ____."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_orange",
+          "text": {
+            "id": "jingga",
+            "en": "orange"
+          },
+          "image": "pic_color_orange"
+        },
+        {
+          "id": "t_purple",
+          "text": {
+            "id": "ungu",
+            "en": "purple"
+          },
+          "image": "pic_color_purple"
+        },
+        {
+          "id": "t_green",
+          "text": {
+            "id": "hijau",
+            "en": "green"
+          },
+          "image": "pic_color_green"
+        }
+      ],
+      "solution": [
+        "t_green"
+      ],
+      "model_answer": {
+        "id": "Kuning dan biru dicampur menjadi hijau, warna yang pas untuk daun.",
+        "en": "Yellow and blue mixed together make green, just right for a leaf."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-04-007",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ART-SHAPE"
+      ],
+      "pool": "PRACT",
+      "order": 42,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Atap rumah sering digambar seperti ini.",
+            "en": "House roofs are often drawn like this."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "shape_circle",
+          "image": "shape_circle"
+        },
+        {
+          "id": "shape_triangle",
+          "image": "shape_triangle",
+          "correct": true
+        },
+        {
+          "id": "shape_square",
+          "image": "shape_square"
+        }
+      ],
+      "model_answer": {
+        "id": "Segitiga! Atap rumah sering digambar sebagai segitiga.",
+        "en": "A triangle! House roofs are often drawn as triangles."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-04-008",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "tap_hotspot",
+      "skills": [
+        "ART-SHAPE"
+      ],
+      "pool": "PRACT",
+      "order": 43,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang belah ketupat?",
+            "en": "Which one is a rhombus (diamond)?"
+          }
+        }
+      ],
+      "image": "scene_kampung_shapes",
+      "options": [
+        {
+          "id": "kite",
+          "text": {
+            "id": "layang-layang",
+            "en": "kite"
+          },
+          "region": {
+            "x": 0.74,
+            "y": 0.06,
+            "w": 0.16,
+            "h": 0.26
+          },
+          "correct": true
+        },
+        {
+          "id": "sun",
+          "text": {
+            "id": "matahari",
+            "en": "sun"
+          },
+          "region": {
+            "x": 0.06,
+            "y": 0.06,
+            "w": 0.18,
+            "h": 0.24
+          }
+        },
+        {
+          "id": "board",
+          "text": {
+            "id": "papan pengumuman",
+            "en": "noticeboard"
+          },
+          "region": {
+            "x": 0.72,
+            "y": 0.56,
+            "w": 0.22,
+            "h": 0.18
+          }
+        },
+        {
+          "id": "roof",
+          "text": {
+            "id": "atap",
+            "en": "roof"
+          },
+          "region": {
+            "x": 0.3,
+            "y": 0.2,
+            "w": 0.36,
+            "h": 0.22
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Layang-layang itu berbentuk belah ketupat: empat sisinya sama panjang dan semuanya miring.",
+        "en": "The kite is a rhombus: four sides of the same length, all of them slanting."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-04-009",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "ART-SHAPE"
+      ],
+      "pool": "PRACT",
+      "order": 44,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Benda → bentuknya.",
+            "en": "Thing → its shape."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "o_wheel",
+          "text": {
+            "id": "Roda sepeda",
+            "en": "A bicycle wheel"
+          }
+        },
+        {
+          "id": "o_door",
+          "text": {
+            "id": "Pintu",
+            "en": "A door"
+          },
+          "image": "pic_door"
+        },
+        {
+          "id": "o_egg",
+          "text": {
+            "id": "Telur",
+            "en": "An egg"
+          },
+          "image": "count_egg_1"
+        },
+        {
+          "id": "o_ruler",
+          "text": {
+            "id": "Penggaris segitiga",
+            "en": "A set square (triangle ruler)"
+          }
+        },
+        {
+          "id": "f_circle",
+          "text": {
+            "id": "Lingkaran",
+            "en": "Circle"
+          },
+          "image": "shape_circle"
+        },
+        {
+          "id": "f_rect",
+          "text": {
+            "id": "Persegi panjang",
+            "en": "Rectangle"
+          },
+          "image": "shape_rectangle"
+        },
+        {
+          "id": "f_oval",
+          "text": {
+            "id": "Oval",
+            "en": "Oval"
+          },
+          "image": "shape_oval"
+        },
+        {
+          "id": "f_tri",
+          "text": {
+            "id": "Segitiga",
+            "en": "Triangle"
+          },
+          "image": "shape_triangle"
+        }
+      ],
+      "solution_pairs": {
+        "o_wheel": "f_circle",
+        "o_door": "f_rect",
+        "o_egg": "f_oval",
+        "o_ruler": "f_tri"
+      },
+      "model_answer": {
+        "id": "Roda: lingkaran. Pintu: persegi panjang. Telur: oval. Penggaris segitiga: segitiga.",
+        "en": "Wheel: circle. Door: rectangle. Egg: oval. Set square: triangle."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-04-010",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ART-SHAPE"
+      ],
+      "pool": "PRACT",
+      "order": 45,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rumah ini dibuat dari dua bentuk besar. Apa saja?",
+            "en": "This house is made of two big shapes. Which ones?"
+          }
+        }
+      ],
+      "image": "scene_kampung_shapes",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Lingkaran dan oval",
+            "en": "A circle and an oval"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Segitiga dan persegi",
+            "en": "A triangle and a square"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Belah ketupat dan lingkaran",
+            "en": "A rhombus and a circle"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Atapnya segitiga, dindingnya persegi. Bentuk sederhana bisa menjadi gambar!",
+        "en": "A triangle roof and a square wall. Simple shapes make pictures!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-04-011",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ART-COLOUR"
+      ],
+      "pool": "PRACT",
+      "order": 46,
+      "prompt_id": "P-MAKE",
+      "image": "pic_rainbow",
+      "model_answer": {
+        "id": "Buat roda warnamu! Gambar lingkaran besar dan bagi menjadi enam seperti potongan kue. Warnai berurutan: merah, jingga, kuning, hijau, biru, ungu. Tidak punya jingga, hijau, atau ungu? Campur dua warna primer. Minta orang dewasa membantu menyiapkan cat.",
+        "en": "Make your own colour wheel! Draw a big circle and divide it into six slices, like a cake. Colour them in order: red, orange, yellow, green, blue, purple. No orange, green or purple? Mix two primary colours. Ask a grown-up to help set up the paints."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-04-012",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ART-MIX",
+        "ART-COLOUR"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Merah + kuning jadi warna apa?",
+            "en": "Red + yellow makes which colour?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "c",
+          "text": {
+            "id": "Jingga",
+            "en": "Orange"
+          },
+          "image": "pic_color_orange",
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Hijau",
+            "en": "Green"
+          },
+          "image": "pic_color_green"
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Ungu",
+            "en": "Purple"
+          },
+          "image": "pic_color_purple"
+        }
+      ],
+      "model_answer": {
+        "id": "Merah dicampur kuning menjadi jingga.",
+        "en": "Red mixed with yellow makes orange."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-04-013",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ART-SHAPE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana lingkaran?",
+            "en": "Which one is a circle?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "shape_oval",
+          "image": "shape_oval"
+        },
+        {
+          "id": "shape_square",
+          "image": "shape_square"
+        },
+        {
+          "id": "shape_circle",
+          "image": "shape_circle",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Lingkaran itu bulat sempurna. Oval lebih lonjong, seperti telur.",
+        "en": "A circle is perfectly round. An oval is longer, like an egg."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-04-014",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "ART-COLOUR"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "pic_rainbow",
+      "gem": true,
+      "source": "Isaac Newton, Opticks (1704), Book I, Part II, Propositions III and VI (the spectrum and the colour circle divided like the notes of a musical octave).",
+      "model_answer": {
+        "id": "Ilmuwan Inggris Isaac Newton membagi warna pelangi menjadi tujuh: merah, jingga, kuning, hijau, biru, nila, dan ungu. Salah satu alasannya, ia membandingkan warna-warna itu dengan tujuh nada dalam musik. Warna dan bunyi ternyata bersaudara!",
+        "en": "The English scientist Isaac Newton split the rainbow into seven colours: red, orange, yellow, green, blue, indigo and violet. One of his reasons was that he compared the colours with the seven notes of a musical scale. Colour and sound turn out to be cousins!"
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-05-001",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "MUS-DYNAMICS"
+      ],
+      "pool": "PRACT",
+      "order": 47,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Keras atau pelan?",
+            "en": "Loud or soft?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_loud",
+          "text": {
+            "id": "Keras",
+            "en": "Loud"
+          }
+        },
+        {
+          "id": "b_soft",
+          "text": {
+            "id": "Pelan",
+            "en": "Soft"
+          }
+        },
+        {
+          "id": "x1",
+          "text": {
+            "id": "Guntur",
+            "en": "Thunder"
+          }
+        },
+        {
+          "id": "x2",
+          "text": {
+            "id": "Bisikan",
+            "en": "A whisper"
+          }
+        },
+        {
+          "id": "x3",
+          "text": {
+            "id": "Sirene ambulans",
+            "en": "An ambulance siren"
+          }
+        },
+        {
+          "id": "x4",
+          "text": {
+            "id": "Daun jatuh ke tanah",
+            "en": "A leaf falling to the ground"
+          }
+        },
+        {
+          "id": "x5",
+          "text": {
+            "id": "Sorak penonton di lapangan",
+            "en": "A crowd cheering at the field"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "x1": "b_loud",
+        "x2": "b_soft",
+        "x3": "b_loud",
+        "x4": "b_soft",
+        "x5": "b_loud"
+      },
+      "model_answer": {
+        "id": "Keras: guntur, sirene, sorak penonton. Pelan: bisikan, daun jatuh.",
+        "en": "Loud: thunder, siren, cheering crowd. Soft: whisper, falling leaf."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-05-002",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "MUS-TEMPO"
+      ],
+      "pool": "PRACT",
+      "order": 48,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Habis berlari, pegang dadamu. Detak jantungmu jadi …",
+            "en": "After running, feel your chest. Your heartbeat becomes …"
+          }
+        }
+      ],
+      "image": "pic_run",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "lebih lambat",
+            "en": "slower"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "tidak berubah",
+            "en": "no different"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "lebih cepat",
+            "en": "faster"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Setelah berlari, jantung berdetak lebih cepat. Detak jantung juga punya irama!",
+        "en": "After running, your heart beats faster. Your heartbeat has a rhythm, too!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-05-003",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "MUS-DYNAMICS"
+      ],
+      "pool": "PRACT",
+      "order": 49,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling pelan.",
+            "en": "Softest first."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s_shout",
+          "text": {
+            "id": "Teriakan",
+            "en": "A shout"
+          }
+        },
+        {
+          "id": "s_whisper",
+          "text": {
+            "id": "Bisikan",
+            "en": "A whisper"
+          }
+        },
+        {
+          "id": "s_thunder",
+          "text": {
+            "id": "Guntur yang menggelegar",
+            "en": "A crash of thunder"
+          }
+        },
+        {
+          "id": "s_talk",
+          "text": {
+            "id": "Orang bercakap-cakap",
+            "en": "People chatting"
+          }
+        }
+      ],
+      "solution": [
+        "s_whisper",
+        "s_talk",
+        "s_shout",
+        "s_thunder"
+      ],
+      "model_answer": {
+        "id": "Bisikan, orang bercakap-cakap, teriakan, lalu guntur yang menggelegar.",
+        "en": "A whisper, people chatting, a shout, then a crash of thunder."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-05-004",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "MUS-DYNAMICS"
+      ],
+      "pool": "PRACT",
+      "order": 50,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bunyi terlalu keras bisa menyakiti bagian ini.",
+            "en": "Very loud sounds can hurt this part."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sense_eye",
+          "image": "sense_eye"
+        },
+        {
+          "id": "sense_ear",
+          "image": "sense_ear",
+          "correct": true
+        },
+        {
+          "id": "sense_nose",
+          "image": "sense_nose"
+        }
+      ],
+      "model_answer": {
+        "id": "Telinga. Kalau ada bunyi yang terlalu keras, tutup telingamu atau menjauhlah.",
+        "en": "Your ears. If a sound is too loud, cover your ears or move away."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-05-005",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "MUS-TEMPO"
+      ],
+      "pool": "PRACT",
+      "order": 51,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Lagu pengantar tidur, seperti \"Nina Bobo\", biasanya dinyanyikan dengan cepat dan keras.",
+            "en": "Lullabies such as \"Nina Bobo\" are usually sung fast and loud."
+          }
+        }
+      ],
+      "image": "sleep_moon",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Lagu pengantar tidur dinyanyikan pelan dan lambat supaya adik tenang.",
+        "en": "Lullabies are sung softly and slowly so little ones feel calm."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-05-006",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "story_choice",
+      "skills": [
+        "MUS-DYNAMICS"
+      ],
+      "pool": "PRACT",
+      "order": 52,
+      "prompt_id": "P-STORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bu Guru menurunkan tangannya rendah sekali. Bagaimana anak-anak sebaiknya bermain?",
+            "en": "The teacher lowers her hand right down. How should the children play?"
+          }
+        }
+      ],
+      "reading_id": "R-SOSK-DIRIGEN",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Dengan pelan",
+            "en": "Softly"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Dengan keras sekali",
+            "en": "Very loudly"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Dengan lebih cepat",
+            "en": "Faster"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Tangan Bu Guru turun rendah, jadi anak-anak bermain dengan pelan.",
+        "en": "The teacher's hand is down low, so the children play softly."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-05-007",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "MUS-RHYTHM"
+      ],
+      "pool": "PRACT",
+      "order": 53,
+      "prompt_id": "P-TILES",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aba-aba: hentak kaki sekali, tepuk sekali, lalu diam.",
+            "en": "The call: stamp once, clap once, then rest."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "r_clap",
+          "text": {
+            "id": "tepuk tangan",
+            "en": "clap"
+          }
+        },
+        {
+          "id": "r_snap",
+          "text": {
+            "id": "jentik jari",
+            "en": "snap fingers"
+          }
+        },
+        {
+          "id": "r_rest",
+          "text": {
+            "id": "diam",
+            "en": "rest"
+          }
+        },
+        {
+          "id": "r_stamp",
+          "text": {
+            "id": "hentak kaki",
+            "en": "stamp"
+          }
+        },
+        {
+          "id": "r_pat",
+          "text": {
+            "id": "tepuk paha",
+            "en": "pat thighs"
+          }
+        }
+      ],
+      "solution": [
+        "r_stamp",
+        "r_clap",
+        "r_rest"
+      ],
+      "model_answer": {
+        "id": "Hentak kaki – tepuk tangan – diam.",
+        "en": "Stamp – clap – rest."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-05-008",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "number_input",
+      "skills": [
+        "MUS-RHYTHM"
+      ],
+      "pool": "PRACT",
+      "order": 54,
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Satu tepukan untuk setiap suku kata. Berapa tepukan untuk \"kupu-kupu\" (ku-pu-ku-pu)?",
+            "en": "One clap per syllable. How many claps for \"kupu-kupu\" (butterfly): ku-pu-ku-pu?"
+          }
+        }
+      ],
+      "image": "pic_butterfly",
+      "numeric": {
+        "value": 4,
+        "tolerance": 0,
+        "unit": {
+          "id": "tepukan",
+          "en": "claps"
+        }
+      },
+      "model_answer": {
+        "id": "Ku-pu-ku-pu: empat suku kata, jadi empat tepukan.",
+        "en": "Ku-pu-ku-pu: four syllables, so four claps."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-05-009",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "MUS-RHYTHM"
+      ],
+      "pool": "PRACT",
+      "order": 55,
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Lanjutkan polanya: tepuk – tepuk – diam – tepuk – tepuk – diam – tepuk – ____",
+            "en": "Carry on the pattern: clap – clap – rest – clap – clap – rest – clap – ____"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_rest",
+          "text": {
+            "id": "diam",
+            "en": "rest"
+          }
+        },
+        {
+          "id": "t_clap",
+          "text": {
+            "id": "tepuk",
+            "en": "clap"
+          }
+        },
+        {
+          "id": "t_stamp",
+          "text": {
+            "id": "hentak",
+            "en": "stamp"
+          }
+        }
+      ],
+      "solution": [
+        "t_clap"
+      ],
+      "model_answer": {
+        "id": "Pola \"tepuk – tepuk – diam\" diulang terus, jadi setelah satu tepuk datang tepuk kedua.",
+        "en": "The pattern \"clap – clap – rest\" keeps repeating, so after one clap comes a second clap."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-05-010",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "MUS-RHYTHM"
+      ],
+      "pool": "PRACT",
+      "order": 56,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Diam di antara tepukan juga bagian dari irama.",
+            "en": "The quiet moments between claps are part of the rhythm, too."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Jeda membuat pola terdengar jelas; tanpa jeda, tepukan menyatu.",
+        "en": "Rests make the pattern clear; without them, the claps run together."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-05-011",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "MUS-RHYTHM"
+      ],
+      "pool": "PRACT",
+      "order": 57,
+      "prompt_id": "P-TRY",
+      "image": "sense_hand",
+      "model_answer": {
+        "id": "Buat pola tepukmu sendiri! Pakai tepuk tangan, hentak kaki, dan diam, misalnya \"tepuk – hentak – diam\". Ajak keluargamu menirukannya. Mainkan pelan lalu keras, lambat lalu cepat.",
+        "en": "Make up your own clapping pattern! Use claps, stamps and rests, like \"clap – stamp – rest\". Ask your family to copy it. Play it soft then loud, slow then fast."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-05-012",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "MUS-RHYTHM"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Lanjutkan polanya: tepuk – diam – tepuk – diam – tepuk – ____",
+            "en": "Carry on the pattern: clap – rest – clap – rest – clap – ____"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_clap",
+          "text": {
+            "id": "tepuk",
+            "en": "clap"
+          }
+        },
+        {
+          "id": "t_stamp",
+          "text": {
+            "id": "hentak",
+            "en": "stamp"
+          }
+        },
+        {
+          "id": "t_rest",
+          "text": {
+            "id": "diam",
+            "en": "rest"
+          }
+        }
+      ],
+      "solution": [
+        "t_rest"
+      ],
+      "model_answer": {
+        "id": "Polanya \"tepuk – diam\" berganti-ganti, jadi setelah tepuk datang diam.",
+        "en": "The pattern \"clap – rest\" takes turns, so after a clap comes a rest."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-05-013",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "MUS-DYNAMICS",
+        "MUS-TEMPO"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menidurkan adik bayi. Bernyanyi seperti apa?",
+            "en": "Singing the baby to sleep. How should you sing?"
+          }
+        }
+      ],
+      "image": "fam_baby",
+      "options": [
+        {
+          "id": "c",
+          "text": {
+            "id": "Pelan dan lambat",
+            "en": "Soft and slow"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Keras dan cepat",
+            "en": "Loud and fast"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Keras dan lambat",
+            "en": "Loud and slow"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Pelan dan lambat, supaya adik bayi tenang dan bisa tidur.",
+        "en": "Softly and slowly, so the baby feels calm and can fall asleep."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-05-014",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "MUS-RHYTHM"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Museum Sumpah Pemuda, Kemendikbudristek (museumsumpahpemuda.kemdikbud.go.id), on W.R. Supratman and the Second Youth Congress; UU No. 24 Tahun 2009 (Indonesia Raya composed by Wage Rudolf Supratman).",
+      "model_answer": {
+        "id": "Lagu \"Indonesia Raya\" pertama kali diperdengarkan oleh penciptanya, W.R. Supratman, dengan biola pada Kongres Pemuda II, 28 Oktober 1928. Waktu itu lagunya dimainkan tanpa dinyanyikan.",
+        "en": "\"Indonesia Raya\" was first heard when its composer, W.R. Supratman, played it on the violin at the Second Youth Congress on 28 October 1928. That day it was played without the words being sung."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku ibu dari ayahmu. Siapa aku?",
+            "en": "I am your dad's mother. Who am I?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "gma",
+          "text": {
+            "id": "Nenek",
+            "en": "Grandmother"
+          },
+          "correct": true
+        },
+        {
+          "id": "aunt",
+          "text": {
+            "id": "Bibi",
+            "en": "Aunt"
+          }
+        },
+        {
+          "id": "sis",
+          "text": {
+            "id": "Kakak",
+            "en": "Big sister"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Nenek!",
+        "en": "Your grandmother (Nenek)!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-DP-02",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saat kerja bakti, anak-anak dibagi menjadi 3 kelompok. Setiap kelompok ada 4 anak. Berapa anak semuanya?",
+            "en": "At the clean-up day, the children make 3 groups with 4 children in each. How many children are there altogether?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 12,
+        "tolerance": 0,
+        "unit": {
+          "id": "anak",
+          "en": "children"
+        }
+      },
+      "model_answer": {
+        "id": "3 × 4 = 12 anak.",
+        "en": "3 × 4 = 12 children."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    },
+    {
+      "item_id": "SOS-K-P-DP-03",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pola tepuk Sari: tepuk – tepuk – diam. Ia mengulang polanya 3 kali. Berapa kali Sari bertepuk tangan?",
+            "en": "Sari's pattern is clap – clap – rest. She plays it 3 times. How many times does Sari clap?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 6,
+        "tolerance": 0,
+        "unit": {
+          "id": "tepukan",
+          "en": "claps"
+        }
+      },
+      "model_answer": {
+        "id": "Sari bertepuk 2 kali dalam setiap pola. 3 × 2 = 6 tepukan.",
+        "en": "Sari claps twice in each pattern. 3 × 2 = 6 claps."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-pemula-0.4"
+    }
+  ]
+}

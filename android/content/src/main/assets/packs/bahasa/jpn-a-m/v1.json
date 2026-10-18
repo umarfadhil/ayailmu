@@ -1,0 +1,2179 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "jpn-a-m-0.1",
+    "subject": "bahasa",
+    "track": "jpn-a-m",
+    "level": "menengah",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "target_lang": "ja",
+    "title": {
+      "id": "Bahasa Jepang — Menengah (Dewasa)",
+      "en": "Japanese — Intermediate (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, starter level: 2 units) for review: needs a native Japanese reviewer and the Indonesian and English language reviewers before any item is approved (docs/syllabus/bahasa/ja_levels.md, adults Menengah: time & daily routine, shopping & counters). Voice clips: android/content/voice/ja.json and ja.levels.json (listening items stay hidden until recorded); every skill has a REMED item that needs no audio.",
+  "prompts": {
+    "P-CONNECT": {
+      "id": "Hubungkan pasangannya.",
+      "en": "Connect the pairs."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke katanya.",
+      "en": "Drag each picture to its word."
+    },
+    "P-PICK": {
+      "id": "Pilih gambarnya.",
+      "en": "Pick the picture."
+    },
+    "P-LISTEN-PIC": {
+      "id": "Dengar, lalu ketuk gambarnya.",
+      "en": "Listen, then tap the picture."
+    },
+    "P-LISTEN-CLOCK": {
+      "id": "Dengar, lalu ketuk jamnya.",
+      "en": "Listen, then tap the clock."
+    },
+    "P-LISTEN-MEAN": {
+      "id": "Dengar, lalu pilih artinya.",
+      "en": "Listen, then pick the meaning."
+    },
+    "P-LISTEN-PRICE": {
+      "id": "Dengar, lalu pilih harganya.",
+      "en": "Listen, then pick the price."
+    },
+    "P-SENTENCE": {
+      "id": "Susun kalimatnya.",
+      "en": "Build the sentence."
+    },
+    "P-ORDER": {
+      "id": "Urutkan.",
+      "en": "Put them in order."
+    },
+    "P-DIALOG": {
+      "id": "Urutkan percakapannya.",
+      "en": "Put the dialogue in order."
+    },
+    "P-SORT": {
+      "id": "Kelompokkan.",
+      "en": "Sort them."
+    },
+    "P-FILL": {
+      "id": "Isi yang kosong.",
+      "en": "Fill the gap."
+    },
+    "P-MEMORY": {
+      "id": "Cari pasangannya.",
+      "en": "Find the pairs."
+    },
+    "P-ANSWER": {
+      "id": "Pilih jawabannya.",
+      "en": "Pick the answer."
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Correct. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Jam & rutinitas harian",
+        "en": "Time & daily routine"
+      },
+      "sticker": "sticker_drum"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Belanja & kata bilangan",
+        "en": "Shopping & counters"
+      },
+      "sticker": "sticker_shell"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "JPN-A-M-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Jam & rutinitas harian",
+        "en": "Time & daily routine"
+      },
+      "body": [
+        {
+          "id": "Pukul: angka + 時（じ）: 一時（いちじ） pukul 1. Setengah: 半（はん）.",
+          "en": "O'clock: number + 時（じ）: 一時（いちじ） one o'clock. Half past: 半（はん）."
+        },
+        {
+          "id": "Bacaan khusus: 四時（よじ）, 七時（しちじ）, 九時（くじ）.",
+          "en": "Special readings: 四時（よじ）, 七時（しちじ）, 九時（くじ）."
+        },
+        {
+          "id": "Waktu + に + kata kerja: 七時（しちじ）に 起（お）きます = saya bangun pukul 7.",
+          "en": "Time + に + verb: 七時（しちじ）に 起（お）きます = I get up at 7."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "今（いま） 何時（なんじ）ですか。",
+          "gloss": {
+            "id": "Ima nanji desu ka? = Sekarang pukul berapa?",
+            "en": "Ima nanji desu ka? = What time is it now?"
+          }
+        },
+        {
+          "target_text": "何時（なんじ）に 寝（ね）ますか。",
+          "gloss": {
+            "id": "Nanji ni nemasu ka? = Pukul berapa Anda tidur? (か = tanda tanya)",
+            "en": "Nanji ni nemasu ka? = What time do you go to bed? (か marks a question)"
+          }
+        },
+        {
+          "target_text": "会社（かいしゃ）に 行（い）きます。",
+          "gloss": {
+            "id": "Kaisha ni ikimasu. = Saya pergi ke kantor.",
+            "en": "Kaisha ni ikimasu. = I go to the office."
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "JPN-A-M-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Belanja & kata bilangan",
+        "en": "Shopping & counters"
+      },
+      "body": [
+        {
+          "id": "Benda dihitung ひとつ … とお (1–10): 卵（たまご）を むっつ ください.",
+          "en": "Things are counted ひとつ … とお (1–10): 卵（たまご）を むっつ ください."
+        },
+        {
+          "id": "Harga: 百（ひゃく） 100, 千（せん） 1.000, 万（まん） 10.000. 三百（さんびゃく）, 六百（ろっぴゃく）, 八百（はっぴゃく） berubah bunyi.",
+          "en": "Prices: 百（ひゃく） 100, 千（せん） 1,000, 万（まん） 10,000. 三百（さんびゃく）, 六百（ろっぴゃく） and 八百（はっぴゃく） change their sound."
+        },
+        {
+          "id": "Benda tipis: 〜枚（まい） (kemeja, tiket). Benda panjang: 〜本（ほん） (pena, pensil).",
+          "en": "Flat things: 〜枚（まい） (shirts, tickets). Long things: 〜本（ほん） (pens, pencils)."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "この シャツを ください。",
+          "gloss": {
+            "id": "Kono shatsu o kudasai. = Saya ambil kemeja ini.",
+            "en": "Kono shatsu o kudasai. = I'll take this shirt."
+          }
+        },
+        {
+          "target_text": "全部（ぜんぶ）で いくらですか。",
+          "gloss": {
+            "id": "Zenbu de ikura desu ka? = Semuanya berapa?",
+            "en": "Zenbu de ikura desu ka? = How much is it altogether?"
+          }
+        },
+        {
+          "target_text": "シャツを 二枚（にまい）、ペンを 三本（さんぼん）",
+          "gloss": {
+            "id": "shatsu o nimai, pen o sanbon = dua kemeja, tiga pena",
+            "en": "shatsu o nimai, pen o sanbon = two shirts, three pens"
+          }
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "JPN-A-M-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-ROUTINE"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_wake_up",
+          "image": "pic_wake_up",
+          "text": {
+            "id": "bangun tidur",
+            "en": "waking up"
+          }
+        },
+        {
+          "id": "pic_shower",
+          "image": "pic_shower",
+          "text": {
+            "id": "mandi",
+            "en": "taking a shower"
+          }
+        },
+        {
+          "id": "pic_breakfast",
+          "image": "pic_breakfast",
+          "text": {
+            "id": "sarapan",
+            "en": "breakfast"
+          }
+        },
+        {
+          "id": "pic_go_home",
+          "image": "pic_go_home",
+          "text": {
+            "id": "pulang ke rumah",
+            "en": "going home"
+          }
+        },
+        {
+          "id": "w2",
+          "target_text": "朝（あさ）ご飯（はん）を 食（た）べます",
+          "romanization": "asagohan o tabemasu",
+          "audio": "ja/asagohan_o_tabemasu"
+        },
+        {
+          "id": "w3",
+          "target_text": "家（いえ）に 帰（かえ）ります",
+          "romanization": "ie ni kaerimasu",
+          "audio": "ja/ie_ni_kaerimasu"
+        },
+        {
+          "id": "w0",
+          "target_text": "起（お）きます",
+          "romanization": "okimasu",
+          "audio": "ja/okimasu"
+        },
+        {
+          "id": "w1",
+          "target_text": "シャワーを 浴（あ）びます",
+          "romanization": "shawā o abimasu",
+          "audio": "ja/shawaa_o_abimasu"
+        }
+      ],
+      "solution_pairs": {
+        "pic_wake_up": "w0",
+        "pic_shower": "w1",
+        "pic_breakfast": "w2",
+        "pic_go_home": "w3"
+      },
+      "model_answer": {
+        "id": "起（お）きます bangun · シャワーを 浴（あ）びます mandi · 朝（あさ）ご飯（はん）を 食（た）べます sarapan · 家（いえ）に 帰（かえ）ります pulang",
+        "en": "起（お）きます get up · シャワーを 浴（あ）びます shower · 朝（あさ）ご飯（はん）を 食（た）べます breakfast · 家（いえ）に 帰（かえ）ります go home"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "JPN-TIME"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-LISTEN-CLOCK",
+      "audio": "ja/shichiji_han",
+      "options": [
+        {
+          "id": "clock_7_00",
+          "image": "clock_7_00",
+          "text": {
+            "id": "jam 7.00",
+            "en": "7:00"
+          }
+        },
+        {
+          "id": "clock_7_30",
+          "image": "clock_7_30",
+          "text": {
+            "id": "jam 7.30",
+            "en": "7:30"
+          },
+          "correct": true
+        },
+        {
+          "id": "clock_1_30",
+          "image": "clock_1_30",
+          "text": {
+            "id": "jam 1.30",
+            "en": "1:30"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "七時半（しちじはん）(shichiji han) = pukul 7.30. 一時半（いちじはん） = pukul 1.30.",
+        "en": "七時半（しちじはん）(shichiji han) = 7:30. 一時半（いちじはん） = 1:30."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-TIME"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "clock_4_00",
+          "image": "clock_4_00",
+          "text": {
+            "id": "jam 4.00",
+            "en": "4:00"
+          }
+        },
+        {
+          "id": "clock_7_00",
+          "image": "clock_7_00",
+          "text": {
+            "id": "jam 7.00",
+            "en": "7:00"
+          }
+        },
+        {
+          "id": "clock_9_00",
+          "image": "clock_9_00",
+          "text": {
+            "id": "jam 9.00",
+            "en": "9:00"
+          }
+        },
+        {
+          "id": "clock_10_30",
+          "image": "clock_10_30",
+          "text": {
+            "id": "jam 10.30",
+            "en": "10:30"
+          }
+        },
+        {
+          "id": "w2",
+          "target_text": "九時（くじ）",
+          "romanization": "kuji",
+          "audio": "ja/kuji"
+        },
+        {
+          "id": "w3",
+          "target_text": "十時半（じゅうじはん）",
+          "romanization": "jūji han",
+          "audio": "ja/juuji_han"
+        },
+        {
+          "id": "w0",
+          "target_text": "四時（よじ）",
+          "romanization": "yoji",
+          "audio": "ja/yoji"
+        },
+        {
+          "id": "w1",
+          "target_text": "七時（しちじ）",
+          "romanization": "shichiji",
+          "audio": "ja/shichiji"
+        }
+      ],
+      "solution_pairs": {
+        "clock_4_00": "w0",
+        "clock_7_00": "w1",
+        "clock_9_00": "w2",
+        "clock_10_30": "w3"
+      },
+      "model_answer": {
+        "id": "四時（よじ） 4.00 · 七時（しちじ） 7.00 · 九時（くじ） 9.00 · 十時半（じゅうじはん） 10.30",
+        "en": "四時（よじ） 4:00 · 七時（しちじ） 7:00 · 九時（くじ） 9:00 · 十時半（じゅうじはん） 10:30"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "JPN-ROUTINE"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/ha_o_migakimasu",
+      "options": [
+        {
+          "id": "pic_brush_teeth",
+          "image": "pic_brush_teeth",
+          "text": {
+            "id": "menggosok gigi",
+            "en": "brushing teeth"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_shower",
+          "image": "pic_shower",
+          "text": {
+            "id": "mandi",
+            "en": "taking a shower"
+          }
+        },
+        {
+          "id": "pic_get_dressed",
+          "image": "pic_get_dressed",
+          "text": {
+            "id": "berpakaian",
+            "en": "getting dressed"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "歯（は）を 磨（みが）きます (ha o migakimasu) = menggosok gigi.",
+        "en": "歯（は）を 磨（みが）きます (ha o migakimasu) = I brush my teeth."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "JPN-ROUTINE",
+        "JPN-TIME"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-SENTENCE",
+      "gesture": "drag",
+      "image": "pic_wake_up",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya bangun pukul 7.",
+            "en": "I get up at 7."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s0",
+          "target_text": "七時（しちじ）",
+          "romanization": "shichiji",
+          "audio": "ja/shichiji"
+        },
+        {
+          "id": "s2",
+          "target_text": "起（お）きます",
+          "romanization": "okimasu",
+          "audio": "ja/okimasu"
+        },
+        {
+          "id": "x0",
+          "target_text": "を",
+          "romanization": "o",
+          "audio": "ja/o"
+        },
+        {
+          "id": "s1",
+          "target_text": "に",
+          "romanization": "ni",
+          "audio": "ja/ni"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2"
+      ],
+      "model_answer": {
+        "id": "七時（しちじ）に 起（お）きます。(Shichiji ni okimasu.) Waktu + に.",
+        "en": "七時（しちじ）に 起（お）きます。(Shichiji ni okimasu.) Time + に."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "JPN-ROUTINE"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-PICK",
+      "target_text": "勉強（べんきょう）します",
+      "romanization": "benkyō shimasu",
+      "audio": "ja/benkyoo_shimasu",
+      "options": [
+        {
+          "id": "pic_watch_tv",
+          "image": "pic_watch_tv",
+          "text": {
+            "id": "menonton TV",
+            "en": "watching TV"
+          }
+        },
+        {
+          "id": "pic_cook",
+          "image": "pic_cook",
+          "text": {
+            "id": "memasak",
+            "en": "cooking"
+          }
+        },
+        {
+          "id": "pic_study",
+          "image": "pic_study",
+          "text": {
+            "id": "belajar",
+            "en": "studying"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "勉強（べんきょう）します (benkyō shimasu) = belajar.",
+        "en": "勉強（べんきょう）します (benkyō shimasu) = study."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-ROUTINE"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-FILL",
+      "target_text": "十一時（じゅういちじ）に ＿＿。",
+      "romanization": "Jūichiji ni ___.",
+      "gesture": "drag",
+      "image": "pic_sleep",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya tidur pukul 11.",
+            "en": "I go to bed at 11."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "c",
+          "target_text": "寝（ね）ます",
+          "romanization": "nemasu",
+          "audio": "ja/nemasu"
+        },
+        {
+          "id": "x0",
+          "target_text": "起（お）きます",
+          "romanization": "okimasu",
+          "audio": "ja/okimasu"
+        },
+        {
+          "id": "x1",
+          "target_text": "食（た）べます",
+          "romanization": "tabemasu",
+          "audio": "ja/tabemasu"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "十一時（じゅういちじ）に 寝（ね）ます。(Jūichiji ni nemasu.) = Saya tidur pukul 11.",
+        "en": "十一時（じゅういちじ）に 寝（ね）ます。(Jūichiji ni nemasu.) = I go to bed at 11."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "JPN-TIME"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-ANSWER",
+      "target_text": "今（いま） 何時（なんじ）ですか。",
+      "romanization": "Ima nanji desu ka?",
+      "audio": "ja/ima_nanji_desu_ka",
+      "image": "clock_3_30",
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "三時（さんじ）です。",
+          "romanization": "Sanji desu.",
+          "audio": "ja/sanji_desu"
+        },
+        {
+          "id": "x1",
+          "target_text": "四時半（よじはん）です。",
+          "romanization": "Yoji han desu.",
+          "audio": "ja/yoji_han_desu"
+        },
+        {
+          "id": "a",
+          "target_text": "三時半（さんじはん）です。",
+          "romanization": "Sanji han desu.",
+          "audio": "ja/sanji_han_desu",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "今（いま） 何時（なんじ）ですか？ — 三時半（さんじはん）です。= Pukul 3.30.",
+        "en": "今（いま） 何時（なんじ）ですか？ — 三時半（さんじはん）です。= It's half past three."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "JPN-ROUTINE"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-MEMORY",
+      "options": [
+        {
+          "id": "w1",
+          "target_text": "部屋（へや）を 片付（かたづ）けます",
+          "romanization": "heya o katazukemasu",
+          "audio": "ja/heya_o_katazukemasu"
+        },
+        {
+          "id": "w0",
+          "target_text": "テレビを 見（み）ます",
+          "romanization": "terebi o mimasu",
+          "audio": "ja/terebi_o_mimasu"
+        },
+        {
+          "id": "w2",
+          "target_text": "服（ふく）を 着（き）ます",
+          "romanization": "fuku o kimasu",
+          "audio": "ja/fuku_o_kimasu"
+        },
+        {
+          "id": "pic_get_dressed",
+          "image": "pic_get_dressed",
+          "text": {
+            "id": "berpakaian",
+            "en": "getting dressed"
+          }
+        },
+        {
+          "id": "pic_watch_tv",
+          "image": "pic_watch_tv",
+          "text": {
+            "id": "menonton TV",
+            "en": "watching TV"
+          }
+        },
+        {
+          "id": "w3",
+          "target_text": "学校（がっこう）に 行（い）きます",
+          "romanization": "gakkō ni ikimasu",
+          "audio": "ja/gakkoo_ni_ikimasu"
+        },
+        {
+          "id": "pic_tidy_room",
+          "image": "pic_tidy_room",
+          "text": {
+            "id": "merapikan kamar",
+            "en": "tidying the room"
+          }
+        },
+        {
+          "id": "pic_go_school",
+          "image": "pic_go_school",
+          "text": {
+            "id": "berangkat sekolah",
+            "en": "going to school"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "pic_watch_tv": "w0",
+        "pic_tidy_room": "w1",
+        "pic_get_dressed": "w2",
+        "pic_go_school": "w3"
+      },
+      "model_answer": {
+        "id": "テレビを 見（み）ます nonton TV · 部屋（へや）を 片付（かたづ）けます rapikan kamar · 服（ふく）を 着（き）ます berpakaian · 学校（がっこう）に 行（い）きます ke sekolah",
+        "en": "テレビを 見（み）ます watch TV · 部屋（へや）を 片付（かたづ）けます tidy up · 服（ふく）を 着（き）ます get dressed · 学校（がっこう）に 行（い）きます go to school"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "JPN-TIME"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-LISTEN-MEAN",
+      "audio": "ja/nanji_ni_nemasu_ka",
+      "options": [
+        {
+          "id": "x0",
+          "text": {
+            "id": "Pukul berapa Anda bangun?",
+            "en": "What time do you get up?"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Pukul berapa Anda tidur?",
+            "en": "What time do you go to bed?"
+          },
+          "correct": true
+        },
+        {
+          "id": "x1",
+          "text": {
+            "id": "Sekarang pukul berapa?",
+            "en": "What time is it now?"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "何時（なんじ）に 寝（ね）ますか (nanji ni nemasu ka) = pukul berapa Anda tidur?",
+        "en": "何時（なんじ）に 寝（ね）ますか (nanji ni nemasu ka) = what time do you go to bed?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "JPN-TIME"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-SENTENCE",
+      "gesture": "drag",
+      "image": "pic_go_home",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tanyakan: pukul berapa pulang?",
+            "en": "Ask: what time do you go home?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s0",
+          "target_text": "何時（なんじ）",
+          "romanization": "nanji",
+          "audio": "ja/nanji"
+        },
+        {
+          "id": "x0",
+          "target_text": "を",
+          "romanization": "o",
+          "audio": "ja/o"
+        },
+        {
+          "id": "s3",
+          "target_text": "か",
+          "romanization": "ka",
+          "audio": "ja/ka"
+        },
+        {
+          "id": "s1",
+          "target_text": "に",
+          "romanization": "ni",
+          "audio": "ja/ni"
+        },
+        {
+          "id": "s2",
+          "target_text": "帰（かえ）ります",
+          "romanization": "kaerimasu",
+          "audio": "ja/kaerimasu"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "model_answer": {
+        "id": "何時（なんじ）に 帰（かえ）りますか。(Nanji ni kaerimasu ka?) か di akhir = pertanyaan.",
+        "en": "何時（なんじ）に 帰（かえ）りますか。(Nanji ni kaerimasu ka?) A final か makes a question."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "JPN-ROUTINE"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Hari kerja Bu Sari, dari pagi.",
+            "en": "Ms Sari's workday, from the morning."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s2",
+          "target_text": "八時（はちじ）に 会社（かいしゃ）に 行（い）きます。",
+          "romanization": "Hachiji ni kaisha ni ikimasu.",
+          "audio": "ja/hachiji_ni_kaisha_ni_ikimasu"
+        },
+        {
+          "id": "s1",
+          "target_text": "七時（しちじ）に 朝（あさ）ご飯（はん）を 食（た）べます。",
+          "romanization": "Shichiji ni asagohan o tabemasu.",
+          "audio": "ja/shichiji_ni_asagohan_o_tabemasu"
+        },
+        {
+          "id": "s0",
+          "target_text": "六時半（ろくじはん）に 起（お）きます。",
+          "romanization": "Rokuji han ni okimasu.",
+          "audio": "ja/rokuji_han_ni_okimasu"
+        },
+        {
+          "id": "s3",
+          "target_text": "十一時（じゅういちじ）に 寝（ね）ます。",
+          "romanization": "Jūichiji ni nemasu.",
+          "audio": "ja/juuichiji_ni_nemasu"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "model_answer": {
+        "id": "6.30 bangun → 7.00 sarapan → 8.00 ke kantor (会社（かいしゃ）) → 11.00 malam tidur",
+        "en": "6:30 get up → 7:00 breakfast → 8:00 to the office (会社（かいしゃ）) → 11:00 at night, bed"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-TIME"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "＿＿に 起（お）きます。",
+      "romanization": "___ ni okimasu.",
+      "gesture": "drag",
+      "image": "clock_6_30",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya bangun pukul …",
+            "en": "I get up at …"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x1",
+          "target_text": "七時半（しちじはん）",
+          "romanization": "shichiji han",
+          "audio": "ja/shichiji_han"
+        },
+        {
+          "id": "x0",
+          "target_text": "六時（ろくじ）",
+          "romanization": "rokuji",
+          "audio": "ja/rokuji"
+        },
+        {
+          "id": "c",
+          "target_text": "六時半（ろくじはん）",
+          "romanization": "rokuji han",
+          "audio": "ja/rokuji_han"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "六時半（ろくじはん）に 起（お）きます。(Rokuji han ni okimasu.) = Saya bangun pukul 6.30.",
+        "en": "六時半（ろくじはん）に 起（お）きます。(Rokuji han ni okimasu.) = I get up at 6:30."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "JPN-ROUTINE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "服（ふく）を 着（き）ます",
+      "romanization": "fuku o kimasu",
+      "audio": "ja/fuku_o_kimasu",
+      "options": [
+        {
+          "id": "pic_get_dressed",
+          "image": "pic_get_dressed",
+          "text": {
+            "id": "berpakaian",
+            "en": "getting dressed"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_shower",
+          "image": "pic_shower",
+          "text": {
+            "id": "mandi",
+            "en": "taking a shower"
+          }
+        },
+        {
+          "id": "pic_tidy_room",
+          "image": "pic_tidy_room",
+          "text": {
+            "id": "merapikan kamar",
+            "en": "tidying the room"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "服（ふく）を 着（き）ます (fuku o kimasu) = berpakaian.",
+        "en": "服（ふく）を 着（き）ます (fuku o kimasu) = get dressed."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-SHOP"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_pants",
+          "image": "pic_pants",
+          "text": {
+            "id": "celana panjang",
+            "en": "trousers"
+          }
+        },
+        {
+          "id": "pic_skirt",
+          "image": "pic_skirt",
+          "text": {
+            "id": "rok",
+            "en": "skirt"
+          }
+        },
+        {
+          "id": "pic_jacket",
+          "image": "pic_jacket",
+          "text": {
+            "id": "jaket",
+            "en": "jacket"
+          }
+        },
+        {
+          "id": "pic_socks",
+          "image": "pic_socks",
+          "text": {
+            "id": "kaus kaki",
+            "en": "socks"
+          }
+        },
+        {
+          "id": "w3",
+          "target_text": "靴下（くつした）",
+          "romanization": "kutsushita",
+          "audio": "ja/kutsushita"
+        },
+        {
+          "id": "w0",
+          "target_text": "ズボン",
+          "romanization": "zubon",
+          "audio": "ja/zubon"
+        },
+        {
+          "id": "w1",
+          "target_text": "スカート",
+          "romanization": "sukāto",
+          "audio": "ja/sukaato"
+        },
+        {
+          "id": "w2",
+          "target_text": "ジャケット",
+          "romanization": "jaketto",
+          "audio": "ja/jaketto"
+        }
+      ],
+      "solution_pairs": {
+        "pic_pants": "w0",
+        "pic_skirt": "w1",
+        "pic_jacket": "w2",
+        "pic_socks": "w3"
+      },
+      "model_answer": {
+        "id": "ズボン celana · スカート rok · ジャケット jaket · 靴下（くつした） kaus kaki",
+        "en": "ズボン trousers · スカート skirt · ジャケット jacket · 靴下（くつした） socks"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "JPN-SHOP"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/shatsu",
+      "options": [
+        {
+          "id": "pic_shirt",
+          "image": "pic_shirt",
+          "text": {
+            "id": "kemeja",
+            "en": "shirt"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_jacket",
+          "image": "pic_jacket",
+          "text": {
+            "id": "jaket",
+            "en": "jacket"
+          }
+        },
+        {
+          "id": "pic_dress",
+          "image": "pic_dress",
+          "text": {
+            "id": "gaun",
+            "en": "dress"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "シャツ (shatsu) = kemeja.",
+        "en": "シャツ (shatsu) = shirt."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-COUNT"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "count_egg_4",
+          "image": "count_egg_4",
+          "text": {
+            "id": "4 telur",
+            "en": "4 eggs"
+          }
+        },
+        {
+          "id": "count_egg_5",
+          "image": "count_egg_5",
+          "text": {
+            "id": "5 telur",
+            "en": "5 eggs"
+          }
+        },
+        {
+          "id": "count_egg_6",
+          "image": "count_egg_6",
+          "text": {
+            "id": "6 telur",
+            "en": "6 eggs"
+          }
+        },
+        {
+          "id": "count_egg_8",
+          "image": "count_egg_8",
+          "text": {
+            "id": "8 telur",
+            "en": "8 eggs"
+          }
+        },
+        {
+          "id": "w2",
+          "target_text": "むっつ",
+          "romanization": "muttsu",
+          "audio": "ja/muttsu"
+        },
+        {
+          "id": "w3",
+          "target_text": "やっつ",
+          "romanization": "yattsu",
+          "audio": "ja/yattsu"
+        },
+        {
+          "id": "w0",
+          "target_text": "よっつ",
+          "romanization": "yottsu",
+          "audio": "ja/yottsu"
+        },
+        {
+          "id": "w1",
+          "target_text": "いつつ",
+          "romanization": "itsutsu",
+          "audio": "ja/itsutsu"
+        }
+      ],
+      "solution_pairs": {
+        "count_egg_4": "w0",
+        "count_egg_5": "w1",
+        "count_egg_6": "w2",
+        "count_egg_8": "w3"
+      },
+      "model_answer": {
+        "id": "よっつ 4 · いつつ 5 · むっつ 6 · やっつ 8",
+        "en": "よっつ 4 · いつつ 5 · むっつ 6 · やっつ 8"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-COUNT"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p0",
+          "text": {
+            "id": "¥100",
+            "en": "¥100"
+          }
+        },
+        {
+          "id": "p1",
+          "text": {
+            "id": "¥300",
+            "en": "¥300"
+          }
+        },
+        {
+          "id": "p2",
+          "text": {
+            "id": "¥600",
+            "en": "¥600"
+          }
+        },
+        {
+          "id": "p3",
+          "text": {
+            "id": "¥800",
+            "en": "¥800"
+          }
+        },
+        {
+          "id": "w2",
+          "target_text": "六百円（ろっぴゃくえん）",
+          "romanization": "roppyaku en",
+          "audio": "ja/roppyaku_en"
+        },
+        {
+          "id": "w3",
+          "target_text": "八百円（はっぴゃくえん）",
+          "romanization": "happyaku en",
+          "audio": "ja/happyaku_en"
+        },
+        {
+          "id": "w0",
+          "target_text": "百円（ひゃくえん）",
+          "romanization": "hyaku en",
+          "audio": "ja/hyaku_en"
+        },
+        {
+          "id": "w1",
+          "target_text": "三百円（さんびゃくえん）",
+          "romanization": "sanbyaku en",
+          "audio": "ja/sanbyaku_en"
+        }
+      ],
+      "solution_pairs": {
+        "p0": "w0",
+        "p1": "w1",
+        "p2": "w2",
+        "p3": "w3"
+      },
+      "model_answer": {
+        "id": "百円（ひゃくえん） · 三百円（さんびゃくえん） · 六百円（ろっぴゃくえん） · 八百円（はっぴゃくえん）",
+        "en": "百円（ひゃくえん） · 三百円（さんびゃくえん） · 六百円（ろっぴゃくえん） · 八百円（はっぴゃくえん）"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "JPN-SHOP"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-PICK",
+      "target_text": "めがね",
+      "romanization": "megane",
+      "audio": "ja/megane",
+      "options": [
+        {
+          "id": "pic_hat",
+          "image": "pic_hat",
+          "text": {
+            "id": "topi",
+            "en": "cap"
+          }
+        },
+        {
+          "id": "pic_socks",
+          "image": "pic_socks",
+          "text": {
+            "id": "kaus kaki",
+            "en": "socks"
+          }
+        },
+        {
+          "id": "pic_glasses",
+          "image": "pic_glasses",
+          "text": {
+            "id": "kacamata",
+            "en": "glasses"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "めがね (megane) = kacamata.",
+        "en": "めがね (megane) = glasses."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "JPN-SHOP"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-SENTENCE",
+      "gesture": "drag",
+      "image": "pic_shirt",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya ambil kemeja ini.",
+            "en": "I'll take this shirt."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s3",
+          "target_text": "ください",
+          "romanization": "kudasai",
+          "audio": "ja/kudasai"
+        },
+        {
+          "id": "s0",
+          "target_text": "この",
+          "romanization": "kono",
+          "audio": "ja/kono"
+        },
+        {
+          "id": "s1",
+          "target_text": "シャツ",
+          "romanization": "shatsu",
+          "audio": "ja/shatsu"
+        },
+        {
+          "id": "s2",
+          "target_text": "を",
+          "romanization": "o",
+          "audio": "ja/o"
+        },
+        {
+          "id": "x0",
+          "target_text": "です",
+          "romanization": "desu",
+          "audio": "ja/desu"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "model_answer": {
+        "id": "この シャツを ください。(Kono shatsu o kudasai.) この + benda = … ini.",
+        "en": "この シャツを ください。(Kono shatsu o kudasai.) この + noun = this …"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-COUNT"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-FILL",
+      "target_text": "卵（たまご）を ＿＿ ください。",
+      "romanization": "Tamago o ___ kudasai.",
+      "gesture": "drag",
+      "image": "count_egg_7",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Minta … telur.",
+            "en": "… eggs, please."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "c",
+          "target_text": "ななつ",
+          "romanization": "nanatsu",
+          "audio": "ja/nanatsu"
+        },
+        {
+          "id": "x1",
+          "target_text": "やっつ",
+          "romanization": "yattsu",
+          "audio": "ja/yattsu"
+        },
+        {
+          "id": "x0",
+          "target_text": "むっつ",
+          "romanization": "muttsu",
+          "audio": "ja/muttsu"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "卵（たまご）を ななつ ください。(Tamago o nanatsu kudasai.) = Minta tujuh telur.",
+        "en": "卵（たまご）を ななつ ください。(Tamago o nanatsu kudasai.) = Seven eggs, please."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "JPN-SHOP"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-LISTEN-MEAN",
+      "audio": "ja/zenbu_de_ikura_desu_ka",
+      "options": [
+        {
+          "id": "x0",
+          "text": {
+            "id": "Berapa harga satunya?",
+            "en": "How much is one?"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Berapa semuanya?",
+            "en": "How much is it altogether?"
+          },
+          "correct": true
+        },
+        {
+          "id": "x1",
+          "text": {
+            "id": "Mau berapa buah?",
+            "en": "How many would you like?"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "全部（ぜんぶ）で いくらですか (zenbu de ikura desu ka) = berapa semuanya?",
+        "en": "全部（ぜんぶ）で いくらですか (zenbu de ikura desu ka) = how much altogether?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "JPN-SHOP"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-DIALOG",
+      "gesture": "drag",
+      "image": "pic_jacket",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di toko baju.",
+            "en": "At a clothes shop."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s2",
+          "target_text": "五千円（ごせんえん）です。",
+          "romanization": "Gosen en desu.",
+          "audio": "ja/gosen_en_desu"
+        },
+        {
+          "id": "s3",
+          "target_text": "じゃあ、これを ください。",
+          "romanization": "Jā, kore o kudasai.",
+          "audio": "ja/jaa_kore_o_kudasai"
+        },
+        {
+          "id": "s1",
+          "target_text": "この ジャケットは いくらですか。",
+          "romanization": "Kono jaketto wa ikura desu ka?",
+          "audio": "ja/kono_jaketto_wa_ikura_desu_ka"
+        },
+        {
+          "id": "s0",
+          "target_text": "いらっしゃいませ。",
+          "romanization": "Irasshaimase.",
+          "audio": "ja/irasshaimase"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "model_answer": {
+        "id": "いらっしゃいませ → この ジャケットは いくらですか → 五千円（ごせんえん）です → じゃあ、これを ください",
+        "en": "いらっしゃいませ → この ジャケットは いくらですか → 五千円（ごせんえん）です → じゃあ、これを ください"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "JPN-COUNT"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-ANSWER",
+      "target_text": "いくらですか。",
+      "romanization": "Ikura desu ka?",
+      "audio": "ja/ikura_desu_ka",
+      "image": "pic_jacket",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Harga di label: ¥3.000.",
+            "en": "The price tag says ¥3,000."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "三百円（さんびゃくえん）です。",
+          "romanization": "Sanbyaku en desu.",
+          "audio": "ja/sanbyaku_en_desu"
+        },
+        {
+          "id": "a",
+          "target_text": "三千円（さんぜんえん）です。",
+          "romanization": "Sanzen en desu.",
+          "audio": "ja/sanzen_en_desu",
+          "correct": true
+        },
+        {
+          "id": "x1",
+          "target_text": "三万円（さんまんえん）です。",
+          "romanization": "Sanman en desu.",
+          "audio": "ja/sanman_en_desu"
+        }
+      ],
+      "model_answer": {
+        "id": "¥3.000 = 三千円（さんぜんえん）(sanzen en). 千（せん） = 1.000, 万（まん） = 10.000.",
+        "en": "¥3,000 = 三千円（さんぜんえん）(sanzen en). 千（せん） = 1,000, 万（まん） = 10,000."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "JPN-COUNT"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-LISTEN-PRICE",
+      "audio": "ja/happyaku_en",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "¥800",
+            "en": "¥800"
+          },
+          "correct": true
+        },
+        {
+          "id": "x0",
+          "text": {
+            "id": "¥600",
+            "en": "¥600"
+          }
+        },
+        {
+          "id": "x1",
+          "text": {
+            "id": "¥8.000",
+            "en": "¥8,000"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "はっぴゃくえん (happyaku en) = ¥800. ろっぴゃく = 600, はっせん = 8.000.",
+        "en": "はっぴゃくえん (happyaku en) = ¥800. ろっぴゃく = 600, はっせん = 8,000."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "JPN-COUNT"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_mai",
+          "text": {
+            "id": "benda tipis",
+            "en": "flat things"
+          },
+          "target_text": "〜枚（まい）",
+          "romanization": "-mai",
+          "audio": "ja/mai"
+        },
+        {
+          "id": "b_hon",
+          "text": {
+            "id": "benda panjang",
+            "en": "long things"
+          },
+          "target_text": "〜本（ほん）",
+          "romanization": "-hon",
+          "audio": "ja/hon"
+        },
+        {
+          "id": "pic_map_paper",
+          "image": "pic_map_paper",
+          "text": {
+            "id": "peta",
+            "en": "map"
+          }
+        },
+        {
+          "id": "pic_shirt",
+          "image": "pic_shirt",
+          "text": {
+            "id": "kemeja",
+            "en": "shirt"
+          }
+        },
+        {
+          "id": "pic_pencil",
+          "image": "pic_pencil",
+          "text": {
+            "id": "pensil",
+            "en": "pencil"
+          }
+        },
+        {
+          "id": "pic_pen",
+          "image": "pic_pen",
+          "text": {
+            "id": "pulpen",
+            "en": "pen"
+          }
+        },
+        {
+          "id": "pic_ticket",
+          "image": "pic_ticket",
+          "text": {
+            "id": "tiket",
+            "en": "ticket"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "pic_shirt": "b_mai",
+        "pic_ticket": "b_mai",
+        "pic_map_paper": "b_mai",
+        "pic_pen": "b_hon",
+        "pic_pencil": "b_hon"
+      },
+      "model_answer": {
+        "id": "〜枚（まい）: kemeja, tiket, peta. 〜本（ほん）: pena, pensil.",
+        "en": "〜枚（まい）: shirt, ticket, map. 〜本（ほん）: pen, pencil."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-COUNT"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "count_mango_2",
+          "image": "count_mango_2",
+          "text": {
+            "id": "2 mangga",
+            "en": "2 mangoes"
+          }
+        },
+        {
+          "id": "count_mango_3",
+          "image": "count_mango_3",
+          "text": {
+            "id": "3 mangga",
+            "en": "3 mangoes"
+          }
+        },
+        {
+          "id": "count_mango_9",
+          "image": "count_mango_9",
+          "text": {
+            "id": "9 mangga",
+            "en": "9 mangoes"
+          }
+        },
+        {
+          "id": "count_mango_10",
+          "image": "count_mango_10",
+          "text": {
+            "id": "10 mangga",
+            "en": "10 mangoes"
+          }
+        },
+        {
+          "id": "w3",
+          "target_text": "とお",
+          "romanization": "tō",
+          "audio": "ja/too"
+        },
+        {
+          "id": "w0",
+          "target_text": "ふたつ",
+          "romanization": "futatsu",
+          "audio": "ja/futatsu"
+        },
+        {
+          "id": "w1",
+          "target_text": "みっつ",
+          "romanization": "mittsu",
+          "audio": "ja/mittsu"
+        },
+        {
+          "id": "w2",
+          "target_text": "ここのつ",
+          "romanization": "kokonotsu",
+          "audio": "ja/kokonotsu"
+        }
+      ],
+      "solution_pairs": {
+        "count_mango_2": "w0",
+        "count_mango_3": "w1",
+        "count_mango_9": "w2",
+        "count_mango_10": "w3"
+      },
+      "model_answer": {
+        "id": "ふたつ 2 · みっつ 3 · ここのつ 9 · とお 10",
+        "en": "ふたつ 2 · みっつ 3 · ここのつ 9 · とお 10"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-SHOP"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "この ジャケットは ＿＿ですか。",
+      "romanization": "Kono jaketto wa ___ desu ka?",
+      "gesture": "drag",
+      "image": "pic_jacket",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tanyakan harganya.",
+            "en": "Ask the price."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "どこ",
+          "romanization": "doko",
+          "audio": "ja/doko"
+        },
+        {
+          "id": "c",
+          "target_text": "いくら",
+          "romanization": "ikura",
+          "audio": "ja/ikura"
+        },
+        {
+          "id": "x1",
+          "target_text": "なん",
+          "romanization": "nan",
+          "audio": "ja/nan"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "この ジャケットは いくらですか。(… ikura desu ka?) = Jaket ini berapa?",
+        "en": "この ジャケットは いくらですか。(… ikura desu ka?) = How much is this jacket?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "JPN-SHOP"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "National Tax Agency of Japan (nta.go.jp): tax-inclusive price display required from 1 April 2021; consumption tax 10% since 1 October 2019 with a reduced 8% rate for food and non-alcoholic drinks (not for eating in).",
+      "model_answer": {
+        "id": "Di Jepang, sejak April 2021 harga yang dipajang wajib sudah termasuk pajak konsumsi. Pajaknya 10%, atau 8% untuk makanan dan minuman (bukan alkohol) yang dibawa pulang.",
+        "en": "In Japan, since April 2021 displayed prices must include consumption tax. The tax is 10%, or 8% for food and non-alcoholic drinks you take away."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    },
+    {
+      "item_id": "JPN-A-M-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Roti 三百円（さんびゃくえん） dan jus 五百円（ごひゃくえん）. Semuanya berapa yen?",
+            "en": "Bread is 三百円（さんびゃくえん） and juice is 五百円（ごひゃくえん）. How many yen altogether?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 800,
+        "tolerance": 0
+      },
+      "model_answer": {
+        "id": "300 + 500 = 800: 八百円（はっぴゃくえん）.",
+        "en": "300 + 500 = 800: 八百円（はっぴゃくえん）."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-m-0.1"
+    }
+  ]
+}

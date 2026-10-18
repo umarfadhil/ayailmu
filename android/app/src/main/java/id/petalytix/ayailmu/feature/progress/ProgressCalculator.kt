@@ -40,7 +40,8 @@ data class ProgressSummary(
 }
 
 object ProgressCalculator {
-    private val NOT_TAUGHT = setOf(Pool.FOCUS, Pool.GEM)
+    /** Not skills the track teaches: focus questions, gems and daily puzzles (SPARE, Home only). */
+    private val NOT_TAUGHT = setOf(Pool.FOCUS, Pool.GEM, Pool.SPARE)
     private val ANSWERED = setOf(Outcome.CORRECT, Outcome.WRONG, Outcome.DONT_KNOW, Outcome.PENDING)
 
     fun compute(

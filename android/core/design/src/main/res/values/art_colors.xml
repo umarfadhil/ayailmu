@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Illustration palette roles (ART_DIRECTION section 2.3): paper, ink, clay, ochre, sage, slate, plus blush for cheeks only.
+  Every art_*.xml VectorDrawable references these names, never literal hex, so pictures follow light/night.
+  Starting values: the illustrator's style bible replaces the hex codes, not the roles.
+  Keep in sync with LIGHT in art/tools/draw.py (used for the SVG previews and contact sheets).
+-->
+<resources>
+  <color name="art_paper">#F6F1E7</color>
+  <color name="art_ink">#2B2A28</color>
+  <color name="art_clay">#C4613A</color>
+  <color name="art_ochre">#D9A441</color>
+  <color name="art_sage">#8A9A77</color>
+  <color name="art_slate">#5B6B80</color>
+  <color name="art_blush">#E3A99A</color>
+</resources>

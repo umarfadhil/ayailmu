@@ -4,7 +4,8 @@ package id.petalytix.ayailmu.core.content
 object Fixtures {
     fun arabic(): ContentPack = load("packs/bahasa/arab/v1.json")
 
-    fun math(): ContentPack = load("packs/matematika/mat/v1.json")
+    /** Frozen copy of the P1 math sample (src/test/resources/fixtures); the bundled kids pack keeps growing. */
+    fun math(): ContentPack = load("fixtures/mat-sample-v1.json")
 
     fun load(resource: String): ContentPack {
         val stream = Fixtures::class.java.classLoader.getResourceAsStream(resource)

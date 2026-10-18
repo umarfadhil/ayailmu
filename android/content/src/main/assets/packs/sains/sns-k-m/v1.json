@@ -1,0 +1,2196 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sns-k-m-0.1",
+    "subject": "sains",
+    "track": "sns-k-m",
+    "level": "menengah",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Sains — Menengah (Anak)",
+      "en": "Science — Intermediate (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, starter level: 2 units) for subject + language review: needs a science reviewer and the Indonesian and English language reviewers before any item is approved (docs/syllabus/03_SAINS.md, Kids Menengah units 1-2; MODULES_LEVELS_STORIES.md). New sci_/pic_ art keys (contract section 6) are drafts being drawn.",
+  "prompts": {
+    "P-TAP": {
+      "id": "Ketuk bagian yang tepat.",
+      "en": "Tap the right spot."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-MYTH": {
+      "id": "Mitos atau fakta?",
+      "en": "Myth or fact?"
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke pasangannya.",
+      "en": "Drag each picture to its match."
+    },
+    "P-SORT": {
+      "id": "Seret ke keranjang yang tepat.",
+      "en": "Drag each into the right basket."
+    },
+    "P-ORDER": {
+      "id": "Seret ke urutan yang benar.",
+      "en": "Drag them into the right order."
+    },
+    "P-TILES": {
+      "id": "Seret kepingan ke tempatnya.",
+      "en": "Drag the tiles into place."
+    },
+    "P-FILL": {
+      "id": "Seret ke bagian yang kosong.",
+      "en": "Drag into the gap."
+    },
+    "P-EST": {
+      "id": "Tebak, lalu geser.",
+      "en": "Guess, then slide."
+    },
+    "P-TRY": {
+      "id": "Coba di rumah",
+      "en": "Try at home"
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Sip, kita lanjut!",
+      "en": "Great, let's keep going!"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Daur hidup",
+        "en": "Life cycles"
+      },
+      "sticker": "sticker_mango"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Makanan & gizi",
+        "en": "Food & nutrition"
+      },
+      "sticker": "sticker_star_fruit"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SNS-K-M-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Daur hidup",
+        "en": "Life cycles"
+      },
+      "body": [
+        {
+          "id": "Makhluk hidup lahir atau menetas, tumbuh besar, lalu punya keturunan.",
+          "en": "Living things are born or hatch, grow up, then have young of their own."
+        },
+        {
+          "id": "Kupu-kupu dan katak berubah bentuk saat tumbuh. Namanya metamorfosis.",
+          "en": "Butterflies and frogs change shape as they grow. That's called metamorphosis."
+        },
+        {
+          "id": "Pohon mangga juga: biji, bibit, pohon, bunga, lalu buah berbiji baru.",
+          "en": "A mango tree too: seed, seedling, tree, flower, then fruit with a new seed."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SNS-K-M-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Isi Piringku",
+        "en": "My balanced plate"
+      },
+      "body": [
+        {
+          "id": "Separuh piring: sayur dan buah. Separuh lagi: makanan pokok dan lauk pauk.",
+          "en": "Half the plate: vegetables and fruit. The other half: staple food and protein."
+        },
+        {
+          "id": "Makanan pokok memberi tenaga, lauk pauk membangun tubuh, sayur dan buah menjaga tubuh sehat.",
+          "en": "Staples give energy, protein builds your body, vegetables and fruit keep you healthy."
+        },
+        {
+          "id": "Minum air putih. Minuman manis cukup sesekali saja.",
+          "en": "Drink water. Sweet drinks only now and then."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "SNS-K-M-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "LC-METAMORPH"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Daur hidup kupu-kupu.",
+            "en": "A butterfly's life cycle."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pupa",
+          "text": {
+            "id": "Kepompong",
+            "en": "Pupa"
+          },
+          "image": "sci_pupa"
+        },
+        {
+          "id": "egg",
+          "text": {
+            "id": "Telur",
+            "en": "Egg"
+          },
+          "image": "sci_butterfly_egg"
+        },
+        {
+          "id": "adult",
+          "text": {
+            "id": "Kupu-kupu",
+            "en": "Butterfly"
+          },
+          "image": "pic_butterfly"
+        },
+        {
+          "id": "larva",
+          "text": {
+            "id": "Ulat",
+            "en": "Caterpillar"
+          },
+          "image": "sci_caterpillar"
+        }
+      ],
+      "solution": [
+        "egg",
+        "larva",
+        "pupa",
+        "adult"
+      ],
+      "model_answer": {
+        "id": "Telur → ulat → kepompong → kupu-kupu.",
+        "en": "Egg → caterpillar → pupa → butterfly."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "LC-METAMORPH"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ulat ini akan menjadi apa sesudahnya?",
+            "en": "What does this caterpillar become next?"
+          }
+        }
+      ],
+      "image": "sci_caterpillar",
+      "options": [
+        {
+          "id": "pic_butterfly",
+          "image": "pic_butterfly"
+        },
+        {
+          "id": "sci_butterfly_egg",
+          "image": "sci_butterfly_egg"
+        },
+        {
+          "id": "sci_pupa",
+          "image": "sci_pupa",
+          "correct": true
+        },
+        {
+          "id": "pic_frog",
+          "image": "pic_frog"
+        }
+      ],
+      "model_answer": {
+        "id": "Kepompong dulu. Di dalamnya, ulat berubah menjadi kupu-kupu.",
+        "en": "A pupa first. Inside it, the caterpillar turns into a butterfly."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "LC-METAMORPH"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-TILES",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Susun daur hidup katak.",
+            "en": "Build the frog's life cycle."
+          }
+        }
+      ],
+      "image": "pic_frog",
+      "options": [
+        {
+          "id": "tadpole",
+          "text": {
+            "id": "berudu",
+            "en": "tadpole"
+          }
+        },
+        {
+          "id": "pupa",
+          "text": {
+            "id": "kepompong",
+            "en": "pupa"
+          }
+        },
+        {
+          "id": "egg",
+          "text": {
+            "id": "telur",
+            "en": "eggs"
+          }
+        },
+        {
+          "id": "frog",
+          "text": {
+            "id": "katak",
+            "en": "frog"
+          }
+        },
+        {
+          "id": "legs",
+          "text": {
+            "id": "berudu berkaki",
+            "en": "tadpole with legs"
+          }
+        }
+      ],
+      "solution": [
+        "egg",
+        "tadpole",
+        "legs",
+        "frog"
+      ],
+      "model_answer": {
+        "id": "Telur → berudu → berudu berkaki → katak. Katak tidak punya kepompong.",
+        "en": "Eggs → tadpole → tadpole with legs → frog. Frogs have no pupa."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "LC-METAMORPH"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di mana berudu hidup?",
+            "en": "Where do tadpoles live?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_lake",
+          "image": "pic_lake",
+          "correct": true
+        },
+        {
+          "id": "pic_beach",
+          "image": "pic_beach"
+        },
+        {
+          "id": "pic_tree",
+          "image": "pic_tree"
+        },
+        {
+          "id": "pic_mountain",
+          "image": "pic_mountain"
+        }
+      ],
+      "model_answer": {
+        "id": "Di air tawar, seperti kolam atau danau. Berudu bernapas dengan insang.",
+        "en": "In fresh water, like a pond or lake. Tadpoles breathe with gills."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "LC-PLANT"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari biji sampai buah mangga.",
+            "en": "From seed to mango."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "flower",
+          "text": {
+            "id": "Bunga",
+            "en": "Flower"
+          },
+          "image": "pic_flower"
+        },
+        {
+          "id": "sprout",
+          "text": {
+            "id": "Biji berkecambah",
+            "en": "Sprouting seed"
+          },
+          "image": "sci_seed_sprout"
+        },
+        {
+          "id": "fruit",
+          "text": {
+            "id": "Buah mangga",
+            "en": "Mango fruit"
+          },
+          "image": "fruit_mango"
+        },
+        {
+          "id": "seedling",
+          "text": {
+            "id": "Bibit",
+            "en": "Seedling"
+          },
+          "image": "hist_tree_seedlings"
+        },
+        {
+          "id": "tree",
+          "text": {
+            "id": "Pohon",
+            "en": "Tree"
+          },
+          "image": "pic_tree"
+        }
+      ],
+      "solution": [
+        "sprout",
+        "seedling",
+        "tree",
+        "flower",
+        "fruit"
+      ],
+      "model_answer": {
+        "id": "Biji berkecambah → bibit → pohon → bunga → buah. Di dalam buah ada biji baru!",
+        "en": "Sprouting seed → seedling → tree → flower → fruit. Inside the fruit is a new seed!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "LC-ANIMAL"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menetas atau lahir?",
+            "en": "Hatched or born?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_egg",
+          "text": {
+            "id": "Menetas dari telur",
+            "en": "Hatches from an egg"
+          }
+        },
+        {
+          "id": "b_born",
+          "text": {
+            "id": "Lahir dari induknya",
+            "en": "Born from its mother"
+          }
+        },
+        {
+          "id": "chicken",
+          "text": {
+            "id": "Ayam",
+            "en": "Chicken"
+          },
+          "image": "pic_chicken"
+        },
+        {
+          "id": "cat",
+          "text": {
+            "id": "Kucing",
+            "en": "Cat"
+          },
+          "image": "pic_cat"
+        },
+        {
+          "id": "turtle",
+          "text": {
+            "id": "Kura-kura",
+            "en": "Turtle"
+          },
+          "image": "pic_turtle"
+        },
+        {
+          "id": "cow",
+          "text": {
+            "id": "Sapi",
+            "en": "Cow"
+          },
+          "image": "pic_cow"
+        },
+        {
+          "id": "bird",
+          "text": {
+            "id": "Burung",
+            "en": "Bird"
+          },
+          "image": "pic_bird"
+        },
+        {
+          "id": "goat",
+          "text": {
+            "id": "Kambing",
+            "en": "Goat"
+          },
+          "image": "pic_goat"
+        }
+      ],
+      "solution_pairs": {
+        "chicken": "b_egg",
+        "cat": "b_born",
+        "turtle": "b_egg",
+        "cow": "b_born",
+        "bird": "b_egg",
+        "goat": "b_born"
+      },
+      "model_answer": {
+        "id": "Menetas: ayam, kura-kura, burung. Lahir: kucing, sapi, kambing.",
+        "en": "Hatch: chicken, turtle, bird. Born: cat, cow, goat."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "estimate_slider",
+      "skills": [
+        "LC-ANIMAL"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-EST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Induk ayam mengerami telur. Berapa hari sampai menetas?",
+            "en": "A hen sits on her eggs. How many days until they hatch?"
+          }
+        }
+      ],
+      "image": "pic_chicken",
+      "numeric": {
+        "value": 21,
+        "tolerance": 2,
+        "unit": {
+          "id": "hari",
+          "en": "days"
+        }
+      },
+      "slider": {
+        "min": 0,
+        "max": 60,
+        "step": 1
+      },
+      "model_answer": {
+        "id": "Sekitar 21 hari, kira-kira 3 minggu.",
+        "en": "About 21 days, roughly 3 weeks."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "LC-ANIMAL",
+        "LC-METAMORPH"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Anak dan dewasanya.",
+            "en": "Young and grown-up."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "y_cat",
+          "text": {
+            "id": "Ulat",
+            "en": "Caterpillar"
+          },
+          "image": "sci_caterpillar"
+        },
+        {
+          "id": "y_seed",
+          "text": {
+            "id": "Bibit mangga",
+            "en": "Mango seedling"
+          },
+          "image": "hist_tree_seedlings"
+        },
+        {
+          "id": "y_egg",
+          "text": {
+            "id": "Telur ayam",
+            "en": "Hen's egg"
+          },
+          "image": "count_egg_1"
+        },
+        {
+          "id": "y_tad",
+          "text": {
+            "id": "Berudu",
+            "en": "Tadpole"
+          }
+        },
+        {
+          "id": "a_fly",
+          "text": {
+            "id": "Kupu-kupu",
+            "en": "Butterfly"
+          },
+          "image": "pic_butterfly"
+        },
+        {
+          "id": "a_tree",
+          "text": {
+            "id": "Pohon mangga",
+            "en": "Mango tree"
+          },
+          "image": "pic_tree"
+        },
+        {
+          "id": "a_hen",
+          "text": {
+            "id": "Ayam",
+            "en": "Chicken"
+          },
+          "image": "pic_chicken"
+        },
+        {
+          "id": "a_frog",
+          "text": {
+            "id": "Katak",
+            "en": "Frog"
+          },
+          "image": "pic_frog"
+        }
+      ],
+      "solution_pairs": {
+        "y_cat": "a_fly",
+        "y_seed": "a_tree",
+        "y_egg": "a_hen",
+        "y_tad": "a_frog"
+      },
+      "model_answer": {
+        "id": "Ulat → kupu-kupu, bibit → pohon, telur → ayam, berudu → katak.",
+        "en": "Caterpillar → butterfly, seedling → tree, egg → chicken, tadpole → frog."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "LC-PLANT"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bunga mangga nanti berubah menjadi apa?",
+            "en": "What does a mango flower turn into?"
+          }
+        }
+      ],
+      "image": "pic_flower",
+      "options": [
+        {
+          "id": "sci_seed_sprout",
+          "image": "sci_seed_sprout"
+        },
+        {
+          "id": "pic_tree",
+          "image": "pic_tree"
+        },
+        {
+          "id": "hist_tree_seedlings",
+          "image": "hist_tree_seedlings"
+        },
+        {
+          "id": "fruit_mango",
+          "image": "fruit_mango",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Menjadi buah. Di dalam buah ada biji untuk pohon baru.",
+        "en": "A fruit. Inside the fruit is a seed for a new tree."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "LC-ANIMAL"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kupu-kupu, katak, dan ayam berasal dari ____.",
+            "en": "Butterflies, frogs and chickens start as ____."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "seed",
+          "text": {
+            "id": "biji",
+            "en": "a seed"
+          },
+          "image": "sci_seed_sprout"
+        },
+        {
+          "id": "egg",
+          "text": {
+            "id": "telur",
+            "en": "an egg"
+          },
+          "image": "count_egg_1"
+        },
+        {
+          "id": "pupa",
+          "text": {
+            "id": "kepompong",
+            "en": "a pupa"
+          },
+          "image": "sci_pupa"
+        }
+      ],
+      "solution": [
+        "egg"
+      ],
+      "model_answer": {
+        "id": "Telur! Ketiganya menetas dari telur.",
+        "en": "An egg! All three hatch from eggs."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "LC-METAMORPH"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kupu-kupu kecil tumbuh menjadi kupu-kupu besar.",
+            "en": "Small butterflies grow into big butterflies."
+          }
+        }
+      ],
+      "image": "pic_butterfly",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Kupu-kupu dewasa tidak tumbuh lagi. Ulatlah yang makan banyak dan tumbuh.",
+        "en": "Myth. Adult butterflies don't grow any more. It's the caterpillar that eats and grows."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "LC-PLANT"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-TRY",
+      "image": "sci_seed_sprout",
+      "model_answer": {
+        "id": "Taruh kapas basah di gelas plastik, lalu letakkan 3 butir kacang hijau di atasnya. Jaga kapasnya tetap lembap. Dalam 1–3 hari, bijinya berkecambah. Gambar perubahannya setiap hari!",
+        "en": "Put wet cotton wool in a plastic cup and lay 3 mung beans on top. Keep the cotton damp. In 1–3 days the seeds sprout. Draw how they change every day!"
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "LC-METAMORPH"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Siapa yang keluar dari kepompong?",
+            "en": "What comes out of the pupa?"
+          }
+        }
+      ],
+      "image": "sci_pupa",
+      "options": [
+        {
+          "id": "sci_caterpillar",
+          "image": "sci_caterpillar"
+        },
+        {
+          "id": "pic_butterfly",
+          "image": "pic_butterfly",
+          "correct": true
+        },
+        {
+          "id": "pic_bird",
+          "image": "pic_bird"
+        },
+        {
+          "id": "pic_frog",
+          "image": "pic_frog"
+        }
+      ],
+      "model_answer": {
+        "id": "Kupu-kupu dewasa keluar dari kepompong.",
+        "en": "An adult butterfly comes out of the pupa."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "LC-PLANT"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari biji ke pohon.",
+            "en": "From seed to tree."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "tree",
+          "text": {
+            "id": "Pohon",
+            "en": "Tree"
+          },
+          "image": "pic_tree"
+        },
+        {
+          "id": "sprout",
+          "text": {
+            "id": "Biji berkecambah",
+            "en": "Sprouting seed"
+          },
+          "image": "sci_seed_sprout"
+        },
+        {
+          "id": "seedling",
+          "text": {
+            "id": "Bibit",
+            "en": "Seedling"
+          },
+          "image": "hist_tree_seedlings"
+        }
+      ],
+      "solution": [
+        "sprout",
+        "seedling",
+        "tree"
+      ],
+      "model_answer": {
+        "id": "Biji berkecambah → bibit → pohon.",
+        "en": "Sprouting seed → seedling → tree."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-01-015",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "LC-ANIMAL"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Siapa yang menetas dari telur?",
+            "en": "Which one hatches from an egg?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_cat",
+          "image": "pic_cat"
+        },
+        {
+          "id": "pic_bird",
+          "image": "pic_bird",
+          "correct": true
+        },
+        {
+          "id": "pic_cow",
+          "image": "pic_cow"
+        },
+        {
+          "id": "pic_goat",
+          "image": "pic_goat"
+        }
+      ],
+      "model_answer": {
+        "id": "Burung menetas dari telur. Kucing, sapi, dan kambing lahir dari induknya.",
+        "en": "Birds hatch from eggs. Cats, cows and goats are born from their mothers."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-01-016",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "LC-ANIMAL"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "sci_water_drop",
+      "gem": true,
+      "source": "CDC, \"Mosquito Bites\" and \"Life Cycle of Aedes aegypti and Ae. albopictus Mosquitoes\" (cdc.gov/mosquitoes); Kemenkes RI, Gerakan 3M Plus pencegahan DBD (kemkes.go.id).",
+      "model_answer": {
+        "id": "Hanya nyamuk betina yang menggigit. Ia butuh darah untuk membuat telur. Telurnya menetas di air menjadi jentik, lalu menjadi nyamuk. Karena itu kita menguras dan menutup tempat air!",
+        "en": "Only female mosquitoes bite. They need blood to make their eggs. The eggs hatch in water into wrigglers, which become mosquitoes. That's why we empty and cover water containers!"
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "NUTR-GROUPS"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Masuk kelompok mana?",
+            "en": "Which group?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_staple",
+          "text": {
+            "id": "Makanan pokok",
+            "en": "Staple food"
+          }
+        },
+        {
+          "id": "b_protein",
+          "text": {
+            "id": "Lauk pauk",
+            "en": "Protein dish"
+          }
+        },
+        {
+          "id": "b_veg",
+          "text": {
+            "id": "Sayur",
+            "en": "Vegetables"
+          }
+        },
+        {
+          "id": "b_fruit",
+          "text": {
+            "id": "Buah",
+            "en": "Fruit"
+          }
+        },
+        {
+          "id": "rice",
+          "text": {
+            "id": "Nasi",
+            "en": "Rice"
+          },
+          "image": "pic_rice_bowl"
+        },
+        {
+          "id": "fish",
+          "text": {
+            "id": "Ikan",
+            "en": "Fish"
+          },
+          "image": "pic_fish_dish"
+        },
+        {
+          "id": "papaya",
+          "text": {
+            "id": "Pepaya",
+            "en": "Papaya"
+          },
+          "image": "fruit_papaya"
+        },
+        {
+          "id": "veg",
+          "text": {
+            "id": "Sayuran",
+            "en": "Vegetables"
+          },
+          "image": "pic_vegetables"
+        },
+        {
+          "id": "bread",
+          "text": {
+            "id": "Roti",
+            "en": "Bread"
+          },
+          "image": "pic_bread"
+        },
+        {
+          "id": "egg",
+          "text": {
+            "id": "Telur ceplok",
+            "en": "Fried egg"
+          },
+          "image": "pic_egg_fried"
+        },
+        {
+          "id": "banana",
+          "text": {
+            "id": "Pisang",
+            "en": "Banana"
+          },
+          "image": "fruit_banana"
+        }
+      ],
+      "solution_pairs": {
+        "rice": "b_staple",
+        "fish": "b_protein",
+        "papaya": "b_fruit",
+        "veg": "b_veg",
+        "bread": "b_staple",
+        "egg": "b_protein",
+        "banana": "b_fruit"
+      },
+      "model_answer": {
+        "id": "Pokok: nasi, roti. Lauk: ikan, telur. Sayur: sayuran. Buah: pepaya, pisang.",
+        "en": "Staples: rice, bread. Protein: fish, egg. Vegetables. Fruit: papaya, banana."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NUTR-PLATE"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana piring yang seimbang?",
+            "en": "Which plate is balanced?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_noodle_bowl",
+          "image": "pic_noodle_bowl"
+        },
+        {
+          "id": "pic_cake",
+          "image": "pic_cake"
+        },
+        {
+          "id": "pic_rice_bowl",
+          "image": "pic_rice_bowl"
+        },
+        {
+          "id": "pic_healthy_plate",
+          "image": "pic_healthy_plate",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Piring seimbang berisi makanan pokok, lauk pauk, sayur, dan buah.",
+        "en": "A balanced plate has a staple, protein, vegetables and fruit."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "NUTR-GROUPS"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa gunanya untuk tubuh?",
+            "en": "What does it do for your body?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "rice",
+          "text": {
+            "id": "Nasi",
+            "en": "Rice"
+          },
+          "image": "pic_rice_bowl"
+        },
+        {
+          "id": "fish",
+          "text": {
+            "id": "Ikan",
+            "en": "Fish"
+          },
+          "image": "pic_fish_dish"
+        },
+        {
+          "id": "veg",
+          "text": {
+            "id": "Sayuran",
+            "en": "Vegetables"
+          },
+          "image": "pic_vegetables"
+        },
+        {
+          "id": "milk",
+          "text": {
+            "id": "Susu",
+            "en": "Milk"
+          },
+          "image": "pic_milk_glass"
+        },
+        {
+          "id": "energy",
+          "text": {
+            "id": "memberi tenaga",
+            "en": "gives energy"
+          }
+        },
+        {
+          "id": "build",
+          "text": {
+            "id": "membangun otot dan tubuh",
+            "en": "builds muscles and body"
+          }
+        },
+        {
+          "id": "vit",
+          "text": {
+            "id": "vitamin agar tubuh sehat",
+            "en": "vitamins to stay healthy"
+          }
+        },
+        {
+          "id": "bone",
+          "text": {
+            "id": "tulang dan gigi kuat",
+            "en": "strong bones and teeth"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "rice": "energy",
+        "fish": "build",
+        "veg": "vit",
+        "milk": "bone"
+      },
+      "model_answer": {
+        "id": "Nasi memberi tenaga, ikan membangun tubuh, sayur memberi vitamin, susu menguatkan tulang.",
+        "en": "Rice gives energy, fish builds your body, vegetables give vitamins, milk strengthens bones."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "NUTR-PLATE"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Separuh piring diisi sayur dan ____.",
+            "en": "Half the plate is vegetables and ____."
+          }
+        }
+      ],
+      "image": "pic_healthy_plate",
+      "options": [
+        {
+          "id": "cake",
+          "text": {
+            "id": "kue",
+            "en": "cake"
+          },
+          "image": "pic_cake"
+        },
+        {
+          "id": "fruit",
+          "text": {
+            "id": "buah",
+            "en": "fruit"
+          },
+          "image": "fruit_papaya"
+        },
+        {
+          "id": "noodle",
+          "text": {
+            "id": "mi",
+            "en": "noodles"
+          },
+          "image": "pic_noodle_bowl"
+        }
+      ],
+      "solution": [
+        "fruit"
+      ],
+      "model_answer": {
+        "id": "Buah! Separuh piring sayur dan buah, sayurnya lebih banyak.",
+        "en": "Fruit! Half the plate is vegetables and fruit, with more vegetables."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "estimate_slider",
+      "skills": [
+        "NUTR-SUGAR"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-EST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Label: gula 32 gram. 1 sendok teh = 4 gram. Berapa sendok teh?",
+            "en": "Label: 32 g sugar. 1 teaspoon = 4 g. How many teaspoons?"
+          }
+        }
+      ],
+      "image": "pic_juice",
+      "numeric": {
+        "value": 8,
+        "tolerance": 1,
+        "unit": {
+          "id": "sendok teh",
+          "en": "teaspoons"
+        }
+      },
+      "slider": {
+        "min": 0,
+        "max": 16,
+        "step": 1
+      },
+      "model_answer": {
+        "id": "32 : 4 = 8 sendok teh gula dalam satu botol!",
+        "en": "32 ÷ 4 = 8 teaspoons of sugar in one bottle!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NUTR-SUGAR"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Haus sesudah main. Minum apa?",
+            "en": "Thirsty after playing. What to drink?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "drink_water",
+          "image": "drink_water",
+          "correct": true
+        },
+        {
+          "id": "pic_juice",
+          "image": "pic_juice"
+        },
+        {
+          "id": "pic_coffee_cup",
+          "image": "pic_coffee_cup"
+        },
+        {
+          "id": "pic_tea_cup",
+          "image": "pic_tea_cup"
+        }
+      ],
+      "model_answer": {
+        "id": "Air putih: menghilangkan haus tanpa gula.",
+        "en": "Water: it quenches thirst with no sugar."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "NUTR-SUGAR"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Setiap hari atau sesekali?",
+            "en": "Every day or now and then?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_daily",
+          "text": {
+            "id": "Setiap hari",
+            "en": "Every day"
+          }
+        },
+        {
+          "id": "b_some",
+          "text": {
+            "id": "Sesekali saja",
+            "en": "Only now and then"
+          }
+        },
+        {
+          "id": "veg",
+          "text": {
+            "id": "Sayur",
+            "en": "Vegetables"
+          },
+          "image": "pic_vegetables"
+        },
+        {
+          "id": "cake",
+          "text": {
+            "id": "Kue manis",
+            "en": "Sweet cake"
+          },
+          "image": "pic_cake"
+        },
+        {
+          "id": "water",
+          "text": {
+            "id": "Air putih",
+            "en": "Water"
+          },
+          "image": "drink_water"
+        },
+        {
+          "id": "sweet",
+          "text": {
+            "id": "Minuman manis kemasan",
+            "en": "Packaged sweet drink"
+          },
+          "image": "pic_juice"
+        },
+        {
+          "id": "fruit",
+          "text": {
+            "id": "Buah",
+            "en": "Fruit"
+          },
+          "image": "fruit_mango"
+        }
+      ],
+      "solution_pairs": {
+        "veg": "b_daily",
+        "cake": "b_some",
+        "water": "b_daily",
+        "sweet": "b_some",
+        "fruit": "b_daily"
+      },
+      "model_answer": {
+        "id": "Setiap hari: sayur, buah, air putih. Sesekali: kue manis, minuman manis.",
+        "en": "Every day: vegetables, fruit, water. Now and then: sweet cake, sweet drinks."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NUTR-GROUPS"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana lauk pauk sumber protein?",
+            "en": "Which one is a protein dish?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_rice_bowl",
+          "image": "pic_rice_bowl"
+        },
+        {
+          "id": "fruit_rambutan",
+          "image": "fruit_rambutan"
+        },
+        {
+          "id": "pic_chicken_dish",
+          "image": "pic_chicken_dish",
+          "correct": true
+        },
+        {
+          "id": "pic_vegetables",
+          "image": "pic_vegetables"
+        }
+      ],
+      "model_answer": {
+        "id": "Ayam adalah lauk pauk. Protein membangun otot dan tubuh.",
+        "en": "Chicken is a protein dish. Protein builds muscles and body."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "NUTR-SUGAR"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Buah yang manis sama buruknya dengan permen.",
+            "en": "Sweet fruit is as bad as sweets."
+          }
+        }
+      ],
+      "image": "fruit_mango",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Buah utuh juga berisi serat, vitamin, dan air. Yang perlu dibatasi adalah gula tambahan.",
+        "en": "Myth. Whole fruit also has fibre, vitamins and water. It's added sugar we should limit."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NUTR-PLATE"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di Isi Piringku, mana yang lebih banyak?",
+            "en": "On the balanced plate, which is more?"
+          }
+        }
+      ],
+      "image": "pic_healthy_plate",
+      "options": [
+        {
+          "id": "fruit_papaya",
+          "image": "fruit_papaya"
+        },
+        {
+          "id": "pic_vegetables",
+          "image": "pic_vegetables",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Sayur lebih banyak daripada buah.",
+        "en": "More vegetables than fruit."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "tap_hotspot",
+      "skills": [
+        "NUTR-SUGAR"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Terlalu banyak gula merusak bagian ini.",
+            "en": "Too much sugar harms this part."
+          }
+        }
+      ],
+      "image": "body_child",
+      "options": [
+        {
+          "id": "eyes",
+          "text": {
+            "id": "mata",
+            "en": "eyes"
+          },
+          "region": {
+            "x": 0.36,
+            "y": 0.1,
+            "w": 0.28,
+            "h": 0.07
+          }
+        },
+        {
+          "id": "ear",
+          "text": {
+            "id": "telinga",
+            "en": "ear"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.11,
+            "w": 0.09,
+            "h": 0.1
+          }
+        },
+        {
+          "id": "mouth",
+          "text": {
+            "id": "mulut (gigi)",
+            "en": "mouth (teeth)"
+          },
+          "region": {
+            "x": 0.42,
+            "y": 0.235,
+            "w": 0.16,
+            "h": 0.05
+          },
+          "correct": true
+        },
+        {
+          "id": "hand",
+          "text": {
+            "id": "tangan",
+            "en": "hand"
+          },
+          "region": {
+            "x": 0.06,
+            "y": 0.46,
+            "w": 0.14,
+            "h": 0.1
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Gigi di mulut. Kuman memakan sisa gula dan membuat gigi berlubang.",
+        "en": "Your teeth. Germs feed on leftover sugar and make holes in teeth."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "NUTR-SUGAR"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-TRY",
+      "image": "pic_juice",
+      "model_answer": {
+        "id": "Bersama orang dewasa, cari tulisan \"Informasi Nilai Gizi\" pada kemasan minuman. Temukan angka gula, lalu bagi dengan 4. Itulah jumlah sendok teh gulanya!",
+        "en": "With a grown-up, find the \"Nutrition Facts\" box on a drink. Find the sugar number and divide it by 4. That's how many teaspoons of sugar it has!"
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NUTR-GROUPS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana makanan pokok pemberi tenaga?",
+            "en": "Which staple food gives energy?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_bread",
+          "image": "pic_bread",
+          "correct": true
+        },
+        {
+          "id": "pic_fish_dish",
+          "image": "pic_fish_dish"
+        },
+        {
+          "id": "pic_vegetables",
+          "image": "pic_vegetables"
+        },
+        {
+          "id": "fruit_rambutan",
+          "image": "fruit_rambutan"
+        }
+      ],
+      "model_answer": {
+        "id": "Roti adalah makanan pokok, seperti nasi. Ia memberi tenaga.",
+        "en": "Bread is a staple, like rice. It gives energy."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "NUTR-PLATE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Separuh lagi: makanan pokok dan ____.",
+            "en": "The other half: staple food and ____."
+          }
+        }
+      ],
+      "image": "pic_healthy_plate",
+      "options": [
+        {
+          "id": "juice",
+          "text": {
+            "id": "minuman manis",
+            "en": "sweet drinks"
+          },
+          "image": "pic_juice"
+        },
+        {
+          "id": "cake",
+          "text": {
+            "id": "kue",
+            "en": "cake"
+          },
+          "image": "pic_cake"
+        },
+        {
+          "id": "protein",
+          "text": {
+            "id": "lauk pauk",
+            "en": "protein"
+          },
+          "image": "pic_chicken_dish"
+        }
+      ],
+      "solution": [
+        "protein"
+      ],
+      "model_answer": {
+        "id": "Lauk pauk, seperti ikan, ayam, telur, tempe, atau tahu.",
+        "en": "Protein, such as fish, chicken, egg, tempeh or tofu."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-02-015",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "estimate_slider",
+      "skills": [
+        "NUTR-SUGAR"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-EST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Susu cokelat kemasan: gula 20 gram. 1 sendok teh = 4 gram.",
+            "en": "Packaged chocolate milk: 20 g sugar. 1 teaspoon = 4 g."
+          }
+        }
+      ],
+      "image": "pic_milk_glass",
+      "numeric": {
+        "value": 5,
+        "tolerance": 1,
+        "unit": {
+          "id": "sendok teh",
+          "en": "teaspoons"
+        }
+      },
+      "slider": {
+        "min": 0,
+        "max": 12,
+        "step": 1
+      },
+      "model_answer": {
+        "id": "20 : 4 = 5 sendok teh gula.",
+        "en": "20 ÷ 4 = 5 teaspoons of sugar."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    },
+    {
+      "item_id": "SNS-K-M-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku menetas di air. Waktu kecil aku berekor dan bernapas dengan insang. Sudah besar, aku melompat di darat. Siapa aku?",
+            "en": "I hatch in water. When I'm young I have a tail and breathe with gills. When I grow up I hop on land. Who am I?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "fish",
+          "text": {
+            "id": "Ikan",
+            "en": "Fish"
+          }
+        },
+        {
+          "id": "frog",
+          "text": {
+            "id": "Katak",
+            "en": "Frog"
+          },
+          "correct": true
+        },
+        {
+          "id": "butterfly",
+          "text": {
+            "id": "Kupu-kupu",
+            "en": "Butterfly"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Katak! Waktu kecil namanya berudu.",
+        "en": "A frog! When it's young it's called a tadpole."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-m-0.1"
+    }
+  ]
+}

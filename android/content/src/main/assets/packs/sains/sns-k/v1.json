@@ -1,0 +1,5028 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sns-k-pemula-0.4",
+    "subject": "sains",
+    "track": "sns-k",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Sains — Pemula (Anak)",
+      "en": "Science — Beginner (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-17 for subject + language review: needs a science reviewer and the Indonesian and English language reviewers before any item is approved (docs/syllabus/03_SAINS.md, Kids Pemula units 1-5). Follow-up 11 picture pass (2026-10-18): shorter prompts, gestures on match_pairs, more picture-led items (INTERACTIONS_AUDIO.md §1); same items, skills and order. Follow-up 12 picture pass 2 (2026-10-18): more pictures on cards and questions (MODULES_LEVELS_STORIES.md §8); same items, skills and order. The habit cards in SNS-K-P-01-010 are words again until the two unhealthy habits are drawn.",
+  "prompts": {
+    "P-TAP": {
+      "id": "Ketuk gambarnya.",
+      "en": "Tap the picture."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban yang tepat.",
+      "en": "Pick the right answer."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-MYTH": {
+      "id": "Mitos atau fakta?",
+      "en": "Myth or fact?"
+    },
+    "P-MATCH": {
+      "id": "Pasangkan.",
+      "en": "Match them up."
+    },
+    "P-CONNECT": {
+      "id": "Tarik garis ke pasangannya.",
+      "en": "Draw a line to each match."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke pasangannya.",
+      "en": "Drag each picture to its match."
+    },
+    "P-SORT": {
+      "id": "Seret ke keranjang yang tepat.",
+      "en": "Drag each into the right basket."
+    },
+    "P-ORDER": {
+      "id": "Seret ke urutan yang benar.",
+      "en": "Drag them into the right order."
+    },
+    "P-FILL": {
+      "id": "Seret ke bagian yang kosong.",
+      "en": "Drag into the gap."
+    },
+    "P-NUM": {
+      "id": "Tulis angkanya.",
+      "en": "Type the number."
+    },
+    "P-MEMORY": {
+      "id": "Balik kartu, cari pasangannya.",
+      "en": "Flip the cards, find pairs."
+    },
+    "P-TRY": {
+      "id": "Coba di rumah",
+      "en": "Try at home"
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    },
+    "P-EST": {
+      "id": "Coba tebak.",
+      "en": "Have a guess."
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Sip, kita lanjut!",
+      "en": "Great, let's keep going!"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Tubuhku",
+        "en": "My body"
+      },
+      "sticker": "sticker_kite"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Hewan di sekitarku",
+        "en": "Animals around me"
+      },
+      "sticker": "sticker_cat"
+    },
+    {
+      "unit": "03",
+      "title": {
+        "id": "Tumbuhan",
+        "en": "Plants"
+      },
+      "sticker": "sticker_leaf"
+    },
+    {
+      "unit": "04",
+      "title": {
+        "id": "Benda & bahan",
+        "en": "Objects & materials"
+      },
+      "sticker": "sticker_boat"
+    },
+    {
+      "unit": "05",
+      "title": {
+        "id": "Siang & malam",
+        "en": "Day & night"
+      },
+      "sticker": "sticker_compass"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SNS-K-P-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Tubuhku",
+        "en": "My body"
+      },
+      "body": [
+        {
+          "id": "Jantung memompa darah, paru-paru untuk bernapas, otak untuk berpikir.",
+          "en": "Your heart pumps blood, your lungs breathe, your brain thinks."
+        },
+        {
+          "id": "Lima indra: mata, telinga, hidung, lidah, dan kulit.",
+          "en": "Five senses: eyes, ears, nose, tongue and skin."
+        },
+        {
+          "id": "Supaya sehat: cuci tangan pakai sabun, sikat gigi, minum air, tidur cukup.",
+          "en": "Stay healthy: wash hands with soap, brush teeth, drink water, sleep enough."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SNS-K-P-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Hewan di sekitarku",
+        "en": "Animals around me"
+      },
+      "body": [
+        {
+          "id": "Kelompokkan hewan, misalnya dari kakinya: ayam 2, kucing 4, ikan 0.",
+          "en": "Group animals, for example by legs: chicken 2, cat 4, fish 0."
+        },
+        {
+          "id": "Ikan hidup di air, kambing di darat, katak di keduanya.",
+          "en": "Fish live in water, goats on land, frogs in both."
+        },
+        {
+          "id": "Sapi makan tumbuhan, harimau makan daging, ayam makan keduanya.",
+          "en": "Cows eat plants, tigers eat meat, chickens eat both."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SNS-K-P-03-S1",
+      "unit": "03",
+      "audience": "kids",
+      "title": {
+        "id": "Tumbuhan",
+        "en": "Plants"
+      },
+      "body": [
+        {
+          "id": "Tumbuhan makhluk hidup: tumbuh, butuh air, membuat makanan sendiri.",
+          "en": "Plants are alive: they grow, need water and make their own food."
+        },
+        {
+          "id": "Akar menyerap air, batang menopang, daun membuat makanan, bunga menjadi buah berbiji.",
+          "en": "Roots soak up water, stems hold up, leaves make food, flowers become fruit with seeds."
+        },
+        {
+          "id": "Butuh air, cahaya, udara, dan tanah. Biji → kecambah → tanaman → bunga dan buah.",
+          "en": "They need water, light, air and soil. Seed → sprout → plant → flowers and fruit."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SNS-K-P-04-S1",
+      "unit": "04",
+      "audience": "kids",
+      "title": {
+        "id": "Benda & bahan",
+        "en": "Objects & materials"
+      },
+      "body": [
+        {
+          "id": "Meja dari kayu, paku dari logam, cermin dari kaca, baju dari kain.",
+          "en": "Tables are wood, nails metal, mirrors glass, clothes cloth."
+        },
+        {
+          "id": "Batu keras, kapas lunak, kaca bening, kain menyerap air.",
+          "en": "Stone is hard, cotton soft, glass clear; cloth soaks up water."
+        },
+        {
+          "id": "Kayu terapung, paku tenggelam; ukuran tidak menentukan. Botol bekas bisa jadi pot.",
+          "en": "Wood floats, nails sink; size doesn't decide. An old bottle can become a pot."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SNS-K-P-05-S1",
+      "unit": "05",
+      "audience": "kids",
+      "title": {
+        "id": "Siang & malam",
+        "en": "Day & night"
+      },
+      "body": [
+        {
+          "id": "Bumi berputar: menghadap Matahari = siang, membelakanginya = malam.",
+          "en": "Earth spins: facing the sun = day, facing away = night."
+        },
+        {
+          "id": "Matahari terbit di timur, terbenam di barat. Jangan menatapnya langsung!",
+          "en": "The sun rises in the east and sets in the west. Never stare at it!"
+        },
+        {
+          "id": "Bulan memantulkan cahaya Matahari. Bayangan muncul saat cahaya terhalang.",
+          "en": "The moon reflects sunlight. A shadow forms where light is blocked."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "SNS-K-P-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "BODY-SENSES",
+        "BODY-PARTS"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kita mendengar dengan apa?",
+            "en": "What do we hear with?"
+          }
+        }
+      ],
+      "image": "body_child",
+      "options": [
+        {
+          "id": "nose",
+          "text": {
+            "id": "hidung",
+            "en": "nose"
+          },
+          "region": {
+            "x": 0.45,
+            "y": 0.175,
+            "w": 0.1,
+            "h": 0.05
+          }
+        },
+        {
+          "id": "hand",
+          "text": {
+            "id": "tangan",
+            "en": "hand"
+          },
+          "region": {
+            "x": 0.06,
+            "y": 0.46,
+            "w": 0.14,
+            "h": 0.1
+          }
+        },
+        {
+          "id": "ear",
+          "text": {
+            "id": "telinga",
+            "en": "ear"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.11,
+            "w": 0.09,
+            "h": 0.1
+          },
+          "correct": true
+        },
+        {
+          "id": "eyes",
+          "text": {
+            "id": "mata",
+            "en": "eyes"
+          },
+          "region": {
+            "x": 0.36,
+            "y": 0.1,
+            "w": 0.28,
+            "h": 0.07
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Kita mendengar dengan telinga.",
+        "en": "We hear with our ears."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "BODY-SENSES"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Wangi melati! Kamu menciumnya dengan apa?",
+            "en": "Jasmine! What do you smell it with?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sense_nose",
+          "image": "sense_nose",
+          "correct": true
+        },
+        {
+          "id": "sense_tongue",
+          "image": "sense_tongue"
+        },
+        {
+          "id": "sense_ear",
+          "image": "sense_ear"
+        },
+        {
+          "id": "sense_eye",
+          "image": "sense_eye"
+        }
+      ],
+      "model_answer": {
+        "id": "Kita mencium bau dengan hidung.",
+        "en": "We smell with our nose."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "BODY-SENSES"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "o_eye",
+          "text": {
+            "id": "Mata",
+            "en": "Eyes"
+          },
+          "image": "sense_eye"
+        },
+        {
+          "id": "o_ear",
+          "text": {
+            "id": "Telinga",
+            "en": "Ears"
+          },
+          "image": "sense_ear"
+        },
+        {
+          "id": "o_tongue",
+          "text": {
+            "id": "Lidah",
+            "en": "Tongue"
+          },
+          "image": "sense_tongue"
+        },
+        {
+          "id": "o_skin",
+          "text": {
+            "id": "Kulit",
+            "en": "Skin"
+          },
+          "image": "sense_hand"
+        },
+        {
+          "id": "d_see",
+          "text": {
+            "id": "melihat",
+            "en": "see"
+          }
+        },
+        {
+          "id": "d_hear",
+          "text": {
+            "id": "mendengar",
+            "en": "hear"
+          }
+        },
+        {
+          "id": "d_taste",
+          "text": {
+            "id": "mengecap rasa",
+            "en": "taste"
+          }
+        },
+        {
+          "id": "d_feel",
+          "text": {
+            "id": "meraba",
+            "en": "feel"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "o_eye": "d_see",
+        "o_ear": "d_hear",
+        "o_tongue": "d_taste",
+        "o_skin": "d_feel"
+      },
+      "model_answer": {
+        "id": "Mata melihat, telinga mendengar, lidah mengecap rasa, dan kulit meraba.",
+        "en": "Eyes see, ears hear, the tongue tastes and skin feels."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "BODY-PARTS"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Untuk berjalan dan menendang bola?",
+            "en": "For walking and kicking a ball?"
+          }
+        }
+      ],
+      "image": "body_child",
+      "options": [
+        {
+          "id": "hand",
+          "text": {
+            "id": "tangan",
+            "en": "hand"
+          },
+          "region": {
+            "x": 0.06,
+            "y": 0.46,
+            "w": 0.14,
+            "h": 0.1
+          }
+        },
+        {
+          "id": "mouth",
+          "text": {
+            "id": "mulut",
+            "en": "mouth"
+          },
+          "region": {
+            "x": 0.42,
+            "y": 0.235,
+            "w": 0.16,
+            "h": 0.05
+          }
+        },
+        {
+          "id": "ear",
+          "text": {
+            "id": "telinga",
+            "en": "ear"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.11,
+            "w": 0.09,
+            "h": 0.1
+          }
+        },
+        {
+          "id": "foot",
+          "text": {
+            "id": "kaki",
+            "en": "foot"
+          },
+          "region": {
+            "x": 0.54,
+            "y": 0.89,
+            "w": 0.2,
+            "h": 0.08
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Kita berjalan dan menendang bola dengan kaki.",
+        "en": "We walk and kick a ball with our feet."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "BODY-PARTS"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pegang dadamu: dag-dig-dug! Organ apa yang memompa darah?",
+            "en": "Hand on your chest: thump-thump! Which organ pumps blood?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "lungs",
+          "text": {
+            "id": "Paru-paru",
+            "en": "Lungs"
+          }
+        },
+        {
+          "id": "heart",
+          "text": {
+            "id": "Jantung",
+            "en": "Heart"
+          },
+          "correct": true
+        },
+        {
+          "id": "stomach",
+          "text": {
+            "id": "Lambung",
+            "en": "Stomach"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Jantung memompa darah ke seluruh tubuh.",
+        "en": "Your heart pumps blood all around your body."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "BODY-PARTS"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kita berpikir, belajar, dan mengingat dengan ____.",
+            "en": "We think, learn and remember with our ____."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_stomach",
+          "text": {
+            "id": "lambung",
+            "en": "stomach"
+          }
+        },
+        {
+          "id": "t_brain",
+          "text": {
+            "id": "otak",
+            "en": "brain"
+          }
+        },
+        {
+          "id": "t_lungs",
+          "text": {
+            "id": "paru-paru",
+            "en": "lungs"
+          }
+        }
+      ],
+      "solution": [
+        "t_brain"
+      ],
+      "model_answer": {
+        "id": "Kita berpikir dan mengingat dengan otak.",
+        "en": "We think and remember with our brain."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HEALTH-HABITS"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mencuci tangan dengan air saja sama bersihnya dengan memakai sabun.",
+            "en": "Washing your hands with just water gets them as clean as using soap."
+          }
+        }
+      ],
+      "image": "wash_hands",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Sabun melepas kuman dan kotoran; pakai sabun dan air mengalir.",
+        "en": "Myth. Soap lifts germs and dirt off; use soap and running water."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "HEALTH-HABITS"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Langkah cuci tangan.",
+            "en": "Hand-washing steps."
+          }
+        }
+      ],
+      "image": "wash_hands",
+      "options": [
+        {
+          "id": "s3",
+          "text": {
+            "id": "Bilas dengan air mengalir",
+            "en": "Rinse under running water"
+          }
+        },
+        {
+          "id": "s1",
+          "text": {
+            "id": "Basahi dengan air mengalir",
+            "en": "Wet under running water"
+          }
+        },
+        {
+          "id": "s4",
+          "text": {
+            "id": "Keringkan dengan lap bersih",
+            "en": "Dry with a clean towel"
+          }
+        },
+        {
+          "id": "s2",
+          "text": {
+            "id": "Gosok dengan sabun",
+            "en": "Scrub with soap"
+          }
+        }
+      ],
+      "solution": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "model_answer": {
+        "id": "Basahi, gosok dengan sabun (telapak, punggung tangan, sela jari, kuku), bilas, keringkan.",
+        "en": "Wet, scrub with soap (palms, backs, between fingers, nails), rinse, dry."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "HEALTH-HABITS"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Habis bermain, kamu haus. Mana yang terbaik?",
+            "en": "After playing, you're thirsty. What's best?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "drink_water",
+          "image": "drink_water",
+          "correct": true
+        },
+        {
+          "id": "toothbrush",
+          "image": "toothbrush"
+        },
+        {
+          "id": "sleep_moon",
+          "image": "sleep_moon"
+        }
+      ],
+      "model_answer": {
+        "id": "Minum air putih saat haus membuat tubuhmu segar kembali.",
+        "en": "Drinking water when you're thirsty makes your body feel fresh again."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "HEALTH-HABITS"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sehat atau kurang sehat?",
+            "en": "Healthy or less healthy?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_good",
+          "text": {
+            "id": "Membuat sehat",
+            "en": "Keeps me healthy"
+          }
+        },
+        {
+          "id": "b_less",
+          "text": {
+            "id": "Kurang sehat",
+            "en": "Less healthy"
+          }
+        },
+        {
+          "id": "h1",
+          "text": {
+            "id": "Tidur cukup setiap malam",
+            "en": "Sleeping enough every night"
+          }
+        },
+        {
+          "id": "h2",
+          "text": {
+            "id": "Makan tanpa cuci tangan dulu",
+            "en": "Eating without washing your hands first"
+          }
+        },
+        {
+          "id": "h3",
+          "text": {
+            "id": "Sikat gigi sebelum tidur",
+            "en": "Brushing your teeth before bed"
+          }
+        },
+        {
+          "id": "h4",
+          "text": {
+            "id": "Main gawai sampai larut malam",
+            "en": "Playing on a phone until late at night"
+          }
+        },
+        {
+          "id": "h5",
+          "text": {
+            "id": "Minum air putih",
+            "en": "Drinking water"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "h1": "b_good",
+        "h2": "b_less",
+        "h3": "b_good",
+        "h4": "b_less",
+        "h5": "b_good"
+      },
+      "model_answer": {
+        "id": "Sehat: tidur cukup, sikat gigi, minum air putih. Kurang sehat: makan tanpa cuci tangan, main gawai larut malam.",
+        "en": "Healthy: enough sleep, brushing teeth, drinking water. Less healthy: eating with unwashed hands, a phone late at night."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HEALTH-HABITS"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Anak-anak butuh tidur lebih lama daripada orang dewasa.",
+            "en": "Children need more sleep than adults."
+          }
+        }
+      ],
+      "image": "sleep_moon",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Anak-anak sedang tumbuh, jadi butuh tidur lebih lama daripada orang dewasa.",
+        "en": "Children are still growing, so they need more sleep than adults."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "BODY-SENSES"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-TRY",
+      "image": "sense_hand",
+      "model_answer": {
+        "id": "Minta orang dewasa menaruh tiga benda aman di tanganmu, misalnya sendok, kain, dan daun. Tutup mata, lalu tebak dengan meraba. Indra apa yang kamu pakai? Kulitmu!",
+        "en": "Ask a grown-up to put three safe things in your hand, like a spoon, a cloth and a leaf. Close your eyes and guess by touch. Which sense is that? Your skin!"
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "BODY-SENSES",
+        "BODY-PARTS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kita melihat dengan apa?",
+            "en": "What do we see with?"
+          }
+        }
+      ],
+      "image": "body_child",
+      "options": [
+        {
+          "id": "mouth",
+          "text": {
+            "id": "mulut",
+            "en": "mouth"
+          },
+          "region": {
+            "x": 0.42,
+            "y": 0.235,
+            "w": 0.16,
+            "h": 0.05
+          }
+        },
+        {
+          "id": "eyes",
+          "text": {
+            "id": "mata",
+            "en": "eyes"
+          },
+          "region": {
+            "x": 0.36,
+            "y": 0.1,
+            "w": 0.28,
+            "h": 0.07
+          },
+          "correct": true
+        },
+        {
+          "id": "ear",
+          "text": {
+            "id": "telinga",
+            "en": "ear"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.11,
+            "w": 0.09,
+            "h": 0.1
+          }
+        },
+        {
+          "id": "foot",
+          "text": {
+            "id": "kaki",
+            "en": "foot"
+          },
+          "region": {
+            "x": 0.54,
+            "y": 0.89,
+            "w": 0.2,
+            "h": 0.08
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Kita melihat dengan mata.",
+        "en": "We see with our eyes."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "HEALTH-HABITS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kapan sebaiknya kita menyikat gigi?",
+            "en": "When should we brush our teeth?"
+          }
+        }
+      ],
+      "image": "toothbrush",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Hanya kalau gigi terasa sakit",
+            "en": "Only when a tooth hurts"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Seminggu sekali",
+            "en": "Once a week"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Pagi setelah sarapan dan malam sebelum tidur",
+            "en": "In the morning after breakfast and at night before bed"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Sikat gigi dua kali sehari: pagi setelah sarapan dan malam sebelum tidur.",
+        "en": "Brush twice a day: in the morning after breakfast and at night before bed."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-01-015",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "BODY-PARTS"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Library of Congress, Everyday Mysteries: \"Do babies have more bones than adults?\" (loc.gov/everyday-mysteries); 206 bones in the adult skeleton: Encyclopaedia Britannica, \"human skeleton\".",
+      "model_answer": {
+        "id": "Saat lahir, bayi punya sekitar 300 tulang! Sebagian masih lunak. Ketika kita tumbuh, beberapa tulang menyatu, sehingga orang dewasa punya 206 tulang.",
+        "en": "A newborn baby has about 300 bones! Some are still soft. As we grow, some of them join together, so an adult has 206 bones."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "ANIMAL-GROUPS"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Berapa kakinya?",
+            "en": "How many legs?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b2",
+          "text": {
+            "id": "Berkaki dua",
+            "en": "Two legs"
+          }
+        },
+        {
+          "id": "b4",
+          "text": {
+            "id": "Berkaki empat",
+            "en": "Four legs"
+          }
+        },
+        {
+          "id": "b0",
+          "text": {
+            "id": "Tidak berkaki",
+            "en": "No legs"
+          }
+        },
+        {
+          "id": "a_hen",
+          "text": {
+            "id": "ayam",
+            "en": "chicken"
+          },
+          "image": "pic_chicken"
+        },
+        {
+          "id": "a_cat",
+          "text": {
+            "id": "kucing",
+            "en": "cat"
+          },
+          "image": "pic_cat"
+        },
+        {
+          "id": "a_fish",
+          "text": {
+            "id": "ikan",
+            "en": "fish"
+          },
+          "image": "pic_fish"
+        },
+        {
+          "id": "a_goat",
+          "text": {
+            "id": "kambing",
+            "en": "goat"
+          },
+          "image": "pic_goat"
+        },
+        {
+          "id": "a_snake",
+          "text": {
+            "id": "ular",
+            "en": "snake"
+          },
+          "image": "pic_snake"
+        },
+        {
+          "id": "a_duck",
+          "text": {
+            "id": "bebek",
+            "en": "duck"
+          },
+          "image": "pic_duck"
+        }
+      ],
+      "solution_pairs": {
+        "a_hen": "b2",
+        "a_cat": "b4",
+        "a_fish": "b0",
+        "a_goat": "b4",
+        "a_snake": "b0",
+        "a_duck": "b2"
+      },
+      "model_answer": {
+        "id": "Berkaki dua: ayam, bebek. Berkaki empat: kucing, kambing. Tidak berkaki: ikan, ular.",
+        "en": "Two legs: chicken, duck. Four legs: cat, goat. No legs: fish, snake."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ANIMAL-GROUPS"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana makhluk hidup? (bernapas, makan, tumbuh)",
+            "en": "Which one is alive? (breathes, eats, grows)"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "coin_generic",
+          "image": "coin_generic"
+        },
+        {
+          "id": "solid_cube",
+          "image": "solid_cube"
+        },
+        {
+          "id": "pos_cat_right",
+          "image": "pos_cat_right",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Kucing adalah makhluk hidup: ia bernapas, makan, dan tumbuh.",
+        "en": "The cat is a living thing: it breathes, eats and grows."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "memory_flip",
+      "skills": [
+        "ANIMAL-GROUPS"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Hewan dan suaranya.",
+            "en": "Animals and their sounds."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m_cat",
+          "text": {
+            "id": "kucing",
+            "en": "cat"
+          },
+          "image": "pic_cat"
+        },
+        {
+          "id": "m_rooster",
+          "text": {
+            "id": "ayam jantan",
+            "en": "rooster"
+          },
+          "image": "pic_chicken"
+        },
+        {
+          "id": "m_duck",
+          "text": {
+            "id": "bebek",
+            "en": "duck"
+          },
+          "image": "pic_duck"
+        },
+        {
+          "id": "m_cow",
+          "text": {
+            "id": "sapi",
+            "en": "cow"
+          },
+          "image": "pic_cow"
+        },
+        {
+          "id": "s_meow",
+          "text": {
+            "id": "meong",
+            "en": "meow"
+          }
+        },
+        {
+          "id": "s_kuku",
+          "text": {
+            "id": "kukuruyuk",
+            "en": "cock-a-doodle-doo"
+          }
+        },
+        {
+          "id": "s_kwek",
+          "text": {
+            "id": "kwek kwek",
+            "en": "quack quack"
+          }
+        },
+        {
+          "id": "s_moo",
+          "text": {
+            "id": "mooo",
+            "en": "moo"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "m_cat": "s_meow",
+        "m_rooster": "s_kuku",
+        "m_duck": "s_kwek",
+        "m_cow": "s_moo"
+      },
+      "model_answer": {
+        "id": "Kucing: meong. Ayam jantan: kukuruyuk. Bebek: kwek kwek. Sapi: mooo.",
+        "en": "Cat: meow. Rooster: cock-a-doodle-doo. Duck: quack quack. Cow: moo."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "ANIMAL-HABITAT"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di mana hewan-hewan ini hidup?",
+            "en": "Where do these animals live?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_water",
+          "text": {
+            "id": "Di air",
+            "en": "In water"
+          }
+        },
+        {
+          "id": "b_land",
+          "text": {
+            "id": "Di darat",
+            "en": "On land"
+          }
+        },
+        {
+          "id": "a_lele",
+          "text": {
+            "id": "lele",
+            "en": "catfish"
+          },
+          "image": "pic_fish"
+        },
+        {
+          "id": "a_goat",
+          "text": {
+            "id": "kambing",
+            "en": "goat"
+          },
+          "image": "pic_goat"
+        },
+        {
+          "id": "a_squid",
+          "text": {
+            "id": "cumi-cumi",
+            "en": "squid"
+          }
+        },
+        {
+          "id": "a_ant",
+          "text": {
+            "id": "semut",
+            "en": "ant"
+          }
+        },
+        {
+          "id": "a_seahorse",
+          "text": {
+            "id": "kuda laut",
+            "en": "seahorse"
+          }
+        },
+        {
+          "id": "a_rabbit",
+          "text": {
+            "id": "kelinci",
+            "en": "rabbit"
+          },
+          "image": "pic_rabbit"
+        }
+      ],
+      "solution_pairs": {
+        "a_lele": "b_water",
+        "a_goat": "b_land",
+        "a_squid": "b_water",
+        "a_ant": "b_land",
+        "a_seahorse": "b_water",
+        "a_rabbit": "b_land"
+      },
+      "model_answer": {
+        "id": "Di air: lele, cumi-cumi, kuda laut. Di darat: kambing, semut, kelinci.",
+        "en": "In water: catfish, squid, seahorse. On land: goat, ant, rabbit."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ANIMAL-HABITAT"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Katak menetas di air sebagai berudu. Katak dewasa hidup di mana?",
+            "en": "Frogs hatch in water as tadpoles. Where do grown frogs live?"
+          }
+        }
+      ],
+      "image": "pic_frog",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Hanya di udara",
+            "en": "Only in the air"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Di air dan di darat",
+            "en": "In water and on land"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Hanya di dalam tanah",
+            "en": "Only underground"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Katak bisa hidup di air dan di darat.",
+        "en": "Frogs can live in water and on land."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "ANIMAL-GROUPS",
+        "ANIMAL-HABITAT"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Paus hidup di laut, jadi paus termasuk ikan.",
+            "en": "Whales live in the sea, so whales are fish."
+          }
+        }
+      ],
+      "image": "pic_sea",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Paus bernapas dengan paru-paru dan menyusui, seperti kucing dan sapi.",
+        "en": "Myth. Whales breathe with lungs and feed their babies milk, like cats and cows."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ANIMAL-DIET"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kucing makan ikan dan daging. Pemakan apa?",
+            "en": "Cats eat fish and meat. What kind of eater?"
+          }
+        }
+      ],
+      "image": "pos_cat_right",
+      "options": [
+        {
+          "id": "meat",
+          "text": {
+            "id": "Pemakan daging",
+            "en": "Meat-eater"
+          },
+          "correct": true
+        },
+        {
+          "id": "plant",
+          "text": {
+            "id": "Pemakan tumbuhan",
+            "en": "Plant-eater"
+          }
+        },
+        {
+          "id": "both",
+          "text": {
+            "id": "Pemakan segala",
+            "en": "Eats both plants and animals"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Kucing adalah pemakan daging (karnivora).",
+        "en": "A cat is a meat-eater (a carnivore)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "ANIMAL-DIET"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa makanannya?",
+            "en": "What do they eat?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_plant",
+          "text": {
+            "id": "Pemakan tumbuhan",
+            "en": "Plant-eaters"
+          }
+        },
+        {
+          "id": "b_meat",
+          "text": {
+            "id": "Pemakan daging",
+            "en": "Meat-eaters"
+          }
+        },
+        {
+          "id": "b_both",
+          "text": {
+            "id": "Pemakan segala",
+            "en": "Eat both plants and animals"
+          }
+        },
+        {
+          "id": "a_tiger",
+          "text": {
+            "id": "harimau",
+            "en": "tiger"
+          },
+          "image": "pic_tiger"
+        },
+        {
+          "id": "a_cow",
+          "text": {
+            "id": "sapi",
+            "en": "cow"
+          },
+          "image": "pic_cow"
+        },
+        {
+          "id": "a_hen",
+          "text": {
+            "id": "ayam",
+            "en": "chicken"
+          },
+          "image": "pic_chicken"
+        },
+        {
+          "id": "a_eagle",
+          "text": {
+            "id": "elang",
+            "en": "eagle"
+          }
+        },
+        {
+          "id": "a_bear",
+          "text": {
+            "id": "beruang madu",
+            "en": "sun bear"
+          }
+        },
+        {
+          "id": "a_rabbit",
+          "text": {
+            "id": "kelinci",
+            "en": "rabbit"
+          },
+          "image": "pic_rabbit"
+        }
+      ],
+      "solution_pairs": {
+        "a_tiger": "b_meat",
+        "a_cow": "b_plant",
+        "a_hen": "b_both",
+        "a_eagle": "b_meat",
+        "a_bear": "b_both",
+        "a_rabbit": "b_plant"
+      },
+      "model_answer": {
+        "id": "Pemakan tumbuhan: sapi, kelinci. Pemakan daging: harimau, elang. Pemakan segala: ayam, beruang madu.",
+        "en": "Plant-eaters: cow, rabbit. Meat-eaters: tiger, eagle. Eat both: chicken, sun bear."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ANIMAL-DIET"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sapi makan rumput dan daun. Sapi pemakan ____.",
+            "en": "Cows eat grass and leaves. A cow is a ____-eater."
+          }
+        }
+      ],
+      "image": "pic_cow",
+      "options": [
+        {
+          "id": "t_meat",
+          "text": {
+            "id": "daging",
+            "en": "meat"
+          }
+        },
+        {
+          "id": "t_plant",
+          "text": {
+            "id": "tumbuhan",
+            "en": "plant"
+          }
+        },
+        {
+          "id": "t_fish",
+          "text": {
+            "id": "ikan",
+            "en": "fish"
+          }
+        }
+      ],
+      "solution": [
+        "t_plant"
+      ],
+      "model_answer": {
+        "id": "Sapi adalah pemakan tumbuhan (herbivora).",
+        "en": "A cow is a plant-eater (a herbivore)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "ANIMAL-DIET"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Hewan → makanannya.",
+            "en": "Animal → its food."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a_caterpillar",
+          "text": {
+            "id": "ulat",
+            "en": "caterpillar"
+          }
+        },
+        {
+          "id": "a_bee",
+          "text": {
+            "id": "lebah",
+            "en": "bee"
+          }
+        },
+        {
+          "id": "a_cat",
+          "text": {
+            "id": "kucing",
+            "en": "cat"
+          },
+          "image": "pic_cat"
+        },
+        {
+          "id": "a_bird",
+          "text": {
+            "id": "burung pipit",
+            "en": "sparrow"
+          },
+          "image": "pic_bird"
+        },
+        {
+          "id": "f_leaf",
+          "text": {
+            "id": "daun",
+            "en": "leaves"
+          },
+          "image": "sticker_leaf"
+        },
+        {
+          "id": "f_nectar",
+          "text": {
+            "id": "sari bunga",
+            "en": "nectar from flowers"
+          },
+          "image": "pic_flower"
+        },
+        {
+          "id": "f_fish",
+          "text": {
+            "id": "ikan",
+            "en": "fish"
+          },
+          "image": "pic_fish"
+        },
+        {
+          "id": "f_seed",
+          "text": {
+            "id": "biji-bijian",
+            "en": "seeds"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "a_caterpillar": "f_leaf",
+        "a_bee": "f_nectar",
+        "a_cat": "f_fish",
+        "a_bird": "f_seed"
+      },
+      "model_answer": {
+        "id": "Ulat: daun. Lebah: sari bunga. Kucing: ikan. Burung pipit: biji-bijian.",
+        "en": "Caterpillar: leaves. Bee: nectar. Cat: fish. Sparrow: seeds."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "ANIMAL-GROUPS"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Semua hewan berkembang biak dengan bertelur.",
+            "en": "All animals have babies by laying eggs."
+          }
+        }
+      ],
+      "image": "count_egg_3",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Ayam dan banyak ikan bertelur; kucing, kambing, dan sapi melahirkan.",
+        "en": "Myth. Chickens and many fish lay eggs; cats, goats and cows give birth."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ANIMAL-HABITAT"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-TRY",
+      "image": "pic_bird",
+      "model_answer": {
+        "id": "Amati satu hewan di dekat rumah selama lima menit, misalnya semut, burung, atau kucing. Apa makanannya? Di mana ia tinggal? Ceritakan di rumah. Amati dari jauh, dan jangan pegang hewan yang tidak kamu kenal.",
+        "en": "Watch one animal near your home for five minutes, like an ant, a bird or a cat. What does it eat? Where does it live? Tell someone at home. Watch from a distance, and don't touch animals you don't know."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "ANIMAL-HABITAT",
+        "ANIMAL-GROUPS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ikan bernapas dengan insang dan hidup di air.",
+            "en": "Fish breathe with gills and live in water."
+          }
+        }
+      ],
+      "image": "pic_fish",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Ikan bernapas dengan insang, jadi ikan hidup di air.",
+        "en": "Fish breathe with gills, so they live in water."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ANIMAL-DIET"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Burung hantu berburu tikus. Pemakan apa?",
+            "en": "Owls hunt mice. What kind of eater?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "meat",
+          "text": {
+            "id": "Pemakan daging",
+            "en": "Meat-eater"
+          },
+          "correct": true
+        },
+        {
+          "id": "plant",
+          "text": {
+            "id": "Pemakan tumbuhan",
+            "en": "Plant-eater"
+          }
+        },
+        {
+          "id": "both",
+          "text": {
+            "id": "Pemakan segala",
+            "en": "Eats both plants and animals"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Burung hantu adalah pemakan daging.",
+        "en": "An owl is a meat-eater."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-02-015",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "ANIMAL-GROUPS"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Smithsonian's National Zoo & Conservation Biology Institute, \"Komodo dragon\" (nationalzoo.si.edu/animals/komodo-dragon); UNESCO World Heritage List, \"Komodo National Park\" (whc.unesco.org/en/list/609).",
+      "model_answer": {
+        "id": "Komodo \"mencium\" bau dengan lidahnya! Lidahnya yang bercabang menangkap bau di udara, lalu membawanya ke bagian khusus di langit-langit mulut. Di alam, komodo hanya hidup di beberapa pulau di Nusa Tenggara Timur.",
+        "en": "A Komodo dragon \"smells\" with its tongue! Its forked tongue picks up smells from the air and carries them to a special spot in the roof of its mouth. In the wild, Komodo dragons live only on a few islands in East Nusa Tenggara."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-03-001",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "PLANT-NEEDS"
+      ],
+      "pool": "PRACT",
+      "order": 25,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang memberi cahaya untuk tumbuhan?",
+            "en": "What gives plants light?"
+          }
+        }
+      ],
+      "image": "scene_kampung_shapes",
+      "options": [
+        {
+          "id": "kite",
+          "text": {
+            "id": "layang-layang",
+            "en": "kite"
+          },
+          "region": {
+            "x": 0.74,
+            "y": 0.06,
+            "w": 0.16,
+            "h": 0.26
+          }
+        },
+        {
+          "id": "sun",
+          "text": {
+            "id": "matahari",
+            "en": "sun"
+          },
+          "region": {
+            "x": 0.06,
+            "y": 0.06,
+            "w": 0.18,
+            "h": 0.24
+          },
+          "correct": true
+        },
+        {
+          "id": "roof",
+          "text": {
+            "id": "atap",
+            "en": "roof"
+          },
+          "region": {
+            "x": 0.3,
+            "y": 0.2,
+            "w": 0.36,
+            "h": 0.22
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Matahari memberi cahaya. Daun memakai cahaya matahari untuk membuat makanan.",
+        "en": "The sun gives light. Leaves use sunlight to make food."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-03-002",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "PLANT-PARTS"
+      ],
+      "pool": "PRACT",
+      "order": 26,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bagian → tugasnya.",
+            "en": "Part → its job."
+          }
+        }
+      ],
+      "image": "sci_plant_parts",
+      "options": [
+        {
+          "id": "p_root",
+          "text": {
+            "id": "Akar",
+            "en": "Roots"
+          }
+        },
+        {
+          "id": "p_stem",
+          "text": {
+            "id": "Batang",
+            "en": "Stem"
+          }
+        },
+        {
+          "id": "p_leaf",
+          "text": {
+            "id": "Daun",
+            "en": "Leaves"
+          },
+          "image": "sticker_leaf"
+        },
+        {
+          "id": "p_flower",
+          "text": {
+            "id": "Bunga",
+            "en": "Flower"
+          },
+          "image": "pic_flower"
+        },
+        {
+          "id": "j_water",
+          "text": {
+            "id": "menyerap air",
+            "en": "soaks up water"
+          }
+        },
+        {
+          "id": "j_hold",
+          "text": {
+            "id": "menopang dan mengalirkan air",
+            "en": "holds it up, carries water"
+          }
+        },
+        {
+          "id": "j_food",
+          "text": {
+            "id": "membuat makanan",
+            "en": "make food"
+          }
+        },
+        {
+          "id": "j_fruit",
+          "text": {
+            "id": "bisa menjadi buah",
+            "en": "can turn into a fruit"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p_root": "j_water",
+        "p_stem": "j_hold",
+        "p_leaf": "j_food",
+        "p_flower": "j_fruit"
+      },
+      "model_answer": {
+        "id": "Akar menyerap air, batang menopang dan mengalirkan air, daun membuat makanan, bunga menjadi buah.",
+        "en": "Roots soak up water, the stem holds up and carries water, leaves make food, flowers become fruit."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-03-003",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "PLANT-NEEDS"
+      ],
+      "pool": "PRACT",
+      "order": 27,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tumbuhan bukan makhluk hidup, karena tumbuhan tidak bisa berjalan.",
+            "en": "Plants aren't living things, because they can't walk."
+          }
+        }
+      ],
+      "image": "pic_tree",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Tumbuhan tumbuh, butuh air, dan membuat makanan sendiri. Daun putri malu bahkan bisa menutup!",
+        "en": "Myth. Plants grow, need water and make their own food. Putri malu leaves even fold up!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-03-004",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "PLANT-PARTS"
+      ],
+      "pool": "PRACT",
+      "order": 28,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bagian ini di dalam tanah: menyerap air dan menahan tumbuhan. Apa namanya?",
+            "en": "This part is under the soil: it soaks up water and holds the plant. What is it?"
+          }
+        }
+      ],
+      "image": "sci_plant_parts",
+      "options": [
+        {
+          "id": "leaf",
+          "text": {
+            "id": "Daun",
+            "en": "Leaves"
+          }
+        },
+        {
+          "id": "root",
+          "text": {
+            "id": "Akar",
+            "en": "Roots"
+          },
+          "correct": true
+        },
+        {
+          "id": "flower",
+          "text": {
+            "id": "Bunga",
+            "en": "Flower"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Akar ada di dalam tanah. Akar menyerap air dan memegang tumbuhan supaya kokoh.",
+        "en": "Roots are under the soil. They soak up water and hold the plant steady."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-03-005",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "PLANT-NEEDS"
+      ],
+      "pool": "PRACT",
+      "order": 29,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dibutuhkan tumbuhan atau tidak?",
+            "en": "Does a plant need it?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_need",
+          "text": {
+            "id": "Dibutuhkan",
+            "en": "Needs it"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Tidak dibutuhkan",
+            "en": "Doesn't need it"
+          }
+        },
+        {
+          "id": "n_water",
+          "text": {
+            "id": "air",
+            "en": "water"
+          },
+          "image": "sci_water_drop"
+        },
+        {
+          "id": "n_toy",
+          "text": {
+            "id": "mainan",
+            "en": "toys"
+          },
+          "image": "pic_robot_toy"
+        },
+        {
+          "id": "n_sun",
+          "text": {
+            "id": "cahaya matahari",
+            "en": "sunlight"
+          },
+          "image": "pic_sun"
+        },
+        {
+          "id": "n_candy",
+          "text": {
+            "id": "permen",
+            "en": "sweets"
+          }
+        },
+        {
+          "id": "n_air",
+          "text": {
+            "id": "udara",
+            "en": "air"
+          }
+        },
+        {
+          "id": "n_soap",
+          "text": {
+            "id": "sabun",
+            "en": "soap"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "n_water": "b_need",
+        "n_toy": "b_no",
+        "n_sun": "b_need",
+        "n_candy": "b_no",
+        "n_air": "b_need",
+        "n_soap": "b_no"
+      },
+      "model_answer": {
+        "id": "Tumbuhan butuh air, cahaya matahari, dan udara; bukan mainan, permen, atau sabun.",
+        "en": "Plants need water, sunlight and air, not toys, sweets or soap."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-03-006",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "PLANT-PARTS"
+      ],
+      "pool": "PRACT",
+      "order": 30,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Daun membuat makanan untuk tumbuhan dengan bantuan cahaya matahari.",
+            "en": "Leaves make food for the plant with the help of sunlight."
+          }
+        }
+      ],
+      "image": "pic_tree",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Daun adalah \"dapur\" tumbuhan: makanan dibuat di sana dengan cahaya matahari.",
+        "en": "Leaves are the plant's \"kitchen\": food is made there using sunlight."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-03-007",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "PLANT-GROWTH"
+      ],
+      "pool": "PRACT",
+      "order": 31,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari biji sampai berbuah.",
+            "en": "From seed to fruit."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "g3",
+          "text": {
+            "id": "Tumbuh menjadi tanaman muda",
+            "en": "It becomes a young plant"
+          }
+        },
+        {
+          "id": "g1",
+          "text": {
+            "id": "Biji ditanam",
+            "en": "A seed is planted"
+          },
+          "image": "state_seedling"
+        },
+        {
+          "id": "g4",
+          "text": {
+            "id": "Berbunga, lalu berbuah",
+            "en": "It flowers, then fruits"
+          },
+          "image": "pic_tree"
+        },
+        {
+          "id": "g2",
+          "text": {
+            "id": "Biji berkecambah",
+            "en": "The seed sprouts"
+          },
+          "image": "sci_seed_sprout"
+        }
+      ],
+      "solution": [
+        "g1",
+        "g2",
+        "g3",
+        "g4"
+      ],
+      "model_answer": {
+        "id": "Biji, kecambah, tanaman muda, lalu tanaman yang berbunga dan berbuah.",
+        "en": "Seed, sprout, young plant, then a plant with flowers and fruit."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-03-008",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "PLANT-GROWTH"
+      ],
+      "pool": "PRACT",
+      "order": 32,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Biji mangga tumbuh jadi pohon. Buah apa yang tumbuh?",
+            "en": "A mango seed grows into a tree. What fruit grows on it?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "fruit_banana",
+          "image": "fruit_banana"
+        },
+        {
+          "id": "fruit_mango",
+          "image": "fruit_mango",
+          "correct": true
+        },
+        {
+          "id": "fruit_papaya",
+          "image": "fruit_papaya"
+        },
+        {
+          "id": "fruit_rambutan",
+          "image": "fruit_rambutan"
+        }
+      ],
+      "model_answer": {
+        "id": "Biji mangga tumbuh menjadi pohon mangga, dan pohon mangga berbuah mangga.",
+        "en": "A mango seed grows into a mango tree, and a mango tree grows mangoes."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-03-009",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "PLANT-NEEDS"
+      ],
+      "pool": "PRACT",
+      "order": 33,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Biji kacang hijau di atas kapas. Apa yang perlu ditambah supaya berkecambah?",
+            "en": "Mung beans on cotton wool. What do they need to sprout?"
+          }
+        }
+      ],
+      "image": "state_seedling",
+      "options": [
+        {
+          "id": "water",
+          "text": {
+            "id": "Air, supaya kapasnya basah",
+            "en": "Water, to make the cotton wet"
+          },
+          "correct": true
+        },
+        {
+          "id": "salt",
+          "text": {
+            "id": "Garam",
+            "en": "Salt"
+          }
+        },
+        {
+          "id": "sugar",
+          "text": {
+            "id": "Gula",
+            "en": "Sugar"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Biji butuh air untuk berkecambah. Kapas yang basah memberi biji air.",
+        "en": "Seeds need water to sprout. Wet cotton wool gives them water."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-03-010",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "PLANT-GROWTH"
+      ],
+      "pool": "PRACT",
+      "order": 34,
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di dalam pepaya ada banyak ____. Bisa ditanam menjadi pohon baru.",
+            "en": "Inside a papaya are lots of ____. They can grow into new trees."
+          }
+        }
+      ],
+      "image": "fruit_papaya",
+      "options": [
+        {
+          "id": "t_root",
+          "text": {
+            "id": "akar",
+            "en": "roots"
+          }
+        },
+        {
+          "id": "t_seed",
+          "text": {
+            "id": "biji",
+            "en": "seeds"
+          }
+        },
+        {
+          "id": "t_leaf",
+          "text": {
+            "id": "daun",
+            "en": "leaves"
+          }
+        }
+      ],
+      "solution": [
+        "t_seed"
+      ],
+      "model_answer": {
+        "id": "Di dalam buah ada biji. Biji bisa tumbuh menjadi tumbuhan baru.",
+        "en": "Inside a fruit there are seeds. Seeds can grow into new plants."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-03-011",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "PLANT-PARTS",
+        "PLANT-GROWTH"
+      ],
+      "pool": "PRACT",
+      "order": 35,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Makanan → bagian tumbuhannya.",
+            "en": "Food → which plant part."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "f_carrot",
+          "text": {
+            "id": "wortel",
+            "en": "carrot"
+          }
+        },
+        {
+          "id": "f_cane",
+          "text": {
+            "id": "tebu",
+            "en": "sugar cane"
+          }
+        },
+        {
+          "id": "f_spinach",
+          "text": {
+            "id": "bayam",
+            "en": "spinach"
+          }
+        },
+        {
+          "id": "f_corn",
+          "text": {
+            "id": "jagung",
+            "en": "corn"
+          }
+        },
+        {
+          "id": "x_root",
+          "text": {
+            "id": "akar",
+            "en": "root"
+          }
+        },
+        {
+          "id": "x_stem",
+          "text": {
+            "id": "batang",
+            "en": "stem"
+          }
+        },
+        {
+          "id": "x_leaf",
+          "text": {
+            "id": "daun",
+            "en": "leaves"
+          }
+        },
+        {
+          "id": "x_seed",
+          "text": {
+            "id": "biji",
+            "en": "seeds"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "f_carrot": "x_root",
+        "f_cane": "x_stem",
+        "f_spinach": "x_leaf",
+        "f_corn": "x_seed"
+      },
+      "model_answer": {
+        "id": "Wortel: akar. Tebu: batang. Bayam: daun. Jagung: biji.",
+        "en": "Carrot: root. Sugar cane: stem. Spinach: leaves. Corn: seeds."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-03-012",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "PLANT-GROWTH"
+      ],
+      "pool": "PRACT",
+      "order": 36,
+      "prompt_id": "P-TRY",
+      "image": "state_seedling",
+      "model_answer": {
+        "id": "Tanam kacang hijau, yuk! Taruh kapas basah di gelas plastik bekas, letakkan beberapa biji di atasnya, dan simpan dekat jendela. Jaga kapas tetap basah. Kapan akar dan daunnya muncul?",
+        "en": "Let's grow mung beans! Put wet cotton wool in an old plastic cup, lay a few beans on top and keep it near a window. Keep the cotton wet. When do the root and leaves appear?"
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-03-013",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "PLANT-NEEDS",
+        "PLANT-PARTS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tanaman cabai layu karena tanahnya kering. Apa yang paling ia butuhkan?",
+            "en": "A chilli plant droops because its soil is dry. What does it need most?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "dark",
+          "text": {
+            "id": "Disimpan di lemari gelap",
+            "en": "Put in a dark cupboard"
+          }
+        },
+        {
+          "id": "pick",
+          "text": {
+            "id": "Dipetik semua daunnya",
+            "en": "To have all its leaves picked off"
+          }
+        },
+        {
+          "id": "water",
+          "text": {
+            "id": "Disiram air",
+            "en": "Some water"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Disiram air: akar menyerap air dari tanah.",
+        "en": "Water: the roots take it up from the soil."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-03-014",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "PLANT-GROWTH",
+        "PLANT-PARTS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saat biji berkecambah, akar kecil biasanya muncul lebih dulu daripada daun.",
+            "en": "When a seed sprouts, a tiny root usually comes out before the leaves."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Akar kecil biasanya muncul dulu untuk mencari air, lalu tunas dan daun.",
+        "en": "A tiny root usually comes first to find water, then the shoot and leaves."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-03-015",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "PLANT-PARTS"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Encyclopaedia Britannica, \"Rafflesia\" (R. arnoldii: largest individual flower, up to about 1 m across; parasitic, no leaves, stems or roots; carrion smell attracts pollinating flies); Keputusan Presiden RI No. 4 Tahun 1993 tentang Satwa dan Bunga Nasional (padma raksasa Rafflesia arnoldii as puspa langka).",
+      "model_answer": {
+        "id": "Bunga tunggal terbesar di dunia tumbuh di hutan Sumatra: Rafflesia arnoldii, lebarnya hampir satu meter! Ia tidak punya daun, batang, atau akar sendiri. Baunya seperti daging busuk dan mengundang lalat yang membantunya membuat biji. Ia salah satu bunga nasional Indonesia, si puspa langka.",
+        "en": "The world's largest single flower grows in Sumatra's forests: Rafflesia arnoldii, almost a metre wide! It has no leaves, stem or roots of its own. It smells like rotting meat, which invites flies that help it make seeds. It is one of Indonesia's national flowers, the puspa langka (rare flower)."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-04-001",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "MAT-PROPS"
+      ],
+      "pool": "PRACT",
+      "order": 37,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Keras atau lunak?",
+            "en": "Hard or soft?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_hard",
+          "text": {
+            "id": "Keras",
+            "en": "Hard"
+          }
+        },
+        {
+          "id": "b_soft",
+          "text": {
+            "id": "Lunak",
+            "en": "Soft"
+          }
+        },
+        {
+          "id": "o_stone",
+          "text": {
+            "id": "batu",
+            "en": "stone"
+          }
+        },
+        {
+          "id": "o_pillow",
+          "text": {
+            "id": "bantal",
+            "en": "pillow"
+          }
+        },
+        {
+          "id": "o_spoon",
+          "text": {
+            "id": "sendok besi",
+            "en": "metal spoon"
+          }
+        },
+        {
+          "id": "o_cotton",
+          "text": {
+            "id": "kapas",
+            "en": "cotton wool"
+          }
+        },
+        {
+          "id": "o_marble",
+          "text": {
+            "id": "kelereng",
+            "en": "marble"
+          }
+        },
+        {
+          "id": "o_doll",
+          "text": {
+            "id": "boneka kain",
+            "en": "rag doll"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "o_stone": "b_hard",
+        "o_pillow": "b_soft",
+        "o_spoon": "b_hard",
+        "o_cotton": "b_soft",
+        "o_marble": "b_hard",
+        "o_doll": "b_soft"
+      },
+      "model_answer": {
+        "id": "Keras: batu, sendok besi, kelereng. Lunak: bantal, kapas, boneka kain.",
+        "en": "Hard: stone, metal spoon, marble. Soft: pillow, cotton wool, rag doll."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-04-002",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "MAT-KINDS"
+      ],
+      "pool": "PRACT",
+      "order": 38,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang dari logam? (keras, dingin, berkilau)",
+            "en": "Which one is metal? (hard, cool, shiny)"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "note_generic",
+          "image": "note_generic"
+        },
+        {
+          "id": "toothbrush",
+          "image": "toothbrush"
+        },
+        {
+          "id": "fruit_banana",
+          "image": "fruit_banana"
+        },
+        {
+          "id": "coin_generic",
+          "image": "coin_generic",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Uang logam terbuat dari logam. Uang kertas, sikat gigi, dan pisang tidak.",
+        "en": "Coins are made of metal. Banknotes, toothbrushes and bananas aren't."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-04-003",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "MAT-KINDS"
+      ],
+      "pool": "PRACT",
+      "order": 39,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Benda → bahannya.",
+            "en": "Thing → what it's made of."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_nail",
+          "text": {
+            "id": "paku",
+            "en": "nail"
+          }
+        },
+        {
+          "id": "t_pencil",
+          "text": {
+            "id": "pensil",
+            "en": "pencil"
+          },
+          "image": "pic_pencil"
+        },
+        {
+          "id": "t_mirror",
+          "text": {
+            "id": "cermin",
+            "en": "mirror"
+          }
+        },
+        {
+          "id": "t_shirt",
+          "text": {
+            "id": "baju",
+            "en": "shirt"
+          },
+          "image": "pic_shirt"
+        },
+        {
+          "id": "m_metal",
+          "text": {
+            "id": "logam",
+            "en": "metal"
+          }
+        },
+        {
+          "id": "m_wood",
+          "text": {
+            "id": "kayu",
+            "en": "wood"
+          }
+        },
+        {
+          "id": "m_glass",
+          "text": {
+            "id": "kaca",
+            "en": "glass"
+          }
+        },
+        {
+          "id": "m_cloth",
+          "text": {
+            "id": "kain",
+            "en": "cloth"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "t_nail": "m_metal",
+        "t_pencil": "m_wood",
+        "t_mirror": "m_glass",
+        "t_shirt": "m_cloth"
+      },
+      "model_answer": {
+        "id": "Paku dari logam, pensil dari kayu, cermin dari kaca, dan baju dari kain.",
+        "en": "A nail is made of metal, a pencil of wood, a mirror of glass and a shirt of cloth."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-04-004",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "MAT-PROPS"
+      ],
+      "pool": "PRACT",
+      "order": 40,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Lap kain bisa menyerap air yang tumpah di meja.",
+            "en": "A cloth can soak up water spilled on the table."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Kain menyerap air. Itulah sebabnya kita memakai lap kain untuk mengelap tumpahan.",
+        "en": "Cloth soaks up water. That's why we use a cloth to wipe up spills."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-04-005",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "MAT-PROPS"
+      ],
+      "pool": "PRACT",
+      "order": 41,
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Jendela dibuat dari kaca karena kaca itu ____, jadi cahaya bisa masuk.",
+            "en": "Windows are made of glass because glass is ____, so light can come in."
+          }
+        }
+      ],
+      "image": "pic_window",
+      "options": [
+        {
+          "id": "t_soft",
+          "text": {
+            "id": "lunak",
+            "en": "soft"
+          }
+        },
+        {
+          "id": "t_dark",
+          "text": {
+            "id": "gelap",
+            "en": "dark"
+          }
+        },
+        {
+          "id": "t_clear",
+          "text": {
+            "id": "bening",
+            "en": "clear"
+          }
+        }
+      ],
+      "solution": [
+        "t_clear"
+      ],
+      "model_answer": {
+        "id": "Kaca itu bening, jadi cahaya bisa masuk dan kita bisa melihat ke luar.",
+        "en": "Glass is clear, so light comes in and we can see outside."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-04-006",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "MAT-KINDS"
+      ],
+      "pool": "PRACT",
+      "order": 42,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kursi ini dari bahan yang berasal dari batang pohon. Apa itu?",
+            "en": "This chair is made from something that comes from tree trunks. What is it?"
+          }
+        }
+      ],
+      "image": "pic_chair",
+      "options": [
+        {
+          "id": "plastic",
+          "text": {
+            "id": "Plastik",
+            "en": "Plastic"
+          }
+        },
+        {
+          "id": "glass",
+          "text": {
+            "id": "Kaca",
+            "en": "Glass"
+          }
+        },
+        {
+          "id": "wood",
+          "text": {
+            "id": "Kayu",
+            "en": "Wood"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Kayu berasal dari batang pohon.",
+        "en": "Wood comes from tree trunks."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-04-007",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "estimate_slider",
+      "skills": [
+        "MAT-PROPS"
+      ],
+      "pool": "PRACT",
+      "order": 43,
+      "prompt_id": "P-EST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Daun kering, batu, tutup botol plastik, sendok besi, ranting kayu, kelereng. Berapa yang terapung?",
+            "en": "A dry leaf, a stone, a plastic bottle cap, a metal spoon, a wooden twig, a marble. How many float?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 3,
+        "tolerance": 0.5,
+        "unit": {
+          "id": "benda",
+          "en": "things"
+        }
+      },
+      "slider": {
+        "min": 0,
+        "max": 6,
+        "step": 1
+      },
+      "model_answer": {
+        "id": "Tiga: daun kering, tutup botol, dan ranting. Batu, sendok, dan kelereng tenggelam.",
+        "en": "Three: the leaf, the bottle cap and the twig. The stone, spoon and marble sink."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-04-008",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "MAT-PROPS"
+      ],
+      "pool": "PRACT",
+      "order": 44,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Terapung atau tenggelam?",
+            "en": "Float or sink?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_float",
+          "text": {
+            "id": "Terapung",
+            "en": "Floats"
+          }
+        },
+        {
+          "id": "b_sink",
+          "text": {
+            "id": "Tenggelam",
+            "en": "Sinks"
+          }
+        },
+        {
+          "id": "f_ball",
+          "text": {
+            "id": "bola plastik",
+            "en": "plastic ball"
+          }
+        },
+        {
+          "id": "f_nail",
+          "text": {
+            "id": "paku",
+            "en": "nail"
+          }
+        },
+        {
+          "id": "f_wood",
+          "text": {
+            "id": "potongan kayu",
+            "en": "piece of wood"
+          }
+        },
+        {
+          "id": "f_coin",
+          "text": {
+            "id": "uang logam",
+            "en": "coin"
+          }
+        },
+        {
+          "id": "f_leaf",
+          "text": {
+            "id": "daun kering",
+            "en": "dry leaf"
+          }
+        },
+        {
+          "id": "f_pebble",
+          "text": {
+            "id": "kerikil",
+            "en": "pebble"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "f_ball": "b_float",
+        "f_nail": "b_sink",
+        "f_wood": "b_float",
+        "f_coin": "b_sink",
+        "f_leaf": "b_float",
+        "f_pebble": "b_sink"
+      },
+      "model_answer": {
+        "id": "Terapung: bola plastik, potongan kayu, daun kering. Tenggelam: paku, uang logam, kerikil.",
+        "en": "Float: plastic ball, piece of wood, dry leaf. Sink: nail, coin, pebble."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-04-009",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "MAT-PROPS"
+      ],
+      "pool": "PRACT",
+      "order": 45,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Benda yang besar pasti tenggelam, dan benda yang kecil pasti terapung.",
+            "en": "Big things always sink, and small things always float."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Kapal besar bisa terapung, paku kecil tenggelam. Bahan dan bentuknya yang menentukan.",
+        "en": "Myth. A huge ship floats, a tiny nail sinks. Material and shape decide."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-04-010",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "MAT-REUSE"
+      ],
+      "pool": "PRACT",
+      "order": 46,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Botol plastik bekas. Cara memakai ulang yang baik?",
+            "en": "An old plastic bottle. A good way to reuse it?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "river",
+          "text": {
+            "id": "Dibuang ke sungai",
+            "en": "Throw it in the river"
+          }
+        },
+        {
+          "id": "pot",
+          "text": {
+            "id": "Dijadikan pot tanaman",
+            "en": "Turn it into a plant pot"
+          },
+          "correct": true
+        },
+        {
+          "id": "yard",
+          "text": {
+            "id": "Ditinggal di halaman sekolah",
+            "en": "Leave it in the school yard"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Jadikan pot tanaman. Kalau tak dipakai, buang ke tempat sampah.",
+        "en": "Make it a plant pot. If you don't need it, put it in the bin."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-04-011",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "MAT-PROPS"
+      ],
+      "pool": "PRACT",
+      "order": 47,
+      "prompt_id": "P-TRY",
+      "model_answer": {
+        "id": "Main tebak terapung, yuk! Isi baskom dengan air. Tebak dulu: terapung atau tenggelam? Coba daun, sendok, tutup botol, dan batu kecil. Apakah tebakanmu benar? Ajak orang dewasa menemanimu, ya.",
+        "en": "Let's play float or sink! Fill a basin with water. Guess first: float or sink? Try a leaf, a spoon, a bottle cap and a small stone. Was your guess right? Ask a grown-up to stay with you."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-04-012",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "MAT-PROPS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Batu tenggelam jika dimasukkan ke dalam air.",
+            "en": "A stone sinks when you put it in water."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Batu tenggelam di air, sedangkan daun dan kayu biasanya terapung.",
+        "en": "A stone sinks in water, while leaves and wood usually float."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-04-013",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "MAT-REUSE",
+        "MAT-KINDS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kardus bekas. Cara memakainya ulang?",
+            "en": "An old cardboard box. How could you reuse it?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "toy",
+          "text": {
+            "id": "Dijadikan kotak mainan",
+            "en": "Make it into a toy box"
+          },
+          "correct": true
+        },
+        {
+          "id": "rain",
+          "text": {
+            "id": "Dibiarkan kehujanan di luar",
+            "en": "Leave it out in the rain"
+          }
+        },
+        {
+          "id": "cup",
+          "text": {
+            "id": "Dipakai sebagai gelas minum",
+            "en": "Use it as a drinking cup"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Kardus bekas bisa dijadikan kotak mainan atau tempat buku.",
+        "en": "An old cardboard box can become a toy box or a box for books."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-04-014",
+      "unit": "04",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "MAT-PROPS"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "sci_ice_cube",
+      "gem": true,
+      "source": "USGS Water Science School, \"Water Density\" (ice is about 9% less dense than liquid water, so it floats); Encyclopaedia Britannica, \"water\" (physical properties: water expands on freezing, unlike most substances).",
+      "model_answer": {
+        "id": "Es batu dalam es teh terapung! Kebanyakan bahan menjadi lebih padat saat membeku, lalu tenggelam dalam cairannya sendiri. Air istimewa: saat membeku, air sedikit mengembang. Jadi, es lebih ringan daripada air seukurannya dan terapung.",
+        "en": "Ice cubes in iced tea float! Most materials pack tighter when they freeze and sink in their own liquid. Water is special: it expands a little when it freezes. So ice is lighter than the same amount of water, and it floats."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-05-001",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "SKY-SUN"
+      ],
+      "pool": "PRACT",
+      "order": 48,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Matahari dalam sehari, mulai pagi.",
+            "en": "The sun's day, from morning."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "d3",
+          "text": {
+            "id": "Sore: terbenam di barat",
+            "en": "Evening: sets in the west"
+          }
+        },
+        {
+          "id": "d1",
+          "text": {
+            "id": "Pagi: terbit di timur",
+            "en": "Morning: rises in the east"
+          }
+        },
+        {
+          "id": "d4",
+          "text": {
+            "id": "Malam: gelap, bintang tampak",
+            "en": "Night: dark, stars come out"
+          }
+        },
+        {
+          "id": "d2",
+          "text": {
+            "id": "Siang: tinggi di langit",
+            "en": "Midday: high in the sky"
+          }
+        }
+      ],
+      "solution": [
+        "d1",
+        "d2",
+        "d3",
+        "d4"
+      ],
+      "model_answer": {
+        "id": "Terbit di timur, tinggi di langit, terbenam di barat, lalu malam.",
+        "en": "Rises in the east, high at midday, sets in the west, then night."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-05-002",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "SKY-SUN"
+      ],
+      "pool": "PRACT",
+      "order": 49,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mengapa ada siang dan malam?",
+            "en": "Why do we have day and night?"
+          }
+        }
+      ],
+      "image": "sci_solar_system",
+      "options": [
+        {
+          "id": "spin",
+          "text": {
+            "id": "Karena Bumi berputar",
+            "en": "Because Earth spins"
+          },
+          "correct": true
+        },
+        {
+          "id": "off",
+          "text": {
+            "id": "Karena Matahari dimatikan",
+            "en": "Because the sun is switched off"
+          }
+        },
+        {
+          "id": "cloud",
+          "text": {
+            "id": "Karena awan menutupi Matahari",
+            "en": "Because clouds cover the sun"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Bumi berputar: sisi yang menghadap Matahari siang, yang membelakanginya malam.",
+        "en": "Earth spins: the side facing the sun has day, the side facing away has night."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-05-003",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "SKY-SUN"
+      ],
+      "pool": "PRACT",
+      "order": 50,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Siang atau malam?",
+            "en": "Day or night?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_day",
+          "text": {
+            "id": "Siang",
+            "en": "Day"
+          },
+          "image": "pic_sun"
+        },
+        {
+          "id": "b_night",
+          "text": {
+            "id": "Malam",
+            "en": "Night"
+          },
+          "image": "pic_star"
+        },
+        {
+          "id": "e_sun",
+          "text": {
+            "id": "Matahari bersinar terang",
+            "en": "The sun shines brightly"
+          }
+        },
+        {
+          "id": "e_stars",
+          "text": {
+            "id": "Bintang-bintang tampak berkelip",
+            "en": "Stars twinkle in the sky"
+          }
+        },
+        {
+          "id": "e_butterfly",
+          "text": {
+            "id": "Kupu-kupu mengisap sari bunga",
+            "en": "Butterflies sip nectar"
+          }
+        },
+        {
+          "id": "e_bat",
+          "text": {
+            "id": "Kelelawar mencari makan",
+            "en": "Bats look for food"
+          }
+        },
+        {
+          "id": "e_washing",
+          "text": {
+            "id": "Jemuran kering kena sinar Matahari",
+            "en": "Washing dries in the sunshine"
+          }
+        },
+        {
+          "id": "e_owl",
+          "text": {
+            "id": "Burung hantu berburu tikus",
+            "en": "Owls hunt mice"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "e_sun": "b_day",
+        "e_stars": "b_night",
+        "e_butterfly": "b_day",
+        "e_bat": "b_night",
+        "e_washing": "b_day",
+        "e_owl": "b_night"
+      },
+      "model_answer": {
+        "id": "Siang: Matahari, kupu-kupu, jemuran. Malam: bintang, kelelawar, burung hantu.",
+        "en": "Day: sun, butterflies, washing. Night: stars, bats, owls."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-05-004",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "number_input",
+      "skills": [
+        "SKY-SUN"
+      ],
+      "pool": "PRACT",
+      "order": 51,
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bumi berputar sekali sehari. Satu hari berapa jam?",
+            "en": "Earth spins once a day. How many hours in a day?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 24,
+        "tolerance": 0,
+        "unit": {
+          "id": "jam",
+          "en": "hours"
+        }
+      },
+      "model_answer": {
+        "id": "Satu hari ada 24 jam: siang dan malam bersama-sama.",
+        "en": "One day is 24 hours: daytime and night-time together."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-05-005",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "SKY-SUN"
+      ],
+      "pool": "PRACT",
+      "order": 52,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Siang hari bintang tetap ada, tetapi tak terlihat karena cahaya Matahari terlalu terang.",
+            "en": "In the daytime the stars are still there, but sunlight is too bright to see them."
+          }
+        }
+      ],
+      "image": "pic_star",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Bintang tetap ada pada siang hari. Kita baru bisa melihatnya saat langit gelap.",
+        "en": "The stars are still there in the daytime. We can only see them when the sky is dark."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-05-006",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "SKY-MOON"
+      ],
+      "pool": "PRACT",
+      "order": 53,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mengapa Bulan tampak terang pada malam hari?",
+            "en": "Why does the moon look bright at night?"
+          }
+        }
+      ],
+      "image": "sleep_moon",
+      "options": [
+        {
+          "id": "lamp",
+          "text": {
+            "id": "Karena di Bulan ada banyak lampu",
+            "en": "Because there are lots of lamps on the moon"
+          }
+        },
+        {
+          "id": "fire",
+          "text": {
+            "id": "Karena Bulan terbakar seperti api",
+            "en": "Because the moon is burning like a fire"
+          }
+        },
+        {
+          "id": "reflect",
+          "text": {
+            "id": "Karena Bulan memantulkan cahaya Matahari",
+            "en": "Because the moon reflects sunlight"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Bulan memantulkan cahaya Matahari; ia tidak punya cahaya sendiri.",
+        "en": "The moon reflects sunlight; it has no light of its own."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-05-007",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "SKY-MOON"
+      ],
+      "pool": "PRACT",
+      "order": 54,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bulan hanya ada di langit pada malam hari.",
+            "en": "The moon is only in the sky at night."
+          }
+        }
+      ],
+      "image": "pic_moon",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Bulan kadang terlihat siang hari, misalnya pagi saat langit sudah terang.",
+        "en": "Myth. You can sometimes see the moon by day, like on a bright morning."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-05-008",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "SKY-MOON"
+      ],
+      "pool": "PRACT",
+      "order": 55,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bulan makin penuh setiap malam. Mulai dari yang pertama.",
+            "en": "The moon gets fuller each night. Start with the first."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m2",
+          "text": {
+            "id": "Bulan separuh",
+            "en": "Half moon"
+          }
+        },
+        {
+          "id": "m3",
+          "text": {
+            "id": "Bulan purnama, bulat penuh",
+            "en": "Full moon, a complete circle"
+          }
+        },
+        {
+          "id": "m1",
+          "text": {
+            "id": "Bulan sabit tipis",
+            "en": "Thin crescent moon"
+          }
+        }
+      ],
+      "solution": [
+        "m1",
+        "m2",
+        "m3"
+      ],
+      "model_answer": {
+        "id": "Sabit tipis, separuh, lalu purnama. Setelah itu Bulan tampak mengecil lagi.",
+        "en": "Thin crescent, half, then full. After that it seems to shrink again."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-05-009",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "SKY-SHADOW"
+      ],
+      "pool": "PRACT",
+      "order": 56,
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bayangan terbentuk saat sebuah benda menghalangi ____.",
+            "en": "A shadow forms when something blocks the ____."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_water",
+          "text": {
+            "id": "air",
+            "en": "water"
+          }
+        },
+        {
+          "id": "t_light",
+          "text": {
+            "id": "cahaya",
+            "en": "light"
+          }
+        },
+        {
+          "id": "t_sound",
+          "text": {
+            "id": "suara",
+            "en": "sound"
+          }
+        }
+      ],
+      "solution": [
+        "t_light"
+      ],
+      "model_answer": {
+        "id": "Bayangan terbentuk saat benda menghalangi cahaya.",
+        "en": "A shadow forms when something blocks the light."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-05-010",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "SKY-SHADOW"
+      ],
+      "pool": "PRACT",
+      "order": 57,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bayangan terpendek: tengah hari. Mana pukul 12.00?",
+            "en": "Shortest shadow: midday. Which clock shows 12:00?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "clock_6_00",
+          "image": "clock_6_00"
+        },
+        {
+          "id": "clock_12_00",
+          "image": "clock_12_00",
+          "correct": true
+        },
+        {
+          "id": "clock_9_00",
+          "image": "clock_9_00"
+        }
+      ],
+      "model_answer": {
+        "id": "Pukul 12.00: kedua jarum ke atas; Matahari tinggi, bayangan pendek.",
+        "en": "12 o'clock: both hands point up; the sun is high, shadows are short."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-05-011",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "SKY-SHADOW"
+      ],
+      "pool": "PRACT",
+      "order": 58,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pagi, kamu menghadap Matahari. Di mana bayanganmu?",
+            "en": "In the morning you face the sun. Where is your shadow?"
+          }
+        }
+      ],
+      "image": "pic_sun",
+      "options": [
+        {
+          "id": "front",
+          "text": {
+            "id": "Di depanmu, ke arah Matahari",
+            "en": "In front of you, towards the sun"
+          }
+        },
+        {
+          "id": "behind",
+          "text": {
+            "id": "Di belakangmu",
+            "en": "Behind you"
+          },
+          "correct": true
+        },
+        {
+          "id": "none",
+          "text": {
+            "id": "Tidak ada bayangan sama sekali",
+            "en": "There's no shadow at all"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Di belakangmu: bayangan jatuh berlawanan dengan arah cahaya.",
+        "en": "Behind you: a shadow falls away from the light."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-05-012",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "SKY-SHADOW"
+      ],
+      "pool": "PRACT",
+      "order": 59,
+      "prompt_id": "P-TRY",
+      "image": "pic_sun",
+      "model_answer": {
+        "id": "Main bayangan, yuk! Pagi hari, berdirilah di halaman dan minta temanmu menandai ujung bayanganmu dengan ranting atau kapur. Ulangi siang hari di tempat yang sama. Kapan bayanganmu lebih panjang? Jangan menatap Matahari langsung, ya.",
+        "en": "Let's play with shadows! In the morning, stand in the yard and ask a friend to mark the tip of your shadow with a stick or chalk. Do it again at midday in the same spot. When is your shadow longer? Never look straight at the sun."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-05-013",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "SKY-MOON",
+        "SKY-SUN"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Cahaya Bulan sebenarnya adalah cahaya Matahari yang dipantulkan oleh Bulan.",
+            "en": "Moonlight is really sunlight reflected by the moon."
+          }
+        }
+      ],
+      "image": "sleep_moon",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Bulan tidak bersinar sendiri. Bulan memantulkan cahaya Matahari ke Bumi.",
+        "en": "The moon doesn't shine by itself. It reflects sunlight back to Earth."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-05-014",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "SKY-SHADOW",
+        "SKY-SUN"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sore, Matahari di barat. Bayangan pohon jatuh ke arah mana?",
+            "en": "Late afternoon, the sun is in the west. Which way does a tree's shadow point?"
+          }
+        }
+      ],
+      "image": "pic_tree",
+      "options": [
+        {
+          "id": "east",
+          "text": {
+            "id": "Ke timur",
+            "en": "To the east"
+          },
+          "correct": true
+        },
+        {
+          "id": "west",
+          "text": {
+            "id": "Ke barat",
+            "en": "To the west"
+          }
+        },
+        {
+          "id": "up",
+          "text": {
+            "id": "Ke atas, ke langit",
+            "en": "Up, into the sky"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Ke timur: bayangan jatuh berlawanan arah dengan Matahari.",
+        "en": "East: a shadow points away from the sun."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-05-015",
+      "unit": "05",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "SKY-SHADOW"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "pic_sun",
+      "gem": true,
+      "source": "BMKG, yearly releases on \"Hari Tanpa Bayangan\" (kulminasi utama) with dates per city (bmkg.go.id); the Sun is directly overhead at noon only between the Tropic of Cancer and the Tropic of Capricorn (about 23.4 degrees N/S), which contains all of Indonesia: Encyclopaedia Britannica, \"Tropic of Capricorn\".",
+      "model_answer": {
+        "id": "Ada \"hari tanpa bayangan\"! Dua kali setahun, di setiap tempat di Indonesia, Matahari tepat di atas kepala pada tengah hari. Saat itu tiang bendera yang tegak hampir tidak punya bayangan. Tanggalnya berbeda di setiap kota; BMKG mengumumkannya setiap tahun.",
+        "en": "There are \"days without shadows\"! Twice a year, everywhere in Indonesia, the sun is straight overhead at midday, and an upright flagpole has almost no shadow. The dates differ from town to town; BMKG (the weather agency) announces them every year."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku punya delapan lengan dan tinggal di laut. Kalau takut, aku menyemburkan tinta lalu berenang pergi. Siapa aku?",
+            "en": "I have eight arms and I live in the sea. When I'm scared, I squirt ink and swim away. Who am I?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "crab",
+          "text": {
+            "id": "Kepiting",
+            "en": "Crab"
+          }
+        },
+        {
+          "id": "starfish",
+          "text": {
+            "id": "Bintang laut",
+            "en": "Starfish"
+          }
+        },
+        {
+          "id": "octopus",
+          "text": {
+            "id": "Gurita",
+            "en": "Octopus"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Gurita!",
+        "en": "An octopus!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-DP-02",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di halaman ada 1 ayam dan 2 kucing. Berapa jumlah semua kaki mereka?",
+            "en": "In the yard there is 1 chicken and there are 2 cats. How many legs do they have altogether?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 10,
+        "tolerance": 0,
+        "unit": {
+          "id": "kaki",
+          "en": "legs"
+        }
+      },
+      "model_answer": {
+        "id": "2 + 4 + 4 = 10 kaki.",
+        "en": "2 + 4 + 4 = 10 legs."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    },
+    {
+      "item_id": "SNS-K-P-DP-03",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku tampak terang di langit malam, tetapi aku tidak punya cahaya sendiri. Aku memantulkan cahaya Matahari. Kadang aku berbentuk sabit, kadang bulat penuh. Siapa aku?",
+            "en": "I look bright in the night sky, but I have no light of my own. I reflect sunlight. Sometimes I'm a thin crescent, sometimes a full circle. Who am I?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "star",
+          "text": {
+            "id": "Bintang",
+            "en": "A star"
+          },
+          "image": "pic_star"
+        },
+        {
+          "id": "cloud",
+          "text": {
+            "id": "Awan",
+            "en": "A cloud"
+          },
+          "image": "pic_cloud"
+        },
+        {
+          "id": "moon",
+          "text": {
+            "id": "Bulan",
+            "en": "The moon"
+          },
+          "image": "pic_moon",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Bulan!",
+        "en": "The moon!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-pemula-0.4"
+    }
+  ]
+}

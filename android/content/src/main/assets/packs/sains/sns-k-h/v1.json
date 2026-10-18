@@ -1,0 +1,2274 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sns-k-h-0.1",
+    "subject": "sains",
+    "track": "sns-k-h",
+    "level": "mahir",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Sains — Mahir (Anak)",
+      "en": "Science — Advanced (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, starter level: 2 units) for subject + language review: needs a science reviewer and the Indonesian and English language reviewers before any item is approved (docs/syllabus/03_SAINS.md, Kids Mahir units 1-2; MODULES_LEVELS_STORIES.md). New sci_/pic_ art keys (contract section 6) are drafts being drawn.",
+  "prompts": {
+    "P-TAP": {
+      "id": "Ketuk bagian yang tepat.",
+      "en": "Tap the right spot."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-MYTH": {
+      "id": "Mitos atau fakta?",
+      "en": "Myth or fact?"
+    },
+    "P-CONNECT": {
+      "id": "Tarik garis ke pasangannya.",
+      "en": "Draw a line to each match."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke pasangannya.",
+      "en": "Drag each picture to its match."
+    },
+    "P-SORT": {
+      "id": "Seret ke keranjang yang tepat.",
+      "en": "Drag each into the right basket."
+    },
+    "P-ORDER": {
+      "id": "Seret ke urutan yang benar.",
+      "en": "Drag them into the right order."
+    },
+    "P-FILL": {
+      "id": "Seret ke bagian yang kosong.",
+      "en": "Drag into the gap."
+    },
+    "P-EST": {
+      "id": "Tebak, lalu geser.",
+      "en": "Guess, then slide."
+    },
+    "P-TRY": {
+      "id": "Coba di rumah",
+      "en": "Try at home"
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Sip, kita lanjut!",
+      "en": "Great, let's keep going!"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Sistem tubuh",
+        "en": "Body systems"
+      },
+      "sticker": "sticker_drum"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Ekosistem & rantai makanan",
+        "en": "Ecosystems & food chains"
+      },
+      "sticker": "sticker_leaf"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SNS-K-H-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Sistem tubuh",
+        "en": "Body systems"
+      },
+      "body": [
+        {
+          "id": "Pencernaan: mulut, kerongkongan, lambung, usus halus, lalu usus besar.",
+          "en": "Digestion: mouth, oesophagus, stomach, small intestine, then large intestine."
+        },
+        {
+          "id": "Pernapasan: udara masuk lewat hidung ke paru-paru. Jantung memompa darah berisi oksigen ke seluruh tubuh.",
+          "en": "Breathing: air goes in through the nose to the lungs. The heart pumps oxygen-rich blood all round the body."
+        },
+        {
+          "id": "Tulang dan otot bekerja sama supaya kita bisa bergerak.",
+          "en": "Bones and muscles work together so we can move."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SNS-K-H-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Ekosistem",
+        "en": "Ecosystems"
+      },
+      "body": [
+        {
+          "id": "Rantai makanan menunjukkan siapa makan siapa. Energinya berawal dari Matahari.",
+          "en": "A food chain shows who eats whom. Its energy starts with the Sun."
+        },
+        {
+          "id": "Produsen (tumbuhan) membuat makanan sendiri, konsumen makan makhluk lain, pengurai mengubah yang mati menjadi hara tanah.",
+          "en": "Producers (plants) make their own food, consumers eat other living things, decomposers turn dead things into soil nutrients."
+        },
+        {
+          "id": "Hutan hujan, hutan mangrove, dan terumbu karang Indonesia adalah rumah bagi sangat banyak makhluk.",
+          "en": "Indonesia's rainforests, mangroves and coral reefs are home to a huge number of living things."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "SNS-K-H-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "BODY-DIGEST"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pencernaan dimulai di sini.",
+            "en": "Digestion starts here."
+          }
+        }
+      ],
+      "image": "body_child",
+      "options": [
+        {
+          "id": "nose",
+          "text": {
+            "id": "hidung",
+            "en": "nose"
+          },
+          "region": {
+            "x": 0.45,
+            "y": 0.175,
+            "w": 0.1,
+            "h": 0.05
+          }
+        },
+        {
+          "id": "ear",
+          "text": {
+            "id": "telinga",
+            "en": "ear"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.11,
+            "w": 0.09,
+            "h": 0.1
+          }
+        },
+        {
+          "id": "mouth",
+          "text": {
+            "id": "mulut",
+            "en": "mouth"
+          },
+          "region": {
+            "x": 0.42,
+            "y": 0.235,
+            "w": 0.16,
+            "h": 0.05
+          },
+          "correct": true
+        },
+        {
+          "id": "hand",
+          "text": {
+            "id": "tangan",
+            "en": "hand"
+          },
+          "region": {
+            "x": 0.06,
+            "y": 0.46,
+            "w": 0.14,
+            "h": 0.1
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Di mulut: gigi mengunyah dan air liur mulai mencerna makanan.",
+        "en": "In the mouth: teeth chew and saliva starts digesting the food."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "BODY-DIGEST"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Perjalanan makanan di tubuh.",
+            "en": "Food's journey through the body."
+          }
+        }
+      ],
+      "image": "pic_eat",
+      "options": [
+        {
+          "id": "eso",
+          "text": {
+            "id": "Kerongkongan",
+            "en": "Oesophagus"
+          }
+        },
+        {
+          "id": "small",
+          "text": {
+            "id": "Usus halus",
+            "en": "Small intestine"
+          }
+        },
+        {
+          "id": "mouth",
+          "text": {
+            "id": "Mulut",
+            "en": "Mouth"
+          },
+          "image": "pic_mouth"
+        },
+        {
+          "id": "large",
+          "text": {
+            "id": "Usus besar",
+            "en": "Large intestine"
+          }
+        },
+        {
+          "id": "stomach",
+          "text": {
+            "id": "Lambung",
+            "en": "Stomach"
+          }
+        }
+      ],
+      "solution": [
+        "mouth",
+        "eso",
+        "stomach",
+        "small",
+        "large"
+      ],
+      "model_answer": {
+        "id": "Mulut → kerongkongan → lambung → usus halus → usus besar.",
+        "en": "Mouth → oesophagus → stomach → small intestine → large intestine."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "BODY-CIRC",
+        "BODY-BREATH"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Organ ini bagian dari sistem apa?",
+            "en": "Which system is this organ part of?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "heart",
+          "text": {
+            "id": "Jantung",
+            "en": "Heart"
+          },
+          "image": "pic_heart_organ"
+        },
+        {
+          "id": "lungs",
+          "text": {
+            "id": "Paru-paru",
+            "en": "Lungs"
+          },
+          "image": "pic_lungs"
+        },
+        {
+          "id": "teeth",
+          "text": {
+            "id": "Gigi",
+            "en": "Teeth"
+          },
+          "image": "pic_teeth"
+        },
+        {
+          "id": "legs",
+          "text": {
+            "id": "Tulang dan otot kaki",
+            "en": "Leg bones and muscles"
+          },
+          "image": "pic_run"
+        },
+        {
+          "id": "s_circ",
+          "text": {
+            "id": "peredaran darah",
+            "en": "circulation"
+          }
+        },
+        {
+          "id": "s_breath",
+          "text": {
+            "id": "pernapasan",
+            "en": "breathing"
+          }
+        },
+        {
+          "id": "s_dig",
+          "text": {
+            "id": "pencernaan",
+            "en": "digestion"
+          }
+        },
+        {
+          "id": "s_move",
+          "text": {
+            "id": "gerak",
+            "en": "movement"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "heart": "s_circ",
+        "lungs": "s_breath",
+        "teeth": "s_dig",
+        "legs": "s_move"
+      },
+      "model_answer": {
+        "id": "Jantung: peredaran darah. Paru-paru: pernapasan. Gigi: pencernaan. Tulang dan otot: gerak.",
+        "en": "Heart: circulation. Lungs: breathing. Teeth: digestion. Bones and muscles: movement."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "BODY-BREATH"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Udara masuk lewat sini.",
+            "en": "Air comes in here."
+          }
+        }
+      ],
+      "image": "body_child",
+      "options": [
+        {
+          "id": "nose",
+          "text": {
+            "id": "hidung",
+            "en": "nose"
+          },
+          "region": {
+            "x": 0.45,
+            "y": 0.175,
+            "w": 0.1,
+            "h": 0.05
+          },
+          "correct": true
+        },
+        {
+          "id": "ear",
+          "text": {
+            "id": "telinga",
+            "en": "ear"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.11,
+            "w": 0.09,
+            "h": 0.1
+          }
+        },
+        {
+          "id": "eyes",
+          "text": {
+            "id": "mata",
+            "en": "eyes"
+          },
+          "region": {
+            "x": 0.36,
+            "y": 0.1,
+            "w": 0.28,
+            "h": 0.07
+          }
+        },
+        {
+          "id": "hand",
+          "text": {
+            "id": "tangan",
+            "en": "hand"
+          },
+          "region": {
+            "x": 0.06,
+            "y": 0.46,
+            "w": 0.14,
+            "h": 0.1
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Hidung menyaring, menghangatkan, dan melembapkan udara.",
+        "en": "Your nose filters, warms and moistens the air."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "BODY-BREATH"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Organ mana yang menukar oksigen dan karbon dioksida?",
+            "en": "Which organ swaps oxygen and carbon dioxide?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_heart_organ",
+          "image": "pic_heart_organ"
+        },
+        {
+          "id": "pic_teeth",
+          "image": "pic_teeth"
+        },
+        {
+          "id": "pic_foot",
+          "image": "pic_foot"
+        },
+        {
+          "id": "pic_lungs",
+          "image": "pic_lungs",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Paru-paru: oksigen masuk ke darah, karbon dioksida keluar lewat napas.",
+        "en": "The lungs: oxygen enters the blood, carbon dioxide leaves as you breathe out."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "estimate_slider",
+      "skills": [
+        "BODY-CIRC"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-EST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Detak jantung anak saat duduk santai, per menit?",
+            "en": "A child's heartbeats per minute when sitting still?"
+          }
+        }
+      ],
+      "image": "pic_heart_organ",
+      "numeric": {
+        "value": 85,
+        "tolerance": 15,
+        "unit": {
+          "id": "kali per menit",
+          "en": "beats per minute"
+        }
+      },
+      "slider": {
+        "min": 30,
+        "max": 200,
+        "step": 1
+      },
+      "model_answer": {
+        "id": "Sekitar 70–100 kali per menit. Saat berlari, bisa jauh lebih cepat.",
+        "en": "About 70–100 beats a minute. When you run, it can be much faster."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "BODY-BREATH"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Perjalanan oksigen di tubuh.",
+            "en": "Oxygen's journey through the body."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "lungs",
+          "text": {
+            "id": "Paru-paru",
+            "en": "Lungs"
+          },
+          "image": "pic_lungs"
+        },
+        {
+          "id": "heart",
+          "text": {
+            "id": "Jantung memompa darah ke seluruh tubuh",
+            "en": "The heart pumps blood round the body"
+          },
+          "image": "pic_heart_organ"
+        },
+        {
+          "id": "nose",
+          "text": {
+            "id": "Hidung",
+            "en": "Nose"
+          },
+          "image": "sense_nose"
+        },
+        {
+          "id": "trachea",
+          "text": {
+            "id": "Batang tenggorok (trakea)",
+            "en": "Windpipe (trachea)"
+          }
+        }
+      ],
+      "solution": [
+        "nose",
+        "trachea",
+        "lungs",
+        "heart"
+      ],
+      "model_answer": {
+        "id": "Hidung → trakea → paru-paru → oksigen masuk darah → jantung memompanya ke seluruh tubuh.",
+        "en": "Nose → windpipe → lungs → oxygen enters the blood → the heart pumps it everywhere."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "BODY-CIRC"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Otot yang kita perintah, atau bekerja sendiri?",
+            "en": "Muscles we control, or muscles that work by themselves?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_will",
+          "text": {
+            "id": "Kita perintah",
+            "en": "We control them"
+          }
+        },
+        {
+          "id": "b_auto",
+          "text": {
+            "id": "Bekerja sendiri",
+            "en": "Work by themselves"
+          }
+        },
+        {
+          "id": "run",
+          "text": {
+            "id": "Otot kaki saat berlari",
+            "en": "Leg muscles when running"
+          },
+          "image": "pic_run"
+        },
+        {
+          "id": "heart",
+          "text": {
+            "id": "Otot jantung",
+            "en": "Heart muscle"
+          },
+          "image": "pic_heart_organ"
+        },
+        {
+          "id": "write",
+          "text": {
+            "id": "Otot tangan saat menulis",
+            "en": "Hand muscles when writing"
+          },
+          "image": "pic_write"
+        },
+        {
+          "id": "gut",
+          "text": {
+            "id": "Otot usus saat kita tidur",
+            "en": "Gut muscles while we sleep"
+          },
+          "image": "pic_sleep"
+        },
+        {
+          "id": "swim",
+          "text": {
+            "id": "Otot lengan saat berenang",
+            "en": "Arm muscles when swimming"
+          },
+          "image": "pic_swim"
+        }
+      ],
+      "solution_pairs": {
+        "run": "b_will",
+        "heart": "b_auto",
+        "write": "b_will",
+        "gut": "b_auto",
+        "swim": "b_will"
+      },
+      "model_answer": {
+        "id": "Kita perintah: otot kaki, tangan, lengan. Bekerja sendiri: jantung dan usus, bahkan saat tidur.",
+        "en": "We control: leg, hand and arm muscles. By themselves: heart and gut, even while we sleep."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "BODY-DIGEST"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Makanan dicerna seluruhnya di lambung.",
+            "en": "Food is digested entirely in the stomach."
+          }
+        }
+      ],
+      "image": "pic_eat",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Sebagian besar sari makanan dicerna dan diserap di usus halus.",
+        "en": "Myth. Most nutrients are digested and absorbed in the small intestine."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "BODY-DIGEST"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Organ dan tugasnya.",
+            "en": "Organ and its job."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "teeth",
+          "text": {
+            "id": "Gigi",
+            "en": "Teeth"
+          },
+          "image": "pic_teeth"
+        },
+        {
+          "id": "stomach",
+          "text": {
+            "id": "Lambung",
+            "en": "Stomach"
+          }
+        },
+        {
+          "id": "small",
+          "text": {
+            "id": "Usus halus",
+            "en": "Small intestine"
+          }
+        },
+        {
+          "id": "large",
+          "text": {
+            "id": "Usus besar",
+            "en": "Large intestine"
+          }
+        },
+        {
+          "id": "j_chew",
+          "text": {
+            "id": "memotong dan mengunyah",
+            "en": "cut and chew"
+          }
+        },
+        {
+          "id": "j_mix",
+          "text": {
+            "id": "mengaduk makanan dengan asam",
+            "en": "churn food with acid"
+          }
+        },
+        {
+          "id": "j_absorb",
+          "text": {
+            "id": "menyerap sari makanan",
+            "en": "absorb nutrients"
+          }
+        },
+        {
+          "id": "j_water",
+          "text": {
+            "id": "menyerap air",
+            "en": "absorb water"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "teeth": "j_chew",
+        "stomach": "j_mix",
+        "small": "j_absorb",
+        "large": "j_water"
+      },
+      "model_answer": {
+        "id": "Gigi mengunyah, lambung mengaduk, usus halus menyerap sari makanan, usus besar menyerap air.",
+        "en": "Teeth chew, the stomach churns, the small intestine absorbs nutrients, the large intestine absorbs water."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "BODY-CIRC"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-TRY",
+      "image": "pic_exercise",
+      "model_answer": {
+        "id": "Letakkan dua jari di pergelangan tanganmu. Hitung denyutnya selama 15 detik, lalu kalikan 4. Lompat-lompat selama 1 menit, lalu hitung lagi. Mana yang lebih cepat? Kenapa?",
+        "en": "Put two fingers on your wrist. Count the beats for 15 seconds, then multiply by 4. Jump for 1 minute and count again. Which is faster? Why?"
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "BODY-CIRC"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kegiatan mana yang paling melatih jantung?",
+            "en": "Which activity trains your heart most?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_watch_tv",
+          "image": "pic_watch_tv"
+        },
+        {
+          "id": "pic_run",
+          "image": "pic_run",
+          "correct": true
+        },
+        {
+          "id": "pic_sit",
+          "image": "pic_sit"
+        },
+        {
+          "id": "pic_read",
+          "image": "pic_read"
+        }
+      ],
+      "model_answer": {
+        "id": "Berlari. Anak dianjurkan aktif bergerak sekitar 60 menit setiap hari.",
+        "en": "Running. Children are advised to be active for about 60 minutes every day."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "BODY-DIGEST"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Makanan lewat mana dulu?",
+            "en": "Where does food go first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "stomach",
+          "text": {
+            "id": "Lambung",
+            "en": "Stomach"
+          }
+        },
+        {
+          "id": "small",
+          "text": {
+            "id": "Usus halus",
+            "en": "Small intestine"
+          }
+        },
+        {
+          "id": "mouth",
+          "text": {
+            "id": "Mulut",
+            "en": "Mouth"
+          },
+          "image": "pic_mouth"
+        }
+      ],
+      "solution": [
+        "mouth",
+        "stomach",
+        "small"
+      ],
+      "model_answer": {
+        "id": "Mulut → lambung → usus halus.",
+        "en": "Mouth → stomach → small intestine."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "BODY-BREATH"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Organ untuk bernapas?",
+            "en": "Which organ do we breathe with?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_heart_organ",
+          "image": "pic_heart_organ"
+        },
+        {
+          "id": "pic_lungs",
+          "image": "pic_lungs",
+          "correct": true
+        },
+        {
+          "id": "pic_teeth",
+          "image": "pic_teeth"
+        },
+        {
+          "id": "pic_foot",
+          "image": "pic_foot"
+        }
+      ],
+      "model_answer": {
+        "id": "Paru-paru.",
+        "en": "The lungs."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-01-015",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "BODY-CIRC"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Darah dipompa ke seluruh tubuh oleh ____.",
+            "en": "Blood is pumped round the body by the ____."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "lungs",
+          "text": {
+            "id": "paru-paru",
+            "en": "lungs"
+          },
+          "image": "pic_lungs"
+        },
+        {
+          "id": "heart",
+          "text": {
+            "id": "jantung",
+            "en": "heart"
+          },
+          "image": "pic_heart_organ"
+        },
+        {
+          "id": "teeth",
+          "text": {
+            "id": "gigi",
+            "en": "teeth"
+          },
+          "image": "pic_teeth"
+        }
+      ],
+      "solution": [
+        "heart"
+      ],
+      "model_answer": {
+        "id": "Jantung, otot yang tidak pernah berhenti bekerja.",
+        "en": "The heart, a muscle that never stops working."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ECO-CHAIN"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Siapa makan apa?",
+            "en": "Who eats what?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "orangutan",
+          "text": {
+            "id": "Orangutan",
+            "en": "Orangutan"
+          },
+          "image": "pic_orangutan"
+        },
+        {
+          "id": "rabbit",
+          "text": {
+            "id": "Kelinci",
+            "en": "Rabbit"
+          },
+          "image": "pic_rabbit"
+        },
+        {
+          "id": "frog",
+          "text": {
+            "id": "Katak",
+            "en": "Frog"
+          },
+          "image": "pic_frog"
+        },
+        {
+          "id": "f_fruit",
+          "text": {
+            "id": "buah",
+            "en": "fruit"
+          },
+          "image": "fruit_mango"
+        },
+        {
+          "id": "f_veg",
+          "text": {
+            "id": "sayuran",
+            "en": "vegetables"
+          },
+          "image": "pic_vegetables"
+        },
+        {
+          "id": "f_cat",
+          "text": {
+            "id": "ulat",
+            "en": "caterpillars"
+          },
+          "image": "sci_caterpillar"
+        }
+      ],
+      "solution_pairs": {
+        "orangutan": "f_fruit",
+        "rabbit": "f_veg",
+        "frog": "f_cat"
+      },
+      "model_answer": {
+        "id": "Orangutan makan buah, kelinci makan sayuran, katak makan ulat dan serangga.",
+        "en": "Orangutans eat fruit, rabbits eat vegetables, frogs eat caterpillars and insects."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "ECO-ROLES"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Produsen, konsumen, atau pengurai?",
+            "en": "Producer, consumer or decomposer?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_prod",
+          "text": {
+            "id": "Produsen",
+            "en": "Producer"
+          }
+        },
+        {
+          "id": "b_cons",
+          "text": {
+            "id": "Konsumen",
+            "en": "Consumer"
+          }
+        },
+        {
+          "id": "b_dec",
+          "text": {
+            "id": "Pengurai",
+            "en": "Decomposer"
+          }
+        },
+        {
+          "id": "tree",
+          "text": {
+            "id": "Pohon",
+            "en": "Tree"
+          },
+          "image": "pic_tree"
+        },
+        {
+          "id": "rabbit",
+          "text": {
+            "id": "Kelinci",
+            "en": "Rabbit"
+          },
+          "image": "pic_rabbit"
+        },
+        {
+          "id": "bact",
+          "text": {
+            "id": "Bakteri tanah",
+            "en": "Soil bacteria"
+          },
+          "image": "sci_microscope"
+        },
+        {
+          "id": "tiger",
+          "text": {
+            "id": "Harimau",
+            "en": "Tiger"
+          },
+          "image": "pic_tiger"
+        },
+        {
+          "id": "flower",
+          "text": {
+            "id": "Tanaman bunga",
+            "en": "Flowering plant"
+          },
+          "image": "pic_flower"
+        },
+        {
+          "id": "orangutan",
+          "text": {
+            "id": "Orangutan",
+            "en": "Orangutan"
+          },
+          "image": "pic_orangutan"
+        }
+      ],
+      "solution_pairs": {
+        "tree": "b_prod",
+        "rabbit": "b_cons",
+        "bact": "b_dec",
+        "tiger": "b_cons",
+        "flower": "b_prod",
+        "orangutan": "b_cons"
+      },
+      "model_answer": {
+        "id": "Produsen: pohon, tanaman bunga. Konsumen: kelinci, harimau, orangutan. Pengurai: bakteri.",
+        "en": "Producers: tree, flowering plant. Consumers: rabbit, tiger, orangutan. Decomposer: bacteria."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ECO-ROLES"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Energi semua rantai makanan berasal dari…",
+            "en": "The energy in every food chain comes from…"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_tree",
+          "image": "pic_tree"
+        },
+        {
+          "id": "pic_tiger",
+          "image": "pic_tiger"
+        },
+        {
+          "id": "pic_rain",
+          "image": "pic_rain"
+        },
+        {
+          "id": "pic_sun",
+          "image": "pic_sun",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Matahari. Tumbuhan menangkap cahayanya untuk membuat makanan.",
+        "en": "The Sun. Plants capture its light to make food."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "ECO-CHAIN"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Susun rantai makanannya.",
+            "en": "Build the food chain."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "frog",
+          "text": {
+            "id": "Katak",
+            "en": "Frog"
+          },
+          "image": "pic_frog"
+        },
+        {
+          "id": "leaf",
+          "text": {
+            "id": "Daun",
+            "en": "Leaves"
+          },
+          "image": "pic_tree"
+        },
+        {
+          "id": "snake",
+          "text": {
+            "id": "Ular",
+            "en": "Snake"
+          },
+          "image": "pic_snake"
+        },
+        {
+          "id": "cat",
+          "text": {
+            "id": "Ulat",
+            "en": "Caterpillar"
+          },
+          "image": "sci_caterpillar"
+        }
+      ],
+      "solution": [
+        "leaf",
+        "cat",
+        "frog",
+        "snake"
+      ],
+      "model_answer": {
+        "id": "Daun → ulat → katak → ular.",
+        "en": "Leaves → caterpillar → frog → snake."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ECO-HABITAT"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Hewan ini tinggal di hutan hujan Kalimantan dan Sumatra.",
+            "en": "This animal lives in the rainforests of Borneo and Sumatra."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_orangutan",
+          "image": "pic_orangutan",
+          "correct": true
+        },
+        {
+          "id": "pic_turtle",
+          "image": "pic_turtle"
+        },
+        {
+          "id": "pic_fish",
+          "image": "pic_fish"
+        },
+        {
+          "id": "pic_cow",
+          "image": "pic_cow"
+        }
+      ],
+      "model_answer": {
+        "id": "Orangutan. Hutan hujan memberinya buah dan tempat bersarang di pohon.",
+        "en": "The orangutan. The rainforest gives it fruit and trees to nest in."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "ECO-HABITAT"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Hutan hujan atau terumbu karang?",
+            "en": "Rainforest or coral reef?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_forest",
+          "text": {
+            "id": "Hutan hujan",
+            "en": "Rainforest"
+          }
+        },
+        {
+          "id": "b_reef",
+          "text": {
+            "id": "Terumbu karang",
+            "en": "Coral reef"
+          }
+        },
+        {
+          "id": "orangutan",
+          "text": {
+            "id": "Orangutan",
+            "en": "Orangutan"
+          },
+          "image": "pic_orangutan"
+        },
+        {
+          "id": "fish",
+          "text": {
+            "id": "Ikan karang",
+            "en": "Reef fish"
+          },
+          "image": "pic_fish"
+        },
+        {
+          "id": "tiger",
+          "text": {
+            "id": "Harimau sumatra",
+            "en": "Sumatran tiger"
+          },
+          "image": "pic_tiger"
+        },
+        {
+          "id": "turtle",
+          "text": {
+            "id": "Penyu",
+            "en": "Sea turtle"
+          },
+          "image": "pic_turtle"
+        },
+        {
+          "id": "butterfly",
+          "text": {
+            "id": "Kupu-kupu",
+            "en": "Butterfly"
+          },
+          "image": "pic_butterfly"
+        }
+      ],
+      "solution_pairs": {
+        "orangutan": "b_forest",
+        "fish": "b_reef",
+        "tiger": "b_forest",
+        "turtle": "b_reef",
+        "butterfly": "b_forest"
+      },
+      "model_answer": {
+        "id": "Hutan hujan: orangutan, harimau sumatra, kupu-kupu. Terumbu karang: ikan karang, penyu.",
+        "en": "Rainforest: orangutan, Sumatran tiger, butterfly. Coral reef: reef fish, sea turtle."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "ECO-HABITAT"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Karang di laut adalah batu.",
+            "en": "Coral in the sea is a rock."
+          }
+        }
+      ],
+      "image": "pic_sea",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Karang adalah hewan kecil (polip) yang membangun rumah dari kapur.",
+        "en": "Myth. Corals are tiny animals (polyps) that build limestone homes."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ECO-CHAIN"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Daun → ulat → katak → ular. Kalau ular hilang, siapa langsung bertambah?",
+            "en": "Leaves → caterpillar → frog → snake. If snakes vanish, who increases first?"
+          }
+        }
+      ],
+      "image": "sci_food_chain",
+      "options": [
+        {
+          "id": "pic_snake",
+          "image": "pic_snake"
+        },
+        {
+          "id": "pic_sun",
+          "image": "pic_sun"
+        },
+        {
+          "id": "pic_frog",
+          "image": "pic_frog",
+          "correct": true
+        },
+        {
+          "id": "pic_tree",
+          "image": "pic_tree"
+        }
+      ],
+      "model_answer": {
+        "id": "Katak, karena tidak ada lagi yang memakannya. Lalu ulat bisa berkurang.",
+        "en": "Frogs, because nothing eats them any more. Then caterpillars may decrease."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "estimate_slider",
+      "skills": [
+        "ECO-CHAIN"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-EST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rumput menyimpan 1.000 bagian energi. Berapa yang sampai ke kambing?",
+            "en": "Grass stores 1,000 units of energy. How much reaches the goat?"
+          }
+        }
+      ],
+      "image": "pic_goat",
+      "numeric": {
+        "value": 100,
+        "tolerance": 60,
+        "unit": {
+          "id": "bagian",
+          "en": "units"
+        }
+      },
+      "slider": {
+        "min": 0,
+        "max": 1000,
+        "step": 10
+      },
+      "model_answer": {
+        "id": "Hanya sekitar 100, kira-kira sepersepuluh. Sisanya dipakai untuk hidup dan lepas sebagai panas.",
+        "en": "Only about 100, roughly a tenth. The rest is used for living and lost as heat."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "tap_hotspot",
+      "skills": [
+        "ECO-HABITAT"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Komodo hidup liar di pulau-pulau ini.",
+            "en": "Komodo dragons live wild on these islands."
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "options": [
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "papua",
+          "text": {
+            "id": "Papua",
+            "en": "Papua"
+          },
+          "region": {
+            "x": 0.77,
+            "y": 0.25,
+            "w": 0.22,
+            "h": 0.45
+          }
+        },
+        {
+          "id": "bali_nusa_tenggara",
+          "text": {
+            "id": "Bali dan Nusa Tenggara",
+            "en": "Bali and Nusa Tenggara"
+          },
+          "region": {
+            "x": 0.45,
+            "y": 0.78,
+            "w": 0.22,
+            "h": 0.12
+          },
+          "correct": true
+        },
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Nusa Tenggara Timur: Pulau Komodo, Rinca, dan Flores.",
+        "en": "East Nusa Tenggara: Komodo, Rinca and Flores."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ECO-ROLES"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-TRY",
+      "image": "fruit_banana",
+      "model_answer": {
+        "id": "Kubur kulit pisang di pot berisi tanah. Gali sedikit dan lihat setiap 3 hari. Siapa yang mengubahnya menjadi tanah? Pengurai: bakteri, jamur, dan cacing kecil! Cuci tangan sesudahnya.",
+        "en": "Bury a banana peel in a pot of soil. Dig a little and look every 3 days. Who turns it into soil? Decomposers: bacteria, fungi and little worms! Wash your hands afterwards."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ECO-ROLES"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Daun gugur diuraikan oleh ____ menjadi pupuk.",
+            "en": "Fallen leaves are broken down into fertiliser by ____."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "tiger",
+          "text": {
+            "id": "harimau",
+            "en": "tigers"
+          },
+          "image": "pic_tiger"
+        },
+        {
+          "id": "bact",
+          "text": {
+            "id": "bakteri dan jamur",
+            "en": "bacteria and fungi"
+          },
+          "image": "sci_microscope"
+        },
+        {
+          "id": "bird",
+          "text": {
+            "id": "burung",
+            "en": "birds"
+          },
+          "image": "pic_bird"
+        }
+      ],
+      "solution": [
+        "bact"
+      ],
+      "model_answer": {
+        "id": "Bakteri dan jamur, para pengurai.",
+        "en": "Bacteria and fungi, the decomposers."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ECO-CHAIN"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Daun → ulat → ____ → ular",
+            "en": "Leaves → caterpillar → ____ → snake"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "tiger",
+          "text": {
+            "id": "harimau",
+            "en": "tiger"
+          },
+          "image": "pic_tiger"
+        },
+        {
+          "id": "cow",
+          "text": {
+            "id": "sapi",
+            "en": "cow"
+          },
+          "image": "pic_cow"
+        },
+        {
+          "id": "frog",
+          "text": {
+            "id": "katak",
+            "en": "frog"
+          },
+          "image": "pic_frog"
+        }
+      ],
+      "solution": [
+        "frog"
+      ],
+      "model_answer": {
+        "id": "Katak makan ulat, lalu dimakan ular.",
+        "en": "Frogs eat caterpillars and are eaten by snakes."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ECO-ROLES"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana produsen?",
+            "en": "Which one is a producer?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_tree",
+          "image": "pic_tree",
+          "correct": true
+        },
+        {
+          "id": "pic_rabbit",
+          "image": "pic_rabbit"
+        },
+        {
+          "id": "pic_tiger",
+          "image": "pic_tiger"
+        },
+        {
+          "id": "pic_bird",
+          "image": "pic_bird"
+        }
+      ],
+      "model_answer": {
+        "id": "Pohon: ia membuat makanannya sendiri dari cahaya matahari.",
+        "en": "The tree: it makes its own food from sunlight."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-02-015",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ECO-HABITAT"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Siapa yang tinggal di terumbu karang?",
+            "en": "Who lives on a coral reef?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_orangutan",
+          "image": "pic_orangutan"
+        },
+        {
+          "id": "pic_tiger",
+          "image": "pic_tiger"
+        },
+        {
+          "id": "pic_cow",
+          "image": "pic_cow"
+        },
+        {
+          "id": "pic_fish",
+          "image": "pic_fish",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Ikan karang. Terumbu karang memberinya makanan dan tempat berlindung.",
+        "en": "Reef fish. The reef gives them food and shelter."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-02-016",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ECO-HABITAT"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "map_indonesia",
+      "gem": true,
+      "source": "Encyclopaedia Britannica, \"Wallace Line\"; Alfred Russel Wallace, The Malay Archipelago (1869), chapters on Bali and Lombok.",
+      "model_answer": {
+        "id": "Di antara Bali dan Lombok ada garis tak terlihat: Garis Wallace. Hewan di sebelah baratnya mirip hewan Asia, di sebelah timurnya mulai mirip hewan Australia, misalnya burung kakatua. Selat Lombok yang dalam membuat hewan sulit menyeberang sejak dulu.",
+        "en": "Between Bali and Lombok runs an invisible line: the Wallace Line. Animals to the west are like Asian animals; to the east they start to look Australian, like cockatoos. The deep Lombok Strait has long kept animals from crossing."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    },
+    {
+      "item_id": "SNS-K-H-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku bekerja siang dan malam tanpa kamu suruh. Aku berdetak sekitar 100.000 kali sehari. Siapa aku?",
+            "en": "I work day and night without being told. I beat about 100,000 times a day. Who am I?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "lungs",
+          "text": {
+            "id": "Paru-paru",
+            "en": "Lungs"
+          }
+        },
+        {
+          "id": "heart",
+          "text": {
+            "id": "Jantung",
+            "en": "Heart"
+          },
+          "correct": true
+        },
+        {
+          "id": "stomach",
+          "text": {
+            "id": "Lambung",
+            "en": "Stomach"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Jantung! Sekitar 100.000 detak setiap hari.",
+        "en": "Your heart! About 100,000 beats every day."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-h-0.1"
+    }
+  ]
+}

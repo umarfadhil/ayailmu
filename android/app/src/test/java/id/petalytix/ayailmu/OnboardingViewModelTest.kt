@@ -30,6 +30,7 @@ class OnboardingViewModelTest {
         val lang: Lang,
         val birthYear: Int,
         val createdBy: String?,
+        val avatar: String? = null,
     )
 
     private class FakeData(
@@ -45,8 +46,9 @@ class OnboardingViewModelTest {
             lang: Lang,
             birthYear: Int,
             createdBy: String?,
+            avatar: String?,
         ) {
-            created += Created(label, kind, lang, birthYear, createdBy)
+            created += Created(label, kind, lang, birthYear, createdBy, avatar)
         }
 
         override fun currentYear(): Int = 2026
@@ -125,6 +127,35 @@ class OnboardingViewModelTest {
         vm.onEvent(OnboardingEvent.PickYear(2018))
         vm.onEvent(OnboardingEvent.Next)
         assertEquals(OnboardingStep.GUARDIAN, vm.state.value.step)
+    }
+
+    @Test
+    fun `the picture picked on the name step goes with the new profile, an unknown key is ignored`() {
+        val adult = TestPacks.profile(id = "lrn-adult", kind = ProfileKind.ADULT)
+        val data = FakeData(active = adult)
+        val vm = OnboardingViewModel(data)
+        vm.onEvent(OnboardingEvent.Next)
+        vm.onEvent(OnboardingEvent.PickYear(2017))
+        vm.onEvent(OnboardingEvent.Next)
+        assertNull(vm.state.value.avatar)
+        vm.onEvent(OnboardingEvent.PickAvatar("letter_s"))
+        assertNull(vm.state.value.avatar)
+        vm.onEvent(OnboardingEvent.PickAvatar("pic_rabbit"))
+        vm.onEvent(OnboardingEvent.NameChanged("Sari"))
+        vm.onEvent(OnboardingEvent.Next)
+        assertEquals("pic_rabbit", data.created.single().avatar)
+    }
+
+    @Test
+    fun `without a picked picture the profile is created with none and gets the default later`() {
+        val data = FakeData(active = null)
+        val vm = OnboardingViewModel(data)
+        vm.onEvent(OnboardingEvent.Next)
+        vm.onEvent(OnboardingEvent.PickYear(1990))
+        vm.onEvent(OnboardingEvent.Next)
+        vm.onEvent(OnboardingEvent.NameChanged("Umar"))
+        vm.onEvent(OnboardingEvent.Next)
+        assertNull(data.created.single().avatar)
     }
 
     @Test

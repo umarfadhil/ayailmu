@@ -1,0 +1,2367 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "nil-a-m-0.1",
+    "subject": "nilai",
+    "track": "nil-a-m",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "level": "menengah",
+    "title": {
+      "id": "Nilai — Menengah (Dewasa)",
+      "en": "Values — Intermediate (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12) for review: needs a values/character-education reviewer (universal, cross-faith, non-partisan) and the Indonesian and English language reviewers before any item is approved (docs/content/MODULES_LEVELS_STORIES.md section 3, adults Menengah). Stories are original fiction; val_* scenes are being drawn.",
+  "prompts": {
+    "P-BEST": {
+      "id": "Mana yang paling membantu?",
+      "en": "Which helps most?"
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang paling tepat.",
+      "en": "Pick the best picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban terbaik.",
+      "en": "Choose the best answer."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-SORT": {
+      "id": "Kelompokkan gambarnya.",
+      "en": "Sort the pictures."
+    },
+    "P-MATCH": {
+      "id": "Pasangkan.",
+      "en": "Match them up."
+    },
+    "P-ORDER": {
+      "id": "Urutkan gambarnya.",
+      "en": "Put the pictures in order."
+    },
+    "P-MEMORY": {
+      "id": "Buka kartu, temukan pasangannya.",
+      "en": "Flip cards, find the pairs."
+    },
+    "P-STORY": {
+      "id": "Simak ceritanya.",
+      "en": "Watch the story."
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "That's it. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Baik, kita lanjut.",
+      "en": "Good, let's continue."
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Hormat dan tepat waktu",
+        "en": "Respect and punctuality"
+      },
+      "sticker": "sticker_rice_field"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Gotong royong dan menepati janji",
+        "en": "Working together and keeping promises"
+      },
+      "sticker": "sticker_drum"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "NIL-A-M-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Hormat dan tepat waktu",
+        "en": "Respect and punctuality"
+      },
+      "body": [
+        {
+          "id": "Menghormati yang lebih tua: menyapa lebih dulu, mendengarkan, dan memberi tempat.",
+          "en": "Respecting elders: greet first, listen and make room."
+        },
+        {
+          "id": "Menghormati yang berbeda — suku, agama, logat, atau kebiasaan — berarti tidak mengejek dan memberi ruang.",
+          "en": "Respecting difference — ethnicity, faith, accent or custom — means no mockery and making room."
+        },
+        {
+          "id": "Tepat waktu menghargai waktu orang lain. Jika akan terlambat, kabari sebelum jam janji.",
+          "en": "Being on time respects other people's time. If you'll be late, say so before the agreed time."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "NIL-A-M-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Gotong royong dan menepati janji",
+        "en": "Working together and keeping promises"
+      },
+      "body": [
+        {
+          "id": "Gotong royong: banyak tangan membuat pekerjaan berat menjadi ringan.",
+          "en": "Gotong royong: many hands make heavy work light."
+        },
+        {
+          "id": "Setiap orang bisa menyumbang sesuai kemampuan: tenaga, makanan, alat, atau waktu.",
+          "en": "Everyone can give what they can: effort, food, tools or time."
+        },
+        {
+          "id": "Janjikan yang sanggup Anda lakukan. Jika harus berubah, kabari lebih awal dan tawarkan jalan keluar.",
+          "en": "Promise what you can do. If it has to change, say so early and offer another way."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "stories": {
+    "ST-NIL-A-M-RAPAT": {
+      "figure": "Pak Hendra (tokoh fiksi)",
+      "title": {
+        "id": "Rapat RT pukul tujuh",
+        "en": "The seven o'clock meeting"
+      },
+      "source": "Cerita asli AyaIlmu (fiksi)",
+      "emblem": "clock_7_00",
+      "panels": [
+        {
+          "scene": "val_on_time",
+          "caption": {
+            "id": "Rapat RT dijadwalkan pukul 19.00. Pak Hendra datang sepuluh menit lebih awal.",
+            "en": "The neighbourhood meeting was set for 7 p.m. Pak Hendra arrived ten minutes early."
+          },
+          "narration": {
+            "id": "id/nil_rapat_rt_01",
+            "en": "en/nil_rapat_rt_01"
+          },
+          "layers": [
+            {
+              "art": "clock_7_00",
+              "x": 0.8,
+              "y": 0.06,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "val_late",
+          "caption": {
+            "id": "Pukul tujuh, baru lima warga yang hadir. Yang lain masih di jalan.",
+            "en": "At seven, only five residents were there. The rest were still on their way."
+          },
+          "narration": {
+            "id": "id/nil_rapat_rt_02",
+            "en": "en/nil_rapat_rt_02"
+          },
+          "layers": [
+            {
+              "art": "clock_7_00",
+              "x": 0.8,
+              "y": 0.06,
+              "w": 0.14
+            }
+          ]
+        },
+        {
+          "scene": "val_listen",
+          "caption": {
+            "id": "Pak Hendra tetap memulai tepat waktu dan membahas hal terpenting lebih dulu.",
+            "en": "Pak Hendra started on time anyway and covered the most important points first."
+          },
+          "narration": {
+            "id": "id/nil_rapat_rt_03",
+            "en": "en/nil_rapat_rt_03"
+          },
+          "layers": [
+            {
+              "art": "pic_book",
+              "x": 0.04,
+              "y": 0.62,
+              "w": 0.12,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "val_teamwork",
+          "caption": {
+            "id": "Rapat selesai pukul 20.00, sesuai janji. Bulan berikutnya, lebih banyak warga datang tepat waktu.",
+            "en": "The meeting ended at 8 p.m., as promised. The next month, more residents came on time."
+          },
+          "narration": {
+            "id": "id/nil_rapat_rt_04",
+            "en": "en/nil_rapat_rt_04"
+          },
+          "layers": [
+            {
+              "art": "clock_8_00",
+              "x": 0.8,
+              "y": 0.06,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "pic_moon",
+              "x": 0.05,
+              "y": 0.05,
+              "w": 0.1,
+              "motion": {
+                "type": "glow",
+                "ms": 2400,
+                "loop": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ST-NIL-A-M-TALANG": {
+      "figure": "Pak Yusuf (tokoh fiksi)",
+      "title": {
+        "id": "Janji kepada Bu Meri",
+        "en": "A promise to Bu Meri"
+      },
+      "source": "Cerita asli AyaIlmu (fiksi)",
+      "emblem": "val_keep_promise",
+      "panels": [
+        {
+          "scene": "val_greet_neighbor",
+          "caption": {
+            "id": "Pak Yusuf berjanji membantu Bu Meri membersihkan talang air hari Minggu.",
+            "en": "Pak Yusuf promised to help Bu Meri clear her roof gutter on Sunday."
+          },
+          "narration": {
+            "id": "id/nil_talang_air_01",
+            "en": "en/nil_talang_air_01"
+          },
+          "layers": [
+            {
+              "art": "pic_cloud",
+              "x": 0.05,
+              "y": 0.05,
+              "w": 0.16,
+              "motion": {
+                "type": "drift",
+                "dx": 0.04,
+                "ms": 5000,
+                "loop": true
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "val_calm_breath",
+          "caption": {
+            "id": "Sabtu siang, kantornya meminta ia bekerja pada hari Minggu.",
+            "en": "On Saturday afternoon, his office asked him to work on Sunday."
+          },
+          "narration": {
+            "id": "id/nil_talang_air_02",
+            "en": "en/nil_talang_air_02"
+          },
+          "layers": [
+            {
+              "art": "pic_phone",
+              "x": 0.74,
+              "y": 0.55,
+              "w": 0.12,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 200
+              }
+            },
+            {
+              "art": "pic_computer",
+              "x": 0.04,
+              "y": 0.58,
+              "w": 0.18
+            }
+          ]
+        },
+        {
+          "scene": "val_phone_kind",
+          "caption": {
+            "id": "Ia langsung mengabari Bu Meri dan menawarkan Sabtu sore.",
+            "en": "He told Bu Meri right away and offered Saturday afternoon instead."
+          },
+          "narration": {
+            "id": "id/nil_talang_air_03",
+            "en": "en/nil_talang_air_03"
+          },
+          "layers": []
+        },
+        {
+          "scene": "val_gotong_royong",
+          "caption": {
+            "id": "Sabtu sore, dua tetangga ikut membantu. Talang bersih sebelum hujan turun.",
+            "en": "On Saturday afternoon, two more neighbours joined in. The gutter was clear before the rain came."
+          },
+          "narration": {
+            "id": "id/nil_talang_air_04",
+            "en": "en/nil_talang_air_04"
+          },
+          "layers": [
+            {
+              "art": "pic_cloud",
+              "x": 0.06,
+              "y": 0.04,
+              "w": 0.16,
+              "motion": {
+                "type": "drift",
+                "dx": 0.04,
+                "ms": 5000,
+                "loop": true
+              }
+            },
+            {
+              "art": "pic_rain",
+              "x": 0.7,
+              "y": 0.04,
+              "w": 0.16,
+              "motion": {
+                "type": "fade_in",
+                "ms": 800,
+                "delay_ms": 600
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "NIL-A-M-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-HORMAT"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di bus yang penuh, seorang nenek naik membawa belanjaan.",
+            "en": "On a full bus, an elderly woman gets on with her shopping."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "cut_queue",
+          "image": "val_cut_queue",
+          "text": {
+            "id": "Berebut kursi kosong",
+            "en": "Rushing for the empty seat"
+          }
+        },
+        {
+          "id": "give_seat",
+          "image": "val_give_seat",
+          "text": {
+            "id": "Memberikan tempat duduk",
+            "en": "Offering your seat"
+          },
+          "correct": true
+        },
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Menggerutu karena sesak",
+            "en": "Grumbling about the crush"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Tempat duduk adalah hormat yang paling terasa bagi lansia yang membawa barang.",
+        "en": "A seat is the most practical respect you can offer an older person carrying bags."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "NIL-HORMAT"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang menghormati, mana yang kurang?",
+            "en": "Which show respect, and which don't?"
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Menghormati",
+            "en": "Respectful"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Kurang menghormati",
+            "en": "Not respectful"
+          }
+        },
+        {
+          "id": "respect_elder",
+          "image": "val_respect_elder",
+          "text": {
+            "id": "Menyalami orang tua dengan sopan",
+            "en": "Greeting an elder politely"
+          }
+        },
+        {
+          "id": "phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "Mengirim lelucon yang mengejek suku lain",
+            "en": "Sending a joke that mocks another ethnic group"
+          }
+        },
+        {
+          "id": "friends_diverse",
+          "image": "val_friends_diverse",
+          "text": {
+            "id": "Makan bersama rekan yang berbeda latar",
+            "en": "Eating with colleagues from different backgrounds"
+          }
+        },
+        {
+          "id": "left_out",
+          "image": "val_left_out",
+          "text": {
+            "id": "Mengucilkan rekan karena logatnya",
+            "en": "Leaving a colleague out because of their accent"
+          }
+        },
+        {
+          "id": "listen",
+          "image": "val_listen",
+          "text": {
+            "id": "Mendengarkan cerita orang yang lebih tua",
+            "en": "Listening to an older person's story"
+          }
+        },
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Memotong pembicaraan orang tua",
+            "en": "Talking over an older person"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "respect_elder": "b_yes",
+        "phone_unkind": "b_no",
+        "friends_diverse": "b_yes",
+        "left_out": "b_no",
+        "listen": "b_yes",
+        "interrupt": "b_no"
+      },
+      "model_answer": {
+        "id": "Hormat tampak dari sapaan, kesediaan mendengar, dan tidak mengejek atau mengucilkan siapa pun.",
+        "en": "Respect shows in greetings, in listening, and in never mocking or excluding anyone."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "NIL-HORMAT"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan orangnya dengan sikap yang menghormati.",
+            "en": "Match each person with a respectful approach."
+          }
+        }
+      ],
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p1",
+          "image": "fam_grandfather",
+          "text": {
+            "id": "Kakek yang pendengarannya berkurang",
+            "en": "A grandfather who is hard of hearing"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "val_friends_diverse",
+          "text": {
+            "id": "Rekan yang merayakan hari raya berbeda",
+            "en": "A colleague who celebrates a different holiday"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "val_visit_sick",
+          "text": {
+            "id": "Tetangga yang sedang sakit",
+            "en": "A neighbour who is ill"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Bicara pelan dan jelas, beri waktu menjawab",
+            "en": "Speak slowly and clearly, give him time to answer"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Jangan jadwalkan rapat pada hari rayanya",
+            "en": "Don't schedule meetings on their holiday"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Jenguk sebentar dan jangan berisik",
+            "en": "Visit briefly and keep it quiet"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3"
+      },
+      "model_answer": {
+        "id": "Hormat menyesuaikan diri dengan orangnya: kakek perlu waktu, hari raya rekan perlu dihargai, yang sakit perlu istirahat.",
+        "en": "Respect fits the person: a grandfather needs time, a colleague's holiday deserves honouring, someone ill needs rest."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "NIL-HORMAT"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menghormati keyakinan orang lain berarti harus ikut menjalankannya.",
+            "en": "Respecting someone's beliefs means you have to practise them too."
+          }
+        }
+      ],
+      "image": "val_friends_diverse",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Menghormati berarti tidak mengganggu, tidak mengejek, dan memberi ruang. Anda tidak harus ikut menjalankannya.",
+        "en": "Respect means not disturbing, not mocking and making room. You don't have to practise it yourself."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-HORMAT"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rekan baru dari daerah lain berbicara dengan logat yang berbeda.",
+            "en": "A new colleague from another region speaks with a different accent."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "listen",
+          "image": "val_listen",
+          "text": {
+            "id": "Mendengarkan dengan sungguh-sungguh",
+            "en": "Listening properly"
+          },
+          "correct": true
+        },
+        {
+          "id": "phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "Menirukan logatnya di grup untuk bahan tertawaan",
+            "en": "Mimicking the accent in a group chat for laughs"
+          }
+        },
+        {
+          "id": "left_out",
+          "image": "val_left_out",
+          "text": {
+            "id": "Tidak mengajaknya makan siang",
+            "en": "Not inviting them to lunch"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Logat adalah bagian dari asal seseorang. Mendengarkan dengan sungguh-sungguh membuatnya merasa diterima.",
+        "en": "An accent is part of where someone comes from. Listening properly makes them feel welcome."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "NIL-HORMAT"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutan bertamu ke rumah orang yang lebih tua.",
+            "en": "The steps of visiting an older person's home."
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "s3",
+          "image": "val_listen",
+          "text": {
+            "id": "Mendengarkan ceritanya",
+            "en": "Listening to their stories"
+          }
+        },
+        {
+          "id": "s1",
+          "image": "pic_door",
+          "text": {
+            "id": "Mengetuk pintu dan mengucapkan salam",
+            "en": "Knocking and calling out a greeting"
+          }
+        },
+        {
+          "id": "s4",
+          "image": "pic_wave_bye",
+          "text": {
+            "id": "Berpamitan",
+            "en": "Saying goodbye"
+          }
+        },
+        {
+          "id": "s2",
+          "image": "val_respect_elder",
+          "text": {
+            "id": "Menyalami tuan rumah",
+            "en": "Shaking the host's hand respectfully"
+          }
+        }
+      ],
+      "solution": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "model_answer": {
+        "id": "Ketuk dan ucapkan salam, salami tuan rumah, dengarkan, lalu berpamitan dengan sopan.",
+        "en": "Knock and call out a greeting, shake the host's hand, listen, then take your leave politely."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "NIL-WAKTU"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-NIL-A-M-RAPAT",
+      "model_answer": {
+        "id": "Rapat mulai dan selesai tepat waktu; bulan berikutnya, lebih banyak warga datang tepat waktu.",
+        "en": "The meeting started and ended on time; the next month, more residents came on time."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "NIL-WAKTU"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-CHOOSE",
+      "story_id": "ST-NIL-A-M-RAPAT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mengapa bulan berikutnya lebih banyak warga datang tepat waktu?",
+            "en": "Why did more residents come on time the next month?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Mereka takut ditegur Pak Hendra",
+            "en": "They were afraid Pak Hendra would tell them off"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Rapatnya dipindah ke siang hari",
+            "en": "The meeting was moved to the daytime"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Mereka tahu rapat mulai dan selesai sesuai jadwal",
+            "en": "They knew the meeting would start and end on schedule"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Jadwal yang selalu ditepati membuat orang percaya bahwa datang tepat waktu ada gunanya.",
+        "en": "A schedule that's always kept makes people trust that being on time is worth it."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NIL-WAKTU"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rapat pukul 09.00, perjalanan 30 menit, dan jalan sering macet. Kapan berangkat?",
+            "en": "The meeting is at 9:00, the trip takes 30 minutes and traffic is unpredictable. When do you leave?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "clock_8_30",
+          "image": "clock_8_30",
+          "text": {
+            "id": "Pukul 08.30",
+            "en": "8:30"
+          }
+        },
+        {
+          "id": "clock_9_00",
+          "image": "clock_9_00",
+          "text": {
+            "id": "Pukul 09.00",
+            "en": "9:00"
+          }
+        },
+        {
+          "id": "clock_8_00",
+          "image": "clock_8_00",
+          "text": {
+            "id": "Pukul 08.00",
+            "en": "8:00"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Berangkat 08.00 memberi cadangan 30 menit untuk macet. Berangkat 08.30 berarti tidak ada ruang untuk kejutan.",
+        "en": "Leaving at 8:00 gives a 30-minute buffer for traffic. Leaving at 8:30 leaves no room for surprises."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "NIL-WAKTU"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Malam dan pagi sebelum janji penting: mana yang membantu?",
+            "en": "The night and morning before an important appointment: what helps?"
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Membantu tepat waktu",
+            "en": "Helps you be on time"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Membuat terlambat",
+            "en": "Makes you late"
+          }
+        },
+        {
+          "id": "wake_up",
+          "image": "pic_wake_up",
+          "text": {
+            "id": "Bangun sesuai alarm",
+            "en": "Getting up with the alarm"
+          }
+        },
+        {
+          "id": "watch_tv",
+          "image": "pic_watch_tv",
+          "text": {
+            "id": "Menonton TV sampai larut",
+            "en": "Watching TV until late"
+          }
+        },
+        {
+          "id": "get_dressed",
+          "image": "pic_get_dressed",
+          "text": {
+            "id": "Bersiap dan berpakaian lebih awal",
+            "en": "Getting ready early"
+          }
+        },
+        {
+          "id": "phone",
+          "image": "pic_phone",
+          "text": {
+            "id": "Asyik bermain ponsel sebelum berangkat",
+            "en": "Getting absorbed in your phone before leaving"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "wake_up": "b_yes",
+        "watch_tv": "b_no",
+        "get_dressed": "b_yes",
+        "phone": "b_no"
+      },
+      "model_answer": {
+        "id": "Tidur cukup dan bersiap lebih awal memudahkan tepat waktu; layar sampai larut dan ponsel di pagi hari mencuri waktu.",
+        "en": "Enough sleep and getting ready early help; late-night screens and morning scrolling steal time."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NIL-WAKTU"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Anda akan terlambat 15 menit ke janji dengan teman.",
+            "en": "You're going to be 15 minutes late meeting a friend."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "late",
+          "image": "val_late",
+          "text": {
+            "id": "Datang tanpa kabar",
+            "en": "Turning up without a word"
+          }
+        },
+        {
+          "id": "phone_kind",
+          "image": "val_phone_kind",
+          "text": {
+            "id": "Mengabari sebelum jam janji",
+            "en": "Messaging before the agreed time"
+          },
+          "correct": true
+        },
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Menyalahkan macet saat tiba",
+            "en": "Blaming the traffic when you arrive"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Kabar sebelum jam janji memberi teman pilihan: menunggu, memesan dulu, atau mengatur ulang.",
+        "en": "A message before the time gives your friend options: wait, order first or rearrange."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "NIL-WAKTU",
+        "NIL-HORMAT"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dan nilainya.",
+            "en": "Match each picture to its value."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p1",
+          "image": "val_on_time",
+          "text": {
+            "id": "Datang tepat waktu",
+            "en": "Arriving on time"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "val_respect_elder",
+          "text": {
+            "id": "Menyalami orang tua",
+            "en": "Greeting an elder"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "val_friends_diverse",
+          "text": {
+            "id": "Teman berbeda latar",
+            "en": "Friends of different backgrounds"
+          }
+        },
+        {
+          "id": "p4",
+          "image": "val_listen",
+          "text": {
+            "id": "Orang yang menyimak",
+            "en": "Someone paying attention"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Tepat waktu",
+            "en": "Punctual"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Hormat",
+            "en": "Respectful"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Toleran",
+            "en": "Tolerant"
+          }
+        },
+        {
+          "id": "t4",
+          "text": {
+            "id": "Mau mendengar",
+            "en": "Willing to listen"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3",
+        "p4": "t4"
+      },
+      "model_answer": {
+        "id": "Tepat waktu, hormat, toleran, mau mendengar: cara-cara menghargai orang lain.",
+        "en": "Punctual, respectful, tolerant, willing to listen: ways of valuing others."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-HORMAT"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Seorang lansia kebingungan mencari peron di stasiun.",
+            "en": "An older man looks lost trying to find his platform."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "help_cross",
+          "image": "val_help_cross",
+          "text": {
+            "id": "Mengantarnya ke peron yang benar",
+            "en": "Walking him to the right platform"
+          },
+          "correct": true
+        },
+        {
+          "id": "left_out",
+          "image": "val_left_out",
+          "text": {
+            "id": "Pura-pura tidak melihat",
+            "en": "Pretending not to see"
+          }
+        },
+        {
+          "id": "cut_queue",
+          "image": "val_cut_queue",
+          "text": {
+            "id": "Bergegas mendahuluinya",
+            "en": "Hurrying past him"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Beberapa menit bantuan bisa membuatnya tidak ketinggalan kereta.",
+        "en": "A few minutes of help could stop him missing his train."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "NIL-WAKTU"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mengabari bahwa Anda terlambat sama baiknya dengan datang tepat waktu.",
+            "en": "Letting someone know you'll be late is just as good as being on time."
+          }
+        }
+      ],
+      "image": "val_late",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Kabar itu sopan, tetapi waktu orang lain tetap terbuang. Usahakan tepat waktu; kabar adalah rencana cadangan.",
+        "en": "A message is polite, but their time is still lost. Aim to be on time; a message is the backup plan."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-GOTONG"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Selokan di gang Anda tersumbat menjelang musim hujan.",
+            "en": "The drain in your lane is blocked just before the rainy season."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "gotong_royong",
+          "image": "val_gotong_royong",
+          "text": {
+            "id": "Mengajak tetangga kerja bakti",
+            "en": "Getting the neighbours together to clear it"
+          },
+          "correct": true
+        },
+        {
+          "id": "litter",
+          "image": "val_litter",
+          "text": {
+            "id": "Membuang sampah lagi ke selokan",
+            "en": "Throwing more rubbish into the drain"
+          }
+        },
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Mengeluh tanpa berbuat apa-apa",
+            "en": "Complaining without doing anything"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Kerja bakti menyelesaikan masalah bersama sebelum hujan datang; mengeluh saja tidak membersihkan selokan.",
+        "en": "Working together sorts it out before the rain comes; complaining alone doesn't clear the drain."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "NIL-GOTONG"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saat kerja bakti: mana yang membantu?",
+            "en": "During a community clean-up: what helps?"
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Membantu",
+            "en": "Helps"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Kurang membantu",
+            "en": "Doesn't help"
+          }
+        },
+        {
+          "id": "teamwork",
+          "image": "val_teamwork",
+          "text": {
+            "id": "Berbagi tugas",
+            "en": "Sharing the tasks"
+          }
+        },
+        {
+          "id": "late",
+          "image": "val_late",
+          "text": {
+            "id": "Datang saat kerja hampir selesai",
+            "en": "Turning up when it's nearly done"
+          }
+        },
+        {
+          "id": "share_food",
+          "image": "val_share_food",
+          "text": {
+            "id": "Membawa makanan untuk yang bekerja",
+            "en": "Bringing food for the workers"
+          }
+        },
+        {
+          "id": "phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "Mengejek panitia di grup",
+            "en": "Mocking the organisers in the group chat"
+          }
+        },
+        {
+          "id": "help_friend",
+          "image": "val_help_friend",
+          "text": {
+            "id": "Membantu tetangga mengangkat barang berat",
+            "en": "Helping a neighbour lift something heavy"
+          }
+        },
+        {
+          "id": "left_out",
+          "image": "val_left_out",
+          "text": {
+            "id": "Membiarkan satu orang bekerja sendirian",
+            "en": "Leaving one person to work alone"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "teamwork": "b_yes",
+        "late": "b_no",
+        "share_food": "b_yes",
+        "phone_unkind": "b_no",
+        "help_friend": "b_yes",
+        "left_out": "b_no"
+      },
+      "model_answer": {
+        "id": "Gotong royong hidup dari kehadiran, berbagi tugas, dan saling menyemangati.",
+        "en": "Gotong royong lives on showing up, sharing tasks and encouraging each other."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "NIL-GOTONG"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutan kerja bakti di lingkungan.",
+            "en": "The steps of a neighbourhood clean-up."
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "s3",
+          "image": "val_gotong_royong",
+          "text": {
+            "id": "Bekerja bersama",
+            "en": "Working together"
+          }
+        },
+        {
+          "id": "s1",
+          "image": "val_greet_neighbor",
+          "text": {
+            "id": "Mengajak tetangga",
+            "en": "Inviting the neighbours"
+          }
+        },
+        {
+          "id": "s4",
+          "image": "val_share_food",
+          "text": {
+            "id": "Makan bersama setelahnya",
+            "en": "Eating together afterwards"
+          }
+        },
+        {
+          "id": "s2",
+          "image": "val_teamwork",
+          "text": {
+            "id": "Membagi tugas",
+            "en": "Dividing the tasks"
+          }
+        }
+      ],
+      "solution": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "model_answer": {
+        "id": "Ajak, bagi tugas, kerjakan bersama, lalu makan bersama — kebersamaan itu ikut menguatkan lingkungan.",
+        "en": "Invite, divide the work, do it together, then eat together — that time together strengthens the neighbourhood too."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "NIL-GOTONG"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan situasi dengan bantuan yang pas.",
+            "en": "Match each situation with the right kind of help."
+          }
+        }
+      ],
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p1",
+          "image": "val_visit_sick",
+          "text": {
+            "id": "Tetangga sedang sakit",
+            "en": "A neighbour is ill"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "pic_house",
+          "text": {
+            "id": "Tetangga pindah rumah",
+            "en": "A neighbour is moving house"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_storm",
+          "text": {
+            "id": "Pohon tumbang setelah badai",
+            "en": "A tree has fallen after a storm"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Bergiliran mengantar makanan",
+            "en": "Take turns bringing meals"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Bantu mengangkat barang",
+            "en": "Help carry the furniture"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Bersama menyingkirkan dahan dari jalan",
+            "en": "Clear the branches off the road together"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3"
+      },
+      "model_answer": {
+        "id": "Gotong royong menyesuaikan kebutuhan: makanan untuk yang sakit, tenaga untuk yang pindahan, kerja bersama setelah badai.",
+        "en": "Gotong royong fits the need: meals for the sick, muscle for a move, teamwork after a storm."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "NIL-GOTONG"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dalam gotong royong, setiap orang harus menyumbang dengan cara yang sama.",
+            "en": "In gotong royong, everyone has to contribute in the same way."
+          }
+        }
+      ],
+      "image": "val_gotong_royong",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Setiap orang menyumbang sesuai kemampuan: tenaga, makanan, alat, atau waktu.",
+        "en": "Everyone gives what they can: effort, food, tools or time."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-GOTONG"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Acara 17-an selesai dan kursi masih berserakan di lapangan.",
+            "en": "The Independence Day event is over and chairs are scattered across the field."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "late",
+          "image": "val_late",
+          "text": {
+            "id": "Datang setelah semua selesai",
+            "en": "Turning up when it's all done"
+          }
+        },
+        {
+          "id": "litter",
+          "image": "val_litter",
+          "text": {
+            "id": "Meninggalkan gelas plastik di lapangan",
+            "en": "Leaving plastic cups on the field"
+          }
+        },
+        {
+          "id": "teamwork",
+          "image": "val_teamwork",
+          "text": {
+            "id": "Ikut membereskan bersama",
+            "en": "Helping to clear up"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Beres-beres bersama membuat pekerjaan cepat selesai dan tidak hanya membebani panitia.",
+        "en": "Clearing up together gets it done fast and doesn't leave it all to the organisers."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "NIL-JANJI"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-NIL-A-M-TALANG",
+      "model_answer": {
+        "id": "Pak Yusuf mengabari lebih awal, menawarkan waktu pengganti, dan menepatinya.",
+        "en": "Pak Yusuf told her early, offered another time and kept it."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NIL-JANJI"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-NIL-A-M-TALANG",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Setelah kantornya menelepon, langkah Pak Yusuf mana yang paling membantu?",
+            "en": "After his office called, which step of Pak Yusuf's helped most?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "late",
+          "image": "val_late",
+          "text": {
+            "id": "Datang Minggu sore tanpa kabar",
+            "en": "Turning up on Sunday evening without a word"
+          }
+        },
+        {
+          "id": "phone_kind",
+          "image": "val_phone_kind",
+          "text": {
+            "id": "Langsung mengabari Bu Meri",
+            "en": "Telling Bu Meri right away"
+          },
+          "correct": true
+        },
+        {
+          "id": "left_out",
+          "image": "val_left_out",
+          "text": {
+            "id": "Diam dan berharap Bu Meri lupa",
+            "en": "Saying nothing and hoping she'd forget"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Kabar lebih awal memberi Bu Meri waktu mengatur ulang, dan janji pengganti tetap ditepati.",
+        "en": "Telling her early gave Bu Meri time to rearrange, and the new plan was kept."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "NIL-JANJI"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rekan minta bantuan untuk tugas mendesak. Janji mana yang paling bisa dipegang?",
+            "en": "A colleague needs help with an urgent task. Which promise can they rely on most?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "«Pasti, nanti saya kabari.»",
+            "en": "\"Sure, I'll let you know.\""
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "«Saya kirim besok sebelum pukul 12.»",
+            "en": "\"I'll send it tomorrow before 12.\""
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "«Semua saya kerjakan malam ini juga.»",
+            "en": "\"I'll do the whole lot tonight.\""
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Janji yang jelas waktunya dan masuk akal mudah ditepati. «Nanti» terlalu samar; «semua malam ini» berisiko tidak tercapai.",
+        "en": "A promise with a clear, realistic time is easy to keep. \"Later\" is too vague; \"the whole lot tonight\" may not happen."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "NIL-JANJI"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutan meminjam barang tetangga.",
+            "en": "The steps of borrowing a neighbour's things."
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "s3",
+          "image": "val_borrow_return",
+          "text": {
+            "id": "Mengembalikan sesuai janji",
+            "en": "Returning it when promised"
+          }
+        },
+        {
+          "id": "s1",
+          "image": "val_greet_neighbor",
+          "text": {
+            "id": "Meminta izin",
+            "en": "Asking permission"
+          }
+        },
+        {
+          "id": "s4",
+          "image": "val_say_thanks",
+          "text": {
+            "id": "Berterima kasih",
+            "en": "Saying thank you"
+          }
+        },
+        {
+          "id": "s2",
+          "image": "pic_bicycle",
+          "text": {
+            "id": "Memakai dengan hati-hati",
+            "en": "Using it carefully"
+          }
+        }
+      ],
+      "solution": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "model_answer": {
+        "id": "Minta izin, pakai dengan hati-hati, kembalikan sesuai janji, dan berterima kasih — tetangga akan senang meminjamkan lagi.",
+        "en": "Ask, use it carefully, return it when promised and say thanks — your neighbour will happily lend again."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "NIL-JANJI",
+        "NIL-GOTONG"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dan nilainya.",
+            "en": "Match each picture to its value."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p1",
+          "image": "val_gotong_royong",
+          "text": {
+            "id": "Kerja bakti",
+            "en": "Community work"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "val_keep_promise",
+          "text": {
+            "id": "Menepati janji",
+            "en": "Keeping a promise"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "val_share_food",
+          "text": {
+            "id": "Berbagi makanan",
+            "en": "Sharing food"
+          }
+        },
+        {
+          "id": "p4",
+          "image": "val_visit_sick",
+          "text": {
+            "id": "Menjenguk yang sakit",
+            "en": "Visiting the sick"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Gotong royong",
+            "en": "Gotong royong"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Tepat janji",
+            "en": "True to your word"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Berbagi",
+            "en": "Sharing"
+          }
+        },
+        {
+          "id": "t4",
+          "text": {
+            "id": "Peduli",
+            "en": "Caring"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3",
+        "p4": "t4"
+      },
+      "model_answer": {
+        "id": "Gotong royong, tepat janji, berbagi, dan peduli membuat tetangga bisa saling mengandalkan.",
+        "en": "Gotong royong, keeping your word, sharing and caring let neighbours rely on each other."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NIL-JANJI"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tetangga meminjamkan tangganya kepada Anda sampai hari Sabtu.",
+            "en": "A neighbour has lent you their ladder until Saturday."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "borrow_return",
+          "image": "val_borrow_return",
+          "text": {
+            "id": "Mengembalikannya Sabtu dalam keadaan bersih",
+            "en": "Returning it clean on Saturday"
+          },
+          "correct": true
+        },
+        {
+          "id": "late",
+          "image": "val_late",
+          "text": {
+            "id": "Mengembalikannya seminggu kemudian",
+            "en": "Returning it a week late"
+          }
+        },
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Mengeluh tangganya berat",
+            "en": "Complaining it's heavy"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Mengembalikan tepat waktu dan bersih berarti menepati janji — dan tetangga mau meminjamkan lagi.",
+        "en": "Returning it on time and clean keeps your promise — and they'll lend to you again."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-GOTONG"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rumah tetangga kebanjiran dan warga mengumpulkan bantuan.",
+            "en": "A neighbour's house has flooded and residents are collecting help."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "left_out",
+          "image": "val_left_out",
+          "text": {
+            "id": "Tidak peduli karena bukan urusan sendiri",
+            "en": "Ignoring it as none of your business"
+          }
+        },
+        {
+          "id": "phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "Menyebar kabar belum pasti tentang korban",
+            "en": "Spreading unconfirmed rumours about the family"
+          }
+        },
+        {
+          "id": "share_food",
+          "image": "val_share_food",
+          "text": {
+            "id": "Mengantar makanan dan pakaian layak pakai",
+            "en": "Bringing food and good used clothes"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Bantuan nyata dan kata-kata yang hati-hati meringankan beban korban.",
+        "en": "Practical help and careful words ease the family's burden."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "NIL-JANJI"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Jika janji harus batal, mengabari setelah waktunya lewat sudah cukup.",
+            "en": "If you have to cancel, letting them know after the time has passed is good enough."
+          }
+        }
+      ],
+      "image": "val_keep_promise",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Kabari sebelum waktunya agar orang lain sempat mengatur ulang. Kabar yang terlambat tetap membuang waktunya.",
+        "en": "Tell them before the time so they can rearrange. A late message still wastes their time."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "NIL-GOTONG"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Charities Aid Foundation (2024). World Giving Index 2024: Global perspectives on generosity. London: CAF (rilis 21 Agustus 2024), www.cafonline.org",
+      "model_answer": {
+        "id": "Dalam World Giving Index 2024 dari Charities Aid Foundation (CAF), Indonesia menjadi negara paling dermawan di dunia, tujuh tahun berturut-turut. Sekitar 9 dari 10 responden Indonesia menyumbang uang dalam sebulan sebelum survei, dan 65% menjadi relawan.",
+        "en": "In the Charities Aid Foundation's World Giving Index 2024, Indonesia was the world's most generous country for the seventh year in a row. About 9 in 10 Indonesian respondents had given money in the month before the survey, and 65% had volunteered."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    },
+    {
+      "item_id": "NIL-A-M-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rapat RT pukul 19.30. Perjalanan 20 menit, dan Anda ingin tiba 10 menit lebih awal. Paling lambat berangkat pukul berapa?",
+            "en": "The meeting is at 7:30 p.m. The trip takes 20 minutes and you want to arrive 10 minutes early. What's the latest you can leave?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "19.10",
+            "en": "7:10 p.m."
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "19.20",
+            "en": "7:20 p.m."
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "19.00",
+            "en": "7:00 p.m."
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "19.30 − 10 menit − 20 menit = 19.00.",
+        "en": "7:30 − 10 minutes − 20 minutes = 7:00 p.m."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-m-0.1"
+    }
+  ]
+}

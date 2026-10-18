@@ -1,0 +1,2151 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sos-a-h-0.1",
+    "subject": "sosial_seni",
+    "track": "sos-a-h",
+    "level": "mahir",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Sosial & Seni — Mahir (Dewasa)",
+      "en": "Social Studies & Arts — Advanced (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12 starter level, 2 units) for subject + language review: needs a social-studies reviewer, a cultural reviewer, and the Indonesian and English language reviewers before any item is approved (docs/syllabus/04_SOSIAL_SENI.md, Adults Mahir: unit 2 Ekonomi makro untuk warga and unit 8 Arsitektur & kota as starter units 01-02; unit 1 Sejarah dunia left to Sejarah, unit 3 geopolitics left out). Picture-first per INTERACTIONS_AUDIO.md §1 and MODULES_LEVELS_STORIES.md §8; values and history figures live in the Nilai and Sejarah modules.",
+  "prompts": {
+    "P-TAP": {
+      "id": "Ketuk tempatnya di peta.",
+      "en": "Tap the place on the map."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban yang tepat.",
+      "en": "Choose the right answer."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-MYTH": {
+      "id": "Mitos atau fakta?",
+      "en": "Myth or fact?"
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke pasangannya.",
+      "en": "Drag each picture to its match."
+    },
+    "P-SORT": {
+      "id": "Seret ke kelompok yang tepat.",
+      "en": "Drag each into the right group."
+    },
+    "P-ORDER": {
+      "id": "Seret ke urutan yang benar.",
+      "en": "Drag them into the right order."
+    },
+    "P-FILL": {
+      "id": "Seret ke bagian yang kosong.",
+      "en": "Drag into the gap."
+    },
+    "P-NUM": {
+      "id": "Masukkan angkanya.",
+      "en": "Enter the number."
+    },
+    "P-EST": {
+      "id": "Perkirakan.",
+      "en": "Make an estimate."
+    },
+    "P-MEMORY": {
+      "id": "Balik kartu, cari pasangannya.",
+      "en": "Flip the cards, find pairs."
+    },
+    "P-TRY": {
+      "id": "Coba di rumah",
+      "en": "Try at home"
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Correct. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Baik, kita lanjut.",
+      "en": "Good, let's continue."
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Ekonomi makro untuk warga",
+        "en": "Macroeconomics for citizens"
+      },
+      "sticker": "sticker_rice_field"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Arsitektur & kota",
+        "en": "Architecture & cities"
+      },
+      "sticker": "sticker_umbrella"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SOS-A-H-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Ekonomi makro untuk warga",
+        "en": "Macroeconomics for citizens"
+      },
+      "body": [
+        {
+          "id": "Bank Indonesia menjaga inflasi dan nilai rupiah, antara lain lewat suku bunga acuan (BI-Rate). Bunga naik membuat kredit lebih mahal dan belanja melambat.",
+          "en": "Bank Indonesia keeps inflation and the rupiah stable, mainly through its policy rate (the BI-Rate). Higher rates make loans dearer and slow spending."
+        },
+        {
+          "id": "Pajak membiayai barang publik seperti jalan, lampu jalan, dan sekolah negeri. PPh orang pribadi progresif: tarif lebih tinggi hanya untuk lapisan penghasilan atas.",
+          "en": "Taxes pay for public goods such as roads, street lights and state schools. Personal income tax is progressive: higher rates apply only to the top slices of income."
+        },
+        {
+          "id": "Jika rupiah melemah, barang impor seperti gandum dan kedelai menjadi lebih mahal, sedangkan eksportir menerima lebih banyak rupiah.",
+          "en": "When the rupiah weakens, imports such as wheat and soybeans cost more, while exporters receive more rupiah."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SOS-A-H-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Arsitektur & kota",
+        "en": "Architecture & cities"
+      },
+      "body": [
+        {
+          "id": "Rumah tradisional Nusantara menjawab iklim tropis: atap curam untuk hujan lebat, lantai panggung untuk udara dan banjir, bahan lokal seperti kayu, bambu, dan ijuk.",
+          "en": "Traditional houses of the archipelago answer the tropical climate: steep roofs for heavy rain, raised floors for air and floods, local timber, bamboo and palm fibre."
+        },
+        {
+          "id": "Bentuknya juga mencerminkan cara hidup: rumah gadang untuk keluarga besar garis ibu, betang Dayak untuk banyak keluarga, pendapa joglo untuk menerima tamu.",
+          "en": "Their forms mirror ways of life too: the rumah gadang for a large matrilineal family, the Dayak betang for many families, the joglo's pendapa for receiving guests."
+        },
+        {
+          "id": "Kota yang baik memberi ruang bagi publik. UU Penataan Ruang mewajibkan ruang terbuka hijau minimal 30% luas kota, 20% di antaranya publik.",
+          "en": "Good cities make room for the public. The Spatial Planning Law requires green open space of at least 30% of a city's area, 20% of it public."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "SOS-A-H-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "MACRO-MONEY"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "image": "pic_bank",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Jika BI menaikkan suku bunga acuan…",
+            "en": "If BI raises its policy rate…"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m_loan",
+          "text": {
+            "id": "Bunga kredit bank ikut naik",
+            "en": "Bank loan rates rise"
+          }
+        },
+        {
+          "id": "m_rate",
+          "text": {
+            "id": "BI menaikkan BI-Rate",
+            "en": "BI raises the BI-Rate"
+          }
+        },
+        {
+          "id": "m_price",
+          "text": {
+            "id": "Kenaikan harga melambat",
+            "en": "Price rises slow down"
+          }
+        },
+        {
+          "id": "m_spend",
+          "text": {
+            "id": "Rumah tangga dan usaha menunda pinjaman dan belanja",
+            "en": "Households and firms put off borrowing and spending"
+          }
+        }
+      ],
+      "solution": [
+        "m_rate",
+        "m_loan",
+        "m_spend",
+        "m_price"
+      ],
+      "model_answer": {
+        "id": "BI-Rate naik, bunga kredit naik, pinjaman dan belanja ditunda, lalu kenaikan harga melambat.",
+        "en": "BI-Rate up, loan rates up, borrowing and spending put off, then price rises slow down."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "MACRO-FISCAL"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Barang publik atau barang pribadi?",
+            "en": "Public good or private good?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_pub",
+          "text": {
+            "id": "Barang publik",
+            "en": "Public good"
+          }
+        },
+        {
+          "id": "b_priv",
+          "text": {
+            "id": "Barang pribadi",
+            "en": "Private good"
+          }
+        },
+        {
+          "id": "c_light",
+          "text": {
+            "id": "lampu lalu lintas",
+            "en": "traffic lights"
+          },
+          "image": "pic_traffic_light"
+        },
+        {
+          "id": "c_phone",
+          "text": {
+            "id": "ponsel",
+            "en": "a mobile phone"
+          },
+          "image": "pic_phone"
+        },
+        {
+          "id": "c_bridge",
+          "text": {
+            "id": "jembatan umum",
+            "en": "a public bridge"
+          },
+          "image": "pic_bridge"
+        },
+        {
+          "id": "c_bread",
+          "text": {
+            "id": "roti",
+            "en": "bread"
+          },
+          "image": "pic_bread"
+        },
+        {
+          "id": "c_park",
+          "text": {
+            "id": "taman kota",
+            "en": "a city park"
+          },
+          "image": "pic_park"
+        },
+        {
+          "id": "c_moto",
+          "text": {
+            "id": "sepeda motor",
+            "en": "a motorbike"
+          },
+          "image": "pic_motorbike"
+        }
+      ],
+      "solution_pairs": {
+        "c_light": "b_pub",
+        "c_phone": "b_priv",
+        "c_bridge": "b_pub",
+        "c_bread": "b_priv",
+        "c_park": "b_pub",
+        "c_moto": "b_priv"
+      },
+      "model_answer": {
+        "id": "Barang publik dipakai bersama dan sulit membatasi penggunanya, sehingga biasanya dibiayai pajak.",
+        "en": "Public goods are shared and hard to restrict, so they are usually paid for by taxes."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "number_input",
+      "skills": [
+        "MACRO-FISCAL"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-NUM",
+      "image": "note_generic",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Penghasilan kena pajak Rp100 juta setahun. Tarif: 5% sampai Rp60 juta, 15% di atasnya. Pajaknya (juta rupiah)?",
+            "en": "Taxable income Rp100 million a year. Rates: 5% up to Rp60 million, 15% above. Tax due (million rupiah)?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 9,
+        "tolerance": 0,
+        "unit": {
+          "id": "juta rupiah",
+          "en": "million rupiah"
+        }
+      },
+      "model_answer": {
+        "id": "5% × 60 juta = 3 juta; 15% × 40 juta = 6 juta; total Rp9 juta (Pasal 17 UU PPh, diubah UU HPP).",
+        "en": "5% × 60 million = 3 million; 15% × 40 million = 6 million; Rp9 million in all (Income Tax Law art. 17, as amended by the HPP Law)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "MACRO-TRADE"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-CHOOSE",
+      "image": "pic_bread",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rupiah melemah terhadap dolar. Harga roti dari gandum impor cenderung…",
+            "en": "The rupiah weakens against the dollar. Bread made from imported wheat tends to…"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Turun",
+            "en": "Get cheaper"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Naik",
+            "en": "Get dearer"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Tidak terpengaruh",
+            "en": "Stay unaffected"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Gandum diimpor dan dibayar dengan dolar, jadi biayanya dalam rupiah naik.",
+        "en": "Wheat is imported and paid for in dollars, so it costs more rupiah."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "MACRO-FISCAL"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-TF",
+      "image": "math_bar_chart",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "UU Keuangan Negara membatasi defisit APBN 3% dan utang pemerintah 60% dari PDB.",
+            "en": "The State Finance Law caps the budget deficit at 3% and government debt at 60% of GDP."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Batas defisit 3% dan utang 60% dari PDB ada di Penjelasan Pasal 12 UU No. 17 Tahun 2003.",
+        "en": "The 3% deficit and 60% debt ceilings are in the elucidation of art. 12, Law 17/2003."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "MACRO-MONEY"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "image": "pic_bank",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tabungan berbunga 3%, inflasi 4%. Daya beli tabungan itu ____.",
+            "en": "Savings earn 3%, inflation is 4%. The savings' buying power ____."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_down",
+          "text": {
+            "id": "turun",
+            "en": "falls"
+          }
+        },
+        {
+          "id": "t_up",
+          "text": {
+            "id": "naik",
+            "en": "rises"
+          }
+        },
+        {
+          "id": "t_same",
+          "text": {
+            "id": "tetap",
+            "en": "stays the same"
+          }
+        }
+      ],
+      "solution": [
+        "t_down"
+      ],
+      "model_answer": {
+        "id": "Bunga riil ≈ 3% − 4% = −1%: daya beli tabungan turun sedikit.",
+        "en": "Real interest ≈ 3% − 4% = −1%: the savings' buying power slips a little."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "estimate_slider",
+      "skills": [
+        "MACRO-MONEY"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-EST",
+      "image": "math_money_notes",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Inflasi 5% per tahun selama 10 tahun. Barang seharga Rp100.000 kini menjadi sekitar… (ribu rupiah)",
+            "en": "Inflation of 5% a year for 10 years. Something costing Rp100,000 now costs about… (thousand rupiah)"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 163,
+        "tolerance": 10,
+        "unit": {
+          "id": "ribu rupiah",
+          "en": "thousand rupiah"
+        }
+      },
+      "slider": {
+        "min": 100,
+        "max": 250,
+        "step": 1
+      },
+      "model_answer": {
+        "id": "Rp100.000 × 1,05¹⁰ ≈ Rp163.000: harga naik lebih dari 60% dalam 10 tahun.",
+        "en": "Rp100,000 × 1.05¹⁰ ≈ Rp163,000: prices rise by more than 60% in 10 years."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "MACRO-TRADE"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saat rupiah melemah: diuntungkan atau dirugikan?",
+            "en": "When the rupiah weakens: gains or loses?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_gain",
+          "text": {
+            "id": "Cenderung diuntungkan",
+            "en": "Tends to gain"
+          }
+        },
+        {
+          "id": "b_lose",
+          "text": {
+            "id": "Cenderung dirugikan",
+            "en": "Tends to lose"
+          }
+        },
+        {
+          "id": "c_coffee",
+          "text": {
+            "id": "Eksportir kopi",
+            "en": "A coffee exporter"
+          }
+        },
+        {
+          "id": "c_tempe",
+          "text": {
+            "id": "Perajin tempe yang membeli kedelai impor",
+            "en": "A tempe maker buying imported soybeans"
+          }
+        },
+        {
+          "id": "c_hotel",
+          "text": {
+            "id": "Hotel di Bali yang melayani turis asing",
+            "en": "A Bali hotel serving foreign tourists"
+          }
+        },
+        {
+          "id": "c_phone",
+          "text": {
+            "id": "Pembeli ponsel impor",
+            "en": "Someone buying an imported phone"
+          }
+        },
+        {
+          "id": "c_student",
+          "text": {
+            "id": "Keluarga yang membiayai kuliah anak di luar negeri",
+            "en": "A family paying for study abroad"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c_coffee": "b_gain",
+        "c_tempe": "b_lose",
+        "c_hotel": "b_gain",
+        "c_phone": "b_lose",
+        "c_student": "b_lose"
+      },
+      "model_answer": {
+        "id": "Eksportir dan sektor yang dibayar valuta asing cenderung diuntungkan; pembeli barang dan jasa impor cenderung dirugikan.",
+        "en": "Exporters and sectors paid in foreign currency tend to gain; buyers of imported goods and services tend to lose."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "MACRO-FISCAL"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-CHOOSE",
+      "image": "note_generic",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Penghasilan Anda naik ke lapisan tarif berikutnya. Yang terjadi…",
+            "en": "Your income moves into the next tax bracket. What happens?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Hanya bagian di atas batas lapisan yang dikenai tarif lebih tinggi",
+            "en": "Only the part above the threshold is taxed at the higher rate"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Seluruh penghasilan dikenai tarif yang lebih tinggi",
+            "en": "All your income is taxed at the higher rate"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Pajak Anda otomatis dihapus",
+            "en": "Your tax is automatically cancelled"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Tarif yang lebih tinggi hanya dikenakan pada bagian penghasilan di lapisan atas.",
+        "en": "The higher rate applies only to the part of income in the higher bracket."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "MACRO-TRADE"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Istilah dan artinya.",
+            "en": "Terms and their meanings."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_exp",
+          "text": {
+            "id": "Ekspor",
+            "en": "Exports"
+          }
+        },
+        {
+          "id": "t_imp",
+          "text": {
+            "id": "Impor",
+            "en": "Imports"
+          }
+        },
+        {
+          "id": "t_sur",
+          "text": {
+            "id": "Neraca perdagangan surplus",
+            "en": "Trade surplus"
+          }
+        },
+        {
+          "id": "t_dep",
+          "text": {
+            "id": "Depresiasi",
+            "en": "Depreciation"
+          }
+        },
+        {
+          "id": "d_imp",
+          "text": {
+            "id": "Membeli barang dari luar negeri",
+            "en": "Buying goods from abroad"
+          }
+        },
+        {
+          "id": "d_sur",
+          "text": {
+            "id": "Nilai ekspor lebih besar daripada impor",
+            "en": "Exports worth more than imports"
+          }
+        },
+        {
+          "id": "d_dep",
+          "text": {
+            "id": "Nilai mata uang melemah",
+            "en": "A currency losing value"
+          }
+        },
+        {
+          "id": "d_exp",
+          "text": {
+            "id": "Menjual barang ke luar negeri",
+            "en": "Selling goods abroad"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "t_exp": "d_exp",
+        "t_imp": "d_imp",
+        "t_sur": "d_sur",
+        "t_dep": "d_dep"
+      },
+      "model_answer": {
+        "id": "Ekspor: menjual ke luar negeri. Impor: membeli dari luar negeri. Surplus: ekspor > impor. Depresiasi: nilai mata uang turun.",
+        "en": "Exports: selling abroad. Imports: buying from abroad. Surplus: exports > imports. Depreciation: a currency losing value."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "MACRO-MONEY"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-MYTH",
+      "image": "note_generic",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mencetak uang sebanyak-banyaknya membuat semua orang kaya.",
+            "en": "Printing lots of money makes everyone rich."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Uang bertambah tanpa tambahan barang dan jasa membuat harga melonjak.",
+        "en": "Myth. More money without more goods and services sends prices soaring."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "MACRO-MONEY"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-TRY",
+      "image": "pic_bank",
+      "model_answer": {
+        "id": "Cek bunga tabungan atau deposito Anda, lalu bandingkan dengan inflasi terbaru di bps.go.id. Jika bunganya lebih kecil, daya beli tabungan itu menyusut.",
+        "en": "Check your savings or deposit rate, then compare it with the latest inflation figure on bps.go.id. If the rate is lower, those savings are losing buying power."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "MACRO-MONEY"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "image": "pic_bank",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Untuk meredam inflasi yang tinggi, BI biasanya…",
+            "en": "To curb high inflation, BI usually…"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Menurunkan suku bunga acuan",
+            "en": "Cuts its policy rate"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Menghapus semua pajak",
+            "en": "Abolishes all taxes"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Menaikkan suku bunga acuan",
+            "en": "Raises its policy rate"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Bunga yang lebih tinggi meredam pinjaman dan belanja, sehingga tekanan harga mereda.",
+        "en": "Higher rates damp borrowing and spending, so price pressure eases."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "MACRO-FISCAL"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "image": "note_generic",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dalam tarif progresif, seluruh penghasilan dikenai tarif tertinggi.",
+            "en": "Under progressive rates, all income is taxed at the top rate."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Tarif progresif berlaku per lapisan: tarif tinggi hanya untuk bagian penghasilan di lapisan atas.",
+        "en": "Progressive rates work by slices: the high rate applies only to the top slice of income."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-01-015",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "MACRO-TRADE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "image": "pic_phone",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rupiah melemah. Harga ponsel impor dalam rupiah biasanya…",
+            "en": "The rupiah weakens. The rupiah price of an imported phone usually…"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Turun",
+            "en": "Falls"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Menjadi nol",
+            "en": "Drops to zero"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Naik",
+            "en": "Rises"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Barang impor dibayar dengan valuta asing, jadi harganya dalam rupiah naik.",
+        "en": "Imports are paid for in foreign currency, so their rupiah price rises."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-01-016",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "MACRO-MONEY"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Bank Indonesia, \"Sejarah Bank Indonesia\" / \"History of Bank Indonesia\" (bi.go.id/id/tentang-bi/sejarah-bi).",
+      "model_answer": {
+        "id": "Bank sentral kita berawal dari De Javasche Bank, yang didirikan pada 1828. Bank itu menjadi Bank Indonesia pada 1 Juli 1953 melalui Undang-Undang Pokok Bank Indonesia (UU No. 11 Tahun 1953).",
+        "en": "Our central bank began as De Javasche Bank, founded in 1828. It became Bank Indonesia on 1 July 1953 under the Bank Indonesia Principal Act (Law No. 11 of 1953)."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ARCH-VERNAC"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rumah adat → cirinya.",
+            "en": "House → its feature."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "h_gadang",
+          "text": {
+            "id": "rumah gadang",
+            "en": "rumah gadang"
+          },
+          "image": "soc_rumah_gadang"
+        },
+        {
+          "id": "h_joglo",
+          "text": {
+            "id": "joglo",
+            "en": "joglo"
+          },
+          "image": "soc_joglo"
+        },
+        {
+          "id": "h_tong",
+          "text": {
+            "id": "tongkonan",
+            "en": "tongkonan"
+          },
+          "image": "soc_tongkonan"
+        },
+        {
+          "id": "f_joglo",
+          "text": {
+            "id": "Empat tiang utama (soko guru) dan pendapa terbuka",
+            "en": "Four main pillars (soko guru) and an open front hall"
+          }
+        },
+        {
+          "id": "f_tong",
+          "text": {
+            "id": "Atap melengkung seperti perahu; rumah leluhur keluarga",
+            "en": "Boat-shaped roof; the family's ancestral house"
+          }
+        },
+        {
+          "id": "f_gadang",
+          "text": {
+            "id": "Atap gonjong runcing; rumah keluarga besar garis ibu",
+            "en": "Pointed gonjong roof; home of a large matrilineal family"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "h_gadang": "f_gadang",
+        "h_joglo": "f_joglo",
+        "h_tong": "f_tong"
+      },
+      "model_answer": {
+        "id": "Rumah gadang: gonjong, rumah keluarga garis ibu. Joglo: soko guru dan pendapa. Tongkonan: atap seperti perahu, rumah leluhur keluarga.",
+        "en": "Rumah gadang: gonjong peaks, a matrilineal family home. Joglo: soko guru pillars and pendapa. Tongkonan: boat-like roof, ancestral family house."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "ARCH-VERNAC"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Untuk hujan atau untuk udara sejuk?",
+            "en": "For the rain, or for cool air?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_rain",
+          "text": {
+            "id": "Agar air hujan cepat mengalir",
+            "en": "To shed rain quickly"
+          }
+        },
+        {
+          "id": "b_air",
+          "text": {
+            "id": "Agar udara mengalir dan rumah sejuk",
+            "en": "To move air and keep cool"
+          }
+        },
+        {
+          "id": "c_roof",
+          "text": {
+            "id": "Atap yang curam",
+            "en": "A steep roof"
+          }
+        },
+        {
+          "id": "c_window",
+          "text": {
+            "id": "Jendela dan bukaan yang saling berhadapan",
+            "en": "Windows and openings facing each other"
+          },
+          "image": "pic_window"
+        },
+        {
+          "id": "c_gutter",
+          "text": {
+            "id": "Talang dan saluran air di tepi atap",
+            "en": "Gutters and drains along the roof edge"
+          }
+        },
+        {
+          "id": "c_wall",
+          "text": {
+            "id": "Dinding anyaman bambu",
+            "en": "Woven bamboo walls"
+          }
+        },
+        {
+          "id": "c_under",
+          "text": {
+            "id": "Kolong terbuka di bawah lantai panggung",
+            "en": "An open space under the raised floor"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c_roof": "b_rain",
+        "c_window": "b_air",
+        "c_gutter": "b_rain",
+        "c_wall": "b_air",
+        "c_under": "b_air"
+      },
+      "model_answer": {
+        "id": "Atap curam dan talang mengalirkan hujan; bukaan berhadapan, dinding anyaman, dan kolong mengalirkan udara.",
+        "en": "Steep roofs and gutters shed rain; facing openings, woven walls and the space under the floor move air."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "ARCH-VERNAC"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Asal rumah betang, rumah panjang Dayak?",
+            "en": "Where is the betang, the Dayak longhouse, from?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          }
+        },
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          },
+          "correct": true
+        },
+        {
+          "id": "papua",
+          "text": {
+            "id": "Papua",
+            "en": "Papua"
+          },
+          "region": {
+            "x": 0.77,
+            "y": 0.25,
+            "w": 0.22,
+            "h": 0.45
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Betang adalah rumah panjang Dayak di Kalimantan, dihuni banyak keluarga di bawah satu atap.",
+        "en": "The betang is the Dayak longhouse of Kalimantan, home to many families under one roof."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ARCH-VERNAC"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rumah dengan pendapa terbuka untuk menerima tamu.",
+            "en": "The house with an open hall for receiving guests."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "soc_tongkonan",
+          "text": {
+            "id": "tongkonan",
+            "en": "tongkonan"
+          },
+          "image": "soc_tongkonan"
+        },
+        {
+          "id": "soc_joglo",
+          "text": {
+            "id": "joglo",
+            "en": "joglo"
+          },
+          "image": "soc_joglo",
+          "correct": true
+        },
+        {
+          "id": "soc_rumah_gadang",
+          "text": {
+            "id": "rumah gadang",
+            "en": "rumah gadang"
+          },
+          "image": "soc_rumah_gadang"
+        }
+      ],
+      "model_answer": {
+        "id": "Joglo punya pendapa, ruang terbuka di depan untuk menerima tamu dan pertemuan.",
+        "en": "The joglo has a pendapa, an open front hall for guests and gatherings."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "ARCH-VERNAC"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-CHOOSE",
+      "image": "pic_mountain",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Honai di Pegunungan Tengah Papua bundar, rendah, dan hampir tanpa jendela. Mengapa?",
+            "en": "The honai of Papua's central highlands is round, low and nearly windowless. Why?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "c",
+          "text": {
+            "id": "Supaya hangat di udara pegunungan yang dingin",
+            "en": "To stay warm in cold mountain air"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Supaya mudah dipindahkan",
+            "en": "To be easy to move"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Supaya tahan banjir rob",
+            "en": "To withstand tidal floods"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Honai yang rendah dan tertutup menahan hangat di udara pegunungan yang dingin.",
+        "en": "The low, closed honai keeps warmth in against the cold mountain air."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "ARCH-VERNAC"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-MYTH",
+      "image": "soc_tongkonan",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rumah panggung hanya ada di Sumatra.",
+            "en": "Raised houses on posts are found only in Sumatra."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Rumah panggung ada di banyak daerah: rumah gadang, tongkonan, betang, rumah Bugis, dan lainnya.",
+        "en": "Myth. Raised houses are found in many regions: rumah gadang, tongkonan, betang, Bugis houses and more."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ARCH-CITY"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "image": "pic_park",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ruang terbuka hijau kota minimal ____ luas wilayah kota.",
+            "en": "A city's green open space must be at least ____ of its area."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_30",
+          "text": {
+            "id": "30%",
+            "en": "30%"
+          }
+        },
+        {
+          "id": "t_10",
+          "text": {
+            "id": "10%",
+            "en": "10%"
+          }
+        },
+        {
+          "id": "t_50",
+          "text": {
+            "id": "50%",
+            "en": "50%"
+          }
+        }
+      ],
+      "solution": [
+        "t_30"
+      ],
+      "model_answer": {
+        "id": "Minimal 30%, dengan RTH publik minimal 20% (UU No. 26 Tahun 2007, Pasal 29).",
+        "en": "At least 30%, with at least 20% public green space (Law 26/2007, art. 29)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ARCH-CITY"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ruang publik yang terbuka untuk semua warga?",
+            "en": "Public space open to every resident?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_park",
+          "text": {
+            "id": "taman kota",
+            "en": "city park"
+          },
+          "image": "pic_park",
+          "correct": true
+        },
+        {
+          "id": "pic_hotel",
+          "text": {
+            "id": "hotel",
+            "en": "hotel"
+          },
+          "image": "pic_hotel"
+        },
+        {
+          "id": "pic_bank",
+          "text": {
+            "id": "bank",
+            "en": "bank"
+          },
+          "image": "pic_bank"
+        }
+      ],
+      "model_answer": {
+        "id": "Taman kota adalah ruang publik: terbuka untuk semua warga tanpa harus membeli apa pun.",
+        "en": "A city park is public space: open to everyone without having to buy anything."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "ARCH-CITY"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mengurangi atau memperparah banjir kota?",
+            "en": "Reduces or worsens urban flooding?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_less",
+          "text": {
+            "id": "Mengurangi banjir",
+            "en": "Reduces flooding"
+          }
+        },
+        {
+          "id": "b_more",
+          "text": {
+            "id": "Memperparah banjir",
+            "en": "Worsens flooding"
+          }
+        },
+        {
+          "id": "c_park",
+          "text": {
+            "id": "Taman yang menyerap air hujan",
+            "en": "Parks that soak up rain"
+          },
+          "image": "pic_park"
+        },
+        {
+          "id": "c_river",
+          "text": {
+            "id": "Sungai yang dipenuhi sampah",
+            "en": "Rivers choked with rubbish"
+          }
+        },
+        {
+          "id": "c_bio",
+          "text": {
+            "id": "Lubang biopori dan sumur resapan",
+            "en": "Biopore holes and soakaway wells"
+          }
+        },
+        {
+          "id": "c_concrete",
+          "text": {
+            "id": "Semua halaman ditutup beton",
+            "en": "Every yard paved with concrete"
+          }
+        },
+        {
+          "id": "c_lake",
+          "text": {
+            "id": "Waduk dan situ yang terawat",
+            "en": "Well-kept reservoirs and ponds"
+          },
+          "image": "pic_lake"
+        }
+      ],
+      "solution_pairs": {
+        "c_park": "b_less",
+        "c_river": "b_more",
+        "c_bio": "b_less",
+        "c_concrete": "b_more",
+        "c_lake": "b_less"
+      },
+      "model_answer": {
+        "id": "Taman, resapan, dan waduk menampung air; sungai bersampah dan halaman yang dibeton memperparah banjir.",
+        "en": "Parks, soakaways and reservoirs hold water; rubbish-choked rivers and paved-over yards make floods worse."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "ARCH-VERNAC"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "image": "soc_joglo",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ruang joglo: dari paling publik.",
+            "en": "Joglo spaces: most public first."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "j_senthong",
+          "text": {
+            "id": "Senthong: bilik-bilik di bagian paling dalam",
+            "en": "Senthong: the innermost rooms"
+          }
+        },
+        {
+          "id": "j_dalem",
+          "text": {
+            "id": "Dalem: rumah induk keluarga",
+            "en": "Dalem: the family's main house"
+          }
+        },
+        {
+          "id": "j_pendapa",
+          "text": {
+            "id": "Pendapa: balai terbuka untuk tamu",
+            "en": "Pendapa: open hall for guests"
+          }
+        },
+        {
+          "id": "j_pringgitan",
+          "text": {
+            "id": "Pringgitan: ruang peralihan",
+            "en": "Pringgitan: in-between space"
+          }
+        }
+      ],
+      "solution": [
+        "j_pendapa",
+        "j_pringgitan",
+        "j_dalem",
+        "j_senthong"
+      ],
+      "model_answer": {
+        "id": "Pendapa (paling terbuka), pringgitan, dalem, lalu senthong (paling pribadi).",
+        "en": "Pendapa (most open), pringgitan, dalem, then senthong (most private)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "ARCH-CITY"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Istilah kota dan artinya.",
+            "en": "City terms and their meanings."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_alun",
+          "text": {
+            "id": "Alun-alun",
+            "en": "Alun-alun"
+          }
+        },
+        {
+          "id": "t_rth",
+          "text": {
+            "id": "RTH",
+            "en": "RTH"
+          }
+        },
+        {
+          "id": "t_trot",
+          "text": {
+            "id": "Trotoar",
+            "en": "Trotoar"
+          }
+        },
+        {
+          "id": "t_tod",
+          "text": {
+            "id": "TOD",
+            "en": "TOD"
+          }
+        },
+        {
+          "id": "d_rth",
+          "text": {
+            "id": "Ruang terbuka hijau",
+            "en": "Green open space"
+          }
+        },
+        {
+          "id": "d_trot",
+          "text": {
+            "id": "Jalur khusus pejalan kaki di tepi jalan",
+            "en": "Footway along the road (pavement)"
+          }
+        },
+        {
+          "id": "d_tod",
+          "text": {
+            "id": "Kawasan padat yang dirancang di sekitar stasiun angkutan massal",
+            "en": "Dense area planned around a mass-transit station"
+          }
+        },
+        {
+          "id": "d_alun",
+          "text": {
+            "id": "Lapangan terbuka di pusat kota tradisional Jawa",
+            "en": "Open square at the heart of a traditional Javanese town"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "t_alun": "d_alun",
+        "t_rth": "d_rth",
+        "t_trot": "d_trot",
+        "t_tod": "d_tod"
+      },
+      "model_answer": {
+        "id": "Alun-alun: lapangan pusat kota. RTH: ruang terbuka hijau. Trotoar: jalur pejalan kaki. TOD: kawasan padat di sekitar stasiun.",
+        "en": "Alun-alun: central town square. RTH: green open space. Trotoar: pavement. TOD: dense area around a transit station."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ARCH-CITY"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-TRY",
+      "image": "pic_map_paper",
+      "model_answer": {
+        "id": "Jalan kaki 15 menit di sekitar rumah Anda. Catat: adakah trotoar, pohon peneduh, taman, dan tempat menyeberang yang aman? Itulah ukuran sederhana kota yang ramah warga.",
+        "en": "Take a 15-minute walk around your home. Note: are there pavements, shade trees, parks and safe crossings? That is a simple measure of a people-friendly city."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ARCH-VERNAC"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rumah leluhur Toraja.",
+            "en": "The Toraja ancestral house."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "soc_joglo",
+          "text": {
+            "id": "joglo",
+            "en": "joglo"
+          },
+          "image": "soc_joglo"
+        },
+        {
+          "id": "soc_rumah_gadang",
+          "text": {
+            "id": "rumah gadang",
+            "en": "rumah gadang"
+          },
+          "image": "soc_rumah_gadang"
+        },
+        {
+          "id": "soc_tongkonan",
+          "text": {
+            "id": "tongkonan",
+            "en": "tongkonan"
+          },
+          "image": "soc_tongkonan",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Tongkonan, rumah leluhur Toraja, beratap melengkung seperti perahu.",
+        "en": "The tongkonan, Toraja's ancestral house, has a boat-shaped roof."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ARCH-CITY"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "image": "pic_park",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bagian RTH publik minimal berapa persen luas kota?",
+            "en": "Public green space must be at least what share of a city?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "5%",
+            "en": "5%"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "20%",
+            "en": "20%"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "60%",
+            "en": "60%"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Dari minimal 30% RTH, minimal 20% harus RTH publik (UU No. 26 Tahun 2007).",
+        "en": "Of the minimum 30% green space, at least 20% must be public (Law 26/2007)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    },
+    {
+      "item_id": "SOS-A-H-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "mahir",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Harga cabai naik dari Rp40.000 menjadi Rp60.000 per kilogram. Naik berapa persen?",
+            "en": "Chilli prices rise from Rp40,000 to Rp60,000 a kilogram. By what percentage?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 50,
+        "tolerance": 0,
+        "unit": {
+          "id": "%",
+          "en": "%"
+        }
+      },
+      "model_answer": {
+        "id": "(60.000 − 40.000) : 40.000 = 0,5 = 50%.",
+        "en": "(60,000 − 40,000) ÷ 40,000 = 0.5 = 50%."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-a-h-0.1"
+    }
+  ]
+}

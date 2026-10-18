@@ -6,8 +6,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import id.petalytix.ayailmu.core.data.Profile
 import id.petalytix.ayailmu.core.data.ProfileKind
 import id.petalytix.ayailmu.core.data.repo.ProfileRepository
+import id.petalytix.ayailmu.core.data.settings.ProfileChoiceStore
 import id.petalytix.ayailmu.core.engine.Clock
 import id.petalytix.ayailmu.core.model.Lang
+import id.petalytix.ayailmu.feature.home.Avatars
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,12 +23,14 @@ interface OnboardingDataSource {
     /** The active profile, which becomes the creator of a child profile; null on first run. */
     suspend fun creator(): Profile?
 
+    /** [avatar]: the picture picked on the name step (follow-up 12); null = the default for the new profile's id. */
     suspend fun create(
         label: String,
         kind: ProfileKind,
         lang: Lang,
         birthYear: Int,
         createdBy: String?,
+        avatar: String?,
     )
 
     fun currentYear(): Int
@@ -37,6 +41,7 @@ class DefaultOnboardingDataSource
     constructor(
         private val profiles: ProfileRepository,
         private val clock: Clock,
+        private val choices: ProfileChoiceStore,
     ) : OnboardingDataSource {
         override suspend fun creator(): Profile? = profiles.activeProfile()
 
@@ -46,8 +51,12 @@ class DefaultOnboardingDataSource
             lang: Lang,
             birthYear: Int,
             createdBy: String?,
+            avatar: String?,
         ) {
-            profiles.create(label = label, kind = kind, lang = lang, birthYear = birthYear, createdBy = createdBy, makeActive = true)
+            val profile =
+                profiles.create(label = label, kind = kind, lang = lang, birthYear = birthYear, createdBy = createdBy, makeActive = true)
+            // A picture that cannot be saved is not worth failing the profile for: the default picture stays.
+            if (avatar != null) runCatching { choices.setAvatar(profile.id, avatar) }
         }
 
         override fun currentYear(): Int = clock.today().year
@@ -67,6 +76,8 @@ data class OnboardingUiState(
     /** Neutral age screen: nothing is preselected (Play Families policy). */
     val birthYear: Int? = null,
     val name: String = "",
+    /** Follow-up 12: the picture picked on the name step; null = none yet (the new profile gets a default). */
+    val avatar: String? = null,
     val creatorLabel: String? = null,
     val busy: Boolean = false,
     val error: Boolean = false,
@@ -107,6 +118,11 @@ sealed interface OnboardingEvent {
 
     data class NameChanged(
         val text: String,
+    ) : OnboardingEvent
+
+    /** A picture on the name step (one of `Avatars.KEYS`). */
+    data class PickAvatar(
+        val key: String,
     ) : OnboardingEvent
 
     data object Next : OnboardingEvent
@@ -163,6 +179,7 @@ class OnboardingViewModel
                 is OnboardingEvent.PickLang -> _state.update { it.copy(lang = event.lang, langPicked = true) }
                 is OnboardingEvent.PickYear -> _state.update { it.copy(birthYear = event.year) }
                 is OnboardingEvent.NameChanged -> _state.update { it.copy(name = event.text.take(OnboardingUiState.NAME_MAX), error = false) }
+                is OnboardingEvent.PickAvatar -> if (event.key in Avatars.KEYS) _state.update { it.copy(avatar = event.key) }
                 OnboardingEvent.Back -> _state.update { it.copy(step = previous(it.step), error = false) }
                 OnboardingEvent.Next -> next()
             }
@@ -203,6 +220,7 @@ class OnboardingViewModel
                         lang = s.lang,
                         birthYear = year,
                         createdBy = if (kind == ProfileKind.ANAK) creator?.id else null,
+                        avatar = s.avatar,
                     )
                     _state.update { it.copy(busy = false, done = true) }
                 } catch (e: Exception) {

@@ -1,6 +1,6 @@
 # Monetization Scheme — AyaIlmu
 
-Budget: ≤ 20 KB. Prices are **defaults until Umar confirms** (OPEN). Status stamps as elsewhere. Nothing here is marketed until the matching feature is RELEASED.
+Budget: ≤ 20 KB. Prices **DECIDED 2026-10-17** (Umar: use the defaults below; no upgrade product). Status stamps as elsewhere. Nothing here is marketed until the matching feature is RELEASED.
 
 ## Model (DECIDED 2026-10-16): freemium + one-time lifetime unlocks, no ads, no server
 
@@ -10,23 +10,25 @@ Why this model fits the constraints:
 - **Indonesian market.** "Bayar sekali, milik selamanya, bisa offline" is a strong, honest pitch where subscriptions churn and data plans are metered. Pending payments (Indomaret/Alfamart, bank transfer) are supported by Play and handled by CR-BIL-1.
 - **Solo founder.** No entitlement server, no receipt-validation endpoint, no webhook, no subscription-state machine to maintain.
 
-## Products (PLANNED 2026-10-16) — all `INAPP` non-consumable
+## Products (DECIDED 2026-10-17; IN SOURCE in `:core:billing`) — all `INAPP` non-consumable
 
 | Product ID | Unlocks | Default price (IDR) | Notes |
 |---|---|---|---|
-| `pack_bahasa_lifetime` | All Bahasa tracks (Arab first; later tracks included) | 79.000 | Includes the full Arabic course as units are approved |
+| `pack_bahasa_lifetime` | All Bahasa tracks (Arab first; later tracks included — since 2026-10-18 also Inggris, Korea, Jepang, Mandarin, unit 01 of each free) | 79.000 | Includes the full Arabic course as units are approved |
 | `pack_matematika_lifetime` | All Matematika tracks | 59.000 | |
 | `pack_sains_lifetime` | All Sains tracks | 59.000 | |
 | `pack_sosial_seni_lifetime` | All Sosial & Seni tracks | 59.000 | |
+| `pack_sejarah_lifetime` (IN SOURCE 2026-10-18) | All Sejarah tracks | 59.000 [UMAR: confirm] | Create in Play Console; included in all-access |
+| *Nilai* | — | free | No product: every unit of every Nilai track is free (a Families-friendly gift) |
 | `all_access_lifetime` | Everything, current and future tracks | 149.000 | Anchor: cheaper than any three packs |
-| `all_access_upgrade` (OPEN) | All-access for owners of ≥ 1 pack | 99.000 | Only if Play's one-time product offers make it clean; otherwise skip |
+| ~~`all_access_upgrade`~~ (DROPPED 2026-10-17) | — | — | No upgrade product; all-access stays one price |
 
 Rules: product IDs never change once live; a pack's scope only grows. Prices are set in Play Console in IDR with Play's local price templates for other countries; the app always shows Play's formatted price (CR-BIL-5). Consider a launch-window price (Play "one-time product offers") rather than permanent discounts.
 
-## Free tier (PLANNED 2026-10-16)
+## Free tier (IN SOURCE 2026-10-17: catalog `free_units` = unit 01 / Arabic A; «Coba satu soal» preview of locked units and closed-test tester codes IN SOURCE in follow-up 10)
 
 - Every subject: first track's first unit(s) free, plus the daily session always works with free content, so a free learner never hits a dead screen.
-- Arabic: entry check + Unit A free; Unit B onward in the pack. (Closed-test testers get everything via a tester flag, not a purchase.)
+- Arabic: entry check + Unit A free; Unit B onward in the pack. (Closed-test testers get everything via a tester code — hashes + `tester_until` in `app_config.json`, CR-BIL-7 — not a purchase.)
 - Locked content is visible and previewable (one item), labelled plainly "Termasuk dalam Paket Bahasa", no countdowns, no lock-shaking animations.
 - Free users keep all progress and stickers forever; nothing is taken away.
 

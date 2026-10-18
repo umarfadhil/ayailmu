@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- shape_square: DRAFT art authored as code by art/tools/draw.py (ART_DIRECTION section 6). Placeholder until a human illustrator redraws or approves it (section 7). Generated: do not edit by hand. -->
+<!-- Texture slot: the app composites the shared paper-grain overlay above this drawing; no grain is baked in. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+  android:width="240dp"
+  android:height="240dp"
+  android:viewportWidth="240"
+  android:viewportHeight="240">
+  <path
+    android:fillColor="@color/art_ochre"
+    android:pathData="M52.1 48.2L68.9 48.2L86.8 49.7L104 50.2L120.7 51.3L137.6 51.8L154.9 53.4L172.3 53.8L189.8 54.5L188.8 72.2L187.6 89.7L187.1 106.3L186.1 123.4L185.3 141L184.7 158.5L183 175.1L182.4 192.7L164.9 191.9L147.5 191.2L130.9 189.6L113 189.2L96.6 188L79.4 187.5L61.9 186.5L44.5 185.6L45.3 168.3L46.8 151.1L47.8 134.1L47.8 116.5L48.9 99.8L50.1 82.6L50.6 64.8Z" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="3"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M54.4 48.2C99.9 51.1 146.9 53.1 192.4 55.9M191.5 54.5C189 100.3 186.5 147.6 184.3 193.5M182.7 193.6C138.2 191.7 92.4 188.8 47.9 186.4M46.4 186C48.9 140.6 51.7 93.7 53.5 48.2" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="1.5"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M188.9 89.3C187.1 121.8 185.9 155.4 184.7 187.9" />
+</vector>

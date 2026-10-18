@@ -1,0 +1,3321 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sej-k-h-0.1",
+    "subject": "sejarah",
+    "track": "sej-k-h",
+    "level": "mahir",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Sejarah — Mahir (Anak)",
+      "en": "History — Advanced (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, MODULES_LEVELS_STORIES.md sections 2 and 4) for review: needs a history reviewer (every date, place and claim against the story sources), a depiction check of the drawn scenes (silhouettes only, no face likeness, no weapons or violence) and the Indonesian and English language reviewers before any item is approved. Narration clips (id/en sej_k_*) are scripted in android/content/voice/id.sejarah-k.json and en.sejarah-k.json; captions show without them.",
+  "prompts": {
+    "P-STORY": {
+      "id": "Tonton ceritanya, yuk.",
+      "en": "Let's watch the story."
+    },
+    "P-STORY-ORDER": {
+      "id": "Urutkan kejadian di cerita.",
+      "en": "Put the story in order."
+    },
+    "P-TIMELINE": {
+      "id": "Urutkan dari yang paling dulu.",
+      "en": "Order from earliest to latest."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban yang tepat.",
+      "en": "Pick the right answer."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-CONNECT": {
+      "id": "Tarik garis ke pasangannya.",
+      "en": "Draw a line to each match."
+    },
+    "P-WHOSE": {
+      "id": "Seret ke tokoh pemiliknya.",
+      "en": "Drag each to its person."
+    },
+    "P-LEARN": {
+      "id": "Mana yang patut ditiru?",
+      "en": "Which are good to follow?"
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Sip, kita lanjut!",
+      "en": "Great, let's keep going!"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Masa keemasan ilmu",
+        "en": "The golden age of science"
+      },
+      "sticker": "sticker_teapot"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Pembangun bangsa",
+        "en": "Nation builders"
+      },
+      "sticker": "sticker_rice_field"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SEJ-K-H-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Masa keemasan ilmu",
+        "en": "The golden age of science"
+      },
+      "body": [
+        {
+          "id": "Sekitar 1.000 tahun lalu, kota Bagdad dan Bukhara penuh dengan perpustakaan dan ilmuwan.",
+          "en": "About 1,000 years ago, the cities of Baghdad and Bukhara were full of libraries and scholars."
+        },
+        {
+          "id": "Al-Khwarizmi menulis buku hitung yang melahirkan kata aljabar dan algoritma.",
+          "en": "Al-Khwarizmi wrote maths books that gave us the words algebra and algorithm."
+        },
+        {
+          "id": "Ibn Sina menulis buku kedokteran yang dipakai ratusan tahun.",
+          "en": "Ibn Sina wrote a medical book that was used for hundreds of years."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SEJ-K-H-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Pembangun bangsa",
+        "en": "Nation builders"
+      },
+      "body": [
+        {
+          "id": "Mohammad Hatta ikut memproklamasikan kemerdekaan dan dikenal sebagai Bapak Koperasi.",
+          "en": "Mohammad Hatta helped proclaim independence and is known as the Father of Cooperatives."
+        },
+        {
+          "id": "B.J. Habibie merancang pesawat dan memimpin pembuatan pesawat N250.",
+          "en": "B.J. Habibie designed aircraft and led the building of the N250 plane."
+        },
+        {
+          "id": "Keduanya belajar jauh di luar negeri, lalu pulang untuk membangun Indonesia.",
+          "en": "Both studied far away abroad, then came home to build Indonesia."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "stories": {
+    "ST-KHWARIZMI": {
+      "figure": "Muhammad ibn Musa al-Khwarizmi (c. 780–c. 850)",
+      "title": {
+        "id": "Al-Khwarizmi dan angka-angka",
+        "en": "Al-Khwarizmi and the numbers"
+      },
+      "source": "Encyclopaedia Britannica, \"al-Khwarizmi\" (c. 780-c. 850; House of Wisdom, Baghdad, under al-Ma'mun; introduced Hindu-Arabic numerals and algebra to Europe; 'algorithm' and 'algebra' from Latin forms of his name and book title); MacTutor / Dictionary of Scientific Biography, \"Al-Khwarizmi\" (the algebra book solves everyday problems: measuring land, dividing inheritances; the numerals book explains 1-9 and 0 with place value).",
+      "emblem": "hist_khwarizmi_board",
+      "panels": [
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Al-Khwarizmi hidup sekitar 1.200 tahun lalu di Bagdad, kota besar di Irak. Ia ahli matematika dan bintang.",
+            "en": "Al-Khwarizmi lived about 1,200 years ago in Baghdad, a great city in Iraq. He was a master of mathematics and the stars."
+          },
+          "narration": {
+            "id": "id/sej_k_khwarizmi_01",
+            "en": "en/sej_k_khwarizmi_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_scholar",
+              "x": 0.01,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_astrolabe",
+              "x": 0.28,
+              "y": 0.745,
+              "w": 0.12,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_library_old",
+          "caption": {
+            "id": "Ia bekerja di Baitul Hikmah, Rumah Kebijaksanaan. Di sana para ilmuwan menerjemahkan dan menulis buku dari banyak bangsa.",
+            "en": "He worked at the House of Wisdom. There, scholars translated and wrote books from many peoples."
+          },
+          "narration": {
+            "id": "id/sej_k_khwarizmi_02",
+            "en": "en/sej_k_khwarizmi_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_scholar",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_sil_scholar",
+              "x": 0.19,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.45,
+              "y": 0.711,
+              "w": 0.14,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 500
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_library_old",
+          "caption": {
+            "id": "Ia menulis buku tentang angka 0 sampai 9 dari India. Dengan sepuluh angka itu, berhitung menjadi jauh lebih mudah.",
+            "en": "He wrote a book about the digits 0 to 9 from India. With those ten digits, arithmetic became much easier."
+          },
+          "narration": {
+            "id": "id/sej_k_khwarizmi_03",
+            "en": "en/sej_k_khwarizmi_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_scholar",
+              "x": 0.01,
+              "y": 0.426,
+              "w": 0.3
+            },
+            {
+              "art": "hist_khwarizmi_board",
+              "x": 0.38,
+              "y": 0.267,
+              "w": 0.4,
+              "motion": {
+                "type": "reveal",
+                "from": "left",
+                "ms": 1600
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Bukunya yang lain, al-Jabr, mengajarkan cara mencari bilangan yang belum diketahui. Dari situ lahir kata \"aljabar\".",
+            "en": "Another of his books, al-Jabr, taught how to find an unknown number. That is where the word \"algebra\" comes from."
+          },
+          "narration": {
+            "id": "id/sej_k_khwarizmi_04",
+            "en": "en/sej_k_khwarizmi_04"
+          },
+          "layers": [
+            {
+              "art": "hist_khwarizmi_board",
+              "x": 0.1,
+              "y": 0.267,
+              "w": 0.4,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_sil_scholar",
+              "x": 0.55,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_quill",
+              "x": 0.81,
+              "y": 0.779,
+              "w": 0.1,
+              "motion": {
+                "type": "sway",
+                "deg": 3,
+                "ms": 2400,
+                "loop": true
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_night_sky",
+          "caption": {
+            "id": "Ilmunya dipakai untuk mengukur tanah dan membagi warisan dengan adil. Bahkan kata \"algoritma\" berasal dari namanya!",
+            "en": "His maths was used to measure land and share inheritances fairly. Even the word \"algorithm\" comes from his name!"
+          },
+          "narration": {
+            "id": "id/sej_k_khwarizmi_05",
+            "en": "en/sej_k_khwarizmi_05"
+          },
+          "layers": [
+            {
+              "art": "hist_astrolabe",
+              "x": 0.12,
+              "y": 0.647,
+              "w": 0.16,
+              "motion": {
+                "type": "glow",
+                "ms": 2400,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_khwarizmi_board",
+              "x": 0.44,
+              "y": 0.306,
+              "w": 0.36,
+              "motion": {
+                "type": "zoom",
+                "scale_from": 1.0,
+                "scale_to": 1.06,
+                "ms": 4000
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ST-IBN-SINA": {
+      "figure": "Ibn Sina / Avicenna (980–1037)",
+      "title": {
+        "id": "Ibn Sina, dokter yang gemar membaca",
+        "en": "Ibn Sina, the doctor who loved to read"
+      },
+      "source": "MacTutor History of Mathematics (University of St Andrews), \"Avicenna\" (born c. 980, Afshana near Bukhara; physician at 18; cured the Samanid ruler Nuh II in 997 and gained access to the royal library; the Canon of Medicine was a standard text at medieval universities and used until the 1700s; died 1037 near Hamadan); IAU Gazetteer of Planetary Nomenclature, lunar crater \"Avicenna\".",
+      "emblem": "hist_ibn_sina_book",
+      "panels": [
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Ibn Sina lahir tahun 980 di dekat Bukhara, kini di Uzbekistan. Sejak kecil ia sangat cepat belajar.",
+            "en": "Ibn Sina was born in 980 near Bukhara, in today's Uzbekistan. From childhood he learned very fast."
+          },
+          "narration": {
+            "id": "id/sej_k_ibn_sina_01",
+            "en": "en/sej_k_ibn_sina_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_boy",
+              "x": 0.01,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.26,
+              "y": 0.745,
+              "w": 0.12,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_room_lamp",
+          "caption": {
+            "id": "Ia membaca buku-buku kedokteran dan mencoba mengobati orang sakit. Umur 18 tahun, ia sudah menjadi dokter.",
+            "en": "He read medical books and tried to treat sick people. By the age of 18, he was already a doctor."
+          },
+          "narration": {
+            "id": "id/sej_k_ibn_sina_02",
+            "en": "en/sej_k_ibn_sina_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.03,
+              "y": 0.446,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_herbs_mortar",
+              "x": 0.49,
+              "y": 0.421,
+              "w": 0.14,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_oil_lamp",
+              "x": 0.81,
+              "y": 0.489,
+              "w": 0.1,
+              "motion": {
+                "type": "glow",
+                "ms": 2400,
+                "loop": true
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_library_old",
+          "caption": {
+            "id": "Ketika ia menyembuhkan penguasa Bukhara, ia diizinkan membaca di perpustakaan istana. Ia membaca hampir semua bukunya!",
+            "en": "When he cured the ruler of Bukhara, he was allowed to read in the palace library. He read almost every book in it!"
+          },
+          "narration": {
+            "id": "id/sej_k_ibn_sina_03",
+            "en": "en/sej_k_ibn_sina_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_scholar",
+              "x": 0.03,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.35,
+              "y": 0.643,
+              "w": 0.18,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.57,
+              "y": 0.711,
+              "w": 0.14,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 500
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_library_old",
+          "caption": {
+            "id": "Ia menulis Al-Qanun fi al-Tibb, buku besar tentang penyakit, obat, dan cara hidup sehat. Buku itu dipakai dokter di Asia dan Eropa selama ratusan tahun.",
+            "en": "He wrote the Canon of Medicine, a great book about illnesses, medicines and healthy living. Doctors in Asia and Europe used it for hundreds of years."
+          },
+          "narration": {
+            "id": "id/sej_k_ibn_sina_04",
+            "en": "en/sej_k_ibn_sina_04"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_scholar",
+              "x": 0.01,
+              "y": 0.426,
+              "w": 0.3
+            },
+            {
+              "art": "hist_ibn_sina_book",
+              "x": 0.39,
+              "y": 0.506,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_herbs_mortar",
+              "x": 0.74,
+              "y": 0.745,
+              "w": 0.12,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 400
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_night_sky",
+          "caption": {
+            "id": "Sebuah kawah di Bulan dinamai Avicenna, nama Latinnya. Dari Ibn Sina, kita belajar gemar membaca dan menolong orang sakit.",
+            "en": "A crater on the Moon is named Avicenna, his Latin name. From Ibn Sina we learn to love reading and to help the sick."
+          },
+          "narration": {
+            "id": "id/sej_k_ibn_sina_05",
+            "en": "en/sej_k_ibn_sina_05"
+          },
+          "layers": [
+            {
+              "art": "pic_moon",
+              "x": 0.14,
+              "y": 0.118,
+              "w": 0.16,
+              "motion": {
+                "type": "glow",
+                "ms": 3000,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_ibn_sina_book",
+              "x": 0.46,
+              "y": 0.442,
+              "w": 0.28,
+              "motion": {
+                "type": "zoom",
+                "scale_from": 1.0,
+                "scale_to": 1.06,
+                "ms": 4000
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ST-HATTA": {
+      "figure": "Mohammad Hatta (1902–1980)",
+      "title": {
+        "id": "Bung Hatta dan peti-peti bukunya",
+        "en": "Bung Hatta and his chests of books"
+      },
+      "source": "Bisnis.com, \"Biografi Moh Hatta: latar pendidikan, gagasan ekonomi & legasinya\" (born Bukittinggi, 12 August 1902; studied in Rotterdam from 1921; arrested 1934, Boven Digoel then Banda Neira; signed the proclamation 17 August 1945; first Vice President; died 14 March 1980); Spice Islands blog, \"Hatta and Sjahrir in exile in Banda\" (sixteen chests of books; Banda Neira 1936-1942; afternoon school for the island's children); Metro TV News, \"Siapa Bapak Koperasi Indonesia?\" (title given at the Kongres Koperasi, Bandung, 17 July 1953; Hari Koperasi 12 July).",
+      "emblem": "hist_hatta_books",
+      "panels": [
+        {
+          "scene": "hist_bg_green_hills",
+          "caption": {
+            "id": "Mohammad Hatta lahir di Bukittinggi, Sumatra Barat, tahun 1902. Sejak kecil ia gemar membaca.",
+            "en": "Mohammad Hatta was born in Bukittinggi, West Sumatra, in 1902. He loved reading from an early age."
+          },
+          "narration": {
+            "id": "id/sej_k_hatta_01",
+            "en": "en/sej_k_hatta_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_boy",
+              "x": 0.03,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.28,
+              "y": 0.745,
+              "w": 0.12,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Ia kuliah ekonomi di Belanda. Di sana ia belajar tentang koperasi, usaha yang dimiliki bersama oleh anggotanya.",
+            "en": "He studied economics in the Netherlands. There he learned about cooperatives, businesses owned together by their members."
+          },
+          "narration": {
+            "id": "id/sej_k_hatta_02",
+            "en": "en/sej_k_hatta_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.01,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_hatta_books",
+              "x": 0.33,
+              "y": 0.506,
+              "w": 0.26,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_harbor",
+          "caption": {
+            "id": "Karena memperjuangkan kemerdekaan, ia diasingkan pemerintah Belanda ke tempat yang jauh. Ia membawa enam belas peti buku!",
+            "en": "Because he fought for independence, the Dutch government exiled him far away. He took sixteen chests of books with him!"
+          },
+          "narration": {
+            "id": "id/sej_k_hatta_03",
+            "en": "en/sej_k_hatta_03"
+          },
+          "layers": [
+            {
+              "art": "hist_small_boat",
+              "x": 0.15,
+              "y": 0.465,
+              "w": 0.22,
+              "motion": {
+                "type": "drift",
+                "dx": 0.04,
+                "ms": 5000,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.53,
+              "y": 0.245,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_hatta_books",
+              "x": 0.77,
+              "y": 0.393,
+              "w": 0.18,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 400
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_harbor",
+          "caption": {
+            "id": "Di Pulau Banda Neira, ia dan temannya, Sjahrir, membuka sekolah sore untuk anak-anak pulau.",
+            "en": "On the island of Banda Neira, he and his friend Sjahrir ran an afternoon school for the island's children."
+          },
+          "narration": {
+            "id": "id/sej_k_hatta_04",
+            "en": "en/sej_k_hatta_04"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.49,
+              "y": 0.245,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_sil_boy",
+              "x": 0.67,
+              "y": 0.245,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_sil_girl",
+              "x": 0.78,
+              "y": 0.245,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 500
+              }
+            },
+            {
+              "art": "hist_slate_board",
+              "x": 0.66,
+              "y": 0.563,
+              "w": 0.08
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_village_java",
+          "caption": {
+            "id": "Pada 17 Agustus 1945, ia dan Soekarno memproklamasikan kemerdekaan Indonesia. Hatta menjadi wakil presiden pertama.",
+            "en": "On 17 August 1945, he and Soekarno proclaimed Indonesia's independence. Hatta became the first Vice President."
+          },
+          "narration": {
+            "id": "id/sej_k_hatta_05",
+            "en": "en/sej_k_hatta_05"
+          },
+          "layers": [
+            {
+              "art": "hist_sunrise",
+              "x": 0.06,
+              "y": 0.0,
+              "w": 0.32,
+              "motion": {
+                "type": "glow",
+                "ms": 3000,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.41,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.57,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_village_java",
+          "caption": {
+            "id": "Ia mendorong rakyat mendirikan koperasi supaya maju bersama. Karena itu ia disebut Bapak Koperasi Indonesia.",
+            "en": "He encouraged people to start cooperatives so they could get ahead together. That is why he is called the Father of Indonesian Cooperatives."
+          },
+          "narration": {
+            "id": "id/sej_k_hatta_06",
+            "en": "en/sej_k_hatta_06"
+          },
+          "layers": [
+            {
+              "art": "hist_coop_shop",
+              "x": 0.42,
+              "y": 0.387,
+              "w": 0.44,
+              "motion": {
+                "type": "fade_in",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_sil_woman_headscarf",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.0,
+                    0.426
+                  ],
+                  [
+                    0.09,
+                    0.426
+                  ]
+                ],
+                "ms": 3500
+              }
+            },
+            {
+              "art": "hist_hatta_books",
+              "x": 0.32,
+              "y": 0.745,
+              "w": 0.12,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 600
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ST-HABIBIE": {
+      "figure": "Bacharuddin Jusuf Habibie (1936–2019)",
+      "title": {
+        "id": "Habibie dan pesawat buatan Indonesia",
+        "en": "Habibie and the plane made in Indonesia"
+      },
+      "source": "Wikipedia, \"B. J. Habibie\" (born 25 June 1936, Parepare; RWTH Aachen, Diplom-Ingenieur 1960, doctorate 1965; Messerschmitt-Bölkow-Blohm; returned 1974; led IPTN from about 1976; third President 1998-1999; died 11 September 2019); ITS News, \"Selamat Hari Kebangkitan Teknologi Nasional\" (N-250 Gatotkaca first flight 10 August 1995 in Bandung, origin of Hakteknas on 10 August).",
+      "emblem": "hist_habibie_plane",
+      "panels": [
+        {
+          "scene": "hist_bg_harbor",
+          "caption": {
+            "id": "B.J. Habibie lahir di Parepare, Sulawesi Selatan, tahun 1936. Waktu kecil ia suka membaca dan bertanya tentang cara kerja benda.",
+            "en": "B.J. Habibie was born in Parepare, South Sulawesi, in 1936. As a boy he loved reading and asking how things work."
+          },
+          "narration": {
+            "id": "id/sej_k_habibie_01",
+            "en": "en/sej_k_habibie_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_boy",
+              "x": 0.67,
+              "y": 0.245,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "pic_plane",
+              "x": 0.22,
+              "y": 0.038,
+              "w": 0.16,
+              "motion": {
+                "type": "drift",
+                "dx": 0.05,
+                "ms": 5000,
+                "loop": true
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Ia kuliah teknik pesawat di Aachen, Jerman, sampai menjadi doktor. Ia lalu bekerja di pabrik pesawat di sana.",
+            "en": "He studied aircraft engineering in Aachen, Germany, and earned a doctorate. Then he worked at an aircraft factory there."
+          },
+          "narration": {
+            "id": "id/sej_k_habibie_02",
+            "en": "en/sej_k_habibie_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.01,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_blueprint",
+              "x": 0.33,
+              "y": 0.438,
+              "w": 0.3,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_sky_field",
+          "caption": {
+            "id": "Tahun 1974, ia pulang ke Indonesia. Ia memimpin pabrik pesawat di Bandung dan melatih banyak insinyur muda.",
+            "en": "In 1974 he came home to Indonesia. He led the aircraft factory in Bandung and trained many young engineers."
+          },
+          "narration": {
+            "id": "id/sej_k_habibie_03",
+            "en": "en/sej_k_habibie_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_sil_woman",
+              "x": 0.15,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_blueprint",
+              "x": 0.45,
+              "y": 0.438,
+              "w": 0.3,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 500
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_sky_field",
+          "caption": {
+            "id": "Pada 10 Agustus 1995, pesawat N250 Gatotkaca rancangan Indonesia terbang perdana di Bandung. Orang-orang bersorak gembira.",
+            "en": "On 10 August 1995, the N250 Gatotkaca, designed in Indonesia, made its first flight in Bandung. People cheered with joy."
+          },
+          "narration": {
+            "id": "id/sej_k_habibie_04",
+            "en": "en/sej_k_habibie_04"
+          },
+          "layers": [
+            {
+              "art": "hist_habibie_plane",
+              "x": 0.11,
+              "y": 0.46,
+              "w": 0.3,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.11,
+                    0.46
+                  ],
+                  [
+                    0.45,
+                    0.28
+                  ],
+                  [
+                    0.69,
+                    0.24
+                  ]
+                ],
+                "ms": 5000
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_sil_girl",
+              "x": 0.07,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.06,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_sky_field",
+          "caption": {
+            "id": "Kini 10 Agustus diperingati sebagai Hari Kebangkitan Teknologi Nasional. Dari Habibie, kita belajar bermimpi besar dan terus belajar.",
+            "en": "Today 10 August is National Technology Awakening Day. From Habibie we learn to dream big and keep learning."
+          },
+          "narration": {
+            "id": "id/sej_k_habibie_05",
+            "en": "en/sej_k_habibie_05"
+          },
+          "layers": [
+            {
+              "art": "hist_habibie_plane",
+              "x": 0.44,
+              "y": 0.127,
+              "w": 0.32,
+              "motion": {
+                "type": "drift",
+                "dx": 0.04,
+                "ms": 5000,
+                "loop": true,
+                "dy": -0.02
+              }
+            },
+            {
+              "art": "hist_blueprint",
+              "x": 0.08,
+              "y": 0.54,
+              "w": 0.24,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "SEJ-K-H-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "story",
+      "skills": [
+        "SEJ-KHWARIZMI"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-KHWARIZMI",
+      "model_answer": {
+        "id": "Al-Khwarizmi menulis buku tentang angka 0–9 dan aljabar di Rumah Kebijaksanaan, Bagdad.",
+        "en": "Al-Khwarizmi wrote books on the digits 0-9 and on algebra at the House of Wisdom in Baghdad."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "SEJ-KHWARIZMI"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-STORY-ORDER",
+      "story_id": "ST-KHWARIZMI",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang terjadi lebih dulu?",
+            "en": "What happened first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Ia menulis buku angka 0–9",
+            "en": "He writes the book of digits 0-9"
+          },
+          "image": "hist_khwarizmi_board"
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Ia mempelajari matematika dan bintang",
+            "en": "He studies maths and the stars"
+          },
+          "image": "hist_astrolabe"
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Ia menulis buku al-Jabr",
+            "en": "He writes the book al-Jabr"
+          },
+          "image": "hist_quill"
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Ia bekerja di Rumah Kebijaksanaan",
+            "en": "He works at the House of Wisdom"
+          },
+          "image": "hist_book_stack"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "model_answer": {
+        "id": "Ia belajar di Bagdad, bekerja di Rumah Kebijaksanaan, menulis buku angka, lalu menulis al-Jabr.",
+        "en": "He studied in Baghdad, worked at the House of Wisdom, wrote the book of numbers, then wrote al-Jabr."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-KHWARIZMI"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-KHWARIZMI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang dijelaskan Al-Khwarizmi?",
+            "en": "What did Al-Khwarizmi explain?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_herbs_mortar",
+          "image": "hist_herbs_mortar"
+        },
+        {
+          "id": "hist_habibie_plane",
+          "image": "hist_habibie_plane"
+        },
+        {
+          "id": "hist_khwarizmi_board",
+          "image": "hist_khwarizmi_board",
+          "correct": true
+        },
+        {
+          "id": "hist_coop_shop",
+          "image": "hist_coop_shop"
+        }
+      ],
+      "model_answer": {
+        "id": "Al-Khwarizmi menjelaskan angka 0 sampai 9 dan cara berhitung dengannya.",
+        "en": "Al-Khwarizmi explained the digits 0 to 9 and how to calculate with them."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "SEJ-KHWARIZMI"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-TF",
+      "story_id": "ST-KHWARIZMI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kata \"algoritma\" berasal dari nama Al-Khwarizmi.",
+            "en": "The word \"algorithm\" comes from Al-Khwarizmi's name."
+          }
+        }
+      ],
+      "image": "hist_khwarizmi_board",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Nama Latinnya, Algoritmi, menjadi kata algoritma.",
+        "en": "True. His Latin name, Algoritmi, became the word algorithm."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "SEJ-KHWARIZMI"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-CONNECT",
+      "story_id": "ST-KHWARIZMI",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dengan ceritanya.",
+            "en": "Match each picture to the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m1",
+          "text": {
+            "id": "papan angka",
+            "en": "number board"
+          },
+          "image": "hist_khwarizmi_board"
+        },
+        {
+          "id": "m2",
+          "text": {
+            "id": "astrolab",
+            "en": "astrolabe"
+          },
+          "image": "hist_astrolabe"
+        },
+        {
+          "id": "m3",
+          "text": {
+            "id": "buku",
+            "en": "books"
+          },
+          "image": "hist_book_stack"
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "mengamati bintang",
+            "en": "watching the stars"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Rumah Kebijaksanaan",
+            "en": "the House of Wisdom"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "berhitung dengan angka 0–9",
+            "en": "counting with the digits 0-9"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "m1": "t1",
+        "m2": "t2",
+        "m3": "t3"
+      },
+      "model_answer": {
+        "id": "Papan angka untuk berhitung, astrolab untuk mengamati bintang, dan tumpukan buku Rumah Kebijaksanaan.",
+        "en": "The number board for arithmetic, the astrolabe for the stars, and the books of the House of Wisdom."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "SEJ-KHWARIZMI"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-CHOOSE",
+      "story_id": "ST-KHWARIZMI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Untuk apa ilmu aljabar dipakai pada masa itu?",
+            "en": "What was algebra used for in those days?"
+          }
+        }
+      ],
+      "image": "hist_khwarizmi_board",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Membuat pesawat terbang",
+            "en": "Building aeroplanes"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Mengukur tanah dan membagi warisan",
+            "en": "Measuring land and sharing inheritances"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Mengobati orang sakit",
+            "en": "Treating the sick"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Aljabar dipakai untuk mengukur tanah dan membagi warisan dengan adil.",
+        "en": "Algebra was used to measure land and share inheritances fairly."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "SEJ-IBN-SINA"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-IBN-SINA",
+      "model_answer": {
+        "id": "Ibn Sina menjadi dokter pada umur 18 dan menulis buku kedokteran yang dipakai ratusan tahun.",
+        "en": "Ibn Sina became a doctor at 18 and wrote a medical book that was used for hundreds of years."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "SEJ-IBN-SINA"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-STORY-ORDER",
+      "story_id": "ST-IBN-SINA",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang terjadi lebih dulu?",
+            "en": "What happened first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Ia membaca di perpustakaan istana",
+            "en": "He reads in the palace library"
+          },
+          "image": "hist_book_stack"
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Ibn Sina kecil cepat belajar",
+            "en": "Young Ibn Sina learns fast"
+          },
+          "image": "hist_sil_boy"
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Ia menulis buku kedokteran",
+            "en": "He writes his medical book"
+          },
+          "image": "hist_ibn_sina_book"
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Ia menjadi dokter",
+            "en": "He becomes a doctor"
+          },
+          "image": "hist_herbs_mortar"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "model_answer": {
+        "id": "Ibn Sina kecil cepat belajar, menjadi dokter, membaca di perpustakaan istana, lalu menulis bukunya.",
+        "en": "Young Ibn Sina learned fast, became a doctor, read in the palace library, then wrote his book."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-IBN-SINA"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-IBN-SINA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa pekerjaan Ibn Sina?",
+            "en": "What was Ibn Sina's job?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_doctor",
+          "image": "pic_doctor",
+          "correct": true
+        },
+        {
+          "id": "pic_pilot",
+          "image": "pic_pilot"
+        },
+        {
+          "id": "pic_fisher",
+          "image": "pic_fisher"
+        },
+        {
+          "id": "pic_chef",
+          "image": "pic_chef"
+        }
+      ],
+      "model_answer": {
+        "id": "Ibn Sina adalah seorang dokter.",
+        "en": "Ibn Sina was a doctor."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "SEJ-IBN-SINA",
+        "SEJ-KHWARIZMI"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-WHOSE",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Benda ini dari cerita siapa?",
+            "en": "Whose story is each thing from?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_kw",
+          "text": {
+            "id": "Al-Khwarizmi",
+            "en": "Al-Khwarizmi"
+          }
+        },
+        {
+          "id": "b_is",
+          "text": {
+            "id": "Ibn Sina",
+            "en": "Ibn Sina"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Papan angka",
+            "en": "A number board"
+          },
+          "image": "hist_khwarizmi_board"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Buku kedokteran",
+            "en": "A medical book"
+          },
+          "image": "hist_ibn_sina_book"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Astrolab",
+            "en": "An astrolabe"
+          },
+          "image": "hist_astrolabe"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Lumpang dan ramuan obat",
+            "en": "A mortar and herbs"
+          },
+          "image": "hist_herbs_mortar"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_kw",
+        "c2": "b_is",
+        "c3": "b_kw",
+        "c4": "b_is"
+      },
+      "model_answer": {
+        "id": "Papan angka dan astrolab dari cerita Al-Khwarizmi. Buku kedokteran dan lumpang obat dari cerita Ibn Sina.",
+        "en": "The number board and the astrolabe belong to Al-Khwarizmi's story. The medical book and the herb mortar belong to Ibn Sina's."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "SEJ-IBN-SINA"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-TF",
+      "story_id": "ST-IBN-SINA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Buku kedokteran Ibn Sina hanya dipakai beberapa tahun.",
+            "en": "Ibn Sina's medical book was used for only a few years."
+          }
+        }
+      ],
+      "image": "hist_ibn_sina_book",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Salah. Bukunya dipakai dokter di Asia dan Eropa selama ratusan tahun.",
+        "en": "False. Doctors in Asia and Europe used his book for hundreds of years."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "SEJ-IBN-SINA"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-CONNECT",
+      "story_id": "ST-IBN-SINA",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dengan ceritanya.",
+            "en": "Match each picture to the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m1",
+          "text": {
+            "id": "ramuan obat",
+            "en": "herbs"
+          },
+          "image": "hist_herbs_mortar"
+        },
+        {
+          "id": "m2",
+          "text": {
+            "id": "buku tebal",
+            "en": "a thick book"
+          },
+          "image": "hist_ibn_sina_book"
+        },
+        {
+          "id": "m3",
+          "text": {
+            "id": "bulan",
+            "en": "the Moon"
+          },
+          "image": "pic_moon"
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Al-Qanun fi al-Tibb",
+            "en": "the Canon of Medicine"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "kawah Avicenna",
+            "en": "the crater Avicenna"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "mengobati orang sakit",
+            "en": "treating the sick"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "m1": "t1",
+        "m2": "t2",
+        "m3": "t3"
+      },
+      "model_answer": {
+        "id": "Ramuan obat untuk pasien, buku Al-Qanun fi al-Tibb, dan Bulan dengan kawah Avicenna.",
+        "en": "The herbs for his patients, the Canon of Medicine, and the Moon with the crater Avicenna."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "SEJ-IBN-SINA"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-CHOOSE",
+      "story_id": "ST-IBN-SINA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang Ibn Sina dapatkan setelah menyembuhkan penguasa Bukhara?",
+            "en": "What did Ibn Sina receive after curing the ruler of Bukhara?"
+          }
+        }
+      ],
+      "image": "hist_book_stack",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Sebuah kapal besar",
+            "en": "A big ship"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Sebuah pesawat",
+            "en": "An aeroplane"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Izin membaca di perpustakaan istana",
+            "en": "Permission to read in the palace library"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Ia diizinkan membaca di perpustakaan istana.",
+        "en": "He was allowed to read in the palace library."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "SEJ-KHWARIZMI",
+        "SEJ-IBN-SINA"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-TIMELINE",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang hidup paling dulu?",
+            "en": "Who lived first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Ibn Battuta, 1304–1368",
+            "en": "Ibn Battuta, 1304-1368"
+          },
+          "image": "hist_caravan"
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Al-Khwarizmi, sekitar 780–850",
+            "en": "Al-Khwarizmi, about 780-850"
+          },
+          "image": "hist_khwarizmi_board"
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Ibn Sina, 980–1037",
+            "en": "Ibn Sina, 980-1037"
+          },
+          "image": "hist_ibn_sina_book"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3"
+      ],
+      "model_answer": {
+        "id": "Al-Khwarizmi (sekitar 780–850), lalu Ibn Sina (980–1037), lalu Ibn Battuta (1304–1368).",
+        "en": "Al-Khwarizmi (about 780-850), then Ibn Sina (980-1037), then Ibn Battuta (1304-1368)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-01-015",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "SEJ-KHWARIZMI",
+        "SEJ-IBN-SINA"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-LEARN",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Seperti Al-Khwarizmi dan Ibn Sina?",
+            "en": "Like Al-Khwarizmi and Ibn Sina?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_good",
+          "text": {
+            "id": "Patut ditiru",
+            "en": "Good to follow"
+          }
+        },
+        {
+          "id": "b_less",
+          "text": {
+            "id": "Kurang baik",
+            "en": "Not so good"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Rajin membaca",
+            "en": "Reading a lot"
+          },
+          "image": "pic_read"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Mencontek jawaban teman",
+            "en": "Copying a friend's answers"
+          },
+          "image": "val_copy_answer"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Membagi dengan adil",
+            "en": "Sharing fairly"
+          },
+          "image": "val_share_food"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Menyerobot antrean",
+            "en": "Pushing into a queue"
+          },
+          "image": "val_cut_queue"
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Menjenguk teman yang sakit",
+            "en": "Visiting a sick friend"
+          },
+          "image": "val_visit_sick"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_good",
+        "c2": "b_less",
+        "c3": "b_good",
+        "c4": "b_less",
+        "c5": "b_good"
+      },
+      "model_answer": {
+        "id": "Rajin membaca, membagi dengan adil, dan menjenguk yang sakit patut ditiru. Mencontek dan menyerobot antrean kurang baik.",
+        "en": "Reading a lot, sharing fairly and visiting the sick are good to follow. Copying answers and pushing into a queue are not so good."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-01-016",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "SEJ-KHWARIZMI"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "story_id": "ST-KHWARIZMI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di kota mana Al-Khwarizmi bekerja?",
+            "en": "In which city did Al-Khwarizmi work?"
+          }
+        }
+      ],
+      "image": "hist_bg_city_old",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Bagdad",
+            "en": "Baghdad"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Paris",
+            "en": "Paris"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Jakarta",
+            "en": "Jakarta"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Al-Khwarizmi bekerja di Bagdad, di Rumah Kebijaksanaan.",
+        "en": "Al-Khwarizmi worked in Baghdad, at the House of Wisdom."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-01-017",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "SEJ-IBN-SINA"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "story_id": "ST-IBN-SINA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ibn Sina sudah menjadi dokter pada umur 18 tahun.",
+            "en": "Ibn Sina was already a doctor at 18."
+          }
+        }
+      ],
+      "image": "hist_herbs_mortar",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Ia menjadi dokter saat masih sangat muda.",
+        "en": "True. He became a doctor while still very young."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-01-018",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "SEJ-KHWARIZMI"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "hist_khwarizmi_board",
+      "gem": true,
+      "source": "Encyclopaedia Britannica, \"al-Khwarizmi\": \"Latinized versions of his name and of his most famous book title live on in the terms algorithm and algebra.\"",
+      "model_answer": {
+        "id": "Kata \"algoritma\", urutan langkah yang dipakai komputer dan ponselmu, berasal dari nama Al-Khwarizmi. Nama Latinnya ditulis Algoritmi.",
+        "en": "The word \"algorithm\", the list of steps your computer and phone follow, comes from Al-Khwarizmi's name. In Latin it was written Algoritmi."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "story",
+      "skills": [
+        "SEJ-HATTA"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-HATTA",
+      "model_answer": {
+        "id": "Hatta membawa peti-peti bukunya ke pengasingan, mengajar anak-anak, lalu ikut memproklamasikan kemerdekaan.",
+        "en": "Hatta took his chests of books into exile, taught children, then helped proclaim independence."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "SEJ-HATTA"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-STORY-ORDER",
+      "story_id": "ST-HATTA",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang terjadi lebih dulu?",
+            "en": "What happened first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Ia mengajar anak-anak Banda Neira",
+            "en": "He teaches the children of Banda Neira"
+          },
+          "image": "hist_slate_board"
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Hatta kuliah di Belanda",
+            "en": "Hatta studies in the Netherlands"
+          },
+          "image": "hist_book_stack"
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Proklamasi kemerdekaan 1945",
+            "en": "The 1945 proclamation of independence"
+          },
+          "image": "hist_sunrise"
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Ia diasingkan dengan peti bukunya",
+            "en": "He is exiled with his chests of books"
+          },
+          "image": "hist_hatta_books"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "model_answer": {
+        "id": "Hatta kuliah di Belanda, diasingkan dengan peti buku, mengajar di Banda Neira, lalu proklamasi 1945.",
+        "en": "Hatta studied in the Netherlands, was exiled with his chests of books, taught in Banda Neira, then the 1945 proclamation."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-HATTA"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-HATTA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang dibawa Hatta ke pengasingan?",
+            "en": "What did Hatta take into exile?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_habibie_plane",
+          "image": "hist_habibie_plane"
+        },
+        {
+          "id": "hist_treasure_ship",
+          "image": "hist_treasure_ship"
+        },
+        {
+          "id": "hist_astrolabe",
+          "image": "hist_astrolabe"
+        },
+        {
+          "id": "hist_hatta_books",
+          "image": "hist_hatta_books",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Hatta membawa enam belas peti buku.",
+        "en": "Hatta took sixteen chests of books."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "SEJ-HATTA"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-TF",
+      "story_id": "ST-HATTA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Hatta disebut Bapak Koperasi Indonesia.",
+            "en": "Hatta is called the Father of Indonesian Cooperatives."
+          }
+        }
+      ],
+      "image": "hist_coop_shop",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Gelar itu diberikan pada Kongres Koperasi di Bandung tahun 1953.",
+        "en": "True. He was given the title at the Cooperative Congress in Bandung in 1953."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "SEJ-HATTA"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-CONNECT",
+      "story_id": "ST-HATTA",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dengan ceritanya.",
+            "en": "Match each picture to the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m1",
+          "text": {
+            "id": "peti buku",
+            "en": "chests of books"
+          },
+          "image": "hist_hatta_books"
+        },
+        {
+          "id": "m2",
+          "text": {
+            "id": "papan tulis",
+            "en": "board"
+          },
+          "image": "hist_slate_board"
+        },
+        {
+          "id": "m3",
+          "text": {
+            "id": "toko koperasi",
+            "en": "cooperative shop"
+          },
+          "image": "hist_coop_shop"
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "sekolah sore di Banda Neira",
+            "en": "the afternoon school in Banda Neira"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "maju bersama",
+            "en": "getting ahead together"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "dibawa ke pengasingan",
+            "en": "taken into exile"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "m1": "t1",
+        "m2": "t2",
+        "m3": "t3"
+      },
+      "model_answer": {
+        "id": "Peti buku ke pengasingan, papan tulis untuk sekolah sore, dan koperasi untuk maju bersama.",
+        "en": "The chests of books for exile, the board for the afternoon school, and the cooperative for getting ahead together."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "SEJ-HATTA"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-CHOOSE",
+      "story_id": "ST-HATTA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa itu koperasi?",
+            "en": "What is a cooperative?"
+          }
+        }
+      ],
+      "image": "hist_coop_shop",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Toko milik satu orang kaya",
+            "en": "A shop owned by one rich person"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Sekolah untuk anak perempuan",
+            "en": "A school for girls"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Usaha yang dimiliki bersama oleh anggotanya",
+            "en": "A business owned together by its members"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Koperasi adalah usaha yang dimiliki dan dijalankan bersama oleh anggotanya.",
+        "en": "A cooperative is a business owned and run together by its members."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "SEJ-HABIBIE"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-HABIBIE",
+      "model_answer": {
+        "id": "Habibie belajar teknik pesawat di Jerman, pulang, lalu memimpin pembuatan pesawat N250.",
+        "en": "Habibie studied aircraft engineering in Germany, came home, then led the building of the N250."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "SEJ-HABIBIE"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-STORY-ORDER",
+      "story_id": "ST-HABIBIE",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang terjadi lebih dulu?",
+            "en": "What happened first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Ia pulang memimpin pabrik pesawat",
+            "en": "He comes home to lead the aircraft factory"
+          },
+          "image": "hist_sil_man"
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Habibie kecil suka bertanya",
+            "en": "Young Habibie asks questions"
+          },
+          "image": "hist_sil_boy"
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "N250 terbang perdana",
+            "en": "The N250 makes its first flight"
+          },
+          "image": "hist_habibie_plane"
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Ia kuliah teknik pesawat di Jerman",
+            "en": "He studies aircraft engineering in Germany"
+          },
+          "image": "hist_blueprint"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "model_answer": {
+        "id": "Habibie kecil suka bertanya, kuliah di Jerman, pulang ke Bandung, lalu N250 terbang tahun 1995.",
+        "en": "Young Habibie asked questions, studied in Germany, came home to Bandung, then the N250 flew in 1995."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-HABIBIE"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-HABIBIE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang dirancang Habibie?",
+            "en": "What did Habibie design?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_coop_shop",
+          "image": "hist_coop_shop"
+        },
+        {
+          "id": "hist_habibie_plane",
+          "image": "hist_habibie_plane",
+          "correct": true
+        },
+        {
+          "id": "hist_ibn_sina_book",
+          "image": "hist_ibn_sina_book"
+        },
+        {
+          "id": "hist_sewing_kit",
+          "image": "hist_sewing_kit"
+        }
+      ],
+      "model_answer": {
+        "id": "Habibie merancang pesawat terbang.",
+        "en": "Habibie designed aeroplanes."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "SEJ-HABIBIE",
+        "SEJ-HATTA"
+      ],
+      "pool": "PRACT",
+      "order": 25,
+      "prompt_id": "P-WHOSE",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Benda ini dari cerita siapa?",
+            "en": "Whose story is each thing from?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_ht",
+          "text": {
+            "id": "Mohammad Hatta",
+            "en": "Mohammad Hatta"
+          }
+        },
+        {
+          "id": "b_hb",
+          "text": {
+            "id": "B.J. Habibie",
+            "en": "B.J. Habibie"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Peti buku",
+            "en": "Chests of books"
+          },
+          "image": "hist_hatta_books"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Pesawat N250",
+            "en": "The N250 plane"
+          },
+          "image": "hist_habibie_plane"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Toko koperasi",
+            "en": "A cooperative shop"
+          },
+          "image": "hist_coop_shop"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Gambar rancangan",
+            "en": "A blueprint"
+          },
+          "image": "hist_blueprint"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_ht",
+        "c2": "b_hb",
+        "c3": "b_ht",
+        "c4": "b_hb"
+      },
+      "model_answer": {
+        "id": "Peti buku dan koperasi dari cerita Hatta. Pesawat dan gambar rancangan dari cerita Habibie.",
+        "en": "The chests of books and the cooperative belong to Hatta's story. The plane and the blueprint belong to Habibie's."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "SEJ-HABIBIE"
+      ],
+      "pool": "PRACT",
+      "order": 26,
+      "prompt_id": "P-TF",
+      "story_id": "ST-HABIBIE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pesawat N250 terbang perdana pada 10 Agustus 1995.",
+            "en": "The N250 made its first flight on 10 August 1995."
+          }
+        }
+      ],
+      "image": "hist_habibie_plane",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Kini 10 Agustus menjadi Hari Kebangkitan Teknologi Nasional.",
+        "en": "True. Today 10 August is National Technology Awakening Day."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "SEJ-HABIBIE"
+      ],
+      "pool": "PRACT",
+      "order": 27,
+      "prompt_id": "P-CONNECT",
+      "story_id": "ST-HABIBIE",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dengan ceritanya.",
+            "en": "Match each picture to the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m1",
+          "text": {
+            "id": "gambar rancangan",
+            "en": "blueprint"
+          },
+          "image": "hist_blueprint"
+        },
+        {
+          "id": "m2",
+          "text": {
+            "id": "pesawat N250",
+            "en": "the N250 plane"
+          },
+          "image": "hist_habibie_plane"
+        },
+        {
+          "id": "m3",
+          "text": {
+            "id": "kota tua",
+            "en": "old city"
+          },
+          "image": "hist_bg_city_old"
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "terbang perdana di Bandung",
+            "en": "first flight in Bandung"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "kuliah di Aachen, Jerman",
+            "en": "studying in Aachen, Germany"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "merancang pesawat",
+            "en": "designing a plane"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "m1": "t1",
+        "m2": "t2",
+        "m3": "t3"
+      },
+      "model_answer": {
+        "id": "Gambar rancangan dibuat insinyur, N250 terbang di Bandung, dan kota tua Aachen tempatnya kuliah.",
+        "en": "Engineers draw blueprints, the N250 flew in Bandung, and the old city of Aachen is where he studied."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-HABIBIE"
+      ],
+      "pool": "PRACT",
+      "order": 28,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-HABIBIE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang dipakai insinyur merancang pesawat?",
+            "en": "What do engineers use to design a plane?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_blueprint",
+          "image": "hist_blueprint",
+          "correct": true
+        },
+        {
+          "id": "hist_sewing_kit",
+          "image": "hist_sewing_kit"
+        },
+        {
+          "id": "hist_herbs_mortar",
+          "image": "hist_herbs_mortar"
+        }
+      ],
+      "model_answer": {
+        "id": "Insinyur menggambar rancangan pesawat lebih dulu.",
+        "en": "Engineers draw a blueprint of the plane first."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "SEJ-HATTA",
+        "SEJ-HABIBIE"
+      ],
+      "pool": "PRACT",
+      "order": 29,
+      "prompt_id": "P-TIMELINE",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang terjadi paling dulu?",
+            "en": "Which happened first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Hatta menjadi Bapak Koperasi, 1953",
+            "en": "Hatta named Father of Cooperatives, 1953"
+          },
+          "image": "hist_coop_shop"
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Hatta diasingkan, 1935",
+            "en": "Hatta is exiled, 1935"
+          },
+          "image": "hist_hatta_books"
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "N250 terbang perdana, 1995",
+            "en": "The N250's first flight, 1995"
+          },
+          "image": "hist_habibie_plane"
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Proklamasi kemerdekaan, 1945",
+            "en": "Independence proclaimed, 1945"
+          },
+          "image": "hist_sunrise"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "model_answer": {
+        "id": "Hatta diasingkan (1935), proklamasi kemerdekaan (1945), Hatta menjadi Bapak Koperasi (1953), lalu N250 terbang (1995).",
+        "en": "Hatta is exiled (1935), independence is proclaimed (1945), Hatta is named Father of Cooperatives (1953), then the N250 flies (1995)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-02-015",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "SEJ-HATTA",
+        "SEJ-HABIBIE"
+      ],
+      "pool": "PRACT",
+      "order": 30,
+      "prompt_id": "P-LEARN",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Seperti Hatta dan Habibie?",
+            "en": "Like Hatta and Habibie?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_good",
+          "text": {
+            "id": "Patut ditiru",
+            "en": "Good to follow"
+          }
+        },
+        {
+          "id": "b_less",
+          "text": {
+            "id": "Kurang baik",
+            "en": "Not so good"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Gotong royong",
+            "en": "Working together for the community"
+          },
+          "image": "val_gotong_royong"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Selalu terlambat",
+            "en": "Always being late"
+          },
+          "image": "val_late"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Tekun belajar",
+            "en": "Studying hard"
+          },
+          "image": "pic_study"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Mencontek jawaban teman",
+            "en": "Copying a friend's answers"
+          },
+          "image": "val_copy_answer"
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Datang tepat waktu",
+            "en": "Arriving on time"
+          },
+          "image": "val_on_time"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_good",
+        "c2": "b_less",
+        "c3": "b_good",
+        "c4": "b_less",
+        "c5": "b_good"
+      },
+      "model_answer": {
+        "id": "Gotong royong, tekun belajar, dan tepat waktu patut ditiru. Terlambat terus dan mencontek kurang baik.",
+        "en": "Working together, studying hard and being on time are good to follow. Always being late and copying answers are not so good."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-02-016",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "SEJ-HATTA"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "story_id": "ST-HATTA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kapan Soekarno dan Hatta memproklamasikan kemerdekaan?",
+            "en": "When did Soekarno and Hatta proclaim independence?"
+          }
+        }
+      ],
+      "image": "hist_sunrise",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "2 Mei 1889",
+            "en": "2 May 1889"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "17 Agustus 1945",
+            "en": "17 August 1945"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "10 Agustus 1995",
+            "en": "10 August 1995"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Proklamasi kemerdekaan Indonesia dibacakan pada 17 Agustus 1945.",
+        "en": "Indonesia's independence was proclaimed on 17 August 1945."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-02-017",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "SEJ-HABIBIE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "story_id": "ST-HABIBIE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Habibie kuliah teknik pesawat di Jerman.",
+            "en": "Habibie studied aircraft engineering in Germany."
+          }
+        }
+      ],
+      "image": "hist_blueprint",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Ia kuliah di Aachen, Jerman, sampai menjadi doktor.",
+        "en": "True. He studied in Aachen, Germany, and earned a doctorate."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    },
+    {
+      "item_id": "SEJ-K-H-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku sebuah angka. Sendirian aku berarti tidak ada, tetapi di belakang angka lain aku membuatnya sepuluh kali lebih besar. Al-Khwarizmi menjelaskan aku. Angka berapa aku?",
+            "en": "I am a digit. Alone I mean nothing, but behind another digit I make it ten times bigger. Al-Khwarizmi explained me. Which digit am I?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 0,
+        "tolerance": 0
+      },
+      "model_answer": {
+        "id": "Nol! Al-Khwarizmi menjelaskan angka 0 sampai 9 yang kita pakai sekarang.",
+        "en": "Zero! Al-Khwarizmi explained the digits 0 to 9 that we use today."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-h-0.1"
+    }
+  ]
+}

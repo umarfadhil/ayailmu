@@ -1,0 +1,675 @@
+{
+ "lang": "ko",
+ "clips": [
+  {
+   "key": "ko/a",
+   "text": "아",
+   "note": "a — vowel ㅏ, read as its syllable 아 (silent ㅇ + vowel); say it alone, clearly"
+  },
+  {
+   "key": "ko/abeoji",
+   "text": "아버지",
+   "note": "abeoji — father (polite)"
+  },
+  {
+   "key": "ko/adeul",
+   "text": "아들",
+   "note": "adeul — son"
+  },
+  {
+   "key": "ko/agi",
+   "text": "아기",
+   "note": "agi — baby"
+  },
+  {
+   "key": "ko/ahop",
+   "text": "아홉",
+   "note": "ahop — nine (native Korean)"
+  },
+  {
+   "key": "ko/ai",
+   "text": "아이",
+   "note": "ai — child"
+  },
+  {
+   "key": "ko/annyeong",
+   "text": "안녕",
+   "note": "annyeong — hi / bye (casual, to friends)"
+  },
+  {
+   "key": "ko/annyeonghaseyo",
+   "text": "안녕하세요",
+   "note": "annyeonghaseyo — hello (polite, to anyone)"
+  },
+  {
+   "key": "ko/annyeonghi_gaseyo",
+   "text": "안녕히 가세요",
+   "note": "annyeonghi gaseyo — goodbye (said to someone who is leaving)"
+  },
+  {
+   "key": "ko/annyeonghi_gyeseyo",
+   "text": "안녕히 계세요",
+   "note": "annyeonghi gyeseyo — goodbye (said by the one leaving, to someone who stays)"
+  },
+  {
+   "key": "ko/appa",
+   "text": "아빠",
+   "note": "appa — dad (casual)"
+  },
+  {
+   "key": "ko/bada",
+   "text": "바다",
+   "note": "bada — sea"
+  },
+  {
+   "key": "ko/baegopayo",
+   "text": "배고파요",
+   "note": "baegopayo — I'm hungry"
+  },
+  {
+   "key": "ko/bal",
+   "text": "발",
+   "note": "bal — foot"
+  },
+  {
+   "key": "ko/banana",
+   "text": "바나나",
+   "note": "banana — banana"
+  },
+  {
+   "key": "ko/bap",
+   "text": "밥",
+   "note": "bap — rice, a meal"
+  },
+  {
+   "key": "ko/bieup",
+   "text": "비읍",
+   "note": "bieup — the NAME of consonant ㅂ (비읍), as Korean children recite it"
+  },
+  {
+   "key": "ko/bihaenggi",
+   "text": "비행기",
+   "note": "bihaenggi — plane"
+  },
+  {
+   "key": "ko/byeongwon",
+   "text": "병원",
+   "note": "byeongwon — hospital"
+  },
+  {
+   "key": "ko/byeongwon_eodiyeyo",
+   "text": "병원 어디예요?",
+   "note": "byeongwon eodiyeyo? — Where is the hospital? (everyday spoken form)"
+  },
+  {
+   "key": "ko/cha",
+   "text": "차",
+   "note": "cha — tea; also car (same word)"
+  },
+  {
+   "key": "ko/chaek",
+   "text": "책",
+   "note": "chaek — book"
+  },
+  {
+   "key": "ko/chaeso",
+   "text": "채소",
+   "note": "chaeso — vegetables"
+  },
+  {
+   "key": "ko/chieut",
+   "text": "치읓",
+   "note": "chieut — the NAME of consonant ㅊ (치읓), as Korean children recite it"
+  },
+  {
+   "key": "ko/chikin",
+   "text": "치킨",
+   "note": "chikin — fried chicken"
+  },
+  {
+   "key": "ko/chil",
+   "text": "칠",
+   "note": "chil — seven (Sino-Korean)"
+  },
+  {
+   "key": "ko/daseot",
+   "text": "다섯",
+   "note": "daseot — five (native Korean)"
+  },
+  {
+   "key": "ko/digeut",
+   "text": "디귿",
+   "note": "digeut — the NAME of consonant ㄷ (디귿), as Korean children recite it"
+  },
+  {
+   "key": "ko/dul",
+   "text": "둘",
+   "note": "dul — two (native Korean)"
+  },
+  {
+   "key": "ko/eo",
+   "text": "어",
+   "note": "eo — vowel ㅓ, read as its syllable 어 (silent ㅇ + vowel); say it alone, clearly"
+  },
+  {
+   "key": "ko/eolmayeyo",
+   "text": "얼마예요?",
+   "note": "eolmayeyo? — How much is it?"
+  },
+  {
+   "key": "ko/eomeoni",
+   "text": "어머니",
+   "note": "eomeoni — mother (polite)"
+  },
+  {
+   "key": "ko/eomma",
+   "text": "엄마",
+   "note": "eomma — mum, mom (casual)"
+  },
+  {
+   "key": "ko/eonni",
+   "text": "언니",
+   "note": "eonni — older sister (said by a girl or woman)"
+  },
+  {
+   "key": "ko/eoseo_oseyo",
+   "text": "어서 오세요.",
+   "note": "eoseo oseyo. — Welcome! (shop greeting)"
+  },
+  {
+   "key": "ko/eu",
+   "text": "으",
+   "note": "eu — vowel ㅡ, read as its syllable 으 (silent ㅇ + vowel); say it alone, clearly"
+  },
+  {
+   "key": "ko/eummae",
+   "text": "음매",
+   "note": "eummae — moo (cow)"
+  },
+  {
+   "key": "ko/eumnyo",
+   "text": "음료",
+   "note": "eumnyo — drinks, beverages"
+  },
+  {
+   "key": "ko/eumsik",
+   "text": "음식",
+   "note": "eumsik — food"
+  },
+  {
+   "key": "ko/gabang",
+   "text": "가방",
+   "note": "gabang — bag"
+  },
+  {
+   "key": "ko/gamsahamnida",
+   "text": "감사합니다",
+   "note": "gamsahamnida — thank you (polite)"
+  },
+  {
+   "key": "ko/gangaji",
+   "text": "강아지",
+   "note": "gangaji — puppy, dog (word children use)"
+  },
+  {
+   "key": "ko/gicha",
+   "text": "기차",
+   "note": "gicha — train"
+  },
+  {
+   "key": "ko/gimchi",
+   "text": "김치",
+   "note": "gimchi — kimchi"
+  },
+  {
+   "key": "ko/gireogi",
+   "text": "기러기",
+   "note": "gireogi — wild goose (a palindrome: gi-reo-gi)"
+  },
+  {
+   "key": "ko/giyeok",
+   "text": "기역",
+   "note": "giyeok — the NAME of consonant ㄱ (기역), as Korean children recite it"
+  },
+  {
+   "key": "ko/gongilgong",
+   "text": "공일공",
+   "note": "gongilgong — 010, read digit by digit as a phone prefix (공 = zero)"
+  },
+  {
+   "key": "ko/gongwon",
+   "text": "공원",
+   "note": "gongwon — park"
+  },
+  {
+   "key": "ko/goyangi",
+   "text": "고양이",
+   "note": "goyangi — cat"
+  },
+  {
+   "key": "ko/gu",
+   "text": "구",
+   "note": "gu — nine (Sino-Korean)"
+  },
+  {
+   "key": "ko/guksu",
+   "text": "국수",
+   "note": "guksu — noodles"
+  },
+  {
+   "key": "ko/gyesanhae_juseyo",
+   "text": "계산해 주세요.",
+   "note": "gyesanhae juseyo. — The bill, please."
+  },
+  {
+   "key": "ko/halmeoni",
+   "text": "할머니",
+   "note": "halmeoni — grandmother"
+  },
+  {
+   "key": "ko/hana",
+   "text": "하나",
+   "note": "hana — one (native Korean)"
+  },
+  {
+   "key": "ko/harabeoji",
+   "text": "할아버지",
+   "note": "harabeoji — grandfather"
+  },
+  {
+   "key": "ko/hieut",
+   "text": "히읗",
+   "note": "hieut — the NAME of consonant ㅎ (히읗), as Korean children recite it"
+  },
+  {
+   "key": "ko/hwajangsil_eodiyeyo",
+   "text": "화장실 어디예요?",
+   "note": "hwajangsil eodiyeyo? — Where is the restroom? (everyday spoken form)"
+  },
+  {
+   "key": "ko/hyeong",
+   "text": "형",
+   "note": "hyeong — older brother (said by a boy or man)"
+  },
+  {
+   "key": "ko/i",
+   "text": "이",
+   "note": "i — vowel ㅣ, read as its syllable 이 (silent ㅇ + vowel); say it alone, clearly; i — two (Sino-Korean)"
+  },
+  {
+   "key": "ko/ieung",
+   "text": "이응",
+   "note": "ieung — the NAME of consonant ㅇ (이응), as Korean children recite it"
+  },
+  {
+   "key": "ko/ieyo",
+   "text": "이에요",
+   "note": "ieyo — '(it) is' ending after a final consonant, said alone"
+  },
+  {
+   "key": "ko/il",
+   "text": "일",
+   "note": "il — one (Sino-Korean)"
+  },
+  {
+   "key": "ko/ilgop",
+   "text": "일곱",
+   "note": "ilgop — seven (native Korean)"
+  },
+  {
+   "key": "ko/jajeongeo",
+   "text": "자전거",
+   "note": "jajeongeo — bicycle"
+  },
+  {
+   "key": "ko/jal_meokgetseumnida",
+   "text": "잘 먹겠습니다.",
+   "note": "jal meokgetseumnida. — said before eating: 'I will eat well' (thanks for the meal)"
+  },
+  {
+   "key": "ko/jeogiyeyo",
+   "text": "저기예요.",
+   "note": "jeogiyeyo. — It's over there."
+  },
+  {
+   "key": "ko/jeogiyo",
+   "text": "저기요.",
+   "note": "jeogiyo. — Excuse me! (to get attention)"
+  },
+  {
+   "key": "ko/jido",
+   "text": "지도",
+   "note": "jido — map"
+  },
+  {
+   "key": "ko/jieut",
+   "text": "지읒",
+   "note": "jieut — the NAME of consonant ㅈ (지읒), as Korean children recite it"
+  },
+  {
+   "key": "ko/joesonghamnida",
+   "text": "죄송합니다",
+   "note": "joesonghamnida — I'm sorry (formal, polite)"
+  },
+  {
+   "key": "ko/juseu",
+   "text": "주스",
+   "note": "juseu — juice"
+  },
+  {
+   "key": "ko/juseyo",
+   "text": "주세요",
+   "note": "juseyo — please give me (polite request ending)"
+  },
+  {
+   "key": "ko/ka",
+   "text": "카",
+   "note": "ka — the syllable ka (aspirated ㅋ, strong puff); said alone"
+  },
+  {
+   "key": "ko/keopi",
+   "text": "커피",
+   "note": "keopi — coffee"
+  },
+  {
+   "key": "ko/keopi_hana_juseyo",
+   "text": "커피 하나 주세요.",
+   "note": "keopi hana juseyo. — One coffee, please."
+  },
+  {
+   "key": "ko/kieuk",
+   "text": "키읔",
+   "note": "kieuk — the NAME of consonant ㅋ (키읔), as Korean children recite it"
+  },
+  {
+   "key": "ko/kkwaekkkwaek",
+   "text": "꽥꽥",
+   "note": "kkwaek-kkwaek — quack quack (duck)"
+  },
+  {
+   "key": "ko/kokkiri",
+   "text": "코끼리",
+   "note": "kokkiri — elephant"
+  },
+  {
+   "key": "ko/mandu",
+   "text": "만두",
+   "note": "mandu — dumplings"
+  },
+  {
+   "key": "ko/masyeoyo",
+   "text": "마셔요",
+   "note": "masyeoyo — (I) drink"
+  },
+  {
+   "key": "ko/meogeoyo",
+   "text": "먹어요",
+   "note": "meogeoyo — (I) eat"
+  },
+  {
+   "key": "ko/meongmeong",
+   "text": "멍멍",
+   "note": "meongmeong — woof woof (dog)"
+  },
+  {
+   "key": "ko/mianhae",
+   "text": "미안해",
+   "note": "mianhae — sorry (casual, to a friend)"
+  },
+  {
+   "key": "ko/mieum",
+   "text": "미음",
+   "note": "mieum — the NAME of consonant ㅁ (미음), as Korean children recite it"
+  },
+  {
+   "key": "ko/moja",
+   "text": "모자",
+   "note": "moja — hat"
+  },
+  {
+   "key": "ko/mul",
+   "text": "물",
+   "note": "mul — water"
+  },
+  {
+   "key": "ko/mul_juseyo",
+   "text": "물 주세요.",
+   "note": "mul juseyo. — Water, please."
+  },
+  {
+   "key": "ko/mulgogi",
+   "text": "물고기",
+   "note": "mulgogi — fish (live)"
+  },
+  {
+   "key": "ko/namu",
+   "text": "나무",
+   "note": "namu — tree"
+  },
+  {
+   "key": "ko/ne",
+   "text": "네",
+   "note": "ne — yes"
+  },
+  {
+   "key": "ko/ne_annyeonghaseyo",
+   "text": "네, 안녕하세요",
+   "note": "ne, annyeonghaseyo — yes, hello (returning a greeting; friendly, not clipped)"
+  },
+  {
+   "key": "ko/net",
+   "text": "넷",
+   "note": "net — four (native Korean)"
+  },
+  {
+   "key": "ko/nieun",
+   "text": "니은",
+   "note": "nieun — the NAME of consonant ㄴ (니은), as Korean children recite it"
+  },
+  {
+   "key": "ko/nuna",
+   "text": "누나",
+   "note": "nuna — older sister (said by a boy or man)"
+  },
+  {
+   "key": "ko/o",
+   "text": "오",
+   "note": "o — vowel ㅗ, read as its syllable 오 (silent ㅇ + vowel); say it alone, clearly; o — five (Sino-Korean)"
+  },
+  {
+   "key": "ko/ocheon_wonieyo",
+   "text": "오천 원이에요.",
+   "note": "ocheon wonieyo. — It's 5,000 won."
+  },
+  {
+   "key": "ko/oppa",
+   "text": "오빠",
+   "note": "oppa — older brother (said by a girl or woman)"
+  },
+  {
+   "key": "ko/otobai",
+   "text": "오토바이",
+   "note": "otobai — motorbike"
+  },
+  {
+   "key": "ko/pal",
+   "text": "팔",
+   "note": "pal — eight (Sino-Korean)"
+  },
+  {
+   "key": "ko/pieup",
+   "text": "피읖",
+   "note": "pieup — the NAME of consonant ㅍ (피읖), as Korean children recite it"
+  },
+  {
+   "key": "ko/ppang",
+   "text": "빵",
+   "note": "ppang — bread"
+  },
+  {
+   "key": "ko/ramyeon",
+   "text": "라면",
+   "note": "ramyeon — ramyeon, instant noodles"
+  },
+  {
+   "key": "ko/rieul",
+   "text": "리을",
+   "note": "rieul — the NAME of consonant ㄹ (리을), as Korean children recite it"
+  },
+  {
+   "key": "ko/sa",
+   "text": "사",
+   "note": "sa — four (Sino-Korean)"
+  },
+  {
+   "key": "ko/sae",
+   "text": "새",
+   "note": "sae — bird"
+  },
+  {
+   "key": "ko/saengseon",
+   "text": "생선",
+   "note": "saengseon — fish (as food)"
+  },
+  {
+   "key": "ko/sagwa",
+   "text": "사과",
+   "note": "sagwa — apple"
+  },
+  {
+   "key": "ko/sagwa_juseyo",
+   "text": "사과 주세요.",
+   "note": "sagwa juseyo. — An apple, please."
+  },
+  {
+   "key": "ko/sam",
+   "text": "삼",
+   "note": "sam — three (Sino-Korean)"
+  },
+  {
+   "key": "ko/set",
+   "text": "셋",
+   "note": "set — three (native Korean)"
+  },
+  {
+   "key": "ko/sijang",
+   "text": "시장",
+   "note": "sijang — market"
+  },
+  {
+   "key": "ko/siot",
+   "text": "시옷",
+   "note": "siot — the NAME of consonant ㅅ (시옷), as Korean children recite it"
+  },
+  {
+   "key": "ko/sip",
+   "text": "십",
+   "note": "sip — ten (Sino-Korean)"
+  },
+  {
+   "key": "ko/son",
+   "text": "손",
+   "note": "son — hand"
+  },
+  {
+   "key": "ko/subak",
+   "text": "수박",
+   "note": "subak — watermelon"
+  },
+  {
+   "key": "ko/tieut",
+   "text": "티읕",
+   "note": "tieut — the NAME of consonant ㅌ (티읕), as Korean children recite it"
+  },
+  {
+   "key": "ko/tokki",
+   "text": "토끼",
+   "note": "tokki — rabbit"
+  },
+  {
+   "key": "ko/tomato",
+   "text": "토마토",
+   "note": "tomato — tomato (a palindrome: to-ma-to)"
+  },
+  {
+   "key": "ko/ttal",
+   "text": "딸",
+   "note": "ttal — daughter (tense ㄸ, no puff); also the drill syllable ttal"
+  },
+  {
+   "key": "ko/u",
+   "text": "우",
+   "note": "u — vowel ㅜ, read as its syllable 우 (silent ㅇ + vowel); say it alone, clearly"
+  },
+  {
+   "key": "ko/uija",
+   "text": "의자",
+   "note": "uija — chair"
+  },
+  {
+   "key": "ko/uyu",
+   "text": "우유",
+   "note": "uyu — milk"
+  },
+  {
+   "key": "ko/ya",
+   "text": "야",
+   "note": "ya — vowel ㅑ, read as its syllable 야 (silent ㅇ + vowel); say it alone, clearly"
+  },
+  {
+   "key": "ko/yaong",
+   "text": "야옹",
+   "note": "yaong — meow (cat)"
+  },
+  {
+   "key": "ko/yeo",
+   "text": "여",
+   "note": "yeo — vowel ㅕ, read as its syllable 여 (silent ㅇ + vowel); say it alone, clearly"
+  },
+  {
+   "key": "ko/yeodeol",
+   "text": "여덟",
+   "note": "yeodeol — eight (native Korean); final ㄼ is read l"
+  },
+  {
+   "key": "ko/yeok",
+   "text": "역",
+   "note": "yeok — station"
+  },
+  {
+   "key": "ko/yeol",
+   "text": "열",
+   "note": "yeol — ten (native Korean)"
+  },
+  {
+   "key": "ko/yeonpil",
+   "text": "연필",
+   "note": "yeonpil — pencil"
+  },
+  {
+   "key": "ko/yeoseot",
+   "text": "여섯",
+   "note": "yeoseot — six (native Korean)"
+  },
+  {
+   "key": "ko/yeyo",
+   "text": "예요",
+   "note": "yeyo — '(it) is' ending after a vowel, said alone"
+  },
+  {
+   "key": "ko/yo",
+   "text": "요",
+   "note": "yo — vowel ㅛ, read as its syllable 요 (silent ㅇ + vowel); say it alone, clearly"
+  },
+  {
+   "key": "ko/yu",
+   "text": "유",
+   "note": "yu — vowel ㅠ, read as its syllable 유 (silent ㅇ + vowel); say it alone, clearly"
+  },
+  {
+   "key": "ko/yuk",
+   "text": "육",
+   "note": "yuk — six (Sino-Korean)"
+  }
+ ]
+}

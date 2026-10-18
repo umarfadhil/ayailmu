@@ -1,0 +1,2291 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sos-k-x-0.1",
+    "subject": "sosial_seni",
+    "track": "sos-k-x",
+    "level": "master",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Sosial & Seni — Master (Anak)",
+      "en": "Social Studies & Arts — Master (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12 starter level, 2 units) for subject + language review: needs a social-studies reviewer, a cultural reviewer, and the Indonesian and English language reviewers before any item is approved (docs/syllabus/04_SOSIAL_SENI.md, Kids Master: unit 1 Dunia & Indonesia and unit 5 Musik dunia & Indonesia as starter units 01-02; units 2-4 skipped (Sejarah, Nilai overlap, art not drawn)). Picture-first per INTERACTIONS_AUDIO.md §1 and MODULES_LEVELS_STORIES.md §8; values and history figures live in the Nilai and Sejarah modules.",
+  "prompts": {
+    "P-TAP": {
+      "id": "Ketuk tempatnya di peta.",
+      "en": "Tap the place on the map."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban yang tepat.",
+      "en": "Pick the right answer."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-CONNECT": {
+      "id": "Tarik garis ke pasangannya.",
+      "en": "Draw a line to each match."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke pasangannya.",
+      "en": "Drag each picture to its match."
+    },
+    "P-SORT": {
+      "id": "Seret ke keranjang yang tepat.",
+      "en": "Drag each into the right basket."
+    },
+    "P-ORDER": {
+      "id": "Seret ke urutan yang benar.",
+      "en": "Drag them into the right order."
+    },
+    "P-FILL": {
+      "id": "Seret ke bagian yang kosong.",
+      "en": "Drag into the gap."
+    },
+    "P-MEMORY": {
+      "id": "Balik kartu, cari pasangannya.",
+      "en": "Flip the cards, find pairs."
+    },
+    "P-MAKE": {
+      "id": "Buat sendiri",
+      "en": "Make it yourself"
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Sip, kita lanjut!",
+      "en": "Great, let's keep going!"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Dunia & Indonesia",
+        "en": "The world & Indonesia"
+      },
+      "sticker": "sticker_kite"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Musik Nusantara & dunia",
+        "en": "Music of the archipelago & the world"
+      },
+      "sticker": "sticker_drum"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SOS-K-X-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Dunia & Indonesia",
+        "en": "The world & Indonesia"
+      },
+      "body": [
+        {
+          "id": "Bumi punya tujuh benua: Asia, Afrika, Amerika Utara, Amerika Selatan, Antarktika, Eropa, dan Australia. Di antaranya ada lima samudra.",
+          "en": "Earth has seven continents: Asia, Africa, North America, South America, Antarctica, Europe and Australia. Five oceans lie between them."
+        },
+        {
+          "id": "Indonesia berada di antara dua benua, Asia dan Australia, dan dua samudra, Hindia dan Pasifik. Garis khatulistiwa melintasi negeri kita.",
+          "en": "Indonesia lies between two continents, Asia and Australia, and two oceans, the Indian and the Pacific. The equator crosses our country."
+        },
+        {
+          "id": "Pada 1967 Indonesia ikut mendirikan ASEAN bersama Malaysia, Filipina, Singapura, dan Thailand. Kini anggotanya 11 negara.",
+          "en": "In 1967 Indonesia helped found ASEAN with Malaysia, the Philippines, Singapore and Thailand. Today it has 11 members."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SOS-K-X-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Musik Nusantara & dunia",
+        "en": "Music of the archipelago & the world"
+      },
+      "body": [
+        {
+          "id": "Alat musik berbunyi dengan cara berbeda: dipukul (gamelan, kendang), dipetik (sasando, gitar), digoyang (angklung), atau ditiup (suling).",
+          "en": "Instruments sound in different ways: struck (gamelan, kendang drum), plucked (sasando, guitar), shaken (angklung) or blown (suling flute)."
+        },
+        {
+          "id": "Tiap daerah punya bunyi khas: sasando dari Pulau Rote, angklung dari Jawa Barat, dan tari Saman dari Aceh yang memakai tepukan tubuh.",
+          "en": "Each region has its own sound: the sasando from Rote Island, the angklung from West Java, and Aceh's Saman dance, played with body percussion."
+        },
+        {
+          "id": "Musik juga berkelana: keroncong berakar dari musik Portugis abad ke-16, dan gamelan pernah memikat komponis di Eropa.",
+          "en": "Music travels too: keroncong has roots in 16th-century Portuguese music, and gamelan once captivated composers in Europe."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "SOS-K-X-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "WORLD-MAP"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-CHOOSE",
+      "image": "soc_world_continents",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Benua terbesar?",
+            "en": "The largest continent?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Eropa",
+            "en": "Europe"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Asia",
+            "en": "Asia"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Australia",
+            "en": "Australia"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Asia adalah benua terbesar, baik luasnya maupun jumlah penduduknya.",
+        "en": "Asia is the largest continent, by area and by population."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "WORLD-MAP"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "image": "soc_world_continents",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Indonesia diapit Samudra Hindia dan Samudra ____.",
+            "en": "Indonesia lies between the Indian Ocean and the ____ Ocean."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_atl",
+          "text": {
+            "id": "Atlantik",
+            "en": "Atlantic"
+          }
+        },
+        {
+          "id": "t_pac",
+          "text": {
+            "id": "Pasifik",
+            "en": "Pacific"
+          }
+        },
+        {
+          "id": "t_arc",
+          "text": {
+            "id": "Arktik",
+            "en": "Arctic"
+          }
+        }
+      ],
+      "solution": [
+        "t_pac"
+      ],
+      "model_answer": {
+        "id": "Indonesia diapit Samudra Hindia dan Samudra Pasifik.",
+        "en": "Indonesia lies between the Indian and Pacific Oceans."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "WORLD-ASEAN"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pulau ini kita bagi dengan Papua Nugini.",
+            "en": "We share this island with Papua New Guinea."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "papua",
+          "text": {
+            "id": "Papua",
+            "en": "Papua"
+          },
+          "region": {
+            "x": 0.77,
+            "y": 0.25,
+            "w": 0.22,
+            "h": 0.45
+          },
+          "correct": true
+        },
+        {
+          "id": "maluku",
+          "text": {
+            "id": "Maluku",
+            "en": "Maluku"
+          },
+          "region": {
+            "x": 0.66,
+            "y": 0.25,
+            "w": 0.1,
+            "h": 0.35
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Pulau Papua (Nugini) dibagi Indonesia dan Papua Nugini.",
+        "en": "The island of New Guinea is shared by Indonesia and Papua New Guinea."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "WORLD-CLIMATE"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Musim di Indonesia atau empat musim?",
+            "en": "Indonesia's seasons, or four seasons?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_two",
+          "text": {
+            "id": "Musim di Indonesia",
+            "en": "Seasons in Indonesia"
+          }
+        },
+        {
+          "id": "b_four",
+          "text": {
+            "id": "Empat musim, jauh dari khatulistiwa",
+            "en": "Four seasons, far from the equator"
+          }
+        },
+        {
+          "id": "c_snow",
+          "text": {
+            "id": "salju musim dingin",
+            "en": "winter snow"
+          },
+          "image": "pic_snow"
+        },
+        {
+          "id": "c_rain",
+          "text": {
+            "id": "musim hujan",
+            "en": "the rainy season"
+          },
+          "image": "pic_rain"
+        },
+        {
+          "id": "c_leaves",
+          "text": {
+            "id": "daun gugur",
+            "en": "falling autumn leaves"
+          },
+          "image": "pic_autumn_leaves"
+        },
+        {
+          "id": "c_dry",
+          "text": {
+            "id": "musim kemarau",
+            "en": "the dry season"
+          },
+          "image": "pic_sun"
+        },
+        {
+          "id": "c_blossom",
+          "text": {
+            "id": "bunga musim semi",
+            "en": "spring blossom"
+          },
+          "image": "pic_spring_blossom"
+        }
+      ],
+      "solution_pairs": {
+        "c_snow": "b_four",
+        "c_rain": "b_two",
+        "c_leaves": "b_four",
+        "c_dry": "b_two",
+        "c_blossom": "b_four"
+      },
+      "model_answer": {
+        "id": "Indonesia punya musim hujan dan kemarau. Negara yang jauh dari khatulistiwa punya musim semi, panas, gugur, dan dingin.",
+        "en": "Indonesia has a rainy and a dry season. Countries far from the equator have spring, summer, autumn and winter."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "WORLD-MAP"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tugu Khatulistiwa di Pontianak. Ketuk pulaunya.",
+            "en": "The Equator Monument is in Pontianak. Tap its island."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          },
+          "correct": true
+        },
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          }
+        },
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          }
+        },
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Pontianak di Kalimantan Barat dilalui garis khatulistiwa.",
+        "en": "Pontianak in West Kalimantan sits on the equator."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "WORLD-ASEAN"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-TF",
+      "image": "soc_world_continents",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "ASEAN didirikan di Bangkok pada 1967.",
+            "en": "ASEAN was founded in Bangkok in 1967."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Deklarasi Bangkok ditandatangani 8 Agustus 1967 oleh lima negara pendiri ASEAN.",
+        "en": "The Bangkok Declaration was signed on 8 August 1967 by ASEAN's five founding countries."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "WORLD-ASEAN"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Negara tetangga → pulau yang dibagi.",
+            "en": "Neighbour → the island we share."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "n_my",
+          "text": {
+            "id": "Malaysia",
+            "en": "Malaysia"
+          }
+        },
+        {
+          "id": "n_png",
+          "text": {
+            "id": "Papua Nugini",
+            "en": "Papua New Guinea"
+          }
+        },
+        {
+          "id": "n_tl",
+          "text": {
+            "id": "Timor-Leste",
+            "en": "Timor-Leste"
+          }
+        },
+        {
+          "id": "i_pap",
+          "text": {
+            "id": "Papua",
+            "en": "New Guinea"
+          }
+        },
+        {
+          "id": "i_tim",
+          "text": {
+            "id": "Timor",
+            "en": "Timor"
+          }
+        },
+        {
+          "id": "i_kal",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "n_my": "i_kal",
+        "n_png": "i_pap",
+        "n_tl": "i_tim"
+      },
+      "model_answer": {
+        "id": "Kalimantan dengan Malaysia (dan Brunei), Papua dengan Papua Nugini, Timor dengan Timor-Leste.",
+        "en": "Kalimantan with Malaysia (and Brunei), New Guinea with Papua New Guinea, Timor with Timor-Leste."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "WORLD-CLIMATE"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ini hanya bisa dibuat di musim dingin.",
+            "en": "You can only make this in winter."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_snowman",
+          "text": {
+            "id": "manusia salju",
+            "en": "snowman"
+          },
+          "image": "pic_snowman",
+          "correct": true
+        },
+        {
+          "id": "pic_beach",
+          "text": {
+            "id": "pantai",
+            "en": "beach"
+          },
+          "image": "pic_beach"
+        },
+        {
+          "id": "pic_rainbow",
+          "text": {
+            "id": "pelangi",
+            "en": "rainbow"
+          },
+          "image": "pic_rainbow"
+        }
+      ],
+      "model_answer": {
+        "id": "Manusia salju dibuat dari salju, di negara yang mengalami musim dingin bersalju.",
+        "en": "A snowman is made of snow, in countries with snowy winters."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "WORLD-MAP"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "image": "soc_world_continents",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari benua terluas.",
+            "en": "Largest continent first."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "o_europe",
+          "text": {
+            "id": "Eropa",
+            "en": "Europe"
+          }
+        },
+        {
+          "id": "o_aus",
+          "text": {
+            "id": "Australia",
+            "en": "Australia"
+          }
+        },
+        {
+          "id": "o_africa",
+          "text": {
+            "id": "Afrika",
+            "en": "Africa"
+          }
+        },
+        {
+          "id": "o_asia",
+          "text": {
+            "id": "Asia",
+            "en": "Asia"
+          }
+        }
+      ],
+      "solution": [
+        "o_asia",
+        "o_africa",
+        "o_europe",
+        "o_aus"
+      ],
+      "model_answer": {
+        "id": "Asia, Afrika, Eropa, lalu Australia.",
+        "en": "Asia, Africa, Europe, then Australia."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "WORLD-ASEAN"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-CHOOSE",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sekretariat ASEAN ada di kota…",
+            "en": "The ASEAN Secretariat is in…"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Bangkok",
+            "en": "Bangkok"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Manila",
+            "en": "Manila"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Jakarta",
+            "en": "Jakarta"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Sekretariat ASEAN berkantor di Jakarta.",
+        "en": "The ASEAN Secretariat is based in Jakarta."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "WORLD-MAP"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Negara dan benuanya.",
+            "en": "Countries and their continents."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "c_eg",
+          "text": {
+            "id": "Mesir",
+            "en": "Egypt"
+          }
+        },
+        {
+          "id": "c_fr",
+          "text": {
+            "id": "Prancis",
+            "en": "France"
+          }
+        },
+        {
+          "id": "c_br",
+          "text": {
+            "id": "Brasil",
+            "en": "Brazil"
+          }
+        },
+        {
+          "id": "c_ca",
+          "text": {
+            "id": "Kanada",
+            "en": "Canada"
+          }
+        },
+        {
+          "id": "k_eu",
+          "text": {
+            "id": "Eropa",
+            "en": "Europe"
+          }
+        },
+        {
+          "id": "k_sa",
+          "text": {
+            "id": "Amerika Selatan",
+            "en": "South America"
+          }
+        },
+        {
+          "id": "k_na",
+          "text": {
+            "id": "Amerika Utara",
+            "en": "North America"
+          }
+        },
+        {
+          "id": "k_af",
+          "text": {
+            "id": "Afrika",
+            "en": "Africa"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c_eg": "k_af",
+        "c_fr": "k_eu",
+        "c_br": "k_sa",
+        "c_ca": "k_na"
+      },
+      "model_answer": {
+        "id": "Mesir di Afrika, Prancis di Eropa, Brasil di Amerika Selatan, Kanada di Amerika Utara.",
+        "en": "Egypt is in Africa, France in Europe, Brazil in South America, Canada in North America."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "WORLD-MAP"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-MAKE",
+      "image": "soc_world_continents",
+      "model_answer": {
+        "id": "Buat peta dunia dari kertas warna: gunting tujuh benua, tempel di kertas biru sebagai laut, lalu beri tanda tempat Indonesia.",
+        "en": "Make a world map from coloured paper: cut out the seven continents, stick them on blue paper for the sea, then mark where Indonesia is."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "WORLD-MAP"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "image": "pic_snow",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Benua yang hampir seluruhnya es?",
+            "en": "The continent that is almost all ice?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Afrika",
+            "en": "Africa"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Asia",
+            "en": "Asia"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Antarktika",
+            "en": "Antarctica"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Antarktika, di sekitar Kutub Selatan, hampir seluruhnya tertutup es.",
+        "en": "Antarctica, around the South Pole, is almost all covered in ice."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "tap_hotspot",
+      "skills": [
+        "WORLD-ASEAN"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pulau ini kita bagi dengan Malaysia.",
+            "en": "We share this island with Malaysia."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          }
+        },
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "papua",
+          "text": {
+            "id": "Papua",
+            "en": "Papua"
+          },
+          "region": {
+            "x": 0.77,
+            "y": 0.25,
+            "w": 0.22,
+            "h": 0.45
+          }
+        },
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Kalimantan dibagi Indonesia, Malaysia, dan Brunei Darussalam.",
+        "en": "Borneo is shared by Indonesia, Malaysia and Brunei Darussalam."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-01-015",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "WORLD-CLIMATE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "image": "pic_rain",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di Indonesia ada musim hujan dan musim kemarau.",
+            "en": "Indonesia has a rainy season and a dry season."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Indonesia dekat khatulistiwa, jadi musimnya musim hujan dan musim kemarau.",
+        "en": "Indonesia is near the equator, so its seasons are a rainy one and a dry one."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "MUS-SOUND"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dipukul, dipetik, atau digoyang?",
+            "en": "Struck, plucked or shaken?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_hit",
+          "text": {
+            "id": "Dipukul",
+            "en": "Struck"
+          }
+        },
+        {
+          "id": "b_pluck",
+          "text": {
+            "id": "Dipetik",
+            "en": "Plucked"
+          }
+        },
+        {
+          "id": "b_shake",
+          "text": {
+            "id": "Digoyang",
+            "en": "Shaken"
+          }
+        },
+        {
+          "id": "c_gamelan",
+          "text": {
+            "id": "gamelan",
+            "en": "gamelan"
+          },
+          "image": "soc_gamelan"
+        },
+        {
+          "id": "c_sasando",
+          "text": {
+            "id": "sasando",
+            "en": "sasando"
+          },
+          "image": "soc_sasando"
+        },
+        {
+          "id": "c_angklung",
+          "text": {
+            "id": "angklung",
+            "en": "angklung"
+          },
+          "image": "sticker_angklung"
+        },
+        {
+          "id": "c_guitar",
+          "text": {
+            "id": "gitar",
+            "en": "guitar"
+          },
+          "image": "pic_guitar"
+        },
+        {
+          "id": "c_kendang",
+          "text": {
+            "id": "kendang",
+            "en": "kendang drum"
+          },
+          "image": "sticker_drum"
+        }
+      ],
+      "solution_pairs": {
+        "c_gamelan": "b_hit",
+        "c_sasando": "b_pluck",
+        "c_angklung": "b_shake",
+        "c_guitar": "b_pluck",
+        "c_kendang": "b_hit"
+      },
+      "model_answer": {
+        "id": "Gamelan dan kendang dipukul, sasando dan gitar dipetik, angklung digoyang.",
+        "en": "Gamelan and kendang are struck, sasando and guitar are plucked, angklung is shaken."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "MUS-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Alat musik petik dari Pulau Rote.",
+            "en": "A plucked instrument from Rote Island."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "soc_gamelan",
+          "text": {
+            "id": "gamelan",
+            "en": "gamelan"
+          },
+          "image": "soc_gamelan"
+        },
+        {
+          "id": "soc_sasando",
+          "text": {
+            "id": "sasando",
+            "en": "sasando"
+          },
+          "image": "soc_sasando",
+          "correct": true
+        },
+        {
+          "id": "sticker_angklung",
+          "text": {
+            "id": "angklung",
+            "en": "angklung"
+          },
+          "image": "sticker_angklung"
+        }
+      ],
+      "model_answer": {
+        "id": "Sasando dari Pulau Rote, NTT. Wadah bunyinya dari daun lontar.",
+        "en": "The sasando is from Rote Island, East Nusa Tenggara. Its sound shell is lontar palm leaf."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "MUS-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tari Saman dari Aceh. Ketuk pulaunya.",
+            "en": "The Saman dance is from Aceh. Tap its island."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          }
+        },
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          },
+          "correct": true
+        },
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Tari Saman berasal dari suku Gayo di Aceh, Sumatra.",
+        "en": "The Saman dance comes from the Gayo people of Aceh, Sumatra."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "MUS-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Masuk daftar warisan budaya UNESCO pada 2021.",
+            "en": "Added to UNESCO's heritage list in 2021."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "soc_gamelan",
+          "text": {
+            "id": "gamelan",
+            "en": "gamelan"
+          },
+          "image": "soc_gamelan",
+          "correct": true
+        },
+        {
+          "id": "pic_guitar",
+          "text": {
+            "id": "gitar",
+            "en": "guitar"
+          },
+          "image": "pic_guitar"
+        },
+        {
+          "id": "soc_sasando",
+          "text": {
+            "id": "sasando",
+            "en": "sasando"
+          },
+          "image": "soc_sasando"
+        }
+      ],
+      "model_answer": {
+        "id": "Gamelan masuk daftar warisan budaya takbenda UNESCO pada 2021.",
+        "en": "Gamelan joined UNESCO's intangible cultural heritage list in 2021."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "MUS-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Seni → daerah asalnya.",
+            "en": "Art form → where it's from."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a_saman",
+          "text": {
+            "id": "tari Saman",
+            "en": "Saman dance"
+          },
+          "image": "soc_saman_dance"
+        },
+        {
+          "id": "a_angk",
+          "text": {
+            "id": "angklung",
+            "en": "angklung"
+          },
+          "image": "sticker_angklung"
+        },
+        {
+          "id": "a_sas",
+          "text": {
+            "id": "sasando",
+            "en": "sasando"
+          },
+          "image": "soc_sasando"
+        },
+        {
+          "id": "a_way",
+          "text": {
+            "id": "wayang kulit",
+            "en": "wayang kulit"
+          },
+          "image": "soc_wayang"
+        },
+        {
+          "id": "r_jabar",
+          "text": {
+            "id": "Jawa Barat",
+            "en": "West Java"
+          }
+        },
+        {
+          "id": "r_rote",
+          "text": {
+            "id": "Pulau Rote, NTT",
+            "en": "Rote Island, East Nusa Tenggara"
+          }
+        },
+        {
+          "id": "r_jawabali",
+          "text": {
+            "id": "Jawa dan Bali",
+            "en": "Java and Bali"
+          }
+        },
+        {
+          "id": "r_aceh",
+          "text": {
+            "id": "Aceh",
+            "en": "Aceh"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "a_saman": "r_aceh",
+        "a_angk": "r_jabar",
+        "a_sas": "r_rote",
+        "a_way": "r_jawabali"
+      },
+      "model_answer": {
+        "id": "Saman dari Aceh, angklung dari Jawa Barat, sasando dari Rote (NTT), wayang kulit dari Jawa dan Bali.",
+        "en": "Saman from Aceh, angklung from West Java, sasando from Rote (East Nusa Tenggara), wayang kulit from Java and Bali."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "MUS-SOUND"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-CHOOSE",
+      "image": "soc_saman_dance",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Penari Saman membuat bunyi dengan…",
+            "en": "Saman dancers make their sound with…"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Tepukan tangan, dada, dan paha, juga nyanyian",
+            "en": "Clapping hands, chest and thighs, and singing"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Gitar listrik",
+            "en": "Electric guitars"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Terompet dan biola",
+            "en": "Trumpets and violins"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Saman memakai tubuh sebagai alat musik: tepuk tangan, tepuk dada dan paha, serta nyanyian.",
+        "en": "Saman uses the body as the instrument: clapping, slapping chest and thighs, and singing."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "MUS-WORLD"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "image": "pic_guitar",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling dulu.",
+            "en": "Earliest first."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "w_dang",
+          "text": {
+            "id": "Dangdut menjadi sangat populer (1970-an)",
+            "en": "Dangdut becomes hugely popular (1970s)"
+          }
+        },
+        {
+          "id": "w_paris",
+          "text": {
+            "id": "Gamelan Jawa dimainkan di Pameran Dunia Paris (1889)",
+            "en": "Javanese gamelan plays at the Paris World's Fair (1889)"
+          }
+        },
+        {
+          "id": "w_kron",
+          "text": {
+            "id": "Musik pelaut Portugis tiba, akar keroncong (abad ke-16)",
+            "en": "Portuguese sailors' music arrives, the roots of keroncong (1500s)"
+          }
+        }
+      ],
+      "solution": [
+        "w_kron",
+        "w_paris",
+        "w_dang"
+      ],
+      "model_answer": {
+        "id": "Keroncong (abad ke-16), gamelan di Paris (1889), lalu dangdut populer (1970-an).",
+        "en": "Keroncong (1500s), gamelan in Paris (1889), then dangdut's rise (1970s)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "MUS-WORLD"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Nama dangdut meniru bunyi alat ini.",
+            "en": "Dangdut is named after this instrument's sound."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_guitar",
+          "text": {
+            "id": "gitar",
+            "en": "guitar"
+          },
+          "image": "pic_guitar"
+        },
+        {
+          "id": "soc_sasando",
+          "text": {
+            "id": "sasando",
+            "en": "sasando"
+          },
+          "image": "soc_sasando"
+        },
+        {
+          "id": "sticker_drum",
+          "text": {
+            "id": "gendang",
+            "en": "drum"
+          },
+          "image": "sticker_drum",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Nama dangdut meniru bunyi gendangnya: \"dang\" dan \"dut\".",
+        "en": "Dangdut is named after its drum sound: \"dang\" and \"dut\"."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "MUS-SOUND"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-CHOOSE",
+      "image": "sticker_angklung",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Angklung besar atau kecil: mana bernada lebih rendah?",
+            "en": "Big or small angklung: which sounds lower?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Angklung yang kecil",
+            "en": "The small angklung"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Angklung yang besar",
+            "en": "The big angklung"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Bunyinya pasti sama",
+            "en": "They always sound the same"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Tabung bambu yang lebih besar dan panjang berbunyi lebih rendah.",
+        "en": "Bigger, longer bamboo tubes make lower notes."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "MUS-PLACE"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Wayang kulit diiringi musik ini.",
+            "en": "Wayang kulit is played with this music."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_guitar",
+          "text": {
+            "id": "gitar",
+            "en": "guitar"
+          },
+          "image": "pic_guitar"
+        },
+        {
+          "id": "soc_gamelan",
+          "text": {
+            "id": "gamelan",
+            "en": "gamelan"
+          },
+          "image": "soc_gamelan",
+          "correct": true
+        },
+        {
+          "id": "soc_sasando",
+          "text": {
+            "id": "sasando",
+            "en": "sasando"
+          },
+          "image": "soc_sasando"
+        }
+      ],
+      "model_answer": {
+        "id": "Wayang kulit diiringi gamelan, dan satu dalang menyuarakan semua tokohnya.",
+        "en": "Wayang kulit is accompanied by gamelan, and one dalang voices every character."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "MUS-WORLD"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "image": "pic_guitar",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Keroncong berakar dari musik pelaut ____.",
+            "en": "Keroncong has roots in the music of ____ sailors."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_jp",
+          "text": {
+            "id": "Jepang",
+            "en": "Japanese"
+          }
+        },
+        {
+          "id": "t_pt",
+          "text": {
+            "id": "Portugis",
+            "en": "Portuguese"
+          }
+        },
+        {
+          "id": "t_en",
+          "text": {
+            "id": "Inggris",
+            "en": "English"
+          }
+        }
+      ],
+      "solution": [
+        "t_pt"
+      ],
+      "model_answer": {
+        "id": "Keroncong berakar dari musik Portugis; Kampung Tugu di Jakarta masih memainkannya.",
+        "en": "Keroncong has Portuguese roots; Kampung Tugu in Jakarta still plays it."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "MUS-SOUND"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-MAKE",
+      "image": "pic_milk_glass",
+      "model_answer": {
+        "id": "Buat alat musik gelas: isi beberapa gelas dengan air yang tingginya berbeda. Ketuk pelan dengan sendok, dengarkan, lalu susun dari nada rendah ke tinggi.",
+        "en": "Make a glass instrument: fill a few glasses with different amounts of water. Tap each gently with a spoon, listen, then line them up from low to high."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "MUS-SOUND"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Alat musik yang dipetik?",
+            "en": "Which instrument is plucked?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_guitar",
+          "text": {
+            "id": "gitar",
+            "en": "guitar"
+          },
+          "image": "pic_guitar",
+          "correct": true
+        },
+        {
+          "id": "soc_gamelan",
+          "text": {
+            "id": "gamelan",
+            "en": "gamelan"
+          },
+          "image": "soc_gamelan"
+        },
+        {
+          "id": "sticker_angklung",
+          "text": {
+            "id": "angklung",
+            "en": "angklung"
+          },
+          "image": "sticker_angklung"
+        }
+      ],
+      "model_answer": {
+        "id": "Gitar dibunyikan dengan dipetik.",
+        "en": "A guitar is played by plucking."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "MUS-PLACE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Angklung dari Jawa Barat. Ketuk pulaunya.",
+            "en": "The angklung is from West Java. Tap its island."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          }
+        },
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          },
+          "correct": true
+        },
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "bali_nusa_tenggara",
+          "text": {
+            "id": "Bali dan Nusa Tenggara",
+            "en": "Bali and Nusa Tenggara"
+          },
+          "region": {
+            "x": 0.45,
+            "y": 0.78,
+            "w": 0.22,
+            "h": 0.12
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Angklung berasal dari Jawa Barat, di Pulau Jawa.",
+        "en": "The angklung comes from West Java, on Java."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-02-015",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "MUS-WORLD"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "image": "pic_guitar",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Keroncong berakar dari musik Jepang.",
+            "en": "Keroncong has its roots in Japanese music."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Keroncong berakar dari musik Portugis, bukan Jepang.",
+        "en": "Keroncong has Portuguese roots, not Japanese."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-02-016",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "MUS-WORLD"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Encyclopaedia Britannica, \"Claude Debussy\" (britannica.com); Richard Mueller, \"Javanese Influence on Debussy's Fantaisie and Beyond\", 19th-Century Music 10/2 (1986).",
+      "model_answer": {
+        "id": "Pada Pameran Dunia Paris 1889, komponis Prancis Claude Debussy mendengar gamelan Jawa. Bunyinya memengaruhi musiknya, misalnya karya piano \"Pagodes\" (1903).",
+        "en": "At the 1889 Paris World's Fair, the French composer Claude Debussy heard a Javanese gamelan. Its sound shaped his music, for example the piano piece \"Pagodes\" (1903)."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    },
+    {
+      "item_id": "SOS-K-X-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "ASEAN berdiri pada 1967. Pada tahun 2027, ASEAN berumur berapa tahun?",
+            "en": "ASEAN was founded in 1967. How old will it be in 2027?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 60,
+        "tolerance": 0,
+        "unit": {
+          "id": "tahun",
+          "en": "years"
+        }
+      },
+      "model_answer": {
+        "id": "2027 − 1967 = 60 tahun.",
+        "en": "2027 − 1967 = 60 years."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-x-0.1"
+    }
+  ]
+}

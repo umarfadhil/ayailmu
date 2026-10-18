@@ -1,0 +1,2400 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "nil-a-x-0.1",
+    "subject": "nilai",
+    "track": "nil-a-x",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "level": "master",
+    "title": {
+      "id": "Nilai — Master (Dewasa)",
+      "en": "Values — Master (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12) for review: needs a values/character-education reviewer (universal, cross-faith, non-partisan) and the Indonesian and English language reviewers before any item is approved (docs/content/MODULES_LEVELS_STORIES.md section 3, adults Master). Stories are original fiction; val_* scenes are being drawn.",
+  "prompts": {
+    "P-BEST": {
+      "id": "Mana yang paling membantu?",
+      "en": "Which helps most?"
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang paling tepat.",
+      "en": "Pick the best picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban terbaik.",
+      "en": "Choose the best answer."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-SORT": {
+      "id": "Kelompokkan gambarnya.",
+      "en": "Sort the pictures."
+    },
+    "P-MATCH": {
+      "id": "Pasangkan.",
+      "en": "Match them up."
+    },
+    "P-ORDER": {
+      "id": "Urutkan gambarnya.",
+      "en": "Put the pictures in order."
+    },
+    "P-MEMORY": {
+      "id": "Buka kartu, temukan pasangannya.",
+      "en": "Flip cards, find the pairs."
+    },
+    "P-STORY": {
+      "id": "Simak ceritanya.",
+      "en": "Watch the story."
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "That's it. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Baik, kita lanjut.",
+      "en": "Good, let's continue."
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Memimpin dengan melayani dan antikorupsi",
+        "en": "Servant leadership and everyday anti-corruption"
+      },
+      "sticker": "sticker_star_fruit"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Dialog, toleransi, dan etika digital",
+        "en": "Dialogue, tolerance and digital ethics"
+      },
+      "sticker": "sticker_boat"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "NIL-A-X-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Memimpin dengan melayani dan antikorupsi",
+        "en": "Servant leadership and everyday anti-corruption"
+      },
+      "body": [
+        {
+          "id": "Pemimpin yang melayani mendahulukan kebutuhan tim: mendengar, memberi contoh, dan ikut turun tangan.",
+          "en": "A servant leader puts the team's needs first: listening, setting the example, pitching in."
+        },
+        {
+          "id": "Korupsi sering dimulai dari hal kecil: «uang rokok», titip absen, atau kuitansi yang dibesarkan.",
+          "en": "Corruption often starts small: \"cigarette money\", clocking in for a friend, an inflated receipt."
+        },
+        {
+          "id": "Menolak dengan sopan, memakai jalur resmi, dan mencatat dengan rapi menutup celahnya.",
+          "en": "Declining politely, using official channels and keeping clean records close the gaps."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "NIL-A-X-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Dialog, toleransi, dan etika digital",
+        "en": "Dialogue, tolerance and digital ethics"
+      },
+      "body": [
+        {
+          "id": "Dialog bukan untuk menang, tetapi untuk saling memahami.",
+          "en": "Dialogue isn't about winning; it's about understanding each other."
+        },
+        {
+          "id": "Toleransi: memberi ruang bagi keyakinan dan cara hidup yang berbeda, tanpa harus menjadi sama.",
+          "en": "Tolerance: making room for different beliefs and ways of life, without having to be the same."
+        },
+        {
+          "id": "Di dunia digital: cek sebelum menyebar, minta izin sebelum mengunggah, dan menulislah seperti sedang bertatap muka.",
+          "en": "Online: check before you share, ask before you post, and write as if face to face."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "stories": {
+    "ST-NIL-A-X-KATERING": {
+      "figure": "Maya (tokoh fiksi)",
+      "title": {
+        "id": "Tawaran untuk Maya",
+        "en": "An offer for Maya"
+      },
+      "source": "Cerita asli AyaIlmu (fiksi)",
+      "emblem": "val_tell_truth",
+      "panels": [
+        {
+          "scene": "val_teamwork",
+          "caption": {
+            "id": "Maya ditugasi memilih katering untuk acara kantor.",
+            "en": "Maya was asked to choose a caterer for an office event."
+          },
+          "narration": {
+            "id": "id/nil_katering_kantor_01",
+            "en": "en/nil_katering_kantor_01"
+          },
+          "layers": [
+            {
+              "art": "pic_computer",
+              "x": 0.76,
+              "y": 0.58,
+              "w": 0.18,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "val_calm_breath",
+          "caption": {
+            "id": "Seorang pemilik katering menawarkan «uang terima kasih» jika ia dipilih.",
+            "en": "One caterer offered her a \"thank-you payment\" if she chose them."
+          },
+          "narration": {
+            "id": "id/nil_katering_kantor_02",
+            "en": "en/nil_katering_kantor_02"
+          },
+          "layers": [
+            {
+              "art": "pic_phone",
+              "x": 0.74,
+              "y": 0.56,
+              "w": 0.12,
+              "motion": {
+                "type": "slide_in",
+                "from": "right",
+                "ms": 600
+              }
+            },
+            {
+              "art": "math_money_notes",
+              "x": 0.58,
+              "y": 0.66,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 400
+              }
+            }
+          ]
+        },
+        {
+          "scene": "val_tell_truth",
+          "caption": {
+            "id": "Maya menolak dengan sopan dan mencatat tawaran itu untuk atasannya.",
+            "en": "Maya politely said no and noted the offer for her manager."
+          },
+          "narration": {
+            "id": "id/nil_katering_kantor_03",
+            "en": "en/nil_katering_kantor_03"
+          },
+          "layers": [
+            {
+              "art": "pic_write",
+              "x": 0.06,
+              "y": 0.62,
+              "w": 0.12,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "val_share_food",
+          "caption": {
+            "id": "Ia membandingkan tiga penawaran dan memilih yang terbaik. Semua orang tahu cara pilihan itu dibuat.",
+            "en": "She compared three quotes and chose the best one. Everyone knew how the choice was made."
+          },
+          "narration": {
+            "id": "id/nil_katering_kantor_04",
+            "en": "en/nil_katering_kantor_04"
+          },
+          "layers": [
+            {
+              "art": "pic_rice_bowl",
+              "x": 0.76,
+              "y": 0.64,
+              "w": 0.12,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        }
+      ]
+    },
+    "ST-NIL-A-X-GRUP": {
+      "figure": "Bu Nanik (tokoh fiksi)",
+      "title": {
+        "id": "Kabar di grup warga",
+        "en": "News in the residents' group"
+      },
+      "source": "Cerita asli AyaIlmu (fiksi)",
+      "emblem": "val_phone_kind",
+      "panels": [
+        {
+          "scene": "val_friends_diverse",
+          "caption": {
+            "id": "Pesan berantai masuk ke grup warga: «Besok jalan utama ditutup seharian!»",
+            "en": "A chain message arrived in the residents' group: \"Main road closed all day tomorrow!\""
+          },
+          "narration": {
+            "id": "id/nil_grup_warga_01",
+            "en": "en/nil_grup_warga_01"
+          },
+          "layers": [
+            {
+              "art": "pic_phone",
+              "x": 0.78,
+              "y": 0.08,
+              "w": 0.12,
+              "motion": {
+                "type": "slide_in",
+                "from": "top",
+                "ms": 600
+              }
+            }
+          ]
+        },
+        {
+          "scene": "val_calm_breath",
+          "caption": {
+            "id": "Bu Nanik tidak langsung meneruskannya. Ia mengecek akun resmi kelurahan.",
+            "en": "Bu Nanik didn't forward it straight away. She checked the kelurahan's official account."
+          },
+          "narration": {
+            "id": "id/nil_grup_warga_02",
+            "en": "en/nil_grup_warga_02"
+          },
+          "layers": [
+            {
+              "art": "pic_tablet",
+              "x": 0.72,
+              "y": 0.56,
+              "w": 0.16,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "val_phone_kind",
+          "caption": {
+            "id": "Ternyata itu pengumuman tahun lalu. Ia membalas dengan ramah dan menyertakan tautan resminya.",
+            "en": "It turned out to be last year's notice. She replied kindly, with the official link."
+          },
+          "narration": {
+            "id": "id/nil_grup_warga_03",
+            "en": "en/nil_grup_warga_03"
+          },
+          "layers": [],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "val_greet_neighbor",
+          "caption": {
+            "id": "Pengirim pertama berterima kasih. Grup pun kembali tenang.",
+            "en": "The first sender thanked her. The group calmed down again."
+          },
+          "narration": {
+            "id": "id/nil_grup_warga_04",
+            "en": "en/nil_grup_warga_04"
+          },
+          "layers": [
+            {
+              "art": "pic_phone",
+              "x": 0.78,
+              "y": 0.08,
+              "w": 0.12
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "NIL-A-X-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-MELAYANI"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tim Anda lembur menyelesaikan pesanan besar.",
+            "en": "Your team is working late to finish a big order."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Memarahi tim karena lambat",
+            "en": "Scolding the team for being slow"
+          }
+        },
+        {
+          "id": "teamwork",
+          "image": "val_teamwork",
+          "text": {
+            "id": "Ikut turun tangan bersama tim",
+            "en": "Pitching in with the team"
+          },
+          "correct": true
+        },
+        {
+          "id": "phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "Menegur lewat pesan ketus dari rumah",
+            "en": "Sending curt messages from home"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Pemimpin yang ikut turun tangan memberi contoh dan semangat. Memarahi, langsung atau dari jauh, menurunkan semangat tim.",
+        "en": "A leader who pitches in sets the example and lifts spirits. Scolding, in person or from afar, drags morale down."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "NIL-MELAYANI"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana gaya memimpin yang melayani?",
+            "en": "Which show servant leadership?"
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Melayani",
+            "en": "Serving"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Sekadar menyuruh",
+            "en": "Just giving orders"
+          }
+        },
+        {
+          "id": "listen",
+          "image": "val_listen",
+          "text": {
+            "id": "Mendengar usul anggota",
+            "en": "Hearing members' ideas"
+          }
+        },
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Memotong usul anggota",
+            "en": "Cutting members' ideas short"
+          }
+        },
+        {
+          "id": "help_friend",
+          "image": "val_help_friend",
+          "text": {
+            "id": "Membantu anggota yang kesulitan",
+            "en": "Helping a member who's struggling"
+          }
+        },
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Membentak di depan tim",
+            "en": "Shouting in front of the team"
+          }
+        },
+        {
+          "id": "on_time",
+          "image": "val_on_time",
+          "text": {
+            "id": "Memberi contoh datang tepat waktu",
+            "en": "Setting the example by being on time"
+          }
+        },
+        {
+          "id": "late",
+          "image": "val_late",
+          "text": {
+            "id": "Menuntut disiplin tetapi sering terlambat",
+            "en": "Demanding discipline while often being late"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "listen": "b_yes",
+        "interrupt": "b_no",
+        "help_friend": "b_yes",
+        "angry_face": "b_no",
+        "on_time": "b_yes",
+        "late": "b_no"
+      },
+      "model_answer": {
+        "id": "Melayani berarti mendengar, membantu, dan memberi contoh — bukan hanya memberi perintah.",
+        "en": "Serving means listening, helping and leading by example — not just giving orders."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "NIL-MELAYANI"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutan memimpin rapat tim yang melayani.",
+            "en": "The steps of running a team meeting that serves."
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "s3",
+          "image": "val_teamwork",
+          "text": {
+            "id": "Membagi tugas bersama",
+            "en": "Dividing the tasks together"
+          }
+        },
+        {
+          "id": "s1",
+          "image": "val_on_time",
+          "text": {
+            "id": "Mulai tepat waktu",
+            "en": "Starting on time"
+          }
+        },
+        {
+          "id": "s4",
+          "image": "val_say_thanks",
+          "text": {
+            "id": "Berterima kasih atas kerja tim",
+            "en": "Thanking the team"
+          }
+        },
+        {
+          "id": "s2",
+          "image": "val_listen",
+          "text": {
+            "id": "Mendengarkan semua anggota",
+            "en": "Hearing every member"
+          }
+        }
+      ],
+      "solution": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "model_answer": {
+        "id": "Mulai tepat waktu, dengarkan semua, bagi tugas bersama, tutup dengan terima kasih.",
+        "en": "Start on time, hear everyone, divide tasks together, close with thanks."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "NIL-MELAYANI"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan keadaan anggota tim dengan langkah pemimpinnya.",
+            "en": "Match each team member's state with the leader's step."
+          }
+        }
+      ],
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p1",
+          "image": "pic_tired",
+          "text": {
+            "id": "Anggota tampak kelelahan",
+            "en": "A member looks worn out"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "pic_sad",
+          "text": {
+            "id": "Anggota tampak murung",
+            "en": "A member seems low"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_happy",
+          "text": {
+            "id": "Anggota baru saja berhasil",
+            "en": "A member has just succeeded"
+          }
+        },
+        {
+          "id": "p4",
+          "image": "val_include_friend",
+          "text": {
+            "id": "Anggota baru bergabung",
+            "en": "A new member joins"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Atur ulang beban kerjanya",
+            "en": "Rebalance their workload"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Ajak bicara empat mata",
+            "en": "Have a one-to-one chat"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Beri apresiasi di depan tim",
+            "en": "Praise them in front of the team"
+          }
+        },
+        {
+          "id": "t4",
+          "text": {
+            "id": "Pasangkan dengan rekan pendamping",
+            "en": "Pair them with a buddy"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3",
+        "p4": "t4"
+      },
+      "model_answer": {
+        "id": "Pemimpin yang melayani membaca keadaan tiap orang dan menyesuaikan langkahnya.",
+        "en": "A servant leader reads each person's state and adjusts accordingly."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "NIL-MELAYANI"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pemimpin yang melayani berarti menuruti semua permintaan anggota tim.",
+            "en": "Being a servant leader means granting every request from the team."
+          }
+        }
+      ],
+      "image": "val_teamwork",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Melayani berarti mendengar dan mendukung, tetapi pemimpin tetap memutuskan demi tujuan bersama.",
+        "en": "Serving means listening and supporting, but the leader still decides for the shared goal."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-MELAYANI"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Seorang anggota tim membuat kesalahan yang merugikan klien.",
+            "en": "A team member makes a mistake that costs a client."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "listen",
+          "image": "val_listen",
+          "text": {
+            "id": "Bicara empat mata, mencari penyebab dan perbaikannya",
+            "en": "Talking one-to-one about the cause and the fix"
+          },
+          "correct": true
+        },
+        {
+          "id": "phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "Menyindirnya di grup kantor",
+            "en": "Making snide remarks in the office group"
+          }
+        },
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Memarahinya di depan semua orang",
+            "en": "Scolding them in front of everyone"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Bicara empat mata menjaga martabatnya dan fokus pada perbaikan. Mempermalukan di depan umum membuat orang takut mengaku salah.",
+        "en": "A private talk protects their dignity and focuses on the fix. Public shaming makes people afraid to admit mistakes."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "NIL-ANTIKORUPSI"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-NIL-A-X-KATERING",
+      "model_answer": {
+        "id": "Maya menolak «uang terima kasih», membandingkan tiga penawaran secara terbuka, dan memilih yang terbaik.",
+        "en": "Maya turned down the \"thank-you payment\", compared three quotes openly and chose the best."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "NIL-ANTIKORUPSI"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-CHOOSE",
+      "story_id": "ST-NIL-A-X-KATERING",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mengapa Maya membandingkan tiga penawaran secara terbuka?",
+            "en": "Why did Maya compare three quotes openly?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Agar mendapat hadiah yang lebih besar",
+            "en": "To get a bigger gift"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Supaya pemilik katering pertama merasa malu",
+            "en": "To embarrass the first caterer"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Agar pilihannya bisa diperiksa dan adil bagi semua penjual",
+            "en": "So the choice could be checked and was fair to every supplier"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Proses terbuka menutup celah suap: siapa pun bisa melihat mengapa satu penawaran dipilih.",
+        "en": "An open process closes the door on bribes: anyone can see why one quote was chosen."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "NIL-ANTIKORUPSI"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang menutup celah korupsi, mana yang membukanya?",
+            "en": "Which close the door on corruption, and which open it?"
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_close",
+          "text": {
+            "id": "Menutup celah",
+            "en": "Closes the door"
+          }
+        },
+        {
+          "id": "b_open",
+          "text": {
+            "id": "Membuka celah",
+            "en": "Opens the door"
+          }
+        },
+        {
+          "id": "queue",
+          "image": "val_queue",
+          "text": {
+            "id": "Mengurus izin lewat antrean resmi",
+            "en": "Applying for a permit through the official queue"
+          }
+        },
+        {
+          "id": "cut_queue",
+          "image": "val_cut_queue",
+          "text": {
+            "id": "Membayar «uang pelicin» agar didahulukan",
+            "en": "Paying \"grease money\" to jump ahead"
+          }
+        },
+        {
+          "id": "return_change",
+          "image": "val_return_change",
+          "text": {
+            "id": "Mengembalikan sisa anggaran",
+            "en": "Returning leftover budget"
+          }
+        },
+        {
+          "id": "copy_answer",
+          "image": "val_copy_answer",
+          "text": {
+            "id": "Menyalin tanda tangan atasan",
+            "en": "Copying the manager's signature"
+          }
+        },
+        {
+          "id": "tell_truth",
+          "image": "val_tell_truth",
+          "text": {
+            "id": "Melaporkan tawaran suap",
+            "en": "Reporting a bribe offer"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "queue": "b_close",
+        "cut_queue": "b_open",
+        "return_change": "b_close",
+        "copy_answer": "b_open",
+        "tell_truth": "b_close"
+      },
+      "model_answer": {
+        "id": "Jalur resmi, sisa anggaran yang dikembalikan, dan laporan yang jujur menutup celah. Uang pelicin dan pemalsuan membukanya.",
+        "en": "Official channels, returned budgets and honest reports close the door. Grease money and forgery open it."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "NIL-ANTIKORUPSI"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan godaan sehari-hari dengan pilihan bersihnya.",
+            "en": "Match each everyday temptation with the clean choice."
+          }
+        }
+      ],
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p1",
+          "image": "math_money_notes",
+          "text": {
+            "id": "Biaya mengurus dokumen",
+            "en": "Fees for paperwork"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "clock_8_00",
+          "text": {
+            "id": "Rekan minta dibantu absen",
+            "en": "A colleague asks you to clock in for them"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "pic_ticket",
+          "text": {
+            "id": "Nomor antrean",
+            "en": "A queue number"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Bayar tarif resmi dan minta tanda terima",
+            "en": "Pay the official rate and ask for a receipt"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Tolak titip absen; setiap orang absen sendiri",
+            "en": "Say no — everyone clocks in for themselves"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Antre sesuai nomor, tanpa calo",
+            "en": "Wait your turn, no middlemen"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3"
+      },
+      "model_answer": {
+        "id": "Tarif resmi, absen sendiri, antre tanpa calo: antikorupsi dimulai dari kebiasaan kecil.",
+        "en": "Official fees, your own attendance, no queue touts: anti-corruption starts with small habits."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NIL-ANTIKORUPSI"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kenalan menawarkan «jalur cepat» mengurus dokumen dengan bayaran tambahan.",
+            "en": "An acquaintance offers a \"fast track\" for your paperwork for an extra fee."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "cut_queue",
+          "image": "val_cut_queue",
+          "text": {
+            "id": "Membayar agar didahulukan",
+            "en": "Paying to jump ahead"
+          }
+        },
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Marah-marah kepada petugas loket",
+            "en": "Losing your temper at the counter"
+          }
+        },
+        {
+          "id": "queue",
+          "image": "val_queue",
+          "text": {
+            "id": "Mengurus lewat jalur resmi",
+            "en": "Going through the official channel"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Jalur resmi mungkin lebih lama, tetapi adil bagi yang antre dan tidak memberi ruang pungutan liar.",
+        "en": "The official route may take longer, but it's fair to those queueing and leaves no room for illegal fees."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "NIL-ANTIKORUPSI"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dengan nilai antikorupsi.",
+            "en": "Match each picture with an anti-corruption value."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p1",
+          "image": "val_tell_truth",
+          "text": {
+            "id": "Berkata jujur",
+            "en": "Telling the truth"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "val_visit_sick",
+          "text": {
+            "id": "Menjenguk yang sakit",
+            "en": "Visiting the sick"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "val_on_time",
+          "text": {
+            "id": "Datang tepat waktu",
+            "en": "Arriving on time"
+          }
+        },
+        {
+          "id": "p4",
+          "image": "val_keep_promise",
+          "text": {
+            "id": "Menepati janji",
+            "en": "Keeping a promise"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Jujur",
+            "en": "Honest"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Peduli",
+            "en": "Caring"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Disiplin",
+            "en": "Disciplined"
+          }
+        },
+        {
+          "id": "t4",
+          "text": {
+            "id": "Tanggung jawab",
+            "en": "Responsible"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3",
+        "p4": "t4"
+      },
+      "model_answer": {
+        "id": "Jujur, peduli, disiplin, dan tanggung jawab termasuk sembilan nilai integritas yang dikampanyekan KPK.",
+        "en": "Honest, caring, disciplined and responsible are among the nine integrity values promoted by the KPK."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-MELAYANI"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Proyek tim Anda berhasil dan pimpinan memujinya.",
+            "en": "Your team's project succeeds and senior management praises it."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "left_out",
+          "image": "val_left_out",
+          "text": {
+            "id": "Hanya menyebut nama sendiri",
+            "en": "Mentioning only yourself"
+          }
+        },
+        {
+          "id": "say_thanks",
+          "image": "val_say_thanks",
+          "text": {
+            "id": "Berterima kasih dan menyebut peran tiap anggota",
+            "en": "Thanking everyone and naming each person's part"
+          },
+          "correct": true
+        },
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Memotong anggota yang ingin bercerita",
+            "en": "Cutting off a member who wants to speak"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Pemimpin yang melayani membagi pujian kepada tim; tim yang dihargai akan bekerja lebih baik lagi.",
+        "en": "A servant leader shares the credit; a team that feels valued does even better next time."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "NIL-ANTIKORUPSI"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Memberi «uang rokok» kepada petugas agar urusan cepat selesai itu wajar asal nilainya kecil.",
+            "en": "Slipping an official \"cigarette money\" to speed things up is fine if the amount is small."
+          }
+        }
+      ],
+      "image": "math_money_notes",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Sekecil apa pun, uang pelicin merugikan orang yang antre dengan jujur dan membuat pungutan liar dianggap biasa.",
+        "en": "However small, grease money is unfair to honest people in the queue and makes illegal fees seem normal."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-01-015",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "NIL-ANTIKORUPSI"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Komisi Pemberantasan Korupsi (KPK), Anti-Corruption Learning Center: «Sembilan Nilai Integritas» (aclc.kpk.go.id)",
+      "model_answer": {
+        "id": "KPK mengampanyekan sembilan nilai integritas untuk mencegah korupsi: jujur, peduli, mandiri, disiplin, tanggung jawab, kerja keras, sederhana, berani, dan adil.",
+        "en": "Indonesia's Corruption Eradication Commission (KPK) promotes nine integrity values to prevent corruption: honesty, care, independence, discipline, responsibility, hard work, simplicity, courage and fairness."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-DIALOG"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dalam rapat warga, pendapat tetangga sangat berbeda dari pendapat Anda.",
+            "en": "At a residents' meeting, a neighbour's view is very different from yours."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "listen",
+          "image": "val_listen",
+          "text": {
+            "id": "Mendengarkan sampai selesai, lalu bertanya",
+            "en": "Listening to the end, then asking questions"
+          },
+          "correct": true
+        },
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Memotong untuk membantah",
+            "en": "Cutting in to argue"
+          }
+        },
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Meninggikan suara",
+            "en": "Raising your voice"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Mendengarkan sampai selesai membuat Anda paham alasannya — dan membuatnya mau mendengar Anda juga.",
+        "en": "Listening to the end helps you understand their reasons — and makes them willing to hear yours."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "NIL-DIALOG"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-SORT",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang membuka dialog, mana yang menutupnya?",
+            "en": "Which open dialogue, and which shut it down?"
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_open",
+          "text": {
+            "id": "Membuka dialog",
+            "en": "Opens dialogue"
+          }
+        },
+        {
+          "id": "b_shut",
+          "text": {
+            "id": "Menutup dialog",
+            "en": "Shuts it down"
+          }
+        },
+        {
+          "id": "listen",
+          "image": "val_listen",
+          "text": {
+            "id": "Mendengarkan pendapat yang berbeda",
+            "en": "Listening to a different view"
+          }
+        },
+        {
+          "id": "phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "Mengejek keyakinan orang di media sosial",
+            "en": "Mocking someone's beliefs online"
+          }
+        },
+        {
+          "id": "friends_diverse",
+          "image": "val_friends_diverse",
+          "text": {
+            "id": "Makan bersama tetangga yang berbeda keyakinan",
+            "en": "Sharing a meal with neighbours of another faith"
+          }
+        },
+        {
+          "id": "left_out",
+          "image": "val_left_out",
+          "text": {
+            "id": "Tidak mengundang tetangga karena beda keyakinan",
+            "en": "Not inviting a neighbour because of their faith"
+          }
+        },
+        {
+          "id": "handshake",
+          "image": "hist_handshake",
+          "text": {
+            "id": "Berjabat tangan setelah berbeda pendapat",
+            "en": "Shaking hands after disagreeing"
+          }
+        },
+        {
+          "id": "interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "Memotong sebelum orang selesai bicara",
+            "en": "Interrupting before someone has finished"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "listen": "b_open",
+        "phone_unkind": "b_shut",
+        "friends_diverse": "b_open",
+        "left_out": "b_shut",
+        "handshake": "b_open",
+        "interrupt": "b_shut"
+      },
+      "model_answer": {
+        "id": "Dialog terbuka saat orang merasa didengar dan dihormati; ejekan dan pengucilan menutupnya.",
+        "en": "Dialogue opens up when people feel heard and respected; mockery and exclusion shut it down."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "NIL-DIALOG"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutan berbeda pendapat dengan sehat.",
+            "en": "The steps of disagreeing well."
+          }
+        }
+      ],
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "s3",
+          "image": "val_teamwork",
+          "text": {
+            "id": "Mencari titik temu",
+            "en": "Looking for common ground"
+          }
+        },
+        {
+          "id": "s1",
+          "image": "val_listen",
+          "text": {
+            "id": "Mendengarkan pendapatnya",
+            "en": "Hearing their view"
+          }
+        },
+        {
+          "id": "s4",
+          "image": "hist_handshake",
+          "text": {
+            "id": "Menyepakati langkah berikutnya",
+            "en": "Agreeing on the next step"
+          }
+        },
+        {
+          "id": "s2",
+          "image": "pic_yes_nod",
+          "text": {
+            "id": "Mengulang intinya untuk memastikan paham",
+            "en": "Summing up their point to check you understood"
+          }
+        }
+      ],
+      "solution": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "model_answer": {
+        "id": "Dengar, pastikan paham, cari titik temu, lalu sepakati — walau belum setuju dalam semua hal.",
+        "en": "Listen, check you understood, find common ground, then agree a way forward — even if you don't agree on everything."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "NIL-DIALOG"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dalam dialog, mengulang pendapat lawan bicara dengan kata-kata sendiri membantu menunjukkan bahwa Anda memahaminya.",
+            "en": "In a dialogue, restating the other person's view in your own words helps show you've understood it."
+          }
+        }
+      ],
+      "image": "val_listen",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Mengulang dengan kata-kata sendiri menunjukkan Anda mendengar dan memberi kesempatan meluruskan salah paham.",
+        "en": "Restating shows you were listening and gives a chance to clear up misunderstandings."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "NIL-DIALOG"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan situasi dengan kalimat pembuka dialog.",
+            "en": "Match each situation with a way to open dialogue."
+          }
+        }
+      ],
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p1",
+          "image": "val_friends_diverse",
+          "text": {
+            "id": "Tetangga merayakan hari raya yang berbeda",
+            "en": "A neighbour celebrates a different holiday"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Lawan bicara tampak kesal",
+            "en": "The other person looks upset"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "hist_handshake",
+          "text": {
+            "id": "Diskusi selesai tanpa kesepakatan",
+            "en": "A discussion ends without agreement"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "«Bagaimana keluarga Anda biasa merayakannya?»",
+            "en": "\"How does your family usually celebrate it?\""
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "«Saya lihat Anda kesal. Boleh saya dengar alasannya?»",
+            "en": "\"I can see you're upset. May I hear why?\""
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "«Kita belum sepakat, tetapi terima kasih sudah berdiskusi.»",
+            "en": "\"We don't agree yet, but thank you for talking it through.\""
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3"
+      },
+      "model_answer": {
+        "id": "Pertanyaan yang tulus, pengakuan atas perasaan, dan terima kasih menjaga hubungan walau berbeda pendapat.",
+        "en": "Sincere questions, acknowledging feelings and saying thanks keep the relationship even when you disagree."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-DIALOG"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tim makan siang bersama; satu rekan punya pantangan makanan karena keyakinannya.",
+            "en": "The team is having lunch; one colleague avoids certain foods because of their beliefs."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "include_friend",
+          "image": "val_include_friend",
+          "text": {
+            "id": "Memilih tempat yang juga punya menu untuknya",
+            "en": "Choosing a place with food they can eat too"
+          },
+          "correct": true
+        },
+        {
+          "id": "left_out",
+          "image": "val_left_out",
+          "text": {
+            "id": "Tidak mengajaknya karena repot",
+            "en": "Not inviting them because it's a hassle"
+          }
+        },
+        {
+          "id": "phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "Bercanda soal pantangannya di grup",
+            "en": "Joking about it in the group chat"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Memilih tempat yang cocok untuk semua membuat setiap orang bisa ikut. Toleransi sering sesederhana itu.",
+        "en": "Picking a place that works for everyone lets everyone come. Tolerance is often that simple."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "NIL-DIGITAL"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-NIL-A-X-GRUP",
+      "model_answer": {
+        "id": "Bu Nanik mengecek sumber resmi sebelum menanggapi, lalu meluruskan kabar dengan ramah.",
+        "en": "Bu Nanik checked the official source before responding, then kindly set the record straight."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NIL-DIGITAL"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-NIL-A-X-GRUP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Balasan seperti apa yang dikirim Bu Nanik ke grup?",
+            "en": "What kind of reply did Bu Nanik send to the group?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "Sindiran untuk pengirimnya",
+            "en": "A dig at the sender"
+          }
+        },
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Pesan marah dengan huruf kapital",
+            "en": "An angry message in capitals"
+          }
+        },
+        {
+          "id": "phone_kind",
+          "image": "val_phone_kind",
+          "text": {
+            "id": "Balasan ramah dengan tautan resmi",
+            "en": "A kind reply with the official link"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Meluruskan tanpa mempermalukan membuat pengirim mau mengoreksi diri — dan grup tetap rukun.",
+        "en": "Correcting without shaming lets the sender put it right — and keeps the group friendly."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "NIL-DIGITAL"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Anda melihat orang terjatuh dari motor dan sempat memotretnya.",
+            "en": "You see someone fall off a motorbike, and you've taken a photo."
+          }
+        }
+      ],
+      "image": "pic_camera",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Mengunggahnya segera agar orang lain berhati-hati",
+            "en": "Post it straight away so others take care"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Menolong dulu; jangan unggah wajahnya tanpa izin",
+            "en": "Help first; don't post their face without permission"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Mengunggahnya dengan keterangan lucu",
+            "en": "Post it with a funny caption"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Menolong lebih penting daripada mengunggah. Wajah orang yang sedang kesusahan adalah privasinya; peringatan lalu lintas bisa disampaikan tanpa fotonya.",
+        "en": "Helping matters more than posting. A person's face in a bad moment is their privacy; a traffic warning doesn't need their photo."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "NIL-DIGITAL"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dengan kebiasaan digital yang baik.",
+            "en": "Match each picture with a good online habit."
+          }
+        }
+      ],
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p1",
+          "image": "pic_camera",
+          "text": {
+            "id": "Kamera",
+            "en": "A camera"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "Menerima komentar kasar",
+            "en": "Receiving a rude comment"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "val_phone_kind",
+          "text": {
+            "id": "Mengirim pesan yang ramah",
+            "en": "Sending a kind message"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Minta izin sebelum mengunggah foto orang lain",
+            "en": "Ask before posting photos of other people"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Jangan membalas kasar; abaikan atau laporkan",
+            "en": "Don't reply rudely; ignore or report it"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Luruskan kabar keliru dengan sopan dan sertakan sumber",
+            "en": "Correct false news politely and give a source"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3"
+      },
+      "model_answer": {
+        "id": "Minta izin, tahan diri, luruskan dengan sopan: tiga kebiasaan warga digital yang baik.",
+        "en": "Ask permission, hold back, correct politely: three habits of a good digital citizen."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "NIL-DIGITAL"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ada komentar kasar tentang Anda di unggahan publik.",
+            "en": "Someone has posted a rude comment about you publicly."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "Membalas dengan hinaan",
+            "en": "Replying with insults"
+          }
+        },
+        {
+          "id": "calm_breath",
+          "image": "val_calm_breath",
+          "text": {
+            "id": "Menenangkan diri, lalu mengabaikan atau melaporkannya",
+            "en": "Calming down, then ignoring or reporting it"
+          },
+          "correct": true
+        },
+        {
+          "id": "angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "Mengajak teman-teman menyerang balik",
+            "en": "Getting friends to attack back"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Membalas kasar memperpanjang pertengkaran di depan umum. Tenangkan diri dulu; abaikan, blokir, atau laporkan bila perlu.",
+        "en": "Hitting back drags the fight out in public. Calm down first; ignore, block or report it if needed."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "NIL-DIGITAL",
+        "NIL-DIALOG"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dan nilainya.",
+            "en": "Match each picture to its value."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p1",
+          "image": "val_phone_kind",
+          "text": {
+            "id": "Pesan yang ramah",
+            "en": "A kind message"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "hist_handshake",
+          "text": {
+            "id": "Jabat tangan",
+            "en": "A handshake"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "val_friends_diverse",
+          "text": {
+            "id": "Teman yang beragam",
+            "en": "A diverse group of friends"
+          }
+        },
+        {
+          "id": "p4",
+          "image": "val_listen",
+          "text": {
+            "id": "Orang yang menyimak",
+            "en": "Someone paying attention"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Santun di dunia maya",
+            "en": "Courteous online"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Berdamai",
+            "en": "Making peace"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Toleransi",
+            "en": "Tolerance"
+          }
+        },
+        {
+          "id": "t4",
+          "text": {
+            "id": "Mendengarkan",
+            "en": "Listening"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3",
+        "p4": "t4"
+      },
+      "model_answer": {
+        "id": "Santun, berdamai, toleran, mau mendengar — di dunia nyata maupun di dunia maya.",
+        "en": "Courteous, peaceable, tolerant, willing to listen — offline and online."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "NIL-DIALOG"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-BEST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tetangga yang berbeda keyakinan mengundang Anda ke acara keluarganya.",
+            "en": "A neighbour of a different faith invites you to a family celebration."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "friends_diverse",
+          "image": "val_friends_diverse",
+          "text": {
+            "id": "Datang dan menghormati acaranya",
+            "en": "Going and respecting the occasion"
+          },
+          "correct": true
+        },
+        {
+          "id": "left_out",
+          "image": "val_left_out",
+          "text": {
+            "id": "Tidak membalas undangannya",
+            "en": "Ignoring the invitation"
+          }
+        },
+        {
+          "id": "phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "Mengomentari keyakinannya di grup",
+            "en": "Commenting on their faith in a group chat"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Hadir dengan hormat — atau menolak dengan sopan bila berhalangan — menjaga hubungan baik. Mengabaikan atau mengejek merusaknya.",
+        "en": "Going respectfully — or declining politely if you can't — keeps things good. Ignoring or mocking damages them."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "NIL-DIGITAL"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Meneruskan kabar yang belum pasti tidak apa-apa asal ditambah kata «katanya».",
+            "en": "Forwarding unconfirmed news is fine as long as you add \"apparently\"."
+          }
+        }
+      ],
+      "image": "pic_phone",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "«Katanya» tidak menghentikan kabar keliru menyebar. Cek sumber resmi dulu; jika ragu, jangan teruskan.",
+        "en": "\"Apparently\" doesn't stop false news spreading. Check an official source first; if in doubt, don't forward it."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    },
+    {
+      "item_id": "NIL-A-X-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Anda mengirim kabar keliru ke 3 orang (putaran 1). Setiap penerima meneruskannya ke 3 orang baru. Berapa orang baru yang menerimanya pada putaran 4?",
+            "en": "You send a false rumour to 3 people (round 1). Each of them forwards it to 3 new people. How many new people get it in round 4?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 81,
+        "tolerance": 0,
+        "unit": {
+          "id": "orang",
+          "en": "people"
+        }
+      },
+      "model_answer": {
+        "id": "3 → 9 → 27 → 81 orang. Kabar menyebar cepat, jadi cek dulu sebelum meneruskan.",
+        "en": "3 → 9 → 27 → 81 people. Rumours spread fast, so check before you forward."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "nil-a-x-0.1"
+    }
+  ]
+}

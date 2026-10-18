@@ -4,9 +4,12 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * The activity catalog (docs/syllabus/00_FRAMEWORK.md §2). [renderer] is the v1 renderer that draws it
- * (CR-ENG-5); types whose renderer is null need a new renderer in P6. [evidenceCapable] false means the
- * type can never produce fresh evidence (CR-ENG-9).
+ * The activity catalog (docs/syllabus/00_FRAMEWORK.md §2). [renderer] is the renderer that draws it in a session
+ * (CR-ENG-5); a null renderer means the type never appears in a session. [evidenceCapable] false means the type
+ * can never produce fresh evidence (CR-ENG-9). P6 (2026-10-17) added renderers for the v2 types except
+ * `speed_round`, which is an opt-in practice mode over existing items rather than an item type of its own.
+ * Follow-up 11 (2026-10-18) added `trace` (docs/content/INTERACTIONS_AUDIO.md §4); follow-up 12 added `story`
+ * (docs/content/MODULES_LEVELS_STORIES.md §2).
  */
 @Serializable
 enum class ItemType(
@@ -52,29 +55,48 @@ enum class ItemType(
     @SerialName("info_card")
     INFO_CARD(Renderer.INFO_CARD, evidenceCapable = false),
 
-    // v2 renderers (P6)
+    // v2 types (P6)
     @SerialName("tap_hotspot")
-    TAP_HOTSPOT(null),
+    TAP_HOTSPOT(Renderer.TAP_HOTSPOT),
 
     @SerialName("estimate_slider")
-    ESTIMATE_SLIDER(null),
+    ESTIMATE_SLIDER(Renderer.SLIDER),
 
     @SerialName("memory_flip")
-    MEMORY_FLIP(null, evidenceCapable = false),
+    MEMORY_FLIP(Renderer.MEMORY_FLIP, evidenceCapable = false),
 
+    /** A short story (reading) and a choice; drawn by the choice renderer with the reading above it. */
     @SerialName("story_choice")
-    STORY_CHOICE(null),
+    STORY_CHOICE(Renderer.CHOOSE),
 
+    /** Not an item type: speed rounds replay existing items in an opt-in practice mode (feature/speedround). */
     @SerialName("speed_round")
     SPEED_ROUND(null, evidenceCapable = false),
 
+    /** Home's daily puzzle (pool SPARE, never planned into sessions); answered as a choice or a number. */
     @SerialName("daily_puzzle")
-    DAILY_PUZZLE(null, evidenceCapable = false),
+    DAILY_PUZZLE(Renderer.DAILY_PUZZLE, evidenceCapable = false),
+
+    /**
+     * Trace a letter stroke by stroke (`Item.trace` names the glyph in `assets/strokes/index.json`). Answered with
+     * the ids of the strokes completed; practice only, like `memory_flip` (CR-ENG-9).
+     */
+    @SerialName("trace")
+    TRACE(Renderer.TRACE, evidenceCapable = false),
+
+    /**
+     * An animated story (`Item.storyId` names it in the pack's `stories`): 3–6 panels the learner taps through.
+     * "Seen", never scored and never evidence, exactly like `info_card`; questions about it are ordinary items
+     * carrying the same `story_id`.
+     */
+    @SerialName("story")
+    STORY(Renderer.STORY, evidenceCapable = false),
     ;
 
+    /** True when this build can draw the type in a session (name kept from P1: "has a renderer"). */
     val isV1: Boolean get() = renderer != null
 
-    /** Renderers that exist in the v1 registry (feature/session, P3). */
+    /** Renderers in the registry (feature/session). */
     enum class Renderer {
         CHOOSE,
         TYPE_IN,
@@ -85,5 +107,11 @@ enum class ItemType(
         AUDIO_MATCH,
         MINI_READING,
         INFO_CARD,
+        TAP_HOTSPOT,
+        SLIDER,
+        MEMORY_FLIP,
+        DAILY_PUZZLE,
+        TRACE,
+        STORY,
     }
 }

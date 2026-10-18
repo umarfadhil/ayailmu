@@ -1,0 +1,4797 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sej-k-0.1",
+    "subject": "sejarah",
+    "track": "sej-k",
+    "level": "pemula",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Sejarah — Pemula (Anak)",
+      "en": "History — Beginner (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, MODULES_LEVELS_STORIES.md sections 2 and 4) for review: needs a history reviewer (every date, place and claim against the story sources), a depiction check of the drawn scenes (silhouettes only, no face likeness, no weapons or violence) and the Indonesian and English language reviewers before any item is approved. Narration clips (id/en sej_k_*) are scripted in android/content/voice/id.sejarah-k.json and en.sejarah-k.json; captions show without them.",
+  "prompts": {
+    "P-STORY": {
+      "id": "Tonton ceritanya, yuk.",
+      "en": "Let's watch the story."
+    },
+    "P-STORY-ORDER": {
+      "id": "Urutkan kejadian di cerita.",
+      "en": "Put the story in order."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban yang tepat.",
+      "en": "Pick the right answer."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-CONNECT": {
+      "id": "Tarik garis ke pasangannya.",
+      "en": "Draw a line to each match."
+    },
+    "P-WHOSE": {
+      "id": "Seret ke tokoh pemiliknya.",
+      "en": "Drag each to its person."
+    },
+    "P-LEARN": {
+      "id": "Mana yang patut ditiru?",
+      "en": "Which are good to follow?"
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Sip, kita lanjut!",
+      "en": "Great, let's keep going!"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Pahlawan pendidikan",
+        "en": "Heroes of learning"
+      },
+      "sticker": "sticker_book"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Para penolong",
+        "en": "Helpers"
+      },
+      "sticker": "sticker_lantern"
+    },
+    {
+      "unit": "03",
+      "title": {
+        "id": "Para penjelajah",
+        "en": "Explorers"
+      },
+      "sticker": "sticker_compass"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SEJ-K-P-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Pahlawan pendidikan",
+        "en": "Heroes of learning"
+      },
+      "body": [
+        {
+          "id": "Ki Hajar Dewantara membuka sekolah untuk anak-anak Indonesia.",
+          "en": "Ki Hajar Dewantara opened a school for Indonesian children."
+        },
+        {
+          "id": "Kartini menulis surat dan mengajar anak perempuan.",
+          "en": "Kartini wrote letters and taught girls."
+        },
+        {
+          "id": "Berkat mereka, semua anak boleh belajar.",
+          "en": "Thanks to them, every child may learn."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SEJ-K-P-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Para penolong",
+        "en": "Helpers"
+      },
+      "body": [
+        {
+          "id": "Florence Nightingale merawat orang sakit dan membuka sekolah perawat.",
+          "en": "Florence Nightingale cared for the sick and opened a school for nurses."
+        },
+        {
+          "id": "Dewi Sartika membuka sekolah untuk anak perempuan.",
+          "en": "Dewi Sartika opened a school for girls."
+        },
+        {
+          "id": "Mereka menolong banyak orang dengan ilmu dan kasih sayang.",
+          "en": "They helped many people with knowledge and kindness."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SEJ-K-P-03-S1",
+      "unit": "03",
+      "audience": "kids",
+      "title": {
+        "id": "Para penjelajah",
+        "en": "Explorers"
+      },
+      "body": [
+        {
+          "id": "Zheng He memimpin kapal-kapal besar menyeberangi samudra.",
+          "en": "Zheng He led great ships across the oceans."
+        },
+        {
+          "id": "Ibn Battuta berkelana hampir 30 tahun dan menulis kisahnya.",
+          "en": "Ibn Battuta travelled for almost 30 years and told his story in a book."
+        },
+        {
+          "id": "Keduanya singgah di Nusantara.",
+          "en": "Both of them visited the Indonesian islands."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "stories": {
+    "ST-KI-HAJAR": {
+      "figure": "Ki Hajar Dewantara (1889–1959)",
+      "title": {
+        "id": "Ki Hajar Dewantara dan sekolah untuk semua",
+        "en": "Ki Hajar Dewantara and a school for everyone"
+      },
+      "source": "Encyclopaedia Britannica, \"Ki Hadjar Dewantara\" (born 2 May 1889, Yogyakarta; Taman Siswa schools from July 1922); RRI, \"The Life Journey of the 'Father of Education' Ki Hajar Dewantara\" (birth name Soewardi Soerjaningrat; Taman Siswa 3 July 1922; Hari Pendidikan Nasional 2 May); detik.com, \"Logo Tut Wuri Handayani: makna, arti, dan sejarahnya\" (motto, 'di belakang memberi dorongan', ministry logo).",
+      "emblem": "hist_ki_hajar_school",
+      "panels": [
+        {
+          "scene": "hist_bg_village_java",
+          "caption": {
+            "id": "Ki Hajar Dewantara lahir di Yogyakarta tahun 1889. Nama kecilnya Soewardi.",
+            "en": "Ki Hajar Dewantara was born in Yogyakarta in 1889. His childhood name was Soewardi."
+          },
+          "narration": {
+            "id": "id/sej_k_ki_hajar_01",
+            "en": "en/sej_k_ki_hajar_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_boy",
+              "x": 0.05,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.3,
+              "y": 0.745,
+              "w": 0.12,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_classroom_old",
+          "caption": {
+            "id": "Waktu itu, Indonesia dijajah Belanda. Hanya sedikit anak Indonesia yang bisa bersekolah.",
+            "en": "Back then, Indonesia was ruled by the Dutch. Only a few Indonesian children could go to school."
+          },
+          "narration": {
+            "id": "id/sej_k_ki_hajar_02",
+            "en": "en/sej_k_ki_hajar_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_boy",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "slide_in",
+                "from": "left",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_sil_girl",
+              "x": 0.07,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "slide_in",
+                "from": "left",
+                "ms": 800,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_slate_board",
+              "x": 0.63,
+              "y": 0.711,
+              "w": 0.14
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_village_java",
+          "caption": {
+            "id": "Tahun 1922, ia mendirikan sekolah Taman Siswa di Yogyakarta. Di sana, anak-anak Indonesia bisa belajar.",
+            "en": "In 1922 he founded the Taman Siswa school in Yogyakarta. There, Indonesian children could learn."
+          },
+          "narration": {
+            "id": "id/sej_k_ki_hajar_03",
+            "en": "en/sej_k_ki_hajar_03"
+          },
+          "layers": [
+            {
+              "art": "hist_ki_hajar_school",
+              "x": 0.49,
+              "y": 0.412,
+              "w": 0.42,
+              "motion": {
+                "type": "fade_in",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3
+            },
+            {
+              "art": "hist_sil_girl",
+              "x": 0.13,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.13,
+                    0.426
+                  ],
+                  [
+                    0.33,
+                    0.426
+                  ]
+                ],
+                "ms": 3000,
+                "delay_ms": 600
+              }
+            },
+            {
+              "art": "hist_slate_board",
+              "x": 0.35,
+              "y": 0.779,
+              "w": 0.1,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 900
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_classroom_old",
+          "caption": {
+            "id": "Semboyannya, \"Tut Wuri Handayani\", artinya guru memberi semangat dari belakang. Semboyan itu ada di logo pendidikan Indonesia.",
+            "en": "His motto, \"Tut Wuri Handayani\", means a teacher encourages from behind. It is on the logo of Indonesian education."
+          },
+          "narration": {
+            "id": "id/sej_k_ki_hajar_04",
+            "en": "en/sej_k_ki_hajar_04"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_boy",
+              "x": 0.31,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_sil_girl",
+              "x": 0.47,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.01,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 800,
+                "delay_ms": 500
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.78,
+              "y": 0.745,
+              "w": 0.12
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_village_java",
+          "caption": {
+            "id": "Kini, hari lahirnya, 2 Mei, menjadi Hari Pendidikan Nasional. Semua anak berhak belajar!",
+            "en": "Today his birthday, 2 May, is National Education Day. Every child has the right to learn!"
+          },
+          "narration": {
+            "id": "id/sej_k_ki_hajar_05",
+            "en": "en/sej_k_ki_hajar_05"
+          },
+          "layers": [
+            {
+              "art": "hist_sunrise",
+              "x": 0.02,
+              "y": 0.0,
+              "w": 0.32,
+              "motion": {
+                "type": "glow",
+                "ms": 3000,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_ki_hajar_school",
+              "x": 0.6,
+              "y": 0.489,
+              "w": 0.36
+            },
+            {
+              "art": "hist_sil_boy",
+              "x": 0.09,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.09,
+                    0.426
+                  ],
+                  [
+                    0.29,
+                    0.426
+                  ]
+                ],
+                "ms": 3500
+              }
+            },
+            {
+              "art": "hist_sil_girl",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.0,
+                    0.426
+                  ],
+                  [
+                    0.17,
+                    0.426
+                  ]
+                ],
+                "ms": 3500,
+                "delay_ms": 300
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ST-KARTINI": {
+      "figure": "Raden Ajeng Kartini (1879–1904)",
+      "title": {
+        "id": "Kartini dan surat-suratnya",
+        "en": "Kartini and her letters"
+      },
+      "source": "Encyclopaedia Britannica, \"Kartini\" (born 21 April 1879, Mayong, Java; letters to Dutch friends; Door Duisternis tot Licht, 1911); ANTARA, \"Kartini\" (secluded from age 12; small school at her home, letter of 4 July 1903; Habis Gelap Terbitlah Terang; Hari Kartini 21 April; National Hero 1964); Kartini, Habis Gelap Terbitlah Terang (Balai Pustaka).",
+      "emblem": "hist_kartini_letters",
+      "panels": [
+        {
+          "scene": "hist_bg_village_java",
+          "caption": {
+            "id": "Kartini lahir di Jepara, Jawa Tengah, tahun 1879. Ia senang sekali belajar.",
+            "en": "Kartini was born in Jepara, Central Java, in 1879. She loved to learn."
+          },
+          "narration": {
+            "id": "id/sej_k_kartini_01",
+            "en": "en/sej_k_kartini_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_girl",
+              "x": 0.07,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.32,
+              "y": 0.745,
+              "w": 0.12,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_room_lamp",
+          "caption": {
+            "id": "Saat berumur 12 tahun, Kartini harus berhenti sekolah dan tinggal di rumah. Begitulah adat bagi anak perempuan bangsawan saat itu.",
+            "en": "When she was 12, Kartini had to leave school and stay at home. That was the custom for noble girls at the time."
+          },
+          "narration": {
+            "id": "id/sej_k_kartini_02",
+            "en": "en/sej_k_kartini_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_girl",
+              "x": 0.05,
+              "y": 0.446,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_oil_lamp",
+              "x": 0.56,
+              "y": 0.455,
+              "w": 0.12,
+              "motion": {
+                "type": "glow",
+                "ms": 2400,
+                "loop": true
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_room_lamp",
+          "caption": {
+            "id": "Kartini terus membaca dan menulis surat kepada sahabatnya di Belanda. Ia ingin anak perempuan juga bisa bersekolah.",
+            "en": "Kartini kept reading and wrote letters to her friends in the Netherlands. She wanted girls to go to school too."
+          },
+          "narration": {
+            "id": "id/sej_k_kartini_03",
+            "en": "en/sej_k_kartini_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_woman_kebaya",
+              "x": 0.05,
+              "y": 0.446,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_oil_lamp",
+              "x": 0.8,
+              "y": 0.455,
+              "w": 0.12,
+              "motion": {
+                "type": "glow",
+                "ms": 2400,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_kartini_letters",
+              "x": 0.47,
+              "y": 0.353,
+              "w": 0.18,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_classroom_old",
+          "caption": {
+            "id": "Tahun 1903, Kartini membuka sekolah kecil untuk anak perempuan. Ia sendiri yang mengajar.",
+            "en": "In 1903 Kartini opened a small school for girls. She taught there herself."
+          },
+          "narration": {
+            "id": "id/sej_k_kartini_04",
+            "en": "en/sej_k_kartini_04"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_woman_kebaya",
+              "x": 0.01,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_sil_girl",
+              "x": 0.37,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_sil_girl",
+              "x": 0.51,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 500
+              }
+            },
+            {
+              "art": "hist_slate_board",
+              "x": 0.78,
+              "y": 0.745,
+              "w": 0.12
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_village_java",
+          "caption": {
+            "id": "Setelah Kartini wafat, surat-suratnya dijadikan buku, Habis Gelap Terbitlah Terang. Kini setiap 21 April kita merayakan Hari Kartini.",
+            "en": "After Kartini died, her letters became a book, Habis Gelap Terbitlah Terang (After Darkness Comes Light). Every 21 April we celebrate Kartini Day."
+          },
+          "narration": {
+            "id": "id/sej_k_kartini_05",
+            "en": "en/sej_k_kartini_05"
+          },
+          "layers": [
+            {
+              "art": "hist_sunrise",
+              "x": 0.07,
+              "y": 0.073,
+              "w": 0.34,
+              "motion": {
+                "type": "glow",
+                "ms": 3000,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.22,
+              "y": 0.677,
+              "w": 0.16,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 200
+              }
+            },
+            {
+              "art": "hist_kartini_letters",
+              "x": 0.45,
+              "y": 0.575,
+              "w": 0.22,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 500
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ST-NIGHTINGALE": {
+      "figure": "Florence Nightingale (1820–1910)",
+      "title": {
+        "id": "Florence Nightingale, perempuan berlampu",
+        "en": "Florence Nightingale, the lady with the lamp"
+      },
+      "source": "Science Museum Group Collection, \"Florence Nightingale 1820-1910\" (born 12 May 1820, Florence; Scutari, November 1854, with 38 nurses; food, blankets, cleanliness; 'Lady of the Lamp'; Nightingale Training School, St Thomas' Hospital, 1860); Encyclopaedia Britannica, \"Florence Nightingale\"; International Council of Nurses: International Nurses Day, 12 May.",
+      "emblem": "hist_nightingale_lamp",
+      "panels": [
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Florence Nightingale lahir di Italia tahun 1820 dan besar di Inggris. Ia ingin merawat orang sakit.",
+            "en": "Florence Nightingale was born in Italy in 1820 and grew up in England. She wanted to care for sick people."
+          },
+          "narration": {
+            "id": "id/sej_k_nightingale_01",
+            "en": "en/sej_k_nightingale_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_woman",
+              "x": 0.01,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.245,
+              "y": 0.762,
+              "w": 0.11,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_ward",
+          "caption": {
+            "id": "Tahun 1854, ia dan 38 perawat pergi ke sebuah rumah sakit tentara di Turki. Rumah sakit itu kotor, dan banyak pasien sakit parah.",
+            "en": "In 1854 she and 38 nurses went to an army hospital in Turkey. The hospital was dirty, and many patients were very ill."
+          },
+          "narration": {
+            "id": "id/sej_k_nightingale_02",
+            "en": "en/sej_k_nightingale_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_nurse",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "slide_in",
+                "from": "left",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_hospital_bed",
+              "x": 0.42,
+              "y": 0.438,
+              "w": 0.4
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.06,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_ward",
+          "caption": {
+            "id": "Florence dan para perawat membersihkan rumah sakit dan menyiapkan makanan. Pasien pun dirawat dengan lebih baik.",
+            "en": "Florence and the nurses cleaned the hospital and prepared food. The patients were cared for much better."
+          },
+          "narration": {
+            "id": "id/sej_k_nightingale_03",
+            "en": "en/sej_k_nightingale_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_nurse",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_sil_nurse",
+              "x": 0.15,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_hospital_bed",
+              "x": 0.48,
+              "y": 0.438,
+              "w": 0.4
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_ward",
+          "caption": {
+            "id": "Malam hari, ia berkeliling membawa lampu untuk menengok pasien. Orang menyebutnya \"Perempuan Berlampu\".",
+            "en": "At night she walked around with a lamp to check on the patients. People called her \"the Lady with the Lamp\"."
+          },
+          "narration": {
+            "id": "id/sej_k_nightingale_04",
+            "en": "en/sej_k_nightingale_04"
+          },
+          "layers": [
+            {
+              "art": "hist_hospital_bed",
+              "x": 0.5,
+              "y": 0.438,
+              "w": 0.4
+            },
+            {
+              "art": "hist_sil_nurse",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.0,
+                    0.426
+                  ],
+                  [
+                    0.21,
+                    0.426
+                  ]
+                ],
+                "ms": 5000
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Tahun 1860, ia membuka sekolah perawat di London. Kini hari lahirnya, 12 Mei, menjadi Hari Perawat Internasional.",
+            "en": "In 1860 she opened a school for nurses in London. Now her birthday, 12 May, is International Nurses Day."
+          },
+          "narration": {
+            "id": "id/sej_k_nightingale_05",
+            "en": "en/sej_k_nightingale_05"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_nurse",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_sil_nurse",
+              "x": 0.07,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.32,
+              "y": 0.745,
+              "w": 0.12,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 500
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_ward",
+          "caption": {
+            "id": "Dari Florence, kita belajar peduli kepada orang sakit dan menjaga kebersihan.",
+            "en": "From Florence we learn to care for sick people and to keep things clean."
+          },
+          "narration": {
+            "id": "id/sej_k_nightingale_06",
+            "en": "en/sej_k_nightingale_06"
+          },
+          "layers": [
+            {
+              "art": "hist_nightingale_lamp",
+              "x": 0.24,
+              "y": 0.745,
+              "w": 0.12,
+              "motion": {
+                "type": "glow",
+                "ms": 2400,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_hospital_bed",
+              "x": 0.46,
+              "y": 0.438,
+              "w": 0.4
+            }
+          ]
+        }
+      ]
+    },
+    "ST-DEWI-SARTIKA": {
+      "figure": "Raden Dewi Sartika (1884–1947)",
+      "title": {
+        "id": "Dewi Sartika dan Sakola Istri",
+        "en": "Dewi Sartika and the girls' school"
+      },
+      "source": "detik.com, \"Sekolah Perempuan Pertama Indonesia Ada di Bandung, Siapa Pendirinya?\" (born 4 December 1884; taught servants' children with boards and charcoal as a child; Sakola Istri opened 16 January 1904 at the Bandung regency pendopo; reading, sewing, cooking and more; National Hero 1966); Wikipedia, \"Dewi Sartika\" (renamed Sakola Kaoetamaan Isteri 1910; nine schools in West Java by 1912).",
+      "emblem": "hist_dewi_sartika_school",
+      "panels": [
+        {
+          "scene": "hist_bg_village_java",
+          "caption": {
+            "id": "Dewi Sartika lahir di Jawa Barat tahun 1884. Waktu kecil, ia suka bermain sekolah-sekolahan.",
+            "en": "Dewi Sartika was born in West Java in 1884. As a child, she loved playing school."
+          },
+          "narration": {
+            "id": "id/sej_k_dewi_sartika_01",
+            "en": "en/sej_k_dewi_sartika_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_girl",
+              "x": 0.07,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_slate_board",
+              "x": 0.32,
+              "y": 0.745,
+              "w": 0.12,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_village_java",
+          "caption": {
+            "id": "Ia mengajari anak-anak di sekitarnya membaca dan menulis. Papan tulisnya dari kayu, kapurnya dari arang!",
+            "en": "She taught the children around her to read and write. Her board was made of wood, and her chalk was charcoal!"
+          },
+          "narration": {
+            "id": "id/sej_k_dewi_sartika_02",
+            "en": "en/sej_k_dewi_sartika_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_girl",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_slate_board",
+              "x": 0.24,
+              "y": 0.745,
+              "w": 0.12
+            },
+            {
+              "art": "hist_sil_boy",
+              "x": 0.35,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_sil_girl",
+              "x": 0.47,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 600
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_classroom_old",
+          "caption": {
+            "id": "Waktu itu, banyak anak perempuan tidak bisa bersekolah. Dewi Sartika ingin mereka pandai dan mandiri.",
+            "en": "In those days, many girls could not go to school. Dewi Sartika wanted them to learn and to stand on their own feet."
+          },
+          "narration": {
+            "id": "id/sej_k_dewi_sartika_03",
+            "en": "en/sej_k_dewi_sartika_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_girl",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "slide_in",
+                "from": "left",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_sil_girl",
+              "x": 0.07,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "slide_in",
+                "from": "left",
+                "ms": 800,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_sil_woman_kebaya",
+              "x": 0.55,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 600
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_village_java",
+          "caption": {
+            "id": "Tanggal 16 Januari 1904, ia membuka Sakola Istri di Bandung, sekolah untuk anak perempuan. Muridnya belajar membaca, berhitung, dan menjahit.",
+            "en": "On 16 January 1904 she opened Sakola Istri in Bandung, a school for girls. The pupils learned reading, arithmetic and sewing."
+          },
+          "narration": {
+            "id": "id/sej_k_dewi_sartika_04",
+            "en": "en/sej_k_dewi_sartika_04"
+          },
+          "layers": [
+            {
+              "art": "hist_dewi_sartika_school",
+              "x": 0.46,
+              "y": 0.387,
+              "w": 0.44,
+              "motion": {
+                "type": "fade_in",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_sil_woman_kebaya",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3
+            },
+            {
+              "art": "hist_sewing_kit",
+              "x": 0.27,
+              "y": 0.711,
+              "w": 0.14,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 500
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_green_hills",
+          "caption": {
+            "id": "Sekolahnya bertambah di banyak kota di Jawa Barat. Kini Dewi Sartika menjadi Pahlawan Nasional.",
+            "en": "Her schools spread to many towns in West Java. Today Dewi Sartika is a National Hero of Indonesia."
+          },
+          "narration": {
+            "id": "id/sej_k_dewi_sartika_05",
+            "en": "en/sej_k_dewi_sartika_05"
+          },
+          "layers": [
+            {
+              "art": "hist_dewi_sartika_school",
+              "x": 0.09,
+              "y": 0.416,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_dewi_sartika_school",
+              "x": 0.45,
+              "y": 0.438,
+              "w": 0.22,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 400
+              }
+            },
+            {
+              "art": "hist_dewi_sartika_school",
+              "x": 0.71,
+              "y": 0.527,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 800
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_classroom_old",
+          "caption": {
+            "id": "Dari Dewi Sartika, kita belajar berbagi ilmu dengan teman.",
+            "en": "From Dewi Sartika we learn to share what we know with others."
+          },
+          "narration": {
+            "id": "id/sej_k_dewi_sartika_06",
+            "en": "en/sej_k_dewi_sartika_06"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_woman_kebaya",
+              "x": 0.03,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_sil_girl",
+              "x": 0.41,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true
+            },
+            {
+              "art": "hist_sil_boy",
+              "x": 0.55,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true
+            },
+            {
+              "art": "hist_sewing_kit",
+              "x": 0.8,
+              "y": 0.745,
+              "w": 0.12,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 400
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ST-ZHENG-HE": {
+      "figure": "Laksamana Zheng He / Cheng Ho (c. 1371–1433)",
+      "title": {
+        "id": "Zheng He mengarungi samudra",
+        "en": "Zheng He sails the oceans"
+      },
+      "source": "Britannica Kids, \"Zheng He\" (born about 1371, Yunnan, Hui family; seven expeditions from 1405; first fleet 62 treasure ships and more than 200 smaller vessels; Southeast Asia including Java, India, Arabia, East Africa); Katadata, \"Jejak Perjalanan Cheng Ho di Indonesia\" (Java, Sumatra, Sam Poo Kong in Semarang); Macao Cultural Institute, Review of Culture (compass and star board on Zheng He's fleet).",
+      "emblem": "hist_treasure_ship",
+      "panels": [
+        {
+          "scene": "hist_bg_harbor",
+          "caption": {
+            "id": "Zheng He, atau Cheng Ho, lahir di Tiongkok sekitar tahun 1371. Ia menjadi laksamana, pemimpin para pelaut.",
+            "en": "Zheng He, also called Cheng Ho, was born in China around 1371. He became an admiral, a leader of sailors."
+          },
+          "narration": {
+            "id": "id/sej_k_zheng_he_01",
+            "en": "en/sej_k_zheng_he_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_sailor",
+              "x": 0.71,
+              "y": 0.245,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_treasure_ship",
+              "x": 0.13,
+              "y": 0.416,
+              "w": 0.3,
+              "motion": {
+                "type": "bob",
+                "amp": 0.01,
+                "ms": 2000,
+                "loop": true
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_harbor",
+          "caption": {
+            "id": "Mulai tahun 1405, ia memimpin tujuh pelayaran besar. Pada pelayaran pertama, ada lebih dari 200 kapal!",
+            "en": "From 1405 he led seven great voyages. On the first voyage there were more than 200 ships!"
+          },
+          "narration": {
+            "id": "id/sej_k_zheng_he_02",
+            "en": "en/sej_k_zheng_he_02"
+          },
+          "layers": [
+            {
+              "art": "hist_treasure_ship",
+              "x": 0.13,
+              "y": 0.425,
+              "w": 0.34,
+              "motion": {
+                "type": "drift",
+                "dx": 0.03,
+                "ms": 4000,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_treasure_ship",
+              "x": 0.53,
+              "y": 0.45,
+              "w": 0.18,
+              "motion": {
+                "type": "bob",
+                "amp": 0.01,
+                "ms": 2400,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_small_boat",
+              "x": 0.04,
+              "y": 0.535,
+              "w": 0.12,
+              "motion": {
+                "type": "bob",
+                "amp": 0.012,
+                "ms": 1800,
+                "loop": true
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_map_world",
+          "caption": {
+            "id": "Kapal-kapalnya berlayar ke Asia Tenggara, India, Arab, dan Afrika. Mereka mencari arah dengan kompas dan bintang.",
+            "en": "His ships sailed to Southeast Asia, India, Arabia and Africa. They found their way with a compass and the stars."
+          },
+          "narration": {
+            "id": "id/sej_k_zheng_he_03",
+            "en": "en/sej_k_zheng_he_03"
+          },
+          "layers": [
+            {
+              "art": "hist_treasure_ship",
+              "x": 0.78,
+              "y": 0.313,
+              "w": 0.1,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.78,
+                    0.313
+                  ],
+                  [
+                    0.75,
+                    0.433
+                  ],
+                  [
+                    0.67,
+                    0.463
+                  ],
+                  [
+                    0.61,
+                    0.413
+                  ],
+                  [
+                    0.56,
+                    0.513
+                  ]
+                ],
+                "ms": 6000
+              }
+            },
+            {
+              "art": "hist_compass_old",
+              "x": 0.05,
+              "y": 0.667,
+              "w": 0.16,
+              "motion": {
+                "type": "sway",
+                "deg": 3,
+                "ms": 2400,
+                "loop": true
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_harbor",
+          "caption": {
+            "id": "Ia juga singgah di Jawa dan Sumatra untuk berdagang dan bersahabat. Di Semarang, Klenteng Sam Poo Kong mengenang kedatangannya.",
+            "en": "He also stopped in Java and Sumatra to trade and make friends. In Semarang, the Sam Poo Kong temple remembers his visit."
+          },
+          "narration": {
+            "id": "id/sej_k_zheng_he_04",
+            "en": "en/sej_k_zheng_he_04"
+          },
+          "layers": [
+            {
+              "art": "hist_treasure_ship",
+              "x": 0.15,
+              "y": 0.456,
+              "w": 0.3,
+              "motion": {
+                "type": "slide_in",
+                "from": "left",
+                "ms": 900
+              }
+            },
+            {
+              "art": "hist_sil_sailor",
+              "x": 0.57,
+              "y": 0.245,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 400
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.73,
+              "y": 0.245,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 700
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_sea",
+          "caption": {
+            "id": "Pelayaran Zheng He menghubungkan banyak bangsa. Kita belajar berani menjelajah dan bersahabat dengan semua orang.",
+            "en": "Zheng He's voyages linked many peoples. We learn to be brave explorers and friends to everyone."
+          },
+          "narration": {
+            "id": "id/sej_k_zheng_he_05",
+            "en": "en/sej_k_zheng_he_05"
+          },
+          "layers": [
+            {
+              "art": "hist_sunrise",
+              "x": 0.63,
+              "y": 0.1,
+              "w": 0.3,
+              "motion": {
+                "type": "glow",
+                "ms": 3000,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_treasure_ship",
+              "x": 0.19,
+              "y": 0.365,
+              "w": 0.34,
+              "motion": {
+                "type": "drift",
+                "dx": 0.04,
+                "ms": 5000,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_small_boat",
+              "x": 0.65,
+              "y": 0.489,
+              "w": 0.1,
+              "motion": {
+                "type": "bob",
+                "amp": 0.01,
+                "ms": 2000,
+                "loop": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ST-IBN-BATTUTA": {
+      "figure": "Ibn Battuta (1304–1368/69)",
+      "title": {
+        "id": "Ibn Battuta, penjelajah dari Maroko",
+        "en": "Ibn Battuta, the traveller from Morocco"
+      },
+      "source": "World History Encyclopedia, \"Ibn Battuta\" (born 25 February 1304, Tangier; left June 1325 aged 21 for the hajj; about 1325-1352; 75,000 miles / 120,000 km; caravans; Rihla written down by Ibn Juzayy c. 1352-1355; died 1368 or 1369); Wikipedia, \"Samudera Pasai Sultanate\" (visit in 1345, about two weeks as the sultan's guest).",
+      "emblem": "hist_route_map",
+      "panels": [
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Ibn Battuta lahir di kota Tangier, Maroko, tahun 1304. Ia senang belajar dan ingin melihat dunia.",
+            "en": "Ibn Battuta was born in Tangier, Morocco, in 1304. He loved learning and wanted to see the world."
+          },
+          "narration": {
+            "id": "id/sej_k_ibn_battuta_01",
+            "en": "en/sej_k_ibn_battuta_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_traveler",
+              "x": 0.03,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.285,
+              "y": 0.762,
+              "w": 0.11,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_desert_road",
+          "caption": {
+            "id": "Tahun 1325, saat berumur 21 tahun, ia berangkat naik haji ke Mekah. Ia berjalan bersama kafilah unta.",
+            "en": "In 1325, at the age of 21, he set off on the pilgrimage to Mecca. He travelled with a camel caravan."
+          },
+          "narration": {
+            "id": "id/sej_k_ibn_battuta_02",
+            "en": "en/sej_k_ibn_battuta_02"
+          },
+          "layers": [
+            {
+              "art": "hist_caravan",
+              "x": 0.15,
+              "y": 0.513,
+              "w": 0.34,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.15,
+                    0.513
+                  ],
+                  [
+                    0.41,
+                    0.473
+                  ]
+                ],
+                "ms": 6000
+              }
+            },
+            {
+              "art": "hist_sil_traveler",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_map_world",
+          "caption": {
+            "id": "Ia terus berkelana hampir 30 tahun, ke Afrika, India, Tiongkok, dan Sumatra. Jauhnya sekitar 120.000 kilometer!",
+            "en": "He kept travelling for almost 30 years, to Africa, India, China and Sumatra. That's about 120,000 kilometres!"
+          },
+          "narration": {
+            "id": "id/sej_k_ibn_battuta_03",
+            "en": "en/sej_k_ibn_battuta_03"
+          },
+          "layers": [
+            {
+              "art": "hist_caravan",
+              "x": 0.43,
+              "y": 0.283,
+              "w": 0.1,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.43,
+                    0.283
+                  ],
+                  [
+                    0.6,
+                    0.383
+                  ],
+                  [
+                    0.67,
+                    0.423
+                  ],
+                  [
+                    0.74,
+                    0.483
+                  ],
+                  [
+                    0.77,
+                    0.293
+                  ]
+                ],
+                "ms": 6000
+              }
+            },
+            {
+              "art": "hist_route_map",
+              "x": 0.04,
+              "y": 0.582,
+              "w": 0.28,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 600
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_harbor",
+          "caption": {
+            "id": "Di Sumatra, ia singgah di Kerajaan Samudera Pasai sekitar tahun 1345. Ia disambut sebagai tamu sultan.",
+            "en": "In Sumatra he stopped at the kingdom of Samudera Pasai around 1345. He was welcomed as the sultan's guest."
+          },
+          "narration": {
+            "id": "id/sej_k_ibn_battuta_04",
+            "en": "en/sej_k_ibn_battuta_04"
+          },
+          "layers": [
+            {
+              "art": "hist_small_boat",
+              "x": 0.17,
+              "y": 0.513,
+              "w": 0.18,
+              "motion": {
+                "type": "bob",
+                "amp": 0.01,
+                "ms": 2000,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_sil_traveler",
+              "x": 0.57,
+              "y": 0.245,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.73,
+              "y": 0.245,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 600
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_library_old",
+          "caption": {
+            "id": "Setelah pulang, ia menceritakan perjalanannya, dan seorang penulis mencatatnya. Buku itu bernama Rihlah, artinya \"perjalanan\".",
+            "en": "Back home, he told the story of his travels, and a writer wrote it down. The book is called the Rihla, which means \"journey\"."
+          },
+          "narration": {
+            "id": "id/sej_k_ibn_battuta_05",
+            "en": "en/sej_k_ibn_battuta_05"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_traveler",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_sil_scholar",
+              "x": 0.25,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_quill",
+              "x": 0.5,
+              "y": 0.745,
+              "w": 0.12,
+              "motion": {
+                "type": "sway",
+                "deg": 3,
+                "ms": 2400,
+                "loop": true
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_desert_road",
+          "caption": {
+            "id": "Berkat bukunya, kita tahu seperti apa dunia hampir 700 tahun lalu. Kita belajar ingin tahu dan mencatat apa yang kita lihat.",
+            "en": "Thanks to his book, we know what the world was like almost 700 years ago. We learn to be curious and to write down what we see."
+          },
+          "narration": {
+            "id": "id/sej_k_ibn_battuta_06",
+            "en": "en/sej_k_ibn_battuta_06"
+          },
+          "layers": [
+            {
+              "art": "hist_route_map",
+              "x": 0.12,
+              "y": 0.408,
+              "w": 0.4,
+              "motion": {
+                "type": "reveal",
+                "from": "left",
+                "ms": 1600
+              }
+            },
+            {
+              "art": "hist_quill",
+              "x": 0.56,
+              "y": 0.715,
+              "w": 0.12,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 800
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "SEJ-K-P-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "story",
+      "skills": [
+        "SEJ-KI-HAJAR"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-KI-HAJAR",
+      "model_answer": {
+        "id": "Ki Hajar Dewantara mendirikan Taman Siswa supaya anak-anak Indonesia bisa belajar.",
+        "en": "Ki Hajar Dewantara founded Taman Siswa so Indonesian children could learn."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "SEJ-KI-HAJAR"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-STORY-ORDER",
+      "story_id": "ST-KI-HAJAR",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang terjadi lebih dulu?",
+            "en": "What happened first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Ia menjadi guru yang memberi semangat dari belakang",
+            "en": "He becomes a teacher who encourages from behind"
+          },
+          "image": "hist_sil_man"
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Soewardi kecil lahir di Yogyakarta",
+            "en": "Young Soewardi is born in Yogyakarta"
+          },
+          "image": "hist_sil_boy"
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "2 Mei menjadi Hari Pendidikan Nasional",
+            "en": "2 May becomes National Education Day"
+          },
+          "image": "hist_sunrise"
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Ia mendirikan Taman Siswa",
+            "en": "He founds Taman Siswa"
+          },
+          "image": "hist_ki_hajar_school"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "model_answer": {
+        "id": "Soewardi kecil, lalu sekolah Taman Siswa, lalu semboyan Tut Wuri Handayani, lalu Hari Pendidikan Nasional.",
+        "en": "Young Soewardi, then the Taman Siswa school, then the motto Tut Wuri Handayani, then National Education Day."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-KI-HAJAR"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-KI-HAJAR",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang didirikan Ki Hajar?",
+            "en": "What did Ki Hajar found?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_treasure_ship",
+          "image": "hist_treasure_ship"
+        },
+        {
+          "id": "hist_hospital_bed",
+          "image": "hist_hospital_bed"
+        },
+        {
+          "id": "hist_ki_hajar_school",
+          "image": "hist_ki_hajar_school",
+          "correct": true
+        },
+        {
+          "id": "hist_caravan",
+          "image": "hist_caravan"
+        }
+      ],
+      "model_answer": {
+        "id": "Ki Hajar Dewantara mendirikan sekolah Taman Siswa.",
+        "en": "Ki Hajar Dewantara founded the Taman Siswa school."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "SEJ-KI-HAJAR"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-TF",
+      "story_id": "ST-KI-HAJAR",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dulu, semua anak Indonesia bisa bersekolah.",
+            "en": "Long ago, every Indonesian child could go to school."
+          }
+        }
+      ],
+      "image": "hist_slate_board",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Salah. Dulu hanya sedikit anak Indonesia yang bisa bersekolah. Karena itu Ki Hajar membuka Taman Siswa.",
+        "en": "False. Back then only a few Indonesian children could go to school. That is why Ki Hajar opened Taman Siswa."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "SEJ-KI-HAJAR"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-CONNECT",
+      "story_id": "ST-KI-HAJAR",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dengan ceritanya.",
+            "en": "Match each picture to the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m1",
+          "text": {
+            "id": "sekolah",
+            "en": "school"
+          },
+          "image": "hist_ki_hajar_school"
+        },
+        {
+          "id": "m2",
+          "text": {
+            "id": "Ki Hajar sebagai guru",
+            "en": "Ki Hajar as a teacher"
+          },
+          "image": "hist_sil_man"
+        },
+        {
+          "id": "m3",
+          "text": {
+            "id": "matahari terbit",
+            "en": "sunrise"
+          },
+          "image": "hist_sunrise"
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Tut Wuri Handayani",
+            "en": "Tut Wuri Handayani"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "2 Mei, Hari Pendidikan Nasional",
+            "en": "2 May, National Education Day"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Taman Siswa",
+            "en": "Taman Siswa"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "m1": "t1",
+        "m2": "t2",
+        "m3": "t3"
+      },
+      "model_answer": {
+        "id": "Taman Siswa sekolahnya, Tut Wuri Handayani semboyannya, dan 2 Mei Hari Pendidikan Nasional.",
+        "en": "Taman Siswa was his school, Tut Wuri Handayani his motto, and 2 May is National Education Day."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "SEJ-KI-HAJAR"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-CHOOSE",
+      "story_id": "ST-KI-HAJAR",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Hari lahir Ki Hajar, 2 Mei, sekarang menjadi hari apa?",
+            "en": "Ki Hajar's birthday, 2 May, is now which day?"
+          }
+        }
+      ],
+      "image": "hist_sunrise",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Hari Kemerdekaan",
+            "en": "Independence Day"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Hari Pendidikan Nasional",
+            "en": "National Education Day"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Hari Ibu",
+            "en": "Mother's Day"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "2 Mei adalah Hari Pendidikan Nasional.",
+        "en": "2 May is National Education Day."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "SEJ-KARTINI"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-KARTINI",
+      "model_answer": {
+        "id": "Kartini menulis surat tentang harapannya agar anak perempuan bisa bersekolah.",
+        "en": "Kartini wrote letters about her hope that girls could go to school."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "SEJ-KARTINI"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-STORY-ORDER",
+      "story_id": "ST-KARTINI",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang terjadi lebih dulu?",
+            "en": "What happened first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Kartini membuka sekolah kecil",
+            "en": "Kartini opens a small school"
+          },
+          "image": "hist_slate_board"
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Kartini kecil suka belajar",
+            "en": "Young Kartini loves to learn"
+          },
+          "image": "hist_sil_girl"
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Surat-suratnya menjadi buku",
+            "en": "Her letters become a book"
+          },
+          "image": "hist_book_stack"
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Kartini menulis surat",
+            "en": "Kartini writes letters"
+          },
+          "image": "hist_kartini_letters"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "model_answer": {
+        "id": "Kartini kecil suka belajar, lalu menulis surat, lalu membuka sekolah, lalu surat-suratnya menjadi buku.",
+        "en": "Young Kartini loved learning, then she wrote letters, then opened a school, then her letters became a book."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-KARTINI"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-KARTINI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kartini menulis apa?",
+            "en": "What did Kartini write?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_kartini_letters",
+          "image": "hist_kartini_letters",
+          "correct": true
+        },
+        {
+          "id": "hist_compass_old",
+          "image": "hist_compass_old"
+        },
+        {
+          "id": "hist_hospital_bed",
+          "image": "hist_hospital_bed"
+        },
+        {
+          "id": "hist_caravan",
+          "image": "hist_caravan"
+        }
+      ],
+      "model_answer": {
+        "id": "Kartini menulis banyak surat kepada sahabatnya.",
+        "en": "Kartini wrote many letters to her friends."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "SEJ-KARTINI"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-TF",
+      "story_id": "ST-KARTINI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kartini ingin hanya anak laki-laki yang bersekolah.",
+            "en": "Kartini wanted only boys to go to school."
+          }
+        }
+      ],
+      "image": "hist_kartini_letters",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Salah. Kartini ingin anak perempuan juga bisa bersekolah.",
+        "en": "False. Kartini wanted girls to go to school too."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "SEJ-KARTINI"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-CONNECT",
+      "story_id": "ST-KARTINI",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dengan ceritanya.",
+            "en": "Match each picture to the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m1",
+          "text": {
+            "id": "lampu minyak",
+            "en": "oil lamp"
+          },
+          "image": "hist_oil_lamp"
+        },
+        {
+          "id": "m2",
+          "text": {
+            "id": "surat",
+            "en": "letters"
+          },
+          "image": "hist_kartini_letters"
+        },
+        {
+          "id": "m3",
+          "text": {
+            "id": "papan tulis kecil",
+            "en": "a small slate"
+          },
+          "image": "hist_slate_board"
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "menulis kepada sahabat",
+            "en": "writing to friends"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "sekolah untuk anak perempuan",
+            "en": "a school for girls"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "membaca malam hari",
+            "en": "reading at night"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "m1": "t1",
+        "m2": "t2",
+        "m3": "t3"
+      },
+      "model_answer": {
+        "id": "Lampu untuk membaca malam hari, surat untuk sahabat, dan papan tulis di sekolah untuk anak perempuan.",
+        "en": "The lamp for reading at night, letters to her friends, and a slate at the school for girls."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "SEJ-KARTINI",
+        "SEJ-KI-HAJAR"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-WHOSE",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Benda ini dari cerita siapa?",
+            "en": "Whose story is each thing from?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_kh",
+          "text": {
+            "id": "Ki Hajar Dewantara",
+            "en": "Ki Hajar Dewantara"
+          }
+        },
+        {
+          "id": "b_ka",
+          "text": {
+            "id": "Kartini",
+            "en": "Kartini"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Sekolah Taman Siswa",
+            "en": "The Taman Siswa school"
+          },
+          "image": "hist_ki_hajar_school"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Surat-surat",
+            "en": "Letters"
+          },
+          "image": "hist_kartini_letters"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Ki Hajar sebagai guru",
+            "en": "Ki Hajar as a teacher"
+          },
+          "image": "hist_sil_man"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Lampu minyak",
+            "en": "An oil lamp"
+          },
+          "image": "hist_oil_lamp"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_kh",
+        "c2": "b_ka",
+        "c3": "b_kh",
+        "c4": "b_ka"
+      },
+      "model_answer": {
+        "id": "Sekolah dan semboyan guru dari cerita Ki Hajar. Surat dan lampu minyak dari cerita Kartini.",
+        "en": "The school and the teacher's motto belong to Ki Hajar's story. The letters and the oil lamp belong to Kartini's."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-KARTINI"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-KARTINI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kartini membaca malam hari dengan cahaya apa?",
+            "en": "What light did Kartini read by at night?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_sun",
+          "image": "pic_sun"
+        },
+        {
+          "id": "pic_star",
+          "image": "pic_star"
+        },
+        {
+          "id": "hist_oil_lamp",
+          "image": "hist_oil_lamp",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Kartini membaca dengan cahaya lampu minyak.",
+        "en": "Kartini read by the light of an oil lamp."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "SEJ-KI-HAJAR",
+        "SEJ-KARTINI"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-LEARN",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Seperti Ki Hajar dan Kartini?",
+            "en": "Like Ki Hajar and Kartini?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_good",
+          "text": {
+            "id": "Patut ditiru",
+            "en": "Good to follow"
+          }
+        },
+        {
+          "id": "b_less",
+          "text": {
+            "id": "Kurang baik",
+            "en": "Not so good"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Rajin membaca",
+            "en": "Reading a lot"
+          },
+          "image": "pic_read"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Mencontek jawaban teman",
+            "en": "Copying a friend's answers"
+          },
+          "image": "val_copy_answer"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Membantu teman belajar",
+            "en": "Helping a friend learn"
+          },
+          "image": "val_help_friend"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Memotong teman yang bicara",
+            "en": "Cutting in while a friend talks"
+          },
+          "image": "val_interrupt"
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Mengajak teman yang sendirian",
+            "en": "Including a friend who is alone"
+          },
+          "image": "val_include_friend"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_good",
+        "c2": "b_less",
+        "c3": "b_good",
+        "c4": "b_less",
+        "c5": "b_good"
+      },
+      "model_answer": {
+        "id": "Rajin membaca, membantu teman belajar, dan mengajak teman yang sendirian patut ditiru. Mencontek dan memotong pembicaraan kurang baik.",
+        "en": "Reading a lot, helping a friend learn and including a friend who is alone are good to follow. Copying answers and interrupting are not so good."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-01-015",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "SEJ-KI-HAJAR"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "story_id": "ST-KI-HAJAR",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ki Hajar Dewantara mendirikan sekolah Taman Siswa.",
+            "en": "Ki Hajar Dewantara founded the Taman Siswa school."
+          }
+        }
+      ],
+      "image": "hist_ki_hajar_school",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Ia mendirikan Taman Siswa tahun 1922.",
+        "en": "True. He founded Taman Siswa in 1922."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-01-016",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "SEJ-KARTINI"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "story_id": "ST-KARTINI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Setiap tanggal berapa kita merayakan Hari Kartini?",
+            "en": "On which date do we celebrate Kartini Day?"
+          }
+        }
+      ],
+      "image": "hist_kartini_letters",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "21 April",
+            "en": "21 April"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "2 Mei",
+            "en": "2 May"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "17 Agustus",
+            "en": "17 August"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Hari Kartini dirayakan setiap 21 April, hari lahirnya.",
+        "en": "Kartini Day is on 21 April, her birthday."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "story",
+      "skills": [
+        "SEJ-NIGHTINGALE"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-NIGHTINGALE",
+      "model_answer": {
+        "id": "Florence Nightingale merawat pasien, menjaga rumah sakit tetap bersih, dan membuka sekolah perawat.",
+        "en": "Florence Nightingale cared for patients, kept the hospital clean and opened a school for nurses."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "SEJ-NIGHTINGALE"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-STORY-ORDER",
+      "story_id": "ST-NIGHTINGALE",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang terjadi lebih dulu?",
+            "en": "What happened first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Ia berkeliling membawa lampu",
+            "en": "She walks round with a lamp"
+          },
+          "image": "hist_nightingale_lamp"
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Florence ingin merawat orang sakit",
+            "en": "Florence wants to care for the sick"
+          },
+          "image": "hist_sil_woman"
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Ia membuka sekolah perawat",
+            "en": "She opens a school for nurses"
+          },
+          "image": "pic_school"
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Ia pergi ke rumah sakit tentara",
+            "en": "She goes to an army hospital"
+          },
+          "image": "hist_hospital_bed"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "model_answer": {
+        "id": "Florence ingin merawat orang sakit, pergi ke rumah sakit yang kotor, berkeliling dengan lampu, lalu membuka sekolah perawat.",
+        "en": "Florence wanted to care for the sick, went to a dirty hospital, walked round with her lamp, then opened a school for nurses."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-NIGHTINGALE"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-NIGHTINGALE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Florence membawa apa saat malam?",
+            "en": "What did Florence carry at night?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_compass_old",
+          "image": "hist_compass_old"
+        },
+        {
+          "id": "hist_quill",
+          "image": "hist_quill"
+        },
+        {
+          "id": "hist_book_stack",
+          "image": "hist_book_stack"
+        },
+        {
+          "id": "hist_nightingale_lamp",
+          "image": "hist_nightingale_lamp",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Florence membawa lampu untuk menengok pasien.",
+        "en": "Florence carried a lamp to check on the patients."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "SEJ-NIGHTINGALE"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-TF",
+      "story_id": "ST-NIGHTINGALE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Florence membuat rumah sakit menjadi lebih bersih.",
+            "en": "Florence made the hospital cleaner."
+          }
+        }
+      ],
+      "image": "hist_hospital_bed",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Florence dan para perawat membersihkan rumah sakit, jadi pasien dirawat lebih baik.",
+        "en": "True. Florence and the nurses cleaned the hospital, so the patients got better care."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "SEJ-NIGHTINGALE"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-CONNECT",
+      "story_id": "ST-NIGHTINGALE",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dengan ceritanya.",
+            "en": "Match each picture to the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m1",
+          "text": {
+            "id": "lampu",
+            "en": "lamp"
+          },
+          "image": "hist_nightingale_lamp"
+        },
+        {
+          "id": "m2",
+          "text": {
+            "id": "tempat tidur rumah sakit",
+            "en": "hospital bed"
+          },
+          "image": "hist_hospital_bed"
+        },
+        {
+          "id": "m3",
+          "text": {
+            "id": "sekolah",
+            "en": "school"
+          },
+          "image": "pic_school"
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "merawat orang sakit",
+            "en": "caring for the sick"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "sekolah perawat",
+            "en": "a school for nurses"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "menengok pasien malam hari",
+            "en": "visiting patients at night"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "m1": "t1",
+        "m2": "t2",
+        "m3": "t3"
+      },
+      "model_answer": {
+        "id": "Lampu untuk menengok pasien malam hari, tempat tidur untuk orang sakit, dan sekolah untuk perawat.",
+        "en": "The lamp for night visits, the bed for sick people, and the school for nurses."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-NIGHTINGALE"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-NIGHTINGALE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa pekerjaan Florence?",
+            "en": "What was Florence's job?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_pilot",
+          "image": "pic_pilot"
+        },
+        {
+          "id": "pic_farmer",
+          "image": "pic_farmer"
+        },
+        {
+          "id": "pic_nurse",
+          "image": "pic_nurse",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Florence Nightingale adalah perawat.",
+        "en": "Florence Nightingale was a nurse."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "SEJ-DEWI-SARTIKA"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-DEWI-SARTIKA",
+      "model_answer": {
+        "id": "Dewi Sartika membuka Sakola Istri supaya anak perempuan bisa belajar.",
+        "en": "Dewi Sartika opened Sakola Istri so that girls could learn."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "SEJ-DEWI-SARTIKA"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-STORY-ORDER",
+      "story_id": "ST-DEWI-SARTIKA",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang terjadi lebih dulu?",
+            "en": "What happened first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Ia membuka Sakola Istri",
+            "en": "She opens Sakola Istri"
+          },
+          "image": "hist_sewing_kit"
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Dewi kecil bermain sekolah-sekolahan",
+            "en": "Young Dewi plays school"
+          },
+          "image": "hist_sil_girl"
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Sekolahnya bertambah banyak",
+            "en": "Her schools spread"
+          },
+          "image": "hist_dewi_sartika_school"
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Ia mengajar dengan papan kayu",
+            "en": "She teaches with a wooden board"
+          },
+          "image": "hist_slate_board"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "model_answer": {
+        "id": "Dewi kecil bermain sekolah-sekolahan, mengajar dengan papan kayu, membuka Sakola Istri, lalu sekolahnya bertambah banyak.",
+        "en": "Young Dewi played school, taught with a wooden board, opened Sakola Istri, and then her schools spread."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-DEWI-SARTIKA"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-DEWI-SARTIKA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang dibuka Dewi Sartika?",
+            "en": "What did Dewi Sartika open?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_hospital_bed",
+          "image": "hist_hospital_bed"
+        },
+        {
+          "id": "hist_dewi_sartika_school",
+          "image": "hist_dewi_sartika_school",
+          "correct": true
+        },
+        {
+          "id": "hist_treasure_ship",
+          "image": "hist_treasure_ship"
+        },
+        {
+          "id": "hist_compass_old",
+          "image": "hist_compass_old"
+        }
+      ],
+      "model_answer": {
+        "id": "Dewi Sartika membuka sekolah untuk anak perempuan.",
+        "en": "Dewi Sartika opened a school for girls."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "SEJ-DEWI-SARTIKA",
+        "SEJ-NIGHTINGALE"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-WHOSE",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Benda ini dari cerita siapa?",
+            "en": "Whose story is each thing from?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_fn",
+          "text": {
+            "id": "Florence Nightingale",
+            "en": "Florence Nightingale"
+          }
+        },
+        {
+          "id": "b_ds",
+          "text": {
+            "id": "Dewi Sartika",
+            "en": "Dewi Sartika"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Lampu",
+            "en": "A lamp"
+          },
+          "image": "hist_nightingale_lamp"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Sekolah Sakola Istri",
+            "en": "The Sakola Istri school"
+          },
+          "image": "hist_dewi_sartika_school"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Tempat tidur pasien",
+            "en": "A patient's bed"
+          },
+          "image": "hist_hospital_bed"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Alat jahit",
+            "en": "A sewing kit"
+          },
+          "image": "hist_sewing_kit"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_fn",
+        "c2": "b_ds",
+        "c3": "b_fn",
+        "c4": "b_ds"
+      },
+      "model_answer": {
+        "id": "Lampu dan tempat tidur pasien dari cerita Florence. Sekolah dan alat jahit dari cerita Dewi Sartika.",
+        "en": "The lamp and the patient's bed belong to Florence's story. The school and the sewing kit belong to Dewi Sartika's."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "SEJ-DEWI-SARTIKA"
+      ],
+      "pool": "PRACT",
+      "order": 25,
+      "prompt_id": "P-TF",
+      "story_id": "ST-DEWI-SARTIKA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di Sakola Istri, murid juga belajar menjahit.",
+            "en": "At Sakola Istri, pupils also learned to sew."
+          }
+        }
+      ],
+      "image": "hist_sewing_kit",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Murid Sakola Istri belajar membaca, berhitung, dan menjahit.",
+        "en": "True. Sakola Istri pupils learned reading, arithmetic and sewing."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "SEJ-DEWI-SARTIKA"
+      ],
+      "pool": "PRACT",
+      "order": 26,
+      "prompt_id": "P-CONNECT",
+      "story_id": "ST-DEWI-SARTIKA",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dengan ceritanya.",
+            "en": "Match each picture to the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m1",
+          "text": {
+            "id": "papan tulis",
+            "en": "board"
+          },
+          "image": "hist_slate_board"
+        },
+        {
+          "id": "m2",
+          "text": {
+            "id": "alat jahit",
+            "en": "sewing kit"
+          },
+          "image": "hist_sewing_kit"
+        },
+        {
+          "id": "m3",
+          "text": {
+            "id": "sekolah",
+            "en": "school"
+          },
+          "image": "hist_dewi_sartika_school"
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "belajar menjahit",
+            "en": "learning to sew"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Sakola Istri",
+            "en": "Sakola Istri"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "mengajar membaca",
+            "en": "teaching reading"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "m1": "t1",
+        "m2": "t2",
+        "m3": "t3"
+      },
+      "model_answer": {
+        "id": "Papan kayu untuk mengajar, alat jahit untuk belajar menjahit, dan Sakola Istri sekolahnya.",
+        "en": "The wooden board for teaching, the sewing kit for sewing lessons, and Sakola Istri, her school."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-DEWI-SARTIKA"
+      ],
+      "pool": "PRACT",
+      "order": 27,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-DEWI-SARTIKA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sakola Istri untuk siapa?",
+            "en": "Who was Sakola Istri for?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_girl",
+          "image": "pic_girl",
+          "correct": true
+        },
+        {
+          "id": "pic_man",
+          "image": "pic_man"
+        },
+        {
+          "id": "fam_grandfather",
+          "image": "fam_grandfather"
+        }
+      ],
+      "model_answer": {
+        "id": "Sakola Istri adalah sekolah untuk anak perempuan.",
+        "en": "Sakola Istri was a school for girls."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "SEJ-NIGHTINGALE",
+        "SEJ-DEWI-SARTIKA"
+      ],
+      "pool": "PRACT",
+      "order": 28,
+      "prompt_id": "P-LEARN",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Seperti Florence dan Dewi Sartika?",
+            "en": "Like Florence and Dewi Sartika?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_good",
+          "text": {
+            "id": "Patut ditiru",
+            "en": "Good to follow"
+          }
+        },
+        {
+          "id": "b_less",
+          "text": {
+            "id": "Kurang baik",
+            "en": "Not so good"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Menjenguk teman yang sakit",
+            "en": "Visiting a sick friend"
+          },
+          "image": "val_visit_sick"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Membuang sampah sembarangan",
+            "en": "Dropping litter"
+          },
+          "image": "val_litter"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Membereskan kelas",
+            "en": "Tidying the classroom"
+          },
+          "image": "val_clean_up"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Menyerobot antrean",
+            "en": "Pushing into a queue"
+          },
+          "image": "val_cut_queue"
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Membantu teman belajar",
+            "en": "Helping a friend learn"
+          },
+          "image": "val_help_friend"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_good",
+        "c2": "b_less",
+        "c3": "b_good",
+        "c4": "b_less",
+        "c5": "b_good"
+      },
+      "model_answer": {
+        "id": "Menjenguk teman yang sakit, membereskan kelas, dan membantu teman belajar patut ditiru. Membuang sampah sembarangan dan menyerobot antrean kurang baik.",
+        "en": "Visiting a sick friend, tidying the classroom and helping a friend learn are good to follow. Littering and pushing into a queue are not so good."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-02-015",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-NIGHTINGALE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "story_id": "ST-NIGHTINGALE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Florence bekerja di mana?",
+            "en": "Where did Florence work?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_bg_sea",
+          "image": "hist_bg_sea"
+        },
+        {
+          "id": "hist_bg_ward",
+          "image": "hist_bg_ward",
+          "correct": true
+        },
+        {
+          "id": "hist_bg_desert_road",
+          "image": "hist_bg_desert_road"
+        }
+      ],
+      "model_answer": {
+        "id": "Florence bekerja di rumah sakit.",
+        "en": "Florence worked in a hospital."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-02-016",
+      "unit": "02",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "SEJ-DEWI-SARTIKA"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "story_id": "ST-DEWI-SARTIKA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Waktu kecil, Dewi Sartika mengajari anak-anak membaca.",
+            "en": "As a child, Dewi Sartika taught children to read."
+          }
+        }
+      ],
+      "image": "hist_slate_board",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Ia mengajari anak-anak di sekitarnya membaca dan menulis.",
+        "en": "True. She taught the children around her to read and write."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-03-001",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "story",
+      "skills": [
+        "SEJ-ZHENG-HE"
+      ],
+      "pool": "PRACT",
+      "order": 29,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-ZHENG-HE",
+      "model_answer": {
+        "id": "Zheng He memimpin tujuh pelayaran besar dan singgah di Jawa serta Sumatra.",
+        "en": "Zheng He led seven great voyages and stopped in Java and Sumatra."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-03-002",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "SEJ-ZHENG-HE"
+      ],
+      "pool": "PRACT",
+      "order": 30,
+      "prompt_id": "P-STORY-ORDER",
+      "story_id": "ST-ZHENG-HE",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang terjadi lebih dulu?",
+            "en": "What happened first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Mereka mencari arah dengan kompas",
+            "en": "They find their way with a compass"
+          },
+          "image": "hist_compass_old"
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Zheng He menjadi laksamana",
+            "en": "Zheng He becomes an admiral"
+          },
+          "image": "hist_sil_sailor"
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Ia singgah di Jawa dan Sumatra",
+            "en": "He stops in Java and Sumatra"
+          },
+          "image": "map_indonesia"
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Ia memimpin kapal-kapal besar",
+            "en": "He leads great ships"
+          },
+          "image": "hist_treasure_ship"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "model_answer": {
+        "id": "Zheng He menjadi laksamana, memimpin kapal-kapal besar, berlayar dengan kompas, lalu singgah di Jawa.",
+        "en": "Zheng He became an admiral, led great ships, sailed with a compass, then stopped in Java."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-03-003",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-ZHENG-HE"
+      ],
+      "pool": "PRACT",
+      "order": 31,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-ZHENG-HE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Zheng He memimpin apa?",
+            "en": "What did Zheng He lead?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_ki_hajar_school",
+          "image": "hist_ki_hajar_school"
+        },
+        {
+          "id": "hist_treasure_ship",
+          "image": "hist_treasure_ship",
+          "correct": true
+        },
+        {
+          "id": "hist_hospital_bed",
+          "image": "hist_hospital_bed"
+        },
+        {
+          "id": "hist_oil_lamp",
+          "image": "hist_oil_lamp"
+        }
+      ],
+      "model_answer": {
+        "id": "Zheng He memimpin armada kapal yang besar.",
+        "en": "Zheng He led a great fleet of ships."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-03-004",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "SEJ-ZHENG-HE"
+      ],
+      "pool": "PRACT",
+      "order": 32,
+      "prompt_id": "P-TF",
+      "story_id": "ST-ZHENG-HE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Zheng He hanya berlayar satu kali.",
+            "en": "Zheng He sailed only once."
+          }
+        }
+      ],
+      "image": "hist_treasure_ship",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Salah. Zheng He memimpin tujuh pelayaran besar.",
+        "en": "False. Zheng He led seven great voyages."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-03-005",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "SEJ-ZHENG-HE"
+      ],
+      "pool": "PRACT",
+      "order": 33,
+      "prompt_id": "P-CONNECT",
+      "story_id": "ST-ZHENG-HE",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dengan ceritanya.",
+            "en": "Match each picture to the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m1",
+          "text": {
+            "id": "kompas",
+            "en": "compass"
+          },
+          "image": "hist_compass_old"
+        },
+        {
+          "id": "m2",
+          "text": {
+            "id": "kapal besar",
+            "en": "a big ship"
+          },
+          "image": "hist_treasure_ship"
+        },
+        {
+          "id": "m3",
+          "text": {
+            "id": "peta Indonesia",
+            "en": "map of Indonesia"
+          },
+          "image": "map_indonesia"
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "berlayar jauh",
+            "en": "sailing far"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "singgah di Jawa",
+            "en": "stopping in Java"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "mencari arah",
+            "en": "finding the way"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "m1": "t1",
+        "m2": "t2",
+        "m3": "t3"
+      },
+      "model_answer": {
+        "id": "Kompas untuk mencari arah, kapal besar untuk berlayar jauh, dan peta Nusantara tempat ia singgah.",
+        "en": "The compass to find the way, the big ship to sail far, and the map of Indonesia where he stopped."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-03-006",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-ZHENG-HE"
+      ],
+      "pool": "PRACT",
+      "order": 34,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-ZHENG-HE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Zheng He menjelajah lewat mana?",
+            "en": "Where did Zheng He travel?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_bg_desert_road",
+          "image": "hist_bg_desert_road"
+        },
+        {
+          "id": "hist_bg_sea",
+          "image": "hist_bg_sea",
+          "correct": true
+        },
+        {
+          "id": "hist_bg_classroom_old",
+          "image": "hist_bg_classroom_old"
+        }
+      ],
+      "model_answer": {
+        "id": "Zheng He menjelajah lewat laut dengan kapal.",
+        "en": "Zheng He travelled by sea, on ships."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-03-007",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "SEJ-IBN-BATTUTA"
+      ],
+      "pool": "PRACT",
+      "order": 35,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-IBN-BATTUTA",
+      "model_answer": {
+        "id": "Ibn Battuta berkelana hampir 30 tahun, singgah di Sumatra, lalu kisahnya ditulis menjadi buku.",
+        "en": "Ibn Battuta travelled for almost 30 years, visited Sumatra, and his story became a book."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-03-008",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "SEJ-IBN-BATTUTA"
+      ],
+      "pool": "PRACT",
+      "order": 36,
+      "prompt_id": "P-STORY-ORDER",
+      "story_id": "ST-IBN-BATTUTA",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang terjadi lebih dulu?",
+            "en": "What happened first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Ia singgah di Sumatra",
+            "en": "He stops in Sumatra"
+          },
+          "image": "hist_small_boat"
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Ibn Battuta lahir di Maroko",
+            "en": "Ibn Battuta is born in Morocco"
+          },
+          "image": "hist_sil_traveler"
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Kisahnya dicatat menjadi buku",
+            "en": "His story is written down as a book"
+          },
+          "image": "hist_quill"
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Ia berangkat bersama kafilah",
+            "en": "He sets off with a caravan"
+          },
+          "image": "hist_caravan"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "model_answer": {
+        "id": "Ibn Battuta lahir di Maroko, berangkat bersama kafilah, singgah di Sumatra, lalu kisahnya dicatat.",
+        "en": "Ibn Battuta was born in Morocco, set off with a caravan, stopped in Sumatra, then his story was written down."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-03-009",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-IBN-BATTUTA"
+      ],
+      "pool": "PRACT",
+      "order": 37,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-IBN-BATTUTA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di gurun, Ibn Battuta ikut apa?",
+            "en": "In the desert, what did Ibn Battuta travel with?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_treasure_ship",
+          "image": "hist_treasure_ship"
+        },
+        {
+          "id": "hist_hospital_bed",
+          "image": "hist_hospital_bed"
+        },
+        {
+          "id": "hist_ki_hajar_school",
+          "image": "hist_ki_hajar_school"
+        },
+        {
+          "id": "hist_caravan",
+          "image": "hist_caravan",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Ibn Battuta berjalan bersama kafilah unta.",
+        "en": "Ibn Battuta travelled with a camel caravan."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-03-010",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "SEJ-IBN-BATTUTA",
+        "SEJ-ZHENG-HE"
+      ],
+      "pool": "PRACT",
+      "order": 38,
+      "prompt_id": "P-WHOSE",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Benda ini dari cerita siapa?",
+            "en": "Whose story is each thing from?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_zh",
+          "text": {
+            "id": "Zheng He",
+            "en": "Zheng He"
+          }
+        },
+        {
+          "id": "b_ib",
+          "text": {
+            "id": "Ibn Battuta",
+            "en": "Ibn Battuta"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Kapal besar",
+            "en": "A big ship"
+          },
+          "image": "hist_treasure_ship"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Kafilah unta",
+            "en": "A camel caravan"
+          },
+          "image": "hist_caravan"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Kompas",
+            "en": "A compass"
+          },
+          "image": "hist_compass_old"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Peta perjalanan",
+            "en": "A travel map"
+          },
+          "image": "hist_route_map"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_zh",
+        "c2": "b_ib",
+        "c3": "b_zh",
+        "c4": "b_ib"
+      },
+      "model_answer": {
+        "id": "Kapal besar dan kompas dari cerita Zheng He. Kafilah unta dan peta perjalanan dari cerita Ibn Battuta.",
+        "en": "The big ship and the compass belong to Zheng He's story. The camel caravan and the travel map belong to Ibn Battuta's."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-03-011",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "SEJ-IBN-BATTUTA"
+      ],
+      "pool": "PRACT",
+      "order": 39,
+      "prompt_id": "P-TF",
+      "story_id": "ST-IBN-BATTUTA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ibn Battuta pernah singgah di Sumatra.",
+            "en": "Ibn Battuta once visited Sumatra."
+          }
+        }
+      ],
+      "image": "hist_route_map",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Ia singgah di Samudera Pasai, Sumatra, sekitar tahun 1345.",
+        "en": "True. He visited Samudera Pasai in Sumatra around 1345."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-03-012",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "SEJ-IBN-BATTUTA"
+      ],
+      "pool": "PRACT",
+      "order": 40,
+      "prompt_id": "P-CONNECT",
+      "story_id": "ST-IBN-BATTUTA",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dengan ceritanya.",
+            "en": "Match each picture to the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m1",
+          "text": {
+            "id": "kafilah",
+            "en": "caravan"
+          },
+          "image": "hist_caravan"
+        },
+        {
+          "id": "m2",
+          "text": {
+            "id": "perahu",
+            "en": "boat"
+          },
+          "image": "hist_small_boat"
+        },
+        {
+          "id": "m3",
+          "text": {
+            "id": "pena bulu",
+            "en": "quill pen"
+          },
+          "image": "hist_quill"
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "berlayar ke Sumatra",
+            "en": "sailing to Sumatra"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "buku Rihlah",
+            "en": "the Rihla book"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "berjalan di gurun",
+            "en": "crossing the desert"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "m1": "t1",
+        "m2": "t2",
+        "m3": "t3"
+      },
+      "model_answer": {
+        "id": "Kafilah unta di gurun, perahu ke Sumatra, dan pena untuk menulis buku Rihlah.",
+        "en": "The camel caravan in the desert, the boat to Sumatra, and the pen that wrote the Rihla."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-03-013",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-IBN-BATTUTA"
+      ],
+      "pool": "PRACT",
+      "order": 41,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-IBN-BATTUTA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ibn Battuta melewati tempat apa?",
+            "en": "What kind of place did Ibn Battuta cross?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_bg_desert_road",
+          "image": "hist_bg_desert_road",
+          "correct": true
+        },
+        {
+          "id": "hist_bg_ward",
+          "image": "hist_bg_ward"
+        },
+        {
+          "id": "hist_bg_classroom_old",
+          "image": "hist_bg_classroom_old"
+        }
+      ],
+      "model_answer": {
+        "id": "Ibn Battuta melewati gurun bersama kafilah unta.",
+        "en": "Ibn Battuta crossed the desert with a camel caravan."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-03-014",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "SEJ-ZHENG-HE",
+        "SEJ-IBN-BATTUTA"
+      ],
+      "pool": "PRACT",
+      "order": 42,
+      "prompt_id": "P-LEARN",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Seperti Zheng He dan Ibn Battuta?",
+            "en": "Like Zheng He and Ibn Battuta?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_good",
+          "text": {
+            "id": "Patut ditiru",
+            "en": "Good to follow"
+          }
+        },
+        {
+          "id": "b_less",
+          "text": {
+            "id": "Kurang baik",
+            "en": "Not so good"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Berteman dengan anak yang berbeda",
+            "en": "Making friends with different children"
+          },
+          "image": "val_friends_diverse"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Mengirim pesan yang menyakitkan",
+            "en": "Sending a hurtful message"
+          },
+          "image": "val_phone_unkind"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Menyapa tetangga",
+            "en": "Greeting a neighbour"
+          },
+          "image": "val_greet_neighbor"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Membuang sampah sembarangan",
+            "en": "Dropping litter"
+          },
+          "image": "val_litter"
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Mencatat apa yang kita lihat",
+            "en": "Writing down what we see"
+          },
+          "image": "pic_write"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_good",
+        "c2": "b_less",
+        "c3": "b_good",
+        "c4": "b_less",
+        "c5": "b_good"
+      },
+      "model_answer": {
+        "id": "Berteman dengan anak yang berbeda, menyapa tetangga, dan mencatat apa yang kita lihat patut ditiru. Membuang sampah sembarangan dan mengirim pesan yang menyakitkan kurang baik.",
+        "en": "Making friends with children who are different, greeting neighbours and writing down what we see are good to follow. Littering and sending hurtful messages are not so good."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-03-015",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "SEJ-ZHENG-HE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "story_id": "ST-ZHENG-HE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Berapa kali Zheng He memimpin pelayaran besar?",
+            "en": "How many great voyages did Zheng He lead?"
+          }
+        }
+      ],
+      "image": "hist_treasure_ship",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "1 kali",
+            "en": "once"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "100 kali",
+            "en": "100 times"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "7 kali",
+            "en": "7 times"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Zheng He memimpin tujuh pelayaran besar.",
+        "en": "Zheng He led seven great voyages."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-03-016",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "SEJ-IBN-BATTUTA"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "story_id": "ST-IBN-BATTUTA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ibn Battuta berangkat dari Maroko saat berumur 21 tahun.",
+            "en": "Ibn Battuta set off from Morocco when he was 21."
+          }
+        }
+      ],
+      "image": "hist_caravan",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Ia berangkat tahun 1325, saat berumur 21 tahun.",
+        "en": "True. He set off in 1325, aged 21."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-03-017",
+      "unit": "03",
+      "audience": "kids",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "SEJ-ZHENG-HE"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "hist_treasure_ship",
+      "gem": true,
+      "source": "Smithsonian Magazine, \"The Peculiar Story of the Giraffes of Medieval China\" (2017): envoys from Malindi (Kenya) gave a giraffe that reached China with Zheng He's fourth voyage and was presented as a qilin.",
+      "model_answer": {
+        "id": "Armada Zheng He pernah membawa seekor jerapah dari Afrika ke Tiongkok! Ada yang menyamakannya dengan qilin, hewan dalam dongeng Tiongkok.",
+        "en": "Zheng He's fleet once carried a giraffe from Africa to China! Some people compared it to the qilin, a creature from Chinese legends."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    },
+    {
+      "item_id": "SEJ-K-P-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "pemula",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Jarumku selalu menunjuk ke utara. Pelaut memakaiku untuk mencari arah. Siapa aku?",
+            "en": "My needle always points north. Sailors use me to find their way. What am I?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "lamp",
+          "text": {
+            "id": "Lampu",
+            "en": "A lamp"
+          }
+        },
+        {
+          "id": "compass",
+          "text": {
+            "id": "Kompas",
+            "en": "A compass"
+          },
+          "correct": true
+        },
+        {
+          "id": "book",
+          "text": {
+            "id": "Buku",
+            "en": "A book"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Kompas! Jarumnya menunjuk ke utara, jadi pelaut seperti Zheng He tahu arah.",
+        "en": "A compass! Its needle points north, so sailors like Zheng He knew which way to go."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-0.1"
+    }
+  ]
+}

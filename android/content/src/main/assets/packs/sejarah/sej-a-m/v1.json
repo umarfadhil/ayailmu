@@ -1,0 +1,3227 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sej-a-m-0.1",
+    "subject": "sejarah",
+    "track": "sej-a-m",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "level": "menengah",
+    "title": {
+      "id": "Sejarah — Menengah (Dewasa)",
+      "en": "History — Intermediate (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, Sejarah adults, Menengah). Needs a historian (every date, place and number against the story sources), a cultural/religious sensitivity reviewer, and the Indonesian and English language reviewers before any item is approved. Figures are drawn only as silhouettes and objects of their work (MODULES_LEVELS_STORIES.md section 4); captions contain no invented quotes.",
+  "prompts": {
+    "P-STORY": {
+      "id": "Simak kisahnya.",
+      "en": "Watch the story."
+    },
+    "P-ORDER": {
+      "id": "Urutkan kisahnya.",
+      "en": "Put the story in order."
+    },
+    "P-MATCH": {
+      "id": "Pasangkan gambar dan artinya.",
+      "en": "Match each picture to its meaning."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-SORT": {
+      "id": "Kelompokkan.",
+      "en": "Sort into groups."
+    },
+    "P-WHO": {
+      "id": "Kelompokkan menurut tokohnya.",
+      "en": "Sort by figure."
+    },
+    "P-VALUE": {
+      "id": "Mana yang sejalan?",
+      "en": "Which one fits?"
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Correct. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Baik, kita lanjut.",
+      "en": "Good, let's continue."
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Rumah ilmu",
+        "en": "Houses of knowledge"
+      },
+      "sticker": "sticker_compass"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Kesehatan",
+        "en": "Health"
+      },
+      "sticker": "sticker_teapot"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SEJ-A-M-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Rumah ilmu",
+        "en": "Houses of knowledge"
+      },
+      "body": [
+        {
+          "id": "Lebih dari seribu tahun lalu, Baghdad dan Fes menjadi tempat orang berkumpul untuk belajar, menerjemahkan, dan menulis buku.",
+          "en": "More than a thousand years ago, Baghdad and Fez were places where people gathered to study, translate and write books."
+        },
+        {
+          "id": "Al-Khwarizmi menulis buku matematika yang dipakai berabad-abad. Fatima al-Fihri dikenang sebagai pendiri al-Qarawiyyin di Fes.",
+          "en": "Al-Khwarizmi wrote mathematics books used for centuries. Fatima al-Fihri is remembered as the founder of al-Qarawiyyin in Fez."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SEJ-A-M-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Kesehatan",
+        "en": "Health"
+      },
+      "body": [
+        {
+          "id": "Ibn Sina mengumpulkan ilmu kedokteran zamannya dalam satu buku besar. Delapan abad kemudian, Florence Nightingale mengubah cara orang merawat pasien.",
+          "en": "Ibn Sina gathered the medical knowledge of his time into one great book. Eight centuries later, Florence Nightingale changed how patients are cared for."
+        },
+        {
+          "id": "Keduanya tekun mengamati, mencatat, dan membagikan ilmu. Kisah ini informasi sejarah, bukan nasihat medis.",
+          "en": "Both observed carefully, kept records and shared what they learned. These are history stories, not medical advice."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "stories": {
+    "ST-A-KHWARIZMI": {
+      "figure": "Muhammad ibn Musa al-Khwarizmi (c. 780–c. 850)",
+      "title": {
+        "id": "Al-Khwarizmi dan aljabar",
+        "en": "Al-Khwarizmi and algebra"
+      },
+      "source": "MacTutor History of Mathematics (University of St Andrews): Al-Khwarizmi; Britannica: al-Khwarizmi",
+      "emblem": "hist_khwarizmi_board",
+      "panels": [
+        {
+          "scene": "hist_bg_library_old",
+          "caption": {
+            "id": "Sekitar 1.200 tahun lalu, Baghdad menjadi kota ilmu. Khalifah al-Ma'mun mendukung Bait al-Hikmah (Rumah Kebijaksanaan), tempat para cendekiawan menerjemahkan dan menulis buku.",
+            "en": "About 1,200 years ago Baghdad was a city of learning. Caliph al-Ma'mun supported the House of Wisdom, where scholars translated and wrote books."
+          },
+          "narration": {
+            "id": "id/sej_a_khwarizmi_01",
+            "en": "en/sej_a_khwarizmi_01"
+          },
+          "layers": [
+            {
+              "art": "hist_book_stack",
+              "x": 0.62,
+              "y": 0.56,
+              "w": 0.18,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_sil_scholar",
+              "x": 0.14,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_library_old",
+          "caption": {
+            "id": "Al-Khwarizmi bekerja di sana sebagai ahli matematika dan astronomi. Ia hidup sekitar tahun 780 sampai 850.",
+            "en": "Al-Khwarizmi worked there as a mathematician and astronomer. He lived from about 780 to 850."
+          },
+          "narration": {
+            "id": "id/sej_a_khwarizmi_02",
+            "en": "en/sej_a_khwarizmi_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_scholar",
+              "x": 0.12,
+              "y": 0.3,
+              "w": 0.26
+            },
+            {
+              "art": "hist_astrolabe",
+              "x": 0.6,
+              "y": 0.3,
+              "w": 0.16,
+              "motion": {
+                "type": "sway",
+                "deg": 3,
+                "ms": 2400,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_quill",
+              "x": 0.4,
+              "y": 0.6,
+              "w": 0.1,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Orang perlu cara berhitung yang rapi untuk membagi warisan, berdagang, dan mengukur tanah. Al-Khwarizmi menulis buku untuk soal-soal sehari-hari seperti itu.",
+            "en": "People needed orderly ways to work out inheritances, trade and measure land. Al-Khwarizmi wrote a book for everyday problems like these."
+          },
+          "narration": {
+            "id": "id/sej_a_khwarizmi_03",
+            "en": "en/sej_a_khwarizmi_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.12,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_sil_woman_headscarf",
+              "x": 0.3,
+              "y": 0.3,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_khwarizmi_board",
+              "x": 0.58,
+              "y": 0.3,
+              "w": 0.3,
+              "motion": {
+                "type": "slide_in",
+                "from": "right",
+                "ms": 700,
+                "delay_ms": 500
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_library_old",
+          "caption": {
+            "id": "Di dalamnya ia menjelaskan al-jabr, «melengkapi», dan al-muqabala, «menyeimbangkan». Dari kata al-jabr lahirlah kata «aljabar».",
+            "en": "In it he explained al-jabr, \"completing\", and al-muqabala, \"balancing\". The word al-jabr gave us the word \"algebra\"."
+          },
+          "narration": {
+            "id": "id/sej_a_khwarizmi_04",
+            "en": "en/sej_a_khwarizmi_04"
+          },
+          "layers": [
+            {
+              "art": "hist_khwarizmi_board",
+              "x": 0.3,
+              "y": 0.2,
+              "w": 0.4,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_quill",
+              "x": 0.74,
+              "y": 0.6,
+              "w": 0.1,
+              "motion": {
+                "type": "sway",
+                "deg": 4,
+                "ms": 2400,
+                "loop": true
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.06,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_map_world",
+          "caption": {
+            "id": "Ia juga menulis tentang angka dari India yang memakai nilai tempat dan angka nol. Terjemahan Latinnya membawa angka ini ke Eropa, dan namanya menjadi kata «algoritma».",
+            "en": "He also wrote about the numerals from India, with place value and zero. A Latin translation carried them to Europe, and his name became the word \"algorithm\"."
+          },
+          "narration": {
+            "id": "id/sej_a_khwarizmi_05",
+            "en": "en/sej_a_khwarizmi_05"
+          },
+          "layers": [
+            {
+              "art": "hist_book_stack",
+              "x": 0.66,
+              "y": 0.4,
+              "w": 0.14,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.66,
+                    0.4
+                  ],
+                  [
+                    0.56,
+                    0.34
+                  ],
+                  [
+                    0.46,
+                    0.26
+                  ]
+                ],
+                "ms": 5000,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_khwarizmi_board",
+              "x": 0.06,
+              "y": 0.56,
+              "w": 0.24,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Setiap kali ponsel menghitung rute atau harga, ia menjalankan algoritma. Kisah al-Khwarizmi mengajak kita menjelaskan ilmu dengan langkah-langkah yang jelas.",
+            "en": "Every time a phone works out a route or a price, it runs an algorithm. Al-Khwarizmi's story asks us to explain knowledge in clear steps."
+          },
+          "narration": {
+            "id": "id/sej_a_khwarizmi_06",
+            "en": "en/sej_a_khwarizmi_06"
+          },
+          "layers": [
+            {
+              "art": "pic_phone",
+              "x": 0.62,
+              "y": 0.5,
+              "w": 0.12,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_sil_woman",
+              "x": 0.18,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        }
+      ]
+    },
+    "ST-A-AL-FIHRI": {
+      "figure": "Fatima al-Fihri (c. 800–c. 880)",
+      "title": {
+        "id": "Fatima al-Fihri dan al-Qarawiyyin",
+        "en": "Fatima al-Fihri and al-Qarawiyyin"
+      },
+      "source": "Ibn Abi Zar', Rawd al-Qirtas (abad ke-14), sebagaimana diringkas dalam Wikipedia: Fatima al-Fihriya (termasuk keraguan sejarawan); Guinness World Records: Oldest higher-learning institution (University of Karueein, 859)",
+      "emblem": "hist_qarawiyyin",
+      "panels": [
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Pada abad ke-9, Fes di Maroko tumbuh menjadi kota yang ramai. Banyak keluarga pendatang dari Kairouan, kini di Tunisia, menetap di sana.",
+            "en": "In the 9th century Fez, in Morocco, was a busy, growing city. Many families from Kairouan, in today's Tunisia, settled there."
+          },
+          "narration": {
+            "id": "id/sej_a_al_fihri_01",
+            "en": "en/sej_a_al_fihri_01"
+          },
+          "layers": [
+            {
+              "art": "hist_caravan",
+              "x": 0.5,
+              "y": 0.46,
+              "w": 0.4,
+              "motion": {
+                "type": "drift",
+                "dx": 0.03,
+                "dy": 0.0,
+                "ms": 6000,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_sil_woman_headscarf",
+              "x": 0.1,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_room_lamp",
+          "caption": {
+            "id": "Menurut sejarawan Ibn Abi Zar', yang menulis pada abad ke-14, Fatima al-Fihri mewarisi harta ayahnya, seorang saudagar. Ia memutuskan memakainya untuk kepentingan banyak orang.",
+            "en": "According to the historian Ibn Abi Zar', writing in the 14th century, Fatima al-Fihri inherited the wealth of her merchant father. She decided to use it for the good of many people."
+          },
+          "narration": {
+            "id": "id/sej_a_al_fihri_02",
+            "en": "en/sej_a_al_fihri_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_woman_headscarf",
+              "x": 0.16,
+              "y": 0.3,
+              "w": 0.26
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.6,
+              "y": 0.58,
+              "w": 0.16,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.04,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Sekitar tahun 859, ia mendirikan Masjid al-Qarawiyyin di Fes. Tempat itu menjadi ruang untuk berkumpul, beribadah, dan belajar.",
+            "en": "Around 859 she founded the al-Qarawiyyin mosque in Fez. It became a place to gather, to pray and to learn."
+          },
+          "narration": {
+            "id": "id/sej_a_al_fihri_03",
+            "en": "en/sej_a_al_fihri_03"
+          },
+          "layers": [
+            {
+              "art": "hist_qarawiyyin",
+              "x": 0.4,
+              "y": 0.2,
+              "w": 0.5,
+              "motion": {
+                "type": "slide_in",
+                "from": "right",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_sil_woman_headscarf",
+              "x": 0.1,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_library_old",
+          "caption": {
+            "id": "Lambat laun al-Qarawiyyin menjadi pusat ilmu yang didatangi pelajar dari banyak negeri. Di sana orang mempelajari agama, bahasa, dan ilmu pasti.",
+            "en": "Over time al-Qarawiyyin became a centre of learning that drew students from many lands. People studied religion, language and mathematics there."
+          },
+          "narration": {
+            "id": "id/sej_a_al_fihri_04",
+            "en": "en/sej_a_al_fihri_04"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_scholar",
+              "x": 0.1,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_sil_scholar",
+              "x": 0.3,
+              "y": 0.32,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.62,
+              "y": 0.56,
+              "w": 0.18,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 500
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_library_old",
+          "caption": {
+            "id": "Kisah Fatima baru dicatat berabad-abad setelah ia wafat, sehingga sebagian sejarawan meragukan rinciannya. Namun lembaga yang dikaitkan dengannya masih berdiri hingga kini.",
+            "en": "Fatima's story was written down centuries after her death, so some historians doubt the details. But the institution linked to her still stands today."
+          },
+          "narration": {
+            "id": "id/sej_a_al_fihri_05",
+            "en": "en/sej_a_al_fihri_05"
+          },
+          "layers": [
+            {
+              "art": "hist_quill",
+              "x": 0.3,
+              "y": 0.5,
+              "w": 0.1,
+              "motion": {
+                "type": "sway",
+                "deg": 4,
+                "ms": 2400,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.5,
+              "y": 0.56,
+              "w": 0.18
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Guinness World Records mencatat al-Qarawiyyin, yang berdiri pada 859, sebagai lembaga pendidikan tinggi tertua yang masih berjalan. Kisahnya mengajak kita memakai yang kita miliki untuk membuka jalan belajar bagi orang lain.",
+            "en": "Guinness World Records lists al-Qarawiyyin, founded in 859, as the oldest higher-learning institution still running. Her story asks us to use what we have to open the way to learning for others."
+          },
+          "narration": {
+            "id": "id/sej_a_al_fihri_06",
+            "en": "en/sej_a_al_fihri_06"
+          },
+          "layers": [
+            {
+              "art": "hist_sunrise",
+              "x": 0.6,
+              "y": 0.06,
+              "w": 0.32,
+              "motion": {
+                "type": "fade_in",
+                "ms": 900
+              }
+            },
+            {
+              "art": "hist_qarawiyyin",
+              "x": 0.08,
+              "y": 0.26,
+              "w": 0.46
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        }
+      ]
+    },
+    "ST-A-IBN-SINA": {
+      "figure": "Ibn Sina / Avicenna (980–1037)",
+      "title": {
+        "id": "Ibn Sina dan Kanon Kedokteran",
+        "en": "Ibn Sina and the Canon of Medicine"
+      },
+      "source": "MacTutor History of Mathematics (University of St Andrews): Avicenna; Library of Congress: Canon of Medicine (catalog record 2021667335)",
+      "emblem": "hist_ibn_sina_book",
+      "panels": [
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Ibn Sina, yang di Eropa dikenal sebagai Avicenna, lahir pada 980 di dekat Bukhara, kini di Uzbekistan. Pada usia sepuluh tahun ia sudah menghafal Al-Qur'an.",
+            "en": "Ibn Sina, known in Europe as Avicenna, was born in 980 near Bukhara, in today's Uzbekistan. By the age of ten he had memorised the Qur'an."
+          },
+          "narration": {
+            "id": "id/sej_a_ibn_sina_01",
+            "en": "en/sej_a_ibn_sina_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_boy",
+              "x": 0.18,
+              "y": 0.44,
+              "w": 0.19,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.6,
+              "y": 0.58,
+              "w": 0.16,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Ia mulai belajar kedokteran pada usia 13 tahun. Pada usia 16 tahun ia sudah merawat pasien.",
+            "en": "He began studying medicine at 13. By 16 he was already treating patients."
+          },
+          "narration": {
+            "id": "id/sej_a_ibn_sina_02",
+            "en": "en/sej_a_ibn_sina_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_scholar",
+              "x": 0.12,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_sil_woman_headscarf",
+              "x": 0.56,
+              "y": 0.3,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_herbs_mortar",
+              "x": 0.36,
+              "y": 0.64,
+              "w": 0.12,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 400
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_library_old",
+          "caption": {
+            "id": "Setelah berhasil mengobati penguasa Samaniyah, ia diizinkan membaca di perpustakaan istana. Di sana ia belajar dari sangat banyak buku.",
+            "en": "After he cured the Samanid ruler, he was allowed to read in the royal library. There he learned from a great many books."
+          },
+          "narration": {
+            "id": "id/sej_a_ibn_sina_03",
+            "en": "en/sej_a_ibn_sina_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_scholar",
+              "x": 0.1,
+              "y": 0.3,
+              "w": 0.26
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.4,
+              "y": 0.56,
+              "w": 0.18,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.64,
+              "y": 0.5,
+              "w": 0.2,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.06,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_desert_road",
+          "caption": {
+            "id": "Keadaan yang tidak tenang membuatnya sering berpindah kota, tetapi ia terus menulis. Ia wafat di Hamadan, Persia, pada 1037.",
+            "en": "Unsettled times often forced him to move from city to city, but he kept writing. He died in Hamadan, Persia, in 1037."
+          },
+          "narration": {
+            "id": "id/sej_a_ibn_sina_04",
+            "en": "en/sej_a_ibn_sina_04"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_traveler",
+              "x": 0.08,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "slide_in",
+                "from": "left",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_caravan",
+              "x": 0.5,
+              "y": 0.46,
+              "w": 0.4,
+              "motion": {
+                "type": "drift",
+                "dx": 0.03,
+                "dy": 0.0,
+                "ms": 6000,
+                "loop": true
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_library_old",
+          "caption": {
+            "id": "Karya besarnya, Kanon Kedokteran (al-Qanun fi al-Tibb), merangkum ilmu kedokteran zamannya. Ia menulis sekitar 450 karya, dan sekitar 240 masih ada.",
+            "en": "His great work, The Canon of Medicine (al-Qanun fi al-Tibb), gathered the medical knowledge of his time. He wrote about 450 works, and about 240 survive."
+          },
+          "narration": {
+            "id": "id/sej_a_ibn_sina_05",
+            "en": "en/sej_a_ibn_sina_05"
+          },
+          "layers": [
+            {
+              "art": "hist_ibn_sina_book",
+              "x": 0.32,
+              "y": 0.3,
+              "w": 0.34,
+              "motion": {
+                "type": "fade_in",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_herbs_mortar",
+              "x": 0.72,
+              "y": 0.58,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 400
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_map_world",
+          "caption": {
+            "id": "Kanon diterjemahkan ke bahasa Latin pada abad ke-12 dan dipelajari mahasiswa kedokteran di Eropa hingga akhir abad ke-17. Kisahnya mengajak kita tekun belajar dan mencatat ilmu agar berguna bagi orang lain.",
+            "en": "The Canon was translated into Latin in the 12th century and studied by medical students in Europe until the late 17th century. His story asks us to study hard and write knowledge down so it helps others."
+          },
+          "narration": {
+            "id": "id/sej_a_ibn_sina_06",
+            "en": "en/sej_a_ibn_sina_06"
+          },
+          "layers": [
+            {
+              "art": "hist_ibn_sina_book",
+              "x": 0.64,
+              "y": 0.4,
+              "w": 0.12,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.64,
+                    0.4
+                  ],
+                  [
+                    0.56,
+                    0.3
+                  ],
+                  [
+                    0.46,
+                    0.22
+                  ]
+                ],
+                "ms": 5000,
+                "delay_ms": 300
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ST-A-NIGHTINGALE": {
+      "figure": "Florence Nightingale (1820–1910)",
+      "title": {
+        "id": "Nightingale dan lampunya",
+        "en": "Nightingale and her lamp"
+      },
+      "source": "Florence Nightingale Museum London: About Florence Nightingale; Universidad de Alicante: Florence Nightingale (exhibition); MacTutor: Florence Nightingale",
+      "emblem": "hist_nightingale_lamp",
+      "panels": [
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Florence Nightingale lahir pada 12 Mei 1820 di Firenze, Italia, dari keluarga Inggris yang berada. Ia ingin menjadi perawat, pekerjaan yang saat itu dianggap tidak pantas bagi perempuan dari kalangannya.",
+            "en": "Florence Nightingale was born on 12 May 1820 in Florence, Italy, to a wealthy English family. She wanted to be a nurse, work then seen as unsuitable for a woman of her class."
+          },
+          "narration": {
+            "id": "id/sej_a_nightingale_01",
+            "en": "en/sej_a_nightingale_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_woman",
+              "x": 0.16,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.62,
+              "y": 0.6,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_ward",
+          "caption": {
+            "id": "Pada November 1854, ia tiba di rumah sakit tentara Inggris di Scutari (kini Üsküdar, Istanbul) bersama 38 perawat. Rumah sakit itu penuh sesak, kotor, dan kekurangan perlengkapan.",
+            "en": "In November 1854 she arrived at the British army hospital in Scutari (now Üsküdar, Istanbul) with 38 nurses. The hospital was overcrowded, dirty and short of supplies."
+          },
+          "narration": {
+            "id": "id/sej_a_nightingale_02",
+            "en": "en/sej_a_nightingale_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_nurse",
+              "x": 0.1,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "slide_in",
+                "from": "left",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_hospital_bed",
+              "x": 0.4,
+              "y": 0.52,
+              "w": 0.3
+            },
+            {
+              "art": "hist_hospital_bed",
+              "x": 0.68,
+              "y": 0.54,
+              "w": 0.28
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.04,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_ward",
+          "caption": {
+            "id": "Ia dan para perawat memperbaiki kebersihan, makanan, selimut, dan tempat tidur. Pada malam hari ia berkeliling memeriksa pasien sambil membawa lampu.",
+            "en": "She and the nurses improved cleanliness, food, blankets and beds. At night she walked the wards checking on patients, carrying a lamp."
+          },
+          "narration": {
+            "id": "id/sej_a_nightingale_03",
+            "en": "en/sej_a_nightingale_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_nurse",
+              "x": 0.08,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.08,
+                    0.3
+                  ],
+                  [
+                    0.22,
+                    0.3
+                  ],
+                  [
+                    0.36,
+                    0.3
+                  ]
+                ],
+                "ms": 6000
+              }
+            },
+            {
+              "art": "hist_nightingale_lamp",
+              "x": 0.32,
+              "y": 0.46,
+              "w": 0.11,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.32,
+                    0.46
+                  ],
+                  [
+                    0.46,
+                    0.46
+                  ],
+                  [
+                    0.6,
+                    0.46
+                  ]
+                ],
+                "ms": 6000
+              }
+            },
+            {
+              "art": "hist_hospital_bed",
+              "x": 0.6,
+              "y": 0.56,
+              "w": 0.3
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_ward",
+          "caption": {
+            "id": "Karena itulah ia dijuluki «Perempuan Berlampu». Ia juga mencatat angka dan menunjukkan bahwa lebih banyak pasien meninggal karena penyakit daripada karena luka.",
+            "en": "That is why she was called \"the Lady with the Lamp\". She also kept figures and showed that more patients died of disease than of their wounds."
+          },
+          "narration": {
+            "id": "id/sej_a_nightingale_04",
+            "en": "en/sej_a_nightingale_04"
+          },
+          "layers": [
+            {
+              "art": "hist_nightingale_lamp",
+              "x": 0.3,
+              "y": 0.3,
+              "w": 0.12,
+              "motion": {
+                "type": "glow",
+                "ms": 2400,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_notebook",
+              "x": 0.58,
+              "y": 0.56,
+              "w": 0.18,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 400
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_library_old",
+          "caption": {
+            "id": "Ia menyajikan data itu dalam diagram berbentuk lingkaran yang terbagi-bagi, agar para pejabat mudah memahaminya. Ia menjadi perempuan pertama yang diterima di Royal Statistical Society.",
+            "en": "She presented the data as a circular diagram divided into wedges, so officials could grasp it quickly. She became the first woman elected to the Royal Statistical Society."
+          },
+          "narration": {
+            "id": "id/sej_a_nightingale_05",
+            "en": "en/sej_a_nightingale_05"
+          },
+          "layers": [
+            {
+              "art": "math_pie_half",
+              "x": 0.34,
+              "y": 0.24,
+              "w": 0.24,
+              "motion": {
+                "type": "reveal",
+                "from": "left",
+                "ms": 1600
+              }
+            },
+            {
+              "art": "hist_sil_woman",
+              "x": 0.08,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Pada 1860 ia membuka sekolah perawat di Rumah Sakit St Thomas, London. Kisahnya mengajak kita menjaga kebersihan dan memakai data untuk menolong sesama.",
+            "en": "In 1860 she opened a nursing school at St Thomas' Hospital in London. Her story asks us to keep things clean and use data to help others."
+          },
+          "narration": {
+            "id": "id/sej_a_nightingale_06",
+            "en": "en/sej_a_nightingale_06"
+          },
+          "layers": [
+            {
+              "art": "hist_sunrise",
+              "x": 0.6,
+              "y": 0.06,
+              "w": 0.32,
+              "motion": {
+                "type": "fade_in",
+                "ms": 900
+              }
+            },
+            {
+              "art": "hist_sil_nurse",
+              "x": 0.14,
+              "y": 0.3,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_sil_nurse",
+              "x": 0.32,
+              "y": 0.32,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 600
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "SEJ-A-M-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "story",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-A-KHWARIZMI",
+      "model_answer": {
+        "id": "Al-Khwarizmi menulis buku al-jabr di Baghdad; namanya menjadi kata «algoritma».",
+        "en": "Al-Khwarizmi wrote the al-jabr book in Baghdad; his name became the word \"algorithm\"."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-ORDER",
+      "story_id": "ST-A-KHWARIZMI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Urutkan kisahnya.",
+            "en": "Put the story in order."
+          }
+        }
+      ],
+      "image": "hist_khwarizmi_board",
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Bukunya diterjemahkan ke bahasa Latin",
+            "en": "His books are translated into Latin"
+          }
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Bekerja di Bait al-Hikmah, Baghdad",
+            "en": "Works at the House of Wisdom, Baghdad"
+          }
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Kata «aljabar» dan «algoritma» dipakai di dunia",
+            "en": "The words \"algebra\" and \"algorithm\" spread"
+          }
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Menulis buku tentang al-jabr",
+            "en": "Writes the book on al-jabr"
+          }
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "gesture": "drag",
+      "model_answer": {
+        "id": "Bait al-Hikmah, buku al-jabr, terjemahan Latin, lalu kata «aljabar» dan «algoritma».",
+        "en": "House of Wisdom, the al-jabr book, Latin translation, then the words \"algebra\" and \"algorithm\"."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-A-KHWARIZMI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Alat astronomi para cendekiawan Baghdad?",
+            "en": "An astronomy tool of Baghdad's scholars?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_spinning_wheel",
+          "image": "hist_spinning_wheel",
+          "text": {
+            "id": "roda pintal",
+            "en": "spinning wheel"
+          }
+        },
+        {
+          "id": "hist_sewing_kit",
+          "image": "hist_sewing_kit",
+          "text": {
+            "id": "peralatan menjahit",
+            "en": "sewing kit"
+          }
+        },
+        {
+          "id": "hist_astrolabe",
+          "image": "hist_astrolabe",
+          "text": {
+            "id": "astrolab",
+            "en": "astrolabe"
+          },
+          "correct": true
+        },
+        {
+          "id": "hist_wright_flyer",
+          "image": "hist_wright_flyer",
+          "text": {
+            "id": "pesawat terbang awal",
+            "en": "early aeroplane"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Astrolab, alat untuk mengamati dan menghitung posisi bintang.",
+        "en": "The astrolabe, a tool for observing and calculating the positions of stars."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-TF",
+      "story_id": "ST-A-KHWARIZMI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kata «algoritma» berasal dari nama al-Khwarizmi.",
+            "en": "The word \"algorithm\" comes from al-Khwarizmi's name."
+          }
+        }
+      ],
+      "image": "hist_khwarizmi_board",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Terjemahan Latin bukunya tentang angka dari India memakai nama «Algoritmi».",
+        "en": "True. The Latin translation of his book on the Indian numerals used the name \"Algoritmi\"."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-MATCH",
+      "story_id": "ST-A-KHWARIZMI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gambar dan bagian kisahnya.",
+            "en": "Picture and part of the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p1",
+          "image": "hist_khwarizmi_board",
+          "text": {
+            "id": "papan hitungan",
+            "en": "calculation board"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "hist_astrolabe",
+          "text": {
+            "id": "astrolab",
+            "en": "astrolabe"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "hist_book_stack",
+          "text": {
+            "id": "buku",
+            "en": "books"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Menghitung posisi bintang",
+            "en": "Working out star positions"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Bait al-Hikmah: menerjemahkan dan menulis",
+            "en": "House of Wisdom: translating and writing"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Al-jabr: melengkapi dan menyeimbangkan",
+            "en": "Al-jabr: completing and balancing"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3"
+      },
+      "gesture": "connect",
+      "model_answer": {
+        "id": "Papan hitungan untuk al-jabr, astrolab untuk astronomi, dan buku untuk Bait al-Hikmah.",
+        "en": "The board for al-jabr, the astrolabe for astronomy, and books for the House of Wisdom."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-SORT",
+      "story_id": "ST-A-KHWARIZMI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kebiasaan belajar ala al-Khwarizmi?",
+            "en": "Learning habits like al-Khwarizmi's?"
+          }
+        }
+      ],
+      "image": "hist_khwarizmi_board",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Kebiasaan yang baik",
+            "en": "Good habit"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Kurang membantu",
+            "en": "Less helpful"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Memecah soal menjadi langkah kecil",
+            "en": "Breaking a problem into small steps"
+          }
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Menghafal tanpa memahami",
+            "en": "Memorising without understanding"
+          }
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Memeriksa kedua sisi agar seimbang",
+            "en": "Checking both sides balance"
+          }
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Belajar dari ilmu bangsa lain",
+            "en": "Learning from other peoples' knowledge"
+          }
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Menolak ilmu dari luar",
+            "en": "Rejecting knowledge from outside"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_yes",
+        "c2": "b_no",
+        "c3": "b_yes",
+        "c4": "b_yes",
+        "c5": "b_no"
+      },
+      "gesture": "drag",
+      "model_answer": {
+        "id": "Langkah kecil, memeriksa keseimbangan, dan belajar dari bangsa lain, seperti al-Khwarizmi.",
+        "en": "Small steps, checking the balance, and learning from other peoples, as al-Khwarizmi did."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-A-AL-FIHRI",
+      "model_answer": {
+        "id": "Menurut catatan abad ke-14, Fatima al-Fihri mendirikan al-Qarawiyyin di Fes sekitar 859.",
+        "en": "According to a 14th-century account, Fatima al-Fihri founded al-Qarawiyyin in Fez around 859."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-ORDER",
+      "story_id": "ST-A-AL-FIHRI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling awal.",
+            "en": "Earliest first."
+          }
+        }
+      ],
+      "image": "hist_qarawiyyin",
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Al-Qarawiyyin didirikan (sekitar 859)",
+            "en": "Al-Qarawiyyin is founded (around 859)"
+          }
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Keluarga dari Kairouan menetap di Fes",
+            "en": "Families from Kairouan settle in Fez"
+          }
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Ibn Abi Zar' mencatat kisahnya (abad ke-14)",
+            "en": "Ibn Abi Zar' records her story (14th century)"
+          }
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Fatima mewarisi harta ayahnya",
+            "en": "Fatima inherits her father's wealth"
+          }
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "gesture": "drag",
+      "model_answer": {
+        "id": "Pindah ke Fes, warisan, al-Qarawiyyin sekitar 859, lalu kisahnya dicatat pada abad ke-14.",
+        "en": "The move to Fez, the inheritance, al-Qarawiyyin around 859, then her story recorded in the 14th century."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-A-AL-FIHRI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bangunan mana yang dikaitkan dengan Fatima?",
+            "en": "Which building is linked to Fatima?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_qarawiyyin",
+          "image": "hist_qarawiyyin",
+          "text": {
+            "id": "al-Qarawiyyin di Fes",
+            "en": "al-Qarawiyyin in Fez"
+          },
+          "correct": true
+        },
+        {
+          "id": "hist_ki_hajar_school",
+          "image": "hist_ki_hajar_school",
+          "text": {
+            "id": "sekolah Taman Siswa",
+            "en": "Taman Siswa school"
+          }
+        },
+        {
+          "id": "hist_coop_shop",
+          "image": "hist_coop_shop",
+          "text": {
+            "id": "toko koperasi",
+            "en": "cooperative shop"
+          }
+        },
+        {
+          "id": "hist_bicycle_shop",
+          "image": "hist_bicycle_shop",
+          "text": {
+            "id": "toko sepeda",
+            "en": "bicycle shop"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Al-Qarawiyyin di Fes, yang didirikan sekitar 859.",
+        "en": "Al-Qarawiyyin in Fez, founded around 859."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-TF",
+      "story_id": "ST-A-AL-FIHRI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kisah Fatima al-Fihri ditulis pada masa hidupnya sendiri.",
+            "en": "Fatima al-Fihri's story was written down in her own lifetime."
+          }
+        }
+      ],
+      "image": "hist_quill",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Salah. Kisahnya baru dicatat Ibn Abi Zar' pada abad ke-14, berabad-abad kemudian.",
+        "en": "False. Ibn Abi Zar' recorded it in the 14th century, centuries later."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-MATCH",
+      "story_id": "ST-A-AL-FIHRI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gambar dan bagian kisahnya.",
+            "en": "Picture and part of the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p1",
+          "image": "hist_qarawiyyin",
+          "text": {
+            "id": "al-Qarawiyyin",
+            "en": "al-Qarawiyyin"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "hist_book_stack",
+          "text": {
+            "id": "buku",
+            "en": "books"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "hist_quill",
+          "text": {
+            "id": "pena bulu",
+            "en": "quill pen"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Pusat belajar bagi banyak negeri",
+            "en": "A centre of learning for many lands"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Kisahnya dicatat pada abad ke-14",
+            "en": "Her story recorded in the 14th century"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Didirikan di Fes sekitar 859",
+            "en": "Founded in Fez around 859"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3"
+      },
+      "gesture": "connect",
+      "model_answer": {
+        "id": "Bangunan al-Qarawiyyin, buku sebagai pusat belajar, dan pena penulis kisahnya.",
+        "en": "The al-Qarawiyyin building, books for a centre of learning, and the pen that recorded her story."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-VALUE",
+      "story_id": "ST-A-AL-FIHRI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sikap mana yang sejalan dengan teladan Fatima?",
+            "en": "Which fits Fatima's example?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "val_cut_queue",
+          "image": "val_cut_queue",
+          "text": {
+            "id": "menyerobot antrean",
+            "en": "cutting the queue"
+          }
+        },
+        {
+          "id": "val_share_food",
+          "image": "val_share_food",
+          "text": {
+            "id": "berbagi makanan dengan orang lain",
+            "en": "sharing food with others"
+          },
+          "correct": true
+        },
+        {
+          "id": "val_litter",
+          "image": "val_litter",
+          "text": {
+            "id": "membuang sampah sembarangan",
+            "en": "littering"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Berbagi yang kita miliki, seperti Fatima memakai warisannya untuk banyak orang.",
+        "en": "Sharing what we have, as Fatima used her inheritance for many people."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling awal.",
+            "en": "Earliest first."
+          }
+        }
+      ],
+      "image": "hist_book_stack",
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Al-Qarawiyyin didirikan (sekitar 859)",
+            "en": "Al-Qarawiyyin is founded (around 859)"
+          }
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Al-Khwarizmi lahir (sekitar 780)",
+            "en": "Al-Khwarizmi is born (around 780)"
+          }
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Kisah Fatima dicatat (abad ke-14)",
+            "en": "Fatima's story is recorded (14th century)"
+          }
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Fatima al-Fihri lahir (sekitar 800)",
+            "en": "Fatima al-Fihri is born (around 800)"
+          }
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "gesture": "drag",
+      "model_answer": {
+        "id": "Sekitar 780, sekitar 800, sekitar 859, lalu abad ke-14.",
+        "en": "Around 780, around 800, around 859, then the 14th century."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-WHO",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gambar ini milik kisah siapa?",
+            "en": "Whose story does each picture belong to?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_k",
+          "text": {
+            "id": "Al-Khwarizmi",
+            "en": "Al-Khwarizmi"
+          }
+        },
+        {
+          "id": "b_f",
+          "text": {
+            "id": "Fatima al-Fihri",
+            "en": "Fatima al-Fihri"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "papan hitungan al-jabr",
+            "en": "al-jabr calculation board"
+          },
+          "image": "hist_khwarizmi_board"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "al-Qarawiyyin di Fes",
+            "en": "al-Qarawiyyin in Fez"
+          },
+          "image": "hist_qarawiyyin"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "astrolab",
+            "en": "astrolabe"
+          },
+          "image": "hist_astrolabe"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_k",
+        "c2": "b_f",
+        "c3": "b_k"
+      },
+      "gesture": "drag",
+      "model_answer": {
+        "id": "Al-Khwarizmi: papan hitungan dan astrolab. Fatima: al-Qarawiyyin.",
+        "en": "Al-Khwarizmi: the calculation board and the astrolabe. Fatima: al-Qarawiyyin."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-01-015",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kedua kisah menunjukkan bahwa ilmu tumbuh ketika dibagikan.",
+            "en": "Both stories show that knowledge grows when it is shared."
+          }
+        }
+      ],
+      "image": "hist_book_stack",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Buku al-Khwarizmi dipakai berabad-abad, dan al-Qarawiyyin terbuka bagi pelajar dari banyak negeri.",
+        "en": "True. Al-Khwarizmi's books were used for centuries, and al-Qarawiyyin welcomed students from many lands."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "story",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-A-IBN-SINA",
+      "model_answer": {
+        "id": "Ibn Sina menulis Kanon Kedokteran, yang dipelajari di Eropa hingga akhir abad ke-17.",
+        "en": "Ibn Sina wrote the Canon of Medicine, studied in Europe until the late 17th century."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-ORDER",
+      "story_id": "ST-A-IBN-SINA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling awal.",
+            "en": "Earliest first."
+          }
+        }
+      ],
+      "image": "hist_ibn_sina_book",
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Menulis Kanon Kedokteran",
+            "en": "Writes the Canon of Medicine"
+          }
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Lahir di dekat Bukhara (980)",
+            "en": "Born near Bukhara (980)"
+          }
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Kanon diterjemahkan ke bahasa Latin (abad ke-12)",
+            "en": "The Canon is translated into Latin (12th century)"
+          }
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Merawat pasien pada usia 16",
+            "en": "Treats patients at 16"
+          }
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "gesture": "drag",
+      "model_answer": {
+        "id": "980 lahir, usia 16 merawat pasien, menulis Kanon, lalu Kanon diterjemahkan pada abad ke-12.",
+        "en": "Born 980, treating patients at 16, writing the Canon, then its Latin translation in the 12th century."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-A-IBN-SINA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Alat untuk menumbuk bahan obat?",
+            "en": "A tool for grinding medicines?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_compass_old",
+          "image": "hist_compass_old",
+          "text": {
+            "id": "kompas kuno",
+            "en": "old compass"
+          }
+        },
+        {
+          "id": "hist_quill",
+          "image": "hist_quill",
+          "text": {
+            "id": "pena bulu",
+            "en": "quill pen"
+          }
+        },
+        {
+          "id": "hist_rain_gauge",
+          "image": "hist_rain_gauge",
+          "text": {
+            "id": "pengukur hujan",
+            "en": "rain gauge"
+          }
+        },
+        {
+          "id": "hist_herbs_mortar",
+          "image": "hist_herbs_mortar",
+          "text": {
+            "id": "lumpang dan tanaman obat",
+            "en": "mortar and herbs"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Lumpang untuk tanaman obat. Kanon juga membahas obat-obatan dari tumbuhan.",
+        "en": "A mortar for herbs. The Canon also covers medicines made from plants."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-TF",
+      "story_id": "ST-A-IBN-SINA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kanon Kedokteran dipelajari di Eropa hingga akhir abad ke-17.",
+            "en": "The Canon of Medicine was studied in Europe until the late 17th century."
+          }
+        }
+      ],
+      "image": "hist_ibn_sina_book",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Terjemahan Latinnya menjadi bagian kurikulum kedokteran hingga akhir abad ke-17.",
+        "en": "True. Its Latin translation stayed in the medical curriculum until the late 17th century."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-MATCH",
+      "story_id": "ST-A-IBN-SINA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gambar dan bagian kisahnya.",
+            "en": "Picture and part of the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p1",
+          "image": "hist_ibn_sina_book",
+          "text": {
+            "id": "Kanon Kedokteran",
+            "en": "the Canon of Medicine"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "hist_herbs_mortar",
+          "text": {
+            "id": "lumpang dan tanaman obat",
+            "en": "mortar and herbs"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "hist_book_stack",
+          "text": {
+            "id": "tumpukan buku",
+            "en": "stack of books"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Obat dari tumbuhan",
+            "en": "Medicines from plants"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Belajar di perpustakaan istana",
+            "en": "Studying in the royal library"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Merangkum ilmu kedokteran zamannya",
+            "en": "Gathers the medicine of his time"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3"
+      },
+      "gesture": "connect",
+      "model_answer": {
+        "id": "Kanon untuk ilmu kedokteran, lumpang untuk obat, dan buku di perpustakaan istana.",
+        "en": "The Canon for medicine, the mortar for remedies, and the books of the royal library."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-SORT",
+      "story_id": "ST-A-IBN-SINA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang bisa kita teladani?",
+            "en": "What can we learn from him?"
+          }
+        }
+      ],
+      "image": "hist_ibn_sina_book",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Teladan Ibn Sina",
+            "en": "Ibn Sina's example"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Bukan teladannya",
+            "en": "Not his example"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Membaca dari banyak sumber",
+            "en": "Reading from many sources"
+          }
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Mencatat apa yang dipelajari",
+            "en": "Writing down what you learn"
+          }
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Berhenti belajar setelah lulus",
+            "en": "Stopping learning after you graduate"
+          }
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Terus belajar walau keadaan sulit",
+            "en": "Learning on even in hard times"
+          }
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Menyimpan ilmu untuk diri sendiri",
+            "en": "Keeping knowledge to yourself"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_yes",
+        "c2": "b_yes",
+        "c3": "b_no",
+        "c4": "b_yes",
+        "c5": "b_no"
+      },
+      "gesture": "drag",
+      "model_answer": {
+        "id": "Membaca luas, mencatat, dan terus belajar walau sulit.",
+        "en": "Read widely, take notes, and keep learning even when times are hard."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-A-NIGHTINGALE",
+      "model_answer": {
+        "id": "Nightingale membenahi rumah sakit di Scutari, memakai data untuk meyakinkan pejabat, dan membuka sekolah perawat pada 1860.",
+        "en": "Nightingale reformed the Scutari hospital, used data to persuade officials, and opened a nursing school in 1860."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-ORDER",
+      "story_id": "ST-A-NIGHTINGALE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling awal.",
+            "en": "Earliest first."
+          }
+        }
+      ],
+      "image": "hist_nightingale_lamp",
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Diagram datanya dikirim ke Ratu Victoria (1858)",
+            "en": "Her data diagram is sent to Queen Victoria (1858)"
+          }
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Lahir di Firenze (1820)",
+            "en": "Born in Florence (1820)"
+          }
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Membuka sekolah perawat di London (1860)",
+            "en": "Opens a nursing school in London (1860)"
+          }
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Tiba di Scutari bersama 38 perawat (1854)",
+            "en": "Arrives in Scutari with 38 nurses (1854)"
+          }
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "gesture": "drag",
+      "model_answer": {
+        "id": "1820, 1854, 1858, lalu 1860.",
+        "en": "1820, 1854, 1858, then 1860."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-A-NIGHTINGALE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Benda apa yang menjadi julukannya?",
+            "en": "Which object gave her a nickname?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_telescope",
+          "image": "hist_telescope",
+          "text": {
+            "id": "teropong",
+            "en": "telescope"
+          }
+        },
+        {
+          "id": "hist_nightingale_lamp",
+          "image": "hist_nightingale_lamp",
+          "text": {
+            "id": "lampu Nightingale",
+            "en": "Nightingale's lamp"
+          },
+          "correct": true
+        },
+        {
+          "id": "hist_spinning_wheel",
+          "image": "hist_spinning_wheel",
+          "text": {
+            "id": "roda pintal",
+            "en": "spinning wheel"
+          }
+        },
+        {
+          "id": "hist_compass_old",
+          "image": "hist_compass_old",
+          "text": {
+            "id": "kompas kuno",
+            "en": "old compass"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Lampunya: ia dijuluki «Perempuan Berlampu» karena memeriksa pasien pada malam hari.",
+        "en": "Her lamp: she was called \"the Lady with the Lamp\" for checking on patients at night."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-TF",
+      "story_id": "ST-A-NIGHTINGALE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di Scutari, menurut catatannya, lebih banyak pasien meninggal karena penyakit daripada karena luka.",
+            "en": "At Scutari, her figures showed that more patients died of disease than of wounds."
+          }
+        }
+      ],
+      "image": "hist_hospital_bed",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Karena itu kebersihan, air, dan sanitasi menjadi perjuangannya.",
+        "en": "True. That is why cleanliness, water and sanitation became her cause."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-MATCH",
+      "story_id": "ST-A-NIGHTINGALE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gambar dan bagian kisahnya.",
+            "en": "Picture and part of the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p1",
+          "image": "hist_nightingale_lamp",
+          "text": {
+            "id": "lampu",
+            "en": "lamp"
+          }
+        },
+        {
+          "id": "p2",
+          "image": "hist_hospital_bed",
+          "text": {
+            "id": "tempat tidur pasien",
+            "en": "hospital bed"
+          }
+        },
+        {
+          "id": "p3",
+          "image": "hist_notebook",
+          "text": {
+            "id": "buku catatan",
+            "en": "notebook"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "Kebersihan, selimut, dan tempat tidur",
+            "en": "Cleanliness, blankets and beds"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Mencatat angka pasien",
+            "en": "Recording patient figures"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Memeriksa pasien pada malam hari",
+            "en": "Checking patients at night"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "p1": "t1",
+        "p2": "t2",
+        "p3": "t3"
+      },
+      "gesture": "connect",
+      "model_answer": {
+        "id": "Lampu untuk ronda malam, tempat tidur yang layak, dan catatan angka.",
+        "en": "A lamp for night rounds, decent beds, and careful figures."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-VALUE",
+      "story_id": "ST-A-NIGHTINGALE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kebiasaan mana yang sejalan dengan pesannya?",
+            "en": "Which habit fits her message?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "val_litter",
+          "image": "val_litter",
+          "text": {
+            "id": "membuang sampah sembarangan",
+            "en": "littering"
+          }
+        },
+        {
+          "id": "val_interrupt",
+          "image": "val_interrupt",
+          "text": {
+            "id": "memotong pembicaraan orang lain",
+            "en": "interrupting others"
+          }
+        },
+        {
+          "id": "wash_hands",
+          "image": "wash_hands",
+          "text": {
+            "id": "mencuci tangan",
+            "en": "washing hands"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mencuci tangan: kebersihan menyelamatkan nyawa, seperti yang ditunjukkan Nightingale.",
+        "en": "Washing hands: cleanliness saves lives, as Nightingale showed."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "HIST-SEQ"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-ORDER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang paling awal.",
+            "en": "Earliest first."
+          }
+        }
+      ],
+      "image": "hist_book_stack",
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Nightingale lahir (1820)",
+            "en": "Nightingale is born (1820)"
+          }
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Ibn Sina lahir (980)",
+            "en": "Ibn Sina is born (980)"
+          }
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Sekolah perawat Nightingale dibuka (1860)",
+            "en": "Nightingale's nursing school opens (1860)"
+          }
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Kanon diterjemahkan ke bahasa Latin (abad ke-12)",
+            "en": "The Canon is translated into Latin (12th century)"
+          }
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "gesture": "drag",
+      "model_answer": {
+        "id": "980, abad ke-12, 1820, lalu 1860.",
+        "en": "980, the 12th century, 1820, then 1860."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-WHO",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Gambar ini milik kisah siapa?",
+            "en": "Whose story does each picture belong to?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_s",
+          "text": {
+            "id": "Ibn Sina",
+            "en": "Ibn Sina"
+          }
+        },
+        {
+          "id": "b_n",
+          "text": {
+            "id": "Florence Nightingale",
+            "en": "Florence Nightingale"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Kanon Kedokteran",
+            "en": "the Canon of Medicine"
+          },
+          "image": "hist_ibn_sina_book"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "lampu Nightingale",
+            "en": "Nightingale's lamp"
+          },
+          "image": "hist_nightingale_lamp"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "tempat tidur bangsal",
+            "en": "ward bed"
+          },
+          "image": "hist_hospital_bed"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "lumpang dan tanaman obat",
+            "en": "mortar and herbs"
+          },
+          "image": "hist_herbs_mortar"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_s",
+        "c2": "b_n",
+        "c3": "b_n",
+        "c4": "b_s"
+      },
+      "gesture": "drag",
+      "model_answer": {
+        "id": "Ibn Sina: Kanon dan lumpang obat. Nightingale: lampu dan tempat tidur bangsal.",
+        "en": "Ibn Sina: the Canon and the mortar. Nightingale: the lamp and the ward bed."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "HIST-VALUE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-VALUE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang sejalan dengan kedua tokoh?",
+            "en": "Which fits both figures?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "val_visit_sick",
+          "image": "val_visit_sick",
+          "text": {
+            "id": "menjenguk orang sakit",
+            "en": "visiting someone who is ill"
+          },
+          "correct": true
+        },
+        {
+          "id": "val_cut_queue",
+          "image": "val_cut_queue",
+          "text": {
+            "id": "menyerobot antrean",
+            "en": "cutting the queue"
+          }
+        },
+        {
+          "id": "val_phone_unkind",
+          "image": "val_phone_unkind",
+          "text": {
+            "id": "menulis pesan yang menyakitkan",
+            "en": "sending an unkind message"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Menjenguk dan peduli pada orang sakit, seperti kedua tokoh yang mengabdi untuk kesehatan.",
+        "en": "Visiting and caring for the sick, like both figures who served health."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-01-016",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "HIST-WORK"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "hist_astrolabe",
+      "gem": true,
+      "source": "MacTutor History of Mathematics (University of St Andrews): Abu Ja'far Muhammad ibn Musa Al-Khwarizmi",
+      "model_answer": {
+        "id": "Al-Khwarizmi juga menulis buku geografi. Di dalamnya ia mencantumkan garis lintang dan bujur untuk 2.402 tempat, berdasarkan karya Ptolemaios.",
+        "en": "Al-Khwarizmi also wrote a geography book. In it he listed the latitude and longitude of 2,402 places, building on Ptolemy's work."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    },
+    {
+      "item_id": "SEJ-A-M-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Cara al-Khwarizmi: seimbangkan kedua sisi. Jika x + 5 = 12, berapa x?",
+            "en": "Al-Khwarizmi's way: keep both sides balanced. If x + 5 = 12, what is x?"
+          }
+        }
+      ],
+      "image": "hist_khwarizmi_board",
+      "numeric": {
+        "value": 7,
+        "tolerance": 0
+      },
+      "model_answer": {
+        "id": "Kurangi 5 di kedua sisi: x = 12 − 5 = 7.",
+        "en": "Take 5 from both sides: x = 12 − 5 = 7."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-a-m-0.1"
+    }
+  ]
+}

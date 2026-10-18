@@ -1,0 +1,2095 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "kor-k-x-0.1",
+    "subject": "bahasa",
+    "track": "kor-k-x",
+    "level": "master",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "target_lang": "ko",
+    "title": {
+      "id": "Bahasa Korea — Master (Anak)",
+      "en": "Korean — Master (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, starter level: 2 units) for language review: needs a native Korean reviewer (hangul, Revised Romanization, naturalness, register, every voice clip) and the Indonesian and English reviewers before any item is approved (docs/syllabus/bahasa/ko_levels.md, Kids Master units 01-02). Picture-first; audio_match items stay hidden until their ko/* clips exist (android/content/voice/ko.json and ko.levels.json); every skill has a REMED item that needs no audio.",
+  "prompts": {
+    "P-LISTEN-PIC": {
+      "id": "Dengar, lalu ketuk gambarnya.",
+      "en": "Listen, then tap the picture."
+    },
+    "P-PICK": {
+      "id": "Pilih gambarnya.",
+      "en": "Pick the picture."
+    },
+    "P-READ": {
+      "id": "Baca, lalu pilih gambarnya.",
+      "en": "Read it, then pick the picture."
+    },
+    "P-MATCH-PIC": {
+      "id": "Pasangkan gambar dan katanya.",
+      "en": "Match each picture to its word."
+    },
+    "P-BUILD-SAY": {
+      "id": "Susun kalimatnya.",
+      "en": "Build the sentence."
+    },
+    "P-FILL": {
+      "id": "Isi yang kosong.",
+      "en": "Fill the gap."
+    },
+    "P-SORT": {
+      "id": "Kelompokkan.",
+      "en": "Sort them."
+    },
+    "P-ORDER-TALK": {
+      "id": "Urutkan percakapannya.",
+      "en": "Put the talk in order."
+    },
+    "P-MEMORY": {
+      "id": "Buka kartu, cari pasangannya.",
+      "en": "Flip cards, find the pairs."
+    },
+    "P-REPLY": {
+      "id": "Pilih jawaban yang cocok.",
+      "en": "Pick the best reply."
+    },
+    "P-WHICH": {
+      "id": "Mana yang benar?",
+      "en": "Which one is right?"
+    },
+    "P-SAY": {
+      "id": "Kamu bilang apa?",
+      "en": "What do you say?"
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Teman & perasaan",
+        "en": "Friends & feelings"
+      },
+      "sticker": "sticker_kite"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Hobi & waktu luang",
+        "en": "Hobbies & free time"
+      },
+      "sticker": "sticker_drum"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "KOR-K-X-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Perasaan & teman",
+        "en": "Feelings & friends"
+      },
+      "body": [
+        {
+          "id": "Perasaan: 기뻐요 (gippeoyo) senang, 슬퍼요 (seulpeoyo) sedih, 화가 나요 (hwaga nayo) marah, 피곤해요 (pigonhaeyo) capek.",
+          "en": "Feelings: 기뻐요 (gippeoyo) happy, 슬퍼요 (seulpeoyo) sad, 화가 나요 (hwaga nayo) angry, 피곤해요 (pigonhaeyo) tired."
+        },
+        {
+          "id": "Teman sedih? Tanya 괜찮아? (gwaenchana?) lalu ajak 같이 놀자! (gachi nolja!) Ini bahasa akrab.",
+          "en": "A friend is sad? Ask 괜찮아? (gwaenchana?) and say 같이 놀자! (gachi nolja!) This is friendly talk."
+        },
+        {
+          "id": "Memakai: 써요 (sseoyo) di kepala dan wajah, 입어요 (ibeoyo) di badan, 신어요 (sineoyo) di kaki.",
+          "en": "Wearing: 써요 (sseoyo) on the head and face, 입어요 (ibeoyo) on the body, 신어요 (sineoyo) on the feet."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "친구",
+          "gloss": {
+            "id": "chingu · teman",
+            "en": "chingu · friend"
+          }
+        },
+        {
+          "target_text": "그래서",
+          "gloss": {
+            "id": "geuraeseo · jadi, karena itu",
+            "en": "geuraeseo · so"
+          }
+        },
+        {
+          "target_text": "친절해요",
+          "gloss": {
+            "id": "chinjeolhaeyo · baik hati",
+            "en": "chinjeolhaeyo · kind"
+          }
+        },
+        {
+          "target_text": "안경",
+          "gloss": {
+            "id": "angyeong · kacamata",
+            "en": "angyeong · glasses"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "KOR-K-X-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Hobiku",
+        "en": "My hobbies"
+      },
+      "body": [
+        {
+          "id": "Main bola: 축구를 해요 (chukgureul haeyo). Gitar dan bulu tangkis memakai 쳐요 (chyeoyo): 기타를 쳐요 (gitareul chyeoyo).",
+          "en": "Football: 축구를 해요 (chukgureul haeyo). Guitar and badminton use 쳐요 (chyeoyo): 기타를 쳐요 (gitareul chyeoyo)."
+        },
+        {
+          "id": "Suka: 좋아해요 (joahaeyo). 저는 축구를 좋아해요 (jeoneun chukgureul joahaeyo).",
+          "en": "Like: 좋아해요 (joahaeyo). 저는 축구를 좋아해요 (jeoneun chukgureul joahaeyo)."
+        },
+        {
+          "id": "Ingin: kata kerja + 고 싶어요 (go sipeoyo). 기타를 배우고 싶어요 (gitareul baeugo sipeoyo).",
+          "en": "Want to: verb + 고 싶어요 (go sipeoyo). 기타를 배우고 싶어요 (gitareul baeugo sipeoyo)."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "취미",
+          "gloss": {
+            "id": "chwimi · hobi",
+            "en": "chwimi · hobby"
+          }
+        },
+        {
+          "target_text": "좋아해요",
+          "gloss": {
+            "id": "joahaeyo · suka",
+            "en": "joahaeyo · like"
+          }
+        },
+        {
+          "target_text": "같이",
+          "gloss": {
+            "id": "gachi · bersama",
+            "en": "gachi · together"
+          }
+        },
+        {
+          "target_text": "태권도",
+          "gloss": {
+            "id": "taegwondo · taekwondo",
+            "en": "taegwondo · taekwondo"
+          }
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "KOR-K-X-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_happy",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          }
+        },
+        {
+          "id": "pic_sad",
+          "image": "pic_sad",
+          "text": {
+            "id": "sedih",
+            "en": "sad"
+          }
+        },
+        {
+          "id": "val_angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "wajah marah",
+            "en": "an angry face"
+          }
+        },
+        {
+          "id": "pic_tired",
+          "image": "pic_tired",
+          "text": {
+            "id": "capek",
+            "en": "tired"
+          }
+        },
+        {
+          "id": "w_gippeoyo",
+          "target_text": "기뻐요",
+          "romanization": "gippeoyo",
+          "audio": "ko/gippeoyo"
+        },
+        {
+          "id": "w_seulpeoyo",
+          "target_text": "슬퍼요",
+          "romanization": "seulpeoyo",
+          "audio": "ko/seulpeoyo"
+        },
+        {
+          "id": "w_hwaga_nayo",
+          "target_text": "화가 나요",
+          "romanization": "hwaga nayo",
+          "audio": "ko/hwaga_nayo"
+        },
+        {
+          "id": "w_pigonhaeyo",
+          "target_text": "피곤해요",
+          "romanization": "pigonhaeyo",
+          "audio": "ko/pigonhaeyo"
+        }
+      ],
+      "solution_pairs": {
+        "pic_happy": "w_gippeoyo",
+        "pic_sad": "w_seulpeoyo",
+        "val_angry_face": "w_hwaga_nayo",
+        "pic_tired": "w_pigonhaeyo"
+      },
+      "model_answer": {
+        "id": "기뻐요 (gippeoyo) senang, 슬퍼요 (seulpeoyo) sedih, 화가 나요 (hwaga nayo) marah, 피곤해요 (pigonhaeyo) capek.",
+        "en": "기뻐요 (gippeoyo) happy, 슬퍼요 (seulpeoyo) sad, 화가 나요 (hwaga nayo) angry, 피곤해요 (pigonhaeyo) tired."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/seulpeoyo",
+      "options": [
+        {
+          "id": "pic_happy",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          }
+        },
+        {
+          "id": "pic_sad",
+          "image": "pic_sad",
+          "text": {
+            "id": "sedih",
+            "en": "sad"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_tired",
+          "image": "pic_tired",
+          "text": {
+            "id": "capek",
+            "en": "tired"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "슬퍼요 (seulpeoyo) = sedih.",
+        "en": "슬퍼요 (seulpeoyo) = I'm sad."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "KOR-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-SAY",
+      "image": "pic_sad",
+      "options": [
+        {
+          "id": "w_gwaenchana",
+          "target_text": "괜찮아?",
+          "romanization": "gwaenchana?",
+          "audio": "ko/gwaenchana",
+          "correct": true
+        },
+        {
+          "id": "w_baegopayo",
+          "target_text": "배고파요",
+          "romanization": "baegopayo",
+          "audio": "ko/baegopayo"
+        },
+        {
+          "id": "w_annyeonghi_gaseyo",
+          "target_text": "안녕히 가세요",
+          "romanization": "annyeonghi gaseyo",
+          "audio": "ko/annyeonghi_gaseyo"
+        }
+      ],
+      "model_answer": {
+        "id": "Temanmu sedih? Tanya 괜찮아? (gwaenchana?) = kamu tidak apa-apa?",
+        "en": "Your friend is sad? Ask 괜찮아? (gwaenchana?) = are you okay?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-DESCRIBE"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_glasses",
+          "image": "pic_glasses",
+          "text": {
+            "id": "kacamata",
+            "en": "glasses"
+          }
+        },
+        {
+          "id": "pic_hat",
+          "image": "pic_hat",
+          "text": {
+            "id": "topi",
+            "en": "cap"
+          }
+        },
+        {
+          "id": "pic_shirt",
+          "image": "pic_shirt",
+          "text": {
+            "id": "kaus",
+            "en": "T-shirt"
+          }
+        },
+        {
+          "id": "pic_shoes",
+          "image": "pic_shoes",
+          "text": {
+            "id": "sepatu",
+            "en": "shoes"
+          }
+        },
+        {
+          "id": "w_angyeongeul_sseoyo",
+          "target_text": "안경을 써요",
+          "romanization": "angyeongeul sseoyo",
+          "audio": "ko/angyeongeul_sseoyo"
+        },
+        {
+          "id": "w_mojareul_sseoyo",
+          "target_text": "모자를 써요",
+          "romanization": "mojareul sseoyo",
+          "audio": "ko/mojareul_sseoyo"
+        },
+        {
+          "id": "w_tisyeocheureul_ibeoyo",
+          "target_text": "티셔츠를 입어요",
+          "romanization": "tisyeocheureul ibeoyo",
+          "audio": "ko/tisyeocheureul_ibeoyo"
+        },
+        {
+          "id": "w_sinbareul_sineoyo",
+          "target_text": "신발을 신어요",
+          "romanization": "sinbareul sineoyo",
+          "audio": "ko/sinbareul_sineoyo"
+        }
+      ],
+      "solution_pairs": {
+        "pic_glasses": "w_angyeongeul_sseoyo",
+        "pic_hat": "w_mojareul_sseoyo",
+        "pic_shirt": "w_tisyeocheureul_ibeoyo",
+        "pic_shoes": "w_sinbareul_sineoyo"
+      },
+      "model_answer": {
+        "id": "안경을 써요 (angyeongeul sseoyo), 모자를 써요 (mojareul sseoyo), 티셔츠를 입어요 (tisyeocheureul ibeoyo), 신발을 신어요 (sinbareul sineoyo).",
+        "en": "안경을 써요 (angyeongeul sseoyo), 모자를 써요 (mojareul sseoyo), 티셔츠를 입어요 (tisyeocheureul ibeoyo), 신발을 신어요 (sinbareul sineoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-FILL",
+      "image": "pic_tired",
+      "target_text": "피곤해요. 그래서 ___.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_ttwieoyo",
+          "target_text": "뛰어요",
+          "romanization": "ttwieoyo",
+          "audio": "ko/ttwieoyo"
+        },
+        {
+          "id": "w_meogeoyo",
+          "target_text": "먹어요",
+          "romanization": "meogeoyo",
+          "audio": "ko/meogeoyo"
+        },
+        {
+          "id": "w_jayo",
+          "target_text": "자요",
+          "romanization": "jayo",
+          "audio": "ko/jayo"
+        }
+      ],
+      "solution": [
+        "w_jayo"
+      ],
+      "romanization": "pigonhaeyo. geuraeseo ___.",
+      "model_answer": {
+        "id": "Capek, jadi tidur: 피곤해요. 그래서 자요 (pigonhaeyo. geuraeseo jayo).",
+        "en": "Tired, so you sleep: 피곤해요. 그래서 자요 (pigonhaeyo. geuraeseo jayo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "KOR-DESCRIBE"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_sseoyo",
+          "target_text": "써요",
+          "romanization": "sseoyo",
+          "audio": "ko/sseoyo"
+        },
+        {
+          "id": "b_ibeoyo",
+          "target_text": "입어요",
+          "romanization": "ibeoyo",
+          "audio": "ko/ibeoyo"
+        },
+        {
+          "id": "b_sineoyo",
+          "target_text": "신어요",
+          "romanization": "sineoyo",
+          "audio": "ko/sineoyo"
+        },
+        {
+          "id": "pic_glasses",
+          "image": "pic_glasses",
+          "text": {
+            "id": "kacamata",
+            "en": "glasses"
+          }
+        },
+        {
+          "id": "pic_shirt",
+          "image": "pic_shirt",
+          "text": {
+            "id": "kaus",
+            "en": "T-shirt"
+          }
+        },
+        {
+          "id": "pic_socks",
+          "image": "pic_socks",
+          "text": {
+            "id": "kaus kaki",
+            "en": "socks"
+          }
+        },
+        {
+          "id": "pic_hat",
+          "image": "pic_hat",
+          "text": {
+            "id": "topi",
+            "en": "cap"
+          }
+        },
+        {
+          "id": "pic_dress",
+          "image": "pic_dress",
+          "text": {
+            "id": "gaun",
+            "en": "dress"
+          }
+        },
+        {
+          "id": "pic_shoes",
+          "image": "pic_shoes",
+          "text": {
+            "id": "sepatu",
+            "en": "shoes"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "pic_glasses": "b_sseoyo",
+        "pic_shirt": "b_ibeoyo",
+        "pic_socks": "b_sineoyo",
+        "pic_hat": "b_sseoyo",
+        "pic_dress": "b_ibeoyo",
+        "pic_shoes": "b_sineoyo"
+      },
+      "model_answer": {
+        "id": "써요 (sseoyo): kacamata, topi. 입어요 (ibeoyo): kaus, gaun. 신어요 (sineoyo): kaus kaki, sepatu.",
+        "en": "써요 (sseoyo): glasses, cap. 입어요 (ibeoyo): T-shirt, dress. 신어요 (sineoyo): socks, shoes."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-DESCRIBE"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/je_chinguneun_angyeongeul_sseoyo",
+      "options": [
+        {
+          "id": "pic_hat",
+          "image": "pic_hat",
+          "text": {
+            "id": "topi",
+            "en": "cap"
+          }
+        },
+        {
+          "id": "pic_book",
+          "image": "pic_book",
+          "text": {
+            "id": "buku",
+            "en": "book"
+          }
+        },
+        {
+          "id": "pic_glasses",
+          "image": "pic_glasses",
+          "text": {
+            "id": "kacamata",
+            "en": "glasses"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "제 친구는 안경을 써요 (je chinguneun angyeongeul sseoyo) = temanku memakai kacamata.",
+        "en": "제 친구는 안경을 써요 (je chinguneun angyeongeul sseoyo) = my friend wears glasses."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "KOR-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-MEMORY",
+      "options": [
+        {
+          "id": "pic_hungry",
+          "image": "pic_hungry",
+          "text": {
+            "id": "lapar",
+            "en": "hungry"
+          }
+        },
+        {
+          "id": "pic_hot",
+          "image": "pic_hot",
+          "text": {
+            "id": "kepanasan",
+            "en": "hot"
+          }
+        },
+        {
+          "id": "pic_cold",
+          "image": "pic_cold",
+          "text": {
+            "id": "kedinginan",
+            "en": "cold"
+          }
+        },
+        {
+          "id": "pic_sad",
+          "image": "pic_sad",
+          "text": {
+            "id": "sedih",
+            "en": "sad"
+          }
+        },
+        {
+          "id": "w_baegopayo",
+          "target_text": "배고파요",
+          "romanization": "baegopayo",
+          "audio": "ko/baegopayo"
+        },
+        {
+          "id": "w_deowoyo",
+          "target_text": "더워요",
+          "romanization": "deowoyo",
+          "audio": "ko/deowoyo"
+        },
+        {
+          "id": "w_chuwoyo",
+          "target_text": "추워요",
+          "romanization": "chuwoyo",
+          "audio": "ko/chuwoyo"
+        },
+        {
+          "id": "w_seulpeoyo",
+          "target_text": "슬퍼요",
+          "romanization": "seulpeoyo",
+          "audio": "ko/seulpeoyo"
+        }
+      ],
+      "solution_pairs": {
+        "pic_hungry": "w_baegopayo",
+        "pic_hot": "w_deowoyo",
+        "pic_cold": "w_chuwoyo",
+        "pic_sad": "w_seulpeoyo"
+      },
+      "model_answer": {
+        "id": "배고파요 (baegopayo) lapar, 더워요 (deowoyo) panas, 추워요 (chuwoyo) dingin, 슬퍼요 (seulpeoyo) sedih.",
+        "en": "배고파요 (baegopayo) hungry, 더워요 (deowoyo) hot, 추워요 (chuwoyo) cold, 슬퍼요 (seulpeoyo) sad."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "KOR-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-ORDER-TALK",
+      "image": "pic_sad",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_waeyo",
+          "target_text": "왜요?",
+          "romanization": "waeyo?",
+          "audio": "ko/waeyo"
+        },
+        {
+          "id": "w_gangajiga_apayo",
+          "target_text": "강아지가 아파요.",
+          "romanization": "gangajiga apayo.",
+          "audio": "ko/gangajiga_apayo"
+        },
+        {
+          "id": "w_gwaenchanayo",
+          "target_text": "괜찮아요?",
+          "romanization": "gwaenchanayo?",
+          "audio": "ko/gwaenchanayo"
+        },
+        {
+          "id": "w_aniyo_seulpeoyo",
+          "target_text": "아니요, 슬퍼요.",
+          "romanization": "aniyo, seulpeoyo.",
+          "audio": "ko/aniyo_seulpeoyo"
+        }
+      ],
+      "solution": [
+        "w_gwaenchanayo",
+        "w_aniyo_seulpeoyo",
+        "w_waeyo",
+        "w_gangajiga_apayo"
+      ],
+      "model_answer": {
+        "id": "Tanya kabar, dengar jawabannya, tanya 왜요? (waeyo?), lalu dengar alasannya.",
+        "en": "Ask if they're okay, hear the answer, ask 왜요? (waeyo?), then hear the reason."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "KOR-DESCRIBE"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-BUILD-SAY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Temanku baik hati.",
+            "en": "My friend is kind."
+          }
+        }
+      ],
+      "image": "val_help_friend",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_chinjeolhaeyo",
+          "target_text": "친절해요",
+          "romanization": "chinjeolhaeyo",
+          "audio": "ko/chinjeolhaeyo"
+        },
+        {
+          "id": "w_jeoneun",
+          "target_text": "저는",
+          "romanization": "jeoneun",
+          "audio": "ko/jeoneun"
+        },
+        {
+          "id": "w_je_chinguneun",
+          "target_text": "제 친구는",
+          "romanization": "je chinguneun",
+          "audio": "ko/je_chinguneun"
+        },
+        {
+          "id": "w_seulpeoyo",
+          "target_text": "슬퍼요",
+          "romanization": "seulpeoyo",
+          "audio": "ko/seulpeoyo"
+        }
+      ],
+      "solution": [
+        "w_je_chinguneun",
+        "w_chinjeolhaeyo"
+      ],
+      "model_answer": {
+        "id": "제 친구는 친절해요 (je chinguneun chinjeolhaeyo) = temanku baik hati.",
+        "en": "제 친구는 친절해요 (je chinguneun chinjeolhaeyo) = my friend is kind."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "KOR-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-REPLY",
+      "image": "pic_cake",
+      "target_text": "왜 기뻐요?",
+      "options": [
+        {
+          "id": "w_biga_wayo",
+          "target_text": "비가 와요",
+          "romanization": "biga wayo",
+          "audio": "ko/biga_wayo"
+        },
+        {
+          "id": "w_baegopayo",
+          "target_text": "배고파요",
+          "romanization": "baegopayo",
+          "audio": "ko/baegopayo"
+        },
+        {
+          "id": "w_oneul_je_saengirieyo",
+          "target_text": "오늘 제 생일이에요.",
+          "romanization": "oneul je saengirieyo.",
+          "audio": "ko/oneul_je_saengirieyo",
+          "correct": true
+        }
+      ],
+      "romanization": "wae gippeoyo?",
+      "audio": "ko/wae_gippeoyo",
+      "model_answer": {
+        "id": "Kenapa senang? Alasannya: 오늘 제 생일이에요 (oneul je saengirieyo)!",
+        "en": "Why happy? The reason: 오늘 제 생일이에요 (oneul je saengirieyo)!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-FEEL"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/hwaga_nayo",
+      "options": [
+        {
+          "id": "pic_sad",
+          "image": "pic_sad",
+          "text": {
+            "id": "sedih",
+            "en": "sad"
+          }
+        },
+        {
+          "id": "val_angry_face",
+          "image": "val_angry_face",
+          "text": {
+            "id": "wajah marah",
+            "en": "an angry face"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_happy",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "화가 나요 (hwaga nayo) = marah.",
+        "en": "화가 나요 (hwaga nayo) = I'm angry."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "KOR-FEEL"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "기뻐요",
+      "options": [
+        {
+          "id": "pic_happy",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_sad",
+          "image": "pic_sad",
+          "text": {
+            "id": "sedih",
+            "en": "sad"
+          }
+        },
+        {
+          "id": "pic_tired",
+          "image": "pic_tired",
+          "text": {
+            "id": "capek",
+            "en": "tired"
+          }
+        }
+      ],
+      "romanization": "gippeoyo",
+      "audio": "ko/gippeoyo",
+      "model_answer": {
+        "id": "기뻐요 (gippeoyo) = senang.",
+        "en": "기뻐요 (gippeoyo) = I'm happy."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-DESCRIBE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "image": "pic_glasses",
+      "target_text": "안경을 ___.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_ibeoyo",
+          "target_text": "입어요",
+          "romanization": "ibeoyo",
+          "audio": "ko/ibeoyo"
+        },
+        {
+          "id": "w_sseoyo",
+          "target_text": "써요",
+          "romanization": "sseoyo",
+          "audio": "ko/sseoyo"
+        },
+        {
+          "id": "w_sineoyo",
+          "target_text": "신어요",
+          "romanization": "sineoyo",
+          "audio": "ko/sineoyo"
+        }
+      ],
+      "solution": [
+        "w_sseoyo"
+      ],
+      "romanization": "angyeongeul ___.",
+      "model_answer": {
+        "id": "Kacamata dipakai di wajah: 안경을 써요 (angyeongeul sseoyo).",
+        "en": "Glasses go on the face: 안경을 써요 (angyeongeul sseoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_football",
+          "image": "pic_football",
+          "text": {
+            "id": "sepak bola",
+            "en": "football"
+          }
+        },
+        {
+          "id": "pic_badminton",
+          "image": "pic_badminton",
+          "text": {
+            "id": "bulu tangkis",
+            "en": "badminton"
+          }
+        },
+        {
+          "id": "pic_guitar",
+          "image": "pic_guitar",
+          "text": {
+            "id": "gitar",
+            "en": "guitar"
+          }
+        },
+        {
+          "id": "pic_dance",
+          "image": "pic_dance",
+          "text": {
+            "id": "menari",
+            "en": "dancing"
+          }
+        },
+        {
+          "id": "w_chukgureul_haeyo",
+          "target_text": "축구를 해요",
+          "romanization": "chukgureul haeyo",
+          "audio": "ko/chukgureul_haeyo"
+        },
+        {
+          "id": "w_baedeuminteoneul_chyeoyo",
+          "target_text": "배드민턴을 쳐요",
+          "romanization": "baedeuminteoneul chyeoyo",
+          "audio": "ko/baedeuminteoneul_chyeoyo"
+        },
+        {
+          "id": "w_gitareul_chyeoyo",
+          "target_text": "기타를 쳐요",
+          "romanization": "gitareul chyeoyo",
+          "audio": "ko/gitareul_chyeoyo"
+        },
+        {
+          "id": "w_chumeul_chwoyo",
+          "target_text": "춤을 춰요",
+          "romanization": "chumeul chwoyo",
+          "audio": "ko/chumeul_chwoyo"
+        }
+      ],
+      "solution_pairs": {
+        "pic_football": "w_chukgureul_haeyo",
+        "pic_badminton": "w_baedeuminteoneul_chyeoyo",
+        "pic_guitar": "w_gitareul_chyeoyo",
+        "pic_dance": "w_chumeul_chwoyo"
+      },
+      "model_answer": {
+        "id": "축구를 해요 (chukgureul haeyo), 배드민턴을 쳐요 (baedeuminteoneul chyeoyo), 기타를 쳐요 (gitareul chyeoyo), 춤을 춰요 (chumeul chwoyo).",
+        "en": "축구를 해요 (chukgureul haeyo), 배드민턴을 쳐요 (baedeuminteoneul chyeoyo), 기타를 쳐요 (gitareul chyeoyo), 춤을 춰요 (chumeul chwoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/geurimeul_geuryeoyo",
+      "options": [
+        {
+          "id": "pic_draw_paint",
+          "image": "pic_draw_paint",
+          "text": {
+            "id": "menggambar",
+            "en": "drawing and painting"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_write",
+          "image": "pic_write",
+          "text": {
+            "id": "menulis",
+            "en": "writing"
+          }
+        },
+        {
+          "id": "pic_read",
+          "image": "pic_read",
+          "text": {
+            "id": "membaca",
+            "en": "reading"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "그림을 그려요 (geurimeul geuryeoyo) = menggambar.",
+        "en": "그림을 그려요 (geurimeul geuryeoyo) = I draw."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-FILL",
+      "image": "pic_guitar",
+      "target_text": "기타를 ___.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_geuryeoyo",
+          "target_text": "그려요",
+          "romanization": "geuryeoyo",
+          "audio": "ko/geuryeoyo"
+        },
+        {
+          "id": "w_masyeoyo",
+          "target_text": "마셔요",
+          "romanization": "masyeoyo",
+          "audio": "ko/masyeoyo"
+        },
+        {
+          "id": "w_chyeoyo",
+          "target_text": "쳐요",
+          "romanization": "chyeoyo",
+          "audio": "ko/chyeoyo"
+        }
+      ],
+      "solution": [
+        "w_chyeoyo"
+      ],
+      "romanization": "gitareul ___.",
+      "model_answer": {
+        "id": "Gitar 'dipukul': 기타를 쳐요 (gitareul chyeoyo).",
+        "en": "A guitar is 'hit': 기타를 쳐요 (gitareul chyeoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "memory_flip",
+      "skills": [
+        "KOR-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-MEMORY",
+      "options": [
+        {
+          "id": "pic_camera",
+          "image": "pic_camera",
+          "text": {
+            "id": "kamera",
+            "en": "camera"
+          }
+        },
+        {
+          "id": "pic_fishing",
+          "image": "pic_fishing",
+          "text": {
+            "id": "memancing",
+            "en": "fishing"
+          }
+        },
+        {
+          "id": "pic_sing",
+          "image": "pic_sing",
+          "text": {
+            "id": "menyanyi",
+            "en": "singing"
+          }
+        },
+        {
+          "id": "pic_swim",
+          "image": "pic_swim",
+          "text": {
+            "id": "berenang",
+            "en": "swimming"
+          }
+        },
+        {
+          "id": "w_sajin",
+          "target_text": "사진",
+          "romanization": "sajin",
+          "audio": "ko/sajin"
+        },
+        {
+          "id": "w_naksi",
+          "target_text": "낚시",
+          "romanization": "naksi",
+          "audio": "ko/naksi"
+        },
+        {
+          "id": "w_norae",
+          "target_text": "노래",
+          "romanization": "norae",
+          "audio": "ko/norae"
+        },
+        {
+          "id": "w_suyeong",
+          "target_text": "수영",
+          "romanization": "suyeong",
+          "audio": "ko/suyeong"
+        }
+      ],
+      "solution_pairs": {
+        "pic_camera": "w_sajin",
+        "pic_fishing": "w_naksi",
+        "pic_sing": "w_norae",
+        "pic_swim": "w_suyeong"
+      },
+      "model_answer": {
+        "id": "사진 (sajin) foto, 낚시 (naksi) memancing, 노래 (norae) menyanyi, 수영 (suyeong) renang.",
+        "en": "사진 (sajin) photos, 낚시 (naksi) fishing, 노래 (norae) singing, 수영 (suyeong) swimming."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "KOR-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_haeyo",
+          "target_text": "해요",
+          "romanization": "haeyo",
+          "audio": "ko/haeyo"
+        },
+        {
+          "id": "b_chyeoyo",
+          "target_text": "쳐요",
+          "romanization": "chyeoyo",
+          "audio": "ko/chyeoyo"
+        },
+        {
+          "id": "pic_football",
+          "image": "pic_football",
+          "text": {
+            "id": "sepak bola",
+            "en": "football"
+          }
+        },
+        {
+          "id": "pic_badminton",
+          "image": "pic_badminton",
+          "text": {
+            "id": "bulu tangkis",
+            "en": "badminton"
+          }
+        },
+        {
+          "id": "pic_swim",
+          "image": "pic_swim",
+          "text": {
+            "id": "berenang",
+            "en": "swimming"
+          }
+        },
+        {
+          "id": "pic_guitar",
+          "image": "pic_guitar",
+          "text": {
+            "id": "gitar",
+            "en": "guitar"
+          }
+        },
+        {
+          "id": "pic_fishing",
+          "image": "pic_fishing",
+          "text": {
+            "id": "memancing",
+            "en": "fishing"
+          }
+        },
+        {
+          "id": "pic_sing",
+          "image": "pic_sing",
+          "text": {
+            "id": "menyanyi",
+            "en": "singing"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "pic_football": "b_haeyo",
+        "pic_badminton": "b_chyeoyo",
+        "pic_swim": "b_haeyo",
+        "pic_guitar": "b_chyeoyo",
+        "pic_fishing": "b_haeyo",
+        "pic_sing": "b_haeyo"
+      },
+      "model_answer": {
+        "id": "해요 (haeyo): sepak bola, renang, memancing, menyanyi. 쳐요 (chyeoyo): bulu tangkis, gitar.",
+        "en": "해요 (haeyo): football, swimming, fishing, singing. 쳐요 (chyeoyo): badminton, guitar."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-WANT"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/suyeonghago_sipeoyo",
+      "options": [
+        {
+          "id": "pic_dance",
+          "image": "pic_dance",
+          "text": {
+            "id": "menari",
+            "en": "dancing"
+          }
+        },
+        {
+          "id": "pic_football",
+          "image": "pic_football",
+          "text": {
+            "id": "sepak bola",
+            "en": "football"
+          }
+        },
+        {
+          "id": "pic_swim",
+          "image": "pic_swim",
+          "text": {
+            "id": "berenang",
+            "en": "swimming"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "수영하고 싶어요 (suyeonghago sipeoyo) = aku ingin berenang.",
+        "en": "수영하고 싶어요 (suyeonghago sipeoyo) = I want to swim."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "KOR-WANT"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-BUILD-SAY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku ingin belajar gitar.",
+            "en": "I want to learn the guitar."
+          }
+        }
+      ],
+      "image": "pic_guitar",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_sipeoyo",
+          "target_text": "싶어요",
+          "romanization": "sipeoyo",
+          "audio": "ko/sipeoyo"
+        },
+        {
+          "id": "w_gitareul",
+          "target_text": "기타를",
+          "romanization": "gitareul",
+          "audio": "ko/gitareul"
+        },
+        {
+          "id": "w_joahaeyo",
+          "target_text": "좋아해요",
+          "romanization": "joahaeyo",
+          "audio": "ko/joahaeyo"
+        },
+        {
+          "id": "w_baeugo",
+          "target_text": "배우고",
+          "romanization": "baeugo",
+          "audio": "ko/baeugo"
+        }
+      ],
+      "solution": [
+        "w_gitareul",
+        "w_baeugo",
+        "w_sipeoyo"
+      ],
+      "model_answer": {
+        "id": "기타를 배우고 싶어요 (gitareul baeugo sipeoyo) = aku ingin belajar gitar.",
+        "en": "기타를 배우고 싶어요 (gitareul baeugo sipeoyo) = I want to learn the guitar."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "KOR-WANT"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-WHICH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku ingin main bulu tangkis.",
+            "en": "I want to play badminton."
+          }
+        }
+      ],
+      "image": "pic_badminton",
+      "options": [
+        {
+          "id": "w_baedeuminteoneul_chyeosseoyo",
+          "target_text": "배드민턴을 쳤어요.",
+          "romanization": "baedeuminteoneul chyeosseoyo.",
+          "audio": "ko/baedeuminteoneul_chyeosseoyo"
+        },
+        {
+          "id": "w_baedeuminteoneul_chigo_sipeoyo",
+          "target_text": "배드민턴을 치고 싶어요.",
+          "romanization": "baedeuminteoneul chigo sipeoyo.",
+          "audio": "ko/baedeuminteoneul_chigo_sipeoyo",
+          "correct": true
+        },
+        {
+          "id": "w_baedeuminteoneul_joahaeyo",
+          "target_text": "배드민턴을 좋아해요.",
+          "romanization": "baedeuminteoneul joahaeyo.",
+          "audio": "ko/baedeuminteoneul_joahaeyo"
+        }
+      ],
+      "model_answer": {
+        "id": "Ingin = 고 싶어요 (go sipeoyo): 배드민턴을 치고 싶어요 (baedeuminteoneul chigo sipeoyo).",
+        "en": "Want to = 고 싶어요 (go sipeoyo): 배드민턴을 치고 싶어요 (baedeuminteoneul chigo sipeoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "KOR-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-READ",
+      "target_text": "춤을 춰요",
+      "options": [
+        {
+          "id": "pic_sing",
+          "image": "pic_sing",
+          "text": {
+            "id": "menyanyi",
+            "en": "singing"
+          }
+        },
+        {
+          "id": "pic_dance",
+          "image": "pic_dance",
+          "text": {
+            "id": "menari",
+            "en": "dancing"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_run",
+          "image": "pic_run",
+          "text": {
+            "id": "berlari",
+            "en": "running"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "춤을 춰요 (chumeul chwoyo) = menari.",
+        "en": "춤을 춰요 (chumeul chwoyo) = I dance."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "KOR-WANT"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-ORDER-TALK",
+      "image": "pic_football",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_chukguhago_sipeoyo",
+          "target_text": "축구하고 싶어요.",
+          "romanization": "chukguhago sipeoyo.",
+          "audio": "ko/chukguhago_sipeoyo"
+        },
+        {
+          "id": "w_joayo",
+          "target_text": "좋아요!",
+          "romanization": "joayo!",
+          "audio": "ko/joayo"
+        },
+        {
+          "id": "w_jumare_mwo_hago_sipeoyo",
+          "target_text": "주말에 뭐 하고 싶어요?",
+          "romanization": "jumare mwo hago sipeoyo?",
+          "audio": "ko/jumare_mwo_hago_sipeoyo"
+        },
+        {
+          "id": "w_jeodoyo_gachi_haeyo",
+          "target_text": "저도요! 같이 해요.",
+          "romanization": "jeodoyo! gachi haeyo.",
+          "audio": "ko/jeodoyo_gachi_haeyo"
+        }
+      ],
+      "solution": [
+        "w_jumare_mwo_hago_sipeoyo",
+        "w_chukguhago_sipeoyo",
+        "w_jeodoyo_gachi_haeyo",
+        "w_joayo"
+      ],
+      "model_answer": {
+        "id": "Tanya, jawab, setuju dengan 저도요 (jeodoyo), lalu 좋아요 (joayo)!",
+        "en": "Ask, answer, agree with 저도요 (jeodoyo), then 좋아요 (joayo)!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-HOBBY"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/sajineul_jjigeoyo",
+      "options": [
+        {
+          "id": "pic_camera",
+          "image": "pic_camera",
+          "text": {
+            "id": "kamera",
+            "en": "camera"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_draw_paint",
+          "image": "pic_draw_paint",
+          "text": {
+            "id": "menggambar",
+            "en": "drawing and painting"
+          }
+        },
+        {
+          "id": "pic_read",
+          "image": "pic_read",
+          "text": {
+            "id": "membaca",
+            "en": "reading"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "사진을 찍어요 (sajineul jjigeoyo) = memotret.",
+        "en": "사진을 찍어요 (sajineul jjigeoyo) = I take photos."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-WANT"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-FILL",
+      "image": "pic_dance",
+      "target_text": "춤을 추고 ___.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_joahaeyo",
+          "target_text": "좋아해요",
+          "romanization": "joahaeyo"
+        },
+        {
+          "id": "p_sipeoyo",
+          "target_text": "싶어요",
+          "romanization": "sipeoyo"
+        },
+        {
+          "id": "p_juseyo",
+          "target_text": "주세요",
+          "romanization": "juseyo"
+        }
+      ],
+      "solution": [
+        "p_sipeoyo"
+      ],
+      "romanization": "chumeul chugo ___.",
+      "model_answer": {
+        "id": "Ingin menari: 춤을 추고 싶어요 (chumeul chugo sipeoyo).",
+        "en": "Want to dance: 춤을 추고 싶어요 (chumeul chugo sipeoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "KOR-HOBBY"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "배드민턴을 쳐요",
+      "options": [
+        {
+          "id": "pic_football",
+          "image": "pic_football",
+          "text": {
+            "id": "sepak bola",
+            "en": "football"
+          }
+        },
+        {
+          "id": "pic_guitar",
+          "image": "pic_guitar",
+          "text": {
+            "id": "gitar",
+            "en": "guitar"
+          }
+        },
+        {
+          "id": "pic_badminton",
+          "image": "pic_badminton",
+          "text": {
+            "id": "bulu tangkis",
+            "en": "badminton"
+          },
+          "correct": true
+        }
+      ],
+      "romanization": "baedeuminteoneul chyeoyo",
+      "audio": "ko/baedeuminteoneul_chyeoyo",
+      "model_answer": {
+        "id": "배드민턴을 쳐요 (baedeuminteoneul chyeoyo) = main bulu tangkis.",
+        "en": "배드민턴을 쳐요 (baedeuminteoneul chyeoyo) = I play badminton."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-WANT"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "image": "pic_draw_paint",
+      "target_text": "그림을 그리고 ___.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_juseyo",
+          "target_text": "주세요",
+          "romanization": "juseyo"
+        },
+        {
+          "id": "p_sipeoyo",
+          "target_text": "싶어요",
+          "romanization": "sipeoyo"
+        },
+        {
+          "id": "p_joahaeyo",
+          "target_text": "좋아해요",
+          "romanization": "joahaeyo"
+        }
+      ],
+      "solution": [
+        "p_sipeoyo"
+      ],
+      "romanization": "geurimeul geurigo ___.",
+      "model_answer": {
+        "id": "Ingin menggambar: 그림을 그리고 싶어요 (geurimeul geurigo sipeoyo).",
+        "en": "Want to draw: 그림을 그리고 싶어요 (geurimeul geurigo sipeoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-02-015",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "KOR-HOBBY"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "International Olympic Committee, 'Taekwondo' (olympics.com): demonstration sport at Seoul 1988 and Barcelona 1992, on the full Olympic programme since Sydney 2000; World Taekwondo (worldtaekwondo.org).",
+      "model_answer": {
+        "id": "태권도 (taegwondo), bela diri dari Korea, menjadi cabang resmi Olimpiade sejak Sydney 2000. Banyak anak Indonesia juga berlatih taekwondo!",
+        "en": "태권도 (taegwondo), a martial art from Korea, has been a full Olympic sport since Sydney 2000. Many Indonesian children train in taekwondo too!"
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    },
+    {
+      "item_id": "KOR-K-X-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang bukan perasaan?",
+            "en": "Which one is not a feeling?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "w_gippeoyo",
+          "target_text": "기뻐요",
+          "romanization": "gippeoyo",
+          "audio": "ko/gippeoyo"
+        },
+        {
+          "id": "w_seulpeoyo",
+          "target_text": "슬퍼요",
+          "romanization": "seulpeoyo",
+          "audio": "ko/seulpeoyo"
+        },
+        {
+          "id": "w_chukgureul_haeyo",
+          "target_text": "축구를 해요",
+          "romanization": "chukgureul haeyo",
+          "audio": "ko/chukgureul_haeyo",
+          "correct": true
+        },
+        {
+          "id": "w_pigonhaeyo",
+          "target_text": "피곤해요",
+          "romanization": "pigonhaeyo",
+          "audio": "ko/pigonhaeyo"
+        }
+      ],
+      "model_answer": {
+        "id": "축구를 해요 (chukgureul haeyo) itu hobi, bukan perasaan.",
+        "en": "축구를 해요 (chukgureul haeyo) is a hobby, not a feeling."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-k-x-0.1"
+    }
+  ]
+}

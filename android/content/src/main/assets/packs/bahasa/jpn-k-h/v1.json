@@ -1,0 +1,2113 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "jpn-k-h-0.1",
+    "subject": "bahasa",
+    "track": "jpn-k-h",
+    "level": "mahir",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "target_lang": "ja",
+    "title": {
+      "id": "Bahasa Jepang — Mahir (Anak)",
+      "en": "Japanese — Advanced (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, starter level: 2 units) for review: needs a native Japanese reviewer and the Indonesian and English language reviewers before any item is approved (docs/syllabus/bahasa/ja_levels.md, kids Mahir: directions & getting around, weather, seasons & yesterday). Voice clips: android/content/voice/ja.json and ja.levels.json (listening items stay hidden until recorded); every skill has a REMED item that needs no audio.",
+  "prompts": {
+    "P-CONNECT": {
+      "id": "Hubungkan pasangannya.",
+      "en": "Connect the pairs."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke katanya.",
+      "en": "Drag each picture to its word."
+    },
+    "P-PICK": {
+      "id": "Pilih gambarnya.",
+      "en": "Pick the picture."
+    },
+    "P-LISTEN-PIC": {
+      "id": "Dengar, lalu ketuk gambarnya.",
+      "en": "Listen, then tap the picture."
+    },
+    "P-LISTEN-ARROW": {
+      "id": "Dengar, lalu ketuk arahnya.",
+      "en": "Listen, then tap the arrow."
+    },
+    "P-LISTEN-MEAN": {
+      "id": "Dengar, lalu pilih artinya.",
+      "en": "Listen, then pick the meaning."
+    },
+    "P-BUILD": {
+      "id": "Susun hurufnya.",
+      "en": "Build the word."
+    },
+    "P-SENTENCE": {
+      "id": "Susun kalimatnya.",
+      "en": "Build the sentence."
+    },
+    "P-DIALOG": {
+      "id": "Urutkan percakapannya.",
+      "en": "Put the dialogue in order."
+    },
+    "P-SORT": {
+      "id": "Kelompokkan.",
+      "en": "Sort them."
+    },
+    "P-FILL": {
+      "id": "Isi yang kosong.",
+      "en": "Fill the gap."
+    },
+    "P-ANSWER": {
+      "id": "Pilih jawabannya.",
+      "en": "Pick the answer."
+    },
+    "P-MATCH-PIC": {
+      "id": "Cocok dengan gambarnya?",
+      "en": "Does it match the picture?"
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Arah & kendaraan",
+        "en": "Directions & getting around"
+      },
+      "sticker": "sticker_bicycle"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Cuaca, musim & kemarin",
+        "en": "Weather, seasons & yesterday"
+      },
+      "sticker": "sticker_umbrella"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "JPN-K-H-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Arah & kendaraan",
+        "en": "Directions & getting around"
+      },
+      "body": [
+        {
+          "id": "Naik apa? Kendaraan + で: でんしゃで いきます (densha de ikimasu).",
+          "en": "How do you go? Vehicle + で: でんしゃで いきます (densha de ikimasu)."
+        },
+        {
+          "id": "Jalan kaki: あるいて いきます (aruite ikimasu), tanpa で.",
+          "en": "On foot: あるいて いきます (aruite ikimasu), no で."
+        },
+        {
+          "id": "Arah: みぎ (migi) kanan, ひだり (hidari) kiri, まっすぐ (massugu) lurus.",
+          "en": "Directions: みぎ (migi) right, ひだり (hidari) left, まっすぐ (massugu) straight on."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "みぎに まがります。",
+          "gloss": {
+            "id": "Migi ni magarimasu. = Belok kanan.",
+            "en": "Migi ni magarimasu. = Turn right."
+          }
+        },
+        {
+          "target_text": "えきは どこですか。",
+          "gloss": {
+            "id": "Eki wa doko desu ka? = Stasiun di mana?",
+            "en": "Eki wa doko desu ka? = Where is the station?"
+          }
+        },
+        {
+          "target_text": "まっすぐ いって、みぎです。",
+          "gloss": {
+            "id": "Massugu itte, migi desu. = Lurus, lalu di kanan.",
+            "en": "Massugu itte, migi desu. = Go straight, it's on the right."
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "JPN-K-H-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Cuaca, musim & kemarin",
+        "en": "Weather, seasons & yesterday"
+      },
+      "body": [
+        {
+          "id": "Cuaca: はれ (hare) cerah, あめ (ame) hujan, くもり (kumori) berawan, ゆき (yuki) salju.",
+          "en": "Weather: はれ (hare) sunny, あめ (ame) rain, くもり (kumori) cloudy, ゆき (yuki) snow."
+        },
+        {
+          "id": "Jepang punya 4 musim: はる (haru) semi, なつ (natsu) panas, あき (aki) gugur, ふゆ (fuyu) dingin.",
+          "en": "Japan has 4 seasons: はる (haru) spring, なつ (natsu) summer, あき (aki) autumn, ふゆ (fuyu) winter."
+        },
+        {
+          "id": "Kemarin? ます jadi ました: いきます → いきました. です jadi でした.",
+          "en": "Yesterday? ます becomes ました: いきます → いきました. です becomes でした."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "きょうは はれです。",
+          "gloss": {
+            "id": "Kyō wa hare desu. = Hari ini cerah.",
+            "en": "Kyō wa hare desu. = It's sunny today."
+          }
+        },
+        {
+          "target_text": "きのうは あめでした。",
+          "gloss": {
+            "id": "Kinō wa ame deshita. = Kemarin hujan.",
+            "en": "Kinō wa ame deshita. = It rained yesterday."
+          }
+        },
+        {
+          "target_text": "きのう こうえんに いきました。",
+          "gloss": {
+            "id": "Kinō kōen ni ikimashita. = Kemarin aku ke taman.",
+            "en": "Kinō kōen ni ikimashita. = Yesterday I went to the park."
+          }
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "JPN-K-H-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-GO"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_train",
+          "image": "pic_train",
+          "text": {
+            "id": "kereta",
+            "en": "train"
+          }
+        },
+        {
+          "id": "pic_bus",
+          "image": "pic_bus",
+          "text": {
+            "id": "bus",
+            "en": "bus"
+          }
+        },
+        {
+          "id": "pic_bicycle",
+          "image": "pic_bicycle",
+          "text": {
+            "id": "sepeda",
+            "en": "bicycle"
+          }
+        },
+        {
+          "id": "pic_plane",
+          "image": "pic_plane",
+          "text": {
+            "id": "pesawat",
+            "en": "plane"
+          }
+        },
+        {
+          "id": "w2",
+          "target_text": "じてんしゃ",
+          "romanization": "jitensha",
+          "audio": "ja/jitensha"
+        },
+        {
+          "id": "w3",
+          "target_text": "ひこうき",
+          "romanization": "hikōki",
+          "audio": "ja/hikooki"
+        },
+        {
+          "id": "w0",
+          "target_text": "でんしゃ",
+          "romanization": "densha",
+          "audio": "ja/densha"
+        },
+        {
+          "id": "w1",
+          "target_text": "バス",
+          "romanization": "basu",
+          "audio": "ja/basu"
+        }
+      ],
+      "solution_pairs": {
+        "pic_train": "w0",
+        "pic_bus": "w1",
+        "pic_bicycle": "w2",
+        "pic_plane": "w3"
+      },
+      "model_answer": {
+        "id": "でんしゃ kereta · バス bus · じてんしゃ sepeda · ひこうき pesawat",
+        "en": "でんしゃ train · バス bus · じてんしゃ bicycle · ひこうき plane"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-DIR"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "glyph_arrow_left",
+          "image": "glyph_arrow_left",
+          "text": {
+            "id": "panah ke kiri",
+            "en": "arrow to the left"
+          }
+        },
+        {
+          "id": "glyph_arrow_right",
+          "image": "glyph_arrow_right",
+          "text": {
+            "id": "panah ke kanan",
+            "en": "arrow to the right"
+          }
+        },
+        {
+          "id": "glyph_arrow_straight",
+          "image": "glyph_arrow_straight",
+          "text": {
+            "id": "panah lurus ke depan",
+            "en": "arrow straight ahead"
+          }
+        },
+        {
+          "id": "w1",
+          "target_text": "みぎ",
+          "romanization": "migi",
+          "audio": "ja/migi"
+        },
+        {
+          "id": "w2",
+          "target_text": "まっすぐ",
+          "romanization": "massugu",
+          "audio": "ja/massugu"
+        },
+        {
+          "id": "w0",
+          "target_text": "ひだり",
+          "romanization": "hidari",
+          "audio": "ja/hidari"
+        }
+      ],
+      "solution_pairs": {
+        "glyph_arrow_left": "w0",
+        "glyph_arrow_right": "w1",
+        "glyph_arrow_straight": "w2"
+      },
+      "model_answer": {
+        "id": "ひだり kiri · みぎ kanan · まっすぐ lurus",
+        "en": "ひだり left · みぎ right · まっすぐ straight on"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "JPN-DIR"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-LISTEN-ARROW",
+      "audio": "ja/migi_ni_magarimasu",
+      "options": [
+        {
+          "id": "glyph_arrow_left",
+          "image": "glyph_arrow_left",
+          "text": {
+            "id": "panah ke kiri",
+            "en": "arrow to the left"
+          }
+        },
+        {
+          "id": "glyph_arrow_right",
+          "image": "glyph_arrow_right",
+          "text": {
+            "id": "panah ke kanan",
+            "en": "arrow to the right"
+          },
+          "correct": true
+        },
+        {
+          "id": "glyph_arrow_straight",
+          "image": "glyph_arrow_straight",
+          "text": {
+            "id": "panah lurus ke depan",
+            "en": "arrow straight ahead"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "みぎに まがります (migi ni magarimasu) = belok kanan.",
+        "en": "みぎに まがります (migi ni magarimasu) = turn right."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "JPN-GO"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-SENTENCE",
+      "gesture": "drag",
+      "image": "pic_bicycle",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku pergi naik sepeda.",
+            "en": "I go by bicycle."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s2",
+          "target_text": "いきます",
+          "romanization": "ikimasu",
+          "audio": "ja/ikimasu"
+        },
+        {
+          "id": "s1",
+          "target_text": "で",
+          "romanization": "de",
+          "audio": "ja/de"
+        },
+        {
+          "id": "s0",
+          "target_text": "じてんしゃ",
+          "romanization": "jitensha",
+          "audio": "ja/jitensha"
+        },
+        {
+          "id": "x0",
+          "target_text": "を",
+          "romanization": "o",
+          "audio": "ja/o"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2"
+      ],
+      "model_answer": {
+        "id": "じてんしゃで いきます。(Jitensha de ikimasu.) = Aku naik sepeda.",
+        "en": "じてんしゃで いきます。(Jitensha de ikimasu.) = I go by bicycle."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "JPN-GO"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-PICK",
+      "target_text": "としょかん",
+      "romanization": "toshokan",
+      "audio": "ja/toshokan",
+      "options": [
+        {
+          "id": "pic_library",
+          "image": "pic_library",
+          "text": {
+            "id": "perpustakaan",
+            "en": "library"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_school",
+          "image": "pic_school",
+          "text": {
+            "id": "sekolah",
+            "en": "school"
+          }
+        },
+        {
+          "id": "pic_hospital",
+          "image": "pic_hospital",
+          "text": {
+            "id": "rumah sakit",
+            "en": "hospital"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "としょかん (toshokan) = perpustakaan.",
+        "en": "としょかん (toshokan) = library."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "JPN-GO"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/fune",
+      "options": [
+        {
+          "id": "pic_plane",
+          "image": "pic_plane",
+          "text": {
+            "id": "pesawat",
+            "en": "plane"
+          }
+        },
+        {
+          "id": "pic_car",
+          "image": "pic_car",
+          "text": {
+            "id": "mobil",
+            "en": "car"
+          }
+        },
+        {
+          "id": "pic_ship",
+          "image": "pic_ship",
+          "text": {
+            "id": "kapal",
+            "en": "ship"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "ふね (fune) = kapal.",
+        "en": "ふね (fune) = ship."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-GO"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-FILL",
+      "target_text": "＿＿で がっこうに いきます。",
+      "romanization": "___ de gakkō ni ikimasu.",
+      "gesture": "drag",
+      "image": "pic_bus",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku ke sekolah naik …",
+            "en": "I go to school by …"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "c",
+          "target_text": "バス",
+          "romanization": "basu",
+          "audio": "ja/basu"
+        },
+        {
+          "id": "x1",
+          "target_text": "ふね",
+          "romanization": "fune",
+          "audio": "ja/fune"
+        },
+        {
+          "id": "x0",
+          "target_text": "でんしゃ",
+          "romanization": "densha",
+          "audio": "ja/densha"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "バスで がっこうに いきます。(Basu de gakkō ni ikimasu.) = Aku ke sekolah naik bus.",
+        "en": "バスで がっこうに いきます。(Basu de gakkō ni ikimasu.) = I go to school by bus."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "JPN-GO"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-PICK",
+      "target_text": "あるいて いきます",
+      "romanization": "aruite ikimasu",
+      "audio": "ja/aruite_ikimasu",
+      "options": [
+        {
+          "id": "pic_run",
+          "image": "pic_run",
+          "text": {
+            "id": "berlari",
+            "en": "running"
+          }
+        },
+        {
+          "id": "pic_bicycle",
+          "image": "pic_bicycle",
+          "text": {
+            "id": "sepeda",
+            "en": "bicycle"
+          }
+        },
+        {
+          "id": "pic_walk",
+          "image": "pic_walk",
+          "text": {
+            "id": "berjalan kaki",
+            "en": "walking"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "あるいて いきます (aruite ikimasu) = pergi jalan kaki.",
+        "en": "あるいて いきます (aruite ikimasu) = go on foot."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "JPN-DIR"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-BUILD",
+      "audio": "ja/massugu",
+      "gesture": "drag",
+      "image": "glyph_arrow_straight",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "massugu = lurus",
+            "en": "massugu = straight ahead"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "く"
+        },
+        {
+          "id": "t1",
+          "target_text": "っ"
+        },
+        {
+          "id": "t3",
+          "target_text": "ぐ"
+        },
+        {
+          "id": "t2",
+          "target_text": "す"
+        },
+        {
+          "id": "t0",
+          "target_text": "ま"
+        }
+      ],
+      "solution": [
+        "t0",
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "model_answer": {
+        "id": "ま + っ + す + ぐ = まっすぐ (massugu, lurus). ぐ = く + ゛.",
+        "en": "ま + っ + す + ぐ = まっすぐ (massugu, straight on). ぐ is く + ゛."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "JPN-DIR"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-DIALOG",
+      "gesture": "drag",
+      "image": "pic_station",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bertanya jalan.",
+            "en": "Asking the way."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s2",
+          "target_text": "ありがとうございます。",
+          "romanization": "Arigatō gozaimasu.",
+          "audio": "ja/arigatoo_gozaimasu"
+        },
+        {
+          "id": "s1",
+          "target_text": "まっすぐ いって、みぎです。",
+          "romanization": "Massugu itte, migi desu.",
+          "audio": "ja/massugu_itte_migi_desu"
+        },
+        {
+          "id": "s0",
+          "target_text": "すみません、えきは どこですか。",
+          "romanization": "Sumimasen, eki wa doko desu ka?",
+          "audio": "ja/sumimasen_eki_wa_doko_desu_ka"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2"
+      ],
+      "model_answer": {
+        "id": "すみません、えきは どこですか → まっすぐ いって、みぎです → ありがとうございます",
+        "en": "すみません、えきは どこですか → まっすぐ いって、みぎです → ありがとうございます"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "JPN-DIR"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/shingoo",
+      "options": [
+        {
+          "id": "pic_bridge",
+          "image": "pic_bridge",
+          "text": {
+            "id": "jembatan",
+            "en": "bridge"
+          }
+        },
+        {
+          "id": "pic_traffic_light",
+          "image": "pic_traffic_light",
+          "text": {
+            "id": "lampu lalu lintas",
+            "en": "traffic light"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_station",
+          "image": "pic_station",
+          "text": {
+            "id": "stasiun",
+            "en": "station"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "しんごう (shingō) = lampu lalu lintas.",
+        "en": "しんごう (shingō) = traffic light."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "JPN-GO"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_vehicle",
+          "text": {
+            "id": "kendaraan",
+            "en": "vehicles"
+          },
+          "target_text": "のりもの",
+          "romanization": "norimono",
+          "audio": "ja/norimono"
+        },
+        {
+          "id": "b_place",
+          "text": {
+            "id": "tempat",
+            "en": "places"
+          },
+          "target_text": "ばしょ",
+          "romanization": "basho",
+          "audio": "ja/basho"
+        },
+        {
+          "id": "pic_station",
+          "image": "pic_station",
+          "text": {
+            "id": "stasiun",
+            "en": "station"
+          }
+        },
+        {
+          "id": "pic_library",
+          "image": "pic_library",
+          "text": {
+            "id": "perpustakaan",
+            "en": "library"
+          }
+        },
+        {
+          "id": "pic_motorbike",
+          "image": "pic_motorbike",
+          "text": {
+            "id": "sepeda motor",
+            "en": "motorbike"
+          }
+        },
+        {
+          "id": "pic_park",
+          "image": "pic_park",
+          "text": {
+            "id": "taman",
+            "en": "park"
+          }
+        },
+        {
+          "id": "pic_ship",
+          "image": "pic_ship",
+          "text": {
+            "id": "kapal",
+            "en": "ship"
+          }
+        },
+        {
+          "id": "pic_car",
+          "image": "pic_car",
+          "text": {
+            "id": "mobil",
+            "en": "car"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "pic_car": "b_vehicle",
+        "pic_ship": "b_vehicle",
+        "pic_motorbike": "b_vehicle",
+        "pic_park": "b_place",
+        "pic_library": "b_place",
+        "pic_station": "b_place"
+      },
+      "model_answer": {
+        "id": "のりもの (norimono, kendaraan): mobil, kapal, motor. ばしょ (basho, tempat): taman, perpustakaan, stasiun.",
+        "en": "のりもの (norimono, vehicles): car, ship, motorbike. ばしょ (basho, places): park, library, station."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "JPN-DIR"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "ひだり",
+      "romanization": "hidari",
+      "audio": "ja/hidari",
+      "options": [
+        {
+          "id": "glyph_arrow_left",
+          "image": "glyph_arrow_left",
+          "text": {
+            "id": "panah ke kiri",
+            "en": "arrow to the left"
+          },
+          "correct": true
+        },
+        {
+          "id": "glyph_arrow_right",
+          "image": "glyph_arrow_right",
+          "text": {
+            "id": "panah ke kanan",
+            "en": "arrow to the right"
+          }
+        },
+        {
+          "id": "glyph_arrow_straight",
+          "image": "glyph_arrow_straight",
+          "text": {
+            "id": "panah lurus ke depan",
+            "en": "arrow straight ahead"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "ひだり (hidari) = kiri. みぎ (migi) = kanan.",
+        "en": "ひだり (hidari) = left. みぎ (migi) = right."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-GO"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "＿＿で いきます。",
+      "romanization": "___ de ikimasu.",
+      "gesture": "drag",
+      "image": "pic_train",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku pergi naik …",
+            "en": "I go by …"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x1",
+          "target_text": "じてんしゃ",
+          "romanization": "jitensha",
+          "audio": "ja/jitensha"
+        },
+        {
+          "id": "x0",
+          "target_text": "ひこうき",
+          "romanization": "hikōki",
+          "audio": "ja/hikooki"
+        },
+        {
+          "id": "c",
+          "target_text": "でんしゃ",
+          "romanization": "densha",
+          "audio": "ja/densha"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "でんしゃで いきます。(Densha de ikimasu.) = Aku naik kereta.",
+        "en": "でんしゃで いきます。(Densha de ikimasu.) = I go by train."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-WEATHER"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_sun",
+          "image": "pic_sun",
+          "text": {
+            "id": "matahari bersinar",
+            "en": "sunshine"
+          }
+        },
+        {
+          "id": "pic_rain",
+          "image": "pic_rain",
+          "text": {
+            "id": "hujan",
+            "en": "rain"
+          }
+        },
+        {
+          "id": "pic_cloud",
+          "image": "pic_cloud",
+          "text": {
+            "id": "awan",
+            "en": "cloud"
+          }
+        },
+        {
+          "id": "pic_snow",
+          "image": "pic_snow",
+          "text": {
+            "id": "salju",
+            "en": "snow"
+          }
+        },
+        {
+          "id": "w3",
+          "target_text": "ゆき",
+          "romanization": "yuki",
+          "audio": "ja/yuki"
+        },
+        {
+          "id": "w0",
+          "target_text": "はれ",
+          "romanization": "hare",
+          "audio": "ja/hare"
+        },
+        {
+          "id": "w1",
+          "target_text": "あめ",
+          "romanization": "ame",
+          "audio": "ja/ame"
+        },
+        {
+          "id": "w2",
+          "target_text": "くもり",
+          "romanization": "kumori",
+          "audio": "ja/kumori"
+        }
+      ],
+      "solution_pairs": {
+        "pic_sun": "w0",
+        "pic_rain": "w1",
+        "pic_cloud": "w2",
+        "pic_snow": "w3"
+      },
+      "model_answer": {
+        "id": "はれ cerah · あめ hujan · くもり berawan · ゆき salju",
+        "en": "はれ sunny · あめ rain · くもり cloudy · ゆき snow"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-WEATHER"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "pic_spring_blossom",
+          "image": "pic_spring_blossom",
+          "text": {
+            "id": "bunga musim semi",
+            "en": "spring blossom"
+          }
+        },
+        {
+          "id": "pic_beach",
+          "image": "pic_beach",
+          "text": {
+            "id": "pantai",
+            "en": "beach"
+          }
+        },
+        {
+          "id": "pic_autumn_leaves",
+          "image": "pic_autumn_leaves",
+          "text": {
+            "id": "daun musim gugur",
+            "en": "autumn leaves"
+          }
+        },
+        {
+          "id": "pic_snowman",
+          "image": "pic_snowman",
+          "text": {
+            "id": "boneka salju",
+            "en": "snowman"
+          }
+        },
+        {
+          "id": "w3",
+          "target_text": "ふゆ",
+          "romanization": "fuyu",
+          "audio": "ja/fuyu"
+        },
+        {
+          "id": "w0",
+          "target_text": "はる",
+          "romanization": "haru",
+          "audio": "ja/haru"
+        },
+        {
+          "id": "w1",
+          "target_text": "なつ",
+          "romanization": "natsu",
+          "audio": "ja/natsu"
+        },
+        {
+          "id": "w2",
+          "target_text": "あき",
+          "romanization": "aki",
+          "audio": "ja/aki"
+        }
+      ],
+      "solution_pairs": {
+        "pic_spring_blossom": "w0",
+        "pic_beach": "w1",
+        "pic_autumn_leaves": "w2",
+        "pic_snowman": "w3"
+      },
+      "model_answer": {
+        "id": "はる musim semi · なつ musim panas · あき musim gugur · ふゆ musim dingin",
+        "en": "はる spring · なつ summer · あき autumn · ふゆ winter"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "JPN-WEATHER"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/kaze",
+      "options": [
+        {
+          "id": "pic_wind",
+          "image": "pic_wind",
+          "text": {
+            "id": "angin",
+            "en": "wind"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_snow",
+          "image": "pic_snow",
+          "text": {
+            "id": "salju",
+            "en": "snow"
+          }
+        },
+        {
+          "id": "pic_sun",
+          "image": "pic_sun",
+          "text": {
+            "id": "matahari bersinar",
+            "en": "sunshine"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "かぜ (kaze) = angin.",
+        "en": "かぜ (kaze) = wind."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "JPN-WEATHER"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_hot",
+          "text": {
+            "id": "panas",
+            "en": "hot"
+          },
+          "target_text": "あつい",
+          "romanization": "atsui",
+          "audio": "ja/atsui"
+        },
+        {
+          "id": "b_cold",
+          "text": {
+            "id": "dingin",
+            "en": "cold"
+          },
+          "target_text": "さむい",
+          "romanization": "samui",
+          "audio": "ja/samui"
+        },
+        {
+          "id": "pic_snow",
+          "image": "pic_snow",
+          "text": {
+            "id": "salju",
+            "en": "snow"
+          }
+        },
+        {
+          "id": "pic_snowman",
+          "image": "pic_snowman",
+          "text": {
+            "id": "boneka salju",
+            "en": "snowman"
+          }
+        },
+        {
+          "id": "pic_sun",
+          "image": "pic_sun",
+          "text": {
+            "id": "matahari bersinar",
+            "en": "sunshine"
+          }
+        },
+        {
+          "id": "pic_jacket",
+          "image": "pic_jacket",
+          "text": {
+            "id": "jaket",
+            "en": "jacket"
+          }
+        },
+        {
+          "id": "pic_beach",
+          "image": "pic_beach",
+          "text": {
+            "id": "pantai",
+            "en": "beach"
+          }
+        },
+        {
+          "id": "pic_swim",
+          "image": "pic_swim",
+          "text": {
+            "id": "berenang",
+            "en": "swimming"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "pic_beach": "b_hot",
+        "pic_swim": "b_hot",
+        "pic_sun": "b_hot",
+        "pic_snow": "b_cold",
+        "pic_snowman": "b_cold",
+        "pic_jacket": "b_cold"
+      },
+      "model_answer": {
+        "id": "あつい (atsui, panas): pantai, berenang, matahari. さむい (samui, dingin): salju, boneka salju, jaket.",
+        "en": "あつい (atsui, hot): beach, swimming, sun. さむい (samui, cold): snow, snowman, jacket."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "JPN-WEATHER"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-MATCH-PIC",
+      "target_text": "きょうは はれです。",
+      "romanization": "Kyō wa hare desu.",
+      "audio": "ja/kyoo_wa_hare_desu",
+      "image": "pic_rain",
+      "options": [
+        {
+          "id": "yes",
+          "text": {
+            "id": "Cocok",
+            "en": "It matches"
+          }
+        },
+        {
+          "id": "no",
+          "text": {
+            "id": "Tidak cocok",
+            "en": "It doesn't match"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Tidak cocok: gambarnya hujan, あめ (ame). はれ (hare) = cerah.",
+        "en": "It doesn't match: the picture shows rain, あめ (ame). はれ (hare) = sunny."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "JPN-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-SENTENCE",
+      "gesture": "drag",
+      "image": "pic_park",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kemarin aku pergi ke taman.",
+            "en": "Yesterday I went to the park."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s3",
+          "target_text": "いきました",
+          "romanization": "ikimashita",
+          "audio": "ja/ikimashita"
+        },
+        {
+          "id": "s0",
+          "target_text": "きのう",
+          "romanization": "kinō",
+          "audio": "ja/kinoo"
+        },
+        {
+          "id": "s2",
+          "target_text": "に",
+          "romanization": "ni",
+          "audio": "ja/ni"
+        },
+        {
+          "id": "x0",
+          "target_text": "いきます",
+          "romanization": "ikimasu",
+          "audio": "ja/ikimasu"
+        },
+        {
+          "id": "s1",
+          "target_text": "こうえん",
+          "romanization": "kōen",
+          "audio": "ja/kooen"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "model_answer": {
+        "id": "きのう こうえんに いきました。(Kinō kōen ni ikimashita.) きのう → ました.",
+        "en": "きのう こうえんに いきました。(Kinō kōen ni ikimashita.) きのう → ました."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-FILL",
+      "target_text": "きのう ゆきだるまを ＿＿。",
+      "romanization": "Kinō yukidaruma o ___.",
+      "gesture": "drag",
+      "image": "pic_snowman",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kemarin aku membuat boneka salju.",
+            "en": "Yesterday I made a snowman."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "つくります",
+          "romanization": "tsukurimasu",
+          "audio": "ja/tsukurimasu"
+        },
+        {
+          "id": "x1",
+          "target_text": "たべました",
+          "romanization": "tabemashita",
+          "audio": "ja/tabemashita"
+        },
+        {
+          "id": "c",
+          "target_text": "つくりました",
+          "romanization": "tsukurimashita",
+          "audio": "ja/tsukurimashita"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "きのう ゆきだるまを つくりました。(… tsukurimashita.) = Kemarin aku membuat boneka salju.",
+        "en": "きのう ゆきだるまを つくりました。(… tsukurimashita.) = Yesterday I made a snowman."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "JPN-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-LISTEN-MEAN",
+      "audio": "ja/kinoo_wa_ame_deshita",
+      "options": [
+        {
+          "id": "x0",
+          "text": {
+            "id": "Hari ini hujan.",
+            "en": "It's raining today."
+          }
+        },
+        {
+          "id": "x1",
+          "text": {
+            "id": "Besok hujan.",
+            "en": "It will rain tomorrow."
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Kemarin hujan.",
+            "en": "It rained yesterday."
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "きのうは あめでした (kinō wa ame deshita) = kemarin hujan. でした = lampau.",
+        "en": "きのうは あめでした (kinō wa ame deshita) = it rained yesterday. でした = past."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "l0",
+          "target_text": "いきます",
+          "romanization": "ikimasu",
+          "audio": "ja/ikimasu"
+        },
+        {
+          "id": "l1",
+          "target_text": "たべます",
+          "romanization": "tabemasu",
+          "audio": "ja/tabemasu"
+        },
+        {
+          "id": "l2",
+          "target_text": "みます",
+          "romanization": "mimasu",
+          "audio": "ja/mimasu"
+        },
+        {
+          "id": "r2",
+          "target_text": "みました",
+          "romanization": "mimashita",
+          "audio": "ja/mimashita"
+        },
+        {
+          "id": "r0",
+          "target_text": "いきました",
+          "romanization": "ikimashita",
+          "audio": "ja/ikimashita"
+        },
+        {
+          "id": "r1",
+          "target_text": "たべました",
+          "romanization": "tabemashita",
+          "audio": "ja/tabemashita"
+        }
+      ],
+      "solution_pairs": {
+        "l0": "r0",
+        "l1": "r1",
+        "l2": "r2"
+      },
+      "model_answer": {
+        "id": "いきます → いきました · たべます → たべました · みます → みました",
+        "en": "いきます → いきました · たべます → たべました · みます → みました"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "JPN-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/umi_de_oyogimashita",
+      "options": [
+        {
+          "id": "pic_fishing",
+          "image": "pic_fishing",
+          "text": {
+            "id": "memancing",
+            "en": "fishing"
+          }
+        },
+        {
+          "id": "pic_swim",
+          "image": "pic_swim",
+          "text": {
+            "id": "berenang",
+            "en": "swimming"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_cook",
+          "image": "pic_cook",
+          "text": {
+            "id": "memasak",
+            "en": "cooking"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "うみで およぎました (umi de oyogimashita) = aku berenang di laut.",
+        "en": "うみで およぎました (umi de oyogimashita) = I swam in the sea."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "JPN-WEATHER"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-PICK",
+      "target_text": "さむい",
+      "romanization": "samui",
+      "audio": "ja/samui",
+      "options": [
+        {
+          "id": "pic_hot",
+          "image": "pic_hot",
+          "text": {
+            "id": "kepanasan",
+            "en": "feeling hot"
+          }
+        },
+        {
+          "id": "pic_cold",
+          "image": "pic_cold",
+          "text": {
+            "id": "kedinginan",
+            "en": "feeling cold"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_tired",
+          "image": "pic_tired",
+          "text": {
+            "id": "lelah",
+            "en": "tired"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "さむい (samui) = dingin. あつい (atsui) = panas.",
+        "en": "さむい (samui) = cold. あつい (atsui) = hot."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "JPN-PAST"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-ANSWER",
+      "target_text": "きのう なにを しましたか。",
+      "romanization": "Kinō nani o shimashita ka?",
+      "audio": "ja/kinoo_nani_o_shimashita_ka",
+      "image": "pic_watch_tv",
+      "options": [
+        {
+          "id": "a",
+          "target_text": "テレビを みました。",
+          "romanization": "Terebi o mimashita.",
+          "audio": "ja/terebi_o_mimashita",
+          "correct": true
+        },
+        {
+          "id": "x0",
+          "target_text": "テレビを みます。",
+          "romanization": "Terebi o mimasu.",
+          "audio": "ja/terebi_o_mimasu"
+        },
+        {
+          "id": "x1",
+          "target_text": "ほんを よみました。",
+          "romanization": "Hon o yomimashita.",
+          "audio": "ja/hon_o_yomimashita"
+        }
+      ],
+      "model_answer": {
+        "id": "きのう なにを しましたか？ — テレビを みました。(Terebi o mimashita.) Kemarin → ました.",
+        "en": "きのう なにを しましたか？ — テレビを みました。(Terebi o mimashita.) Yesterday → ました."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "JPN-WEATHER"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "くもり",
+      "romanization": "kumori",
+      "audio": "ja/kumori",
+      "options": [
+        {
+          "id": "pic_sun",
+          "image": "pic_sun",
+          "text": {
+            "id": "matahari bersinar",
+            "en": "sunshine"
+          }
+        },
+        {
+          "id": "pic_rain",
+          "image": "pic_rain",
+          "text": {
+            "id": "hujan",
+            "en": "rain"
+          }
+        },
+        {
+          "id": "pic_cloud",
+          "image": "pic_cloud",
+          "text": {
+            "id": "awan",
+            "en": "cloud"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "くもり (kumori) = berawan.",
+        "en": "くもり (kumori) = cloudy."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-PAST"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "きのう ほんを ＿＿。",
+      "romanization": "Kinō hon o ___.",
+      "gesture": "drag",
+      "image": "pic_read",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kemarin aku membaca buku.",
+            "en": "Yesterday I read a book."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x1",
+          "target_text": "のみました",
+          "romanization": "nomimashita",
+          "audio": "ja/nomimashita"
+        },
+        {
+          "id": "c",
+          "target_text": "よみました",
+          "romanization": "yomimashita",
+          "audio": "ja/yomimashita"
+        },
+        {
+          "id": "x0",
+          "target_text": "よみます",
+          "romanization": "yomimasu",
+          "audio": "ja/yomimasu"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "きのう ほんを よみました。(Kinō hon o yomimashita.) = Kemarin aku membaca buku.",
+        "en": "きのう ほんを よみました。(Kinō hon o yomimashita.) = Yesterday I read a book."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-02-015",
+      "unit": "02",
+      "audience": "kids",
+      "level": "mahir",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "JPN-WEATHER"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Japan Meteorological Agency (jma.go.jp), seasonal plant observations (cherry blossom): the flowering date is the first day on which 5-6 or more blossoms are open on the sample tree.",
+      "model_answer": {
+        "id": "Setiap musim semi, badan cuaca Jepang mengamati satu pohon sakura contoh di tiap kota. Bila 5–6 bunganya sudah mekar, diumumkan: sakura mulai mekar!",
+        "en": "Every spring, Japan's weather agency watches one sample cherry tree in each city. When 5 or 6 of its flowers are open, it announces: the cherry blossoms have opened!"
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    },
+    {
+      "item_id": "JPN-K-H-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "mahir",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Musim apa sesudah なつ (natsu, musim panas)?",
+            "en": "Which season comes after なつ (natsu, summer)?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "target_text": "はる",
+          "romanization": "haru",
+          "audio": "ja/haru"
+        },
+        {
+          "id": "c",
+          "target_text": "ふゆ",
+          "romanization": "fuyu",
+          "audio": "ja/fuyu"
+        },
+        {
+          "id": "a",
+          "target_text": "あき",
+          "romanization": "aki",
+          "audio": "ja/aki",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "ふゆ → はる → なつ → あき (aki, musim gugur).",
+        "en": "ふゆ → はる → なつ → あき (aki, autumn)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-k-h-0.1"
+    }
+  ]
+}

@@ -1,11 +1,14 @@
 package id.petalytix.ayailmu
 
+import id.petalytix.ayailmu.core.content.ContentJson
 import id.petalytix.ayailmu.core.content.ContentPack
 import id.petalytix.ayailmu.core.content.GatedContent
 import id.petalytix.ayailmu.core.content.Gating
 import id.petalytix.ayailmu.core.content.PackLoader
 import id.petalytix.ayailmu.core.data.Profile
 import id.petalytix.ayailmu.core.data.ProfileKind
+import id.petalytix.ayailmu.core.data.repo.ContentCatalog
+import id.petalytix.ayailmu.core.data.repo.LoadedTrack
 import id.petalytix.ayailmu.core.engine.CountingIdGenerator
 import id.petalytix.ayailmu.core.engine.Env
 import id.petalytix.ayailmu.core.engine.RuleConfig
@@ -45,7 +48,19 @@ object TestPacks {
         return Track(p, RuleConfig.parse(read(rules)), SessionContent.playable(Gating.gate(p, developerDemo = true)))
     }
 
-    val math: Track by lazy { load("packs/matematika/mat/v1.json", "config/rules.mat.json") }
+    /** Every track in the bundled catalog as the app loads it (demo gating, the catalog's free units). */
+    val catalog: List<LoadedTrack> by lazy {
+        val c = ContentJson.json.decodeFromString(ContentCatalog.serializer(), read("config/catalog.json"))
+        c.tracks.map { e ->
+            val p = PackLoader.parse(read(e.pack))
+            LoadedTrack(e.track, p, RuleConfig.parse(read(e.rules)), Gating.gate(p, developerDemo = true), emptyList(), e.freeUnits)
+        }
+    }
+
+    fun track(id: String): LoadedTrack = catalog.first { it.track == id }
+
+    /** Frozen copy of the P1 math sample (src/test/resources/fixtures); the bundled kids pack keeps growing. */
+    val math: Track by lazy { load("fixtures/mat-sample-v1.json", "config/rules.mat.json") }
     val arabic: Track by lazy { load("packs/bahasa/arab/v1.json", "config/rules.arab.json") }
 
     fun profile(

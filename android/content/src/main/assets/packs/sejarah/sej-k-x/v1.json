@@ -1,0 +1,3473 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sej-k-x-0.1",
+    "subject": "sejarah",
+    "track": "sej-k-x",
+    "level": "master",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Sejarah — Master (Anak)",
+      "en": "History — Master (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, MODULES_LEVELS_STORIES.md sections 2 and 4) for review: needs a history reviewer (every date, place and claim against the story sources), a depiction check of the drawn scenes (silhouettes only, no face likeness, no weapons or violence) and the Indonesian and English language reviewers before any item is approved. Narration clips (id/en sej_k_*) are scripted in android/content/voice/id.sejarah-k.json and en.sejarah-k.json; captions show without them.",
+  "prompts": {
+    "P-STORY": {
+      "id": "Tonton ceritanya, yuk.",
+      "en": "Let's watch the story."
+    },
+    "P-STORY-ORDER": {
+      "id": "Urutkan kejadian di cerita.",
+      "en": "Put the story in order."
+    },
+    "P-TIMELINE": {
+      "id": "Urutkan dari yang paling dulu.",
+      "en": "Order from earliest to latest."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban yang tepat.",
+      "en": "Pick the right answer."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-MYTH": {
+      "id": "Mitos atau fakta?",
+      "en": "Myth or fact?"
+    },
+    "P-CONNECT": {
+      "id": "Tarik garis ke pasangannya.",
+      "en": "Draw a line to each match."
+    },
+    "P-WHOSE": {
+      "id": "Seret ke tokoh pemiliknya.",
+      "en": "Drag each to its person."
+    },
+    "P-LEARN": {
+      "id": "Mana yang patut ditiru?",
+      "en": "Which are good to follow?"
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Sip, kita lanjut!",
+      "en": "Great, let's keep going!"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Pantang menyerah",
+        "en": "Never giving up"
+      },
+      "sticker": "sticker_umbrella"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Damai dan bumi",
+        "en": "Peace and the earth"
+      },
+      "sticker": "sticker_leaf"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SEJ-K-X-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Pantang menyerah",
+        "en": "Never giving up"
+      },
+      "body": [
+        {
+          "id": "Helen Keller tidak bisa melihat dan mendengar, tetapi ia belajar membaca, menulis, dan kuliah.",
+          "en": "Helen Keller could not see or hear, yet she learned to read, write and go to university."
+        },
+        {
+          "id": "George Washington Carver lahir dalam perbudakan, lalu menjadi ilmuwan pertanian yang menolong petani.",
+          "en": "George Washington Carver was born into slavery and became a farm scientist who helped farmers."
+        },
+        {
+          "id": "Keduanya menghadapi rintangan besar dengan tekun dan hati yang baik.",
+          "en": "Both faced great obstacles with patience and a kind heart."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SEJ-K-X-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Damai dan bumi",
+        "en": "Peace and the earth"
+      },
+      "body": [
+        {
+          "id": "Wangari Maathai mengajak para ibu di Kenya menanam jutaan pohon.",
+          "en": "Wangari Maathai got mothers in Kenya to plant millions of trees."
+        },
+        {
+          "id": "Nelson Mandela berjuang agar semua orang di Afrika Selatan setara, lalu memilih berdamai.",
+          "en": "Nelson Mandela worked so that everyone in South Africa would be equal, then chose peace."
+        },
+        {
+          "id": "Keduanya meraih Hadiah Nobel Perdamaian.",
+          "en": "Both won the Nobel Peace Prize."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "stories": {
+    "ST-KELLER": {
+      "figure": "Helen Keller (1880–1968)",
+      "title": {
+        "id": "Helen Keller dan kata pertamanya",
+        "en": "Helen Keller and her first word"
+      },
+      "source": "American Foundation for the Blind, \"Helen Keller: Life Chronology\" (born 27 June 1880, Tuscumbia, Alabama; lost sight and hearing after an illness in 1882; Anne Sullivan began teaching 3 March 1887; W-A-T-E-R breakthrough 5 April 1887; Radcliffe, 1904, first deaf-blind person to earn a college degree; worked with AFB from 1924; visited 39 countries; died 1 June 1968); Keller, The Story of My Life (1903).",
+      "emblem": "hist_hands_spelling",
+      "panels": [
+        {
+          "scene": "hist_bg_green_hills",
+          "caption": {
+            "id": "Helen Keller lahir di Alabama, Amerika Serikat, tahun 1880. Saat masih bayi, ia sakit keras, lalu tidak bisa melihat dan mendengar.",
+            "en": "Helen Keller was born in Alabama, in the United States, in 1880. As a baby she fell very ill, and afterwards she could not see or hear."
+          },
+          "narration": {
+            "id": "id/sej_k_keller_01",
+            "en": "en/sej_k_keller_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_girl",
+              "x": 0.05,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 800
+              }
+            },
+            {
+              "art": "pic_flower",
+              "x": 0.55,
+              "y": 0.711,
+              "w": 0.1,
+              "motion": {
+                "type": "sway",
+                "deg": 3,
+                "ms": 2400,
+                "loop": true
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_room_lamp",
+          "caption": {
+            "id": "Helen kecil sulit memberi tahu apa yang ia inginkan. Ia sering sedih dan marah karena tidak ada yang mengerti.",
+            "en": "Little Helen found it hard to tell people what she wanted. She was often sad and upset because no one understood."
+          },
+          "narration": {
+            "id": "id/sej_k_keller_02",
+            "en": "en/sej_k_keller_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_girl",
+              "x": 0.07,
+              "y": 0.446,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_sil_woman",
+              "x": 0.55,
+              "y": 0.446,
+              "w": 0.3,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 400
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_green_hills",
+          "caption": {
+            "id": "Tahun 1887, guru Anne Sullivan datang dan mengeja kata-kata dengan jari di telapak tangan Helen. Di dekat pompa air, Helen akhirnya mengerti: a-i-r!",
+            "en": "In 1887 a teacher, Anne Sullivan, arrived and spelled words with her fingers into Helen's palm. By the water pump, Helen finally understood: w-a-t-e-r!"
+          },
+          "narration": {
+            "id": "id/sej_k_keller_03",
+            "en": "en/sej_k_keller_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_woman",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_sil_girl",
+              "x": 0.15,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_water_pump",
+              "x": 0.47,
+              "y": 0.643,
+              "w": 0.18
+            },
+            {
+              "art": "hist_hands_spelling",
+              "x": 0.7,
+              "y": 0.242,
+              "w": 0.2,
+              "motion": {
+                "type": "slide_in",
+                "from": "right",
+                "ms": 800,
+                "delay_ms": 900
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.06,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_library_old",
+          "caption": {
+            "id": "Helen belajar membaca huruf Braille dan menulis. Tahun 1904, ia lulus dari universitas, orang tunanetra-tunarungu pertama yang berhasil melakukannya.",
+            "en": "Helen learned to read braille and to write. In 1904 she graduated from university, the first deaf-blind person ever to do so."
+          },
+          "narration": {
+            "id": "id/sej_k_keller_04",
+            "en": "en/sej_k_keller_04"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_woman",
+              "x": 0.03,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_braille_book",
+              "x": 0.34,
+              "y": 0.54,
+              "w": 0.24,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.63,
+              "y": 0.711,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 600
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_map_world",
+          "caption": {
+            "id": "Ia menulis buku dan mengunjungi 39 negara untuk membela hak orang tunanetra. Dari Helen, kita belajar pantang menyerah.",
+            "en": "She wrote books and visited 39 countries to speak up for blind people. From Helen we learn never to give up."
+          },
+          "narration": {
+            "id": "id/sej_k_keller_05",
+            "en": "en/sej_k_keller_05"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_woman",
+              "x": 0.23,
+              "y": 0.336,
+              "w": 0.14,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.23,
+                    0.336
+                  ],
+                  [
+                    0.43,
+                    0.336
+                  ],
+                  [
+                    0.63,
+                    0.376
+                  ]
+                ],
+                "ms": 6000
+              }
+            },
+            {
+              "art": "hist_braille_book",
+              "x": 0.06,
+              "y": 0.599,
+              "w": 0.2,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ST-CARVER": {
+      "figure": "George Washington Carver (c. 1864–1943)",
+      "title": {
+        "id": "Carver, sang dokter tanaman",
+        "en": "Carver, the plant doctor"
+      },
+      "source": "National Park Service, George Washington Carver National Monument, \"George Washington Carver\" (born enslaved about 1864 on the Moses and Susan Carver farm, Diamond, Missouri; 'The Plant Doctor'; refused by schools because of his race; Simpson College 1890; Iowa State 1891-1896; Tuskegee from 1896 for 47 years; crop rotation and soil care; more than 300 uses for the peanut; the Jesup Wagon travelling school); National Peanut Board, \"Who invented peanut butter?\" (Carver did not invent peanut butter).",
+      "emblem": "hist_peanut_plant",
+      "panels": [
+        {
+          "scene": "hist_bg_green_hills",
+          "caption": {
+            "id": "George Washington Carver lahir sekitar tahun 1864 di Missouri, Amerika Serikat. Ia lahir sebagai budak, dan perbudakan dihapus saat ia masih bayi.",
+            "en": "George Washington Carver was born around 1864 in Missouri, in the United States. He was born enslaved, and slavery was abolished while he was a baby."
+          },
+          "narration": {
+            "id": "id/sej_k_carver_01",
+            "en": "en/sej_k_carver_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_boy",
+              "x": 0.05,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 800
+              }
+            },
+            {
+              "art": "pic_flower",
+              "x": 0.54,
+              "y": 0.749,
+              "w": 0.08,
+              "motion": {
+                "type": "sway",
+                "deg": 3,
+                "ms": 2400,
+                "loop": true
+              }
+            },
+            {
+              "art": "pic_tree",
+              "x": 0.71,
+              "y": 0.56,
+              "w": 0.18
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_green_hills",
+          "caption": {
+            "id": "Ia sangat suka tanaman, dan tetangga membawa tanaman yang layu kepadanya karena ia tahu cara menyembuhkannya. Mereka menyebutnya \"dokter tanaman\".",
+            "en": "He loved plants, and neighbours brought him wilting plants because he knew how to heal them. They called him \"the plant doctor\"."
+          },
+          "narration": {
+            "id": "id/sej_k_carver_02",
+            "en": "en/sej_k_carver_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_boy",
+              "x": 0.01,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_peanut_plant",
+              "x": 0.34,
+              "y": 0.677,
+              "w": 0.16,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_sil_woman",
+              "x": 0.55,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 500
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Banyak sekolah menolaknya karena warna kulitnya. Ia tidak menyerah dan terus mencari, sampai akhirnya ia kuliah pertanian di Iowa.",
+            "en": "Many schools turned him away because of the colour of his skin. He did not give up and kept looking, until at last he studied farming at a college in Iowa."
+          },
+          "narration": {
+            "id": "id/sej_k_carver_03",
+            "en": "en/sej_k_carver_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.0,
+                    0.426
+                  ],
+                  [
+                    0.11,
+                    0.426
+                  ]
+                ],
+                "ms": 4000
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.38,
+              "y": 0.745,
+              "w": 0.12,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 800
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_sky_field",
+          "caption": {
+            "id": "Tahun 1896, ia menjadi guru di Tuskegee, Alabama. Ia mengajari petani menanam kacang tanah dan ubi bergantian dengan kapas supaya tanah tetap subur.",
+            "en": "In 1896 he became a teacher at Tuskegee, Alabama. He taught farmers to grow peanuts and sweet potatoes in turn with cotton, so the soil stayed rich."
+          },
+          "narration": {
+            "id": "id/sej_k_carver_04",
+            "en": "en/sej_k_carver_04"
+          },
+          "layers": [
+            {
+              "art": "hist_soil_field",
+              "x": 0.42,
+              "y": 0.387,
+              "w": 0.44,
+              "motion": {
+                "type": "fade_in",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3
+            },
+            {
+              "art": "hist_peanut_plant",
+              "x": 0.25,
+              "y": 0.711,
+              "w": 0.14,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 500
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_lab",
+          "caption": {
+            "id": "Di labnya, ia menemukan lebih dari 300 kegunaan kacang tanah: sabun, tinta, minyak, dan lainnya. Ia juga berkeliling dengan gerobak sekolah untuk mengajar petani.",
+            "en": "In his lab he found more than 300 uses for the peanut: soap, ink, oil and more. He also travelled with a wagon school to teach farmers."
+          },
+          "narration": {
+            "id": "id/sej_k_carver_05",
+            "en": "en/sej_k_carver_05"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.01,
+              "y": 0.456,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_peanut_plant",
+              "x": 0.37,
+              "y": 0.681,
+              "w": 0.14
+            },
+            {
+              "art": "hist_curie_flask",
+              "x": 0.56,
+              "y": 0.715,
+              "w": 0.12,
+              "motion": {
+                "type": "glow",
+                "ms": 2400,
+                "loop": true
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_green_hills",
+          "caption": {
+            "id": "Carver mengajar selama 47 tahun dan membagikan ilmunya dengan cuma-cuma. Dari Carver, kita belajar merawat bumi dan berbagi ilmu.",
+            "en": "Carver taught for 47 years and gave his knowledge away freely. From Carver we learn to care for the earth and to share what we know."
+          },
+          "narration": {
+            "id": "id/sej_k_carver_06",
+            "en": "en/sej_k_carver_06"
+          },
+          "layers": [
+            {
+              "art": "hist_sunrise",
+              "x": 0.09,
+              "y": 0.0,
+              "w": 0.3,
+              "motion": {
+                "type": "glow",
+                "ms": 3000,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_soil_field",
+              "x": 0.4,
+              "y": 0.387,
+              "w": 0.44,
+              "motion": {
+                "type": "zoom",
+                "scale_from": 1.0,
+                "scale_to": 1.05,
+                "ms": 4000
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ST-MAATHAI": {
+      "figure": "Wangari Maathai (1940–2011)",
+      "title": {
+        "id": "Wangari Maathai dan jutaan pohon",
+        "en": "Wangari Maathai and millions of trees"
+      },
+      "source": "Encyclopaedia Britannica, \"Wangari Maathai\" (born 1 April 1940, Nyeri, Kenya; PhD 1971, first woman in East or Central Africa to earn a doctorate; Green Belt Movement 1977, village women plant trees; some 30 million trees; Nobel Peace Prize 2004, first Black African woman laureate; died 25 September 2011); The Green Belt Movement, \"Who we are\" (women reported streams drying up and long walks for firewood; trees hold soil, store rainwater and give food and firewood).",
+      "emblem": "hist_tree_seedlings",
+      "panels": [
+        {
+          "scene": "hist_bg_green_hills",
+          "caption": {
+            "id": "Wangari Maathai lahir tahun 1940 di Nyeri, Kenya, di kaki pegunungan yang hijau. Ia suka bermain di dekat sungai kecil.",
+            "en": "Wangari Maathai was born in 1940 in Nyeri, Kenya, at the foot of green mountains. She loved playing by a little stream."
+          },
+          "narration": {
+            "id": "id/sej_k_maathai_01",
+            "en": "en/sej_k_maathai_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_girl",
+              "x": 0.05,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 800
+              }
+            },
+            {
+              "art": "pic_tree",
+              "x": 0.63,
+              "y": 0.404,
+              "w": 0.22,
+              "motion": {
+                "type": "sway",
+                "deg": 2,
+                "ms": 3000,
+                "loop": true
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_library_old",
+          "caption": {
+            "id": "Ia belajar biologi sampai ke Amerika dan Jerman. Tahun 1971, ia menjadi perempuan pertama di Afrika Timur yang meraih gelar doktor.",
+            "en": "She studied biology as far as America and Germany. In 1971 she became the first woman in East Africa to earn a doctorate."
+          },
+          "narration": {
+            "id": "id/sej_k_maathai_02",
+            "en": "en/sej_k_maathai_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_woman",
+              "x": 0.03,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_notebook",
+              "x": 0.37,
+              "y": 0.711,
+              "w": 0.14,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 700,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "sci_microscope",
+              "x": 0.58,
+              "y": 0.745,
+              "w": 0.12,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 600
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_sky_field",
+          "caption": {
+            "id": "Para ibu di desa bercerita: sungai mengering, kayu bakar makin jauh, dan tanah terbawa hujan karena pohon-pohon ditebang.",
+            "en": "Village mothers told her: the streams were drying up, firewood was farther away and the soil washed away in the rain, because the trees had been cut down."
+          },
+          "narration": {
+            "id": "id/sej_k_maathai_03",
+            "en": "en/sej_k_maathai_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_woman",
+              "x": 0.01,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_sil_woman_headscarf",
+              "x": 0.19,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "pic_cloud",
+              "x": 0.62,
+              "y": 0.018,
+              "w": 0.16,
+              "motion": {
+                "type": "drift",
+                "dx": 0.05,
+                "ms": 5000,
+                "loop": true
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_green_hills",
+          "caption": {
+            "id": "Tahun 1977, ia memulai Gerakan Sabuk Hijau. Para ibu menyemai bibit dan menanam pohon di sekitar desa mereka.",
+            "en": "In 1977 she started the Green Belt Movement. Mothers grew seedlings and planted trees around their villages."
+          },
+          "narration": {
+            "id": "id/sej_k_maathai_04",
+            "en": "en/sej_k_maathai_04"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_woman",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_tree_seedlings",
+              "x": 0.29,
+              "y": 0.438,
+              "w": 0.3,
+              "motion": {
+                "type": "slide_in",
+                "from": "bottom",
+                "ms": 800,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_sil_woman_headscarf",
+              "x": 0.57,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 500
+              }
+            },
+            {
+              "art": "hist_sil_girl",
+              "x": 0.71,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.05,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_green_hills",
+          "caption": {
+            "id": "Puluhan juta pohon tumbuh. Tahun 2004, ia meraih Hadiah Nobel Perdamaian, perempuan Afrika pertama yang menerimanya.",
+            "en": "Tens of millions of trees grew. In 2004 she won the Nobel Peace Prize, the first African woman to receive it."
+          },
+          "narration": {
+            "id": "id/sej_k_maathai_05",
+            "en": "en/sej_k_maathai_05"
+          },
+          "layers": [
+            {
+              "art": "pic_tree",
+              "x": 0.12,
+              "y": 0.382,
+              "w": 0.2,
+              "motion": {
+                "type": "fade_in",
+                "ms": 800
+              }
+            },
+            {
+              "art": "pic_tree",
+              "x": 0.34,
+              "y": 0.287,
+              "w": 0.24,
+              "motion": {
+                "type": "fade_in",
+                "ms": 800,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "pic_tree",
+              "x": 0.62,
+              "y": 0.382,
+              "w": 0.2,
+              "motion": {
+                "type": "fade_in",
+                "ms": 800,
+                "delay_ms": 600
+              }
+            },
+            {
+              "art": "hist_sunrise",
+              "x": 0.74,
+              "y": 0.02,
+              "w": 0.24
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_green_hills",
+          "caption": {
+            "id": "Dari Wangari, kita belajar bahwa hal kecil seperti menanam satu pohon bisa mengubah dunia.",
+            "en": "From Wangari we learn that a small act, like planting one tree, can change the world."
+          },
+          "narration": {
+            "id": "id/sej_k_maathai_06",
+            "en": "en/sej_k_maathai_06"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_girl",
+              "x": 0.05,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_tree_seedlings",
+              "x": 0.37,
+              "y": 0.438,
+              "w": 0.3,
+              "motion": {
+                "type": "zoom",
+                "scale_from": 1.0,
+                "scale_to": 1.06,
+                "ms": 4000
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ST-MANDELA": {
+      "figure": "Nelson Mandela (1918–2013)",
+      "title": {
+        "id": "Nelson Mandela memilih berdamai",
+        "en": "Nelson Mandela chooses peace"
+      },
+      "source": "Nelson Mandela Foundation, \"Biography of Nelson Mandela\" (learners' biography: born 18 July 1918, Mvezo; named Rolihlahla, 'Nelson' from his teacher; arrested 1962, 18 years on Robben Island, studied law in prison; released 11 February 1990; Nobel Peace Prize 1993 with F.W. de Klerk; voted 27 April 1994, inaugurated 10 May 1994; died 5 December 2013); NobelPrize.org, \"Nelson Mandela - Speed read\" (27 years in prison; apartheid as racial segregation; reconciliation); UN General Assembly 2009: Nelson Mandela International Day, 18 July (67 minutes of service).",
+      "emblem": "hist_handshake",
+      "panels": [
+        {
+          "scene": "hist_bg_green_hills",
+          "caption": {
+            "id": "Nelson Mandela lahir tahun 1918 di desa Mvezo, Afrika Selatan. Nama kecilnya Rolihlahla; nama Nelson diberikan gurunya di sekolah.",
+            "en": "Nelson Mandela was born in 1918 in the village of Mvezo, South Africa. His childhood name was Rolihlahla; his teacher gave him the name Nelson at school."
+          },
+          "narration": {
+            "id": "id/sej_k_mandela_01",
+            "en": "en/sej_k_mandela_01"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_boy",
+              "x": 0.05,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 800
+              }
+            },
+            {
+              "art": "pic_tree",
+              "x": 0.62,
+              "y": 0.442,
+              "w": 0.2,
+              "motion": {
+                "type": "sway",
+                "deg": 2,
+                "ms": 3000,
+                "loop": true
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Saat itu, hukum apartheid memisahkan orang menurut warna kulit. Orang kulit hitam tidak boleh memilih dan dilarang masuk banyak tempat.",
+            "en": "In those days, apartheid laws separated people by the colour of their skin. Black people could not vote and were kept out of many places."
+          },
+          "narration": {
+            "id": "id/sej_k_mandela_02",
+            "en": "en/sej_k_mandela_02"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.0,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600
+              }
+            },
+            {
+              "art": "hist_sil_woman_headscarf",
+              "x": 0.15,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.63,
+              "y": 0.426,
+              "w": 0.3,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 600
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_room_lamp",
+          "caption": {
+            "id": "Mandela, seorang pengacara, menuntut agar semua orang setara. Karena itu ia dipenjara 27 tahun, sebagian besar di Pulau Robben.",
+            "en": "Mandela, a lawyer, demanded that everyone be treated as equals. For that he was imprisoned for 27 years, mostly on Robben Island."
+          },
+          "narration": {
+            "id": "id/sej_k_mandela_03",
+            "en": "en/sej_k_mandela_03"
+          },
+          "layers": [
+            {
+              "art": "hist_sil_man",
+              "x": 0.07,
+              "y": 0.446,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 800
+              }
+            },
+            {
+              "art": "hist_book_stack",
+              "x": 0.54,
+              "y": 0.455,
+              "w": 0.12,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 400
+              }
+            },
+            {
+              "art": "hist_oil_lamp",
+              "x": 0.815,
+              "y": 0.506,
+              "w": 0.09,
+              "motion": {
+                "type": "glow",
+                "ms": 2400,
+                "loop": true
+              }
+            }
+          ],
+          "zoom": {
+            "scale_from": 1.0,
+            "scale_to": 1.06,
+            "ms": 5000
+          }
+        },
+        {
+          "scene": "hist_bg_harbor",
+          "caption": {
+            "id": "Di penjara, ia terus belajar dan membaca. Pada 11 Februari 1990, ia akhirnya bebas, disambut ribuan orang.",
+            "en": "In prison he kept studying and reading. On 11 February 1990 he was finally free, welcomed by thousands of people."
+          },
+          "narration": {
+            "id": "id/sej_k_mandela_04",
+            "en": "en/sej_k_mandela_04"
+          },
+          "layers": [
+            {
+              "art": "hist_sunrise",
+              "x": 0.07,
+              "y": 0.06,
+              "w": 0.3,
+              "motion": {
+                "type": "glow",
+                "ms": 3000,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.45,
+              "y": 0.245,
+              "w": 0.26,
+              "motion": {
+                "type": "path",
+                "points": [
+                  [
+                    0.45,
+                    0.245
+                  ],
+                  [
+                    0.61,
+                    0.245
+                  ]
+                ],
+                "ms": 4000
+              }
+            },
+            {
+              "art": "hist_sil_woman",
+              "x": 0.77,
+              "y": 0.245,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 600
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_city_old",
+          "caption": {
+            "id": "Ia tidak membalas dendam. Ia berjabat tangan dengan lawannya, dan bersama Presiden de Klerk meraih Hadiah Nobel Perdamaian 1993.",
+            "en": "He did not seek revenge. He shook hands with his opponents, and with President de Klerk he won the 1993 Nobel Peace Prize."
+          },
+          "narration": {
+            "id": "id/sej_k_mandela_05",
+            "en": "en/sej_k_mandela_05"
+          },
+          "layers": [
+            {
+              "art": "hist_handshake",
+              "x": 0.32,
+              "y": 0.24,
+              "w": 0.36,
+              "motion": {
+                "type": "fade_in",
+                "ms": 900
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.01,
+              "y": 0.495,
+              "w": 0.26,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.73,
+              "y": 0.495,
+              "w": 0.26,
+              "flip": true,
+              "motion": {
+                "type": "fade_in",
+                "ms": 600,
+                "delay_ms": 300
+              }
+            }
+          ]
+        },
+        {
+          "scene": "hist_bg_green_hills",
+          "caption": {
+            "id": "Tahun 1994, semua warga boleh memilih untuk pertama kalinya, dan Mandela menjadi presiden. Setiap 18 Juli, dunia memperingati Hari Mandela dengan berbuat baik.",
+            "en": "In 1994 every citizen could vote for the first time, and Mandela became president. Every 18 July, the world marks Mandela Day by doing good deeds."
+          },
+          "narration": {
+            "id": "id/sej_k_mandela_06",
+            "en": "en/sej_k_mandela_06"
+          },
+          "layers": [
+            {
+              "art": "hist_sunrise",
+              "x": 0.05,
+              "y": 0.0,
+              "w": 0.3,
+              "motion": {
+                "type": "glow",
+                "ms": 3000,
+                "loop": true
+              }
+            },
+            {
+              "art": "hist_sil_man",
+              "x": 0.35,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700
+              }
+            },
+            {
+              "art": "hist_sil_woman_headscarf",
+              "x": 0.49,
+              "y": 0.426,
+              "w": 0.3,
+              "motion": {
+                "type": "fade_in",
+                "ms": 700,
+                "delay_ms": 200
+              }
+            },
+            {
+              "art": "hist_sil_girl",
+              "x": 0.63,
+              "y": 0.426,
+              "w": 0.3
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "SEJ-K-X-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "story",
+      "skills": [
+        "SEJ-KELLER"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-KELLER",
+      "model_answer": {
+        "id": "Helen Keller belajar kata-kata lewat telapak tangannya, lalu kuliah dan membela hak orang tunanetra.",
+        "en": "Helen Keller learned words through her palm, then went to university and spoke up for blind people."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "SEJ-KELLER"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-STORY-ORDER",
+      "story_id": "ST-KELLER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang terjadi lebih dulu?",
+            "en": "What happened first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e4",
+          "text": {
+            "id": "Helen belajar membaca Braille",
+            "en": "Helen learns to read braille"
+          },
+          "image": "hist_braille_book"
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Helen sakit saat masih bayi",
+            "en": "Helen falls ill as a baby"
+          },
+          "image": "hist_sil_girl"
+        },
+        {
+          "id": "e5",
+          "text": {
+            "id": "Helen mengunjungi 39 negara",
+            "en": "Helen visits 39 countries"
+          },
+          "image": "hist_bg_map_world"
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Guru Anne mengeja di tangannya",
+            "en": "Teacher Anne spells into her hand"
+          },
+          "image": "hist_hands_spelling"
+        },
+        {
+          "id": "e3",
+          "text": {
+            "id": "Helen mengerti kata \"air\"",
+            "en": "Helen understands the word \"water\""
+          },
+          "image": "hist_water_pump"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4",
+        "e5"
+      ],
+      "model_answer": {
+        "id": "Helen sakit saat bayi, guru Anne datang, Helen mengerti kata \"air\", belajar Braille, lalu berkeliling dunia.",
+        "en": "Helen fell ill as a baby, teacher Anne arrived, Helen understood the word \"water\", learned braille, then travelled the world."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-KELLER"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-KELLER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di mana Helen mengerti kata pertamanya?",
+            "en": "Where did Helen understand her first word?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_treasure_ship",
+          "image": "hist_treasure_ship"
+        },
+        {
+          "id": "hist_coop_shop",
+          "image": "hist_coop_shop"
+        },
+        {
+          "id": "hist_water_pump",
+          "image": "hist_water_pump",
+          "correct": true
+        },
+        {
+          "id": "hist_tree_seedlings",
+          "image": "hist_tree_seedlings"
+        }
+      ],
+      "model_answer": {
+        "id": "Helen mengerti kata \"air\" di dekat pompa air.",
+        "en": "Helen understood the word \"water\" by the water pump."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "SEJ-KELLER"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-TF",
+      "story_id": "ST-KELLER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Helen Keller belajar membaca huruf Braille.",
+            "en": "Helen Keller learned to read braille."
+          }
+        }
+      ],
+      "image": "hist_braille_book",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Dengan huruf Braille, Helen bisa membaca buku.",
+        "en": "True. With braille, Helen could read books."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "SEJ-KELLER"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-CONNECT",
+      "story_id": "ST-KELLER",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dengan ceritanya.",
+            "en": "Match each picture to the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m1",
+          "text": {
+            "id": "tangan mengeja",
+            "en": "spelling hands"
+          },
+          "image": "hist_hands_spelling"
+        },
+        {
+          "id": "m2",
+          "text": {
+            "id": "pompa air",
+            "en": "water pump"
+          },
+          "image": "hist_water_pump"
+        },
+        {
+          "id": "m3",
+          "text": {
+            "id": "buku Braille",
+            "en": "braille book"
+          },
+          "image": "hist_braille_book"
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "kata pertama: air",
+            "en": "the first word: water"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "membaca dengan jari",
+            "en": "reading by touch"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "mengeja kata di telapak tangan",
+            "en": "spelling words into a palm"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "m1": "t1",
+        "m2": "t2",
+        "m3": "t3"
+      },
+      "model_answer": {
+        "id": "Tangan untuk mengeja kata, pompa air tempat kata pertama, dan buku Braille untuk membaca.",
+        "en": "Hands for spelling words, the pump where the first word came, and braille books for reading."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "SEJ-KELLER"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-CHOOSE",
+      "story_id": "ST-KELLER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bagaimana guru Anne mengajari Helen kata-kata?",
+            "en": "How did teacher Anne teach Helen words?"
+          }
+        }
+      ],
+      "image": "hist_hands_spelling",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Menulis di papan tulis",
+            "en": "Writing on a blackboard"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Mengeja dengan jari di telapak tangan Helen",
+            "en": "Spelling with her fingers into Helen's palm"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Berbicara keras-keras",
+            "en": "Speaking very loudly"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Anne mengeja huruf demi huruf dengan jari di telapak tangan Helen.",
+        "en": "Anne spelled letter by letter with her fingers into Helen's palm."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "SEJ-CARVER"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-CARVER",
+      "model_answer": {
+        "id": "Carver, sang dokter tanaman, mengajari petani merawat tanah dan menemukan ratusan kegunaan kacang tanah.",
+        "en": "Carver, the plant doctor, taught farmers to care for the soil and found hundreds of uses for the peanut."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "SEJ-CARVER"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-STORY-ORDER",
+      "story_id": "ST-CARVER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang terjadi lebih dulu?",
+            "en": "What happened first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e4",
+          "text": {
+            "id": "Ia mengajari petani merawat tanah",
+            "en": "He teaches farmers to care for the soil"
+          },
+          "image": "hist_soil_field"
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Carver kecil menyembuhkan tanaman",
+            "en": "Young Carver heals plants"
+          },
+          "image": "hist_peanut_plant"
+        },
+        {
+          "id": "e5",
+          "text": {
+            "id": "Ia menemukan 300 kegunaan kacang tanah",
+            "en": "He finds 300 uses for the peanut"
+          },
+          "image": "hist_curie_flask"
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Ia mencari sekolah yang mau menerimanya",
+            "en": "He searches for a school that will take him"
+          },
+          "image": "hist_sil_man"
+        },
+        {
+          "id": "e3",
+          "text": {
+            "id": "Ia kuliah pertanian di Iowa",
+            "en": "He studies farming in Iowa"
+          },
+          "image": "hist_book_stack"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4",
+        "e5"
+      ],
+      "model_answer": {
+        "id": "Carver kecil si dokter tanaman, mencari sekolah, kuliah pertanian, mengajar petani, lalu 300 kegunaan kacang.",
+        "en": "Young Carver the plant doctor, searching for a school, studying farming, teaching farmers, then 300 peanut uses."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-CARVER"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-CARVER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tanaman apa yang diteliti Carver?",
+            "en": "Which plant did Carver study?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_peanut_plant",
+          "image": "hist_peanut_plant",
+          "correct": true
+        },
+        {
+          "id": "pic_apple",
+          "image": "pic_apple"
+        },
+        {
+          "id": "pic_watermelon",
+          "image": "pic_watermelon"
+        },
+        {
+          "id": "fruit_mango",
+          "image": "fruit_mango"
+        }
+      ],
+      "model_answer": {
+        "id": "Carver menemukan lebih dari 300 kegunaan kacang tanah.",
+        "en": "Carver found more than 300 uses for the peanut."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "SEJ-CARVER",
+        "SEJ-KELLER"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-WHOSE",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Benda ini dari cerita siapa?",
+            "en": "Whose story is each thing from?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_ke",
+          "text": {
+            "id": "Helen Keller",
+            "en": "Helen Keller"
+          }
+        },
+        {
+          "id": "b_cv",
+          "text": {
+            "id": "George Washington Carver",
+            "en": "George Washington Carver"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Pompa air",
+            "en": "A water pump"
+          },
+          "image": "hist_water_pump"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Tanaman kacang tanah",
+            "en": "A peanut plant"
+          },
+          "image": "hist_peanut_plant"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Tangan yang mengeja",
+            "en": "Spelling hands"
+          },
+          "image": "hist_hands_spelling"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Ladang dan tanah subur",
+            "en": "A field with rich soil"
+          },
+          "image": "hist_soil_field"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_ke",
+        "c2": "b_cv",
+        "c3": "b_ke",
+        "c4": "b_cv"
+      },
+      "model_answer": {
+        "id": "Pompa air dan tangan mengeja dari cerita Helen Keller. Kacang tanah dan ladang dari cerita Carver.",
+        "en": "The water pump and the spelling hands belong to Helen Keller's story. The peanut plant and the field belong to Carver's."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "SEJ-CARVER"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-MYTH",
+      "story_id": "ST-CARVER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "George Washington Carver menemukan selai kacang.",
+            "en": "George Washington Carver invented peanut butter."
+          }
+        }
+      ],
+      "image": "hist_peanut_plant",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Carver menemukan ratusan kegunaan kacang tanah, tetapi selai kacang bukan temuannya.",
+        "en": "Myth. Carver found hundreds of peanut uses, but peanut butter was not one of his inventions."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "SEJ-CARVER"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-CONNECT",
+      "story_id": "ST-CARVER",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dengan ceritanya.",
+            "en": "Match each picture to the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m1",
+          "text": {
+            "id": "kacang tanah",
+            "en": "peanut plant"
+          },
+          "image": "hist_peanut_plant"
+        },
+        {
+          "id": "m2",
+          "text": {
+            "id": "ladang",
+            "en": "field"
+          },
+          "image": "hist_soil_field"
+        },
+        {
+          "id": "m3",
+          "text": {
+            "id": "labu lab",
+            "en": "lab flask"
+          },
+          "image": "hist_curie_flask"
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "menanam bergantian",
+            "en": "planting crops in turn"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "mencari kegunaan baru",
+            "en": "finding new uses"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "menyuburkan tanah",
+            "en": "enriching the soil"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "m1": "t1",
+        "m2": "t2",
+        "m3": "t3"
+      },
+      "model_answer": {
+        "id": "Kacang tanah menyuburkan tanah, ladang ditanami bergantian, dan di lab ia mencari kegunaan baru.",
+        "en": "Peanuts enrich the soil, fields are planted in turn, and in the lab he looked for new uses."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "SEJ-CARVER"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-CHOOSE",
+      "story_id": "ST-CARVER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mengapa Carver menyuruh petani menanam kacang bergantian dengan kapas?",
+            "en": "Why did Carver tell farmers to grow peanuts in turn with cotton?"
+          }
+        }
+      ],
+      "image": "hist_soil_field",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Supaya kapas tumbuh lebih cepat",
+            "en": "So cotton grows faster"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Supaya petani tidak perlu bekerja",
+            "en": "So farmers did not have to work"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Supaya tanah tetap subur",
+            "en": "So the soil stays rich"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Menanam bergantian menjaga tanah tetap subur.",
+        "en": "Planting crops in turn keeps the soil rich."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "SEJ-KELLER",
+        "SEJ-CARVER"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-LEARN",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Seperti Helen Keller dan Carver?",
+            "en": "Like Helen Keller and Carver?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_good",
+          "text": {
+            "id": "Patut ditiru",
+            "en": "Good to follow"
+          }
+        },
+        {
+          "id": "b_less",
+          "text": {
+            "id": "Kurang baik",
+            "en": "Not so good"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Merawat tanaman",
+            "en": "Caring for plants"
+          },
+          "image": "pic_gardening"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Membiarkan teman sendirian",
+            "en": "Leaving a friend out"
+          },
+          "image": "val_left_out"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Membantu teman yang kesulitan",
+            "en": "Helping a friend who is struggling"
+          },
+          "image": "val_help_friend"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Membuang sampah sembarangan",
+            "en": "Dropping litter"
+          },
+          "image": "val_litter"
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Mengajak teman yang berbeda",
+            "en": "Including a friend who is different"
+          },
+          "image": "val_include_friend"
+        },
+        {
+          "id": "c6",
+          "text": {
+            "id": "Mencoba lagi bersama-sama",
+            "en": "Trying again together"
+          },
+          "image": "val_teamwork"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_good",
+        "c2": "b_less",
+        "c3": "b_good",
+        "c4": "b_less",
+        "c5": "b_good",
+        "c6": "b_good"
+      },
+      "model_answer": {
+        "id": "Terus mencoba, menyiram tanaman, menolong teman, dan mengajak teman yang berbeda patut ditiru. Membiarkan teman sendirian dan membuang sampah sembarangan kurang baik.",
+        "en": "Keeping on trying, watering plants, helping a friend and including a friend who is different are good to follow. Leaving a friend out and littering are not so good."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-01-015",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "SEJ-KELLER"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "story_id": "ST-KELLER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Helen Keller lulus dari universitas tahun 1904.",
+            "en": "Helen Keller graduated from university in 1904."
+          }
+        }
+      ],
+      "image": "hist_book_stack",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Ia orang tunanetra-tunarungu pertama yang lulus universitas.",
+        "en": "True. She was the first deaf-blind person to graduate from university."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-01-016",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "SEJ-CARVER"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "story_id": "ST-CARVER",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mengapa tetangga menyebut Carver kecil \"dokter tanaman\"?",
+            "en": "Why did neighbours call young Carver \"the plant doctor\"?"
+          }
+        }
+      ],
+      "image": "hist_peanut_plant",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Ia bisa menyembuhkan tanaman yang layu",
+            "en": "He could heal wilting plants"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Ia menjual obat",
+            "en": "He sold medicine"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Ia memakai jas putih",
+            "en": "He wore a white coat"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Karena ia tahu cara menyembuhkan tanaman yang layu.",
+        "en": "Because he knew how to heal wilting plants."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "story",
+      "skills": [
+        "SEJ-MAATHAI"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-MAATHAI",
+      "model_answer": {
+        "id": "Wangari Maathai mengajak para ibu menanam pohon dan meraih Hadiah Nobel Perdamaian 2004.",
+        "en": "Wangari Maathai got mothers planting trees and won the 2004 Nobel Peace Prize."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "SEJ-MAATHAI"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-STORY-ORDER",
+      "story_id": "ST-MAATHAI",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang terjadi lebih dulu?",
+            "en": "What happened first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e4",
+          "text": {
+            "id": "Ia memulai Gerakan Sabuk Hijau",
+            "en": "She starts the Green Belt Movement"
+          },
+          "image": "hist_tree_seedlings"
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Wangari kecil di Nyeri",
+            "en": "Young Wangari in Nyeri"
+          },
+          "image": "hist_sil_girl"
+        },
+        {
+          "id": "e5",
+          "text": {
+            "id": "Ia meraih Nobel Perdamaian",
+            "en": "She wins the Nobel Peace Prize"
+          },
+          "image": "hist_sunrise"
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Ia menjadi doktor biologi",
+            "en": "She earns a doctorate in biology"
+          },
+          "image": "sci_microscope"
+        },
+        {
+          "id": "e3",
+          "text": {
+            "id": "Para ibu bercerita sungai mengering",
+            "en": "The mothers say the streams are drying up"
+          },
+          "image": "pic_cloud"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4",
+        "e5"
+      ],
+      "model_answer": {
+        "id": "Wangari kecil di Nyeri, menjadi doktor biologi, mendengar cerita para ibu, memulai Gerakan Sabuk Hijau, lalu Nobel 2004.",
+        "en": "Young Wangari in Nyeri, a doctorate in biology, the mothers' stories, the Green Belt Movement, then the 2004 Nobel Prize."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-MAATHAI"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-MAATHAI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang ditanam Gerakan Sabuk Hijau?",
+            "en": "What did the Green Belt Movement plant?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_peanut_plant",
+          "image": "hist_peanut_plant"
+        },
+        {
+          "id": "pic_flower",
+          "image": "pic_flower"
+        },
+        {
+          "id": "pic_vegetables",
+          "image": "pic_vegetables"
+        },
+        {
+          "id": "hist_tree_seedlings",
+          "image": "hist_tree_seedlings",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Gerakan Sabuk Hijau menanam jutaan pohon.",
+        "en": "The Green Belt Movement planted millions of trees."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "SEJ-MAATHAI"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-TF",
+      "story_id": "ST-MAATHAI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pohon membantu menahan tanah dan menyimpan air hujan.",
+            "en": "Trees help hold the soil and store rainwater."
+          }
+        }
+      ],
+      "image": "hist_tree_seedlings",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Itulah sebabnya para ibu menanam pohon di sekitar desa.",
+        "en": "True. That is why the mothers planted trees around their villages."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "SEJ-MAATHAI"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-CONNECT",
+      "story_id": "ST-MAATHAI",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dengan ceritanya.",
+            "en": "Match each picture to the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m1",
+          "text": {
+            "id": "bibit pohon",
+            "en": "seedlings"
+          },
+          "image": "hist_tree_seedlings"
+        },
+        {
+          "id": "m2",
+          "text": {
+            "id": "mikroskop",
+            "en": "microscope"
+          },
+          "image": "sci_microscope"
+        },
+        {
+          "id": "m3",
+          "text": {
+            "id": "pohon besar",
+            "en": "a big tree"
+          },
+          "image": "pic_tree"
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "belajar biologi",
+            "en": "studying biology"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "menahan tanah dan air",
+            "en": "holding soil and water"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "Gerakan Sabuk Hijau",
+            "en": "the Green Belt Movement"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "m1": "t1",
+        "m2": "t2",
+        "m3": "t3"
+      },
+      "model_answer": {
+        "id": "Bibit pohon untuk ditanam, mikroskop untuk belajar biologi, dan pohon besar yang menahan tanah.",
+        "en": "Seedlings for planting, the microscope for studying biology, and the grown tree that holds the soil."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "SEJ-MAATHAI"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-CHOOSE",
+      "story_id": "ST-MAATHAI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mengapa sungai di desa mengering?",
+            "en": "Why were the village streams drying up?"
+          }
+        }
+      ],
+      "image": "hist_bg_green_hills",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Terlalu banyak pohon",
+            "en": "There were too many trees"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Para ibu lupa menyiram",
+            "en": "The mothers forgot to water them"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Pohon-pohon ditebang",
+            "en": "The trees had been cut down"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Pohon-pohon ditebang, jadi tanah tidak lagi menyimpan air.",
+        "en": "The trees had been cut down, so the land no longer stored water."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "story",
+      "skills": [
+        "SEJ-MANDELA"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-STORY",
+      "story_id": "ST-MANDELA",
+      "model_answer": {
+        "id": "Mandela dipenjara 27 tahun karena menuntut kesetaraan, lalu memilih berdamai dan menjadi presiden.",
+        "en": "Mandela was imprisoned for 27 years for demanding equality, then chose peace and became president."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "SEJ-MANDELA"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-STORY-ORDER",
+      "story_id": "ST-MANDELA",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang terjadi lebih dulu?",
+            "en": "What happened first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e4",
+          "text": {
+            "id": "Ia berdamai dengan lawannya",
+            "en": "He makes peace with his opponents"
+          },
+          "image": "hist_handshake"
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Mandela kecil di Mvezo",
+            "en": "Young Mandela in Mvezo"
+          },
+          "image": "hist_sil_boy"
+        },
+        {
+          "id": "e5",
+          "text": {
+            "id": "Ia menjadi presiden pada 1994",
+            "en": "He becomes president in 1994"
+          },
+          "image": "hist_sil_man"
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Ia belajar, juga di penjara",
+            "en": "He studies, even in prison"
+          },
+          "image": "hist_book_stack"
+        },
+        {
+          "id": "e3",
+          "text": {
+            "id": "Ia bebas pada 1990",
+            "en": "He is freed in 1990"
+          },
+          "image": "hist_sunrise"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4",
+        "e5"
+      ],
+      "model_answer": {
+        "id": "Mandela kecil di Mvezo, menjadi pengacara, dipenjara, bebas tahun 1990, berjabat tangan, lalu presiden 1994.",
+        "en": "Young Mandela in Mvezo, a lawyer, prison, freedom in 1990, the handshake, then president in 1994."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "SEJ-MANDELA"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-PICK",
+      "story_id": "ST-MANDELA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang dipilih Mandela setelah bebas?",
+            "en": "What did Mandela choose after he was freed?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_treasure_ship",
+          "image": "hist_treasure_ship"
+        },
+        {
+          "id": "hist_handshake",
+          "image": "hist_handshake",
+          "correct": true
+        },
+        {
+          "id": "hist_curie_flask",
+          "image": "hist_curie_flask"
+        },
+        {
+          "id": "hist_compass_old",
+          "image": "hist_compass_old"
+        }
+      ],
+      "model_answer": {
+        "id": "Mandela memilih berdamai dan berjabat tangan dengan lawannya.",
+        "en": "Mandela chose peace and shook hands with his opponents."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "SEJ-MANDELA",
+        "SEJ-MAATHAI"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-WHOSE",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Benda ini dari cerita siapa?",
+            "en": "Whose story is each thing from?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_ma",
+          "text": {
+            "id": "Wangari Maathai",
+            "en": "Wangari Maathai"
+          }
+        },
+        {
+          "id": "b_md",
+          "text": {
+            "id": "Nelson Mandela",
+            "en": "Nelson Mandela"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Bibit pohon",
+            "en": "Seedlings"
+          },
+          "image": "hist_tree_seedlings"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Jabat tangan damai",
+            "en": "A handshake of peace"
+          },
+          "image": "hist_handshake"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Mikroskop",
+            "en": "A microscope"
+          },
+          "image": "sci_microscope"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Buku untuk belajar di penjara",
+            "en": "Books for studying in prison"
+          },
+          "image": "hist_book_stack"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_ma",
+        "c2": "b_md",
+        "c3": "b_ma",
+        "c4": "b_md"
+      },
+      "model_answer": {
+        "id": "Bibit pohon dan mikroskop dari cerita Wangari Maathai. Jabat tangan dan buku di penjara dari cerita Mandela.",
+        "en": "The seedlings and the microscope belong to Wangari Maathai's story. The handshake and the prison books belong to Mandela's."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "SEJ-MANDELA"
+      ],
+      "pool": "PRACT",
+      "order": 25,
+      "prompt_id": "P-TF",
+      "story_id": "ST-MANDELA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Setelah bebas, Mandela membalas dendam kepada lawannya.",
+            "en": "After he was freed, Mandela took revenge on his opponents."
+          }
+        }
+      ],
+      "image": "hist_handshake",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Salah. Mandela memilih berdamai, dan bersama de Klerk meraih Nobel Perdamaian.",
+        "en": "False. Mandela chose peace, and with de Klerk he won the Nobel Peace Prize."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "SEJ-MANDELA"
+      ],
+      "pool": "PRACT",
+      "order": 26,
+      "prompt_id": "P-CONNECT",
+      "story_id": "ST-MANDELA",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan gambar dengan ceritanya.",
+            "en": "Match each picture to the story."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m1",
+          "text": {
+            "id": "buku",
+            "en": "books"
+          },
+          "image": "hist_book_stack"
+        },
+        {
+          "id": "m2",
+          "text": {
+            "id": "matahari terbit",
+            "en": "sunrise"
+          },
+          "image": "hist_sunrise"
+        },
+        {
+          "id": "m3",
+          "text": {
+            "id": "jabat tangan",
+            "en": "handshake"
+          },
+          "image": "hist_handshake"
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "bebas, 11 Februari 1990",
+            "en": "freed, 11 February 1990"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "Nobel Perdamaian 1993",
+            "en": "the 1993 Nobel Peace Prize"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "belajar di penjara",
+            "en": "studying in prison"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "m1": "t1",
+        "m2": "t2",
+        "m3": "t3"
+      },
+      "model_answer": {
+        "id": "Buku untuk belajar di penjara, matahari terbit hari kebebasan, dan jabat tangan perdamaian.",
+        "en": "Books for studying in prison, the sunrise of his day of freedom, and the handshake of peace."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "SEJ-MANDELA"
+      ],
+      "pool": "PRACT",
+      "order": 27,
+      "prompt_id": "P-CHOOSE",
+      "story_id": "ST-MANDELA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang terjadi pada tahun 1994 di Afrika Selatan?",
+            "en": "What happened in 1994 in South Africa?"
+          }
+        }
+      ],
+      "image": "hist_sunrise",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Semua warga boleh memilih untuk pertama kali",
+            "en": "Every citizen could vote for the first time"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Mandela masuk penjara",
+            "en": "Mandela went to prison"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Mandela lahir",
+            "en": "Mandela was born"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Tahun 1994, semua warga boleh memilih, dan Mandela menjadi presiden.",
+        "en": "In 1994 every citizen could vote, and Mandela became president."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "SEJ-MAATHAI",
+        "SEJ-MANDELA"
+      ],
+      "pool": "PRACT",
+      "order": 28,
+      "prompt_id": "P-TIMELINE",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang terjadi paling dulu?",
+            "en": "Which happened first?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "e3",
+          "text": {
+            "id": "Mandela menjadi presiden, 1994",
+            "en": "Mandela becomes president, 1994"
+          },
+          "image": "hist_handshake"
+        },
+        {
+          "id": "e1",
+          "text": {
+            "id": "Gerakan Sabuk Hijau dimulai, 1977",
+            "en": "Green Belt Movement starts, 1977"
+          },
+          "image": "hist_tree_seedlings"
+        },
+        {
+          "id": "e4",
+          "text": {
+            "id": "Wangari meraih Nobel, 2004",
+            "en": "Wangari wins the Nobel Prize, 2004"
+          },
+          "image": "pic_tree"
+        },
+        {
+          "id": "e2",
+          "text": {
+            "id": "Mandela bebas, 1990",
+            "en": "Mandela freed, 1990"
+          },
+          "image": "hist_sunrise"
+        }
+      ],
+      "solution": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "model_answer": {
+        "id": "Gerakan Sabuk Hijau (1977), Mandela bebas (1990), Mandela presiden (1994), lalu Nobel Wangari (2004).",
+        "en": "The Green Belt Movement (1977), Mandela freed (1990), Mandela president (1994), then Wangari's Nobel (2004)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-02-015",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "SEJ-MAATHAI",
+        "SEJ-MANDELA"
+      ],
+      "pool": "PRACT",
+      "order": 29,
+      "prompt_id": "P-LEARN",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Seperti Wangari dan Mandela?",
+            "en": "Like Wangari and Mandela?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_good",
+          "text": {
+            "id": "Patut ditiru",
+            "en": "Good to follow"
+          }
+        },
+        {
+          "id": "b_less",
+          "text": {
+            "id": "Kurang baik",
+            "en": "Not so good"
+          }
+        },
+        {
+          "id": "c1",
+          "text": {
+            "id": "Menanam pohon",
+            "en": "Planting a tree"
+          },
+          "image": "pic_gardening"
+        },
+        {
+          "id": "c2",
+          "text": {
+            "id": "Marah-marah kepada teman",
+            "en": "Shouting at a friend in anger"
+          },
+          "image": "val_angry_face"
+        },
+        {
+          "id": "c3",
+          "text": {
+            "id": "Berteman dengan yang berbeda",
+            "en": "Befriending people who are different"
+          },
+          "image": "val_friends_diverse"
+        },
+        {
+          "id": "c4",
+          "text": {
+            "id": "Membuang sampah sembarangan",
+            "en": "Dropping litter"
+          },
+          "image": "val_litter"
+        },
+        {
+          "id": "c5",
+          "text": {
+            "id": "Hemat air",
+            "en": "Saving water"
+          },
+          "image": "val_save_water"
+        },
+        {
+          "id": "c6",
+          "text": {
+            "id": "Minta maaf dan berdamai",
+            "en": "Saying sorry and making up"
+          },
+          "image": "val_say_sorry"
+        }
+      ],
+      "solution_pairs": {
+        "c1": "b_good",
+        "c2": "b_less",
+        "c3": "b_good",
+        "c4": "b_less",
+        "c5": "b_good",
+        "c6": "b_good"
+      },
+      "model_answer": {
+        "id": "Menanam pohon, berteman dengan yang berbeda, hemat air, dan berdamai patut ditiru. Marah-marah dan membuang sampah sembarangan kurang baik.",
+        "en": "Planting trees, befriending people who are different, saving water and making up are good to follow. Losing your temper and littering are not so good."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-02-016",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "SEJ-MAATHAI"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "story_id": "ST-MAATHAI",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Siapa yang menanam pohon bersama Wangari?",
+            "en": "Who planted trees with Wangari?"
+          }
+        }
+      ],
+      "image": "hist_tree_seedlings",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Para pelaut",
+            "en": "Sailors"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Para ibu di desa",
+            "en": "Village mothers"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Para pilot",
+            "en": "Pilots"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Para ibu di desa-desa Kenya menanam pohon bersama Wangari.",
+        "en": "Mothers in Kenya's villages planted trees with Wangari."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-02-017",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "SEJ-MANDELA"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "story_id": "ST-MANDELA",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mandela dipenjara selama 27 tahun.",
+            "en": "Mandela was in prison for 27 years."
+          }
+        }
+      ],
+      "image": "hist_book_stack",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Ia dipenjara 27 tahun, sebagian besar di Pulau Robben.",
+        "en": "True. He was in prison for 27 years, mostly on Robben Island."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-02-018",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "SEJ-MANDELA"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "hist_handshake",
+      "gem": true,
+      "source": "UN General Assembly resolution A/RES/64/13 (10 November 2009) declaring 18 July Nelson Mandela International Day; South African Government News Agency, \"UN declares Mandela Day international event\" (67 minutes of service).",
+      "model_answer": {
+        "id": "Setiap 18 Juli, Hari Mandela Internasional, orang di seluruh dunia diajak berbuat baik selama 67 menit: satu menit untuk setiap tahun Mandela berjuang bagi sesama.",
+        "en": "Every 18 July, Nelson Mandela International Day, people around the world are invited to do good for 67 minutes: one minute for each year Mandela worked for others."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    },
+    {
+      "item_id": "SEJ-K-X-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku tumbuh dari biji kecil. Aku menahan tanah, menyimpan air hujan, dan memberi kayu bakar. Wangari Maathai menanamku berjuta-juta. Siapa aku?",
+            "en": "I grow from a tiny seed. I hold the soil, store rainwater and give firewood. Wangari Maathai planted millions of me. What am I?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "stone",
+          "text": {
+            "id": "Batu",
+            "en": "A stone"
+          }
+        },
+        {
+          "id": "tree",
+          "text": {
+            "id": "Pohon",
+            "en": "A tree"
+          },
+          "correct": true
+        },
+        {
+          "id": "lamp",
+          "text": {
+            "id": "Lampu",
+            "en": "A lamp"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Pohon! Wangari Maathai mengajak para ibu menanam jutaan pohon.",
+        "en": "A tree! Wangari Maathai got mothers to plant millions of trees."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sej-k-x-0.1"
+    }
+  ]
+}

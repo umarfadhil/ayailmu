@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- glyph_arrow_left: DRAFT art authored as code by art/tools/draw.py (ART_DIRECTION section 6). Placeholder until a human illustrator redraws or approves it (section 7). Generated: do not edit by hand. -->
+<!-- Texture slot: the app composites the shared paper-grain overlay above this drawing; no grain is baked in. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+  android:width="240dp"
+  android:height="240dp"
+  android:viewportWidth="240"
+  android:viewportHeight="240">
+  <path
+    android:strokeColor="@color/art_slate"
+    android:strokeWidth="15"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:strokeAlpha="0.88"
+    android:pathData="M130.9 213.9Q133.5 168.3 131.3 148.4Q129 128.6 120 112.9Q111 97.2 94.9 91.4Q78.9 85.5 44.8 85.3" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="4.4"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M131.6 212Q133.9 168 132 148.2Q130.1 128.4 121.1 112Q112 95.6 96.2 90.1Q80.5 84.6 45.5 84.6M71 67L46 83.9L70.3 101.3" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="1.6"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M132.2 212C132.6 204.6 135 181.6 134.5 167.6C134.1 153.6 130.4 134.5 129.6 127.8" />
+</vector>

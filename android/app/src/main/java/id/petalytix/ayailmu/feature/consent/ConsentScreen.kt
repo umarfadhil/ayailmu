@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.verticalScroll
@@ -23,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -40,6 +42,7 @@ import id.petalytix.ayailmu.core.design.theme.AyaSpacing
 import id.petalytix.ayailmu.core.design.theme.AyaTheme
 import id.petalytix.ayailmu.core.design.theme.AyaThemeTokens
 import id.petalytix.ayailmu.core.engine.Clock
+import id.petalytix.ayailmu.feature.modules.ArtWithFallback
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -161,6 +164,8 @@ fun ConsentScreen(
             modifier = Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()).padding(AyaSpacing.lg),
             verticalArrangement = Arrangement.spacedBy(AyaSpacing.md),
         ) {
+            // The course this consent is for, as its cover (the Arabic trial), above the words.
+            ArtWithFallback("cover_lang_arab", contentDescription = null, modifier = Modifier.width(COURSE_COVER))
             Text(
                 stringResource(R.string.consent_title),
                 style = MaterialTheme.typography.headlineMedium,
@@ -208,6 +213,8 @@ fun ConsentScreen(
         }
     }
 }
+
+private val COURSE_COVER = 120.dp
 
 /** A whole-row checkbox (the row is the touch target, ≥ 48 dp, announced as a checkbox). */
 @Composable

@@ -28,7 +28,46 @@ data class ContentPack(
     val feedback: Map<String, LocalizedText> = emptyMap(),
     val screens: List<LessonScreen> = emptyList(),
     val readings: Map<String, Reading> = emptyMap(),
+    /** P6: unit titles and the sticker each completed unit awards (art key). Empty = units are untitled. */
+    val units: List<UnitInfo> = emptyList(),
     val items: List<Item> = emptyList(),
+    /** Follow-up 12: animated stories by id ([Story]); each is played by a `story` item with that `story_id`. */
+    val stories: Map<String, Story> = emptyMap(),
+)
+
+/** One unit of a pack. [sticker] is an art key (`content/assets/art/index.json`) awarded when the unit is done. */
+@Serializable
+data class UnitInfo(
+    val unit: String,
+    val title: LocalizedText,
+    val sticker: String? = null,
+)
+
+/**
+ * A tappable area of an item's [Item.image] for `tap_hotspot`, as fractions of the picture (0..1, origin top-left).
+ * Regions are published per art key in `art/index.json` so packs and drawings agree.
+ */
+@Serializable
+data class Region(
+    val x: Double,
+    val y: Double,
+    val w: Double,
+    val h: Double,
+) {
+    fun contains(
+        px: Double,
+        py: Double,
+    ): Boolean = px >= x && px <= x + w && py >= y && py <= y + h
+
+    val isValid: Boolean get() = x >= 0 && y >= 0 && w > 0 && h > 0 && x + w <= 1.0 + 1e-9 && y + h <= 1.0 + 1e-9
+}
+
+/** Range of an `estimate_slider`. The answer and its tolerance live in [Item.numeric]. */
+@Serializable
+data class SliderSpec(
+    val min: Double,
+    val max: Double,
+    val step: Double = 1.0,
 )
 
 @Serializable
@@ -44,8 +83,14 @@ data class ChoiceOption(
     val text: LocalizedText? = null,
     /** Target-language text (rendered with the target font / direction). */
     @SerialName("target_text") val targetText: String? = null,
-    /** Asset path for `pick_image` options (hand-drawn, ART_DIRECTION). */
+    /** Art key for `pick_image` options (`art/index.json`; hand-drawn, ART_DIRECTION). */
     val image: String? = null,
+    /** `tap_hotspot`: where this option sits on the item's picture. */
+    val region: Region? = null,
+    /** Clip key (`<lang>/<slug>`, INTERACTIONS_AUDIO.md §3.1): a speaker button on this card. Hidden until the clip exists. */
+    val audio: String? = null,
+    /** Reading aid shown small under [targetText] (pinyin, romaji, Revised Romanization). */
+    val romanization: String? = null,
     val correct: Boolean = false,
     @SerialName("error_tag") val errorTag: ErrorTag? = null,
     @SerialName("feedback_id") val feedbackId: String? = null,
@@ -131,7 +176,23 @@ data class Item(
     @SerialName("focus_for") val focusFor: FocusFor? = null,
     val order: Int? = null,
     @SerialName("reading_id") val readingId: String? = null,
+    /** Clip key (`<lang>/<slug>`, INTERACTIONS_AUDIO.md §3.1): what an `audio_match` plays; a speaker elsewhere. */
     val audio: String? = null,
+    /** Art key shown with the question (a picture to count, the scene of a `tap_hotspot`). */
+    val image: String? = null,
+    /** `estimate_slider` range. */
+    val slider: SliderSpec? = null,
+    /** How a pair/sequence item is answered ([Gestures]); null = the type's default. */
+    val gesture: String? = null,
+    /** Reading aid shown small under [targetText] (pinyin with tone marks, Hepburn romaji, Revised Romanization). */
+    val romanization: String? = null,
+    /** `trace`: the stroke key (`assets/strokes/index.json`, [StrokeIndex]) of the glyph to trace. */
+    val trace: String? = null,
+    /**
+     * Follow-up 12: on a `story` item, the story it plays (`ContentPack.stories`); on any other item, the story the
+     * question is about (the app offers «Lihat lagi / Watch again»).
+     */
+    @SerialName("story_id") val storyId: String? = null,
     val gem: Boolean = false,
     /** Required when `gem` is true (framework §1b). */
     val source: String? = null,
@@ -142,10 +203,30 @@ data class Item(
     val isParaphrase: Boolean get() = type == ItemType.TYPE_IN && variant == VARIANT_PARAPHRASE
     val isMeaning: Boolean get() = type == ItemType.TYPE_IN && variant != VARIANT_PARAPHRASE
     val isChoiceFamily: Boolean
-        get() = type == ItemType.CHOOSE || type == ItemType.PICK_IMAGE || type == ItemType.TRUE_FALSE || type == ItemType.AUDIO_MATCH
+        get() =
+            type == ItemType.CHOOSE ||
+                type == ItemType.PICK_IMAGE ||
+                type == ItemType.TRUE_FALSE ||
+                type == ItemType.AUDIO_MATCH ||
+                type == ItemType.TAP_HOTSPOT ||
+                type == ItemType.STORY_CHOICE ||
+                (type == ItemType.DAILY_PUZZLE && options.isNotEmpty())
+
+    /** Answered with a number: number pad, estimate slider, or a daily puzzle without options. */
+    val isNumeric: Boolean
+        get() = type == ItemType.NUMBER_INPUT || type == ItemType.ESTIMATE_SLIDER || (type == ItemType.DAILY_PUZZLE && options.isEmpty())
     val isReferentChoice: Boolean get() = isChoiceFamily && variant == VARIANT_REFERENT
     val isSequence: Boolean get() = type == ItemType.ORDER || type == ItemType.TILES || type == ItemType.FILL_BLANK
-    val isPairs: Boolean get() = type == ItemType.MATCH_PAIRS || type == ItemType.SORT_BUCKETS
+    val isPairs: Boolean get() = type == ItemType.MATCH_PAIRS || type == ItemType.SORT_BUCKETS || type == ItemType.MEMORY_FLIP
+
+    /** Traced letter: answered with the ids of the completed strokes, never wrong, never evidence. */
+    val isTrace: Boolean get() = type == ItemType.TRACE
+
+    /** Animated story: tapped through and "seen", never scored, never evidence (like `info_card`). */
+    val isStory: Boolean get() = type == ItemType.STORY
+
+    /** The gesture the renderer uses: [gesture] when set, else the type's default (null = the type has none). */
+    val effectiveGesture: String? get() = gesture ?: Gestures.defaultFor(type)
     val primarySkill: String? get() = skills.firstOrNull()
 
     companion object {
@@ -154,6 +235,40 @@ data class Item(
         const val VARIANT_FORM = "form"
         const val VARIANT_REFERENT = "referent"
     }
+}
+
+/**
+ * How pair and sequence items are answered (INTERACTIONS_AUDIO.md §2.1). Every drag or connect also works
+ * tap-then-tap for accessibility; the gesture only picks the main interaction.
+ */
+object Gestures {
+    /** Draw a line from a left card to its partner. */
+    const val CONNECT = "connect"
+
+    /** Drag a card onto its target, slot or basket. */
+    const val DRAG = "drag"
+
+    /** Tap a card, then tap its place (the pre-follow-up-11 interaction). */
+    const val TAP = "tap"
+
+    val ALL: Set<String> = setOf(CONNECT, DRAG, TAP)
+
+    /** Gestures an item of [type] may declare; empty = `gesture` must be absent. */
+    fun allowedFor(type: ItemType): Set<String> =
+        when (type) {
+            ItemType.MATCH_PAIRS -> setOf(CONNECT, DRAG)
+            ItemType.SORT_BUCKETS -> setOf(DRAG)
+            ItemType.ORDER, ItemType.TILES, ItemType.FILL_BLANK -> setOf(DRAG, TAP)
+            else -> emptySet()
+        }
+
+    /** Renderer default when an item leaves `gesture` out. */
+    fun defaultFor(type: ItemType): String? =
+        when (type) {
+            ItemType.MATCH_PAIRS -> CONNECT
+            ItemType.SORT_BUCKETS, ItemType.ORDER, ItemType.TILES, ItemType.FILL_BLANK -> DRAG
+            else -> null
+        }
 }
 
 @Serializable

@@ -1,0 +1,2133 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sns-a-m-0.1",
+    "subject": "sains",
+    "track": "sns-a-m",
+    "level": "menengah",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Sains — Menengah (Dewasa)",
+      "en": "Science — Intermediate (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, starter level: 2 units) for subject + language review: needs a science reviewer (physics and chemistry) and the Indonesian and English language reviewers before any item is approved (docs/syllabus/03_SAINS.md, Adults Menengah units 1-2; MODULES_LEVELS_STORIES.md). New sci_/pic_ art keys (contract section 6) are drafts being drawn.",
+  "prompts": {
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban yang tepat.",
+      "en": "Choose the right answer."
+    },
+    "P-MYTH": {
+      "id": "Mitos atau fakta?",
+      "en": "Myth or fact?"
+    },
+    "P-CONNECT": {
+      "id": "Tarik garis ke pasangannya.",
+      "en": "Draw a line to each match."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke pasangannya.",
+      "en": "Drag each picture to its match."
+    },
+    "P-SORT": {
+      "id": "Seret ke keranjang yang tepat.",
+      "en": "Drag each into the right basket."
+    },
+    "P-ORDER": {
+      "id": "Seret ke urutan yang benar.",
+      "en": "Drag them into the right order."
+    },
+    "P-FILL": {
+      "id": "Seret ke bagian yang kosong.",
+      "en": "Drag into the gap."
+    },
+    "P-EST": {
+      "id": "Perkirakan, lalu geser.",
+      "en": "Estimate, then slide."
+    },
+    "P-TRY": {
+      "id": "Coba di rumah",
+      "en": "Try at home"
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Correct. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Baik, kita lanjut.",
+      "en": "Good, let's continue."
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Fisika sehari-hari",
+        "en": "Everyday physics"
+      },
+      "sticker": "sticker_kite"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Kimia sehari-hari",
+        "en": "Everyday chemistry"
+      },
+      "sticker": "sticker_teapot"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SNS-A-M-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Fisika sehari-hari",
+        "en": "Everyday physics"
+      },
+      "body": [
+        {
+          "id": "Air mendidih pada 100 °C hanya di dekat permukaan laut. Di pegunungan tekanan udara lebih rendah, jadi titik didihnya turun; panci presto menaikkan tekanan, jadi titik didihnya naik.",
+          "en": "Water boils at 100 °C only near sea level. In the mountains the air pressure is lower, so the boiling point drops; a pressure cooker raises the pressure, so the boiling point rises."
+        },
+        {
+          "id": "Sayap pesawat membelokkan udara ke bawah; sebagai balasannya, udara mendorong sayap ke atas.",
+          "en": "A plane's wing turns air downwards; in return, the air pushes the wing up."
+        },
+        {
+          "id": "Energi tidak hilang, hanya berubah bentuk. Mesin bensin mengubah sebagian besar energinya menjadi panas.",
+          "en": "Energy is never lost, only changed. A petrol engine turns most of its energy into heat."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SNS-A-M-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Kimia sehari-hari",
+        "en": "Everyday chemistry"
+      },
+      "body": [
+        {
+          "id": "Karat terbentuk saat besi bereaksi dengan oksigen dan air; garam mempercepatnya. Baterai juga bekerja dengan reaksi yang memindahkan elektron.",
+          "en": "Rust forms when iron reacts with oxygen and water; salt speeds it up. Batteries also work by reactions that move electrons."
+        },
+        {
+          "id": "Fermentasi: mikroba mengolah pangan. Jamur Rhizopus membuat tempe, ragi membuat roti mengembang.",
+          "en": "Fermentation: microbes transform food. Rhizopus mould makes tempeh, yeast makes bread rise."
+        },
+        {
+          "id": "Skala pH: di bawah 7 asam, 7 netral, di atas 7 basa. Kulit sehat sedikit asam, sekitar pH 5.",
+          "en": "The pH scale: below 7 is acidic, 7 neutral, above 7 basic. Healthy skin is slightly acidic, about pH 5."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "SNS-A-M-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "PHYS-HEAT"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di mana air mendidih di bawah 100 °C?",
+            "en": "Where does water boil below 100 °C?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_beach",
+          "image": "pic_beach"
+        },
+        {
+          "id": "pic_mountain",
+          "image": "pic_mountain",
+          "correct": true
+        },
+        {
+          "id": "pic_ship",
+          "image": "pic_ship"
+        }
+      ],
+      "model_answer": {
+        "id": "Di pegunungan. Di Dieng (±2.000 m) air mendidih sekitar 93 °C karena tekanan udaranya lebih rendah.",
+        "en": "In the mountains. On the Dieng Plateau (about 2,000 m) water boils at about 93 °C because the air pressure is lower."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "PHYS-HEAT"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Panci presto: tekanan naik, titik didih air ____.",
+            "en": "Pressure cooker: pressure up, water's boiling point ____."
+          }
+        }
+      ],
+      "image": "sci_steam_kettle",
+      "options": [
+        {
+          "id": "down",
+          "text": {
+            "id": "turun",
+            "en": "goes down"
+          }
+        },
+        {
+          "id": "same",
+          "text": {
+            "id": "tetap 100 °C",
+            "en": "stays at 100 °C"
+          }
+        },
+        {
+          "id": "up",
+          "text": {
+            "id": "naik, sekitar 120 °C",
+            "en": "goes up, to about 120 °C"
+          }
+        }
+      ],
+      "solution": [
+        "up"
+      ],
+      "model_answer": {
+        "id": "Naik sampai sekitar 120 °C, jadi daging dan kacang lebih cepat empuk.",
+        "en": "It rises to about 120 °C, so meat and beans soften faster."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "PHYS-HEAT"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bagaimana panasnya berpindah?",
+            "en": "How does the heat travel?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_cond",
+          "text": {
+            "id": "Konduksi (bersentuhan)",
+            "en": "Conduction (touch)"
+          }
+        },
+        {
+          "id": "b_conv",
+          "text": {
+            "id": "Konveksi (aliran air/udara)",
+            "en": "Convection (moving water/air)"
+          }
+        },
+        {
+          "id": "b_rad",
+          "text": {
+            "id": "Radiasi (pancaran)",
+            "en": "Radiation (rays)"
+          }
+        },
+        {
+          "id": "spoon",
+          "text": {
+            "id": "Sendok logam di kopi panas ikut panas",
+            "en": "A metal spoon in hot coffee heats up"
+          },
+          "image": "pic_spoon_fork"
+        },
+        {
+          "id": "sun",
+          "text": {
+            "id": "Kulit hangat saat berjemur",
+            "en": "Skin warms in the sunshine"
+          },
+          "image": "pic_sun"
+        },
+        {
+          "id": "pot",
+          "text": {
+            "id": "Air di panci berputar naik-turun saat dipanaskan",
+            "en": "Water in a heated pot rolls up and down"
+          },
+          "image": "sci_steam_kettle"
+        },
+        {
+          "id": "breeze",
+          "text": {
+            "id": "Angin laut bertiup ke darat pada siang hari",
+            "en": "A sea breeze blows inland by day"
+          },
+          "image": "pic_wind"
+        },
+        {
+          "id": "lamp",
+          "text": {
+            "id": "Wajah terasa hangat di dekat nyala pelita",
+            "en": "Your face feels warm near a lamp flame"
+          },
+          "image": "hist_oil_lamp"
+        }
+      ],
+      "solution_pairs": {
+        "spoon": "b_cond",
+        "sun": "b_rad",
+        "pot": "b_conv",
+        "breeze": "b_conv",
+        "lamp": "b_rad"
+      },
+      "model_answer": {
+        "id": "Konduksi: sendok. Konveksi: air di panci, angin laut. Radiasi: matahari, nyala pelita.",
+        "en": "Conduction: the spoon. Convection: the pot, the sea breeze. Radiation: the sun, the flame."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "PHYS-FORCE"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa yang terutama mengangkat sayap pesawat?",
+            "en": "What mainly lifts a plane's wing?"
+          }
+        }
+      ],
+      "image": "pic_plane",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Sayap membelokkan udara ke bawah, udara mendorong sayap ke atas",
+            "en": "The wing turns air downwards and the air pushes the wing up"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Udara di atas dan di bawah sayap harus tiba di ujung bersamaan",
+            "en": "Air above and below the wing must reach the back edge at the same time"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Mesin mendorong pesawat lurus ke atas",
+            "en": "The engines push the plane straight up"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Sayap yang miring dan melengkung membelokkan banyak udara ke bawah. Teori \"harus tiba bersamaan\" itu keliru.",
+        "en": "A tilted, curved wing turns a lot of air downwards. The \"must arrive together\" idea is wrong."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "PHYS-ENERGY"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Energi berubah menjadi apa?",
+            "en": "What does the energy become?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "moto",
+          "text": {
+            "id": "Motor bensin",
+            "en": "Petrol motorbike"
+          },
+          "image": "pic_motorbike"
+        },
+        {
+          "id": "torch",
+          "text": {
+            "id": "Senter",
+            "en": "Torch"
+          },
+          "image": "sci_battery_bulb"
+        },
+        {
+          "id": "radio",
+          "text": {
+            "id": "Radio",
+            "en": "Radio"
+          },
+          "image": "pic_radio"
+        },
+        {
+          "id": "runner",
+          "text": {
+            "id": "Orang berlari",
+            "en": "A runner"
+          },
+          "image": "pic_run"
+        },
+        {
+          "id": "e_fuel",
+          "text": {
+            "id": "kimia (bensin) → gerak + banyak panas",
+            "en": "chemical (petrol) → motion + lots of heat"
+          }
+        },
+        {
+          "id": "e_light",
+          "text": {
+            "id": "listrik → cahaya + sedikit panas",
+            "en": "electrical → light + a little heat"
+          }
+        },
+        {
+          "id": "e_sound",
+          "text": {
+            "id": "listrik → bunyi",
+            "en": "electrical → sound"
+          }
+        },
+        {
+          "id": "e_food",
+          "text": {
+            "id": "kimia (makanan) → gerak + panas tubuh",
+            "en": "chemical (food) → motion + body heat"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "moto": "e_fuel",
+        "torch": "e_light",
+        "radio": "e_sound",
+        "runner": "e_food"
+      },
+      "model_answer": {
+        "id": "Bensin dan makanan sama-sama energi kimia; baterai mengalirkan listrik yang menjadi cahaya atau bunyi.",
+        "en": "Petrol and food are both chemical energy; a battery drives electricity that becomes light or sound."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "PHYS-FORCE"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tanpa udara, benda berat jatuh lebih cepat daripada benda ringan.",
+            "en": "Without air, heavy things fall faster than light things."
+          }
+        }
+      ],
+      "image": "pic_ball",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Tanpa hambatan udara semua benda jatuh sama cepat; astronaut Apollo 15 menjatuhkan palu dan bulu di Bulan, keduanya tiba bersamaan.",
+        "en": "Myth. Without air resistance everything falls at the same rate; an Apollo 15 astronaut dropped a hammer and a feather on the Moon and they landed together."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "PHYS-ENERGY"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari matahari sampai lampu menyala (PLTA).",
+            "en": "From sunshine to a lit lamp (hydropower)."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "turbine",
+          "text": {
+            "id": "Air dari bendungan memutar turbin",
+            "en": "Water from the dam turns a turbine"
+          },
+          "image": "pic_river"
+        },
+        {
+          "id": "sun",
+          "text": {
+            "id": "Matahari menguapkan air laut",
+            "en": "The sun evaporates seawater"
+          },
+          "image": "pic_sun"
+        },
+        {
+          "id": "lamp",
+          "text": {
+            "id": "Listrik menyalakan lampu di rumah",
+            "en": "Electricity lights a lamp at home"
+          },
+          "image": "sci_battery_bulb"
+        },
+        {
+          "id": "rain",
+          "text": {
+            "id": "Hujan mengisi sungai dan waduk",
+            "en": "Rain fills rivers and reservoirs"
+          },
+          "image": "pic_rain"
+        }
+      ],
+      "solution": [
+        "sun",
+        "rain",
+        "turbine",
+        "lamp"
+      ],
+      "model_answer": {
+        "id": "Matahari → hujan → turbin → listrik. Energi PLTA sebenarnya berasal dari Matahari.",
+        "en": "Sun → rain → turbine → electricity. Hydropower is really solar energy."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "PHYS-HEAT"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Semua di ruangan yang sama. Mana terasa paling dingin?",
+            "en": "All in the same room. Which feels coldest?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_book",
+          "image": "pic_book"
+        },
+        {
+          "id": "pic_shirt",
+          "image": "pic_shirt"
+        },
+        {
+          "id": "pic_spoon_fork",
+          "image": "pic_spoon_fork",
+          "correct": true
+        },
+        {
+          "id": "pic_chair",
+          "image": "pic_chair"
+        }
+      ],
+      "model_answer": {
+        "id": "Sendok logam. Suhunya sama, tetapi logam cepat menarik panas dari tangan Anda.",
+        "en": "The metal spoon. It's the same temperature, but metal draws heat from your hand quickly."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "estimate_slider",
+      "skills": [
+        "PHYS-ENERGY"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-EST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Berapa persen energi bensin yang benar-benar menggerakkan mobil?",
+            "en": "What percentage of petrol's energy actually moves the car?"
+          }
+        }
+      ],
+      "image": "pic_car",
+      "numeric": {
+        "value": 20,
+        "tolerance": 8,
+        "unit": {
+          "id": "%",
+          "en": "%"
+        }
+      },
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1
+      },
+      "model_answer": {
+        "id": "Hanya sekitar 12–30%. Sisanya terbuang, terutama sebagai panas; itulah gunanya radiator.",
+        "en": "Only about 12–30%. The rest is lost, mostly as heat; that's what the radiator is for."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "PHYS-FORCE"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang mengapung, walau terbuat dari logam?",
+            "en": "Which one floats, even though it's metal?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_ship",
+          "image": "pic_ship",
+          "correct": true
+        },
+        {
+          "id": "coin_generic",
+          "image": "coin_generic"
+        },
+        {
+          "id": "pic_spoon_fork",
+          "image": "pic_spoon_fork"
+        },
+        {
+          "id": "sci_magnet",
+          "image": "sci_magnet"
+        }
+      ],
+      "model_answer": {
+        "id": "Kapal baja. Bentuknya mendorong banyak air ke samping; dorongan air ke atas sama dengan beratnya.",
+        "en": "The steel ship. Its shape pushes aside a lot of water, and the water's upward push equals its weight."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "PHYS-HEAT"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-TRY",
+      "image": "sci_steam_kettle",
+      "model_answer": {
+        "id": "Rebus dua panci air yang sama, satu ditutup dan satu terbuka. Yang ditutup mendidih lebih dulu: uap tidak lolos membawa panas, jadi gas lebih hemat.",
+        "en": "Heat two identical pots of water, one with a lid and one without. The covered one boils first: steam can't carry the heat away, so you save gas."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "PHYS-ENERGY"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Microwave paling cepat memanaskan yang mana?",
+            "en": "What does a microwave heat fastest?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sci_ice_cube",
+          "image": "sci_ice_cube"
+        },
+        {
+          "id": "coin_generic",
+          "image": "coin_generic"
+        },
+        {
+          "id": "sci_water_drop",
+          "image": "sci_water_drop",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Air cair. Gelombang mikro memutar molekul air bolak-balik hingga panas. Es menyerapnya jauh lebih sedikit, logam memantulkannya.",
+        "en": "Liquid water. Microwaves twist water molecules back and forth until they heat up. Ice absorbs far less, and metal reflects them."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "PHYS-HEAT"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mengapa gagang panci dibuat dari kayu atau plastik?",
+            "en": "Why are pan handles made of wood or plastic?"
+          }
+        }
+      ],
+      "image": "pic_cook",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Kayu dan plastik lebih berat",
+            "en": "Wood and plastic are heavier"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Logam terlalu mahal untuk gagang",
+            "en": "Metal is too expensive for handles"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Kayu dan plastik lambat menghantarkan panas",
+            "en": "Wood and plastic conduct heat slowly"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Kayu dan plastik adalah isolator panas, jadi gagangnya tetap aman dipegang.",
+        "en": "Wood and plastic are heat insulators, so the handle stays safe to hold."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "PHYS-FORCE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Burung dan pesawat terangkat karena…",
+            "en": "Birds and planes are lifted because…"
+          }
+        }
+      ],
+      "image": "pic_bird",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "udaranya lebih ringan di atas awan",
+            "en": "the air is lighter above the clouds"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "sayap membelokkan udara ke bawah",
+            "en": "their wings turn air downwards"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "mereka lebih ringan daripada udara",
+            "en": "they are lighter than air"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Sayap membelokkan udara ke bawah, dan udara mendorong sayap ke atas.",
+        "en": "Wings turn air downwards, and the air pushes the wings up."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-01-015",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "PHYS-ENERGY"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mesin bensin: sebagian besar energinya menjadi ____.",
+            "en": "A petrol engine turns most of its energy into ____."
+          }
+        }
+      ],
+      "image": "pic_motorbike",
+      "options": [
+        {
+          "id": "light",
+          "text": {
+            "id": "cahaya",
+            "en": "light"
+          }
+        },
+        {
+          "id": "heat",
+          "text": {
+            "id": "panas",
+            "en": "heat"
+          }
+        },
+        {
+          "id": "sound",
+          "text": {
+            "id": "bunyi",
+            "en": "sound"
+          }
+        }
+      ],
+      "solution": [
+        "heat"
+      ],
+      "model_answer": {
+        "id": "Panas. Hanya sebagian kecil yang menjadi gerak.",
+        "en": "Heat. Only a small part becomes motion."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "CHEM-REDOX"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pagar besi: mempercepat atau mencegah karat?",
+            "en": "An iron fence: speeds up or prevents rust?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_fast",
+          "text": {
+            "id": "Mempercepat karat",
+            "en": "Speeds up rust"
+          }
+        },
+        {
+          "id": "b_stop",
+          "text": {
+            "id": "Mencegah karat",
+            "en": "Prevents rust"
+          }
+        },
+        {
+          "id": "rain",
+          "text": {
+            "id": "Kehujanan lalu dibiarkan basah",
+            "en": "Rained on and left wet"
+          },
+          "image": "pic_rain"
+        },
+        {
+          "id": "paint",
+          "text": {
+            "id": "Dicat",
+            "en": "Painted"
+          },
+          "image": "pic_draw_paint"
+        },
+        {
+          "id": "sea",
+          "text": {
+            "id": "Terkena udara pantai yang bergaram",
+            "en": "Salty sea air"
+          },
+          "image": "pic_sea"
+        },
+        {
+          "id": "dry",
+          "text": {
+            "id": "Disimpan di tempat kering",
+            "en": "Kept somewhere dry"
+          },
+          "image": "pic_house"
+        },
+        {
+          "id": "damp",
+          "text": {
+            "id": "Selalu lembap dan berembun",
+            "en": "Always damp with dew"
+          },
+          "image": "sci_water_drop"
+        }
+      ],
+      "solution_pairs": {
+        "rain": "b_fast",
+        "paint": "b_stop",
+        "sea": "b_fast",
+        "dry": "b_stop",
+        "damp": "b_fast"
+      },
+      "model_answer": {
+        "id": "Air dan garam mempercepat karat; cat dan tempat kering menjauhkan air dan oksigen.",
+        "en": "Water and salt speed up rust; paint and dry storage keep water and oxygen away."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "CHEM-PH"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang bersifat basa (pH di atas 7)?",
+            "en": "Which one is basic (pH above 7)?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_orange_fruit",
+          "image": "pic_orange_fruit"
+        },
+        {
+          "id": "pic_coffee_cup",
+          "image": "pic_coffee_cup"
+        },
+        {
+          "id": "pic_tea_cup",
+          "image": "pic_tea_cup"
+        },
+        {
+          "id": "wash_hands",
+          "image": "wash_hands",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Sabun, sekitar pH 9–10. Jeruk, kopi, dan teh bersifat asam.",
+        "en": "Soap, about pH 9–10. Oranges, coffee and tea are acidic."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "CHEM-REDOX",
+        "CHEM-FERMENT"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Reaksi dan contohnya.",
+            "en": "Reaction and example."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "ox_slow",
+          "text": {
+            "id": "Karat (oksidasi lambat)",
+            "en": "Rust (slow oxidation)"
+          }
+        },
+        {
+          "id": "ox_fast",
+          "text": {
+            "id": "Pembakaran (oksidasi cepat)",
+            "en": "Burning (fast oxidation)"
+          }
+        },
+        {
+          "id": "ferm",
+          "text": {
+            "id": "Fermentasi",
+            "en": "Fermentation"
+          }
+        },
+        {
+          "id": "neut",
+          "text": {
+            "id": "Asam + basa (netralisasi)",
+            "en": "Acid + base (neutralisation)"
+          }
+        },
+        {
+          "id": "bike",
+          "text": {
+            "id": "Rantai sepeda berkarat",
+            "en": "A rusty bicycle chain"
+          },
+          "image": "pic_bicycle"
+        },
+        {
+          "id": "lamp",
+          "text": {
+            "id": "Nyala pelita",
+            "en": "A lamp flame"
+          },
+          "image": "hist_oil_lamp"
+        },
+        {
+          "id": "bread",
+          "text": {
+            "id": "Adonan roti mengembang",
+            "en": "Rising bread dough"
+          },
+          "image": "pic_bread"
+        },
+        {
+          "id": "antacid",
+          "text": {
+            "id": "Obat maag (antasida)",
+            "en": "Antacid for heartburn"
+          },
+          "image": "pic_medicine"
+        }
+      ],
+      "solution_pairs": {
+        "ox_slow": "bike",
+        "ox_fast": "lamp",
+        "ferm": "bread",
+        "neut": "antacid"
+      },
+      "model_answer": {
+        "id": "Karat dan api sama-sama oksidasi, hanya beda kecepatan. Antasida menetralkan asam lambung.",
+        "en": "Rust and fire are both oxidation, just at different speeds. Antacids neutralise stomach acid."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "CHEM-PH"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari paling asam ke paling basa.",
+            "en": "From most acidic to most basic."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "water",
+          "text": {
+            "id": "Air murni",
+            "en": "Pure water"
+          },
+          "image": "drink_water"
+        },
+        {
+          "id": "soap",
+          "text": {
+            "id": "Sabun",
+            "en": "Soap"
+          },
+          "image": "wash_hands"
+        },
+        {
+          "id": "orange",
+          "text": {
+            "id": "Air jeruk",
+            "en": "Orange juice"
+          },
+          "image": "pic_orange_fruit"
+        },
+        {
+          "id": "coffee",
+          "text": {
+            "id": "Kopi hitam",
+            "en": "Black coffee"
+          },
+          "image": "pic_coffee_cup"
+        }
+      ],
+      "solution": [
+        "orange",
+        "coffee",
+        "water",
+        "soap"
+      ],
+      "model_answer": {
+        "id": "Jeruk (±3,5) → kopi (±5) → air murni (7) → sabun (9–10).",
+        "en": "Orange juice (about 3.5) → coffee (about 5) → pure water (7) → soap (9–10)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "CHEM-FERMENT"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dibuat dengan fermentasi atau tidak?",
+            "en": "Made by fermentation or not?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Hasil fermentasi",
+            "en": "Fermented"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Bukan fermentasi",
+            "en": "Not fermented"
+          }
+        },
+        {
+          "id": "bread",
+          "text": {
+            "id": "Roti",
+            "en": "Bread"
+          },
+          "image": "pic_bread"
+        },
+        {
+          "id": "milk",
+          "text": {
+            "id": "Susu segar",
+            "en": "Fresh milk"
+          },
+          "image": "pic_milk_glass"
+        },
+        {
+          "id": "kimchi",
+          "text": {
+            "id": "Kimchi",
+            "en": "Kimchi"
+          },
+          "image": "pic_kimchi"
+        },
+        {
+          "id": "juice",
+          "text": {
+            "id": "Jus buah segar",
+            "en": "Fresh fruit juice"
+          },
+          "image": "pic_juice"
+        },
+        {
+          "id": "egg",
+          "text": {
+            "id": "Telur ceplok",
+            "en": "Fried egg"
+          },
+          "image": "pic_egg_fried"
+        }
+      ],
+      "solution_pairs": {
+        "bread": "b_yes",
+        "milk": "b_no",
+        "kimchi": "b_yes",
+        "juice": "b_no",
+        "egg": "b_no"
+      },
+      "model_answer": {
+        "id": "Roti (ragi) dan kimchi (bakteri asam laktat) hasil fermentasi; susu segar, jus segar, dan telur ceplok bukan.",
+        "en": "Bread (yeast) and kimchi (lactic acid bacteria) are fermented; fresh milk, fresh juice and a fried egg are not."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "CHEM-REDOX"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Baterai ponsel harus dihabiskan sampai 0% sebelum diisi.",
+            "en": "A phone battery must run down to 0% before charging."
+          }
+        }
+      ],
+      "image": "pic_phone",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Itu untuk baterai lama (NiCd). Baterai litium-ion lebih awet bila tidak sering dikuras habis dan tidak kepanasan.",
+        "en": "Myth. That was for old NiCd batteries. Lithium-ion batteries last longer if they're not often run flat and don't overheat."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "CHEM-REDOX"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Besi berkarat bila bertemu oksigen dan ____.",
+            "en": "Iron rusts when it meets oxygen and ____."
+          }
+        }
+      ],
+      "image": "pic_bicycle",
+      "options": [
+        {
+          "id": "light",
+          "text": {
+            "id": "cahaya",
+            "en": "light"
+          },
+          "image": "pic_sun"
+        },
+        {
+          "id": "water",
+          "text": {
+            "id": "air",
+            "en": "water"
+          },
+          "image": "sci_water_drop"
+        },
+        {
+          "id": "wind",
+          "text": {
+            "id": "angin",
+            "en": "wind"
+          },
+          "image": "pic_wind"
+        }
+      ],
+      "solution": [
+        "water"
+      ],
+      "model_answer": {
+        "id": "Air. Tanpa air (atau uap air), besi hampir tidak berkarat.",
+        "en": "Water. Without water (or moisture), iron barely rusts."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "CHEM-FERMENT"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Cara membuat tempe.",
+            "en": "How tempeh is made."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "spores",
+          "text": {
+            "id": "Taburi ragi tempe (spora jamur Rhizopus)",
+            "en": "Sprinkle tempeh starter (Rhizopus spores)"
+          },
+          "image": "sci_microscope"
+        },
+        {
+          "id": "wrap",
+          "text": {
+            "id": "Bungkus, diamkan 1–2 hari di suhu ruang",
+            "en": "Wrap and leave 1–2 days at room temperature"
+          }
+        },
+        {
+          "id": "boil",
+          "text": {
+            "id": "Rendam, rebus, dan kupas kedelai",
+            "en": "Soak, boil and hull the soybeans"
+          },
+          "image": "pic_cook"
+        },
+        {
+          "id": "cool",
+          "text": {
+            "id": "Tiriskan dan dinginkan",
+            "en": "Drain and cool"
+          }
+        }
+      ],
+      "solution": [
+        "boil",
+        "cool",
+        "spores",
+        "wrap"
+      ],
+      "model_answer": {
+        "id": "Rebus dan kupas → dinginkan → taburi ragi → bungkus dan diamkan. Benang jamur mengikat kedelai menjadi padat.",
+        "en": "Boil and hull → cool → add starter → wrap and wait. The mould's threads bind the beans into a solid cake."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "CHEM-REDOX"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari mana listrik di dalam baterai?",
+            "en": "Where does a battery's electricity come from?"
+          }
+        }
+      ],
+      "image": "sci_battery_bulb",
+      "options": [
+        {
+          "id": "c",
+          "text": {
+            "id": "Reaksi kimia yang memindahkan elektron",
+            "en": "A chemical reaction that moves electrons"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Listrik yang disimpan seperti air dalam botol",
+            "en": "Electricity stored like water in a bottle"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Magnet kecil di dalamnya",
+            "en": "A small magnet inside"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Reaksi kimia di dalam baterai mendorong elektron mengalir lewat kabel ke lampu.",
+        "en": "A chemical reaction inside the battery pushes electrons through the wire to the bulb."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "CHEM-PH"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang pH-nya paling dekat dengan kulit sehat (±5)?",
+            "en": "Which pH is closest to healthy skin (about 5)?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "drink_water",
+          "image": "drink_water"
+        },
+        {
+          "id": "pic_coffee_cup",
+          "image": "pic_coffee_cup",
+          "correct": true
+        },
+        {
+          "id": "wash_hands",
+          "image": "wash_hands"
+        },
+        {
+          "id": "pic_orange_fruit",
+          "image": "pic_orange_fruit"
+        }
+      ],
+      "model_answer": {
+        "id": "Kopi hitam, sekitar pH 5. Sabun biasa (pH 9–10) jauh lebih basa daripada kulit.",
+        "en": "Black coffee, about pH 5. Ordinary soap (pH 9–10) is far more basic than skin."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "CHEM-PH"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-TRY",
+      "image": "pic_tea_cup",
+      "model_answer": {
+        "id": "Seduh teh pekat dan tuang ke dua gelas. Teteskan air jeruk nipis ke salah satunya: warnanya memudar. Pigmen teh berubah warna menurut pH, seperti indikator di laboratorium.",
+        "en": "Brew strong tea and pour it into two glasses. Add lime juice to one: its colour fades. Tea pigments change colour with pH, like an indicator in a lab."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "CHEM-FERMENT"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Adonan roti mengembang karena ragi membuat gas ____.",
+            "en": "Bread dough rises because yeast makes ____ gas."
+          }
+        }
+      ],
+      "image": "pic_bread",
+      "options": [
+        {
+          "id": "o2",
+          "text": {
+            "id": "oksigen",
+            "en": "oxygen"
+          }
+        },
+        {
+          "id": "co2",
+          "text": {
+            "id": "karbon dioksida",
+            "en": "carbon dioxide"
+          }
+        },
+        {
+          "id": "n2",
+          "text": {
+            "id": "nitrogen",
+            "en": "nitrogen"
+          }
+        }
+      ],
+      "solution": [
+        "co2"
+      ],
+      "model_answer": {
+        "id": "Karbon dioksida. Ragi memakan gula dan melepas gelembung CO₂ yang terperangkap di adonan.",
+        "en": "Carbon dioxide. Yeast feeds on sugar and releases CO₂ bubbles that get trapped in the dough."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "CHEM-REDOX"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Paku besi diletakkan di tiga tempat. Mana paling cepat berkarat?",
+            "en": "Iron nails are left in three places. Which rusts fastest?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_sea",
+          "image": "pic_sea",
+          "correct": true
+        },
+        {
+          "id": "pic_house",
+          "image": "pic_house"
+        },
+        {
+          "id": "pic_sun",
+          "image": "pic_sun"
+        }
+      ],
+      "model_answer": {
+        "id": "Di tepi laut: air dan garam mempercepat karat.",
+        "en": "By the sea: water and salt speed up rusting."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "CHEM-FERMENT"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tempe dibuat dengan bantuan ____.",
+            "en": "Tempeh is made with the help of ____."
+          }
+        }
+      ],
+      "image": "sci_microscope",
+      "options": [
+        {
+          "id": "lab",
+          "text": {
+            "id": "bakteri asam laktat",
+            "en": "lactic acid bacteria"
+          }
+        },
+        {
+          "id": "rhizo",
+          "text": {
+            "id": "jamur Rhizopus",
+            "en": "Rhizopus mould"
+          }
+        },
+        {
+          "id": "yeast",
+          "text": {
+            "id": "ragi roti",
+            "en": "baker's yeast"
+          }
+        }
+      ],
+      "solution": [
+        "rhizo"
+      ],
+      "model_answer": {
+        "id": "Jamur Rhizopus. Benang-benangnya mengikat kedelai.",
+        "en": "Rhizopus mould. Its threads bind the soybeans."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "CHEM-PH"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang netral (pH 7)?",
+            "en": "Which one is neutral (pH 7)?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_orange_fruit",
+          "image": "pic_orange_fruit"
+        },
+        {
+          "id": "drink_water",
+          "image": "drink_water",
+          "correct": true
+        },
+        {
+          "id": "wash_hands",
+          "image": "wash_hands"
+        },
+        {
+          "id": "pic_coffee_cup",
+          "image": "pic_coffee_cup"
+        }
+      ],
+      "model_answer": {
+        "id": "Air murni, pH 7.",
+        "en": "Pure water, pH 7."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-02-016",
+      "unit": "02",
+      "audience": "adults",
+      "level": "menengah",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "CHEM-FERMENT"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "sci_microscope",
+      "gem": true,
+      "source": "W. Shurtleff & A. Aoyagi, History of Tempeh and Tempeh Products (1815-2011), Soyinfo Center, 2011: the earliest known reference to tempeh is in the Serat Centhini (composed c. 1815; manuscript of 1846).",
+      "model_answer": {
+        "id": "Catatan tertua tentang tempe ada di Serat Centhini, karya sastra Jawa yang disusun sekitar tahun 1815. Jauh sebelum istilah \"pangan nabati\" populer, orang Jawa sudah memakai jamur untuk mengubah kedelai menjadi lauk bergizi.",
+        "en": "The oldest written mention of tempeh is in the Serat Centhini, a Javanese literary work composed around 1815. Long before \"plant-based\" was a buzzword, Javanese cooks were using a mould to turn soybeans into a nourishing dish."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    },
+    {
+      "item_id": "SNS-A-M-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "menengah",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya berkarat di udara lembap, ditarik magnet, dan ada di dalam darah Anda (hemoglobin). Siapa saya?",
+            "en": "I rust in damp air, I'm pulled by magnets, and I'm in your blood (haemoglobin). What am I?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "al",
+          "text": {
+            "id": "Aluminium",
+            "en": "Aluminium"
+          }
+        },
+        {
+          "id": "cu",
+          "text": {
+            "id": "Tembaga",
+            "en": "Copper"
+          }
+        },
+        {
+          "id": "fe",
+          "text": {
+            "id": "Besi",
+            "en": "Iron"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Besi (Fe). Aluminium dan tembaga tidak ditarik magnet.",
+        "en": "Iron (Fe). Aluminium and copper aren't attracted to magnets."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-m-0.1"
+    }
+  ]
+}

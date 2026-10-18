@@ -1,0 +1,2014 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "jpn-a-x-0.1",
+    "subject": "bahasa",
+    "track": "jpn-a-x",
+    "level": "master",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "target_lang": "ja",
+    "title": {
+      "id": "Bahasa Jepang — Master (Dewasa)",
+      "en": "Japanese — Master (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, starter level: 2 units) for review: needs a native Japanese reviewer and the Indonesian and English language reviewers before any item is approved (docs/syllabus/bahasa/ja_levels.md, adults Master: polite requests, opinions & conversations). Voice clips: android/content/voice/ja.json and ja.levels.json (listening items stay hidden until recorded); every skill has a REMED item that needs no audio.",
+  "prompts": {
+    "P-CONNECT": {
+      "id": "Hubungkan pasangannya.",
+      "en": "Connect the pairs."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke katanya.",
+      "en": "Drag each picture to its word."
+    },
+    "P-PICK": {
+      "id": "Pilih gambarnya.",
+      "en": "Pick the picture."
+    },
+    "P-LISTEN-PIC": {
+      "id": "Dengar, lalu ketuk gambarnya.",
+      "en": "Listen, then tap the picture."
+    },
+    "P-LISTEN-MEAN": {
+      "id": "Dengar, lalu pilih artinya.",
+      "en": "Listen, then pick the meaning."
+    },
+    "P-SENTENCE": {
+      "id": "Susun kalimatnya.",
+      "en": "Build the sentence."
+    },
+    "P-DIALOG": {
+      "id": "Urutkan percakapannya.",
+      "en": "Put the dialogue in order."
+    },
+    "P-SORT": {
+      "id": "Kelompokkan.",
+      "en": "Sort them."
+    },
+    "P-FILL": {
+      "id": "Isi yang kosong.",
+      "en": "Fill the gap."
+    },
+    "P-REPLY": {
+      "id": "Pilih balasannya.",
+      "en": "Pick the reply."
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    },
+    "P-POLITE": {
+      "id": "Pilih yang paling sopan.",
+      "en": "Pick the most polite one."
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Correct. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Permintaan sopan",
+        "en": "Polite requests"
+      },
+      "sticker": "sticker_teapot"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Pendapat & percakapan",
+        "en": "Opinions & conversations"
+      },
+      "sticker": "sticker_lantern"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "JPN-A-X-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Permintaan sopan",
+        "en": "Polite requests"
+      },
+      "body": [
+        {
+          "id": "Bentuk て + ください = tolong …: 待（ま）って ください (tolong tunggu).",
+          "en": "て-form + ください = please …: 待（ま）って ください (please wait)."
+        },
+        {
+          "id": "Bentuk て: 書（か）きます → 書（か）いて, 話（はな）します → 話（はな）して, 見（み）ます → 見（み）て.",
+          "en": "て-forms: 書（か）きます → 書（か）いて, 話（はな）します → 話（はな）して, 見（み）ます → 見（み）て."
+        },
+        {
+          "id": "Minta izin: bentuk て + も いいですか: 写真（しゃしん）を 撮（と）っても いいですか.",
+          "en": "Asking permission: て-form + も いいですか: 写真（しゃしん）を 撮（と）っても いいですか."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "もう 一度（いちど） 言（い）って ください。",
+          "gloss": {
+            "id": "Mō ichido itte kudasai. = Tolong ulangi sekali lagi.",
+            "en": "Mō ichido itte kudasai. = Please say it again."
+          }
+        },
+        {
+          "target_text": "ゆっくり 話（はな）して ください。",
+          "gloss": {
+            "id": "Yukkuri hanashite kudasai. = Tolong bicara pelan-pelan.",
+            "en": "Yukkuri hanashite kudasai. = Please speak slowly."
+          }
+        },
+        {
+          "target_text": "少々（しょうしょう） お待（ま）ち ください。",
+          "gloss": {
+            "id": "Shōshō omachi kudasai. = Mohon tunggu sebentar (sangat sopan, dipakai staf).",
+            "en": "Shōshō omachi kudasai. = One moment, please (very polite, used by staff)."
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "JPN-A-X-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Pendapat & percakapan",
+        "en": "Opinions & conversations"
+      },
+      "body": [
+        {
+          "id": "Menurut saya …: 〜と 思（おも）います. Kata sifat い langsung: 高（たか）いと 思（おも）います.",
+          "en": "I think …: 〜と 思（おも）います. い-adjectives go straight in: 高（たか）いと 思（おも）います."
+        },
+        {
+          "id": "Kata benda dan kata sifat な memakai だ: 雨（あめ）だと, 便利（べんり）だと.",
+          "en": "Nouns and な-adjectives take だ: 雨（あめ）だと, 便利（べんり）だと."
+        },
+        {
+          "id": "Tidak setuju dengan halus: そうですね。でも、… (Begitu ya. Tapi …)",
+          "en": "Disagree gently: そうですね。でも、… (I see. But …)"
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "どう 思（おも）いますか。",
+          "gloss": {
+            "id": "Dō omoimasu ka? = Bagaimana menurut Anda?",
+            "en": "Dō omoimasu ka? = What do you think?"
+          }
+        },
+        {
+          "target_text": "私（わたし）も そう 思（おも）います。",
+          "gloss": {
+            "id": "Watashi mo sō omoimasu. = Saya juga berpendapat begitu.",
+            "en": "Watashi mo sō omoimasu. = I think so too."
+          }
+        },
+        {
+          "target_text": "それは ちょっと…",
+          "gloss": {
+            "id": "Sore wa chotto… = Itu agak… (penolakan halus)",
+            "en": "Sore wa chotto… = That's a bit… (a soft no)"
+          }
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "JPN-A-X-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_door",
+          "image": "pic_door",
+          "text": {
+            "id": "pintu",
+            "en": "door"
+          }
+        },
+        {
+          "id": "pic_sit",
+          "image": "pic_sit",
+          "text": {
+            "id": "duduk",
+            "en": "sitting"
+          }
+        },
+        {
+          "id": "pic_write",
+          "image": "pic_write",
+          "text": {
+            "id": "menulis",
+            "en": "writing"
+          }
+        },
+        {
+          "id": "pic_window",
+          "image": "pic_window",
+          "text": {
+            "id": "jendela",
+            "en": "window"
+          }
+        },
+        {
+          "id": "w3",
+          "target_text": "窓（まど）を 開（あ）けて ください",
+          "romanization": "mado o akete kudasai",
+          "audio": "ja/mado_o_akete_kudasai"
+        },
+        {
+          "id": "w0",
+          "target_text": "ドアを 閉（し）めて ください",
+          "romanization": "doa o shimete kudasai",
+          "audio": "ja/doa_o_shimete_kudasai"
+        },
+        {
+          "id": "w1",
+          "target_text": "座（すわ）って ください",
+          "romanization": "suwatte kudasai",
+          "audio": "ja/suwatte_kudasai"
+        },
+        {
+          "id": "w2",
+          "target_text": "ここに 書（か）いて ください",
+          "romanization": "koko ni kaite kudasai",
+          "audio": "ja/koko_ni_kaite_kudasai"
+        }
+      ],
+      "solution_pairs": {
+        "pic_door": "w0",
+        "pic_sit": "w1",
+        "pic_write": "w2",
+        "pic_window": "w3"
+      },
+      "model_answer": {
+        "id": "ドアを 閉（し）めて tutup pintu · 座（すわ）って duduk · ここに 書（か）いて tulis di sini · 窓（まど）を 開（あ）けて buka jendela",
+        "en": "ドアを 閉（し）めて close the door · 座（すわ）って sit down · ここに 書（か）いて write here · 窓（まど）を 開（あ）けて open the window"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-TE"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "l0",
+          "target_text": "待（ま）ちます",
+          "romanization": "machimasu",
+          "audio": "ja/machimasu"
+        },
+        {
+          "id": "l1",
+          "target_text": "書（か）きます",
+          "romanization": "kakimasu",
+          "audio": "ja/kakimasu"
+        },
+        {
+          "id": "l2",
+          "target_text": "見（み）ます",
+          "romanization": "mimasu",
+          "audio": "ja/mimasu"
+        },
+        {
+          "id": "l3",
+          "target_text": "話（はな）します",
+          "romanization": "hanashimasu",
+          "audio": "ja/hanashimasu"
+        },
+        {
+          "id": "r3",
+          "target_text": "話（はな）して",
+          "romanization": "hanashite",
+          "audio": "ja/hanashite"
+        },
+        {
+          "id": "r0",
+          "target_text": "待（ま）って",
+          "romanization": "matte",
+          "audio": "ja/matte"
+        },
+        {
+          "id": "r1",
+          "target_text": "書（か）いて",
+          "romanization": "kaite",
+          "audio": "ja/kaite"
+        },
+        {
+          "id": "r2",
+          "target_text": "見（み）て",
+          "romanization": "mite",
+          "audio": "ja/mite"
+        }
+      ],
+      "solution_pairs": {
+        "l0": "r0",
+        "l1": "r1",
+        "l2": "r2",
+        "l3": "r3"
+      },
+      "model_answer": {
+        "id": "待（ま）ちます → 待（ま）って · 書（か）きます → 書（か）いて · 見（み）ます → 見（み）て · 話（はな）します → 話（はな）して",
+        "en": "待（ま）ちます → 待（ま）って · 書（か）きます → 書（か）いて · 見（み）ます → 見（み）て · 話（はな）します → 話（はな）して"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "JPN-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-LISTEN-MEAN",
+      "audio": "ja/moo_ichido_itte_kudasai",
+      "options": [
+        {
+          "id": "x0",
+          "text": {
+            "id": "Tolong bicara pelan-pelan.",
+            "en": "Please speak slowly."
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Tolong ulangi sekali lagi.",
+            "en": "Please say it again."
+          },
+          "correct": true
+        },
+        {
+          "id": "x1",
+          "text": {
+            "id": "Tolong tunggu sebentar.",
+            "en": "Please wait a moment."
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "もう 一度（いちど） 言（い）って ください (mō ichido itte kudasai) = tolong ulangi sekali lagi.",
+        "en": "もう 一度（いちど） 言（い）って ください (mō ichido itte kudasai) = please say it again."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "JPN-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/shashin_o_totte_mo_ii_desu_ka",
+      "options": [
+        {
+          "id": "pic_camera",
+          "image": "pic_camera",
+          "text": {
+            "id": "kamera",
+            "en": "camera"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_phone",
+          "image": "pic_phone",
+          "text": {
+            "id": "telepon",
+            "en": "phone"
+          }
+        },
+        {
+          "id": "pic_computer",
+          "image": "pic_computer",
+          "text": {
+            "id": "komputer",
+            "en": "computer"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "写真（しゃしん）を 撮（と）っても いいですか = bolehkah saya memotret?",
+        "en": "写真（しゃしん）を 撮（と）っても いいですか = may I take a photo?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "JPN-TE"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-SENTENCE",
+      "gesture": "drag",
+      "image": "pic_phone",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di telepon: tolong bicara pelan-pelan.",
+            "en": "On the phone: please speak slowly."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s2",
+          "target_text": "ください",
+          "romanization": "kudasai",
+          "audio": "ja/kudasai"
+        },
+        {
+          "id": "x0",
+          "target_text": "話（はな）します",
+          "romanization": "hanashimasu",
+          "audio": "ja/hanashimasu"
+        },
+        {
+          "id": "s1",
+          "target_text": "話（はな）して",
+          "romanization": "hanashite",
+          "audio": "ja/hanashite"
+        },
+        {
+          "id": "s0",
+          "target_text": "ゆっくり",
+          "romanization": "yukkuri",
+          "audio": "ja/yukkuri"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2"
+      ],
+      "model_answer": {
+        "id": "ゆっくり 話（はな）して ください。(Yukkuri hanashite kudasai.) Bentuk て + ください.",
+        "en": "ゆっくり 話（はな）して ください。(Yukkuri hanashite kudasai.) て-form + ください."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-TE"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-FILL",
+      "target_text": "名前（なまえ）を ＿＿ ください。",
+      "romanization": "Namae o ___ kudasai.",
+      "gesture": "drag",
+      "image": "pic_pen",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tolong tulis nama Anda.",
+            "en": "Please write your name."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "c",
+          "target_text": "書（か）いて",
+          "romanization": "kaite",
+          "audio": "ja/kaite"
+        },
+        {
+          "id": "x0",
+          "target_text": "書（か）きます",
+          "romanization": "kakimasu",
+          "audio": "ja/kakimasu"
+        },
+        {
+          "id": "x1",
+          "target_text": "見（み）て",
+          "romanization": "mite",
+          "audio": "ja/mite"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "名前（なまえ）を 書（か）いて ください。(Namae o kaite kudasai.) = Tolong tulis nama Anda.",
+        "en": "名前（なまえ）を 書（か）いて ください。(Namae o kaite kudasai.) = Please write your name."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "JPN-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-PICK",
+      "target_text": "あとで 電話（でんわ）して ください。",
+      "romanization": "Ato de denwa shite kudasai.",
+      "audio": "ja/ato_de_denwa_shite_kudasai",
+      "options": [
+        {
+          "id": "pic_computer",
+          "image": "pic_computer",
+          "text": {
+            "id": "komputer",
+            "en": "computer"
+          }
+        },
+        {
+          "id": "pic_write",
+          "image": "pic_write",
+          "text": {
+            "id": "menulis",
+            "en": "writing"
+          }
+        },
+        {
+          "id": "pic_phone",
+          "image": "pic_phone",
+          "text": {
+            "id": "telepon",
+            "en": "phone"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "あとで 電話（でんわ）して ください = tolong telepon nanti.",
+        "en": "あとで 電話（でんわ）して ください = please call later."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "JPN-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-DIALOG",
+      "gesture": "drag",
+      "image": "pic_shirt",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di toko baju.",
+            "en": "At a clothes shop."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s1",
+          "target_text": "はい、どうぞ。",
+          "romanization": "Hai, dōzo.",
+          "audio": "ja/hai_doozo"
+        },
+        {
+          "id": "s2",
+          "target_text": "試着（しちゃく）しても いいですか。",
+          "romanization": "Shichaku shite mo ii desu ka?",
+          "audio": "ja/shichaku_shite_mo_ii_desu_ka"
+        },
+        {
+          "id": "s0",
+          "target_text": "すみません、この シャツを 見（み）せて ください。",
+          "romanization": "Sumimasen, kono shatsu o misete kudasai.",
+          "audio": "ja/sumimasen_kono_shatsu_o_misete_kudasai"
+        },
+        {
+          "id": "s3",
+          "target_text": "はい、こちらへ どうぞ。",
+          "romanization": "Hai, kochira e dōzo.",
+          "audio": "ja/hai_kochira_e_doozo"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "model_answer": {
+        "id": "この シャツを 見（み）せて ください → はい、どうぞ → 試着（しちゃく）しても いいですか → はい、こちらへ どうぞ",
+        "en": "この シャツを 見（み）せて ください → はい、どうぞ → 試着（しちゃく）しても いいですか → はい、こちらへ どうぞ"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "JPN-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-REPLY",
+      "target_text": "ここに 座（すわ）っても いいですか。",
+      "romanization": "Koko ni suwatte mo ii desu ka?",
+      "audio": "ja/koko_ni_suwatte_mo_ii_desu_ka",
+      "image": "pic_sit",
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "どういたしまして",
+          "romanization": "dō itashimashite",
+          "audio": "ja/doo_itashimashite"
+        },
+        {
+          "id": "x1",
+          "target_text": "お願（ねが）いします。",
+          "romanization": "Onegai shimasu.",
+          "audio": "ja/onegai_shimasu"
+        },
+        {
+          "id": "a",
+          "target_text": "はい、どうぞ。",
+          "romanization": "Hai, dōzo.",
+          "audio": "ja/hai_doozo",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "ここに 座（すわ）っても いいですか？ — はい、どうぞ。= Ya, silakan.",
+        "en": "ここに 座（すわ）っても いいですか？ — はい、どうぞ。= Yes, go ahead."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "JPN-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/mado_o_akete_kudasai",
+      "options": [
+        {
+          "id": "pic_door",
+          "image": "pic_door",
+          "text": {
+            "id": "pintu",
+            "en": "door"
+          }
+        },
+        {
+          "id": "pic_window",
+          "image": "pic_window",
+          "text": {
+            "id": "jendela",
+            "en": "window"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_bed",
+          "image": "pic_bed",
+          "text": {
+            "id": "tempat tidur",
+            "en": "bed"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "窓（まど）を 開（あ）けて ください = tolong buka jendelanya.",
+        "en": "窓（まど）を 開（あ）けて ください = please open the window."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "JPN-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_ask",
+          "text": {
+            "id": "Meminta tolong",
+            "en": "Asking someone to do it"
+          }
+        },
+        {
+          "id": "b_may",
+          "text": {
+            "id": "Minta izin",
+            "en": "Asking permission"
+          }
+        },
+        {
+          "id": "c0",
+          "target_text": "待（ま）って ください。",
+          "romanization": "Matte kudasai.",
+          "audio": "ja/matte_kudasai"
+        },
+        {
+          "id": "c3",
+          "target_text": "使（つか）っても いいですか。",
+          "romanization": "Tsukatte mo ii desu ka?",
+          "audio": "ja/tsukatte_mo_ii_desu_ka"
+        },
+        {
+          "id": "c2",
+          "target_text": "写真（しゃしん）を 撮（と）っても いいですか。",
+          "romanization": "Shashin o totte mo ii desu ka?",
+          "audio": "ja/shashin_o_totte_mo_ii_desu_ka"
+        },
+        {
+          "id": "c1",
+          "target_text": "見（み）せて ください。",
+          "romanization": "Misete kudasai.",
+          "audio": "ja/misete_kudasai"
+        }
+      ],
+      "solution_pairs": {
+        "c0": "b_ask",
+        "c1": "b_ask",
+        "c2": "b_may",
+        "c3": "b_may"
+      },
+      "model_answer": {
+        "id": "〜て ください = meminta orang lain. 〜ても いいですか = minta izin.",
+        "en": "〜て ください = asking someone to do something. 〜ても いいですか = asking permission."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "JPN-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-POLITE",
+      "image": "pic_hotel",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Anda di resepsionis. Tamu perlu menunggu.",
+            "en": "You're at reception. A guest has to wait."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "target_text": "少々（しょうしょう） お待（ま）ち ください。",
+          "romanization": "Shōshō omachi kudasai.",
+          "audio": "ja/shooshoo_omachi_kudasai",
+          "correct": true
+        },
+        {
+          "id": "x0",
+          "target_text": "待（ま）って。",
+          "romanization": "Matte.",
+          "audio": "ja/matte"
+        },
+        {
+          "id": "x1",
+          "target_text": "待（ま）ちます。",
+          "romanization": "Machimasu.",
+          "audio": "ja/machimasu"
+        }
+      ],
+      "model_answer": {
+        "id": "少々（しょうしょう） お待（ま）ち ください = mohon tunggu sebentar (sopan untuk tamu). 待（ま）って = santai.",
+        "en": "少々（しょうしょう） お待（ま）ち ください = one moment, please (polite to guests). 待（ま）って is casual."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-TE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "もう 一度（いちど） ＿＿ ください。",
+      "romanization": "Mō ichido ___ kudasai.",
+      "gesture": "drag",
+      "image": "pic_teacher",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tolong ulangi sekali lagi.",
+            "en": "Please say it again."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "c",
+          "target_text": "言（い）って",
+          "romanization": "itte",
+          "audio": "ja/itte"
+        },
+        {
+          "id": "x0",
+          "target_text": "言（い）います",
+          "romanization": "iimasu",
+          "audio": "ja/iimasu"
+        },
+        {
+          "id": "x1",
+          "target_text": "見（み）て",
+          "romanization": "mite",
+          "audio": "ja/mite"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "もう 一度（いちど） 言（い）って ください。言（い）います → 言（い）って.",
+        "en": "もう 一度（いちど） 言（い）って ください。言（い）います → 言（い）って."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "JPN-REQUEST"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "写真（しゃしん）を 撮（と）っても いいですか。",
+      "romanization": "Shashin o totte mo ii desu ka?",
+      "audio": "ja/shashin_o_totte_mo_ii_desu_ka",
+      "options": [
+        {
+          "id": "pic_camera",
+          "image": "pic_camera",
+          "text": {
+            "id": "kamera",
+            "en": "camera"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_phone",
+          "image": "pic_phone",
+          "text": {
+            "id": "telepon",
+            "en": "phone"
+          }
+        },
+        {
+          "id": "pic_write",
+          "image": "pic_write",
+          "text": {
+            "id": "menulis",
+            "en": "writing"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "写真（しゃしん）を 撮（と）っても いいですか = bolehkah saya memotret?",
+        "en": "写真（しゃしん）を 撮（と）っても いいですか = may I take a photo?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "JPN-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "l0",
+          "target_text": "高（たか）い",
+          "romanization": "takai",
+          "audio": "ja/takai"
+        },
+        {
+          "id": "l1",
+          "target_text": "難（むずか）しい",
+          "romanization": "muzukashii",
+          "audio": "ja/muzukashii"
+        },
+        {
+          "id": "l2",
+          "target_text": "便利（べんり）",
+          "romanization": "benri",
+          "audio": "ja/benri"
+        },
+        {
+          "id": "l3",
+          "target_text": "楽（たの）しい",
+          "romanization": "tanoshii",
+          "audio": "ja/tanoshii"
+        },
+        {
+          "id": "r1",
+          "target_text": "簡単（かんたん）",
+          "romanization": "kantan",
+          "audio": "ja/kantan"
+        },
+        {
+          "id": "r2",
+          "target_text": "不便（ふべん）",
+          "romanization": "fuben",
+          "audio": "ja/fuben"
+        },
+        {
+          "id": "r3",
+          "target_text": "つまらない",
+          "romanization": "tsumaranai",
+          "audio": "ja/tsumaranai"
+        },
+        {
+          "id": "r0",
+          "target_text": "安（やす）い",
+          "romanization": "yasui",
+          "audio": "ja/yasui"
+        }
+      ],
+      "solution_pairs": {
+        "l0": "r0",
+        "l1": "r1",
+        "l2": "r2",
+        "l3": "r3"
+      },
+      "model_answer": {
+        "id": "高（たか）い ↔ 安（やす）い · 難（むずか）しい ↔ 簡単（かんたん） · 便利（べんり） ↔ 不便（ふべん） · 楽（たの）しい ↔ つまらない",
+        "en": "高（たか）い ↔ 安（やす）い · 難（むずか）しい ↔ 簡単（かんたん） · 便利（べんり） ↔ 不便（ふべん） · 楽（たの）しい ↔ つまらない"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "JPN-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-SENTENCE",
+      "gesture": "drag",
+      "image": "pic_rain",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya kira besok hujan.",
+            "en": "I think it will rain tomorrow."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s2",
+          "target_text": "雨（あめ）",
+          "romanization": "ame",
+          "audio": "ja/ame"
+        },
+        {
+          "id": "s3",
+          "target_text": "だと",
+          "romanization": "da to",
+          "audio": "ja/da_to"
+        },
+        {
+          "id": "x0",
+          "target_text": "です",
+          "romanization": "desu",
+          "audio": "ja/desu"
+        },
+        {
+          "id": "s4",
+          "target_text": "思（おも）います",
+          "romanization": "omoimasu",
+          "audio": "ja/omoimasu"
+        },
+        {
+          "id": "s0",
+          "target_text": "明日（あした）",
+          "romanization": "ashita",
+          "audio": "ja/ashita"
+        },
+        {
+          "id": "s1",
+          "target_text": "は",
+          "romanization": "wa",
+          "audio": "ja/wa"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "model_answer": {
+        "id": "明日（あした）は 雨（あめ）だと 思（おも）います。(Ashita wa ame da to omoimasu.) Kata benda + だと.",
+        "en": "明日（あした）は 雨（あめ）だと 思（おも）います。(Ashita wa ame da to omoimasu.) Noun + だと."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "JPN-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/ashita_wa_yuki_da_to_omoimasu",
+      "options": [
+        {
+          "id": "pic_rain",
+          "image": "pic_rain",
+          "text": {
+            "id": "hujan",
+            "en": "rain"
+          }
+        },
+        {
+          "id": "pic_sun",
+          "image": "pic_sun",
+          "text": {
+            "id": "matahari bersinar",
+            "en": "sunshine"
+          }
+        },
+        {
+          "id": "pic_snow",
+          "image": "pic_snow",
+          "text": {
+            "id": "salju",
+            "en": "snow"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "明日（あした）は 雪（ゆき）だと 思（おも）います = saya kira besok turun salju.",
+        "en": "明日（あした）は 雪（ゆき）だと 思（おも）います = I think it will snow tomorrow."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "JPN-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-PICK",
+      "target_text": "運動（うんどう）は 体（からだ）に いいと 思（おも）います。",
+      "romanization": "Undō wa karada ni ii to omoimasu.",
+      "audio": "ja/undoo_wa_karada_ni_ii_to_omoimasu",
+      "options": [
+        {
+          "id": "pic_watch_tv",
+          "image": "pic_watch_tv",
+          "text": {
+            "id": "menonton TV",
+            "en": "watching TV"
+          }
+        },
+        {
+          "id": "pic_exercise",
+          "image": "pic_exercise",
+          "text": {
+            "id": "berolahraga",
+            "en": "exercising"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_phone",
+          "image": "pic_phone",
+          "text": {
+            "id": "telepon",
+            "en": "phone"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "運動（うんどう） = olahraga. 体（からだ）に いい = baik untuk tubuh.",
+        "en": "運動（うんどう） = exercise. 体（からだ）に いい = good for your body."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-FILL",
+      "target_text": "電車（でんしゃ）は 便利（べんり）＿＿ 思（おも）います。",
+      "romanization": "Densha wa benri ___ omoimasu.",
+      "gesture": "drag",
+      "image": "pic_train",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menurut saya kereta itu praktis.",
+            "en": "I think trains are convenient."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "c",
+          "target_text": "だと",
+          "romanization": "da to",
+          "audio": "ja/da_to"
+        },
+        {
+          "id": "x1",
+          "target_text": "に",
+          "romanization": "ni",
+          "audio": "ja/ni"
+        },
+        {
+          "id": "x0",
+          "target_text": "を",
+          "romanization": "o",
+          "audio": "ja/o"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "便利（べんり）だと 思（おも）います: kata sifat な + だと.",
+        "en": "便利（べんり）だと 思（おも）います: な-adjective + だと."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "JPN-AGREE"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-LISTEN-MEAN",
+      "audio": "ja/watashi_mo_soo_omoimasu",
+      "options": [
+        {
+          "id": "x0",
+          "text": {
+            "id": "Saya kurang setuju.",
+            "en": "I don't quite agree."
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Saya juga berpendapat begitu.",
+            "en": "I think so too."
+          },
+          "correct": true
+        },
+        {
+          "id": "x1",
+          "text": {
+            "id": "Bagaimana menurut Anda?",
+            "en": "What do you think?"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "私（わたし）も そう 思（おも）います (watashi mo sō omoimasu) = saya juga berpendapat begitu.",
+        "en": "私（わたし）も そう 思（おも）います (watashi mo sō omoimasu) = I think so too."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "JPN-AGREE"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-LISTEN-MEAN",
+      "audio": "ja/doo_omoimasu_ka",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Bagaimana menurut Anda?",
+            "en": "What do you think?"
+          },
+          "correct": true
+        },
+        {
+          "id": "x0",
+          "text": {
+            "id": "Di mana Anda tinggal?",
+            "en": "Where do you live?"
+          }
+        },
+        {
+          "id": "x1",
+          "text": {
+            "id": "Kapan rapatnya?",
+            "en": "When is the meeting?"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "どう 思（おも）いますか (dō omoimasu ka) = bagaimana menurut Anda?",
+        "en": "どう 思（おも）いますか (dō omoimasu ka) = what do you think?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "JPN-AGREE"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-POLITE",
+      "image": "pic_computer",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di rapat, Anda kurang setuju dengan rencana atasan.",
+            "en": "In a meeting, you don't quite agree with your manager's plan."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "いいえ、だめです。",
+          "romanization": "Iie, dame desu.",
+          "audio": "ja/iie_dame_desu"
+        },
+        {
+          "id": "x1",
+          "target_text": "わかりません。",
+          "romanization": "Wakarimasen.",
+          "audio": "ja/wakarimasen"
+        },
+        {
+          "id": "a",
+          "target_text": "そうですね。でも、ちょっと 難（むずか）しいと 思（おも）います。",
+          "romanization": "Sō desu ne. Demo, chotto muzukashii to omoimasu.",
+          "audio": "ja/soo_desu_ne_demo_chotto_muzukashii_to_omoimasu",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "そうですね。でも、… = setuju dulu, lalu beri alasan dengan halus.",
+        "en": "そうですね。でも、… = acknowledge first, then give your reason gently."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "JPN-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-DIALOG",
+      "gesture": "drag",
+      "image": "clock_10_00",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di kantor.",
+            "en": "At the office."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s1",
+          "target_text": "十時（じゅうじ）からだと 思（おも）います。",
+          "romanization": "Jūji kara da to omoimasu.",
+          "audio": "ja/juuji_kara_da_to_omoimasu"
+        },
+        {
+          "id": "s2",
+          "target_text": "わかりました。ありがとうございます。",
+          "romanization": "Wakarimashita. Arigatō gozaimasu.",
+          "audio": "ja/wakarimashita_arigatoo_gozaimasu"
+        },
+        {
+          "id": "s0",
+          "target_text": "明日（あした）の 会議（かいぎ）は 何時（なんじ）からですか。",
+          "romanization": "Ashita no kaigi wa nanji kara desu ka?",
+          "audio": "ja/ashita_no_kaigi_wa_nanji_kara_desu_ka"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2"
+      ],
+      "model_answer": {
+        "id": "会議（かいぎ）は 何時（なんじ）からですか → 十時（じゅうじ）からだと 思（おも）います → わかりました",
+        "en": "会議（かいぎ）は 何時（なんじ）からですか → 十時（じゅうじ）からだと 思（おも）います → わかりました"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "JPN-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ja/taburetto_wa_benri_da_to_omoimasu",
+      "options": [
+        {
+          "id": "pic_radio",
+          "image": "pic_radio",
+          "text": {
+            "id": "radio",
+            "en": "radio"
+          }
+        },
+        {
+          "id": "pic_book",
+          "image": "pic_book",
+          "text": {
+            "id": "buku",
+            "en": "book"
+          }
+        },
+        {
+          "id": "pic_tablet",
+          "image": "pic_tablet",
+          "text": {
+            "id": "tablet",
+            "en": "tablet"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "タブレットは 便利（べんり）だと 思（おも）います = menurut saya tablet itu praktis.",
+        "en": "タブレットは 便利（べんり）だと 思（おも）います = I think tablets are handy."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "JPN-AGREE"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Setuju",
+            "en": "Agreeing"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Kurang setuju",
+            "en": "Disagreeing"
+          }
+        },
+        {
+          "id": "c1",
+          "target_text": "いいですね。",
+          "romanization": "Ii desu ne.",
+          "audio": "ja/ii_desu_ne"
+        },
+        {
+          "id": "c2",
+          "target_text": "ちょっと 違（ちが）うと 思（おも）います。",
+          "romanization": "Chotto chigau to omoimasu.",
+          "audio": "ja/chotto_chigau_to_omoimasu"
+        },
+        {
+          "id": "c0",
+          "target_text": "私（わたし）も そう 思（おも）います。",
+          "romanization": "Watashi mo sō omoimasu.",
+          "audio": "ja/watashi_mo_soo_omoimasu"
+        },
+        {
+          "id": "c3",
+          "target_text": "それは ちょっと…。",
+          "romanization": "Sore wa chotto…",
+          "audio": "ja/sore_wa_chotto"
+        }
+      ],
+      "solution_pairs": {
+        "c0": "b_yes",
+        "c1": "b_yes",
+        "c2": "b_no",
+        "c3": "b_no"
+      },
+      "model_answer": {
+        "id": "Setuju: 私（わたし）も そう 思（おも）います, いいですね. Kurang setuju: ちょっと 違（ちが）うと 思（おも）います, それは ちょっと….",
+        "en": "Agreeing: 私（わたし）も そう 思（おも）います, いいですね. Disagreeing: ちょっと 違（ちが）うと 思（おも）います, それは ちょっと…."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "JPN-AGREE"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-SENTENCE",
+      "gesture": "drag",
+      "image": "pic_friends",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya juga berpendapat begitu.",
+            "en": "I think so too."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s0",
+          "target_text": "私（わたし）も",
+          "romanization": "watashi mo",
+          "audio": "ja/watashi_mo"
+        },
+        {
+          "id": "s2",
+          "target_text": "思（おも）います",
+          "romanization": "omoimasu",
+          "audio": "ja/omoimasu"
+        },
+        {
+          "id": "s1",
+          "target_text": "そう",
+          "romanization": "sō",
+          "audio": "ja/soo"
+        },
+        {
+          "id": "x0",
+          "target_text": "を",
+          "romanization": "o",
+          "audio": "ja/o"
+        }
+      ],
+      "solution": [
+        "s0",
+        "s1",
+        "s2"
+      ],
+      "model_answer": {
+        "id": "私（わたし）も そう 思（おも）います。(Watashi mo sō omoimasu.)",
+        "en": "私（わたし）も そう 思（おも）います。(Watashi mo sō omoimasu.)"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "JPN-OPINION"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "この 本（ほん）は おもしろい＿＿ 思（おも）います。",
+      "romanization": "Kono hon wa omoshiroi ___ omoimasu.",
+      "gesture": "drag",
+      "image": "pic_book",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menurut saya buku ini menarik.",
+            "en": "I think this book is interesting."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "c",
+          "target_text": "と",
+          "romanization": "to",
+          "audio": "ja/to"
+        },
+        {
+          "id": "x0",
+          "target_text": "だと",
+          "romanization": "da to",
+          "audio": "ja/da_to"
+        },
+        {
+          "id": "x1",
+          "target_text": "を",
+          "romanization": "o",
+          "audio": "ja/o"
+        }
+      ],
+      "solution": [
+        "c"
+      ],
+      "model_answer": {
+        "id": "おもしろいと 思（おも）います: kata sifat い + と (tanpa だ).",
+        "en": "おもしろいと 思（おも）います: い-adjective + と (no だ)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "JPN-AGREE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-REPLY",
+      "image": "pic_friends",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rekan kerja berpendapat; Anda setuju.",
+            "en": "A colleague gives an opinion; you agree."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "x0",
+          "target_text": "ちょっと 違（ちが）うと 思（おも）います。",
+          "romanization": "Chotto chigau to omoimasu.",
+          "audio": "ja/chotto_chigau_to_omoimasu"
+        },
+        {
+          "id": "a",
+          "target_text": "私（わたし）も そう 思（おも）います。",
+          "romanization": "Watashi mo sō omoimasu.",
+          "audio": "ja/watashi_mo_soo_omoimasu",
+          "correct": true
+        },
+        {
+          "id": "x1",
+          "target_text": "どう 思（おも）いますか。",
+          "romanization": "Dō omoimasu ka?",
+          "audio": "ja/doo_omoimasu_ka"
+        }
+      ],
+      "model_answer": {
+        "id": "私（わたし）も そう 思（おも）います = saya juga berpendapat begitu.",
+        "en": "私（わたし）も そう 思（おも）います = I think so too."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "JPN-AGREE"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Keiko Ueda, 'Sixteen ways to avoid saying \"no\" in Japan', in J. C. Condon and M. Saito (eds.), Intercultural Encounters with Japan (Tokyo: Simul Press, 1974).",
+      "model_answer": {
+        "id": "Peneliti Keiko Ueda (1974) mencatat 16 cara orang Jepang menghindari kata \"tidak\" secara langsung. Ungkapan halus yang sering terdengar: それは ちょっと… (sore wa chotto, \"itu agak…\").",
+        "en": "Researcher Keiko Ueda (1974) listed 16 ways Japanese speakers avoid saying a direct \"no\". A soft phrase you will often hear: それは ちょっと… (sore wa chotto, \"that's a bit…\")."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    },
+    {
+      "item_id": "JPN-A-X-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "書（か）きます → 書（か）いて. Bagaimana bentuk て dari 行（い）きます?",
+            "en": "書（か）きます → 書（か）いて. What is the て-form of 行（い）きます?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "target_text": "行（い）って",
+          "romanization": "itte",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "target_text": "行（い）いて",
+          "romanization": "iite"
+        },
+        {
+          "id": "c",
+          "target_text": "行（い）きて",
+          "romanization": "ikite"
+        }
+      ],
+      "model_answer": {
+        "id": "行（い）きます → 行（い）って (itte): pengecualian! Biasanya 〜きます → 〜いて (書（か）きます → 書（か）いて).",
+        "en": "行（い）きます → 行（い）って (itte): the exception! Usually 〜きます → 〜いて (書（か）きます → 書（か）いて)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "jpn-a-x-0.1"
+    }
+  ]
+}

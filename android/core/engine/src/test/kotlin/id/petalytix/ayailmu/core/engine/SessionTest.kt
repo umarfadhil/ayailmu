@@ -69,6 +69,17 @@ class SessionTest {
     }
 
     @Test
+    fun `an item reported before answering carries report_flag, others do not (new, P7)`() {
+        val s = skipScreens(startArabic())
+        val plain = assertNotNull(Session.submit(s, Response.typed("orang yang jujur"), env()).event)
+        assertFalse(plain.reportFlag)
+        val reported = assertNotNull(Session.submit(s, Response.typed("orang yang jujur"), env().copy(reportFlag = true)).event)
+        assertTrue(reported.reportFlag)
+        // Reporting is not a hint: the answer still counts as fresh evidence.
+        assertTrue(reported.freshEvidence)
+    }
+
+    @Test
     fun `a second submit on the same item yields no second answer event`() {
         val s = skipScreens(startArabic())
         val first = Session.submit(s, Response.typed("jujur"), env())

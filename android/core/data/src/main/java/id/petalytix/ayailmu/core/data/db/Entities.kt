@@ -69,3 +69,27 @@ data class ItemReportEntity(
     val reason: String,
     val text: String,
 )
+
+/** A trial questionnaire answered on the device (Trial_App_Spec §10): background, day 7 or end of trial. */
+@Entity(tableName = "survey_answers", indices = [Index(value = ["profile_id"])])
+data class SurveyAnswerEntity(
+    @PrimaryKey @ColumnInfo(name = "survey_id") val surveyId: String,
+    @ColumnInfo(name = "profile_id") val profileId: String,
+    val track: String,
+    /** "background", "day7" or "end". */
+    val kind: String,
+    val timestamp: String,
+    @ColumnInfo(name = "app_version") val appVersion: String,
+    /** The answers as JSON: question id to a list of chosen option ids or typed text. */
+    val payload: String,
+)
+
+/** A finished unit challenge (P6): the unit's sticker is earned by it. */
+@Entity(tableName = "unit_challenges", indices = [Index(value = ["profile_id"])])
+data class UnitChallengeEntity(
+    @PrimaryKey @ColumnInfo(name = "challenge_id") val challengeId: String,
+    @ColumnInfo(name = "profile_id") val profileId: String,
+    val track: String,
+    val unit: String,
+    @ColumnInfo(name = "completed_at") val completedAt: String,
+)

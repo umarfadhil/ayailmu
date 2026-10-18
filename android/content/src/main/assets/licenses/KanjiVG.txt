@@ -1,0 +1,23 @@
+KanjiVG
+Copyright (C) 2009/2010/2011 Ulrich Apel (as stated in each KanjiVG file).
+https://kanjivg.tagaini.net  -  https://github.com/KanjiVG/kanjivg
+
+KanjiVG is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported licence (CC BY-SA 3.0):
+https://creativecommons.org/licenses/by-sa/3.0/
+
+What AyaIlmu uses
+The stroke data in strokes/index.json for the 46 hiragana (keys hira_*) and the 25 Chinese characters
+(keys hanzi_*) is derived from KanjiVG: the stroke paths of the KanjiVG files kanji/<code point>.svg
+(commit 70a0b7ae0c18ceb5cb358274b029cce0234a43bc) were sampled, scaled from the 109 x 109 canvas to 0..1
+and simplified to polylines. Stroke order and direction are KanjiVG's; no strokes were reordered.
+
+These derived entries (the hira_* and hanzi_* entries of strokes/index.json) are shared under the same
+licence, CC BY-SA 3.0. You may copy, redistribute and adapt them, including commercially, provided you give
+appropriate credit to KanjiVG / Ulrich Apel, link to the licence, indicate if changes were made, and
+distribute your contributions under the same licence.
+
+The hangul entries (keys hangul_*) are not from KanjiVG; they were drawn for AyaIlmu by PT Petalytix
+Teknologi Indonesia.
+
+The full legal code of CC BY-SA 3.0 Unported is at
+https://creativecommons.org/licenses/by-sa/3.0/legalcode

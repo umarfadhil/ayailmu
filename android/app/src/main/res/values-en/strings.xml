@@ -32,7 +32,6 @@
     <string name="home_greeting">Hi! Aya is ready to learn with you.</string>
     <string name="home_greeting_name">Hi, %1$s! Aya is ready to learn with you.</string>
     <string name="home_tracks_title">Choose a subject</string>
-    <string name="home_track_items">Items available: %1$d</string>
     <string name="home_track_draft">Draft content</string>
     <string name="home_track_resume">Resume</string>
     <string name="home_start">Start</string>
@@ -45,7 +44,12 @@
     <string name="home_profile_kind_child">Child</string>
     <string name="home_track_progress">Progress</string>
     <string name="home_track_consent_first">Before the first session, read and agree to the trial terms.</string>
-    <string name="home_phase_label">Build phase: P3b — settings, progress, consent</string>
+    <string name="home_phase_label">Build phase: P4–P8 — draft art, learning packs, new activities</string>
+    <string name="home_track_units_open">Units open: %1$d of %2$d. %3$s opens them all.</string>
+    <string name="home_track_see_packs">See packs</string>
+    <string name="home_puzzle_from">From %1$s. One puzzle a day.</string>
+    <string name="home_puzzle_done">Answered today. A new puzzle comes tomorrow.</string>
+    <string name="home_puzzle_open">Try the puzzle</string>
 
     <!-- Session -->
     <string name="session_loading">Getting your session ready…</string>
@@ -79,6 +83,17 @@
     <string name="session_sequence_empty">Your answer appears here.</string>
     <string name="session_pairs_hint">Tap one on the left, then its partner on the right.</string>
     <string name="session_buckets_hint">Tap one on the left, then its group on the right.</string>
+    <string name="session_hotspot_hint">Tap the right part of the picture.</string>
+    <string name="session_slider_hint">Slide to choose, then check.</string>
+    <string name="session_slider_value">Your choice: %1$s</string>
+    <string name="session_slider_less">Less</string>
+    <string name="session_slider_more">More</string>
+    <string name="session_memory_hint">Turn over two cards. If they belong together, they stay face up.</string>
+    <string name="session_memory_found">Pairs found: %1$d of %2$d</string>
+    <string name="session_memory_card_down">Card %1$d, face down</string>
+    <string name="session_memory_card_found">%1$s, matched</string>
+    <string name="session_picture_option_cd">Picture option %1$d</string>
+    <string name="session_question_picture_cd">Picture for this question</string>
     <string name="session_image_placeholder">Picture: %1$s (draft — hand-drawn art to come)</string>
     <string name="session_unsupported">This kind of activity arrives in a later version.</string>
     <string name="session_save_error">That wasn\'t saved. Please try again.</string>
@@ -119,6 +134,8 @@
     <string name="dev_delete_confirm_body">Every profile, answer and saved session on this phone will be deleted. This cannot be undone.</string>
     <string name="dev_delete_confirm_yes">Delete</string>
     <string name="dev_cancel">Cancel</string>
+    <string name="dev_free_tier_off">Simulate the free tier: off (every unit open)</string>
+    <string name="dev_free_tier_on">Simulate the free tier: on (units locked as in release)</string>
     <string name="dev_moved_note">Export and delete are now in Settings.</string>
     <string name="dev_notice_failed">That didn\'t work. Please try again.</string>
     <string name="export_chooser_title">Share learning data</string>
@@ -162,6 +179,88 @@
     <string name="progress_gems">Gem box: %1$d</string>
     <string name="progress_days">Days of practice: %1$d</string>
     <string name="progress_note">These numbers are recalculated from your answers each time. “Learned” needs correct answers on different days, so it takes time.</string>
+    <string name="progress_empty_title">No practice yet</string>
+    <string name="progress_open_gems">Open the gem box</string>
+    <string name="progress_open_stickers">Open the sticker shelf</string>
+    <string name="progress_speed_body">Replay up to 10 questions you have already answered, with a relaxed time limit. Nothing is saved.</string>
+    <string name="progress_speed_start">Start a speed round</string>
+
+    <!-- Daily puzzle (P6): practice only, never saved as an answer -->
+    <string name="puzzle_title">Today\'s puzzle</string>
+    <string name="puzzle_none_title">No puzzle yet</string>
+    <string name="puzzle_none_body">Daily puzzles come from the subjects on your shelf. Try again tomorrow.</string>
+    <string name="puzzle_show_answer">Show me the answer</string>
+    <string name="puzzle_done_today">This puzzle was answered today.</string>
+    <string name="puzzle_answer">Answer: %1$s</string>
+    <string name="puzzle_tomorrow">A new puzzle comes tomorrow. No scores and no streaks, it is just for fun.</string>
+    <string name="puzzle_save_failed">This wasn\'t saved, so the puzzle may show again today.</string>
+
+    <!-- Speed round (P6): adults only, opt-in, nothing saved -->
+    <string name="speed_title">Speed round</string>
+    <string name="speed_leave">Stop</string>
+    <string name="speed_not_available_title">No speed round yet</string>
+    <string name="speed_not_available_body">A speed round replays questions you have already answered. Do a few sessions first.</string>
+    <string name="speed_time_cd">Time left</string>
+    <string name="speed_time_plenty">plenty</string>
+    <string name="speed_time_half">about half</string>
+    <string name="speed_time_little">a little</string>
+    <string name="speed_position">Question %1$d of %2$d</string>
+    <string name="speed_skip">Skip</string>
+    <string name="speed_done">Round done</string>
+    <string name="speed_time_up">Time\'s up</string>
+    <string name="speed_result">Answered: %1$d. Correct: %2$d.</string>
+    <string name="speed_note">A speed round is practice only: nothing is saved and your progress doesn\'t change.</string>
+
+    <!-- Gem box and sticker shelf (P6) -->
+    <string name="gems_title">Gem box</string>
+    <string name="gems_count">Gems you have found: %1$d</string>
+    <string name="gems_source">Source: %1$s</string>
+    <string name="gems_empty_title">The box is still empty</string>
+    <string name="gems_empty_body">Now and then a session hides a gem (a surprising fact). Every gem you find is kept here.</string>
+    <string name="stickers_title">Sticker shelf</string>
+    <string name="stickers_body">One sticker for each unit. You get it by finishing the unit challenge, which opens once every practice question in that unit has been answered, whatever the result.</string>
+    <string name="stickers_count">Stickers: %1$d of %2$d</string>
+    <string name="stickers_cd_earned">Sticker for %1$s, earned</string>
+    <string name="stickers_cd_not_yet">Sticker for %1$s, not yet</string>
+    <string name="stickers_empty_title">No sticker shelf yet</string>
+    <string name="stickers_empty_body">Subjects with stickers will show up here.</string>
+    <string name="collection_failed">This page couldn\'t open.</string>
+
+    <!-- Learning packs (P5): Play prices only, no pressure (MONETIZATION_SCHEME) -->
+    <string name="store_title">Learning packs</string>
+    <string name="store_intro">Pay once, keep it. No subscription, no ads. The first unit of every subject is always free.</string>
+    <string name="store_footer">Payments are handled by Google Play at the price Play shows. A pending payment (for example at a minimarket) opens the pack once it is paid. Purchases belong to the Google account, so they can be restored on another phone.</string>
+    <string name="store_failed">The packs page couldn\'t open.</string>
+    <string name="store_prices_unavailable">Prices couldn\'t be loaded from Google Play. Check the connection, then open this page again.</string>
+    <string name="store_demo_unlocked">Demo build: every unit is open. Turn on “Simulate the free tier” in the developer check to see the locks as in the release build.</string>
+    <string name="store_demo_free_tier">Demo build with the free tier simulated. Google Play doesn\'t sell to the demo build, so the buy buttons may stay off.</string>
+    <string name="store_product_all">All access</string>
+    <string name="store_product_bahasa">Languages pack</string>
+    <string name="store_product_bahasa_body">Every language course, starting with Arabic. New units open as they are published.</string>
+    <string name="store_product_matematika">Mathematics pack</string>
+    <string name="store_product_matematika_body">Every Mathematics unit, for children and adults.</string>
+    <string name="store_product_sains">Science pack</string>
+    <string name="store_product_sains_body">Every Science unit, for children and adults.</string>
+    <string name="store_product_sosial_seni">Social studies &amp; arts pack</string>
+    <string name="store_product_sosial_seni_body">Every Social studies and arts unit, for children and adults.</string>
+    <string name="store_buy">Buy</string>
+    <string name="store_buy_price">Buy · %1$s</string>
+    <string name="store_owned">Owned</string>
+    <string name="store_pending">Waiting for payment</string>
+    <string name="store_restore">Restore purchases</string>
+    <string name="store_gate_title">For grown-ups</string>
+    <string name="store_gate_body">Purchases use a parent\'s or guardian\'s Google Play account. Ask them to answer this question, then press and hold the button below.</string>
+    <string name="store_gate_question">What is %1$d × %2$d?</string>
+    <string name="store_gate_answer">Answer</string>
+    <string name="store_gate_hold">Press and hold to continue</string>
+    <string name="store_notice_purchased">Thank you! %1$s is now open.</string>
+    <string name="store_notice_pending">%1$s is waiting for payment. It opens once the payment is complete.</string>
+    <string name="store_notice_cancelled">The purchase was cancelled. Nothing was charged.</string>
+    <string name="store_notice_owned">You already own this pack.</string>
+    <string name="store_notice_unavailable">Google Play can\'t be reached right now. Check the connection and try again.</string>
+    <string name="store_notice_failed">The purchase didn\'t go through. Please try again later.</string>
+    <string name="store_notice_restored">Purchases restored.</string>
+    <string name="store_notice_nothing">No purchases were found on this Google account.</string>
 
     <!-- Settings (P3b) -->
     <string name="settings_title">Settings</string>
@@ -195,6 +294,14 @@
     <string name="settings_delete_profile">Delete this profile</string>
     <string name="settings_delete_profile_title">Delete this profile?</string>
     <string name="settings_delete_profile_body">This profile and all of its answers will be deleted from this phone. This cannot be undone.</string>
+    <string name="settings_purchases">Learning packs</string>
+    <string name="settings_purchases_body">See the packs, buy one, or restore purchases from a Google Play account.</string>
+    <string name="settings_open_store">Open learning packs</string>
+    <string name="settings_delete_child">Delete child profile: %1$s</string>
+    <string name="settings_delete_child_title">Delete %1$s\'s profile?</string>
+    <string name="settings_delete_child_body">This child profile and all of its answers will be deleted from this phone. Other profiles stay as they are. This cannot be undone.</string>
+    <string name="settings_privacy_policy">Privacy policy</string>
+    <string name="settings_font_licence">Arabic typeface: Noto Naskh Arabic, licensed under the SIL Open Font License 1.1. Kana and hanzi stroke data: KanjiVG © Ulrich Apel, licensed under CC BY-SA 3.0.</string>
     <string name="settings_about">About</string>
     <string name="settings_learner_id">Learner ID (long-press to copy)</string>
     <string name="settings_contact">Questions or deletion requests: %1$s</string>
@@ -206,6 +313,234 @@
     <string name="reminder_channel_name">Daily reminder</string>
     <string name="reminder_channel_description">One reminder a day at the time you chose.</string>
 
+    <!-- Home additions (P6/P7): units, trial survey card -->
+    <string name="home_track_units">Units</string>
+    <string name="home_survey_title_day7">A week of Arabic</string>
+    <string name="home_survey_title_end">The trial is nearly over</string>
+    <string name="home_survey_title_background">A little about your background</string>
+    <string name="home_survey_body_background">Four short questions not yet answered. Every one may be skipped.</string>
+    <string name="home_survey_body">Five short questions about how it went. The answers stay on this phone.</string>
+    <string name="home_survey_open">Fill in the survey</string>
+
+    <!-- Units, locked-unit preview, unit challenge (P5/P6) -->
+    <string name="units_title">Units</string>
+    <string name="units_intro">Open units are practised in the daily session. Once every practice question in a unit is answered, its unit challenge opens: a few questions you have met before, with no pass mark. Finishing it earns the unit\'s sticker.</string>
+    <string name="units_failed">The unit list couldn\'t open.</string>
+    <string name="units_unit_label">Unit %1$s</string>
+    <string name="units_answered">Practice: %1$d of %2$d questions answered</string>
+    <string name="units_locked">Included in the %1$s</string>
+    <string name="units_try_one">Try one question</string>
+    <string name="units_challenge_ready">The unit challenge is open.</string>
+    <string name="units_challenge_start">Start the unit challenge</string>
+    <string name="units_challenge_done">Unit challenge done</string>
+    <string name="units_back">Back to the units</string>
+    <string name="preview_note">Just a sample: the answer isn\'t saved and doesn\'t change your progress.</string>
+    <string name="preview_none_title">No sample question yet</string>
+    <string name="preview_none_body">This unit has no question that suits a quick try yet.</string>
+    <string name="challenge_title">Unit challenge</string>
+    <string name="challenge_note">Questions you have met before. There\'s no pass mark, and the answers aren\'t saved.</string>
+    <string name="challenge_position">Question %1$d of %2$d</string>
+    <string name="challenge_done_title">Challenge done!</string>
+    <string name="challenge_done_sticker">This unit\'s sticker is now on your sticker shelf and growing in the knowledge garden.</string>
+    <string name="challenge_done_plain">You\'ve finished this unit.</string>
+    <string name="challenge_save_failed">This wasn\'t saved. Please try the challenge again later.</string>
+    <string name="challenge_not_ready_title">The challenge isn\'t open yet</string>
+    <string name="challenge_not_ready_body">The unit challenge opens once every practice question in this unit has been answered.</string>
+
+    <!-- Kebun Ilmu garden (P6) -->
+    <string name="garden_title">Knowledge garden</string>
+    <string name="garden_body">Each unit has its own plot. Finish the unit challenge and its sticker grows there.</string>
+    <string name="garden_cd">Knowledge garden: %1$d of %2$d plots have grown.</string>
+    <string name="garden_cd_grown">Grown: %1$s.</string>
+
+    <!-- Report a question (P7, Trial_App_Spec section 7) -->
+    <string name="report_open">Report this question</string>
+    <string name="report_title">Report this question</string>
+    <string name="report_body">What\'s wrong with it? The report stays on this phone and is included in the data export.</string>
+    <string name="report_reason_typo">There\'s a typo</string>
+    <string name="report_reason_wrong_answer">The answer key is wrong</string>
+    <string name="report_reason_confusing">The question is confusing</string>
+    <string name="report_reason_picture">The picture doesn\'t fit</string>
+    <string name="report_reason_other">Something else</string>
+    <string name="report_text_label">Tell us a little (optional)</string>
+    <string name="report_send">Save report</string>
+    <string name="report_done">Report saved. Thank you!</string>
+    <string name="report_failed">The report wasn\'t saved.</string>
+    <string name="report_retry">Try again</string>
+    <string name="synthetic_label">Made-up practice sentence — not a verse of the Qur\'an</string>
+
+    <!-- Trial questionnaires (P7): background E-B1..E-B4 (Lessons_Unit_A_B_Draft section 1.1), day 7 and end (Trial_App_Spec section 10) -->
+    <string name="survey_bg_title">Before you start: a little background</string>
+    <string name="survey_bg_intro">Four short questions. This isn\'t a test, and every question may be skipped.</string>
+    <string name="survey_day7_title">How was the first week?</string>
+    <string name="survey_end_title">End-of-trial survey</string>
+    <string name="survey_trial_intro">Honest answers help us improve the lessons. Every question may be skipped.</string>
+    <string name="survey_saved_note">The answers stay on this phone and are included in the data export.</string>
+    <string name="survey_failed">The answers weren\'t saved. Please try again.</string>
+    <string name="survey_submit">Save answers</string>
+    <string name="survey_skip">Skip</string>
+    <string name="survey_later">Not now</string>
+    <string name="survey_clarity_scale">1 = very hard to follow, 5 = very clear</string>
+    <string name="survey_text_label">Your answer (optional)</string>
+    <string name="survey_q_e_b1">How did you first learn to read Arabic letters? (choose any that apply)</string>
+    <string name="survey_q_e_b2">How often do you read Arabic text now?</string>
+    <string name="survey_q_e_b3">Have you ever studied Arabic grammar (nahwu/sharaf)?</string>
+    <string name="survey_q_e_b4">How long would you like to study each day?</string>
+    <string name="survey_o_e_b1_tpa">TPA/TPQ (Qur\'an school)</string>
+    <string name="survey_o_e_b1_iqra">Iqra\' at home or at the mosque</string>
+    <string name="survey_o_e_b1_pesantren">Pesantren (boarding school)</string>
+    <string name="survey_o_e_b1_madrasah">Madrasah or school</string>
+    <string name="survey_o_e_b1_self">On my own</string>
+    <string name="survey_o_e_b1_other">Other</string>
+    <string name="survey_o_e_b2_daily">Almost every day</string>
+    <string name="survey_o_e_b2_weekly">A few times a week</string>
+    <string name="survey_o_e_b2_rarely">Rarely</string>
+    <string name="survey_o_e_b2_almost_never">Almost never</string>
+    <string name="survey_o_e_b3_never">Never</string>
+    <string name="survey_o_e_b3_a_little">A little</string>
+    <string name="survey_o_e_b3_quite_a_lot">Quite a lot</string>
+    <string name="survey_q_clarity">How clear were the explanations?</string>
+    <string name="survey_q_hardest">Which part was hardest?</string>
+    <string name="survey_q_continue">Would you keep learning with AyaIlmu?</string>
+    <string name="survey_q_daily_minutes">How long did you actually study each day?</string>
+    <string name="survey_q_confusing">Was anything confusing? Tell us here.</string>
+    <string name="survey_o_continue_yes">Yes</string>
+    <string name="survey_o_continue_maybe">Maybe</string>
+    <string name="survey_o_continue_no">No</string>
+    <string name="survey_o_daily_lt5">Less than 5 minutes</string>
+    <string name="survey_o_daily_5_10">5–10 minutes</string>
+    <string name="survey_o_daily_10_15">10–15 minutes</string>
+    <string name="survey_o_daily_15_20">15–20 minutes</string>
+    <string name="survey_o_daily_gt20">More than 20 minutes</string>
+
+    <!-- Settings additions (P7): trial survey, tester code -->
+    <string name="settings_survey">Trial survey</string>
+    <string name="settings_survey_body">There\'s a short survey for you. Fill it in now or later.</string>
+    <string name="settings_survey_open">Fill in the trial survey</string>
+    <string name="settings_tester_title">Tester code</string>
+    <string name="settings_tester_body">For closed testers from Petalytix. A valid code opens every unit on this phone until the test ends.</string>
+    <string name="settings_tester_apply">Use the code</string>
+    <string name="settings_tester_active">Tester access is on: every unit is open on this phone.</string>
+    <string name="settings_tester_remove">Remove tester access</string>
+    <string name="settings_notice_tester_on">Code accepted. Every unit is now open.</string>
+    <string name="settings_notice_tester_wrong">That code wasn\'t recognised, or the test has ended. Check the letters again.</string>
+    <string name="settings_notice_tester_off">Tester access removed.</string>
+
     <!-- Accessibility -->
     <string name="cd_aya_mascot">Aya, the AyaIlmu mascot</string>
+
+    <!-- Interactions (follow-up 11) -->
+    <string name="interact_connect_hint">Draw a line to its partner, or tap both.</string>
+    <string name="interact_drag_pairs_hint">Drag each card onto its partner, or tap, then tap.</string>
+    <string name="interact_buckets_hint">Drag each card into its basket, or tap, then tap.</string>
+    <string name="interact_sequence_hint">Drag the tiles into place. Tap to place one or take it back.</string>
+    <string name="interact_pool_empty">Every card is placed.</string>
+    <string name="interact_empty">Empty</string>
+    <string name="interact_selected">Selected</string>
+    <string name="interact_pair_with">Pair with %1$s</string>
+    <string name="interact_put_in">Put in %1$s</string>
+    <string name="interact_put_in_slot">Put in place %1$d</string>
+    <string name="interact_take_out">Take out</string>
+    <string name="interact_unlink">Remove the link</string>
+    <string name="interact_linked_to">Paired with %1$s</string>
+    <string name="interact_in_basket">In %1$s</string>
+    <string name="interact_in_slot">In place %1$d</string>
+    <string name="interact_slot_empty_cd">Place %1$d, empty</string>
+
+    <!-- Listening (follow-up 11) -->
+    <string name="listen_again">Listen again</string>
+    <string name="listen_speaker_cd">Listen</string>
+    <string name="listen_speaker_word_cd">Listen: %1$s</string>
+
+    <!-- Tracing (follow-up 11) -->
+    <string name="trace_hint">Follow the line with your finger, starting at the dot.</string>
+    <string name="trace_progress">Stroke %1$d of %2$d</string>
+    <string name="trace_try_again">Almost! Try this stroke once more.</string>
+    <string name="trace_done">Done! The letter is complete.</string>
+    <string name="trace_canvas_cd">Writing space for the letter %1$s</string>
+    <string name="trace_skip_stroke">Mark this stroke as done</string>
+    <string name="trace_no_strokes">Stroke guides for this letter aren\'t here yet. Look at the letter, then continue.</string>
+
+    <!-- Sound (follow-up 11) -->
+    <string name="settings_sound_title">Sound effects</string>
+    <string name="settings_sound_body">Small sounds when you answer and drag cards. Pronunciation clips still play.</string>
+    <string name="settings_sound_switch">Play sound effects</string>
+
+    <!-- Modules & levels (follow-up 12) -->
+    <string name="module_name_bahasa">Languages</string>
+    <string name="module_name_matematika">Mathematics</string>
+    <string name="module_name_sains">Science</string>
+    <string name="module_name_sosial_seni">Social Studies &amp; Arts</string>
+    <string name="module_name_nilai">Values</string>
+    <string name="module_name_sejarah">History</string>
+    <string name="module_lang_ar">Arabic</string>
+    <string name="module_lang_en">English</string>
+    <string name="module_lang_ko">Korean</string>
+    <string name="module_lang_ja">Japanese</string>
+    <string name="module_lang_zh">Mandarin</string>
+    <string name="level_name_pemula">Beginner</string>
+    <string name="level_name_menengah">Intermediate</string>
+    <string name="level_name_mahir">Advanced</string>
+    <string name="level_name_master">Master</string>
+    <string name="level_desc_pemula_kids">First steps, like grades 1–2.</string>
+    <string name="level_desc_menengah_kids">More on your own, like grades 3–4.</string>
+    <string name="level_desc_mahir_kids">Reasoning and longer tasks, like grades 5–6.</string>
+    <string name="level_desc_master_kids">Using what you know in new ways, and creating.</string>
+    <string name="level_desc_pemula_adults">First steps.</string>
+    <string name="level_desc_menengah_adults">Getting by in everyday life.</string>
+    <string name="level_desc_mahir_adults">Reasoning and longer tasks.</string>
+    <string name="level_desc_master_adults">Nuance, applying and creating.</string>
+    <string name="module_change">Change</string>
+    <string name="module_coming_soon">Coming soon</string>
+    <string name="module_free">Free</string>
+    <string name="module_today">Today: %1$d answered</string>
+    <string name="module_units_done">Units done: %1$d of %2$d</string>
+    <string name="module_level_progress">%1$d of %2$d units done</string>
+    <string name="module_suggest_line">Almost every unit at this level is done. %1$s is there whenever you like.</string>
+    <string name="module_suggest_badge">Ready to try</string>
+    <string name="module_languages_title">Choose a language</string>
+    <string name="module_levels_title">Choose a level</string>
+    <string name="module_figures">Figure gallery</string>
+    <string name="module_failed">This subject couldn\'t open.</string>
+    <string name="module_cd_language">Language: %1$s</string>
+    <string name="module_cd_level">Level: %1$s</string>
+
+    <!-- Sejarah pack and all-access (follow-up 12) -->
+    <string name="store_product_sejarah">History pack</string>
+    <string name="store_product_sejarah_body">Every History unit: noble people from Indonesia and the world, for children and adults.</string>
+    <string name="store_all_access_body">Every subject now and to come: languages, maths, science, social studies and arts, and history. For every profile, children and adults.</string>
+
+    <!-- Profile pictures (follow-up 12) -->
+    <string name="avatar_title">Profile picture</string>
+    <string name="avatar_body">Pick an animal for this profile. It shows on Home and when you switch profiles.</string>
+    <string name="avatar_pick_prompt">Pick a picture for this profile (you can skip this).</string>
+    <string name="avatar_cat">Cat</string>
+    <string name="avatar_dog">Dog</string>
+    <string name="avatar_rabbit">Rabbit</string>
+    <string name="avatar_bird">Bird</string>
+    <string name="avatar_fish">Fish</string>
+    <string name="avatar_duck">Duck</string>
+    <string name="avatar_chicken">Chicken</string>
+    <string name="avatar_cow">Cow</string>
+    <string name="avatar_goat">Goat</string>
+    <string name="avatar_horse">Horse</string>
+    <string name="avatar_elephant">Elephant</string>
+    <string name="avatar_monkey">Monkey</string>
+
+    <!-- Stories (follow-up 12) -->
+    <string name="story_next">Next</string>
+    <string name="story_done">Done</string>
+    <string name="story_close">Close</string>
+    <string name="story_skip">Skip the story</string>
+    <string name="story_watch_again">Watch the story again</string>
+    <string name="story_listen_cd">Hear this part again</string>
+    <string name="story_stage_cd">Picture %1$d of %2$d: %3$s</string>
+    <string name="story_source">Source: %1$s</string>
+    <string name="figures_title">People from history</string>
+    <string name="figures_body">The people you have met in the history stories. Tap one to watch their story again.</string>
+    <string name="figures_count">Met so far: %1$d of %2$d</string>
+    <string name="figures_not_met">Not met yet</string>
+    <string name="figures_watch">watch the story</string>
+    <string name="figures_empty_title">No one here yet</string>
+    <string name="figures_empty_body">The stories in the History module introduce remarkable people. Everyone you meet will appear here.</string>
 </resources>

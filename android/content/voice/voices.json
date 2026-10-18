@@ -1,0 +1,37 @@
+{
+  "_about": "Voice choices for android/tools/voice_gen.py (see README.md in this folder). API facts checked 2026-10-18 on elevenlabs.io/docs. Changing model_id, voice_settings or a voice_id makes the tool regenerate that language's clips.",
+  "model_id": "eleven_v4",
+  "output_format": "mp3_22050_32",
+  "send_language_code": true,
+  "voice_settings": {
+    "stability": 0.5,
+    "similarity_boost": 0.75
+  },
+  "voices": {
+    "en": {
+      "voice_id": "",
+      "name": "",
+      "note": "[UMAR: pick a voice in the ElevenLabs Voice Library] One natural adult voice, friendly and clear, neutral international English accent; same voice for kids and adults packs."
+    },
+    "ko": {
+      "voice_id": "",
+      "name": "",
+      "note": "[UMAR: pick a voice in the ElevenLabs Voice Library] Native Korean (Seoul standard) adult voice, warm and clear; same voice for kids and adults packs."
+    },
+    "ja": {
+      "voice_id": "",
+      "name": "",
+      "note": "[UMAR: pick a voice in the ElevenLabs Voice Library] Native Japanese (standard Tokyo) adult voice, warm and clear; same voice for kids and adults packs."
+    },
+    "zh": {
+      "voice_id": "",
+      "name": "",
+      "note": "[UMAR: pick a voice in the ElevenLabs Voice Library] Native Mandarin (Putonghua, mainland standard) adult voice with clean tones; same voice for kids and adults packs."
+    },
+    "id": {
+      "voice_id": "",
+      "name": "",
+      "note": "[UMAR: pick a voice in the ElevenLabs Voice Library] Native Indonesian adult voice, friendly and clear, standard (non-regional) accent; same voice for kids and adults packs."
+    }
+  }
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- solid_cuboid: DRAFT art authored as code by art/tools/draw.py (ART_DIRECTION section 6). Placeholder until a human illustrator redraws or approves it (section 7). Generated: do not edit by hand. -->
+<!-- Texture slot: the app composites the shared paper-grain overlay above this drawing; no grain is baked in. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+  android:width="240dp"
+  android:height="240dp"
+  android:viewportWidth="240"
+  android:viewportHeight="240">
+  <path
+    android:fillColor="@color/art_sage"
+    android:fillAlpha="0.45"
+    android:pathData="M76.1 74.2L92.1 73.4L109.1 73.5L125.7 73.8L142.1 73.6L159.4 73.3L175.3 74.1L192 73.6L209.5 73.5L225.4 73.6L210.4 86.3L194.9 98.9L180.1 111.3L162.7 111.8L146 111.9L129.7 111.8L112.7 111.7L96.7 111.7L79.5 112.1L63.1 112L46.6 112L29.9 111.6L44.7 98.7L60.1 86.6Z" />
+  <path
+    android:fillColor="@color/art_sage"
+    android:fillAlpha="0.95"
+    android:pathData="M179.6 111.9L195.3 98.7L210.3 86.7L225.8 74L226.1 93.2L225.5 112.4L225.5 131.9L225.3 151.6L210.7 164.9L195.2 177.1L179.8 190L180.1 170.5L179.4 151.2L180.1 130.8Z" />
+  <path
+    android:fillColor="@color/art_sage"
+    android:fillAlpha="0.8"
+    android:pathData="M30 112L46.5 111.4L63.5 112L79.6 111.6L96.4 111.3L112.8 111.5L129.2 111.6L146.5 111.9L162.9 111.7L180.1 111.3L180.1 131.3L180.2 150.6L180.1 169.8L179.6 189.5L162.9 189.8L146.8 189.7L129.8 189.7L113.4 189.2L96.6 189.3L80.2 189.9L63.3 189.3L46.8 189.7L29.7 190L30 170.2L29.3 150.2L29.4 131.4Z" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="1.1"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:strokeAlpha="0.55"
+    android:pathData="M222 77.3L223.1 81.8M218.7 79.9L223.5 91.8M216 83.7L223.8 105.6M209.2 88.7L223.9 127.4M205.3 92.2L223.5 140.8M198.2 96.4L218.5 154.5M194.5 100.5L215.7 157M190.8 103.8L211.5 160.9M186.8 105.6L208 162.9M184.2 108.6L205.1 165.3M181.4 111.1L201.5 168.9M178.2 114.7L198.6 170.9M178.3 125.9L195.5 174.5M178.3 136.8L192.7 175.3M179.1 151L188.4 178.7M178.3 161.2L185.3 181.4M178.6 175L181.2 184.6" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="3"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M28.2 111.7C77.2 111.5 127.5 112 176.5 111.9M177.8 113.1C177.9 138.6 178.2 164.9 178.2 190.5M179.2 189.8C154.2 189.5 128.5 188.9 103.5 189.1C78.5 189.6 52.7 189.6 27.8 190.2M28.2 192.1C27.2 165.1 27.5 137.3 28.2 110.3M27.5 112.5C42.9 100 58.6 87.1 73.6 74.3M74.6 73.9C123.9 73.7 174.7 73.5 223.9 74.2M224 72.7C224 99.1 224.2 126.4 223.7 152.9M224.4 151.9C208.5 164.8 192.3 178.2 176.4 191.1" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="1.9"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M178.2 111.7C193.3 99.3 209 86.6 224.1 74.2" />
+  <path
+    android:strokeColor="@color/art_ink"
+    android:strokeWidth="1.14"
+    android:strokeLineCap="round"
+    android:strokeLineJoin="round"
+    android:pathData="M104.1 74C128.8 74.1 154.4 73.9 179.2 74" />
+</vector>

@@ -29,7 +29,10 @@ enum class Level(val code: String) {
     MASTER("X"),
 }
 
-/** The four subjects on the shelf. */
+/**
+ * The modules on the shelf (docs/content/MODULES_LEVELS_STORIES.md section 1). Follow-up 12 added [NILAI] (universal values,
+ * free) and [SEJARAH] (noble people of history, a paid pack with unit 01 free).
+ */
 @Serializable
 enum class Subject(val code: String) {
     @SerialName("bahasa")
@@ -43,6 +46,12 @@ enum class Subject(val code: String) {
 
     @SerialName("sosial_seni")
     SOSIAL_SENI("SOS"),
+
+    @SerialName("nilai")
+    NILAI("NIL"),
+
+    @SerialName("sejarah")
+    SEJARAH("SJR"),
 }
 
 /** Learning-rule mode of a track (framework §3, CR-ENG-4). */

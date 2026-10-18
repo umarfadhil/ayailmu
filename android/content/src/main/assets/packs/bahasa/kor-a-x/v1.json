@@ -1,0 +1,2020 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "kor-a-x-0.1",
+    "subject": "bahasa",
+    "track": "kor-a-x",
+    "level": "master",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "target_lang": "ko",
+    "title": {
+      "id": "Bahasa Korea — Master (Dewasa)",
+      "en": "Korean — Master (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, starter level: 2 units) for language review: needs a native Korean reviewer (hangul, Revised Romanization, naturalness, register, every voice clip) and the Indonesian and English reviewers before any item is approved (docs/syllabus/bahasa/ko_levels.md, Adults Master units 01-02). Picture-first; audio_match items stay hidden until their ko/* clips exist (android/content/voice/ko.json and ko.levels.json); every skill has a REMED item that needs no audio.",
+  "prompts": {
+    "P-LISTEN": {
+      "id": "Dengar, lalu pilih.",
+      "en": "Listen, then choose."
+    },
+    "P-LISTEN-PIC": {
+      "id": "Dengar, lalu ketuk gambarnya.",
+      "en": "Listen, then tap the picture."
+    },
+    "P-PICK": {
+      "id": "Pilih gambarnya.",
+      "en": "Pick the picture."
+    },
+    "P-READ": {
+      "id": "Baca, lalu pilih gambarnya.",
+      "en": "Read it, then pick the picture."
+    },
+    "P-MATCH-PIC": {
+      "id": "Pasangkan gambar dan katanya.",
+      "en": "Match each picture to its word."
+    },
+    "P-MATCH": {
+      "id": "Pasangkan.",
+      "en": "Match them up."
+    },
+    "P-BUILD-SAY": {
+      "id": "Susun kalimatnya.",
+      "en": "Build the sentence."
+    },
+    "P-FILL": {
+      "id": "Isi yang kosong.",
+      "en": "Fill the gap."
+    },
+    "P-SORT": {
+      "id": "Kelompokkan.",
+      "en": "Sort them."
+    },
+    "P-ORDER-TALK": {
+      "id": "Urutkan percakapannya.",
+      "en": "Put the talk in order."
+    },
+    "P-MEMORY": {
+      "id": "Buka kartu, cari pasangannya.",
+      "en": "Flip cards, find the pairs."
+    },
+    "P-REPLY": {
+      "id": "Pilih jawaban yang cocok.",
+      "en": "Pick the best reply."
+    },
+    "P-WHICH": {
+      "id": "Mana yang benar?",
+      "en": "Which one is right?"
+    },
+    "P-SAY": {
+      "id": "Anda bilang apa?",
+      "en": "What do you say?"
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    },
+    "P-GENTLE": {
+      "id": "Mana penolakan yang paling halus?",
+      "en": "Which is the gentlest 'no'?"
+    },
+    "P-AGREE": {
+      "id": "Tunjukkan bahwa Anda setuju.",
+      "en": "Show that you agree."
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Correct. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Permintaan sopan: kantor & kafe",
+        "en": "Polite requests: work & café"
+      },
+      "sticker": "sticker_teapot"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Pendapat & percakapan",
+        "en": "Opinions & conversation"
+      },
+      "sticker": "sticker_lantern"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "KOR-A-X-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Minta tolong & keinginan",
+        "en": "Requests & wishes"
+      },
+      "body": [
+        {
+          "id": "Minta tolong: 열어요 (yeoreoyo) → 열어 주세요 (yeoreo juseyo), 닫아요 (dadayo) → 닫아 주세요 (dada juseyo).",
+          "en": "Asking for help: 열어요 (yeoreoyo) → 열어 주세요 (yeoreo juseyo), 닫아요 (dadayo) → 닫아 주세요 (dada juseyo)."
+        },
+        {
+          "id": "좀 (jom) membuat permintaan lebih halus: 문 좀 열어 주세요 (mun jom yeoreo juseyo).",
+          "en": "좀 (jom) softens a request: 문 좀 열어 주세요 (mun jom yeoreo juseyo)."
+        },
+        {
+          "id": "Ingin: kata kerja + 고 싶어요 (go sipeoyo): 커피를 마시고 싶어요 (keopireul masigo sipeoyo).",
+          "en": "Want to: verb + 고 싶어요 (go sipeoyo): 커피를 마시고 싶어요 (keopireul masigo sipeoyo)."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "잠시만요",
+          "gloss": {
+            "id": "jamsimanyo · sebentar",
+            "en": "jamsimanyo · just a moment"
+          }
+        },
+        {
+          "target_text": "도와주세요",
+          "gloss": {
+            "id": "dowajuseyo · tolong bantu saya",
+            "en": "dowajuseyo · please help me"
+          }
+        },
+        {
+          "target_text": "다시",
+          "gloss": {
+            "id": "dasi · lagi",
+            "en": "dasi · again"
+          }
+        },
+        {
+          "target_text": "포장",
+          "gloss": {
+            "id": "pojang · bungkus",
+            "en": "pojang · takeaway"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "KOR-A-X-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Pendapat & ajakan",
+        "en": "Opinions & invitations"
+      },
+      "body": [
+        {
+          "id": "Minta pendapat: 어때요? (eottaeyo?) Jawab: 좋아요 (joayo), 괜찮아요 (gwaenchanayo), 별로예요 (byeolloyeyo).",
+          "en": "Ask an opinion: 어때요? (eottaeyo?) Answers: 좋아요 (joayo), 괜찮아요 (gwaenchanayo), 별로예요 (byeolloyeyo)."
+        },
+        {
+          "id": "Setuju: 저도요 (jeodoyo), 맞아요 (majayo). Ragu: 글쎄요 (geulsseyo).",
+          "en": "Agree: 저도요 (jeodoyo), 맞아요 (majayo). Unsure: 글쎄요 (geulsseyo)."
+        },
+        {
+          "id": "Ajakan: 같이 점심 먹을까요? (gachi jeomsim meogeulkkayo?) Menolak halus: 오늘은 좀 (oneureun jom)…",
+          "en": "Inviting: 같이 점심 먹을까요? (gachi jeomsim meogeulkkayo?) A gentle no: 오늘은 좀 (oneureun jom)…"
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "생각",
+          "gloss": {
+            "id": "saenggak · pikiran",
+            "en": "saenggak · thought"
+          }
+        },
+        {
+          "target_text": "더",
+          "gloss": {
+            "id": "deo · lebih",
+            "en": "deo · more"
+          }
+        },
+        {
+          "target_text": "정말",
+          "gloss": {
+            "id": "jeongmal · sungguh",
+            "en": "jeongmal · really"
+          }
+        },
+        {
+          "target_text": "별로예요",
+          "gloss": {
+            "id": "byeolloyeyo · kurang bagus",
+            "en": "byeolloyeyo · not great"
+          }
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "KOR-A-X-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_door",
+          "image": "pic_door",
+          "text": {
+            "id": "pintu",
+            "en": "door"
+          }
+        },
+        {
+          "id": "pic_window",
+          "image": "pic_window",
+          "text": {
+            "id": "jendela",
+            "en": "window"
+          }
+        },
+        {
+          "id": "pic_camera",
+          "image": "pic_camera",
+          "text": {
+            "id": "kamera",
+            "en": "camera"
+          }
+        },
+        {
+          "id": "pic_phone",
+          "image": "pic_phone",
+          "text": {
+            "id": "ponsel",
+            "en": "mobile phone"
+          }
+        },
+        {
+          "id": "w_mun_jom_yeoreo_juseyo",
+          "target_text": "문 좀 열어 주세요.",
+          "romanization": "mun jom yeoreo juseyo.",
+          "audio": "ko/mun_jom_yeoreo_juseyo"
+        },
+        {
+          "id": "w_changmun_jom_dada_juseyo",
+          "target_text": "창문 좀 닫아 주세요.",
+          "romanization": "changmun jom dada juseyo.",
+          "audio": "ko/changmun_jom_dada_juseyo"
+        },
+        {
+          "id": "w_sajin_jom_jjigeo_juseyo",
+          "target_text": "사진 좀 찍어 주세요.",
+          "romanization": "sajin jom jjigeo juseyo.",
+          "audio": "ko/sajin_jom_jjigeo_juseyo"
+        },
+        {
+          "id": "w_jeonhwahae_juseyo",
+          "target_text": "전화해 주세요.",
+          "romanization": "jeonhwahae juseyo.",
+          "audio": "ko/jeonhwahae_juseyo"
+        }
+      ],
+      "solution_pairs": {
+        "pic_door": "w_mun_jom_yeoreo_juseyo",
+        "pic_window": "w_changmun_jom_dada_juseyo",
+        "pic_camera": "w_sajin_jom_jjigeo_juseyo",
+        "pic_phone": "w_jeonhwahae_juseyo"
+      },
+      "model_answer": {
+        "id": "Buka pintu, tutup jendela, minta difoto, minta ditelepon: semuanya diakhiri 주세요 (juseyo).",
+        "en": "Open the door, close the window, take a photo, call me: all end in 주세요 (juseyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-LISTEN",
+      "audio": "ko/cheoncheonhi_malhae_juseyo",
+      "options": [
+        {
+          "id": "again",
+          "text": {
+            "id": "Tolong ulangi.",
+            "en": "Please say it again."
+          }
+        },
+        {
+          "id": "slow",
+          "text": {
+            "id": "Tolong bicara pelan-pelan.",
+            "en": "Please speak slowly."
+          },
+          "correct": true
+        },
+        {
+          "id": "wait",
+          "text": {
+            "id": "Tolong tunggu sebentar.",
+            "en": "Please wait a moment."
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "천천히 말해 주세요 (cheoncheonhi malhae juseyo) = tolong bicara pelan-pelan.",
+        "en": "천천히 말해 주세요 (cheoncheonhi malhae juseyo) = please speak slowly."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "KOR-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-SAY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Anda kurang menangkapnya.",
+            "en": "You didn't catch it."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "w_dasi_hanbeon_malhae_juseyo",
+          "target_text": "다시 한번 말해 주세요.",
+          "romanization": "dasi hanbeon malhae juseyo.",
+          "audio": "ko/dasi_hanbeon_malhae_juseyo",
+          "correct": true
+        },
+        {
+          "id": "w_pojanghae_juseyo",
+          "target_text": "포장해 주세요.",
+          "romanization": "pojanghae juseyo.",
+          "audio": "ko/pojanghae_juseyo"
+        },
+        {
+          "id": "w_gyesanhae_juseyo",
+          "target_text": "계산해 주세요.",
+          "romanization": "gyesanhae juseyo.",
+          "audio": "ko/gyesanhae_juseyo"
+        }
+      ],
+      "model_answer": {
+        "id": "Minta diulang: 다시 한번 말해 주세요 (dasi hanbeon malhae juseyo).",
+        "en": "Ask them to repeat: 다시 한번 말해 주세요 (dasi hanbeon malhae juseyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-FILL",
+      "image": "pic_door",
+      "target_text": "문 좀 ___ 주세요.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_yeolgo",
+          "target_text": "열고",
+          "romanization": "yeolgo"
+        },
+        {
+          "id": "p_yeoreoyo",
+          "target_text": "열어요",
+          "romanization": "yeoreoyo"
+        },
+        {
+          "id": "p_yeoreo",
+          "target_text": "열어",
+          "romanization": "yeoreo"
+        }
+      ],
+      "solution": [
+        "p_yeoreo"
+      ],
+      "romanization": "mun jom ___ juseyo.",
+      "model_answer": {
+        "id": "열어요 (yeoreoyo) → 열어 주세요 (yeoreo juseyo): 문 좀 열어 주세요 (mun jom yeoreo juseyo).",
+        "en": "열어요 (yeoreoyo) → 열어 주세요 (yeoreo juseyo): 문 좀 열어 주세요 (mun jom yeoreo juseyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "memory_flip",
+      "skills": [
+        "KOR-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-MEMORY",
+      "options": [
+        {
+          "id": "pic_computer",
+          "image": "pic_computer",
+          "text": {
+            "id": "komputer",
+            "en": "computer"
+          }
+        },
+        {
+          "id": "pic_phone",
+          "image": "pic_phone",
+          "text": {
+            "id": "ponsel",
+            "en": "mobile phone"
+          }
+        },
+        {
+          "id": "pic_headphones",
+          "image": "pic_headphones",
+          "text": {
+            "id": "headphone",
+            "en": "headphones"
+          }
+        },
+        {
+          "id": "pic_pen",
+          "image": "pic_pen",
+          "text": {
+            "id": "pulpen",
+            "en": "pen"
+          }
+        },
+        {
+          "id": "w_keompyuteo",
+          "target_text": "컴퓨터",
+          "romanization": "keompyuteo",
+          "audio": "ko/keompyuteo"
+        },
+        {
+          "id": "w_hyudaepon",
+          "target_text": "휴대폰",
+          "romanization": "hyudaepon",
+          "audio": "ko/hyudaepon"
+        },
+        {
+          "id": "w_hedeupon",
+          "target_text": "헤드폰",
+          "romanization": "hedeupon",
+          "audio": "ko/hedeupon"
+        },
+        {
+          "id": "w_pen",
+          "target_text": "펜",
+          "romanization": "pen",
+          "audio": "ko/pen"
+        }
+      ],
+      "solution_pairs": {
+        "pic_computer": "w_keompyuteo",
+        "pic_phone": "w_hyudaepon",
+        "pic_headphones": "w_hedeupon",
+        "pic_pen": "w_pen"
+      },
+      "model_answer": {
+        "id": "컴퓨터 (keompyuteo) komputer, 휴대폰 (hyudaepon) ponsel, 헤드폰 (hedeupon) headphone, 펜 (pen) pulpen.",
+        "en": "컴퓨터 (keompyuteo) computer, 휴대폰 (hyudaepon) mobile phone, 헤드폰 (hedeupon) headphones, 펜 (pen) pen."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-WANT"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/jom_swigo_sipeoyo",
+      "options": [
+        {
+          "id": "pic_run",
+          "image": "pic_run",
+          "text": {
+            "id": "berlari",
+            "en": "running"
+          }
+        },
+        {
+          "id": "pic_cook",
+          "image": "pic_cook",
+          "text": {
+            "id": "memasak",
+            "en": "cooking"
+          }
+        },
+        {
+          "id": "pic_tired",
+          "image": "pic_tired",
+          "text": {
+            "id": "capek",
+            "en": "tired"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "좀 쉬고 싶어요 (jom swigo sipeoyo) = saya ingin istirahat sebentar.",
+        "en": "좀 쉬고 싶어요 (jom swigo sipeoyo) = I'd like to rest a bit."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "KOR-WANT"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-BUILD-SAY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya ingin minum teh.",
+            "en": "I'd like to drink tea."
+          }
+        }
+      ],
+      "image": "pic_tea_cup",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_sipeoyo",
+          "target_text": "싶어요",
+          "romanization": "sipeoyo",
+          "audio": "ko/sipeoyo"
+        },
+        {
+          "id": "w_masigo",
+          "target_text": "마시고",
+          "romanization": "masigo",
+          "audio": "ko/masigo"
+        },
+        {
+          "id": "w_juseyo",
+          "target_text": "주세요",
+          "romanization": "juseyo",
+          "audio": "ko/juseyo"
+        },
+        {
+          "id": "w_chareul",
+          "target_text": "차를",
+          "romanization": "chareul",
+          "audio": "ko/chareul"
+        }
+      ],
+      "solution": [
+        "w_chareul",
+        "w_masigo",
+        "w_sipeoyo"
+      ],
+      "model_answer": {
+        "id": "차를 마시고 싶어요 (chareul masigo sipeoyo) = saya ingin minum teh.",
+        "en": "차를 마시고 싶어요 (chareul masigo sipeoyo) = I'd like to drink tea."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "KOR-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-ORDER-TALK",
+      "image": "pic_coffee_cup",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_deusigo_gaseyo",
+          "target_text": "드시고 가세요?",
+          "romanization": "deusigo gaseyo?",
+          "audio": "ko/deusigo_gaseyo"
+        },
+        {
+          "id": "w_aniyo_pojanghae_juseyo",
+          "target_text": "아니요, 포장해 주세요.",
+          "romanization": "aniyo, pojanghae juseyo.",
+          "audio": "ko/aniyo_pojanghae_juseyo"
+        },
+        {
+          "id": "w_jumunhasigesseoyo",
+          "target_text": "주문하시겠어요?",
+          "romanization": "jumunhasigesseoyo?",
+          "audio": "ko/jumunhasigesseoyo"
+        },
+        {
+          "id": "w_aiseu_amerikano_han_jan_juseyo",
+          "target_text": "아이스 아메리카노 한 잔 주세요.",
+          "romanization": "aiseu amerikano han jan juseyo.",
+          "audio": "ko/aiseu_amerikano_han_jan_juseyo"
+        }
+      ],
+      "solution": [
+        "w_jumunhasigesseoyo",
+        "w_aiseu_amerikano_han_jan_juseyo",
+        "w_deusigo_gaseyo",
+        "w_aniyo_pojanghae_juseyo"
+      ],
+      "model_answer": {
+        "id": "Ditawari pesan, memesan, ditanya minum di sini, lalu minta dibungkus.",
+        "en": "Asked to order, you order, asked 'for here?', then ask for takeaway."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "KOR-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-REPLY",
+      "image": "pic_coffee_cup",
+      "target_text": "드시고 가세요?",
+      "options": [
+        {
+          "id": "w_ne_annyeonghi_gaseyo",
+          "target_text": "네, 안녕히 가세요.",
+          "romanization": "ne, annyeonghi gaseyo.",
+          "audio": "ko/ne_annyeonghi_gaseyo"
+        },
+        {
+          "id": "w_samcheon_wonieyo",
+          "target_text": "삼천 원이에요.",
+          "romanization": "samcheon wonieyo.",
+          "audio": "ko/samcheon_wonieyo"
+        },
+        {
+          "id": "w_aniyo_pojanghae_juseyo",
+          "target_text": "아니요, 포장해 주세요.",
+          "romanization": "aniyo, pojanghae juseyo.",
+          "audio": "ko/aniyo_pojanghae_juseyo",
+          "correct": true
+        }
+      ],
+      "romanization": "deusigo gaseyo?",
+      "audio": "ko/deusigo_gaseyo",
+      "model_answer": {
+        "id": "드시고 가세요? (deusigo gaseyo?) = minum di sini? Bukan salam pamit. Jawab: 아니요, 포장해 주세요 (aniyo, pojanghae juseyo).",
+        "en": "드시고 가세요? (deusigo gaseyo?) = for here? Not a goodbye. Reply: 아니요, 포장해 주세요 (aniyo, pojanghae juseyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "KOR-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_a",
+          "target_text": "아 주세요",
+          "romanization": "a juseyo"
+        },
+        {
+          "id": "b_eo",
+          "target_text": "어 주세요",
+          "romanization": "eo juseyo"
+        },
+        {
+          "id": "p_yeol",
+          "target_text": "열-",
+          "romanization": "yeol-"
+        },
+        {
+          "id": "p_dat",
+          "target_text": "닫-",
+          "romanization": "dat-"
+        },
+        {
+          "id": "p_jjik",
+          "target_text": "찍-",
+          "romanization": "jjik-"
+        },
+        {
+          "id": "p_an",
+          "target_text": "앉-",
+          "romanization": "an-"
+        },
+        {
+          "id": "p_ik",
+          "target_text": "읽-",
+          "romanization": "ik-"
+        },
+        {
+          "id": "p_bat",
+          "target_text": "받-",
+          "romanization": "bat-"
+        }
+      ],
+      "solution_pairs": {
+        "p_yeol": "b_eo",
+        "p_dat": "b_a",
+        "p_jjik": "b_eo",
+        "p_an": "b_a",
+        "p_ik": "b_eo",
+        "p_bat": "b_a"
+      },
+      "model_answer": {
+        "id": "Vokal ㅏ/ㅗ + 아 주세요 (a juseyo): 닫아 (dada), 앉아 (anja), 받아 (bada). Lainnya + 어 주세요 (eo juseyo): 열어 (yeoreo), 찍어 (jjigeo), 읽어 (ilgeo).",
+        "en": "ㅏ/ㅗ + 아 주세요 (a juseyo): 닫아 (dada), 앉아 (anja), 받아 (bada). Others + 어 주세요 (eo juseyo): 열어 (yeoreo), 찍어 (jjigeo), 읽어 (ilgeo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-REQUEST"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/changmun_jom_yeoreo_juseyo",
+      "options": [
+        {
+          "id": "pic_door",
+          "image": "pic_door",
+          "text": {
+            "id": "pintu",
+            "en": "door"
+          }
+        },
+        {
+          "id": "pic_window",
+          "image": "pic_window",
+          "text": {
+            "id": "jendela",
+            "en": "window"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_computer",
+          "image": "pic_computer",
+          "text": {
+            "id": "komputer",
+            "en": "computer"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "창문 좀 열어 주세요 (changmun jom yeoreo juseyo) = tolong buka jendelanya.",
+        "en": "창문 좀 열어 주세요 (changmun jom yeoreo juseyo) = could you open the window?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "KOR-WANT"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-READ",
+      "target_text": "차를 마시고 싶어요.",
+      "options": [
+        {
+          "id": "pic_tea_cup",
+          "image": "pic_tea_cup",
+          "text": {
+            "id": "secangkir teh",
+            "en": "cup of tea"
+          },
+          "correct": true
+        },
+        {
+          "id": "pic_coffee_cup",
+          "image": "pic_coffee_cup",
+          "text": {
+            "id": "secangkir kopi",
+            "en": "cup of coffee"
+          }
+        },
+        {
+          "id": "pic_juice",
+          "image": "pic_juice",
+          "text": {
+            "id": "jus",
+            "en": "juice"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "차를 마시고 싶어요 (chareul masigo sipeoyo) = saya ingin minum teh.",
+        "en": "차를 마시고 싶어요 (chareul masigo sipeoyo) = I'd like to drink tea."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-REQUEST"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "image": "pic_window",
+      "target_text": "창문 좀 ___ 주세요.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_datgo",
+          "target_text": "닫고",
+          "romanization": "datgo"
+        },
+        {
+          "id": "p_dada",
+          "target_text": "닫아",
+          "romanization": "dada"
+        },
+        {
+          "id": "p_dadayo",
+          "target_text": "닫아요",
+          "romanization": "dadayo"
+        }
+      ],
+      "solution": [
+        "p_dada"
+      ],
+      "romanization": "changmun jom ___ juseyo.",
+      "model_answer": {
+        "id": "닫아요 (dadayo) → 닫아 주세요 (dada juseyo): 창문 좀 닫아 주세요 (changmun jom dada juseyo).",
+        "en": "닫아요 (dadayo) → 닫아 주세요 (dada juseyo): 창문 좀 닫아 주세요 (changmun jom dada juseyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "KOR-WANT"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-WHICH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Saya ingin istirahat.",
+            "en": "I want to rest."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "w_swigo_sipeoyo",
+          "target_text": "쉬고 싶어요.",
+          "romanization": "swigo sipeoyo.",
+          "audio": "ko/swigo_sipeoyo",
+          "correct": true
+        },
+        {
+          "id": "w_swieo_juseyo",
+          "target_text": "쉬어 주세요.",
+          "romanization": "swieo juseyo.",
+          "audio": "ko/swieo_juseyo"
+        },
+        {
+          "id": "w_swieosseoyo",
+          "target_text": "쉬었어요.",
+          "romanization": "swieosseoyo.",
+          "audio": "ko/swieosseoyo"
+        }
+      ],
+      "model_answer": {
+        "id": "Ingin = 고 싶어요 (go sipeoyo): 쉬고 싶어요 (swigo sipeoyo). 쉬어 주세요 (swieo juseyo) = silakan istirahat.",
+        "en": "Want to = 고 싶어요 (go sipeoyo): 쉬고 싶어요 (swigo sipeoyo). 쉬어 주세요 (swieo juseyo) = please rest."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-MATCH-PIC",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "pic_cake",
+          "image": "pic_cake",
+          "text": {
+            "id": "kue",
+            "en": "cake"
+          }
+        },
+        {
+          "id": "math_money_notes",
+          "image": "math_money_notes",
+          "text": {
+            "id": "uang kertas",
+            "en": "banknotes"
+          }
+        },
+        {
+          "id": "pic_big",
+          "image": "pic_big",
+          "text": {
+            "id": "bola besar",
+            "en": "a big ball"
+          }
+        },
+        {
+          "id": "pic_small",
+          "image": "pic_small",
+          "text": {
+            "id": "bola kecil",
+            "en": "a small ball"
+          }
+        },
+        {
+          "id": "w_masisseoyo",
+          "target_text": "맛있어요",
+          "romanization": "masisseoyo",
+          "audio": "ko/masisseoyo"
+        },
+        {
+          "id": "w_bissayo",
+          "target_text": "비싸요",
+          "romanization": "bissayo",
+          "audio": "ko/bissayo"
+        },
+        {
+          "id": "w_keoyo",
+          "target_text": "커요",
+          "romanization": "keoyo",
+          "audio": "ko/keoyo"
+        },
+        {
+          "id": "w_jagayo",
+          "target_text": "작아요",
+          "romanization": "jagayo",
+          "audio": "ko/jagayo"
+        }
+      ],
+      "solution_pairs": {
+        "pic_cake": "w_masisseoyo",
+        "math_money_notes": "w_bissayo",
+        "pic_big": "w_keoyo",
+        "pic_small": "w_jagayo"
+      },
+      "model_answer": {
+        "id": "맛있어요 (masisseoyo) enak, 비싸요 (bissayo) mahal, 커요 (keoyo) besar, 작아요 (jagayo) kecil.",
+        "en": "맛있어요 (masisseoyo) delicious, 비싸요 (bissayo) expensive, 커요 (keoyo) big, 작아요 (jagayo) small."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-LISTEN",
+      "audio": "ko/byeolloyeyo",
+      "options": [
+        {
+          "id": "great",
+          "text": {
+            "id": "Bagus sekali!",
+            "en": "Really good!"
+          }
+        },
+        {
+          "id": "metoo",
+          "text": {
+            "id": "Saya juga.",
+            "en": "Me too."
+          }
+        },
+        {
+          "id": "notgreat",
+          "text": {
+            "id": "Kurang bagus.",
+            "en": "Not great."
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "별로예요 (byeolloyeyo) = kurang bagus; cara sopan untuk tidak memuji.",
+        "en": "별로예요 (byeolloyeyo) = not great; a polite way not to praise."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "KOR-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-REPLY",
+      "image": "pic_tv",
+      "target_text": "이 영화 어때요?",
+      "options": [
+        {
+          "id": "w_samman_wonieyo",
+          "target_text": "삼만 원이에요.",
+          "romanization": "samman wonieyo.",
+          "audio": "ko/samman_wonieyo"
+        },
+        {
+          "id": "w_jeongmal_jaemiisseoyo",
+          "target_text": "정말 재미있어요.",
+          "romanization": "jeongmal jaemiisseoyo.",
+          "audio": "ko/jeongmal_jaemiisseoyo",
+          "correct": true
+        },
+        {
+          "id": "w_ne_yeonghwayeyo",
+          "target_text": "네, 영화예요.",
+          "romanization": "ne, yeonghwayeyo.",
+          "audio": "ko/ne_yeonghwayeyo"
+        }
+      ],
+      "romanization": "i yeonghwa eottaeyo?",
+      "audio": "ko/i_yeonghwa_eottaeyo",
+      "model_answer": {
+        "id": "어때요? (eottaeyo?) meminta pendapat: 정말 재미있어요 (jeongmal jaemiisseoyo).",
+        "en": "어때요? (eottaeyo?) asks for an opinion: 정말 재미있어요 (jeongmal jaemiisseoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "KOR-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "b_plus",
+          "image": "pic_happy",
+          "text": {
+            "id": "Pendapat baik",
+            "en": "Positive"
+          }
+        },
+        {
+          "id": "b_minus",
+          "image": "pic_sad",
+          "text": {
+            "id": "Pendapat kurang baik",
+            "en": "Negative"
+          }
+        },
+        {
+          "id": "w_masisseoyo",
+          "target_text": "맛있어요",
+          "romanization": "masisseoyo",
+          "audio": "ko/masisseoyo"
+        },
+        {
+          "id": "w_byeolloyeyo",
+          "target_text": "별로예요.",
+          "romanization": "byeolloyeyo.",
+          "audio": "ko/byeolloyeyo"
+        },
+        {
+          "id": "w_jaemiisseoyo",
+          "target_text": "재미있어요",
+          "romanization": "jaemiisseoyo",
+          "audio": "ko/jaemiisseoyo"
+        },
+        {
+          "id": "w_bissayo",
+          "target_text": "비싸요",
+          "romanization": "bissayo",
+          "audio": "ko/bissayo"
+        },
+        {
+          "id": "w_joayo",
+          "target_text": "좋아요!",
+          "romanization": "joayo!",
+          "audio": "ko/joayo"
+        },
+        {
+          "id": "w_jaemieopseoyo",
+          "target_text": "재미없어요",
+          "romanization": "jaemieopseoyo",
+          "audio": "ko/jaemieopseoyo"
+        }
+      ],
+      "solution_pairs": {
+        "w_masisseoyo": "b_plus",
+        "w_byeolloyeyo": "b_minus",
+        "w_jaemiisseoyo": "b_plus",
+        "w_bissayo": "b_minus",
+        "w_joayo": "b_plus",
+        "w_jaemieopseoyo": "b_minus"
+      },
+      "model_answer": {
+        "id": "Baik: 맛있어요 (masisseoyo), 재미있어요 (jaemiisseoyo), 좋아요 (joayo). Kurang: 별로예요 (byeolloyeyo), 비싸요 (bissayo), 재미없어요 (jaemieopseoyo).",
+        "en": "Positive: 맛있어요 (masisseoyo), 재미있어요 (jaemiisseoyo), 좋아요 (joayo). Negative: 별로예요 (byeolloyeyo), 비싸요 (bissayo), 재미없어요 (jaemieopseoyo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "KOR-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-FILL",
+      "image": "pic_coffee_cup",
+      "target_text": "저는 차___ 커피가 더 좋아요.",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_eseo",
+          "target_text": "에서",
+          "romanization": "eseo"
+        },
+        {
+          "id": "p_boda",
+          "target_text": "보다",
+          "romanization": "boda"
+        },
+        {
+          "id": "p_kkaji",
+          "target_text": "까지",
+          "romanization": "kkaji"
+        }
+      ],
+      "solution": [
+        "p_boda"
+      ],
+      "romanization": "jeoneun cha___ keopiga deo joayo.",
+      "model_answer": {
+        "id": "N + 보다 (boda) = daripada: 저는 차보다 커피가 더 좋아요 (jeoneun chaboda keopiga deo joayo).",
+        "en": "N + 보다 (boda) = than: 저는 차보다 커피가 더 좋아요 (jeoneun chaboda keopiga deo joayo)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "KOR-DIALOGUE"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-LISTEN",
+      "audio": "ko/jeodoyo",
+      "options": [
+        {
+          "id": "unsure",
+          "text": {
+            "id": "Hmm, entahlah.",
+            "en": "Hmm, I'm not sure."
+          }
+        },
+        {
+          "id": "metoo",
+          "text": {
+            "id": "Saya juga!",
+            "en": "Me too!"
+          },
+          "correct": true
+        },
+        {
+          "id": "nothanks",
+          "text": {
+            "id": "Tidak, terima kasih.",
+            "en": "No, thank you."
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "저도요 (jeodoyo) = saya juga!",
+        "en": "저도요 (jeodoyo) = me too!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "KOR-DIALOGUE"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-MATCH",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "w_jeodoyo",
+          "target_text": "저도요!",
+          "romanization": "jeodoyo!",
+          "audio": "ko/jeodoyo"
+        },
+        {
+          "id": "w_majayo",
+          "target_text": "맞아요",
+          "romanization": "majayo",
+          "audio": "ko/majayo"
+        },
+        {
+          "id": "w_geulsseyo",
+          "target_text": "글쎄요.",
+          "romanization": "geulsseyo.",
+          "audio": "ko/geulsseyo"
+        },
+        {
+          "id": "w_byeolloyeyo",
+          "target_text": "별로예요.",
+          "romanization": "byeolloyeyo.",
+          "audio": "ko/byeolloyeyo"
+        },
+        {
+          "id": "m_metoo",
+          "text": {
+            "id": "Saya juga",
+            "en": "Me too"
+          }
+        },
+        {
+          "id": "m_right",
+          "text": {
+            "id": "Betul",
+            "en": "That's right"
+          }
+        },
+        {
+          "id": "m_unsure",
+          "text": {
+            "id": "Hmm, entahlah",
+            "en": "Well, I'm not sure"
+          }
+        },
+        {
+          "id": "m_notgreat",
+          "text": {
+            "id": "Kurang bagus",
+            "en": "Not great"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "w_jeodoyo": "m_metoo",
+        "w_majayo": "m_right",
+        "w_geulsseyo": "m_unsure",
+        "w_byeolloyeyo": "m_notgreat"
+      },
+      "model_answer": {
+        "id": "저도요 (jeodoyo) saya juga, 맞아요 (majayo) betul, 글쎄요 (geulsseyo) entahlah, 별로예요 (byeolloyeyo) kurang bagus.",
+        "en": "저도요 (jeodoyo) me too, 맞아요 (majayo) that's right, 글쎄요 (geulsseyo) not sure, 별로예요 (byeolloyeyo) not great."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "KOR-DIALOGUE"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-ORDER-TALK",
+      "image": "pic_restaurant",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_geureom_naeireun_eottaeyo",
+          "target_text": "그럼 내일은 어때요?",
+          "romanization": "geureom naeireun eottaeyo?",
+          "audio": "ko/geureom_naeireun_eottaeyo"
+        },
+        {
+          "id": "w_gachi_jeomsim_meogeulkkayo",
+          "target_text": "같이 점심 먹을까요?",
+          "romanization": "gachi jeomsim meogeulkkayo?",
+          "audio": "ko/gachi_jeomsim_meogeulkkayo"
+        },
+        {
+          "id": "w_joayo",
+          "target_text": "좋아요!",
+          "romanization": "joayo!",
+          "audio": "ko/joayo"
+        },
+        {
+          "id": "w_mianhaeyo_oneureun_jom_bappayo",
+          "target_text": "미안해요. 오늘은 좀 바빠요.",
+          "romanization": "mianhaeyo. oneureun jom bappayo.",
+          "audio": "ko/mianhaeyo_oneureun_jom_bappayo"
+        }
+      ],
+      "solution": [
+        "w_gachi_jeomsim_meogeulkkayo",
+        "w_mianhaeyo_oneureun_jom_bappayo",
+        "w_geureom_naeireun_eottaeyo",
+        "w_joayo"
+      ],
+      "model_answer": {
+        "id": "Ajakan, penolakan halus, tawaran lain: 그럼 내일은 어때요? (geureom naeireun eottaeyo?) Lalu setuju.",
+        "en": "Invitation, gentle no, a new offer: 그럼 내일은 어때요? (geureom naeireun eottaeyo?) Then yes."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "KOR-DIALOGUE"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-GENTLE",
+      "target_text": "같이 점심 먹을까요?",
+      "options": [
+        {
+          "id": "w_oneureun_jom",
+          "target_text": "오늘은 좀…",
+          "romanization": "oneureun jom…",
+          "audio": "ko/oneureun_jom",
+          "correct": true
+        },
+        {
+          "id": "w_sireoyo",
+          "target_text": "싫어요.",
+          "romanization": "sireoyo.",
+          "audio": "ko/sireoyo"
+        },
+        {
+          "id": "w_an_gayo",
+          "target_text": "안 가요.",
+          "romanization": "an gayo.",
+          "audio": "ko/an_gayo"
+        }
+      ],
+      "romanization": "gachi jeomsim meogeulkkayo?",
+      "audio": "ko/gachi_jeomsim_meogeulkkayo",
+      "model_answer": {
+        "id": "오늘은 좀… (oneureun jom…) menolak tanpa kata 'tidak'. 싫어요 (sireoyo) dan 안 가요 (an gayo) terdengar ketus.",
+        "en": "오늘은 좀… (oneureun jom…) says no without 'no'. 싫어요 (sireoyo) and 안 가요 (an gayo) sound blunt."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "KOR-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-BUILD-SAY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menurut saya, kuenya enak.",
+            "en": "I think the cake is delicious."
+          }
+        }
+      ],
+      "image": "pic_cake",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "w_masisseoyo",
+          "target_text": "맛있어요",
+          "romanization": "masisseoyo",
+          "audio": "ko/masisseoyo"
+        },
+        {
+          "id": "w_bissayo",
+          "target_text": "비싸요",
+          "romanization": "bissayo",
+          "audio": "ko/bissayo"
+        },
+        {
+          "id": "w_je_saenggageneun",
+          "target_text": "제 생각에는",
+          "romanization": "je saenggageneun",
+          "audio": "ko/je_saenggageneun"
+        },
+        {
+          "id": "w_keikeuga",
+          "target_text": "케이크가",
+          "romanization": "keikeuga",
+          "audio": "ko/keikeuga"
+        }
+      ],
+      "solution": [
+        "w_je_saenggageneun",
+        "w_keikeuga",
+        "w_masisseoyo"
+      ],
+      "model_answer": {
+        "id": "제 생각에는 케이크가 맛있어요 (je saenggageneun keikeuga masisseoyo) = menurut saya kuenya enak.",
+        "en": "제 생각에는 케이크가 맛있어요 (je saenggageneun keikeuga masisseoyo) = I think the cake is delicious."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "KOR-DIALOGUE"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-LISTEN-PIC",
+      "audio": "ko/gachi_keopi_masilkkayo",
+      "options": [
+        {
+          "id": "pic_rice_bowl",
+          "image": "pic_rice_bowl",
+          "text": {
+            "id": "semangkuk nasi",
+            "en": "bowl of rice"
+          }
+        },
+        {
+          "id": "pic_book",
+          "image": "pic_book",
+          "text": {
+            "id": "buku",
+            "en": "book"
+          }
+        },
+        {
+          "id": "pic_coffee_cup",
+          "image": "pic_coffee_cup",
+          "text": {
+            "id": "secangkir kopi",
+            "en": "cup of coffee"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "같이 커피 마실까요? (gachi keopi masilkkayo?) = mau minum kopi bersama?",
+        "en": "같이 커피 마실까요? (gachi keopi masilkkayo?) = shall we have a coffee?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "KOR-OPINION"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-PICK",
+      "target_text": "여기는 조용해요.",
+      "options": [
+        {
+          "id": "pic_market",
+          "image": "pic_market",
+          "text": {
+            "id": "pasar",
+            "en": "market"
+          }
+        },
+        {
+          "id": "pic_station",
+          "image": "pic_station",
+          "text": {
+            "id": "stasiun",
+            "en": "station"
+          }
+        },
+        {
+          "id": "pic_library",
+          "image": "pic_library",
+          "text": {
+            "id": "perpustakaan",
+            "en": "library"
+          },
+          "correct": true
+        }
+      ],
+      "romanization": "yeogineun joyonghaeyo.",
+      "audio": "ko/yeogineun_joyonghaeyo",
+      "model_answer": {
+        "id": "여기는 조용해요 (yeogineun joyonghaeyo) = di sini tenang, seperti di perpustakaan.",
+        "en": "여기는 조용해요 (yeogineun joyonghaeyo) = it's quiet here, like a library."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "KOR-OPINION"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-REPLY",
+      "image": "pic_cake",
+      "target_text": "어때요?",
+      "options": [
+        {
+          "id": "w_keikeuyeyo",
+          "target_text": "케이크예요",
+          "romanization": "keikeuyeyo",
+          "audio": "ko/keikeuyeyo"
+        },
+        {
+          "id": "w_masisseoyo",
+          "target_text": "맛있어요",
+          "romanization": "masisseoyo",
+          "audio": "ko/masisseoyo",
+          "correct": true
+        },
+        {
+          "id": "w_jeodoyo",
+          "target_text": "저도요!",
+          "romanization": "jeodoyo!",
+          "audio": "ko/jeodoyo"
+        }
+      ],
+      "romanization": "eottaeyo?",
+      "audio": "ko/eottaeyo",
+      "model_answer": {
+        "id": "어때요? (eottaeyo?) meminta pendapat: 맛있어요 (masisseoyo)!",
+        "en": "어때요? (eottaeyo?) asks for an opinion: 맛있어요 (masisseoyo)!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "KOR-DIALOGUE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-AGREE",
+      "target_text": "저는 커피를 좋아해요.",
+      "options": [
+        {
+          "id": "w_jeodoyo",
+          "target_text": "저도요!",
+          "romanization": "jeodoyo!",
+          "audio": "ko/jeodoyo",
+          "correct": true
+        },
+        {
+          "id": "w_geulsseyo",
+          "target_text": "글쎄요.",
+          "romanization": "geulsseyo.",
+          "audio": "ko/geulsseyo"
+        },
+        {
+          "id": "w_byeolloyeyo",
+          "target_text": "별로예요.",
+          "romanization": "byeolloyeyo.",
+          "audio": "ko/byeolloyeyo"
+        }
+      ],
+      "romanization": "jeoneun keopireul joahaeyo.",
+      "audio": "ko/jeoneun_keopireul_joahaeyo",
+      "model_answer": {
+        "id": "Setuju: 저도요 (jeodoyo)! 글쎄요 (geulsseyo) = ragu, 별로예요 (byeolloyeyo) = kurang suka.",
+        "en": "Agreeing: 저도요 (jeodoyo)! 글쎄요 (geulsseyo) = unsure, 별로예요 (byeolloyeyo) = not keen."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "KOR-DIALOGUE"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Oxford English Dictionary, September 2021 update: Danica Salazar, 'Daebak! The OED gets a K-update' (public.oed.com), 26 new words of Korean origin, among them daebak, hanbok and oppa.",
+      "model_answer": {
+        "id": "Sejak 2021, Oxford English Dictionary memuat 26 kata asal Korea, antara lain 대박 (daebak) = 'luar biasa!', 한복 (hanbok) dan 오빠 (oppa).",
+        "en": "Since 2021 the Oxford English Dictionary has 26 words of Korean origin, among them 대박 (daebak) = 'awesome!', 한복 (hanbok) and 오빠 (oppa)."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    },
+    {
+      "item_id": "KOR-A-X-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "image": "pic_apple",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Apa arti lainnya?",
+            "en": "What else does it mean?"
+          }
+        }
+      ],
+      "target_text": "사과",
+      "options": [
+        {
+          "id": "apology",
+          "text": {
+            "id": "permintaan maaf",
+            "en": "an apology"
+          },
+          "correct": true
+        },
+        {
+          "id": "thanks",
+          "text": {
+            "id": "terima kasih",
+            "en": "thanks"
+          }
+        },
+        {
+          "id": "greeting",
+          "text": {
+            "id": "salam",
+            "en": "a greeting"
+          }
+        }
+      ],
+      "romanization": "sagwa",
+      "audio": "ko/sagwa",
+      "model_answer": {
+        "id": "사과 (sagwa) = apel, juga permintaan maaf: 사과해요 (sagwahaeyo) = saya minta maaf.",
+        "en": "사과 (sagwa) = apple, and also an apology: 사과해요 (sagwahaeyo) = I apologise."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "kor-a-x-0.1"
+    }
+  ]
+}

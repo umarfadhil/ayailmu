@@ -1,5 +1,5 @@
 {
-  "config_version": 1,
+  "config_version": 2,
   "schema_version": 1,
   "remote_override_enabled": false,
   "session_minutes": {
@@ -15,5 +15,12 @@
     "evidence": 0.5,
     "casual": 0.4
   },
-  "notes": "Bundled app-level config (CR-CFG-1). Per-track learning rules live in config/rules.<track>.json from P1."
+  "trial": {
+    "track": "arab",
+    "survey_day": 7,
+    "end_survey_from": null,
+    "tester_code_hashes": [],
+    "tester_until": null
+  },
+  "notes": "Bundled app-level config (CR-CFG-1). Per-track learning rules live in config/rules.<track>.json. trial (P7, 2026-10-17): days after the first trial answer before the day-7 survey, the date the end-of-trial survey opens (null = not yet), SHA-256 hashes of closed-test tester codes made with android/tools/tester_code.py (the codes themselves are never committed), and tester_until, the last day those codes open every unit (required when there are hashes)."
 }

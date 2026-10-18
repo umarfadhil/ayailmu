@@ -1,0 +1,480 @@
+{
+  "meta": {"schema_version": 1, "content_version": "mat-k-x-0.1", "subject": "matematika", "track": "mat-k-x", "level": "master", "mode": "casual", "audiences": ["kids"], "instruction_langs": ["id", "en"], "title": {"id": "Matematika — Master (Anak)", "en": "Mathematics — Master (Kids)"}},
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, Kids Master starter: syllabus units 1-2 of docs/syllabus/02_MATEMATIKA.md). Needs a math subject reviewer and both language reviewers (Indonesian, English) before anything is approved. Every answer is computed by the generator and re-checked by a script (scratchpad fu12/mat); prices and figures in questions are illustrative examples.",
+  "prompts": {
+    "P-PICK": {"id": "Pilih gambar yang tepat.", "en": "Pick the right picture."},
+    "P-NUM": {"id": "Tulis angkanya.", "en": "Type the number."},
+    "P-CHOOSE": {"id": "Pilih jawaban yang tepat.", "en": "Pick the right answer."},
+    "P-TF": {"id": "Benar atau salah?", "en": "True or false?"},
+    "P-ORDER": {"id": "Seret ke urutan yang benar.", "en": "Drag them into the right order."},
+    "P-FILL": {"id": "Seret ke bagian yang kosong.", "en": "Drag into the gap."},
+    "P-TILES": {"id": "Seret kepingan ke tempatnya.", "en": "Drag the tiles into place."},
+    "P-CONNECT": {"id": "Tarik garis ke pasangannya.", "en": "Draw a line to each match."},
+    "P-SORT": {"id": "Seret ke keranjang yang tepat.", "en": "Drag each into the right basket."},
+    "P-MEMORY": {"id": "Balik kartu, cari pasangannya.", "en": "Flip the cards, find pairs."},
+    "P-ESTIMATE": {"id": "Tebak, lalu geser.", "en": "Guess, then slide."},
+    "P-TAP": {"id": "Ketuk bagian yang tepat.", "en": "Tap the right spot."},
+    "P-GEM": {"id": "Tahukah kamu?", "en": "Did you know?"},
+    "P-PUZZLE": {"id": "Teka-teki hari ini", "en": "Today's puzzle"}
+  },
+  "feedback": {
+    "FB-OK-MODEL": {"id": "Betul! {model}", "en": "That's right! {model}"},
+    "FB-DONTKNOW": {"id": "Tidak apa-apa. Kita lihat bersama: {model}", "en": "That's okay. Let's look at it together: {model}"},
+    "FB-NO-ESTIMATE": {"id": "Belum terlalu dekat, tetapi menebak itu latihan yang bagus! {model}", "en": "Not that close yet, but guessing is great practice! {model}"},
+    "FB-GEM": {"id": "Permata ini masuk ke Kotak Permatamu.", "en": "This gem goes into your Gem box."},
+    "FB-PUZZLE-OK": {"id": "Hebat, teka-tekinya terpecahkan! {model}", "en": "Brilliant, you solved it! {model}"},
+    "FB-PUZZLE-NO": {"id": "Hampir! Teka-teki memang perlu dipikirkan pelan-pelan. {model}", "en": "Nearly! Puzzles need slow thinking. {model}"},
+    "FB-NO-LOGIC": {"id": "Belum tepat. Cek setiap petunjuk satu per satu dan coret yang tidak cocok. {model}", "en": "Not quite. Check each clue one at a time and cross out what doesn't fit. {model}"},
+    "FB-NO-TRICK": {"id": "Belum tepat. Pecah atau bulatkan dulu bilangannya, lalu hitung pelan-pelan. {model}", "en": "Not quite. Split or round the number first, then work it out slowly. {model}"}
+  },
+  "units": [
+    {"unit": "01", "title": {"id": "Logika & teka-teki", "en": "Logic & puzzles"}, "sticker": "sticker_lantern"},
+    {"unit": "02", "title": {"id": "Strategi hitung cepat", "en": "Mental math tricks"}, "sticker": "sticker_drum"}
+  ],
+  "screens": [
+    {
+      "screen_id": "MAT-K-X-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {"id": "Logika & teka-teki", "en": "Logic & puzzles"},
+      "body": [
+        {"id": "Pakai semua petunjuk bersama-sama: coret yang tidak mungkin, yang tersisa itulah jawabannya.", "en": "Use all the clues together: cross out what can't be, and what's left is the answer."},
+        {"id": "Kalau seseorang selalu berkata benar, semua ucapannya benar. Coba tebak dulu, lalu cek apakah cocok.", "en": "If someone always tells the truth, everything they say is true. Make a guess, then check that it fits."},
+        {"id": "Cari yang tidak pernah berubah. Bilangan genap ditambah 2 tetap genap.", "en": "Look for what never changes. An even number plus 2 is still even."}
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "MAT-K-X-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {"id": "Strategi hitung cepat", "en": "Mental math tricks"},
+      "body": [
+        {"id": "Pecah bilangannya: 7 × 12 = 7 × 10 + 7 × 2 = 70 + 14 = 84.", "en": "Split the number: 7 × 12 = 7 × 10 + 7 × 2 = 70 + 14 = 84."},
+        {"id": "Bulatkan, lalu betulkan: 99 × 6 = 100 × 6 − 6 = 594.", "en": "Round, then fix: 99 × 6 = 100 × 6 − 6 = 594."},
+        {"id": "Kali 5? Kali 10, lalu bagi 2: 48 × 5 = 480 : 2 = 240.", "en": "Times 5? Times 10, then divide by 2: 48 × 5 = 480 ÷ 2 = 240."}
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "MAT-K-X-01-001", "unit": "01", "audience": "kids", "level": "master", "step": 1, "type": "tap_hotspot", "skills": ["LOGIC-CLUES"], "pool": "PRACT", "order": 1, "prompt_id": "P-TAP",
+      "image": "scene_kampung_shapes",
+      "help_lines": [{"word": "", "meaning": {"id": "Aku punya 4 sisi yang sama panjang, tetapi sudutku tidak siku-siku. Siapa aku?", "en": "I have 4 equal sides, but my corners aren't square. Who am I?"}}],
+      "options": [
+        {"id": "sun", "text": {"id": "matahari", "en": "sun"}, "region": {"x": 0.06, "y": 0.06, "w": 0.18, "h": 0.24}},
+        {"id": "roof", "text": {"id": "atap", "en": "roof"}, "region": {"x": 0.3, "y": 0.2, "w": 0.36, "h": 0.22}},
+        {"id": "wall", "text": {"id": "dinding", "en": "wall"}, "region": {"x": 0.34, "y": 0.44, "w": 0.28, "h": 0.37}},
+        {"id": "kite", "text": {"id": "layang-layang", "en": "kite"}, "region": {"x": 0.74, "y": 0.06, "w": 0.16, "h": 0.26}, "correct": true},
+        {"id": "board", "text": {"id": "papan pengumuman", "en": "noticeboard"}, "region": {"x": 0.72, "y": 0.56, "w": 0.22, "h": 0.18}}
+      ],
+      "model_answer": {"id": "Layang-layang (belah ketupat): 4 sisi sama panjang, sudutnya miring. Dinding juga punya 4 sisi sama, tetapi sudutnya siku-siku.", "en": "The kite (a rhombus): 4 equal sides, slanted corners. The wall also has 4 equal sides, but its corners are square."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOGIC", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-01-002", "unit": "01", "audience": "kids", "level": "master", "step": 1, "type": "tap_hotspot", "skills": ["LOGIC-CLUES"], "pool": "PRACT", "order": 2, "prompt_id": "P-TAP",
+      "image": "scene_kampung_shapes",
+      "help_lines": [{"word": "", "meaning": {"id": "Aku punya 4 sudut siku-siku, tetapi sisiku tidak semuanya sama panjang. Siapa aku?", "en": "I have 4 square corners, but my sides aren't all the same length. Who am I?"}}],
+      "options": [
+        {"id": "sun", "text": {"id": "matahari", "en": "sun"}, "region": {"x": 0.06, "y": 0.06, "w": 0.18, "h": 0.24}},
+        {"id": "board", "text": {"id": "papan pengumuman", "en": "noticeboard"}, "region": {"x": 0.72, "y": 0.56, "w": 0.22, "h": 0.18}, "correct": true},
+        {"id": "roof", "text": {"id": "atap", "en": "roof"}, "region": {"x": 0.3, "y": 0.2, "w": 0.36, "h": 0.22}},
+        {"id": "wall", "text": {"id": "dinding", "en": "wall"}, "region": {"x": 0.34, "y": 0.44, "w": 0.28, "h": 0.37}},
+        {"id": "kite", "text": {"id": "layang-layang", "en": "kite"}, "region": {"x": 0.74, "y": 0.06, "w": 0.16, "h": 0.26}}
+      ],
+      "model_answer": {"id": "Papan pengumuman (persegi panjang). Dinding juga bersudut siku-siku, tetapi keempat sisinya sama panjang.", "en": "The noticeboard (a rectangle). The wall has square corners too, but all four of its sides are equal."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOGIC", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-01-003", "unit": "01", "audience": "kids", "level": "master", "step": 1, "type": "pick_image", "skills": ["LOGIC-CLUES"], "pool": "PRACT", "order": 3, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Aku tidak punya sudut. Aku juga bukan bulat sempurna. Siapa aku?", "en": "I have no corners. I'm not perfectly round either. Who am I?"}}],
+      "options": [
+        {"id": "shape_circle", "image": "shape_circle"},
+        {"id": "shape_triangle", "image": "shape_triangle"},
+        {"id": "shape_oval", "image": "shape_oval", "correct": true},
+        {"id": "shape_square", "image": "shape_square"}
+      ],
+      "model_answer": {"id": "Oval: tidak bersudut dan bentuknya seperti telur. Lingkaran juga tidak bersudut, tetapi bulat sempurna.", "en": "The oval: no corners, and egg-shaped. A circle has no corners either, but it is perfectly round."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOGIC", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-01-004", "unit": "01", "audience": "kids", "level": "master", "step": 1, "type": "order", "skills": ["LOGIC-CLUES"], "pool": "PRACT", "order": 4, "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Antre beli es: Cici paling depan. Budi tepat di belakang Ani. Dodi di depan Ani. Urutkan dari depan.", "en": "A queue for ice lollies: Cici is first. Budi is right behind Ani. Dodi is ahead of Ani. Order them from the front."}}],
+      "options": [
+        {"id": "A", "text": {"id": "Ani", "en": "Ani"}},
+        {"id": "B", "text": {"id": "Budi", "en": "Budi"}},
+        {"id": "C", "text": {"id": "Cici", "en": "Cici"}},
+        {"id": "D", "text": {"id": "Dodi", "en": "Dodi"}}
+      ],
+      "solution": ["C", "D", "A", "B"],
+      "model_answer": {"id": "Cici, Dodi, Ani, Budi. Ani dan Budi selalu berdempetan, dan Dodi harus di depan mereka.", "en": "Cici, Dodi, Ani, Budi. Ani and Budi always stand together, and Dodi must be ahead of them."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOGIC", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-01-005", "unit": "01", "audience": "kids", "level": "master", "step": 1, "type": "sort_buckets", "skills": ["LOGIC-CLUES"], "pool": "PRACT", "order": 5, "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Genap dan kelipatan 3 sekaligus, atau bukan?", "en": "Even and a multiple of 3 at once, or not?"}}],
+      "options": [
+        {"id": "b_yes", "text": {"id": "Genap dan kelipatan 3", "en": "Even and a multiple of 3"}},
+        {"id": "b_no", "text": {"id": "Bukan keduanya", "en": "Not both"}},
+        {"id": "c12", "text": {"id": "12", "en": "12"}},
+        {"id": "c18", "text": {"id": "18", "en": "18"}},
+        {"id": "c6", "text": {"id": "6", "en": "6"}},
+        {"id": "c20", "text": {"id": "20", "en": "20"}},
+        {"id": "c9", "text": {"id": "9", "en": "9"}},
+        {"id": "c14", "text": {"id": "14", "en": "14"}}
+      ],
+      "solution_pairs": {"c6": "b_yes", "c9": "b_no", "c12": "b_yes", "c14": "b_no", "c18": "b_yes", "c20": "b_no"},
+      "model_answer": {"id": "Keduanya: 6, 12, 18. Bukan: 9 (ganjil), 14 (bukan kelipatan 3), 20 (bukan kelipatan 3).", "en": "Both: 6, 12, 18. Not both: 9 (odd), 14 (not a multiple of 3), 20 (not a multiple of 3)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOGIC", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-01-006", "unit": "01", "audience": "kids", "level": "master", "step": 1, "type": "choose", "skills": ["LOGIC-INVARIANT"], "pool": "PRACT", "order": 6, "prompt_id": "P-CHOOSE",
+      "image": "pic_socks",
+      "help_lines": [{"word": "", "meaning": {"id": "Di laci ada banyak kaus kaki merah dan biru. Tanpa melihat, paling sedikit berapa yang diambil supaya pasti ada sepasang warna sama?", "en": "A drawer has lots of red and blue socks. Without looking, what's the fewest you must take to be sure of a matching pair?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "2 kaus kaki", "en": "2 socks"}},
+        {"id": "b", "text": {"id": "3 kaus kaki", "en": "3 socks"}, "correct": true},
+        {"id": "c", "text": {"id": "4 kaus kaki", "en": "4 socks"}}
+      ],
+      "model_answer": {"id": "3 kaus kaki: dua yang pertama bisa berbeda warna, tetapi yang ketiga pasti sama dengan salah satunya.", "en": "3 socks: the first two might differ, but the third must match one of them."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOGIC", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-01-007", "unit": "01", "audience": "kids", "level": "master", "step": 2, "type": "choose", "skills": ["LOGIC-TRUTH"], "pool": "PRACT", "order": 7, "prompt_id": "P-CHOOSE",
+      "help_lines": [{"word": "", "meaning": {"id": "Di Pulau Teka-teki, si Jujur selalu berkata benar dan si Bohong selalu berkata salah. Ani berkata: \"Aku dan Budi sama-sama si Bohong.\" Siapa mereka?", "en": "On Puzzle Island, Truthers always tell the truth and Fibbers never do. Ani says: \"Budi and I are both Fibbers.\" Who are they?"}}],
+      "options": [
+        {"id": "b", "text": {"id": "Ani si Bohong, Budi si Jujur", "en": "Ani a Fibber, Budi a Truther"}, "correct": true},
+        {"id": "a", "text": {"id": "Ani si Jujur, Budi si Bohong", "en": "Ani a Truther, Budi a Fibber"}},
+        {"id": "c", "text": {"id": "Keduanya si Bohong", "en": "Both Fibbers"}}
+      ],
+      "model_answer": {"id": "Kalau Ani si Jujur, ucapannya membuat dia si Bohong: tidak mungkin. Jadi Ani si Bohong, ucapannya salah, dan Budi si Jujur.", "en": "If Ani were a Truther, her words would make her a Fibber: impossible. So Ani is a Fibber, her words are false, and Budi is a Truther."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOGIC", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-01-008", "unit": "01", "audience": "kids", "level": "master", "step": 2, "type": "true_false", "skills": ["LOGIC-TRUTH"], "pool": "PRACT", "order": 8, "prompt_id": "P-TF",
+      "image": "pic_dog",
+      "help_lines": [{"word": "", "meaning": {"id": "Semua kucing berkaki empat. Jadi, semua hewan berkaki empat adalah kucing.", "en": "All cats have four legs. So all four-legged animals are cats."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}, "correct": true}
+      ],
+      "model_answer": {"id": "Salah. Anjing juga berkaki empat, tetapi bukan kucing. \"Jika A maka B\" tidak berarti \"jika B maka A\".", "en": "False. A dog has four legs too, but it isn't a cat. \"If A then B\" doesn't mean \"if B then A\"."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOGIC", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-01-009", "unit": "01", "audience": "kids", "level": "master", "step": 2, "type": "number_input", "skills": ["LOGIC-INVARIANT"], "pool": "PRACT", "order": 9, "prompt_id": "P-NUM",
+      "image": "balance_even",
+      "help_lines": [{"word": "", "meaning": {"id": "Ada 9 koin, satu lebih ringan. Paling sedikit berapa kali menimbang supaya pasti ketemu?", "en": "There are 9 coins and one is lighter. What's the fewest weighings that always finds it?"}}],
+      "numeric": {"value": 2, "tolerance": 0},
+      "model_answer": {"id": "2 kali. Bagi jadi 3 kelompok isi 3, timbang 2 kelompok: kelompok yang ringan ketahuan. Lalu timbang 2 koin dari kelompok itu.", "en": "2 weighings. Split them into 3 groups of 3 and weigh 2 groups: you find the light group. Then weigh 2 coins from that group."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOGIC", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-01-010", "unit": "01", "audience": "kids", "level": "master", "step": 2, "type": "sort_buckets", "skills": ["LOGIC-INVARIANT"], "pool": "PRACT", "order": 10, "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Hasilnya genap atau ganjil? Tak perlu dijumlahkan semua!", "en": "Is the total even or odd? No need to add it all up!"}}],
+      "options": [
+        {"id": "b_even", "text": {"id": "Genap", "en": "Even"}},
+        {"id": "b_odd", "text": {"id": "Ganjil", "en": "Odd"}},
+        {"id": "s2", "text": {"id": "2 + 4 + 6", "en": "2 + 4 + 6"}},
+        {"id": "s1", "text": {"id": "7 + 8", "en": "7 + 8"}},
+        {"id": "s5", "text": {"id": "11 + 12 + 13", "en": "11 + 12 + 13"}},
+        {"id": "s0", "text": {"id": "3 + 5", "en": "3 + 5"}},
+        {"id": "s4", "text": {"id": "9 + 9 + 1", "en": "9 + 9 + 1"}},
+        {"id": "s3", "text": {"id": "1 + 3 + 5", "en": "1 + 3 + 5"}}
+      ],
+      "solution_pairs": {"s0": "b_even", "s1": "b_odd", "s2": "b_even", "s3": "b_odd", "s4": "b_odd", "s5": "b_even"},
+      "model_answer": {"id": "Ganjil + ganjil = genap; genap + ganjil = ganjil. Genap: 3 + 5, 2 + 4 + 6, 11 + 12 + 13. Ganjil: 7 + 8, 1 + 3 + 5, 9 + 9 + 1.", "en": "Odd + odd = even; even + odd = odd. Even: 3 + 5, 2 + 4 + 6, 11 + 12 + 13. Odd: 7 + 8, 1 + 3 + 5, 9 + 9 + 1."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOGIC", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-01-011", "unit": "01", "audience": "kids", "level": "master", "step": 2, "type": "choose", "skills": ["LOGIC-INVARIANT"], "pool": "PRACT", "order": 11, "prompt_id": "P-CHOOSE",
+      "help_lines": [{"word": "", "meaning": {"id": "Sebatang cokelat punya 4 × 6 kotak. Sekali patah, satu potong jadi dua. Berapa kali mematahkan supaya jadi 24 kotak kecil?", "en": "A chocolate bar has 4 × 6 squares. Each snap turns one piece into two. How many snaps to get 24 small squares?"}}],
+      "options": [
+        {"id": "b", "text": {"id": "24 kali", "en": "24 snaps"}},
+        {"id": "c", "text": {"id": "10 kali", "en": "10 snaps"}},
+        {"id": "a", "text": {"id": "23 kali", "en": "23 snaps"}, "correct": true}
+      ],
+      "model_answer": {"id": "Setiap patahan menambah 1 potong. Dari 1 potong ke 24 potong perlu 24 − 1 = 23 patahan, apa pun caranya.", "en": "Each snap adds 1 piece. Going from 1 piece to 24 pieces takes 24 − 1 = 23 snaps, whatever you do."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOGIC", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-01-012", "unit": "01", "audience": "kids", "level": "master", "step": 2, "type": "pick_image", "skills": ["LOGIC-TRUTH"], "pool": "PRACT", "order": 12, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Hanya satu orang yang berkata benar. Ayah: \"Aku yang benar.\" Ibu: \"Ayah berkata salah.\" Nenek: \"Ibu berkata salah.\" Siapa yang benar?", "en": "Only one person is telling the truth. Dad: \"I'm the one who's right.\" Mum: \"Dad is wrong.\" Grandma: \"Mum is wrong.\" Who is right?"}}],
+      "options": [
+        {"id": "fam_father", "image": "fam_father"},
+        {"id": "fam_grandmother", "image": "fam_grandmother"},
+        {"id": "fam_mother", "image": "fam_mother", "correct": true}
+      ],
+      "model_answer": {"id": "Ibu. Kalau Ayah yang benar, Nenek juga benar: jadi dua orang, tidak boleh. Kalau Ibu yang benar, Ayah dan Nenek sama-sama salah: cocok.", "en": "Mum. If Dad were right, Grandma would be right too: that's two people, not allowed. If Mum is right, Dad and Grandma are both wrong: it fits."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOGIC", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-01-013", "unit": "01", "audience": "kids", "level": "master", "step": 1, "type": "pick_image", "skills": ["LOGIC-CLUES"], "pool": "REMED", "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Aku punya sudut, tetapi kurang dari empat. Siapa aku?", "en": "I have corners, but fewer than four. Who am I?"}}],
+      "options": [
+        {"id": "shape_triangle", "image": "shape_triangle", "correct": true},
+        {"id": "shape_square", "image": "shape_square"},
+        {"id": "shape_circle", "image": "shape_circle"},
+        {"id": "shape_rectangle", "image": "shape_rectangle"}
+      ],
+      "model_answer": {"id": "Segitiga: tiga sudut. Persegi dan persegi panjang punya empat, lingkaran tidak punya sudut.", "en": "The triangle: three corners. Squares and rectangles have four; a circle has none."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOGIC", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-01-014", "unit": "01", "audience": "kids", "level": "master", "step": 2, "type": "true_false", "skills": ["LOGIC-TRUTH"], "pool": "REMED", "prompt_id": "P-TF",
+      "image": "pic_watermelon",
+      "help_lines": [{"word": "", "meaning": {"id": "Semua apel adalah buah. Jadi, semua buah adalah apel.", "en": "All apples are fruit. So all fruit are apples."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}, "correct": true}
+      ],
+      "model_answer": {"id": "Salah. Semangka juga buah, tetapi bukan apel.", "en": "False. A watermelon is fruit too, but it isn't an apple."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOGIC", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-01-015", "unit": "01", "audience": "kids", "level": "master", "step": 2, "type": "choose", "skills": ["LOGIC-INVARIANT"], "pool": "REMED", "prompt_id": "P-CHOOSE",
+      "image": "pic_socks",
+      "help_lines": [{"word": "", "meaning": {"id": "Di laci ada banyak kaus kaki dengan 4 warna. Paling sedikit ambil berapa supaya pasti dapat sepasang warna sama?", "en": "A drawer has lots of socks in 4 colours. What's the fewest you must take to be sure of a matching pair?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "4 kaus kaki", "en": "4 socks"}},
+        {"id": "b", "text": {"id": "5 kaus kaki", "en": "5 socks"}, "correct": true},
+        {"id": "c", "text": {"id": "8 kaus kaki", "en": "8 socks"}}
+      ],
+      "model_answer": {"id": "4 kaus kaki pertama bisa berbeda semua. Kaus kaki ke-5 pasti sama dengan salah satunya.", "en": "The first 4 socks could all be different. Sock number 5 must match one of them."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-LOGIC", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-02-001", "unit": "02", "audience": "kids", "level": "master", "step": 1, "type": "tiles", "skills": ["MM-DISTRIB"], "pool": "PRACT", "order": 13, "prompt_id": "P-TILES",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Susun cara cepat untuk 6 × 14.", "en": "Build a quick way to work out 6 × 14."}}],
+      "options": [
+        {"id": "t1", "text": {"id": "6 × 10", "en": "6 × 10"}},
+        {"id": "t2", "text": {"id": "6 × 4", "en": "6 × 4"}},
+        {"id": "teq", "text": {"id": "=", "en": "="}},
+        {"id": "tr", "text": {"id": "84", "en": "84"}},
+        {"id": "td2", "text": {"id": "74", "en": "74"}},
+        {"id": "tp", "text": {"id": "+", "en": "+"}},
+        {"id": "td1", "text": {"id": "6 + 14", "en": "6 + 14"}}
+      ],
+      "solution": ["t1", "tp", "t2", "teq", "tr"],
+      "model_answer": {"id": "6 × 14 = 6 × 10 + 6 × 4 = 60 + 24 = 84.", "en": "6 × 14 = 6 × 10 + 6 × 4 = 60 + 24 = 84."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TRICK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-02-002", "unit": "02", "audience": "kids", "level": "master", "step": 1, "type": "number_input", "skills": ["MM-DISTRIB"], "pool": "PRACT", "order": 14, "prompt_id": "P-NUM",
+      "image": "count_egg_15",
+      "help_lines": [{"word": "", "meaning": {"id": "Ada 8 kotak, tiap kotak 15 telur. Berapa semua telurnya?", "en": "There are 8 boxes with 15 eggs in each. How many eggs?"}}],
+      "numeric": {"value": 120, "tolerance": 0},
+      "model_answer": {"id": "8 × 15 = 8 × 10 + 8 × 5 = 80 + 40 = 120.", "en": "8 × 15 = 8 × 10 + 8 × 5 = 80 + 40 = 120."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TRICK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-02-003", "unit": "02", "audience": "kids", "level": "master", "step": 1, "type": "match_pairs", "skills": ["MM-DISTRIB"], "pool": "PRACT", "order": 15, "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [{"word": "", "meaning": {"id": "Pasangkan dengan cara memecahnya.", "en": "Match each with its split."}}],
+      "options": [
+        {"id": "q7", "text": {"id": "7 × 13", "en": "7 × 13"}},
+        {"id": "q9", "text": {"id": "9 × 12", "en": "9 × 12"}},
+        {"id": "q6", "text": {"id": "6 × 17", "en": "6 × 17"}},
+        {"id": "q4", "text": {"id": "4 × 23", "en": "4 × 23"}},
+        {"id": "s6", "text": {"id": "60 + 42", "en": "60 + 42"}},
+        {"id": "s9", "text": {"id": "90 + 18", "en": "90 + 18"}},
+        {"id": "s4", "text": {"id": "80 + 12", "en": "80 + 12"}},
+        {"id": "s7", "text": {"id": "70 + 21", "en": "70 + 21"}}
+      ],
+      "solution_pairs": {"q7": "s7", "q9": "s9", "q6": "s6", "q4": "s4"},
+      "model_answer": {"id": "7 × 13 = 70 + 21 = 91; 9 × 12 = 90 + 18 = 108; 6 × 17 = 60 + 42 = 102; 4 × 23 = 80 + 12 = 92.", "en": "7 × 13 = 70 + 21 = 91; 9 × 12 = 90 + 18 = 108; 6 × 17 = 60 + 42 = 102; 4 × 23 = 80 + 12 = 92."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TRICK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-02-004", "unit": "02", "audience": "kids", "level": "master", "step": 1, "type": "fill_blank", "skills": ["MM-DISTRIB"], "pool": "PRACT", "order": 16, "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "5 × 46 = 5 × 40 + 5 × __", "en": "5 × 46 = 5 × 40 + 5 × __"}}],
+      "options": [
+        {"id": "a", "text": {"id": "6", "en": "6"}},
+        {"id": "b", "text": {"id": "46", "en": "46"}},
+        {"id": "c", "text": {"id": "4", "en": "4"}}
+      ],
+      "solution": ["a"],
+      "model_answer": {"id": "46 = 40 + 6, jadi 5 × 46 = 200 + 30 = 230.", "en": "46 = 40 + 6, so 5 × 46 = 200 + 30 = 230."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TRICK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-02-005", "unit": "02", "audience": "kids", "level": "master", "step": 1, "type": "pick_image", "skills": ["MM-DISTRIB"], "pool": "PRACT", "order": 17, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana yang sama dengan 3 × 4 + 3 × 1?", "en": "Which one equals 3 × 4 + 3 × 1?"}}],
+      "options": [
+        {"id": "groups_3x5", "image": "groups_3x5", "correct": true},
+        {"id": "groups_4x4", "image": "groups_4x4"},
+        {"id": "groups_3x4", "image": "groups_3x4"}
+      ],
+      "model_answer": {"id": "3 × 4 + 3 × 1 = 3 × 5 = 15: 3 kelompok, isi 5.", "en": "3 × 4 + 3 × 1 = 3 × 5 = 15: 3 groups of 5."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TRICK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-02-006", "unit": "02", "audience": "kids", "level": "master", "step": 1, "type": "true_false", "skills": ["MM-DISTRIB"], "pool": "PRACT", "order": 18, "prompt_id": "P-TF",
+      "help_lines": [{"word": "", "meaning": {"id": "8 × 25 = 8 × 20 + 5", "en": "8 × 25 = 8 × 20 + 5"}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}, "correct": true}
+      ],
+      "model_answer": {"id": "Salah. 8 × 25 = 8 × 20 + 8 × 5 = 160 + 40 = 200.", "en": "False. 8 × 25 = 8 × 20 + 8 × 5 = 160 + 40 = 200."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TRICK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-02-007", "unit": "02", "audience": "kids", "level": "master", "step": 2, "type": "number_input", "skills": ["MM-COMPENSATE"], "pool": "PRACT", "order": 19, "prompt_id": "P-NUM",
+      "image": "pic_book",
+      "help_lines": [{"word": "", "meaning": {"id": "Beli 3 buku, masing-masing Rp9.900. Berapa totalnya?", "en": "You buy 3 books at Rp9,900 each. What's the total?"}}],
+      "numeric": {"value": 29700, "tolerance": 0, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "model_answer": {"id": "3 × Rp10.000 − 3 × Rp100 = Rp30.000 − Rp300 = Rp29.700.", "en": "3 × Rp10,000 − 3 × Rp100 = Rp30,000 − Rp300 = Rp29,700."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TRICK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-02-008", "unit": "02", "audience": "kids", "level": "master", "step": 2, "type": "choose", "skills": ["MM-COMPENSATE"], "pool": "PRACT", "order": 20, "prompt_id": "P-CHOOSE",
+      "help_lines": [{"word": "", "meaning": {"id": "Cara cepat menghitung 298 + 145?", "en": "A quick way to work out 298 + 145?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "300 + 145 − 2", "en": "300 + 145 − 2"}, "correct": true},
+        {"id": "b", "text": {"id": "300 + 145 + 2", "en": "300 + 145 + 2"}},
+        {"id": "c", "text": {"id": "298 + 150 + 5", "en": "298 + 150 + 5"}}
+      ],
+      "model_answer": {"id": "298 = 300 − 2, jadi 298 + 145 = 300 + 145 − 2 = 443.", "en": "298 = 300 − 2, so 298 + 145 = 300 + 145 − 2 = 443."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TRICK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-02-009", "unit": "02", "audience": "kids", "level": "master", "step": 2, "type": "order", "skills": ["MM-PATTERN"], "pool": "PRACT", "order": 21, "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Urutkan langkah trik kali 11 untuk 11 × 34.", "en": "Order the steps of the times-11 trick for 11 × 34."}}],
+      "options": [
+        {"id": "s3", "text": {"id": "Taruh di tengah: 374", "en": "Put it in the middle: 374"}},
+        {"id": "s2", "text": {"id": "Jumlahkan: 3 + 4 = 7", "en": "Add them: 3 + 4 = 7"}},
+        {"id": "s1", "text": {"id": "Pisahkan angkanya: 3 _ 4", "en": "Split the digits: 3 _ 4"}}
+      ],
+      "solution": ["s1", "s2", "s3"],
+      "model_answer": {"id": "Pisahkan 3 dan 4, jumlahkan (3 + 4 = 7), taruh di tengah: 11 × 34 = 374.", "en": "Split 3 and 4, add them (3 + 4 = 7), put it in the middle: 11 × 34 = 374."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TRICK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-02-010", "unit": "02", "audience": "kids", "level": "master", "step": 2, "type": "sort_buckets", "skills": ["MM-PATTERN"], "pool": "PRACT", "order": 22, "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Habis dibagi 9? Jumlahkan angka-angkanya!", "en": "Divisible by 9? Add up the digits!"}}],
+      "options": [
+        {"id": "b_yes", "text": {"id": "Habis dibagi 9", "en": "Divisible by 9"}},
+        {"id": "b_no", "text": {"id": "Tidak habis", "en": "Not divisible"}},
+        {"id": "c412", "text": {"id": "412", "en": "412"}},
+        {"id": "c234", "text": {"id": "234", "en": "234"}},
+        {"id": "c81", "text": {"id": "81", "en": "81"}},
+        {"id": "c125", "text": {"id": "125", "en": "125"}},
+        {"id": "c999", "text": {"id": "999", "en": "999"}},
+        {"id": "c108", "text": {"id": "108", "en": "108"}}
+      ],
+      "solution_pairs": {"c81": "b_yes", "c108": "b_yes", "c234": "b_yes", "c125": "b_no", "c999": "b_yes", "c412": "b_no"},
+      "model_answer": {"id": "Habis: 81 (8 + 1 = 9); 108 (1 + 0 + 8 = 9); 234 (2 + 3 + 4 = 9); 999 (9 + 9 + 9 = 27). Tidak: 125 (1 + 2 + 5 = 8); 412 (4 + 1 + 2 = 7).", "en": "Divisible: 81 (8 + 1 = 9); 108 (1 + 0 + 8 = 9); 234 (2 + 3 + 4 = 9); 999 (9 + 9 + 9 = 27). Not: 125 (1 + 2 + 5 = 8); 412 (4 + 1 + 2 = 7)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TRICK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-02-011", "unit": "02", "audience": "kids", "level": "master", "step": 2, "type": "memory_flip", "skills": ["MM-PATTERN"], "pool": "PRACT", "order": 23, "prompt_id": "P-MEMORY",
+      "help_lines": [{"word": "", "meaning": {"id": "Trik: kali 10, lalu bagi 2.", "en": "Trick: times 10, then divide by 2."}}],
+      "options": [
+        {"id": "r38", "text": {"id": "190", "en": "190"}},
+        {"id": "r46", "text": {"id": "230", "en": "230"}},
+        {"id": "r24", "text": {"id": "120", "en": "120"}},
+        {"id": "q46", "text": {"id": "46 × 5", "en": "46 × 5"}},
+        {"id": "q16", "text": {"id": "16 × 5", "en": "16 × 5"}},
+        {"id": "q38", "text": {"id": "38 × 5", "en": "38 × 5"}},
+        {"id": "q24", "text": {"id": "24 × 5", "en": "24 × 5"}},
+        {"id": "r16", "text": {"id": "80", "en": "80"}}
+      ],
+      "solution_pairs": {"q16": "r16", "q24": "r24", "q38": "r38", "q46": "r46"},
+      "model_answer": {"id": "16 × 5 = 160 : 2 = 80; 24 × 5 = 240 : 2 = 120; 38 × 5 = 380 : 2 = 190; 46 × 5 = 460 : 2 = 230.", "en": "16 × 5 = 160 ÷ 2 = 80; 24 × 5 = 240 ÷ 2 = 120; 38 × 5 = 380 ÷ 2 = 190; 46 × 5 = 460 ÷ 2 = 230."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TRICK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-02-012", "unit": "02", "audience": "kids", "level": "master", "step": 2, "type": "estimate_slider", "skills": ["MM-COMPENSATE"], "pool": "PRACT", "order": 24, "prompt_id": "P-ESTIMATE",
+      "image": "math_number_line",
+      "help_lines": [{"word": "", "meaning": {"id": "Kira-kira berapa 49 × 51?", "en": "Roughly what is 49 × 51?"}}],
+      "numeric": {"value": 2499, "tolerance": 100},
+      "slider": {"min": 0, "max": 5000, "step": 50},
+      "model_answer": {"id": "49 × 51 ≈ 50 × 50 = 2.500 (persisnya 2.499).", "en": "49 × 51 ≈ 50 × 50 = 2,500 (exactly 2,499)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-ESTIMATE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-02-013", "unit": "02", "audience": "kids", "level": "master", "step": 1, "type": "number_input", "skills": ["MM-DISTRIB"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "count_mango_14",
+      "help_lines": [{"word": "", "meaning": {"id": "Ada 9 keranjang, tiap keranjang 14 mangga. Berapa semuanya?", "en": "There are 9 baskets with 14 mangoes in each. How many altogether?"}}],
+      "numeric": {"value": 126, "tolerance": 0},
+      "model_answer": {"id": "9 × 14 = 9 × 10 + 9 × 4 = 90 + 36 = 126.", "en": "9 × 14 = 9 × 10 + 9 × 4 = 90 + 36 = 126."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TRICK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-02-014", "unit": "02", "audience": "kids", "level": "master", "step": 2, "type": "number_input", "skills": ["MM-COMPENSATE"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "pic_juice",
+      "help_lines": [{"word": "", "meaning": {"id": "Beli 4 botol jus, masing-masing Rp4.950. Berapa totalnya?", "en": "You buy 4 bottles of juice at Rp4,950 each. What's the total?"}}],
+      "numeric": {"value": 19800, "tolerance": 0, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "model_answer": {"id": "4 × Rp5.000 − 4 × Rp50 = Rp20.000 − Rp200 = Rp19.800.", "en": "4 × Rp5,000 − 4 × Rp50 = Rp20,000 − Rp200 = Rp19,800."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TRICK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-02-015", "unit": "02", "audience": "kids", "level": "master", "step": 2, "type": "fill_blank", "skills": ["MM-PATTERN"], "pool": "REMED", "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "11 × 52 = __", "en": "11 × 52 = __"}}],
+      "options": [
+        {"id": "b", "text": {"id": "527", "en": "527"}},
+        {"id": "c", "text": {"id": "5.072", "en": "5,072"}},
+        {"id": "a", "text": {"id": "572", "en": "572"}}
+      ],
+      "solution": ["a"],
+      "model_answer": {"id": "5 _ 2, lalu 5 + 2 = 7 di tengah: 11 × 52 = 572.", "en": "5 _ 2, then 5 + 2 = 7 in the middle: 11 × 52 = 572."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-TRICK", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-02-016", "unit": "02", "audience": "kids", "level": "master", "step": 2, "type": "info_card", "skills": ["MM-PATTERN"], "pool": "GEM", "gem": true, "prompt_id": "P-GEM",
+      "source": "Encyclopaedia Britannica, 'al-Khwārizmī'; J. J. O'Connor and E. F. Robertson, MacTutor History of Mathematics archive, 'Abu Ja'far Muhammad ibn Musa Al-Khwarizmi'.",
+      "model_answer": {"id": "Kata \"algoritma\" berasal dari nama al-Khwarizmi, ilmuwan di Baghdad sekitar tahun 820. Judul bukunya tentang al-jabr menjadi asal kata \"aljabar\".", "en": "The word \"algorithm\" comes from the name of al-Khwarizmi, a scholar in Baghdad around the year 820. The title of his book on al-jabr gave us the word \"algebra\"."},
+      "feedback_ids": {"correct": "FB-GEM"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    },
+    {
+      "item_id": "MAT-K-X-DP-01", "unit": "01", "audience": "kids", "level": "master", "type": "daily_puzzle", "skills": ["PUZZLE"], "pool": "SPARE", "prompt_id": "P-PUZZLE",
+      "help_lines": [{"word": "", "meaning": {"id": "Aku bilangan dua angka. Jumlah kedua angkaku 9. Kalau kedua angkaku ditukar, aku bertambah 27. Siapa aku?", "en": "I'm a two-digit number. My digits add up to 9. If you swap my digits, I grow by 27. Who am I?"}}],
+      "numeric": {"value": 36, "tolerance": 0},
+      "model_answer": {"id": "Aku 36: 3 + 6 = 9, dan 63 − 36 = 27.", "en": "I'm 36: 3 + 6 = 9, and 63 − 36 = 27."},
+      "feedback_ids": {"correct": "FB-PUZZLE-OK", "wrong": "FB-PUZZLE-NO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-k-x-0.1"
+    }
+  ]
+}

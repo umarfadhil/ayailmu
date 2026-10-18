@@ -116,6 +116,8 @@ class ProfileRepository(
             db.answers().deleteForProfile(id)
             db.snapshots().deleteForProfile(id)
             db.reports().deleteForProfile(id)
+            db.surveys().deleteForProfile(id)
+            db.challenges().deleteForProfile(id)
             db.profiles().delete(id)
         }
         if (active.activeId.first() == id) active.setActive(db.profiles().all().firstOrNull()?.id)

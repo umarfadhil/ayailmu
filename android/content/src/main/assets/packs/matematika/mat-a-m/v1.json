@@ -1,0 +1,458 @@
+{
+  "meta": {"schema_version": 1, "content_version": "mat-a-m-0.1", "subject": "matematika", "track": "mat-a-m", "level": "menengah", "mode": "casual", "audiences": ["adults"], "instruction_langs": ["id", "en"], "title": {"id": "Matematika — Menengah (Dewasa)", "en": "Mathematics — Intermediate (Adults)"}},
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, Adults Menengah starter: syllabus units 1-2 of docs/syllabus/02_MATEMATIKA.md). Needs a math subject reviewer and both language reviewers (Indonesian, English) before anything is approved. Every answer is computed by the generator and re-checked by a script (scratchpad fu12/mat); prices and figures in questions are illustrative examples.",
+  "prompts": {
+    "P-PICK": {"id": "Pilih gambar yang tepat.", "en": "Pick the right picture."},
+    "P-NUM": {"id": "Hitung, lalu masukkan angkanya.", "en": "Work it out, enter the number."},
+    "P-CHOOSE": {"id": "Pilih jawaban yang tepat.", "en": "Choose the right answer."},
+    "P-TF": {"id": "Benar atau salah?", "en": "True or false?"},
+    "P-ESTIMATE": {"id": "Geser ke perkiraan Anda.", "en": "Slide to your estimate."},
+    "P-ORDER": {"id": "Seret ke urutan yang tepat.", "en": "Drag them into the right order."},
+    "P-CONNECT": {"id": "Tarik garis ke pasangannya.", "en": "Draw a line to each match."},
+    "P-SORT": {"id": "Seret ke kelompok yang tepat.", "en": "Drag each into the right group."},
+    "P-FILL": {"id": "Seret ke bagian yang kosong.", "en": "Drag into the gap."},
+    "P-TILES": {"id": "Susun kepingnya menjadi jawaban.", "en": "Build the answer from the tiles."},
+    "P-TAP": {"id": "Ketuk bagian gambar yang tepat.", "en": "Tap the right spot."},
+    "P-GEM": {"id": "Tahukah Anda?", "en": "Did you know?"},
+    "P-PUZZLE": {"id": "Teka-teki hari ini", "en": "Today's puzzle"}
+  },
+  "feedback": {
+    "FB-OK-MODEL": {"id": "Tepat. {model}", "en": "Right. {model}"},
+    "FB-DONTKNOW": {"id": "Tidak apa-apa, begini caranya: {model}", "en": "No problem, here's how: {model}"},
+    "FB-NO-ESTIMATE": {"id": "Masih agak jauh. Perkiraan cukup dekat saja, tidak harus persis. {model}", "en": "A bit far off. An estimate only needs to be close, not exact. {model}"},
+    "FB-GEM": {"id": "Permata ini masuk ke Kotak Permata Anda.", "en": "This gem goes into your Gem box."},
+    "FB-OK-PUZZLE": {"id": "Terpecahkan. {model}", "en": "Solved. {model}"},
+    "FB-NO-PUZZLE": {"id": "Belum tepat. Teka-teki ini memang menjebak banyak orang. {model}", "en": "Not quite. This one catches out lots of people. {model}"},
+    "FB-NO-PERCENT": {"id": "Belum tepat. Persen berantai dikalikan satu per satu, bukan dijumlah. {model}", "en": "Not quite. Chained percents multiply one after another; they don't add up. {model}"},
+    "FB-NO-BASE": {"id": "Belum tepat. Cek dasarnya: dari modal, dari harga jual, atau dari harga awal? {model}", "en": "Not quite. Check the base: the cost, the selling price or the original price? {model}"},
+    "FB-NO-RATIO": {"id": "Belum tepat. Hitung dulu nilai satu bagian atau satu satuan. {model}", "en": "Not quite. Work out one part or one unit first. {model}"}
+  },
+  "units": [
+    {"unit": "01", "title": {"id": "Persentase lanjutan", "en": "Percent, properly"}, "sticker": "sticker_umbrella"},
+    {"unit": "02", "title": {"id": "Rasio & proporsi", "en": "Ratios & proportion"}, "sticker": "sticker_teapot"}
+  ],
+  "screens": [
+    {
+      "screen_id": "MAT-A-M-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {"id": "Persentase lanjutan", "en": "Percent, properly"},
+      "body": [
+        {"id": "Persen berantai dikalikan, bukan dijumlah. Diskon 20% lalu 10%: 0,8 × 0,9 = 0,72, jadi Anda membayar 72% dan hemat 28%.", "en": "Chained percents multiply; they don't add. 20% off then 10% off: 0.8 × 0.9 = 0.72, so you pay 72% and save 28%."},
+        {"id": "Markup dihitung dari modal, margin dari harga jual. Modal Rp80.000, jual Rp100.000: markup 25%, margin 20%.", "en": "Markup is measured on the cost, margin on the selling price. Cost Rp80,000, price Rp100,000: 25% markup, 20% margin."},
+        {"id": "Mencari harga sebelum diskon atau pajak? Bagi, jangan dikurangi: Rp111.000 : 1,11 = Rp100.000.", "en": "Looking for the price before a discount or tax? Divide, don't subtract: Rp111,000 ÷ 1.11 = Rp100,000."}
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "MAT-A-M-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {"id": "Rasio & proporsi", "en": "Ratios & proportion"},
+      "body": [
+        {"id": "Rasio 1 : 3 berarti 1 bagian banding 3 bagian, total 4 bagian. Bagian pertama adalah 1/4 dari semuanya.", "en": "A 1 : 3 ratio means 1 part to 3 parts, 4 parts in all. The first part is 1/4 of the whole."},
+        {"id": "Menskalakan resep: kalikan semua bahan dengan faktor yang sama. Dari 4 porsi ke 10 porsi berarti × 2,5.", "en": "To scale a recipe, multiply every ingredient by the same factor. Going from 4 to 10 servings means × 2.5."},
+        {"id": "Bandingkan harga per satuan, yaitu harga dibagi isi. Kemasan besar tidak selalu lebih murah.", "en": "Compare the price per unit: the price divided by the amount. The big pack isn't always cheaper."}
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "MAT-A-M-01-001", "unit": "01", "audience": "adults", "level": "menengah", "step": 1, "type": "number_input", "skills": ["PCT-CHAIN"], "pool": "PRACT", "order": 1, "prompt_id": "P-NUM",
+      "image": "pic_shoes",
+      "help_lines": [{"word": "", "meaning": {"id": "Sepatu Rp400.000 didiskon 30%, lalu didiskon lagi 10%. Berapa yang Anda bayar?", "en": "Shoes cost Rp400,000, with 30% off and then another 10% off. How much do you pay?"}}],
+      "numeric": {"value": 252000, "tolerance": 0, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "model_answer": {"id": "Rp400.000 × 0,7 × 0,9 = Rp252.000. Total hemat 37%, bukan 40%.", "en": "Rp400,000 × 0.7 × 0.9 = Rp252,000. You save 37% in total, not 40%."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PERCENT", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-01-002", "unit": "01", "audience": "adults", "level": "menengah", "step": 1, "type": "true_false", "skills": ["PCT-CHAIN"], "pool": "PRACT", "order": 2, "prompt_id": "P-TF",
+      "image": "pic_shirt",
+      "help_lines": [{"word": "", "meaning": {"id": "Diskon 50% lalu diskon 50% lagi berarti barangnya gratis.", "en": "50% off and then another 50% off means it's free."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}, "correct": true}
+      ],
+      "model_answer": {"id": "Salah. Anda masih membayar 0,5 × 0,5 = 0,25 dari harga, yaitu 25%.", "en": "False. You still pay 0.5 × 0.5 = 0.25 of the price, which is 25%."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PERCENT", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-01-003", "unit": "01", "audience": "adults", "level": "menengah", "step": 1, "type": "order", "skills": ["PCT-CHAIN"], "pool": "PRACT", "order": 3, "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Harga awal semuanya Rp100.000. Urutkan harga akhirnya, termurah dulu.", "en": "Every item starts at Rp100,000. Order the final prices, cheapest first."}}],
+      "options": [
+        {"id": "d", "text": {"id": "Diskon 10% tiga kali", "en": "10% off three times"}},
+        {"id": "c", "text": {"id": "Diskon 30% lalu 10%", "en": "30% off, then 10%"}},
+        {"id": "b", "text": {"id": "Diskon 20% lalu 20%", "en": "20% off, then 20%"}},
+        {"id": "a", "text": {"id": "Diskon 35%", "en": "35% off"}}
+      ],
+      "solution": ["c", "b", "a", "d"],
+      "model_answer": {"id": "Rp63.000 (diskon 30% + 10%) < Rp64.000 (20% + 20%) < Rp65.000 (35%) < Rp72.900 (10% tiga kali).", "en": "Rp63,000 (30% + 10% off) < Rp64,000 (20% + 20%) < Rp65,000 (35%) < Rp72,900 (10% three times)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PERCENT", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-01-004", "unit": "01", "audience": "adults", "level": "menengah", "step": 1, "type": "estimate_slider", "skills": ["PCT-CHAIN"], "pool": "PRACT", "order": 4, "prompt_id": "P-ESTIMATE",
+      "image": "pic_restaurant",
+      "help_lines": [{"word": "", "meaning": {"id": "Tagihan makan Rp250.000. Restoran ini menambah servis 5%, lalu pajak 10% dari total itu. Kira-kira berapa yang dibayar?", "en": "A meal bill is Rp250,000. This restaurant adds 5% service, then 10% tax on that total. Roughly how much do you pay?"}}],
+      "numeric": {"value": 288750, "tolerance": 5000, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "slider": {"min": 250000, "max": 350000, "step": 1000},
+      "model_answer": {"id": "Rp250.000 × 1,05 × 1,1 = Rp288.750. Naiknya 15,5%, bukan 15%.", "en": "Rp250,000 × 1.05 × 1.1 = Rp288,750. That's 15.5% more, not 15%."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-ESTIMATE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-01-005", "unit": "01", "audience": "adults", "level": "menengah", "step": 1, "type": "match_pairs", "skills": ["PCT-CHAIN"], "pool": "PRACT", "order": 5, "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [{"word": "", "meaning": {"id": "Pasangkan perubahan dengan pengalinya.", "en": "Match each change with its multiplier."}}],
+      "options": [
+        {"id": "l1", "text": {"id": "Naik 10% lalu turun 10%", "en": "Up 10%, then down 10%"}},
+        {"id": "l2", "text": {"id": "Diskon 20% lalu 25%", "en": "20% off, then 25% off"}},
+        {"id": "l3", "text": {"id": "Naik 50% lalu turun 50%", "en": "Up 50%, then down 50%"}},
+        {"id": "l4", "text": {"id": "Diskon 10% dua kali", "en": "10% off twice"}},
+        {"id": "r3", "text": {"id": "× 0,75", "en": "× 0.75"}},
+        {"id": "r2", "text": {"id": "× 0,6", "en": "× 0.6"}},
+        {"id": "r1", "text": {"id": "× 0,99", "en": "× 0.99"}},
+        {"id": "r4", "text": {"id": "× 0,81", "en": "× 0.81"}}
+      ],
+      "solution_pairs": {"l1": "r1", "l2": "r2", "l3": "r3", "l4": "r4"},
+      "model_answer": {"id": "1,1 × 0,9 = 0,99; 0,8 × 0,75 = 0,6; 1,5 × 0,5 = 0,75; 0,9 × 0,9 = 0,81.", "en": "1.1 × 0.9 = 0.99; 0.8 × 0.75 = 0.6; 1.5 × 0.5 = 0.75; 0.9 × 0.9 = 0.81."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PERCENT", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-01-006", "unit": "01", "audience": "adults", "level": "menengah", "step": 1, "type": "number_input", "skills": ["PCT-MARKUP"], "pool": "PRACT", "order": 6, "prompt_id": "P-NUM",
+      "image": "pic_coffee_cup",
+      "help_lines": [{"word": "", "meaning": {"id": "Modal segelas es kopi Rp6.000, dijual Rp8.000. Berapa persen marginnya (dari harga jual)?", "en": "An iced coffee costs Rp6,000 to make and sells for Rp8,000. What is the margin, as a percent of the selling price?"}}],
+      "numeric": {"value": 25, "tolerance": 0, "unit": {"id": "%", "en": "%"}},
+      "model_answer": {"id": "Untung Rp2.000 : Rp8.000 = 0,25 = 25%.", "en": "Profit Rp2,000 ÷ Rp8,000 = 0.25 = 25%."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-BASE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-01-007", "unit": "01", "audience": "adults", "level": "menengah", "step": 2, "type": "choose", "skills": ["PCT-MARKUP"], "pool": "PRACT", "order": 7, "prompt_id": "P-CHOOSE",
+      "image": "pic_coffee_cup",
+      "help_lines": [{"word": "", "meaning": {"id": "Es kopi yang sama: modal Rp6.000, harga jual Rp8.000. Berapa markupnya (dari modal)?", "en": "The same iced coffee: cost Rp6,000, price Rp8,000. What is the markup, as a percent of cost?"}}],
+      "options": [
+        {"id": "b", "text": {"id": "25%", "en": "25%"}},
+        {"id": "a", "text": {"id": "33,3%", "en": "33.3%"}, "correct": true},
+        {"id": "c", "text": {"id": "75%", "en": "75%"}}
+      ],
+      "model_answer": {"id": "Untung Rp2.000 dibagi modal Rp6.000 ≈ 33,3%. Margin hanya 25%, karena dihitung dari harga jual.", "en": "Profit Rp2,000 divided by the cost Rp6,000 ≈ 33.3%. The margin is only 25%, because it's measured on the price."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-BASE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-01-008", "unit": "01", "audience": "adults", "level": "menengah", "step": 2, "type": "sort_buckets", "skills": ["PCT-MARKUP"], "pool": "PRACT", "order": 8, "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Persen untung ini dihitung dari modal atau dari harga jual?", "en": "Is this profit percent measured on the cost or on the selling price?"}}],
+      "options": [
+        {"id": "b_markup", "text": {"id": "Markup (dari modal)", "en": "Markup (on cost)"}},
+        {"id": "b_margin", "text": {"id": "Margin (dari harga jual)", "en": "Margin (on price)"}},
+        {"id": "m3", "text": {"id": "Modal Rp50.000, jual Rp75.000: 50%", "en": "Cost Rp50,000, price Rp75,000: 50%"}},
+        {"id": "m2", "text": {"id": "Modal Rp80.000, jual Rp100.000: 20%", "en": "Cost Rp80,000, price Rp100,000: 20%"}},
+        {"id": "m1", "text": {"id": "Modal Rp80.000, jual Rp100.000: 25%", "en": "Cost Rp80,000, price Rp100,000: 25%"}},
+        {"id": "m4", "text": {"id": "Modal Rp50.000, jual Rp100.000: 50%", "en": "Cost Rp50,000, price Rp100,000: 50%"}}
+      ],
+      "solution_pairs": {"m1": "b_markup", "m2": "b_margin", "m3": "b_markup", "m4": "b_margin"},
+      "model_answer": {"id": "Markup = untung : modal (Rp20.000 : Rp80.000 = 25%; Rp25.000 : Rp50.000 = 50%). Margin = untung : harga jual (Rp20.000 : Rp100.000 = 20%; Rp50.000 : Rp100.000 = 50%).", "en": "Markup = profit ÷ cost (Rp20,000 ÷ Rp80,000 = 25%; Rp25,000 ÷ Rp50,000 = 50%). Margin = profit ÷ price (Rp20,000 ÷ Rp100,000 = 20%; Rp50,000 ÷ Rp100,000 = 50%)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-BASE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-01-009", "unit": "01", "audience": "adults", "level": "menengah", "step": 2, "type": "fill_blank", "skills": ["PCT-MARKUP"], "pool": "PRACT", "order": 9, "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Modal Rp40.000. Anda ingin margin 20% dari harga jual. Harga jual = Rp40.000 : __", "en": "Cost is Rp40,000. You want a 20% margin on the selling price. Price = Rp40,000 ÷ __"}}],
+      "options": [
+        {"id": "b", "text": {"id": "1,2", "en": "1.2"}},
+        {"id": "c", "text": {"id": "0,2", "en": "0.2"}},
+        {"id": "a", "text": {"id": "0,8", "en": "0.8"}}
+      ],
+      "solution": ["a"],
+      "model_answer": {"id": "Rp40.000 : 0,8 = Rp50.000. Cek: untung Rp10.000 : Rp50.000 = 20%. Markup 20% (Rp48.000) tidak cukup.", "en": "Rp40,000 ÷ 0.8 = Rp50,000. Check: profit Rp10,000 ÷ Rp50,000 = 20%. A 20% markup (Rp48,000) is not enough."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-BASE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-01-010", "unit": "01", "audience": "adults", "level": "menengah", "step": 2, "type": "number_input", "skills": ["PCT-REVERSE"], "pool": "PRACT", "order": 10, "prompt_id": "P-NUM",
+      "image": "pic_bag",
+      "help_lines": [{"word": "", "meaning": {"id": "Setelah diskon 20%, harga tas Rp96.000. Berapa harga awalnya?", "en": "After 20% off, a bag costs Rp96,000. What was the original price?"}}],
+      "numeric": {"value": 120000, "tolerance": 0, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "model_answer": {"id": "Rp96.000 : 0,8 = Rp120.000. Menambah 20% dari Rp96.000 memberi Rp115.200, dan itu keliru.", "en": "Rp96,000 ÷ 0.8 = Rp120,000. Adding 20% of Rp96,000 gives Rp115,200, which is wrong."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-BASE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-01-011", "unit": "01", "audience": "adults", "level": "menengah", "step": 2, "type": "choose", "skills": ["PCT-REVERSE"], "pool": "PRACT", "order": 11, "prompt_id": "P-CHOOSE",
+      "image": "pic_computer",
+      "help_lines": [{"word": "", "meaning": {"id": "Harga laptop Rp5.550.000 sudah termasuk PPN 11%. Berapa harga sebelum PPN?", "en": "A laptop costs Rp5,550,000 including 11% VAT (PPN). What is the price before VAT?"}}],
+      "options": [
+        {"id": "b", "text": {"id": "Rp5.000.000", "en": "Rp5,000,000"}, "correct": true},
+        {"id": "a", "text": {"id": "Rp4.939.500", "en": "Rp4,939,500"}},
+        {"id": "c", "text": {"id": "Rp4.995.000", "en": "Rp4,995,000"}}
+      ],
+      "model_answer": {"id": "Rp5.550.000 : 1,11 = Rp5.000.000. Mengurangi 11% dari Rp5.550.000 memberi Rp4.939.500, itu terlalu kecil.", "en": "Rp5,550,000 ÷ 1.11 = Rp5,000,000. Taking 11% off Rp5,550,000 gives Rp4,939,500, which is too low."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-BASE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-01-012", "unit": "01", "audience": "adults", "level": "menengah", "step": 2, "type": "tiles", "skills": ["PCT-REVERSE"], "pool": "PRACT", "order": 12, "prompt_id": "P-TILES",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Harga naik 25% menjadi Rp150.000. Susun cara mencari harga lama.", "en": "A price rose 25% to Rp150,000. Build the way to find the old price."}}],
+      "options": [
+        {"id": "t_m", "text": {"id": "0,75", "en": "0.75"}},
+        {"id": "t_w", "text": {"id": "Rp112.500", "en": "Rp112,500"}},
+        {"id": "t_div", "text": {"id": ":", "en": "÷"}},
+        {"id": "t_x", "text": {"id": "×", "en": "×"}},
+        {"id": "t_a", "text": {"id": "Rp120.000", "en": "Rp120,000"}},
+        {"id": "t_b", "text": {"id": "Rp150.000", "en": "Rp150,000"}},
+        {"id": "t_eq", "text": {"id": "=", "en": "="}},
+        {"id": "t_k", "text": {"id": "1,25", "en": "1.25"}}
+      ],
+      "solution": ["t_b", "t_div", "t_k", "t_eq", "t_a"],
+      "model_answer": {"id": "Rp150.000 : 1,25 = Rp120.000. Bukan Rp150.000 × 0,75 = Rp112.500: turun 25% dari harga baru tidak kembali ke harga lama.", "en": "Rp150,000 ÷ 1.25 = Rp120,000. Not Rp150,000 × 0.75 = Rp112,500: 25% off the new price doesn't get you back."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-BASE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-01-013", "unit": "01", "audience": "adults", "level": "menengah", "step": 1, "type": "number_input", "skills": ["PCT-CHAIN"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "pic_bag",
+      "help_lines": [{"word": "", "meaning": {"id": "Tas Rp300.000 didiskon 20%, lalu 15% lagi. Berapa yang Anda bayar?", "en": "A bag costs Rp300,000, with 20% off and then another 15%. How much do you pay?"}}],
+      "numeric": {"value": 204000, "tolerance": 0, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "model_answer": {"id": "Rp300.000 × 0,8 × 0,85 = Rp204.000.", "en": "Rp300,000 × 0.8 × 0.85 = Rp204,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PERCENT", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-01-014", "unit": "01", "audience": "adults", "level": "menengah", "step": 2, "type": "choose", "skills": ["PCT-MARKUP"], "pool": "REMED", "prompt_id": "P-CHOOSE",
+      "image": "pic_tea_cup",
+      "help_lines": [{"word": "", "meaning": {"id": "Modal segelas teh Rp3.000, dijual Rp5.000. Berapa marginnya (dari harga jual)?", "en": "A glass of tea costs Rp3,000 to make and sells for Rp5,000. What is the margin, on the selling price?"}}],
+      "options": [
+        {"id": "b", "text": {"id": "66,7%", "en": "66.7%"}},
+        {"id": "c", "text": {"id": "60%", "en": "60%"}},
+        {"id": "a", "text": {"id": "40%", "en": "40%"}, "correct": true}
+      ],
+      "model_answer": {"id": "Untung Rp2.000 : Rp5.000 = 40%. Markupnya ≈ 66,7%, karena dihitung dari modal.", "en": "Profit Rp2,000 ÷ Rp5,000 = 40%. The markup is ≈ 66.7%, because it's measured on the cost."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-BASE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-01-015", "unit": "01", "audience": "adults", "level": "menengah", "step": 2, "type": "number_input", "skills": ["PCT-REVERSE"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "pic_shoes",
+      "help_lines": [{"word": "", "meaning": {"id": "Setelah diskon 40%, harga sepatu Rp180.000. Berapa harga awalnya?", "en": "After 40% off, the shoes cost Rp180,000. What was the original price?"}}],
+      "numeric": {"value": 300000, "tolerance": 0, "unit": {"id": "rupiah", "en": "rupiah"}},
+      "model_answer": {"id": "Rp180.000 : 0,6 = Rp300.000.", "en": "Rp180,000 ÷ 0.6 = Rp300,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-BASE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-01-016", "unit": "01", "audience": "adults", "level": "menengah", "step": 2, "type": "info_card", "skills": ["PCT-CHAIN"], "pool": "GEM", "gem": true, "prompt_id": "P-GEM",
+      "source": "C. R. Charig et al., 'Comparison of treatment of renal calculi by open surgery, percutaneous nephrolithotomy, and extracorporeal shockwave lithotripsy', BMJ 292 (1986): 879-882; S. A. Julious and M. A. Mullee, 'Confounding and Simpson's paradox', BMJ 309 (1994): 1480-1481.",
+      "model_answer": {"id": "Paradoks Simpson: dalam studi batu ginjal tahun 1986, operasi terbuka lebih sering berhasil untuk batu kecil (93% vs 87%) dan untuk batu besar (73% vs 69%), tetapi totalnya tampak kalah (78% vs 83%). Sebabnya, operasi terbuka lebih banyak dipakai untuk kasus yang berat.", "en": "Simpson's paradox: in a 1986 kidney-stone study, open surgery succeeded more often for small stones (93% vs 87%) and for large stones (73% vs 69%), yet looked worse overall (78% vs 83%). The reason: open surgery was used more for the hard cases."},
+      "feedback_ids": {"correct": "FB-GEM"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-02-001", "unit": "02", "audience": "adults", "level": "menengah", "step": 1, "type": "number_input", "skills": ["RATIO-MIX"], "pool": "PRACT", "order": 13, "prompt_id": "P-NUM",
+      "image": "pic_coffee_cup",
+      "help_lines": [{"word": "", "meaning": {"id": "Es kopi susu: kopi : susu = 1 : 3. Untuk 400 ml minuman, berapa ml kopinya?", "en": "Iced milk coffee: coffee : milk = 1 : 3. For 400 ml of drink, how many ml of coffee?"}}],
+      "numeric": {"value": 100, "tolerance": 0, "unit": {"id": "ml", "en": "ml"}},
+      "model_answer": {"id": "Total 4 bagian; 400 : 4 = 100 ml per bagian. Kopi 1 bagian = 100 ml.", "en": "4 parts in all; 400 ÷ 4 = 100 ml a part. Coffee is 1 part = 100 ml."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-RATIO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-02-002", "unit": "02", "audience": "adults", "level": "menengah", "step": 1, "type": "pick_image", "skills": ["RATIO-MIX"], "pool": "PRACT", "order": 14, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Sirup : air = 1 : 3. Berapa bagian sirup dalam minuman?", "en": "Syrup : water = 1 : 3. What share of the drink is syrup?"}}],
+      "options": [
+        {"id": "frac_1_3", "image": "frac_1_3"},
+        {"id": "frac_3_4", "image": "frac_3_4"},
+        {"id": "frac_1_4", "image": "frac_1_4", "correct": true}
+      ],
+      "model_answer": {"id": "1 bagian dari 4 bagian = 1/4, bukan 1/3.", "en": "1 part out of 4 parts = 1/4, not 1/3."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-RATIO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-02-003", "unit": "02", "audience": "adults", "level": "menengah", "step": 1, "type": "sort_buckets", "skills": ["RATIO-MIX"], "pool": "PRACT", "order": 15, "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Setara dengan 2 : 3 atau tidak?", "en": "Equivalent to 2 : 3 or not?"}}],
+      "options": [
+        {"id": "b_eq", "text": {"id": "Setara 2 : 3", "en": "Same as 2 : 3"}},
+        {"id": "b_no", "text": {"id": "Tidak setara", "en": "Not the same"}},
+        {"id": "c4_6", "text": {"id": "4 : 6", "en": "4 : 6"}},
+        {"id": "c8_10", "text": {"id": "8 : 10", "en": "8 : 10"}},
+        {"id": "c6_9", "text": {"id": "6 : 9", "en": "6 : 9"}},
+        {"id": "c5_6", "text": {"id": "5 : 6", "en": "5 : 6"}},
+        {"id": "c3_4", "text": {"id": "3 : 4", "en": "3 : 4"}},
+        {"id": "c10_15", "text": {"id": "10 : 15", "en": "10 : 15"}}
+      ],
+      "solution_pairs": {"c4_6": "b_eq", "c6_9": "b_eq", "c3_4": "b_no", "c10_15": "b_eq", "c5_6": "b_no", "c8_10": "b_no"},
+      "model_answer": {"id": "Setara (dikali angka yang sama): 4 : 6, 6 : 9, 10 : 15. Tidak setara: 3 : 4, 5 : 6, 8 : 10.", "en": "Equivalent (both parts times the same number): 4 : 6, 6 : 9, 10 : 15. Not equivalent: 3 : 4, 5 : 6, 8 : 10."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-RATIO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-02-004", "unit": "02", "audience": "adults", "level": "menengah", "step": 1, "type": "true_false", "skills": ["RATIO-MIX"], "pool": "PRACT", "order": 16, "prompt_id": "P-TF",
+      "help_lines": [{"word": "", "meaning": {"id": "Menambah 1 ke kedua bagian rasio 2 : 3 (jadi 3 : 4) tidak mengubah rasionya.", "en": "Adding 1 to both parts of the ratio 2 : 3 (making 3 : 4) doesn't change the ratio."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}, "correct": true}
+      ],
+      "model_answer": {"id": "Salah. 2 : 3 ≈ 0,67, sedangkan 3 : 4 = 0,75. Menambah mengubah rasio; mengali tidak.", "en": "False. 2 : 3 ≈ 0.67, but 3 : 4 = 0.75. Adding changes a ratio; multiplying doesn't."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-RATIO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-02-005", "unit": "02", "audience": "adults", "level": "menengah", "step": 1, "type": "number_input", "skills": ["RATIO-SCALE"], "pool": "PRACT", "order": 17, "prompt_id": "P-NUM",
+      "image": "pic_rice_bowl",
+      "help_lines": [{"word": "", "meaning": {"id": "Nasi liwet: 2 gelas beras perlu 3 gelas air. Untuk 6 gelas beras, berapa gelas air?", "en": "Nasi liwet: 2 cups of rice need 3 cups of water. For 6 cups of rice, how many cups of water?"}}],
+      "numeric": {"value": 9, "tolerance": 0},
+      "model_answer": {"id": "6 : 2 = 3, jadi airnya 3 × 3 = 9 gelas.", "en": "6 ÷ 2 = 3, so the water is 3 × 3 = 9 cups."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-RATIO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-02-006", "unit": "02", "audience": "adults", "level": "menengah", "step": 1, "type": "estimate_slider", "skills": ["RATIO-SCALE"], "pool": "PRACT", "order": 18, "prompt_id": "P-ESTIMATE",
+      "image": "pic_car",
+      "help_lines": [{"word": "", "meaning": {"id": "Mobil menempuh 156 km dengan 12 liter bensin. Dengan 30 liter, kira-kira berapa km?", "en": "A car goes 156 km on 12 litres of petrol. On 30 litres, roughly how many km?"}}],
+      "numeric": {"value": 390, "tolerance": 20, "unit": {"id": "km", "en": "km"}},
+      "slider": {"min": 0, "max": 600, "step": 10},
+      "model_answer": {"id": "156 : 12 = 13 km per liter; 13 × 30 = 390 km.", "en": "156 ÷ 12 = 13 km per litre; 13 × 30 = 390 km."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-ESTIMATE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-02-007", "unit": "02", "audience": "adults", "level": "menengah", "step": 2, "type": "fill_blank", "skills": ["RATIO-SCALE"], "pool": "PRACT", "order": 19, "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "image": "pic_chicken_dish",
+      "help_lines": [{"word": "", "meaning": {"id": "Opor ayam untuk 4 porsi memakai 800 g ayam. Untuk 10 porsi perlu __ g.", "en": "Opor ayam for 4 servings uses 800 g of chicken. For 10 servings you need __ g."}}],
+      "options": [
+        {"id": "a", "text": {"id": "2.000", "en": "2,000"}},
+        {"id": "c", "text": {"id": "3.200", "en": "3,200"}},
+        {"id": "b", "text": {"id": "1.600", "en": "1,600"}}
+      ],
+      "solution": ["a"],
+      "model_answer": {"id": "10 : 4 = 2,5; 800 × 2,5 = 2.000 g.", "en": "10 ÷ 4 = 2.5; 800 × 2.5 = 2,000 g."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-RATIO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-02-008", "unit": "02", "audience": "adults", "level": "menengah", "step": 2, "type": "order", "skills": ["UNIT-RATE"], "pool": "PRACT", "order": 20, "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "image": "pic_market",
+      "help_lines": [{"word": "", "meaning": {"id": "Minyak goreng di pasar. Urutkan dari yang termurah per liter.", "en": "Cooking oil at the market. Order from cheapest per litre."}}],
+      "options": [
+        {"id": "o1", "text": {"id": "1 L Rp18.000", "en": "1 L Rp18,000"}},
+        {"id": "o5", "text": {"id": "5 L Rp87.500", "en": "5 L Rp87,500"}},
+        {"id": "o2", "text": {"id": "2 L Rp34.000", "en": "2 L Rp34,000"}},
+        {"id": "oh", "text": {"id": "0,5 L Rp9.500", "en": "0.5 L Rp9,500"}}
+      ],
+      "solution": ["o2", "o5", "o1", "oh"],
+      "model_answer": {"id": "Per liter: 2 L Rp17.000, 5 L Rp17.500, 1 L Rp18.000, 0,5 L Rp19.000. Kemasan terbesar bukan yang termurah.", "en": "Per litre: 2 L Rp17,000, 5 L Rp17,500, 1 L Rp18,000, 0.5 L Rp19,000. The biggest pack is not the cheapest."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-RATIO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-02-009", "unit": "02", "audience": "adults", "level": "menengah", "step": 2, "type": "choose", "skills": ["UNIT-RATE"], "pool": "PRACT", "order": 21, "prompt_id": "P-CHOOSE",
+      "image": "pic_milk_glass",
+      "help_lines": [{"word": "", "meaning": {"id": "Susu mana yang paling hemat per liter?", "en": "Which milk is the best value per litre?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "250 ml Rp6.000", "en": "250 ml Rp6,000"}},
+        {"id": "b", "text": {"id": "1 L Rp21.000", "en": "1 L Rp21,000"}, "correct": true},
+        {"id": "c", "text": {"id": "1,5 L Rp33.000", "en": "1.5 L Rp33,000"}}
+      ],
+      "model_answer": {"id": "Per liter: 250 ml Rp6.000 → Rp24.000, 1 L Rp21.000 → Rp21.000, 1,5 L Rp33.000 → Rp22.000.", "en": "Per litre: 250 ml Rp6,000 → Rp24,000, 1 L Rp21,000 → Rp21,000, 1.5 L Rp33,000 → Rp22,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-RATIO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-02-010", "unit": "02", "audience": "adults", "level": "menengah", "step": 2, "type": "match_pairs", "skills": ["UNIT-RATE"], "pool": "PRACT", "order": 22, "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [{"word": "", "meaning": {"id": "Beras di pasar. Pasangkan dengan harga per kg.", "en": "Rice at the market. Match each with its price per kg."}}],
+      "options": [
+        {"id": "l1", "text": {"id": "Rp45.000 untuk 3 kg", "en": "Rp45,000 for 3 kg"}},
+        {"id": "l2", "text": {"id": "Rp32.000 untuk 2 kg", "en": "Rp32,000 for 2 kg"}},
+        {"id": "l3", "text": {"id": "Rp70.000 untuk 5 kg", "en": "Rp70,000 for 5 kg"}},
+        {"id": "l4", "text": {"id": "Rp13.000 untuk 1 kg", "en": "Rp13,000 for 1 kg"}},
+        {"id": "r3", "text": {"id": "Rp14.000/kg", "en": "Rp14,000/kg"}},
+        {"id": "r1", "text": {"id": "Rp15.000/kg", "en": "Rp15,000/kg"}},
+        {"id": "r4", "text": {"id": "Rp13.000/kg", "en": "Rp13,000/kg"}},
+        {"id": "r2", "text": {"id": "Rp16.000/kg", "en": "Rp16,000/kg"}}
+      ],
+      "solution_pairs": {"l1": "r1", "l2": "r2", "l3": "r3", "l4": "r4"},
+      "model_answer": {"id": "Rp45.000 : 3 = Rp15.000; Rp32.000 : 2 = Rp16.000; Rp70.000 : 5 = Rp14.000; Rp13.000 : 1 = Rp13.000.", "en": "Rp45,000 ÷ 3 = Rp15,000; Rp32,000 ÷ 2 = Rp16,000; Rp70,000 ÷ 5 = Rp14,000; Rp13,000 ÷ 1 = Rp13,000."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-RATIO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-02-011", "unit": "02", "audience": "adults", "level": "menengah", "step": 2, "type": "tap_hotspot", "skills": ["UNIT-RATE"], "pool": "PRACT", "order": 23, "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [{"word": "", "meaning": {"id": "Pulau mana yang penduduknya paling padat (orang per km²)?", "en": "Which island group is the most densely populated (people per km²)?"}}],
+      "options": [
+        {"id": "sumatra", "text": {"id": "Sumatra", "en": "Sumatra"}, "region": {"x": 0.02, "y": 0.05, "w": 0.22, "h": 0.55}},
+        {"id": "kalimantan", "text": {"id": "Kalimantan", "en": "Kalimantan"}, "region": {"x": 0.28, "y": 0.08, "w": 0.2, "h": 0.4}},
+        {"id": "jawa", "text": {"id": "Jawa", "en": "Java"}, "region": {"x": 0.24, "y": 0.62, "w": 0.2, "h": 0.14}, "correct": true},
+        {"id": "papua", "text": {"id": "Papua", "en": "Papua"}, "region": {"x": 0.77, "y": 0.25, "w": 0.22, "h": 0.45}}
+      ],
+      "model_answer": {"id": "Jawa: sekitar 151 juta orang di sekitar 129.000 km², lebih dari 1.000 orang per km² (Sensus Penduduk 2020).", "en": "Java: about 151 million people on about 129,000 km², over 1,000 people per km² (2020 Population Census)."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-RATIO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-02-012", "unit": "02", "audience": "adults", "level": "menengah", "step": 2, "type": "number_input", "skills": ["UNIT-RATE"], "pool": "PRACT", "order": 24, "prompt_id": "P-NUM",
+      "image": "pic_motorbike",
+      "help_lines": [{"word": "", "meaning": {"id": "Ojek A: Rp12.000 untuk 4 km. Ojek B: Rp20.000 untuk 8 km. Berapa tarif per km yang lebih murah?", "en": "Ojek A: Rp12,000 for 4 km. Ojek B: Rp20,000 for 8 km. What is the cheaper rate per km?"}}],
+      "numeric": {"value": 2500, "tolerance": 0, "unit": {"id": "rupiah per km", "en": "rupiah per km"}},
+      "model_answer": {"id": "A: Rp12.000 : 4 = Rp3.000 per km. B: Rp20.000 : 8 = Rp2.500 per km. B lebih murah.", "en": "A: Rp12,000 ÷ 4 = Rp3,000 per km. B: Rp20,000 ÷ 8 = Rp2,500 per km. B is cheaper."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-RATIO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-02-013", "unit": "02", "audience": "adults", "level": "menengah", "step": 1, "type": "pick_image", "skills": ["RATIO-MIX"], "pool": "REMED", "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Gula : tepung = 1 : 2. Berapa bagian gula dalam adonan?", "en": "Sugar : flour = 1 : 2. What share of the mix is sugar?"}}],
+      "options": [
+        {"id": "frac_1_3", "image": "frac_1_3", "correct": true},
+        {"id": "frac_1_2", "image": "frac_1_2"},
+        {"id": "frac_2_3", "image": "frac_2_3"}
+      ],
+      "model_answer": {"id": "1 bagian dari 3 bagian = 1/3, bukan 1/2.", "en": "1 part out of 3 parts = 1/3, not 1/2."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-RATIO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-02-014", "unit": "02", "audience": "adults", "level": "menengah", "step": 1, "type": "number_input", "skills": ["RATIO-SCALE"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "pic_bread",
+      "help_lines": [{"word": "", "meaning": {"id": "Adonan untuk 12 roti memakai 600 g tepung. Untuk 30 roti, berapa gram tepung?", "en": "Dough for 12 buns uses 600 g of flour. For 30 buns, how many grams?"}}],
+      "numeric": {"value": 1500, "tolerance": 0, "unit": {"id": "gram", "en": "grams"}},
+      "model_answer": {"id": "600 : 12 = 50 g per roti; 50 × 30 = 1.500 g.", "en": "600 ÷ 12 = 50 g a bun; 50 × 30 = 1,500 g."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-RATIO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-02-015", "unit": "02", "audience": "adults", "level": "menengah", "step": 2, "type": "choose", "skills": ["UNIT-RATE"], "pool": "REMED", "prompt_id": "P-CHOOSE",
+      "image": "pic_juice",
+      "help_lines": [{"word": "", "meaning": {"id": "Jus A: 250 ml Rp5.000. Jus B: 1.000 ml Rp18.000. Mana yang lebih hemat?", "en": "Juice A: 250 ml for Rp5,000. Juice B: 1,000 ml for Rp18,000. Which is better value?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "Jus A", "en": "Juice A"}},
+        {"id": "b", "text": {"id": "Jus B", "en": "Juice B"}, "correct": true}
+      ],
+      "model_answer": {"id": "A: Rp5.000 : 250 = Rp20 per ml. B: Rp18.000 : 1.000 = Rp18 per ml. B lebih hemat.", "en": "A: Rp5,000 ÷ 250 = Rp20 per ml. B: Rp18,000 ÷ 1,000 = Rp18 per ml. B is better value."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-RATIO", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    },
+    {
+      "item_id": "MAT-A-M-DP-01", "unit": "01", "audience": "adults", "level": "menengah", "type": "daily_puzzle", "skills": ["PUZZLE"], "pool": "SPARE", "prompt_id": "P-PUZZLE",
+      "help_lines": [{"word": "", "meaning": {"id": "Harga naik 25%. Agar kembali ke harga semula, harga itu harus turun berapa persen?", "en": "A price goes up 25%. To get back to the original price, by what percent must it fall?"}}],
+      "numeric": {"value": 20, "tolerance": 0, "unit": {"id": "%", "en": "%"}},
+      "model_answer": {"id": "Misalnya Rp100 naik 25% menjadi Rp125. Untuk kembali ke Rp100 harus turun Rp25, dan 25 : 125 = 20%.", "en": "Say Rp100 rises 25% to Rp125. To get back to Rp100 it must fall by Rp25, and 25 ÷ 125 = 20%."},
+      "feedback_ids": {"correct": "FB-OK-PUZZLE", "wrong": "FB-NO-PUZZLE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-m-0.1"
+    }
+  ]
+}

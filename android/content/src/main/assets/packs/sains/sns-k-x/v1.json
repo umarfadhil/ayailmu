@@ -1,0 +1,2303 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sns-k-x-0.1",
+    "subject": "sains",
+    "track": "sns-k-x",
+    "level": "master",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Sains — Master (Anak)",
+      "en": "Science — Master (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, starter level: 2 units) for subject + language review: needs a science reviewer and the Indonesian and English language reviewers before any item is approved (docs/syllabus/03_SAINS.md, Kids Master units 1-2; MODULES_LEVELS_STORIES.md). New sci_/pic_ art keys (contract section 6) are drafts being drawn.",
+  "prompts": {
+    "P-TAP": {
+      "id": "Ketuk bagian yang tepat.",
+      "en": "Tap the right spot."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-MYTH": {
+      "id": "Mitos atau fakta?",
+      "en": "Myth or fact?"
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke pasangannya.",
+      "en": "Drag each picture to its match."
+    },
+    "P-SORT": {
+      "id": "Seret ke keranjang yang tepat.",
+      "en": "Drag each into the right basket."
+    },
+    "P-ORDER": {
+      "id": "Seret ke urutan yang benar.",
+      "en": "Drag them into the right order."
+    },
+    "P-FILL": {
+      "id": "Seret ke bagian yang kosong.",
+      "en": "Drag into the gap."
+    },
+    "P-MEMORY": {
+      "id": "Balik kartu, cari pasangannya.",
+      "en": "Flip the cards, find pairs."
+    },
+    "P-EST": {
+      "id": "Tebak, lalu geser.",
+      "en": "Guess, then slide."
+    },
+    "P-TRY": {
+      "id": "Coba di rumah",
+      "en": "Try at home"
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Sip, kita lanjut!",
+      "en": "Great, let's keep going!"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Sel & DNA",
+        "en": "Cells & DNA"
+      },
+      "sticker": "sticker_shell"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Atom & unsur",
+        "en": "Atoms & elements"
+      },
+      "sticker": "sticker_lantern"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SNS-K-X-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Sel & DNA",
+        "en": "Cells & DNA"
+      },
+      "body": [
+        {
+          "id": "Semua makhluk hidup tersusun dari sel. Tubuhmu punya puluhan triliun sel!",
+          "en": "Every living thing is made of cells. Your body has tens of trillions of them!"
+        },
+        {
+          "id": "Inti sel menyimpan DNA, \"buku resep\" tubuh. Sel tumbuhan juga punya kloroplas untuk membuat makanan.",
+          "en": "The nucleus stores DNA, the body's \"recipe book\". Plant cells also have chloroplasts to make food."
+        },
+        {
+          "id": "Separuh genmu dari ibu, separuh dari ayah. Karena itu kakak dan adik mirip, tetapi tidak sama.",
+          "en": "Half your genes come from your mother, half from your father. That's why siblings look alike, but not the same."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SNS-K-X-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Atom & unsur",
+        "en": "Atoms & elements"
+      },
+      "body": [
+        {
+          "id": "Semua benda tersusun dari atom yang sangat kecil. Unsur adalah zat yang atomnya satu jenis saja.",
+          "en": "Everything is made of tiny atoms. An element is a substance with only one kind of atom."
+        },
+        {
+          "id": "Ada 118 unsur yang dikenal. Tabel periodik seperti peta: kebanyakan logam di kiri dan tengah, bukan logam di kanan.",
+          "en": "There are 118 known elements. The periodic table is like a map: most metals on the left and middle, non-metals on the right."
+        },
+        {
+          "id": "Atom bisa bergabung menjadi molekul. Air (H₂O) = 2 atom hidrogen + 1 atom oksigen.",
+          "en": "Atoms can join to make molecules. Water (H₂O) = 2 hydrogen atoms + 1 oxygen atom."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "SNS-K-X-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "CELL-BASICS"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Alat untuk melihat sel?",
+            "en": "Which tool lets you see cells?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_telescope",
+          "image": "hist_telescope"
+        },
+        {
+          "id": "math_ruler",
+          "image": "math_ruler"
+        },
+        {
+          "id": "sci_microscope",
+          "image": "sci_microscope",
+          "correct": true
+        },
+        {
+          "id": "sci_magnet",
+          "image": "sci_magnet"
+        }
+      ],
+      "model_answer": {
+        "id": "Mikroskop. Hampir semua sel terlalu kecil untuk dilihat dengan mata saja.",
+        "en": "A microscope. Almost all cells are too small to see with your eyes alone."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "CELL-BASICS"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bersel satu atau bersel banyak?",
+            "en": "One cell or many cells?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_one",
+          "text": {
+            "id": "Bersel satu",
+            "en": "One cell"
+          }
+        },
+        {
+          "id": "b_many",
+          "text": {
+            "id": "Bersel banyak",
+            "en": "Many cells"
+          }
+        },
+        {
+          "id": "bact",
+          "text": {
+            "id": "Bakteri",
+            "en": "Bacteria"
+          },
+          "image": "sci_microscope"
+        },
+        {
+          "id": "cat",
+          "text": {
+            "id": "Kucing",
+            "en": "Cat"
+          },
+          "image": "pic_cat"
+        },
+        {
+          "id": "yeast",
+          "text": {
+            "id": "Ragi roti (khamir)",
+            "en": "Baker's yeast"
+          },
+          "image": "pic_bread"
+        },
+        {
+          "id": "tree",
+          "text": {
+            "id": "Pohon",
+            "en": "Tree"
+          },
+          "image": "pic_tree"
+        },
+        {
+          "id": "butterfly",
+          "text": {
+            "id": "Kupu-kupu",
+            "en": "Butterfly"
+          },
+          "image": "pic_butterfly"
+        }
+      ],
+      "solution_pairs": {
+        "bact": "b_one",
+        "cat": "b_many",
+        "yeast": "b_one",
+        "tree": "b_many",
+        "butterfly": "b_many"
+      },
+      "model_answer": {
+        "id": "Bersel satu: bakteri dan ragi. Bersel banyak: kucing, pohon, kupu-kupu.",
+        "en": "One cell: bacteria and yeast. Many cells: cat, tree, butterfly."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "CELL-PARTS"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bagian sel itu seperti apa?",
+            "en": "What is each cell part like?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "book",
+          "text": {
+            "id": "Buku resep",
+            "en": "A recipe book"
+          },
+          "image": "hist_book_stack"
+        },
+        {
+          "id": "door",
+          "text": {
+            "id": "Pintu",
+            "en": "A door"
+          },
+          "image": "pic_door"
+        },
+        {
+          "id": "battery",
+          "text": {
+            "id": "Baterai",
+            "en": "A battery"
+          },
+          "image": "sci_battery_bulb"
+        },
+        {
+          "id": "leaf",
+          "text": {
+            "id": "Dapur di daun",
+            "en": "A kitchen in the leaf"
+          },
+          "image": "pic_tree"
+        },
+        {
+          "id": "nucleus",
+          "text": {
+            "id": "Inti sel: menyimpan DNA",
+            "en": "Nucleus: stores DNA"
+          }
+        },
+        {
+          "id": "membrane",
+          "text": {
+            "id": "Membran: mengatur yang keluar-masuk",
+            "en": "Membrane: controls what goes in and out"
+          }
+        },
+        {
+          "id": "mito",
+          "text": {
+            "id": "Mitokondria: mengubah makanan jadi energi",
+            "en": "Mitochondria: turn food into energy"
+          }
+        },
+        {
+          "id": "chloro",
+          "text": {
+            "id": "Kloroplas: membuat makanan dari cahaya",
+            "en": "Chloroplast: makes food from light"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "book": "nucleus",
+        "door": "membrane",
+        "battery": "mito",
+        "leaf": "chloro"
+      },
+      "model_answer": {
+        "id": "Inti = buku resep, membran = pintu, mitokondria = baterai, kloroplas = dapur di daun.",
+        "en": "Nucleus = recipe book, membrane = door, mitochondria = battery, chloroplast = kitchen in the leaf."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "CELL-BASICS"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang terkecil ke yang terbesar.",
+            "en": "From smallest to biggest."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "organ",
+          "text": {
+            "id": "Organ (jantung)",
+            "en": "Organ (heart)"
+          },
+          "image": "pic_heart_organ"
+        },
+        {
+          "id": "cell",
+          "text": {
+            "id": "Sel",
+            "en": "Cell"
+          },
+          "image": "sci_microscope"
+        },
+        {
+          "id": "body",
+          "text": {
+            "id": "Tubuh",
+            "en": "Body"
+          },
+          "image": "body_child"
+        },
+        {
+          "id": "tissue",
+          "text": {
+            "id": "Jaringan (kumpulan sel sejenis)",
+            "en": "Tissue (a group of similar cells)"
+          }
+        }
+      ],
+      "solution": [
+        "cell",
+        "tissue",
+        "organ",
+        "body"
+      ],
+      "model_answer": {
+        "id": "Sel → jaringan → organ → tubuh.",
+        "en": "Cell → tissue → organ → body."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "estimate_slider",
+      "skills": [
+        "CELL-GENES"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-EST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Berapa persen genmu yang berasal dari ibu?",
+            "en": "What percentage of your genes come from your mother?"
+          }
+        }
+      ],
+      "image": "fam_mother",
+      "numeric": {
+        "value": 50,
+        "tolerance": 5,
+        "unit": {
+          "id": "%",
+          "en": "%"
+        }
+      },
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1
+      },
+      "model_answer": {
+        "id": "Separuh (50%) dari ibu, separuh dari ayah.",
+        "en": "Half (50%) from your mother, half from your father."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "CELL-BASICS"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tubuhmu tersusun dari triliunan sel.",
+            "en": "Your body is made of trillions of cells."
+          }
+        }
+      ],
+      "image": "body_child",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          },
+          "correct": true
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Fakta! Sekitar 30 triliun sel, dan hampir semuanya terlalu kecil untuk dilihat tanpa mikroskop.",
+        "en": "Fact! About 30 trillion cells, and almost all are too small to see without a microscope."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "CELL-GENES"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari gen, atau dari belajar dan berlatih?",
+            "en": "From genes, or from learning and practice?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_gene",
+          "text": {
+            "id": "Dari gen",
+            "en": "From genes"
+          }
+        },
+        {
+          "id": "b_learn",
+          "text": {
+            "id": "Dari belajar dan berlatih",
+            "en": "From learning and practice"
+          }
+        },
+        {
+          "id": "eye",
+          "text": {
+            "id": "Warna mata",
+            "en": "Eye colour"
+          },
+          "image": "sense_eye"
+        },
+        {
+          "id": "swim",
+          "text": {
+            "id": "Pandai berenang",
+            "en": "Being a good swimmer"
+          },
+          "image": "pic_swim"
+        },
+        {
+          "id": "ear",
+          "text": {
+            "id": "Bentuk daun telinga",
+            "en": "The shape of your ears"
+          },
+          "image": "sense_ear"
+        },
+        {
+          "id": "guitar",
+          "text": {
+            "id": "Bisa main gitar",
+            "en": "Playing the guitar"
+          },
+          "image": "pic_guitar"
+        },
+        {
+          "id": "paint",
+          "text": {
+            "id": "Pandai melukis",
+            "en": "Being good at painting"
+          },
+          "image": "pic_draw_paint"
+        }
+      ],
+      "solution_pairs": {
+        "eye": "b_gene",
+        "swim": "b_learn",
+        "ear": "b_gene",
+        "guitar": "b_learn",
+        "paint": "b_learn"
+      },
+      "model_answer": {
+        "id": "Warna mata dan bentuk telinga dari gen. Berenang, main gitar, dan melukis hasil berlatih.",
+        "en": "Eye colour and ear shape come from genes. Swimming, guitar and painting come from practice."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "CELL-PARTS"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "DNA disimpan di ____.",
+            "en": "DNA is kept in the ____."
+          }
+        }
+      ],
+      "image": "sci_microscope",
+      "options": [
+        {
+          "id": "membrane",
+          "text": {
+            "id": "membran sel",
+            "en": "cell membrane"
+          }
+        },
+        {
+          "id": "chloro",
+          "text": {
+            "id": "kloroplas",
+            "en": "chloroplast"
+          }
+        },
+        {
+          "id": "nucleus",
+          "text": {
+            "id": "inti sel",
+            "en": "nucleus"
+          }
+        }
+      ],
+      "solution": [
+        "nucleus"
+      ],
+      "model_answer": {
+        "id": "Inti sel, seperti lemari tempat buku resep disimpan.",
+        "en": "The nucleus, like a cupboard for the recipe book."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "CELL-PARTS"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sel makhluk mana yang punya kloroplas?",
+            "en": "Whose cells have chloroplasts?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_tree",
+          "image": "pic_tree",
+          "correct": true
+        },
+        {
+          "id": "pic_cat",
+          "image": "pic_cat"
+        },
+        {
+          "id": "pic_fish",
+          "image": "pic_fish"
+        },
+        {
+          "id": "pic_butterfly",
+          "image": "pic_butterfly"
+        }
+      ],
+      "model_answer": {
+        "id": "Pohon. Kloroplas menangkap cahaya untuk membuat makanan. Hewan tidak punya kloroplas.",
+        "en": "The tree. Chloroplasts catch light to make food. Animals don't have them."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "CELL-BASICS"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-TRY",
+      "image": "sci_microscope",
+      "model_answer": {
+        "id": "Bersama guru atau orang dewasa, ambil selaput tipis dari lapisan bawang bombai. Taruh di kaca, tetesi air, lalu lihat dengan mikroskop sekolah. Kotak-kotak kecil itu adalah sel!",
+        "en": "With a teacher or grown-up, peel the thin skin from an onion layer. Put it on a glass slide, add a drop of water and look through the school microscope. Those little boxes are cells!"
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "CELL-BASICS"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang tidak tersusun dari sel?",
+            "en": "Which one is not made of cells?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_cat",
+          "image": "pic_cat"
+        },
+        {
+          "id": "pic_tree",
+          "image": "pic_tree"
+        },
+        {
+          "id": "pic_frog",
+          "image": "pic_frog"
+        },
+        {
+          "id": "pic_ball",
+          "image": "pic_ball",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Bola plastik. Ia tidak hidup, jadi tidak punya sel.",
+        "en": "The plastic ball. It isn't alive, so it has no cells."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "CELL-GENES"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kembar identik berasal dari ____ sel telur yang membelah.",
+            "en": "Identical twins come from ____ egg cell that splits."
+          }
+        }
+      ],
+      "image": "fam_sister",
+      "options": [
+        {
+          "id": "two",
+          "text": {
+            "id": "dua",
+            "en": "two"
+          }
+        },
+        {
+          "id": "one",
+          "text": {
+            "id": "satu",
+            "en": "one"
+          }
+        },
+        {
+          "id": "three",
+          "text": {
+            "id": "tiga",
+            "en": "three"
+          }
+        }
+      ],
+      "solution": [
+        "one"
+      ],
+      "model_answer": {
+        "id": "Satu! Karena itu DNA mereka hampir sama persis.",
+        "en": "One! That's why their DNA is almost identical."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "CELL-BASICS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Alat apa yang membuat sel terlihat?",
+            "en": "Which tool makes cells visible?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "hist_telescope",
+          "image": "hist_telescope"
+        },
+        {
+          "id": "sci_microscope",
+          "image": "sci_microscope",
+          "correct": true
+        },
+        {
+          "id": "pic_glasses",
+          "image": "pic_glasses"
+        },
+        {
+          "id": "pic_camera",
+          "image": "pic_camera"
+        }
+      ],
+      "model_answer": {
+        "id": "Mikroskop.",
+        "en": "A microscope."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "CELL-PARTS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tumbuhan membuat makanan di ____.",
+            "en": "Plants make food in their ____."
+          }
+        }
+      ],
+      "image": "pic_tree",
+      "options": [
+        {
+          "id": "nucleus",
+          "text": {
+            "id": "inti sel",
+            "en": "nucleus"
+          }
+        },
+        {
+          "id": "chloro",
+          "text": {
+            "id": "kloroplas",
+            "en": "chloroplasts"
+          }
+        },
+        {
+          "id": "membrane",
+          "text": {
+            "id": "membran sel",
+            "en": "cell membrane"
+          }
+        }
+      ],
+      "solution": [
+        "chloro"
+      ],
+      "model_answer": {
+        "id": "Kloroplas, dengan bantuan cahaya matahari.",
+        "en": "Chloroplasts, with the help of sunlight."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-01-015",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "CELL-GENES"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari gen, atau dari berlatih?",
+            "en": "From genes, or from practice?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_gene",
+          "text": {
+            "id": "Dari gen",
+            "en": "From genes"
+          }
+        },
+        {
+          "id": "b_learn",
+          "text": {
+            "id": "Dari berlatih",
+            "en": "From practice"
+          }
+        },
+        {
+          "id": "eye",
+          "text": {
+            "id": "Warna mata",
+            "en": "Eye colour"
+          },
+          "image": "sense_eye"
+        },
+        {
+          "id": "ball",
+          "text": {
+            "id": "Pandai main bola",
+            "en": "Good at football"
+          },
+          "image": "pic_football"
+        },
+        {
+          "id": "hair",
+          "text": {
+            "id": "Warna rambut",
+            "en": "Hair colour"
+          },
+          "image": "pic_head"
+        }
+      ],
+      "solution_pairs": {
+        "eye": "b_gene",
+        "ball": "b_learn",
+        "hair": "b_gene"
+      },
+      "model_answer": {
+        "id": "Warna mata dan rambut dari gen; pandai main bola karena berlatih.",
+        "en": "Eye and hair colour come from genes; being good at football comes from practice."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-01-016",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "CELL-BASICS"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "sci_microscope",
+      "gem": true,
+      "source": "R. Sender, S. Fuchs & R. Milo, \"Revised Estimates for the Number of Human and Bacteria Cells in the Body\", PLOS Biology 14(8): e1002533 (2016).",
+      "model_answer": {
+        "id": "Di tubuhmu ada sekitar 30 triliun sel manusia dan kira-kira 38 triliun bakteri, kebanyakan di usus. Jumlahnya mirip! Tapi bakteri sangat kecil, jadi beratnya hanya sekitar 0,2 kg.",
+        "en": "Your body has about 30 trillion human cells and roughly 38 trillion bacteria, mostly in your gut. About the same number! But bacteria are tiny, so together they weigh only about 0.2 kg."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "ATOM-TABLE"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Terbuat dari logam atau bukan?",
+            "en": "Made of metal or not?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_metal",
+          "text": {
+            "id": "Logam",
+            "en": "Metal"
+          }
+        },
+        {
+          "id": "b_non",
+          "text": {
+            "id": "Bukan logam",
+            "en": "Not metal"
+          }
+        },
+        {
+          "id": "coin",
+          "text": {
+            "id": "Koin",
+            "en": "Coin"
+          },
+          "image": "coin_generic"
+        },
+        {
+          "id": "water",
+          "text": {
+            "id": "Air",
+            "en": "Water"
+          },
+          "image": "drink_water"
+        },
+        {
+          "id": "spoon",
+          "text": {
+            "id": "Sendok baja",
+            "en": "Steel spoon"
+          },
+          "image": "pic_spoon_fork"
+        },
+        {
+          "id": "pencil",
+          "text": {
+            "id": "Isi pensil (grafit, karbon)",
+            "en": "Pencil lead (graphite, carbon)"
+          },
+          "image": "pic_pencil"
+        },
+        {
+          "id": "air",
+          "text": {
+            "id": "Udara",
+            "en": "Air"
+          },
+          "image": "pic_wind"
+        }
+      ],
+      "solution_pairs": {
+        "coin": "b_metal",
+        "water": "b_non",
+        "spoon": "b_metal",
+        "pencil": "b_non",
+        "air": "b_non"
+      },
+      "model_answer": {
+        "id": "Logam: koin dan sendok baja. Bukan logam: air, grafit pensil, dan udara.",
+        "en": "Metal: the coin and the steel spoon. Not metal: water, pencil graphite and air."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "memory_flip",
+      "skills": [
+        "ATOM-TABLE"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Lambang unsur dan contohnya.",
+            "en": "Element symbols and examples."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "o",
+          "text": {
+            "id": "O · oksigen",
+            "en": "O · oxygen"
+          }
+        },
+        {
+          "id": "fe",
+          "text": {
+            "id": "Fe · besi",
+            "en": "Fe · iron"
+          }
+        },
+        {
+          "id": "h",
+          "text": {
+            "id": "H · hidrogen",
+            "en": "H · hydrogen"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "C · karbon",
+            "en": "C · carbon"
+          }
+        },
+        {
+          "id": "p_o",
+          "text": {
+            "id": "yang kita butuhkan saat bernapas",
+            "en": "what we need when we breathe"
+          },
+          "image": "pic_lungs"
+        },
+        {
+          "id": "p_fe",
+          "text": {
+            "id": "sendok baja",
+            "en": "a steel spoon"
+          },
+          "image": "pic_spoon_fork"
+        },
+        {
+          "id": "p_h",
+          "text": {
+            "id": "bahan bakar Matahari",
+            "en": "the Sun's fuel"
+          },
+          "image": "pic_sun"
+        },
+        {
+          "id": "p_c",
+          "text": {
+            "id": "isi pensil",
+            "en": "pencil lead"
+          },
+          "image": "pic_pencil"
+        }
+      ],
+      "solution_pairs": {
+        "o": "p_o",
+        "fe": "p_fe",
+        "h": "p_h",
+        "c": "p_c"
+      },
+      "model_answer": {
+        "id": "O: napas, Fe: baja, H: Matahari, C: grafit pensil.",
+        "en": "O: breath, Fe: steel, H: the Sun, C: pencil graphite."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "ATOM-BASICS"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "H₂O = 2 atom hidrogen + 1 atom ____.",
+            "en": "H₂O = 2 hydrogen atoms + 1 ____ atom."
+          }
+        }
+      ],
+      "image": "drink_water",
+      "options": [
+        {
+          "id": "c",
+          "text": {
+            "id": "karbon",
+            "en": "carbon"
+          }
+        },
+        {
+          "id": "fe",
+          "text": {
+            "id": "besi",
+            "en": "iron"
+          }
+        },
+        {
+          "id": "o",
+          "text": {
+            "id": "oksigen",
+            "en": "oxygen"
+          }
+        }
+      ],
+      "solution": [
+        "o"
+      ],
+      "model_answer": {
+        "id": "Oksigen. Setetes air berisi sekitar satu miliar triliun molekul H₂O.",
+        "en": "Oxygen. A drop of water holds about a billion trillion H₂O molecules."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "ATOM-USES"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Banyak tambang nikel besar ada di pulau ini.",
+            "en": "Many big nickel mines are on this island."
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "options": [
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          }
+        },
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          },
+          "correct": true
+        },
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Sulawesi. Nikel dipakai untuk baja tahan karat dan baterai mobil listrik.",
+        "en": "Sulawesi. Nickel is used in stainless steel and electric-car batteries."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "estimate_slider",
+      "skills": [
+        "ATOM-BASICS"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-EST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Berapa persen udara adalah oksigen?",
+            "en": "What percentage of air is oxygen?"
+          }
+        }
+      ],
+      "image": "pic_wind",
+      "numeric": {
+        "value": 21,
+        "tolerance": 4,
+        "unit": {
+          "id": "%",
+          "en": "%"
+        }
+      },
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1
+      },
+      "model_answer": {
+        "id": "Sekitar 21%. Yang paling banyak justru nitrogen, sekitar 78%.",
+        "en": "About 21%. Most of the air is actually nitrogen, about 78%."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ATOM-USES"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Silikon dari pasir dipakai untuk membuat…",
+            "en": "Silicon from sand is used to make…"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_book",
+          "image": "pic_book"
+        },
+        {
+          "id": "pic_bread",
+          "image": "pic_bread"
+        },
+        {
+          "id": "pic_shoes",
+          "image": "pic_shoes"
+        },
+        {
+          "id": "pic_computer",
+          "image": "pic_computer",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Chip komputer dan ponsel. Kaca jendela juga dibuat dari pasir.",
+        "en": "Computer and phone chips. Window glass is made from sand too."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "ATOM-BASICS"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Menurut beratnya, tubuhmu paling banyak berisi oksigen.",
+            "en": "By weight, your body is mostly oxygen."
+          }
+        }
+      ],
+      "image": "body_child",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          },
+          "correct": true
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Fakta! Sekitar 65% berat tubuh adalah oksigen, kebanyakan di dalam air tubuhmu.",
+        "en": "Fact! About 65% of your body weight is oxygen, mostly in the water inside you."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "ATOM-BASICS"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari yang terkecil ke yang terbesar.",
+            "en": "From smallest to biggest."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "cell",
+          "text": {
+            "id": "Sel",
+            "en": "Cell"
+          },
+          "image": "sci_microscope"
+        },
+        {
+          "id": "body",
+          "text": {
+            "id": "Tubuh",
+            "en": "Body"
+          },
+          "image": "body_child"
+        },
+        {
+          "id": "atom",
+          "text": {
+            "id": "Atom",
+            "en": "Atom"
+          }
+        },
+        {
+          "id": "mol",
+          "text": {
+            "id": "Molekul air",
+            "en": "Water molecule"
+          },
+          "image": "sci_water_drop"
+        }
+      ],
+      "solution": [
+        "atom",
+        "mol",
+        "cell",
+        "body"
+      ],
+      "model_answer": {
+        "id": "Atom → molekul → sel → tubuh. Satu sel berisi triliunan atom.",
+        "en": "Atom → molecule → cell → body. One cell holds trillions of atoms."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "tap_hotspot",
+      "skills": [
+        "ATOM-USES"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-TAP",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tambang tembaga dan emas raksasa Grasberg ada di sini.",
+            "en": "The giant Grasberg copper and gold mine is here."
+          }
+        }
+      ],
+      "image": "map_indonesia",
+      "options": [
+        {
+          "id": "papua",
+          "text": {
+            "id": "Papua",
+            "en": "Papua"
+          },
+          "region": {
+            "x": 0.77,
+            "y": 0.25,
+            "w": 0.22,
+            "h": 0.45
+          },
+          "correct": true
+        },
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          }
+        },
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Papua. Grasberg adalah salah satu tambang tembaga dan emas terbesar di dunia.",
+        "en": "Papua. Grasberg is one of the world's largest copper and gold mines."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ATOM-TABLE"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-TRY",
+      "image": "pic_milk_glass",
+      "model_answer": {
+        "id": "Baca label air mineral atau susu di rumah. Cari kata kalsium, natrium, kalium, atau magnesium. Semuanya unsur di tabel periodik!",
+        "en": "Read the label on bottled water or milk at home. Look for calcium, sodium, potassium or magnesium. They're all elements in the periodic table!"
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "ATOM-TABLE"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Unsur, atau gabungan beberapa unsur?",
+            "en": "An element, or a mix of elements?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_el",
+          "text": {
+            "id": "Unsur (satu jenis atom)",
+            "en": "Element (one kind of atom)"
+          }
+        },
+        {
+          "id": "b_mix",
+          "text": {
+            "id": "Gabungan beberapa unsur",
+            "en": "A mix of elements"
+          }
+        },
+        {
+          "id": "o2",
+          "text": {
+            "id": "Oksigen (O₂)",
+            "en": "Oxygen (O₂)"
+          }
+        },
+        {
+          "id": "water",
+          "text": {
+            "id": "Air (H₂O)",
+            "en": "Water (H₂O)"
+          },
+          "image": "drink_water"
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Grafit (karbon)",
+            "en": "Graphite (carbon)"
+          },
+          "image": "pic_pencil"
+        },
+        {
+          "id": "air",
+          "text": {
+            "id": "Udara",
+            "en": "Air"
+          },
+          "image": "pic_wind"
+        }
+      ],
+      "solution_pairs": {
+        "o2": "b_el",
+        "water": "b_mix",
+        "c": "b_el",
+        "air": "b_mix"
+      },
+      "model_answer": {
+        "id": "Unsur: oksigen, grafit. Gabungan: air (senyawa H dan O) dan udara (campuran banyak gas).",
+        "en": "Elements: oxygen, graphite. Mixes: water (a compound of H and O) and air (a mixture of gases)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "match_pairs",
+      "skills": [
+        "ATOM-USES"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Benda dan unsur pentingnya.",
+            "en": "Object and its key element."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "wire",
+          "text": {
+            "id": "Kabel lampu",
+            "en": "Lamp wire"
+          },
+          "image": "sci_battery_bulb"
+        },
+        {
+          "id": "phone",
+          "text": {
+            "id": "Baterai ponsel",
+            "en": "Phone battery"
+          },
+          "image": "pic_phone"
+        },
+        {
+          "id": "chip",
+          "text": {
+            "id": "Chip komputer",
+            "en": "Computer chip"
+          },
+          "image": "pic_computer"
+        },
+        {
+          "id": "spoon",
+          "text": {
+            "id": "Sendok baja",
+            "en": "Steel spoon"
+          },
+          "image": "pic_spoon_fork"
+        },
+        {
+          "id": "cu",
+          "text": {
+            "id": "tembaga",
+            "en": "copper"
+          }
+        },
+        {
+          "id": "li",
+          "text": {
+            "id": "litium",
+            "en": "lithium"
+          }
+        },
+        {
+          "id": "si",
+          "text": {
+            "id": "silikon",
+            "en": "silicon"
+          }
+        },
+        {
+          "id": "fe",
+          "text": {
+            "id": "besi",
+            "en": "iron"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "wire": "cu",
+        "phone": "li",
+        "chip": "si",
+        "spoon": "fe"
+      },
+      "model_answer": {
+        "id": "Kabel: tembaga. Baterai ponsel: litium. Chip: silikon. Baja: besi.",
+        "en": "Wire: copper. Phone battery: lithium. Chip: silicon. Steel: iron."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ATOM-BASICS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Atom-atom bergabung menjadi ____.",
+            "en": "Atoms join together to make ____."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "cell",
+          "text": {
+            "id": "sel",
+            "en": "cells"
+          }
+        },
+        {
+          "id": "mol",
+          "text": {
+            "id": "molekul",
+            "en": "molecules"
+          }
+        },
+        {
+          "id": "organ",
+          "text": {
+            "id": "organ",
+            "en": "organs"
+          }
+        }
+      ],
+      "solution": [
+        "mol"
+      ],
+      "model_answer": {
+        "id": "Molekul, misalnya H₂O.",
+        "en": "Molecules, such as H₂O."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "ATOM-TABLE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Logam atau bukan?",
+            "en": "Metal or not?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_metal",
+          "text": {
+            "id": "Logam",
+            "en": "Metal"
+          }
+        },
+        {
+          "id": "b_non",
+          "text": {
+            "id": "Bukan logam",
+            "en": "Not metal"
+          }
+        },
+        {
+          "id": "coin",
+          "text": {
+            "id": "Koin",
+            "en": "Coin"
+          },
+          "image": "coin_generic"
+        },
+        {
+          "id": "water",
+          "text": {
+            "id": "Air",
+            "en": "Water"
+          },
+          "image": "drink_water"
+        },
+        {
+          "id": "spoon",
+          "text": {
+            "id": "Sendok baja",
+            "en": "Steel spoon"
+          },
+          "image": "pic_spoon_fork"
+        },
+        {
+          "id": "pencil",
+          "text": {
+            "id": "Isi pensil",
+            "en": "Pencil lead"
+          },
+          "image": "pic_pencil"
+        }
+      ],
+      "solution_pairs": {
+        "coin": "b_metal",
+        "water": "b_non",
+        "spoon": "b_metal",
+        "pencil": "b_non"
+      },
+      "model_answer": {
+        "id": "Logam: koin, sendok. Bukan logam: air, grafit pensil.",
+        "en": "Metal: coin, spoon. Not metal: water, pencil graphite."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-02-015",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ATOM-USES"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Chip komputer dibuat dari silikon. Silikon banyak terdapat di…",
+            "en": "Computer chips are made of silicon. Silicon is plentiful in…"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_tree",
+          "image": "pic_tree"
+        },
+        {
+          "id": "pic_cloud",
+          "image": "pic_cloud"
+        },
+        {
+          "id": "pic_beach",
+          "image": "pic_beach",
+          "correct": true
+        },
+        {
+          "id": "pic_lake",
+          "image": "pic_lake"
+        }
+      ],
+      "model_answer": {
+        "id": "Pasir. Banyak pasir pantai dan sungai adalah pasir kuarsa, yaitu silikon dioksida.",
+        "en": "Sand. Much beach and river sand is quartz sand, which is silicon dioxide."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    },
+    {
+      "item_id": "SNS-K-X-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku unsur paling ringan dan paling banyak di alam semesta. Di dalam Matahari, aku bergabung menjadi helium. Siapa aku?",
+            "en": "I'm the lightest and most common element in the universe. Inside the Sun I join up to make helium. Who am I?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "o",
+          "text": {
+            "id": "Oksigen",
+            "en": "Oxygen"
+          }
+        },
+        {
+          "id": "h",
+          "text": {
+            "id": "Hidrogen",
+            "en": "Hydrogen"
+          },
+          "correct": true
+        },
+        {
+          "id": "fe",
+          "text": {
+            "id": "Besi",
+            "en": "Iron"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Hidrogen (H)!",
+        "en": "Hydrogen (H)!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-k-x-0.1"
+    }
+  ]
+}

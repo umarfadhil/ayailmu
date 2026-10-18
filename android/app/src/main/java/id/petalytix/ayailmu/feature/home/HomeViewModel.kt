@@ -41,6 +41,14 @@ sealed interface HomeEvent {
     ) : HomeEvent
 
     data object NoticeShown : HomeEvent
+
+    /** Developer demo only: show the free tier (locks, store) as prod would. */
+    data class SetFreeTier(
+        val on: Boolean,
+    ) : HomeEvent
+
+    /** "Nanti saja" on the trial survey card. */
+    data object SnoozeSurvey : HomeEvent
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -74,6 +82,8 @@ class HomeViewModel
                 is HomeEvent.SwitchProfile -> launchAction { data.switchProfile(event.id) }
                 is HomeEvent.CreateTestProfile -> launchAction { data.createTestProfile(event.label, event.lang) }
                 HomeEvent.NoticeShown -> _state.update { it.copy(actionFailed = false) }
+                is HomeEvent.SetFreeTier -> if (_state.value.developerDemo) launchAction { data.setFreeTier(event.on) }
+                HomeEvent.SnoozeSurvey -> launchAction { data.snoozeSurvey() }
             }
         }
 

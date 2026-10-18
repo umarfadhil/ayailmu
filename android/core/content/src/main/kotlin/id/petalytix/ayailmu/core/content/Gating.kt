@@ -1,5 +1,6 @@
 package id.petalytix.ayailmu.core.content
 
+import id.petalytix.ayailmu.core.model.ItemType
 import id.petalytix.ayailmu.core.model.LocalizedText
 import id.petalytix.ayailmu.core.model.ReviewStatus
 
@@ -19,12 +20,17 @@ data class GatedContent(
     val screens: List<LessonScreen>,
     val readings: Map<String, Reading>,
     val items: List<Item>,
+    /** Follow-up 12: the stories whose `story` item is visible ([Item.storyId]); others stay hidden with their item. */
+    val stories: Map<String, Story> = emptyMap(),
 ) {
     private val byId: Map<String, Item> = items.associateBy { it.itemId }
 
     fun item(id: String): Item = byId[id] ?: throw IllegalArgumentException("Item $id is not available in this content")
 
     fun itemOrNull(id: String): Item? = byId[id]
+
+    /** The story a `story` item plays, or the one a question is about («Lihat lagi»); null when it is not visible. */
+    fun story(id: String?): Story? = id?.let { stories[it] }
 }
 
 object Gating {
@@ -41,6 +47,9 @@ object Gating {
         val items = pack.items.filter { isShowable(it.reviewStatus, pack.synthetic, developerDemo) }
         val screens = pack.screens.filter { isShowable(it.reviewStatus, pack.synthetic, developerDemo) }
         val readings = pack.readings.filterValues { isShowable(it.reviewStatus, pack.synthetic, developerDemo) }
+        // A story has no review status of its own: it shows when an item that plays it does.
+        val played = items.filter { it.type == ItemType.STORY }.mapNotNull { it.storyId }.toSet()
+        val stories = pack.stories.filterKeys { it in played }
         val unreviewed =
             pack.synthetic ||
                 items.any { it.reviewStatus != ReviewStatus.APPROVED } ||
@@ -55,6 +64,7 @@ object Gating {
             screens = screens,
             readings = readings,
             items = items,
+            stories = stories,
         )
     }
 }

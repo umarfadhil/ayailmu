@@ -4,6 +4,9 @@ import android.net.Uri
 import androidx.lifecycle.SavedStateHandle
 import id.petalytix.ayailmu.core.data.ProfileKind
 import id.petalytix.ayailmu.core.data.settings.ReminderSetting
+import id.petalytix.ayailmu.core.design.sound.Sfx
+import id.petalytix.ayailmu.core.design.sound.SoundFx
+import id.petalytix.ayailmu.core.design.sound.SwitchableSoundFx
 import id.petalytix.ayailmu.core.model.Lang
 import id.petalytix.ayailmu.feature.consent.Consent
 import id.petalytix.ayailmu.feature.consent.ConsentDataSource
@@ -66,6 +69,11 @@ class SettingsAndConsentViewModelTest {
             data.value = data.value?.copy(reminder = value)
         }
 
+        override suspend fun setSoundEffects(on: Boolean) {
+            calls += "sound:$on"
+            data.value = data.value?.copy(soundEffects = on)
+        }
+
         override suspend fun withdrawConsent() {
             calls += "withdraw"
         }
@@ -79,6 +87,26 @@ class SettingsAndConsentViewModelTest {
         override suspend fun deleteAll() {
             calls += "deleteAll"
         }
+
+        override suspend fun enterTesterCode(code: String): Boolean {
+            calls += "code:$code"
+            return code.trim().uppercase() == "AYA-ABCDE-FGHJK-LMNPQ-RSTUV"
+        }
+
+        override suspend fun removeTester() {
+            calls += "removeTester"
+        }
+
+        override suspend fun deleteChild(id: String) {
+            if (id == "lrn-missing") throw IllegalArgumentException("only a child profile can be deleted here")
+            calls += "deleteChild:$id"
+        }
+
+        override suspend fun setAvatar(key: String) {
+            require(key in id.petalytix.ayailmu.feature.home.Avatars.KEYS) { "unknown avatar" }
+            calls += "avatar:$key"
+            data.value = data.value?.copy(avatar = key)
+        }
     }
 
     @Before
@@ -86,6 +114,21 @@ class SettingsAndConsentViewModelTest {
 
     @After
     fun tearDown() = Dispatchers.resetMain()
+
+    @Test
+    fun `the profile shows a picture by default and a picked animal replaces it`() {
+        val data = FakeSettings()
+        val vm = SettingsViewModel(data)
+        val defaultKey = vm.state.value.data!!.avatar
+        assertEquals(id.petalytix.ayailmu.feature.home.Avatars.defaultFor("lrn-adult"), defaultKey)
+        vm.onEvent(SettingsEvent.Avatar("pic_elephant"))
+        assertEquals("pic_elephant", vm.state.value.data!!.avatar)
+        assertEquals(listOf("avatar:pic_elephant"), data.calls)
+        // Something that is not one of the animals is refused and said, never stored.
+        vm.onEvent(SettingsEvent.Avatar("letter_u"))
+        assertEquals(SettingsNotice.ACTION_FAILED, vm.state.value.notice)
+        assertEquals("pic_elephant", vm.state.value.data!!.avatar)
+    }
 
     @Test
     fun `a refused notification permission leaves the reminder off and says why`() {
@@ -107,6 +150,32 @@ class SettingsAndConsentViewModelTest {
     }
 
     @Test
+    fun `an adult can delete one child profile, and a failure says so`() {
+        val data = FakeSettings()
+        val vm = SettingsViewModel(data)
+        vm.onEvent(SettingsEvent.DeleteChild("lrn-kid"))
+        assertEquals(listOf("deleteChild:lrn-kid"), data.calls)
+        assertEquals(null, vm.state.value.notice)
+        vm.onEvent(SettingsEvent.DeleteChild("lrn-missing"))
+        assertEquals(SettingsNotice.ACTION_FAILED, vm.state.value.notice)
+        assertFalse(vm.state.value.busy)
+    }
+
+    @Test
+    fun `a tester code says whether it was accepted, and tester access can be removed`() {
+        val data = FakeSettings()
+        val vm = SettingsViewModel(data)
+        vm.onEvent(SettingsEvent.EnterTesterCode("aya-wrong"))
+        assertEquals(SettingsNotice.TESTER_WRONG, vm.state.value.notice)
+        vm.onEvent(SettingsEvent.EnterTesterCode(" aya-abcde-fghjk-lmnpq-rstuv"))
+        assertEquals(SettingsNotice.TESTER_ON, vm.state.value.notice)
+        vm.onEvent(SettingsEvent.RemoveTester)
+        assertEquals(SettingsNotice.TESTER_OFF, vm.state.value.notice)
+        assertEquals(listOf("code:aya-wrong", "code: aya-abcde-fghjk-lmnpq-rstuv", "removeTester"), data.calls)
+        assertFalse(vm.state.value.busy)
+    }
+
+    @Test
     fun `profile settings, consent withdrawal and deletes reach the data layer`() {
         val data = FakeSettings()
         val vm = SettingsViewModel(data)
@@ -117,6 +186,39 @@ class SettingsAndConsentViewModelTest {
         vm.onEvent(SettingsEvent.DeleteProfile)
         vm.onEvent(SettingsEvent.DeleteAll)
         assertEquals(listOf("lang:en", "minutes:null", "scale:1.4", "withdraw", "deleteProfile", "deleteAll"), data.calls)
+    }
+
+    @Test
+    fun `the sound effects switch is saved from any profile, a child's too`() {
+        val data = FakeSettings()
+        data.data.value = data.data.value?.copy(profile = TestPacks.profile(id = "lrn-kid", kind = ProfileKind.ANAK))
+        val vm = SettingsViewModel(data)
+        assertTrue(vm.state.value.data?.soundEffects == true) // on by default
+        vm.onEvent(SettingsEvent.SoundEffects(false))
+        assertEquals(listOf("sound:false"), data.calls)
+        assertFalse(vm.state.value.data?.soundEffects ?: true)
+        assertFalse(vm.state.value.busy)
+        assertNull(vm.state.value.notice)
+    }
+
+    @Test
+    fun `with the switch off, effects are silent and the player is not touched`() {
+        val played = mutableListOf<Sfx>()
+        val player =
+            object : SoundFx {
+                override fun play(sfx: Sfx) {
+                    played += sfx
+                }
+            }
+        var on = true
+        val fx = SwitchableSoundFx(player) { on }
+        fx.play(Sfx.CORRECT)
+        on = false
+        fx.play(Sfx.NOT_YET)
+        fx.play(Sfx.STICKER)
+        on = true
+        fx.play(Sfx.PAGE)
+        assertEquals(listOf(Sfx.CORRECT, Sfx.PAGE), played)
     }
 
     @Test

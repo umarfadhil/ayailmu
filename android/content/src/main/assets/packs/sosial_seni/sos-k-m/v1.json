@@ -1,0 +1,2265 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sos-k-m-0.1",
+    "subject": "sosial_seni",
+    "track": "sos-k-m",
+    "level": "menengah",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Sosial & Seni — Menengah (Anak)",
+      "en": "Social Studies & Arts — Intermediate (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12 starter level, 2 units) for subject + language review: needs a social-studies reviewer, a cultural reviewer, and the Indonesian and English language reviewers before any item is approved (docs/syllabus/04_SOSIAL_SENI.md, Kids Menengah: unit 1 Indonesiaku and unit 4 Rumah adat & pakaian as starter units 01-02; unit 2 Pahlawan moved to Sejarah). Picture-first per INTERACTIONS_AUDIO.md §1 and MODULES_LEVELS_STORIES.md §8; values and history figures live in the Nilai and Sejarah modules.",
+  "prompts": {
+    "P-TAP": {
+      "id": "Ketuk tempatnya di peta.",
+      "en": "Tap the place on the map."
+    },
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban yang tepat.",
+      "en": "Pick the right answer."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke pasangannya.",
+      "en": "Drag each picture to its match."
+    },
+    "P-SORT": {
+      "id": "Seret ke keranjang yang tepat.",
+      "en": "Drag each into the right basket."
+    },
+    "P-ORDER": {
+      "id": "Seret ke urutan yang benar.",
+      "en": "Drag them into the right order."
+    },
+    "P-FILL": {
+      "id": "Seret ke bagian yang kosong.",
+      "en": "Drag into the gap."
+    },
+    "P-NUM": {
+      "id": "Tulis angkanya.",
+      "en": "Type the number."
+    },
+    "P-MEMORY": {
+      "id": "Balik kartu, cari pasangannya.",
+      "en": "Flip the cards, find pairs."
+    },
+    "P-MAKE": {
+      "id": "Buat sendiri",
+      "en": "Make it yourself"
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Sip, kita lanjut!",
+      "en": "Great, let's keep going!"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Indonesiaku",
+        "en": "My Indonesia"
+      },
+      "sticker": "sticker_boat"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Rumah adat & pakaian",
+        "en": "Traditional houses & dress"
+      },
+      "sticker": "sticker_lantern"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SOS-K-M-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Indonesiaku",
+        "en": "My Indonesia"
+      },
+      "body": [
+        {
+          "id": "Indonesia negara kepulauan: lebih dari 17.000 pulau, dari Sumatra di barat sampai Papua di timur.",
+          "en": "Indonesia is an island country: more than 17,000 islands, from Sumatra in the west to Papua in the east."
+        },
+        {
+          "id": "Pulau besarnya Sumatra, Jawa, Kalimantan, Sulawesi, dan Papua. Ada juga Bali, Nusa Tenggara, dan Maluku.",
+          "en": "The big islands are Sumatra, Java, Kalimantan, Sulawesi and Papua. There are also Bali, Nusa Tenggara and Maluku."
+        },
+        {
+          "id": "Laut menghubungkan pulau-pulau kita. Kapal dan pesawat membawa orang dan barang antarpulau.",
+          "en": "The sea links our islands. Ships and planes carry people and goods between them."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SOS-K-M-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Rumah adat & pakaian",
+        "en": "Traditional houses & dress"
+      },
+      "body": [
+        {
+          "id": "Rumah gadang dari Minangkabau di Sumatra Barat, joglo dari Jawa, dan tongkonan dari Toraja di Sulawesi Selatan.",
+          "en": "The rumah gadang comes from the Minangkabau of West Sumatra, the joglo from Java and the tongkonan from Toraja in South Sulawesi."
+        },
+        {
+          "id": "Bentuknya berbeda karena alam dan cara hidup berbeda. Banyak rumah dibuat panggung, di atas tiang, supaya kering dan sejuk.",
+          "en": "They look different because the land and ways of life differ. Many are raised on posts to stay dry and cool."
+        },
+        {
+          "id": "Kain juga bercerita. Batik dibuat dengan canting dan malam (lilin), lalu diwarnai.",
+          "en": "Cloth tells stories too. Batik is drawn with a canting and wax, then dyed."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "SOS-K-M-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "ISL-MAP"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Di mana Pulau Kalimantan?",
+            "en": "Where is Kalimantan?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          }
+        },
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          },
+          "correct": true
+        },
+        {
+          "id": "papua",
+          "text": {
+            "id": "Papua",
+            "en": "Papua"
+          },
+          "region": {
+            "x": 0.77,
+            "y": 0.25,
+            "w": 0.22,
+            "h": 0.45
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Kalimantan pulau besar di sebelah utara Jawa.",
+        "en": "Kalimantan is the big island north of Java."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ISL-SEA"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ke pulau lain naik apa?",
+            "en": "How do we get to another island?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_train",
+          "text": {
+            "id": "kereta api",
+            "en": "train"
+          },
+          "image": "pic_train"
+        },
+        {
+          "id": "pic_ship",
+          "text": {
+            "id": "kapal",
+            "en": "ship"
+          },
+          "image": "pic_ship",
+          "correct": true
+        },
+        {
+          "id": "pic_bicycle",
+          "text": {
+            "id": "sepeda",
+            "en": "bicycle"
+          },
+          "image": "pic_bicycle"
+        }
+      ],
+      "model_answer": {
+        "id": "Kapal menyeberangi laut. Pesawat juga bisa!",
+        "en": "A ship crosses the sea. A plane can too!"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "ISL-MAP"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari barat ke timur.",
+            "en": "From west to east."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "o_pap",
+          "text": {
+            "id": "Papua",
+            "en": "Papua"
+          }
+        },
+        {
+          "id": "o_sum",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          }
+        },
+        {
+          "id": "o_kal",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan"
+          }
+        },
+        {
+          "id": "o_sul",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          }
+        }
+      ],
+      "solution": [
+        "o_sum",
+        "o_kal",
+        "o_sul",
+        "o_pap"
+      ],
+      "model_answer": {
+        "id": "Sumatra, Kalimantan, Sulawesi, lalu Papua.",
+        "en": "Sumatra, Kalimantan, Sulawesi, then Papua."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "ISL-SEA"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-TF",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Indonesia punya lebih dari 17.000 pulau.",
+            "en": "Indonesia has more than 17,000 islands."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Data tahun 2024 mencatat 17.380 pulau.",
+        "en": "The 2024 count lists 17,380 islands."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "ISL-MAP"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pulau ini mirip huruf K.",
+            "en": "This island looks like the letter K."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          },
+          "correct": true
+        },
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          }
+        },
+        {
+          "id": "maluku",
+          "text": {
+            "id": "Maluku",
+            "en": "Maluku"
+          },
+          "region": {
+            "x": 0.66,
+            "y": 0.25,
+            "w": 0.1,
+            "h": 0.35
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Sulawesi bentuknya mirip huruf K.",
+        "en": "Sulawesi is shaped a bit like the letter K."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "ISL-SEA"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Lewat laut atau udara, atau lewat darat?",
+            "en": "By sea or air, or over land?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_seaair",
+          "text": {
+            "id": "Lewat laut atau udara",
+            "en": "By sea or air"
+          }
+        },
+        {
+          "id": "b_land",
+          "text": {
+            "id": "Lewat darat",
+            "en": "Over land"
+          }
+        },
+        {
+          "id": "c_ship",
+          "text": {
+            "id": "kapal",
+            "en": "ship"
+          },
+          "image": "pic_ship"
+        },
+        {
+          "id": "c_train",
+          "text": {
+            "id": "kereta api",
+            "en": "train"
+          },
+          "image": "pic_train"
+        },
+        {
+          "id": "c_plane",
+          "text": {
+            "id": "pesawat",
+            "en": "plane"
+          },
+          "image": "pic_plane"
+        },
+        {
+          "id": "c_bus",
+          "text": {
+            "id": "bus",
+            "en": "bus"
+          },
+          "image": "pic_bus"
+        },
+        {
+          "id": "c_moto",
+          "text": {
+            "id": "sepeda motor",
+            "en": "motorbike"
+          },
+          "image": "pic_motorbike"
+        }
+      ],
+      "solution_pairs": {
+        "c_ship": "b_seaair",
+        "c_train": "b_land",
+        "c_plane": "b_seaair",
+        "c_bus": "b_land",
+        "c_moto": "b_land"
+      },
+      "model_answer": {
+        "id": "Kapal dan pesawat bisa ke pulau lain. Kereta, bus, dan motor melaju di darat.",
+        "en": "Ships and planes can reach other islands. Trains, buses and motorbikes run over land."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "tap_hotspot",
+      "skills": [
+        "ISL-MAP"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Jakarta ada di pulau ini.",
+            "en": "Jakarta is on this island."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          }
+        },
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "bali_nusa_tenggara",
+          "text": {
+            "id": "Bali dan Nusa Tenggara",
+            "en": "Bali and Nusa Tenggara"
+          },
+          "region": {
+            "x": 0.45,
+            "y": 0.78,
+            "w": 0.22,
+            "h": 0.12
+          }
+        },
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Jakarta ada di pantai utara Pulau Jawa.",
+        "en": "Jakarta is on the north coast of Java."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "ISL-SEA"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-CHOOSE",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Laut di antara Jawa dan Kalimantan?",
+            "en": "The sea between Java and Kalimantan?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Laut Jawa",
+            "en": "The Java Sea"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Laut Banda",
+            "en": "The Banda Sea"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Samudra Pasifik",
+            "en": "The Pacific Ocean"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Laut Jawa ada di antara Jawa dan Kalimantan.",
+        "en": "The Java Sea lies between Java and Kalimantan."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "ISL-MAP"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tempat terkenal dan pulaunya.",
+            "en": "Famous places and their islands."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_toba",
+          "text": {
+            "id": "Danau Toba",
+            "en": "Lake Toba"
+          }
+        },
+        {
+          "id": "t_boro",
+          "text": {
+            "id": "Candi Borobudur",
+            "en": "Borobudur Temple"
+          }
+        },
+        {
+          "id": "t_tor",
+          "text": {
+            "id": "Tana Toraja",
+            "en": "Tana Toraja"
+          }
+        },
+        {
+          "id": "t_raja",
+          "text": {
+            "id": "Raja Ampat",
+            "en": "Raja Ampat"
+          }
+        },
+        {
+          "id": "i_jaw",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          }
+        },
+        {
+          "id": "i_sul",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          }
+        },
+        {
+          "id": "i_pap",
+          "text": {
+            "id": "Papua",
+            "en": "Papua"
+          }
+        },
+        {
+          "id": "i_sum",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "t_toba": "i_sum",
+        "t_boro": "i_jaw",
+        "t_tor": "i_sul",
+        "t_raja": "i_pap"
+      },
+      "model_answer": {
+        "id": "Danau Toba di Sumatra, Borobudur di Jawa, Toraja di Sulawesi, Raja Ampat di Papua.",
+        "en": "Lake Toba is in Sumatra, Borobudur in Java, Toraja in Sulawesi, Raja Ampat in Papua."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ISL-SEA"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Negara yang terdiri atas banyak pulau disebut negara ____.",
+            "en": "A country made of many islands is called an ____ country."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t_isl",
+          "text": {
+            "id": "kepulauan",
+            "en": "island"
+          }
+        },
+        {
+          "id": "t_des",
+          "text": {
+            "id": "gurun",
+            "en": "desert"
+          }
+        },
+        {
+          "id": "t_snow",
+          "text": {
+            "id": "salju",
+            "en": "snow"
+          }
+        }
+      ],
+      "solution": [
+        "t_isl"
+      ],
+      "model_answer": {
+        "id": "Indonesia adalah negara kepulauan.",
+        "en": "Indonesia is an island country (an archipelago)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "number_input",
+      "skills": [
+        "ISL-MAP"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-NUM",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Indonesia punya 38 provinsi; 6 ada di Pulau Papua. Berapa yang lain?",
+            "en": "Indonesia has 38 provinces; 6 are on the island of Papua. How many are elsewhere?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 32,
+        "tolerance": 0,
+        "unit": {
+          "id": "provinsi",
+          "en": "provinces"
+        }
+      },
+      "model_answer": {
+        "id": "38 − 6 = 32 provinsi.",
+        "en": "38 − 6 = 32 provinces."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ISL-MAP"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-MAKE",
+      "image": "map_indonesia",
+      "model_answer": {
+        "id": "Gambar peta Indonesia di kertas. Tandai pulau tempatmu tinggal, lalu gambar kapal yang berlayar ke pulau lain.",
+        "en": "Draw a map of Indonesia on paper. Mark the island where you live, then draw a ship sailing to another island."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "ISL-MAP"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pulau besar paling barat?",
+            "en": "The westernmost big island?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          }
+        },
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          },
+          "correct": true
+        },
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "papua",
+          "text": {
+            "id": "Papua",
+            "en": "Papua"
+          },
+          "region": {
+            "x": 0.77,
+            "y": 0.25,
+            "w": 0.22,
+            "h": 0.45
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Sumatra ada paling barat; Papua paling timur.",
+        "en": "Sumatra is furthest west; Papua is furthest east."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ISL-SEA"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Ke pulau lain lewat udara?",
+            "en": "To another island by air?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_bus",
+          "text": {
+            "id": "bus",
+            "en": "bus"
+          },
+          "image": "pic_bus"
+        },
+        {
+          "id": "pic_train",
+          "text": {
+            "id": "kereta api",
+            "en": "train"
+          },
+          "image": "pic_train"
+        },
+        {
+          "id": "pic_plane",
+          "text": {
+            "id": "pesawat",
+            "en": "plane"
+          },
+          "image": "pic_plane",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Pesawat terbang di atas laut ke pulau lain.",
+        "en": "A plane flies over the sea to another island."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-01-015",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "info_card",
+      "skills": [
+        "ISL-SEA"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "gem": true,
+      "source": "Badan Informasi Geospasial (BIG), \"Rilis Jumlah Pulau\" (big.go.id; data 2024: 17.380 pulau, naik dari 17.374 pada 2023; kriteria pulau) dan portal SiPulau (sipulau.big.go.id).",
+      "model_answer": {
+        "id": "Badan Informasi Geospasial menghitung pulau kita setiap tahun. Yang dihitung hanya pulau alami yang dikelilingi air dan tetap muncul saat laut pasang. Data 2024: 17.380 pulau.",
+        "en": "Indonesia's Geospatial Information Agency counts our islands every year. Only natural islands that are surrounded by water and stay above the sea at high tide count. The 2024 count: 17,380 islands."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "CUL-HOUSE"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rumah adat Minangkabau, atapnya seperti tanduk.",
+            "en": "The Minangkabau house, with horn-like roof peaks."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "soc_joglo",
+          "text": {
+            "id": "joglo",
+            "en": "joglo"
+          },
+          "image": "soc_joglo"
+        },
+        {
+          "id": "soc_tongkonan",
+          "text": {
+            "id": "tongkonan",
+            "en": "tongkonan"
+          },
+          "image": "soc_tongkonan"
+        },
+        {
+          "id": "soc_rumah_gadang",
+          "text": {
+            "id": "rumah gadang",
+            "en": "rumah gadang"
+          },
+          "image": "soc_rumah_gadang",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Atap gonjong rumah gadang meruncing seperti tanduk kerbau.",
+        "en": "The rumah gadang's gonjong roof peaks curve up like buffalo horns."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "CUL-HOUSE"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rumah adat → daerahnya.",
+            "en": "House → its region."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "h_gadang",
+          "text": {
+            "id": "rumah gadang",
+            "en": "rumah gadang"
+          },
+          "image": "soc_rumah_gadang"
+        },
+        {
+          "id": "h_joglo",
+          "text": {
+            "id": "joglo",
+            "en": "joglo"
+          },
+          "image": "soc_joglo"
+        },
+        {
+          "id": "h_tong",
+          "text": {
+            "id": "tongkonan",
+            "en": "tongkonan"
+          },
+          "image": "soc_tongkonan"
+        },
+        {
+          "id": "r_jateng",
+          "text": {
+            "id": "Jawa Tengah dan Yogyakarta",
+            "en": "Central Java and Yogyakarta"
+          }
+        },
+        {
+          "id": "r_toraja",
+          "text": {
+            "id": "Toraja, Sulawesi Selatan",
+            "en": "Toraja, South Sulawesi"
+          }
+        },
+        {
+          "id": "r_sumbar",
+          "text": {
+            "id": "Sumatra Barat",
+            "en": "West Sumatra"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "h_gadang": "r_sumbar",
+        "h_joglo": "r_jateng",
+        "h_tong": "r_toraja"
+      },
+      "model_answer": {
+        "id": "Rumah gadang: Sumatra Barat. Joglo: Jawa Tengah dan Yogyakarta. Tongkonan: Toraja, Sulawesi Selatan.",
+        "en": "Rumah gadang: West Sumatra. Joglo: Central Java and Yogyakarta. Tongkonan: Toraja, South Sulawesi."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "CUL-HOUSE"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tongkonan dari pulau mana?",
+            "en": "Which island is the tongkonan from?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          }
+        },
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          },
+          "correct": true
+        },
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          }
+        },
+        {
+          "id": "papua",
+          "text": {
+            "id": "Papua",
+            "en": "Papua"
+          },
+          "region": {
+            "x": 0.77,
+            "y": 0.25,
+            "w": 0.22,
+            "h": 0.45
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Tongkonan rumah adat Toraja, di Sulawesi Selatan.",
+        "en": "The tongkonan is the Toraja house, in South Sulawesi."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "CUL-HOUSE"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rumah adat Toraja, atapnya seperti perahu.",
+            "en": "The Toraja house, with a boat-shaped roof."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "soc_rumah_gadang",
+          "text": {
+            "id": "rumah gadang",
+            "en": "rumah gadang"
+          },
+          "image": "soc_rumah_gadang"
+        },
+        {
+          "id": "soc_tongkonan",
+          "text": {
+            "id": "tongkonan",
+            "en": "tongkonan"
+          },
+          "image": "soc_tongkonan",
+          "correct": true
+        },
+        {
+          "id": "soc_joglo",
+          "text": {
+            "id": "joglo",
+            "en": "joglo"
+          },
+          "image": "soc_joglo"
+        }
+      ],
+      "model_answer": {
+        "id": "Atap tongkonan melengkung tinggi seperti perahu.",
+        "en": "The tongkonan roof sweeps up like a boat."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "CUL-HOUSE"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dari barat ke timur.",
+            "en": "From west to east."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "o_joglo",
+          "text": {
+            "id": "joglo (Jawa)",
+            "en": "joglo (Java)"
+          },
+          "image": "soc_joglo"
+        },
+        {
+          "id": "o_gadang",
+          "text": {
+            "id": "rumah gadang (Sumatra)",
+            "en": "rumah gadang (Sumatra)"
+          },
+          "image": "soc_rumah_gadang"
+        },
+        {
+          "id": "o_tong",
+          "text": {
+            "id": "tongkonan (Sulawesi)",
+            "en": "tongkonan (Sulawesi)"
+          },
+          "image": "soc_tongkonan"
+        }
+      ],
+      "solution": [
+        "o_gadang",
+        "o_joglo",
+        "o_tong"
+      ],
+      "model_answer": {
+        "id": "Rumah gadang di Sumatra, joglo di Jawa, tongkonan di Sulawesi.",
+        "en": "Rumah gadang in Sumatra, joglo in Java, tongkonan in Sulawesi."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "CUL-WHY"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-CHOOSE",
+      "image": "soc_rumah_gadang",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mengapa rumah ini dibuat di atas tiang?",
+            "en": "Why is this house built on posts?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Supaya tetap kering dan udara mengalir di bawahnya",
+            "en": "To stay dry, with air flowing underneath"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Supaya rumahnya bisa dipindah setiap hari",
+            "en": "So it can be moved every day"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Supaya tidak perlu atap",
+            "en": "So it doesn't need a roof"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Rumah panggung tetap kering, sejuk, dan aman dari genangan air.",
+        "en": "A house on posts stays dry, cool and safe from standing water."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "CUL-CLOTH"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kain ini dilukis dengan canting dan malam.",
+            "en": "This cloth is drawn with a canting and wax."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "soc_batik",
+          "text": {
+            "id": "kain batik",
+            "en": "batik cloth"
+          },
+          "image": "soc_batik",
+          "correct": true
+        },
+        {
+          "id": "pic_hat",
+          "text": {
+            "id": "topi",
+            "en": "hat"
+          },
+          "image": "pic_hat"
+        },
+        {
+          "id": "pic_shoes",
+          "text": {
+            "id": "sepatu",
+            "en": "shoes"
+          },
+          "image": "pic_shoes"
+        }
+      ],
+      "model_answer": {
+        "id": "Itu batik. Malam menutup bagian yang tidak ikut diwarnai.",
+        "en": "That's batik. The wax covers the parts that stay undyed."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "CUL-WHY"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rumah panggung atau di atas tanah?",
+            "en": "On posts or on the ground?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_post",
+          "text": {
+            "id": "Rumah panggung (di atas tiang)",
+            "en": "Raised on posts"
+          }
+        },
+        {
+          "id": "b_ground",
+          "text": {
+            "id": "Berdiri di atas tanah",
+            "en": "Built on the ground"
+          }
+        },
+        {
+          "id": "c_gadang",
+          "text": {
+            "id": "rumah gadang",
+            "en": "rumah gadang"
+          },
+          "image": "soc_rumah_gadang"
+        },
+        {
+          "id": "c_joglo",
+          "text": {
+            "id": "joglo",
+            "en": "joglo"
+          },
+          "image": "soc_joglo"
+        },
+        {
+          "id": "c_tong",
+          "text": {
+            "id": "tongkonan",
+            "en": "tongkonan"
+          },
+          "image": "soc_tongkonan"
+        },
+        {
+          "id": "c_honai",
+          "text": {
+            "id": "honai (Papua)",
+            "en": "honai (Papua)"
+          }
+        },
+        {
+          "id": "c_betang",
+          "text": {
+            "id": "rumah betang (Dayak, Kalimantan)",
+            "en": "betang longhouse (Dayak, Kalimantan)"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "c_gadang": "b_post",
+        "c_joglo": "b_ground",
+        "c_tong": "b_post",
+        "c_honai": "b_ground",
+        "c_betang": "b_post"
+      },
+      "model_answer": {
+        "id": "Rumah gadang, tongkonan, dan betang dibuat panggung. Joglo dan honai berdiri di atas tanah.",
+        "en": "The rumah gadang, tongkonan and betang stand on posts. The joglo and honai stand on the ground."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "CUL-CLOTH"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "image": "soc_batik",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Langkah membuat batik tulis.",
+            "en": "Steps for hand-drawn batik."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "s_dye",
+          "text": {
+            "id": "Mencelup kain ke pewarna",
+            "en": "Dip the cloth in dye"
+          }
+        },
+        {
+          "id": "s_draw",
+          "text": {
+            "id": "Menggambar pola di kain",
+            "en": "Draw the pattern on the cloth"
+          }
+        },
+        {
+          "id": "s_wax",
+          "text": {
+            "id": "Menutup pola dengan malam memakai canting",
+            "en": "Cover the pattern with wax using a canting"
+          }
+        },
+        {
+          "id": "s_boil",
+          "text": {
+            "id": "Merebus kain untuk melepas malam",
+            "en": "Boil the cloth to remove the wax"
+          }
+        }
+      ],
+      "solution": [
+        "s_draw",
+        "s_wax",
+        "s_dye",
+        "s_boil"
+      ],
+      "model_answer": {
+        "id": "Gambar pola, tutup dengan malam, celup warna, lalu lepas malamnya.",
+        "en": "Draw the pattern, cover it with wax, dye, then remove the wax."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "memory_flip",
+      "skills": [
+        "CUL-HOUSE"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-MEMORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rumah adat dan sukunya.",
+            "en": "Each house and its people."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m_gadang",
+          "text": {
+            "id": "rumah gadang",
+            "en": "rumah gadang"
+          },
+          "image": "soc_rumah_gadang"
+        },
+        {
+          "id": "m_joglo",
+          "text": {
+            "id": "joglo",
+            "en": "joglo"
+          },
+          "image": "soc_joglo"
+        },
+        {
+          "id": "m_tong",
+          "text": {
+            "id": "tongkonan",
+            "en": "tongkonan"
+          },
+          "image": "soc_tongkonan"
+        },
+        {
+          "id": "s_jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Javanese"
+          }
+        },
+        {
+          "id": "s_toraja",
+          "text": {
+            "id": "Toraja",
+            "en": "Toraja"
+          }
+        },
+        {
+          "id": "s_minang",
+          "text": {
+            "id": "Minangkabau",
+            "en": "Minangkabau"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "m_gadang": "s_minang",
+        "m_joglo": "s_jawa",
+        "m_tong": "s_toraja"
+      },
+      "model_answer": {
+        "id": "Rumah gadang: Minangkabau. Joglo: Jawa. Tongkonan: Toraja.",
+        "en": "Rumah gadang: Minangkabau. Joglo: Javanese. Tongkonan: Toraja."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "CUL-CLOTH"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-CHOOSE",
+      "image": "soc_batik",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Kapan Hari Batik Nasional?",
+            "en": "When is National Batik Day?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "17 Agustus",
+            "en": "17 August"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "1 Juni",
+            "en": "1 June"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "2 Oktober",
+            "en": "2 October"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Hari Batik Nasional diperingati setiap 2 Oktober.",
+        "en": "National Batik Day is on 2 October every year."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "CUL-HOUSE"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-MAKE",
+      "image": "soc_joglo",
+      "model_answer": {
+        "id": "Buat rumah adat dari kardus bekas! Pilih rumah gadang, joglo, atau tongkonan. Minta orang dewasa membantu memotong kardusnya.",
+        "en": "Build a traditional house from an old box! Choose a rumah gadang, joglo or tongkonan. Ask a grown-up to help cut the cardboard."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "tap_hotspot",
+      "skills": [
+        "CUL-HOUSE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TAP",
+      "image": "map_indonesia",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Rumah gadang dari pulau mana?",
+            "en": "Which island is the rumah gadang from?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "jawa",
+          "text": {
+            "id": "Jawa",
+            "en": "Java"
+          },
+          "region": {
+            "x": 0.24,
+            "y": 0.62,
+            "w": 0.2,
+            "h": 0.14
+          }
+        },
+        {
+          "id": "sulawesi",
+          "text": {
+            "id": "Sulawesi",
+            "en": "Sulawesi"
+          },
+          "region": {
+            "x": 0.5,
+            "y": 0.2,
+            "w": 0.14,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "kalimantan",
+          "text": {
+            "id": "Kalimantan",
+            "en": "Kalimantan (Borneo)"
+          },
+          "region": {
+            "x": 0.28,
+            "y": 0.08,
+            "w": 0.2,
+            "h": 0.4
+          }
+        },
+        {
+          "id": "sumatra",
+          "text": {
+            "id": "Sumatra",
+            "en": "Sumatra"
+          },
+          "region": {
+            "x": 0.02,
+            "y": 0.05,
+            "w": 0.22,
+            "h": 0.55
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Rumah gadang dari Sumatra Barat, di Pulau Sumatra.",
+        "en": "The rumah gadang is from West Sumatra, on Sumatra."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "CUL-WHY"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "image": "soc_tongkonan",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tongkonan berdiri di atas tiang. Apa gunanya?",
+            "en": "The tongkonan stands on posts. Why?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Supaya bisa berlayar seperti perahu",
+            "en": "So it can sail like a boat"
+          }
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Supaya lantai tetap kering dan sejuk",
+            "en": "So the floor stays dry and cool"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Supaya tidak perlu pintu",
+            "en": "So it doesn't need a door"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Lantai yang tinggi tetap kering dan udara bisa mengalir di bawahnya.",
+        "en": "A raised floor stays dry and lets air flow underneath."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-02-015",
+      "unit": "02",
+      "audience": "kids",
+      "level": "menengah",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "CUL-CLOTH"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "image": "soc_batik",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Alat untuk menorehkan malam pada batik tulis?",
+            "en": "The tool for drawing wax on hand-drawn batik?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Gunting",
+            "en": "Scissors"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Canting",
+            "en": "A canting"
+          },
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Kuas cat tembok",
+            "en": "A wall-paint brush"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Canting adalah alat kecil untuk menorehkan malam cair di kain.",
+        "en": "A canting is a small tool for drawing hot wax on cloth."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    },
+    {
+      "item_id": "SOS-K-M-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "menengah",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Aku asin dan luas. Kapal berlayar di atasku, di antara pulau-pulau. Siapa aku?",
+            "en": "I am salty and wide. Ships sail on me, between the islands. What am I?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sea",
+          "text": {
+            "id": "Laut",
+            "en": "The sea"
+          },
+          "correct": true
+        },
+        {
+          "id": "mount",
+          "text": {
+            "id": "Gunung",
+            "en": "A mountain"
+          }
+        },
+        {
+          "id": "river",
+          "text": {
+            "id": "Sungai",
+            "en": "A river"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Laut! Laut menghubungkan pulau-pulau kita.",
+        "en": "The sea! It links all our islands."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sos-k-m-0.1"
+    }
+  ]
+}

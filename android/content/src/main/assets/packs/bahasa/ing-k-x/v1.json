@@ -1,0 +1,1829 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "ing-k-x-0.1",
+    "subject": "bahasa",
+    "track": "ing-k-x",
+    "mode": "casual",
+    "audiences": [
+      "kids"
+    ],
+    "instruction_langs": [
+      "id"
+    ],
+    "target_lang": "en",
+    "level": "master",
+    "title": {
+      "id": "Bahasa Inggris — Master (Anak)",
+      "en": "English — Master (Kids)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12) for review: needs a native English reviewer (listen to every clip in android/content/voice/en.levels.json and the reused ones in en.json) and the Indonesian and English language reviewers before any item is approved (docs/syllabus/01_BAHASA.md §B, Kids Master, starter units 01-02; builds on docs/syllabus/bahasa/en_pemula.md). American spelling throughout.",
+  "prompts": {
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-LISTEN": {
+      "id": "Dengar, lalu pilih gambarnya.",
+      "en": "Listen, then pick the picture."
+    },
+    "P-LISTEN-ANS": {
+      "id": "Dengar, lalu pilih artinya.",
+      "en": "Listen, then pick the meaning."
+    },
+    "P-MATCH": {
+      "id": "Hubungkan gambar dengan katanya.",
+      "en": "Connect each picture to its word."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke katanya.",
+      "en": "Drag each picture to its word."
+    },
+    "P-BUILD": {
+      "id": "Susun kalimatnya.",
+      "en": "Build the sentence."
+    },
+    "P-ORDER-STORY": {
+      "id": "Urutkan sesuai ceritanya.",
+      "en": "Put them in story order."
+    },
+    "P-FILL": {
+      "id": "Seret kata ke tempat kosong.",
+      "en": "Drag the word into the gap."
+    },
+    "P-READ-TEXT": {
+      "id": "Baca teksnya dulu.",
+      "en": "Read the text first."
+    },
+    "P-ANSWER-TEXT": {
+      "id": "Jawab sesuai bacaan.",
+      "en": "Answer from the reading."
+    },
+    "P-TRY": {
+      "id": "Coba di rumah",
+      "en": "Try it at home"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    },
+    "P-GEM": {
+      "id": "Tahukah kamu?",
+      "en": "Did you know?"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Betul! {model}",
+      "en": "That's right! {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, kita lihat bersama. {model}",
+      "en": "That's okay, let's look together. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Sip, kita lanjut!",
+      "en": "Great, let's keep going!"
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permatamu.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Cerita & perasaan",
+        "en": "Stories & feelings"
+      },
+      "sticker": "sticker_kite"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Membandingkan",
+        "en": "Describing & comparing"
+      },
+      "sticker": "sticker_shell"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "ING-K-X-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": {
+        "id": "Cerita & perasaan",
+        "en": "Stories & feelings"
+      },
+      "body": [
+        {
+          "id": "Perasaan baru: excited, nervous, proud, angry, calm.",
+          "en": "New feelings: excited, nervous, proud, angry, calm."
+        },
+        {
+          "id": "Bored = merasa bosan. Boring = membosankan.",
+          "en": "Bored is how you feel; boring is the thing."
+        },
+        {
+          "id": "Cerita memakai: then, but, because, so.",
+          "en": "Stories use: then, but, because, so."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "I'm excited about the trip!",
+          "gloss": {
+            "id": "Aku tidak sabar ikut jalan-jalan!",
+            "en": "excited = very happy about something soon"
+          }
+        },
+        {
+          "target_text": "The movie was boring, so I was bored.",
+          "gloss": {
+            "id": "Filmnya membosankan, jadi aku bosan.",
+            "en": "-ing thing, -ed feeling"
+          }
+        },
+        {
+          "target_text": "She was nervous because she had a test.",
+          "gloss": {
+            "id": "Dia gugup karena ada ulangan.",
+            "en": "because = karena"
+          }
+        },
+        {
+          "target_text": "He felt proud.",
+          "gloss": {
+            "id": "Dia merasa bangga.",
+            "en": "proud = bangga"
+          }
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "ING-K-X-02-S1",
+      "unit": "02",
+      "audience": "kids",
+      "title": {
+        "id": "Membandingkan",
+        "en": "Describing & comparing"
+      },
+      "body": [
+        {
+          "id": "Dua benda: bigger than, faster than.",
+          "en": "Two things: bigger than, faster than."
+        },
+        {
+          "id": "Paling: the biggest, the fastest.",
+          "en": "The most: the biggest, the fastest."
+        },
+        {
+          "id": "Kata baru: un + happy, color + ful.",
+          "en": "New words: un + happy, color + ful."
+        }
+      ],
+      "examples": [
+        {
+          "target_text": "An elephant is bigger than a horse.",
+          "gloss": {
+            "id": "Gajah lebih besar daripada kuda.",
+            "en": "-er + than"
+          }
+        },
+        {
+          "target_text": "A turtle is slower than a rabbit.",
+          "gloss": {
+            "id": "Kura-kura lebih lambat daripada kelinci.",
+            "en": "slow → slower"
+          }
+        },
+        {
+          "target_text": "good → better → the best",
+          "gloss": {
+            "id": "baik → lebih baik → terbaik",
+            "en": "a word that changes"
+          }
+        },
+        {
+          "target_text": "unhappy, colorful, helpful",
+          "gloss": {
+            "id": "tidak bahagia, berwarna-warni, suka menolong",
+            "en": "un- = not, -ful = full of"
+          }
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {
+    "R-INGKX-01": {
+      "title": {
+        "id": "Layang-layang di pohon",
+        "en": "The kite in the tree"
+      },
+      "target_text": "On Sunday, Rani and her brother flew a kite in the field.\nThen the wind blew the kite into a tall tree.\nRani was sad, but her brother had an idea.\nHe used a long bamboo pole, so they got the kite back!",
+      "body": [
+        {
+          "id": "Cerita pendek tentang Rani dan kakaknya.",
+          "en": "A short story about Rani and her brother."
+        }
+      ],
+      "review_status": "draft"
+    },
+    "R-INGKX-02": {
+      "title": {
+        "id": "Orang utan",
+        "en": "Orangutans"
+      },
+      "target_text": "Orangutans live in the forests of Sumatra and Borneo.\nThey are the biggest animals that live in trees.\nTheir arms are longer than their legs.\nThey eat mostly fruit.",
+      "body": [
+        {
+          "id": "Teks info tentang orang utan.",
+          "en": "A short fact text about orangutans."
+        }
+      ],
+      "review_status": "draft"
+    }
+  },
+  "items": [
+    {
+      "item_id": "ING-K-X-01-001",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-FEEL2"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-PICK",
+      "target_text": "She's angry.",
+      "audio": "en/shes_angry",
+      "options": [
+        {
+          "id": "p_calm",
+          "image": "val_calm_breath",
+          "text": {
+            "id": "tenang",
+            "en": "calm"
+          }
+        },
+        {
+          "id": "p_angry",
+          "image": "val_angry_face",
+          "text": {
+            "id": "marah",
+            "en": "angry"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_happy",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Angry artinya marah.",
+        "en": "Angry: when something makes you really mad."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-01-002",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ENG-FEEL2"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-MATCH",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p_angry",
+          "image": "val_angry_face",
+          "text": {
+            "id": "marah",
+            "en": "angry"
+          }
+        },
+        {
+          "id": "p_calm",
+          "image": "val_calm_breath",
+          "text": {
+            "id": "tenang",
+            "en": "calm"
+          }
+        },
+        {
+          "id": "p_lonely",
+          "image": "val_left_out",
+          "text": {
+            "id": "kesepian",
+            "en": "lonely"
+          }
+        },
+        {
+          "id": "p_tired",
+          "image": "pic_tired",
+          "text": {
+            "id": "capek",
+            "en": "tired"
+          }
+        },
+        {
+          "id": "w_angry",
+          "target_text": "angry",
+          "audio": "en/angry"
+        },
+        {
+          "id": "w_calm",
+          "target_text": "calm",
+          "audio": "en/calm"
+        },
+        {
+          "id": "w_lonely",
+          "target_text": "lonely",
+          "audio": "en/lonely"
+        },
+        {
+          "id": "w_tired",
+          "target_text": "tired",
+          "audio": "en/tired"
+        }
+      ],
+      "solution_pairs": {
+        "p_angry": "w_angry",
+        "p_calm": "w_calm",
+        "p_lonely": "w_lonely",
+        "p_tired": "w_tired"
+      },
+      "model_answer": {
+        "id": "angry = marah, calm = tenang, lonely = kesepian, tired = capek.",
+        "en": "Angry, calm, lonely, tired."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-01-003",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ENG-FEEL2"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-LISTEN-ANS",
+      "audio": "en/im_so_excited",
+      "options": [
+        {
+          "id": "excited",
+          "text": {
+            "id": "Aku senang sekali dan tidak sabar!",
+            "en": "I'm very happy and can't wait!"
+          },
+          "correct": true
+        },
+        {
+          "id": "tired",
+          "text": {
+            "id": "Aku capek sekali.",
+            "en": "I really need a rest."
+          }
+        },
+        {
+          "id": "bored",
+          "text": {
+            "id": "Aku bosan sekali.",
+            "en": "I have nothing fun to do."
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Excited = senang sekali dan tidak sabar.",
+        "en": "Excited: very happy about something that's coming."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-01-004",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-EDING"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-FILL",
+      "target_text": "The movie was ___, so I fell asleep.",
+      "image": "pic_watch_tv",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "g2",
+          "target_text": "bored"
+        },
+        {
+          "id": "g1",
+          "target_text": "boring"
+        }
+      ],
+      "solution": [
+        "g1"
+      ],
+      "model_answer": {
+        "id": "Filmnya membosankan: boring (bendanya).",
+        "en": "The movie made me sleepy: it was boring."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-01-005",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ENG-EDING"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-LISTEN-ANS",
+      "audio": "en/this_book_is_so_interesting",
+      "options": [
+        {
+          "id": "boring",
+          "text": {
+            "id": "Buku ini membosankan sekali!",
+            "en": "This book is no fun at all!"
+          }
+        },
+        {
+          "id": "tired",
+          "text": {
+            "id": "Aku capek membaca buku ini.",
+            "en": "Reading this book makes me tired."
+          }
+        },
+        {
+          "id": "interesting",
+          "text": {
+            "id": "Buku ini menarik sekali!",
+            "en": "This book is really good to read!"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Interesting = menarik (bendanya).",
+        "en": "Interesting describes the book, not you."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-01-006",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "ENG-EDING"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-BUILD",
+      "image": "pic_football",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "t2",
+          "target_text": "game"
+        },
+        {
+          "id": "t4",
+          "target_text": "exciting"
+        },
+        {
+          "id": "t1",
+          "target_text": "The"
+        },
+        {
+          "id": "x1",
+          "target_text": "excited"
+        },
+        {
+          "id": "t3",
+          "target_text": "was"
+        }
+      ],
+      "solution": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "model_answer": {
+        "id": "Pertandingannya seru: exciting (-ing untuk bendanya).",
+        "en": "The game was exciting: -ing for the thing."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-01-007",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "mini_reading",
+      "skills": [
+        "ENG-STORY"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-READ-TEXT",
+      "image": "pic_tree",
+      "reading_id": "R-INGKX-01",
+      "model_answer": {
+        "id": "Then, but, so menyambung cerita.",
+        "en": "Then, but and so join the story together."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-01-008",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "ENG-STORY"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-ORDER-STORY",
+      "image": "scene_kampung_shapes",
+      "reading_id": "R-INGKX-01",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "s4",
+          "target_text": "They got the kite back.",
+          "audio": "en/they_got_the_kite_back"
+        },
+        {
+          "id": "s2",
+          "target_text": "The wind blew the kite into a tree.",
+          "audio": "en/the_wind_blew_the_kite_into_a_tree"
+        },
+        {
+          "id": "s3",
+          "target_text": "Her brother had an idea.",
+          "audio": "en/her_brother_had_an_idea"
+        },
+        {
+          "id": "s1",
+          "target_text": "They flew a kite.",
+          "audio": "en/they_flew_a_kite"
+        }
+      ],
+      "solution": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "model_answer": {
+        "id": "Main layang-layang → tersangkut di pohon → ada ide → kembali!",
+        "en": "They flew it, the wind took it, he had an idea, they got it back."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-01-009",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-STORY"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-FILL",
+      "target_text": "Rani was sad, ___ her brother had an idea.",
+      "image": "pic_sad",
+      "reading_id": "R-INGKX-01",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "g2",
+          "target_text": "so"
+        },
+        {
+          "id": "g1",
+          "target_text": "but"
+        },
+        {
+          "id": "g3",
+          "target_text": "because"
+        }
+      ],
+      "solution": [
+        "g1"
+      ],
+      "model_answer": {
+        "id": "But = tetapi: sedih, tetapi ada ide.",
+        "en": "But joins two different ideas: sad, but an idea."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-01-010",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ENG-FEEL2"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-ANSWER-TEXT",
+      "target_text": "How did Rani feel at the end?",
+      "audio": "en/how_did_rani_feel_at_the_end",
+      "reading_id": "R-INGKX-01",
+      "options": [
+        {
+          "id": "p_sad",
+          "image": "pic_sad",
+          "text": {
+            "id": "sedih",
+            "en": "sad"
+          }
+        },
+        {
+          "id": "p_angry",
+          "image": "val_angry_face",
+          "text": {
+            "id": "marah",
+            "en": "angry"
+          }
+        },
+        {
+          "id": "p_happy",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Layang-layangnya kembali, jadi Rani senang.",
+        "en": "They got the kite back, so Rani was happy."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-01-011",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ENG-STORY"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/we_stayed_home_because_it_was_raining",
+      "options": [
+        {
+          "id": "p_sunny",
+          "image": "pic_sun",
+          "text": {
+            "id": "cerah",
+            "en": "sunny"
+          }
+        },
+        {
+          "id": "p_rainy",
+          "image": "pic_rain",
+          "text": {
+            "id": "hujan",
+            "en": "rainy"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_windy",
+          "image": "pic_wind",
+          "text": {
+            "id": "berangin",
+            "en": "windy"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Because = karena: karena hujan, kami di rumah.",
+        "en": "Because gives the reason: it was raining."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-01-012",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-FEEL2"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "He's calm.",
+      "audio": "en/hes_calm",
+      "options": [
+        {
+          "id": "p_calm",
+          "image": "val_calm_breath",
+          "text": {
+            "id": "tenang",
+            "en": "calm"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_angry",
+          "image": "val_angry_face",
+          "text": {
+            "id": "marah",
+            "en": "angry"
+          }
+        },
+        {
+          "id": "p_tired",
+          "image": "pic_tired",
+          "text": {
+            "id": "capek",
+            "en": "tired"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Calm artinya tenang.",
+        "en": "Calm: slow breaths, quiet and still."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-01-013",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-EDING"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "I'm ___. Can we play outside?",
+      "image": "pic_play",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "g2",
+          "target_text": "boring"
+        },
+        {
+          "id": "g1",
+          "target_text": "bored"
+        }
+      ],
+      "solution": [
+        "g1"
+      ],
+      "model_answer": {
+        "id": "Perasaanku: bored (bosan).",
+        "en": "How I feel: bored."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-01-014",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-STORY"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "It was hot, ___ we went swimming.",
+      "image": "pic_swim",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "g2",
+          "target_text": "but"
+        },
+        {
+          "id": "g3",
+          "target_text": "because"
+        },
+        {
+          "id": "g1",
+          "target_text": "so"
+        }
+      ],
+      "solution": [
+        "g1"
+      ],
+      "model_answer": {
+        "id": "So = jadi: panas, jadi kami berenang.",
+        "en": "So shows the result: it was hot, so we swam."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-02-001",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ENG-ANIMAL2"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-MATCH",
+      "gesture": "connect",
+      "options": [
+        {
+          "id": "p_tiger",
+          "image": "pic_tiger",
+          "text": {
+            "id": "harimau",
+            "en": "tiger"
+          }
+        },
+        {
+          "id": "p_turtle",
+          "image": "pic_turtle",
+          "text": {
+            "id": "kura-kura",
+            "en": "turtle"
+          }
+        },
+        {
+          "id": "p_snake",
+          "image": "pic_snake",
+          "text": {
+            "id": "ular",
+            "en": "snake"
+          }
+        },
+        {
+          "id": "p_butterfly",
+          "image": "pic_butterfly",
+          "text": {
+            "id": "kupu-kupu",
+            "en": "butterfly"
+          }
+        },
+        {
+          "id": "w_tiger",
+          "target_text": "tiger",
+          "audio": "en/tiger"
+        },
+        {
+          "id": "w_turtle",
+          "target_text": "turtle",
+          "audio": "en/turtle"
+        },
+        {
+          "id": "w_snake",
+          "target_text": "snake",
+          "audio": "en/snake"
+        },
+        {
+          "id": "w_butterfly",
+          "target_text": "butterfly",
+          "audio": "en/butterfly"
+        }
+      ],
+      "solution_pairs": {
+        "p_tiger": "w_tiger",
+        "p_turtle": "w_turtle",
+        "p_snake": "w_snake",
+        "p_butterfly": "w_butterfly"
+      },
+      "model_answer": {
+        "id": "tiger = harimau, turtle = kura-kura, snake = ular, butterfly = kupu-kupu.",
+        "en": "Tiger, turtle, snake, butterfly."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-02-002",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ENG-COMPARE"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-LISTEN-ANS",
+      "audio": "en/a_turtle_is_slower_than_a_rabbit",
+      "options": [
+        {
+          "id": "ok",
+          "text": {
+            "id": "Kura-kura lebih lambat daripada kelinci.",
+            "en": "The rabbit is quicker than the turtle."
+          },
+          "correct": true
+        },
+        {
+          "id": "swap",
+          "text": {
+            "id": "Kelinci lebih lambat daripada kura-kura.",
+            "en": "The turtle is quicker than the rabbit."
+          }
+        },
+        {
+          "id": "most",
+          "text": {
+            "id": "Kura-kura paling cepat.",
+            "en": "The turtle is the quickest."
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Slower than = lebih lambat daripada.",
+        "en": "Slower than: the turtle takes more time."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-02-003",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "tiles",
+      "skills": [
+        "ENG-COMPARE"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-BUILD",
+      "image": "pic_tiger",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "t5",
+          "target_text": "than"
+        },
+        {
+          "id": "x1",
+          "target_text": "more"
+        },
+        {
+          "id": "t2",
+          "target_text": "tiger"
+        },
+        {
+          "id": "t4",
+          "target_text": "bigger"
+        },
+        {
+          "id": "t3",
+          "target_text": "is"
+        },
+        {
+          "id": "t6",
+          "target_text": "a"
+        },
+        {
+          "id": "t7",
+          "target_text": "cat"
+        },
+        {
+          "id": "t1",
+          "target_text": "A"
+        }
+      ],
+      "solution": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7"
+      ],
+      "model_answer": {
+        "id": "Bigger sudah berarti lebih besar: tanpa more.",
+        "en": "Bigger already means more big: no more."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-02-004",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-WORDBUILD"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-PICK",
+      "target_text": "unhappy",
+      "audio": "en/unhappy",
+      "options": [
+        {
+          "id": "p_happy",
+          "image": "pic_happy",
+          "text": {
+            "id": "senang",
+            "en": "happy"
+          }
+        },
+        {
+          "id": "p_tired",
+          "image": "pic_tired",
+          "text": {
+            "id": "capek",
+            "en": "tired"
+          }
+        },
+        {
+          "id": "p_unhappy",
+          "image": "pic_sad",
+          "text": {
+            "id": "tidak bahagia",
+            "en": "unhappy"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Un- = tidak. Unhappy = tidak bahagia.",
+        "en": "Un- means not. Unhappy means not happy."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-02-005",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "audio_match",
+      "skills": [
+        "ENG-COMPARE"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/its_bigger_than_a_horse",
+      "options": [
+        {
+          "id": "p_rabbit",
+          "image": "pic_rabbit",
+          "text": {
+            "id": "kelinci",
+            "en": "rabbit"
+          }
+        },
+        {
+          "id": "p_elephant",
+          "image": "pic_elephant",
+          "text": {
+            "id": "gajah",
+            "en": "elephant"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_cat",
+          "image": "pic_cat",
+          "text": {
+            "id": "kucing",
+            "en": "cat"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Lebih besar daripada kuda: gajah.",
+        "en": "Bigger than a horse: the elephant."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-02-006",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "ENG-WORDBUILD"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "p_colorful",
+          "image": "pic_rainbow",
+          "text": {
+            "id": "berwarna-warni",
+            "en": "colorful"
+          }
+        },
+        {
+          "id": "p_helpful",
+          "image": "val_help_friend",
+          "text": {
+            "id": "suka menolong",
+            "en": "helpful"
+          }
+        },
+        {
+          "id": "p_unfair",
+          "image": "val_cut_queue",
+          "text": {
+            "id": "tidak adil",
+            "en": "unfair"
+          }
+        },
+        {
+          "id": "w_colorful",
+          "target_text": "colorful",
+          "audio": "en/colorful"
+        },
+        {
+          "id": "w_helpful",
+          "target_text": "helpful",
+          "audio": "en/helpful"
+        },
+        {
+          "id": "w_unfair",
+          "target_text": "unfair",
+          "audio": "en/unfair"
+        }
+      ],
+      "solution_pairs": {
+        "p_colorful": "w_colorful",
+        "p_helpful": "w_helpful",
+        "p_unfair": "w_unfair"
+      },
+      "model_answer": {
+        "id": "Colorful = penuh warna. Helpful = suka menolong. Unfair = tidak adil.",
+        "en": "Colorful: full of color. Helpful: full of help. Unfair: not fair."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-02-007",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "mini_reading",
+      "skills": [
+        "ENG-ANIMAL2"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-READ-TEXT",
+      "image": "pic_orangutan",
+      "reading_id": "R-INGKX-02",
+      "model_answer": {
+        "id": "Borneo = Kalimantan dalam bahasa Inggris.",
+        "en": "Borneo is the English name for Kalimantan."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-02-008",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "ENG-COMPARE"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-ANSWER-TEXT",
+      "target_text": "Orangutans' arms are shorter than their legs.",
+      "audio": "en/orangutans_arms_are_shorter_than_their_legs",
+      "reading_id": "R-INGKX-02",
+      "options": [
+        {
+          "id": "yes",
+          "target_text": "Yes",
+          "audio": "en/yes"
+        },
+        {
+          "id": "no",
+          "target_text": "No",
+          "audio": "en/no",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "No: lengan orang utan lebih panjang daripada kakinya.",
+        "en": "No: their arms are longer than their legs."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-02-009",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "ENG-ANIMAL2"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-ANSWER-TEXT",
+      "target_text": "Where do orangutans live?",
+      "audio": "en/where_do_orangutans_live",
+      "reading_id": "R-INGKX-02",
+      "options": [
+        {
+          "id": "beach",
+          "image": "pic_beach",
+          "text": {
+            "id": "pantai",
+            "en": "beach"
+          }
+        },
+        {
+          "id": "forest",
+          "image": "pic_forest",
+          "text": {
+            "id": "hutan",
+            "en": "forest"
+          },
+          "correct": true
+        },
+        {
+          "id": "lake",
+          "image": "pic_lake",
+          "text": {
+            "id": "danau",
+            "en": "lake"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Orang utan tinggal di hutan (forests).",
+        "en": "Orangutans live in forests."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-02-010",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "audio_match",
+      "skills": [
+        "ENG-ANIMAL2"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-LISTEN",
+      "audio": "en/butterflies_have_colorful_wings",
+      "options": [
+        {
+          "id": "p_butterfly",
+          "image": "pic_butterfly",
+          "text": {
+            "id": "kupu-kupu",
+            "en": "butterfly"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_bird",
+          "image": "pic_bird",
+          "text": {
+            "id": "burung",
+            "en": "bird"
+          }
+        },
+        {
+          "id": "p_frog",
+          "image": "pic_frog",
+          "text": {
+            "id": "katak",
+            "en": "frog"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Butterfly = kupu-kupu. Colorful wings = sayap berwarna-warni.",
+        "en": "Butterflies have colorful wings."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-02-011",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-COMPARE"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-FILL",
+      "target_text": "Elephants are the ___ land animals.",
+      "image": "pic_elephant",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "g3",
+          "target_text": "big"
+        },
+        {
+          "id": "g2",
+          "target_text": "bigger"
+        },
+        {
+          "id": "g1",
+          "target_text": "biggest"
+        }
+      ],
+      "solution": [
+        "g1"
+      ],
+      "model_answer": {
+        "id": "The biggest = paling besar (-est): tidak ada hewan darat yang lebih besar.",
+        "en": "The biggest: -est means more than all the others."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-02-012",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ENG-COMPARE"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-TRY",
+      "image": "pic_draw_paint",
+      "model_answer": {
+        "id": "Gambar dua hewan yang kamu sukai. Tulis dua kalimat: \"The … is bigger than the …\" dan \"The … is faster than the …\"",
+        "en": "Draw two animals you like. Write two sentences: \"The … is bigger than the …\" and \"The … is faster than the …\""
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-02-013",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "ENG-WORDBUILD"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "pic_volcano",
+      "gem": true,
+      "source": "Merriam-Webster, \"pneumonoultramicroscopicsilicovolcanoconiosis\" (entry: a lung disease caused by breathing in very fine silicate or quartz dust); Oxford English Dictionary, same entry (first recorded in the 1930s as a deliberately long coinage).",
+      "model_answer": {
+        "id": "Salah satu kata terpanjang di kamus bahasa Inggris punya 45 huruf: pneumonoultramicroscopicsilicovolcanoconiosis. Artinya penyakit paru-paru karena menghirup debu yang sangat halus, seperti debu gunung api. Kata ini sengaja dibuat panjang!",
+        "en": "One of the longest words in English dictionaries has 45 letters: pneumonoultramicroscopicsilicovolcanoconiosis. It's a lung illness from breathing very fine dust, like volcano dust. It was made long on purpose!"
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-02-014",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-ANIMAL2"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "frog",
+      "audio": "en/frog",
+      "options": [
+        {
+          "id": "p_turtle",
+          "image": "pic_turtle",
+          "text": {
+            "id": "kura-kura",
+            "en": "turtle"
+          }
+        },
+        {
+          "id": "p_snake",
+          "image": "pic_snake",
+          "text": {
+            "id": "ular",
+            "en": "snake"
+          }
+        },
+        {
+          "id": "p_frog",
+          "image": "pic_frog",
+          "text": {
+            "id": "katak",
+            "en": "frog"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Frog artinya katak.",
+        "en": "A frog jumps and says ribbit."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-02-015",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "ENG-COMPARE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "target_text": "A rabbit is ___ than a turtle.",
+      "image": "pic_rabbit",
+      "gesture": "drag",
+      "options": [
+        {
+          "id": "g3",
+          "target_text": "fastest"
+        },
+        {
+          "id": "g1",
+          "target_text": "faster"
+        },
+        {
+          "id": "g2",
+          "target_text": "fast"
+        }
+      ],
+      "solution": [
+        "g1"
+      ],
+      "model_answer": {
+        "id": "Faster than = lebih cepat daripada.",
+        "en": "Two animals: faster than."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-02-016",
+      "unit": "02",
+      "audience": "kids",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "ENG-WORDBUILD"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "target_text": "colorful",
+      "audio": "en/colorful",
+      "options": [
+        {
+          "id": "p_cloudy",
+          "image": "pic_cloud",
+          "text": {
+            "id": "berawan",
+            "en": "cloudy"
+          }
+        },
+        {
+          "id": "black",
+          "image": "pic_color_black",
+          "text": {
+            "id": "hitam",
+            "en": "black"
+          }
+        },
+        {
+          "id": "p_colorful",
+          "image": "pic_rainbow",
+          "text": {
+            "id": "berwarna-warni",
+            "en": "colorful"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Colorful = penuh warna: pelangi.",
+        "en": "Colorful means full of colors, like a rainbow."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    },
+    {
+      "item_id": "ING-K-X-DP-01",
+      "unit": "01",
+      "audience": "kids",
+      "level": "master",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Lengan panjang, rambut oranye, tinggal di pohon di Sumatra dan Kalimantan. Hewan apakah aku?",
+            "en": "I have long arms and orange hair. I live in trees in Sumatra and Borneo. Who am I?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "p_tiger",
+          "image": "pic_tiger",
+          "text": {
+            "id": "harimau",
+            "en": "tiger"
+          }
+        },
+        {
+          "id": "p_orangutan",
+          "image": "pic_orangutan",
+          "text": {
+            "id": "orang utan",
+            "en": "orangutan"
+          },
+          "correct": true
+        },
+        {
+          "id": "p_monkey",
+          "image": "pic_monkey",
+          "text": {
+            "id": "monyet",
+            "en": "monkey"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Orang utan! Lengannya panjang dan rambutnya oranye.",
+        "en": "An orangutan! Long arms and orange hair."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "ing-k-x-0.1"
+    }
+  ]
+}

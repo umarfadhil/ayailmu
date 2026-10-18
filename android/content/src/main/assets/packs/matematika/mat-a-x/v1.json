@@ -1,0 +1,466 @@
+{
+  "meta": {"schema_version": 1, "content_version": "mat-a-x-0.1", "subject": "matematika", "track": "mat-a-x", "level": "master", "mode": "casual", "audiences": ["adults"], "instruction_langs": ["id", "en"], "title": {"id": "Matematika — Master (Dewasa)", "en": "Mathematics — Master (Adults)"}},
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, Adults Master starter: syllabus units 1-2 of docs/syllabus/02_MATEMATIKA.md). Needs a math subject reviewer and both language reviewers (Indonesian, English) before anything is approved. Every answer is computed by the generator and re-checked by a script (scratchpad fu12/mat); prices and figures in questions are illustrative examples.",
+  "prompts": {
+    "P-PICK": {"id": "Pilih gambar yang tepat.", "en": "Pick the right picture."},
+    "P-NUM": {"id": "Hitung, lalu masukkan angkanya.", "en": "Work it out, enter the number."},
+    "P-CHOOSE": {"id": "Pilih jawaban yang tepat.", "en": "Choose the right answer."},
+    "P-TF": {"id": "Benar atau salah?", "en": "True or false?"},
+    "P-ORDER": {"id": "Seret ke urutan yang tepat.", "en": "Drag them into the right order."},
+    "P-CONNECT": {"id": "Tarik garis ke pasangannya.", "en": "Draw a line to each match."},
+    "P-SORT": {"id": "Seret ke kelompok yang tepat.", "en": "Drag each into the right group."},
+    "P-FILL": {"id": "Seret ke bagian yang kosong.", "en": "Drag into the gap."},
+    "P-GEM": {"id": "Tahukah Anda?", "en": "Did you know?"},
+    "P-PUZZLE": {"id": "Teka-teki hari ini", "en": "Today's puzzle"}
+  },
+  "feedback": {
+    "FB-OK-MODEL": {"id": "Tepat. {model}", "en": "Right. {model}"},
+    "FB-NO-MODEL": {"id": "Belum tepat. Begini caranya: {model}", "en": "Not quite. Here's how: {model}"},
+    "FB-DONTKNOW": {"id": "Tidak apa-apa, begini caranya: {model}", "en": "No problem, here's how: {model}"},
+    "FB-GEM": {"id": "Permata ini masuk ke Kotak Permata Anda.", "en": "This gem goes into your Gem box."},
+    "FB-OK-PUZZLE": {"id": "Terpecahkan. {model}", "en": "Solved. {model}"},
+    "FB-NO-PUZZLE": {"id": "Belum tepat. Teka-teki ini memang menjebak banyak orang. {model}", "en": "Not quite. This one catches out lots of people. {model}"},
+    "FB-NO-PROOF": {"id": "Belum tepat. Cari yang pasti berlaku untuk semua kasus, bukan hanya contoh yang dicoba. {model}", "en": "Not quite. Look for what holds in every case, not just in the examples you tried. {model}"},
+    "FB-NO-MOD": {"id": "Belum tepat. Buang dulu putaran penuhnya (12 jam, 24 jam, 7 hari), lalu hitung sisanya. {model}", "en": "Not quite. Drop the full cycles first (12 hours, 24 hours, 7 days), then count what's left. {model}"}
+  },
+  "units": [
+    {"unit": "01", "title": {"id": "Bukti", "en": "Proof"}, "sticker": "sticker_compass"},
+    {"unit": "02", "title": {"id": "Teori bilangan rekreasi", "en": "Recreational number theory"}, "sticker": "sticker_shell"}
+  ],
+  "screens": [
+    {
+      "screen_id": "MAT-A-X-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {"id": "Bukti", "en": "Proof"},
+      "body": [
+        {"id": "Paritas: genap + genap = genap, ganjil + ganjil = genap, genap + ganjil = ganjil. Sering kali itu cukup untuk membuktikan sesuatu mustahil.", "en": "Parity: even + even = even, odd + odd = even, even + odd = odd. Often that's enough to prove something is impossible."},
+        {"id": "Prinsip sarang merpati: dari 13 orang, pasti ada 2 yang lahir di bulan yang sama, karena hanya ada 12 bulan.", "en": "The pigeonhole principle: among 13 people, 2 must share a birth month, because there are only 12 months."},
+        {"id": "Satu contoh penyangkal cukup untuk membantah klaim \"semua\"; sebuah bukti harus berlaku untuk semua kasus.", "en": "One counterexample is enough to refute an \"all\" claim; a proof must cover every case."}
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "MAT-A-X-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {"id": "Teori bilangan rekreasi", "en": "Recreational number theory"},
+      "body": [
+        {"id": "Bilangan prima hanya habis dibagi 1 dan dirinya sendiri: 2, 3, 5, 7, 11, 13, …", "en": "A prime is divisible only by 1 and itself: 2, 3, 5, 7, 11, 13, …"},
+        {"id": "Aritmetika jam menghitung sisa bagi: pukul 15.00 ditambah 10 jam adalah pukul 01.00, karena 25 dibagi 24 bersisa 1.", "en": "Clock arithmetic counts remainders: 15:00 plus 10 hours is 01:00, because 25 divided by 24 leaves 1."},
+        {"id": "Angka terakhir ISBN-13 adalah angka cek: kalikan angka-angkanya bergantian dengan 1 dan 3; totalnya harus kelipatan 10.", "en": "The last digit of an ISBN-13 is a check digit: multiply the digits alternately by 1 and 3; the total must be a multiple of 10."}
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "MAT-A-X-01-001", "unit": "01", "audience": "adults", "level": "master", "step": 1, "type": "sort_buckets", "skills": ["PROOF-PARITY"], "pool": "PRACT", "order": 1, "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Untuk setiap bilangan bulat n: selalu genap atau selalu ganjil?", "en": "For every whole number n: always even or always odd?"}}],
+      "options": [
+        {"id": "b_even", "text": {"id": "Selalu genap", "en": "Always even"}},
+        {"id": "b_odd", "text": {"id": "Selalu ganjil", "en": "Always odd"}},
+        {"id": "e3", "text": {"id": "(2n + 1) + (2n + 3)", "en": "(2n + 1) + (2n + 3)"}},
+        {"id": "e2", "text": {"id": "n(n + 1)", "en": "n(n + 1)"}},
+        {"id": "o3", "text": {"id": "4n − 1", "en": "4n − 1"}},
+        {"id": "o2", "text": {"id": "n² + n + 1", "en": "n² + n + 1"}},
+        {"id": "o1", "text": {"id": "2n + 1", "en": "2n + 1"}},
+        {"id": "e1", "text": {"id": "2n", "en": "2n"}}
+      ],
+      "solution_pairs": {"e1": "b_even", "e2": "b_even", "e3": "b_even", "o1": "b_odd", "o2": "b_odd", "o3": "b_odd"},
+      "model_answer": {"id": "Selalu genap: 2n; n(n + 1), karena dari dua bilangan berurutan pasti ada yang genap; ganjil + ganjil. Selalu ganjil: 2n + 1; n² + n + 1, yaitu n(n + 1) + 1; 4n − 1.", "en": "Always even: 2n; n(n + 1), because one of two consecutive numbers is even; odd + odd. Always odd: 2n + 1; n² + n + 1, which is n(n + 1) + 1; 4n − 1."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-01-002", "unit": "01", "audience": "adults", "level": "master", "step": 1, "type": "true_false", "skills": ["PROOF-PARITY"], "pool": "PRACT", "order": 2, "prompt_id": "P-TF",
+      "image": "pic_friends",
+      "help_lines": [{"word": "", "meaning": {"id": "Dalam pertemuan 9 orang, setiap orang bisa bersalaman dengan tepat 3 orang lain.", "en": "At a gathering of 9 people, everyone can shake hands with exactly 3 others."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}, "correct": true}
+      ],
+      "model_answer": {"id": "Salah, mustahil. Setiap salaman melibatkan 2 orang, jadi jumlah \"ujung salaman\" harus genap; padahal 9 × 3 = 27, ganjil.", "en": "False, it's impossible. Every handshake involves 2 people, so the count of handshake ends must be even; but 9 × 3 = 27, which is odd."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-01-003", "unit": "01", "audience": "adults", "level": "master", "step": 1, "type": "choose", "skills": ["PROOF-PARITY"], "pool": "PRACT", "order": 3, "prompt_id": "P-CHOOSE",
+      "image": "shape_square",
+      "help_lines": [{"word": "", "meaning": {"id": "Dua kotak di pojok berseberangan papan catur 8 × 8 dibuang. Bisakah 31 kartu domino (masing-masing menutup 2 kotak) menutup sisanya?", "en": "Two opposite corner squares of an 8 × 8 chessboard are removed. Can 31 dominoes (each covering 2 squares) cover the rest?"}}],
+      "options": [
+        {"id": "a", "text": {"id": "Bisa", "en": "Yes"}},
+        {"id": "b", "text": {"id": "Tidak: kedua pojok itu warnanya sama", "en": "No: the two corners are the same colour"}, "correct": true},
+        {"id": "c", "text": {"id": "Tidak: sisa 62 kotak itu ganjil", "en": "No: the 62 squares left are an odd number"}}
+      ],
+      "model_answer": {"id": "Tidak bisa. Kedua pojok berwarna sama, jadi tersisa 30 kotak satu warna dan 32 kotak warna lain. Setiap domino menutup 1 kotak hitam dan 1 kotak putih.", "en": "No. Both corners are the same colour, leaving 30 squares of one colour and 32 of the other. Every domino covers 1 black and 1 white square."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-01-004", "unit": "01", "audience": "adults", "level": "master", "step": 1, "type": "number_input", "skills": ["PROOF-PIGEON"], "pool": "PRACT", "order": 4, "prompt_id": "P-NUM",
+      "image": "pic_socks",
+      "help_lines": [{"word": "", "meaning": {"id": "Laci berisi kaus kaki 5 warna. Tanpa melihat, minimal berapa yang diambil supaya pasti dapat sepasang warna sama?", "en": "A drawer has socks in 5 colours. Without looking, what's the fewest you must take to be sure of a matching pair?"}}],
+      "numeric": {"value": 6, "tolerance": 0},
+      "model_answer": {"id": "5 warna = 5 \"sarang\". Ambil 5, bisa beda semua; kaus kaki ke-6 pasti menyamai salah satunya.", "en": "5 colours = 5 \"pigeonholes\". Take 5 and they could all differ; sock number 6 must match one."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-01-005", "unit": "01", "audience": "adults", "level": "master", "step": 1, "type": "number_input", "skills": ["PROOF-PIGEON"], "pool": "PRACT", "order": 5, "prompt_id": "P-NUM",
+      "image": "pic_head",
+      "help_lines": [{"word": "", "meaning": {"id": "Sebuah kota berpenduduk 1.000.000 orang. Misalkan setiap orang punya paling banyak 150.000 helai rambut. Paling sedikit berapa orang pasti punya jumlah helai yang persis sama?", "en": "A city has 1,000,000 people. Suppose everyone has at most 150,000 hairs. At least how many people must have exactly the same number of hairs?"}}],
+      "numeric": {"value": 7, "tolerance": 0},
+      "model_answer": {"id": "Ada 150.001 kemungkinan jumlah helai (0 sampai 150.000). 1.000.000 : 150.001 ≈ 6,67, jadi ada jumlah helai yang dimiliki paling sedikit 7 orang.", "en": "There are 150,001 possible hair counts (0 to 150,000). 1,000,000 ÷ 150,001 ≈ 6.67, so some hair count is shared by at least 7 people."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-01-006", "unit": "01", "audience": "adults", "level": "master", "step": 1, "type": "match_pairs", "skills": ["PROOF-PIGEON"], "pool": "PRACT", "order": 6, "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [{"word": "", "meaning": {"id": "Paling sedikit berapa orang supaya pasti ada…", "en": "The fewest people needed to be sure of…"}}],
+      "options": [
+        {"id": "m2", "text": {"id": "2 orang lahir di bulan yang sama", "en": "2 people born in the same month"}},
+        {"id": "w2", "text": {"id": "2 orang lahir di hari (Senin–Minggu) yang sama", "en": "2 people born on the same weekday"}},
+        {"id": "b2", "text": {"id": "2 orang berulang tahun di tanggal yang sama (termasuk 29 Februari)", "en": "2 people with the same birthday (counting 29 February)"}},
+        {"id": "m3", "text": {"id": "3 orang lahir di bulan yang sama", "en": "3 people born in the same month"}},
+        {"id": "nm2", "text": {"id": "13 orang", "en": "13 people"}},
+        {"id": "nm3", "text": {"id": "25 orang", "en": "25 people"}},
+        {"id": "nw2", "text": {"id": "8 orang", "en": "8 people"}},
+        {"id": "nb2", "text": {"id": "367 orang", "en": "367 people"}}
+      ],
+      "solution_pairs": {"m2": "nm2", "w2": "nw2", "b2": "nb2", "m3": "nm3"},
+      "model_answer": {"id": "12 + 1 = 13; 7 + 1 = 8; 366 + 1 = 367; 2 × 12 + 1 = 25.", "en": "12 + 1 = 13; 7 + 1 = 8; 366 + 1 = 367; 2 × 12 + 1 = 25."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-01-007", "unit": "01", "audience": "adults", "level": "master", "step": 2, "type": "order", "skills": ["PROOF-LOGIC"], "pool": "PRACT", "order": 7, "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Urutkan bukti Euclid bahwa bilangan prima tak terhingga banyaknya.", "en": "Order Euclid's proof that there are infinitely many primes."}}],
+      "options": [
+        {"id": "s4", "text": {"id": "Jadi faktor prima N tidak ada di daftar: kontradiksi.", "en": "So N's prime factors are not on the list: a contradiction."}},
+        {"id": "s2", "text": {"id": "Bentuk N = p₁ × p₂ × … × pₙ + 1.", "en": "Form N = p₁ × p₂ × … × pₙ + 1."}},
+        {"id": "s1", "text": {"id": "Andaikan bilangan prima hanya p₁, p₂, …, pₙ.", "en": "Suppose the only primes are p₁, p₂, …, pₙ."}},
+        {"id": "s3", "text": {"id": "N dibagi prima mana pun di daftar selalu bersisa 1.", "en": "N divided by any prime on the list leaves 1."}}
+      ],
+      "solution": ["s1", "s2", "s3", "s4"],
+      "model_answer": {"id": "Andaikan → bentuk N → sisa 1 → kontradiksi. Contoh: 2 × 3 × 5 × 7 + 1 = 211, bilangan prima di luar daftar.", "en": "Suppose → build N → remainder 1 → contradiction. Example: 2 × 3 × 5 × 7 + 1 = 211, a prime not on the list."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-01-008", "unit": "01", "audience": "adults", "level": "master", "step": 2, "type": "choose", "skills": ["PROOF-LOGIC"], "pool": "PRACT", "order": 8, "prompt_id": "P-CHOOSE",
+      "help_lines": [{"word": "", "meaning": {"id": "Klaim: n² + n + 41 selalu prima. Mana contoh penyangkalnya?", "en": "Claim: n² + n + 41 is always prime. Which is a counterexample?"}}],
+      "options": [
+        {"id": "n40", "text": {"id": "n = 40", "en": "n = 40"}, "correct": true},
+        {"id": "n1", "text": {"id": "n = 1", "en": "n = 1"}},
+        {"id": "n10", "text": {"id": "n = 10", "en": "n = 10"}}
+      ],
+      "model_answer": {"id": "n = 40: 40² + 40 + 41 = 1.681 = 41 × 41, bukan prima. Untuk n = 1 dan n = 10 hasilnya 43 dan 151, keduanya prima.", "en": "n = 40: 40² + 40 + 41 = 1,681 = 41 × 41, not prime. For n = 1 and n = 10 you get 43 and 151, both prime."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-01-009", "unit": "01", "audience": "adults", "level": "master", "step": 2, "type": "true_false", "skills": ["PROOF-LOGIC"], "pool": "PRACT", "order": 9, "prompt_id": "P-TF",
+      "image": "pic_rain",
+      "help_lines": [{"word": "", "meaning": {"id": "Jika hujan, jalan basah. Jalan basah, jadi pasti tadi hujan.", "en": "If it rains, the road gets wet. The road is wet, so it must have rained."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}, "correct": true}
+      ],
+      "model_answer": {"id": "Salah. Jalan bisa basah karena disiram atau pipa bocor. \"Jika A maka B\" tidak berarti \"jika B maka A\".", "en": "False. The road could be wet from watering or a leaking pipe. \"If A then B\" doesn't mean \"if B then A\"."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-01-010", "unit": "01", "audience": "adults", "level": "master", "step": 2, "type": "number_input", "skills": ["PROOF-LOGIC"], "pool": "PRACT", "order": 10, "prompt_id": "P-NUM",
+      "image": "groups_5x5",
+      "help_lines": [{"word": "", "meaning": {"id": "Berapa 1 + 3 + 5 + … + 9 (5 bilangan ganjil pertama)?", "en": "What is 1 + 3 + 5 + … + 9 (the first 5 odd numbers)?"}}],
+      "numeric": {"value": 25, "tolerance": 0},
+      "model_answer": {"id": "Jumlah 5 bilangan ganjil pertama = 5² = 25: tiap bilangan ganjil menambah satu \"siku\" pada sebuah persegi.", "en": "The first 5 odd numbers add up to 5² = 25: each odd number adds one \"L\" to a square."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-01-011", "unit": "01", "audience": "adults", "level": "master", "step": 2, "type": "fill_blank", "skills": ["PROOF-LOGIC"], "pool": "PRACT", "order": 11, "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Untuk membantah \"semua bilangan ganjil itu prima\", cukup __", "en": "To refute \"every odd number is prime\", it is enough to __"}}],
+      "options": [
+        {"id": "c", "text": {"id": "membuktikannya dengan induksi", "en": "prove it by induction"}},
+        {"id": "a", "text": {"id": "memberi satu contoh penyangkal, misalnya 9", "en": "give one counterexample, such as 9"}},
+        {"id": "b", "text": {"id": "memeriksa 100 bilangan ganjil", "en": "check 100 odd numbers"}}
+      ],
+      "solution": ["a"],
+      "model_answer": {"id": "Satu contoh penyangkal cukup: 9 ganjil, tetapi 9 = 3 × 3. Memeriksa banyak contoh tidak membuktikan ataupun membantah klaim \"semua\".", "en": "One counterexample is enough: 9 is odd, but 9 = 3 × 3. Checking lots of examples neither proves nor refutes an \"all\" claim."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-01-012", "unit": "01", "audience": "adults", "level": "master", "step": 2, "type": "match_pairs", "skills": ["PROOF-LOGIC"], "pool": "PRACT", "order": 12, "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [{"word": "", "meaning": {"id": "Pasangkan cara pembuktian dengan contohnya.", "en": "Match each proof method with its example."}}],
+      "options": [
+        {"id": "par", "text": {"id": "Paritas", "en": "Parity"}},
+        {"id": "pig", "text": {"id": "Sarang merpati", "en": "Pigeonhole"}},
+        {"id": "con", "text": {"id": "Kontradiksi", "en": "Contradiction"}},
+        {"id": "cex", "text": {"id": "Contoh penyangkal", "en": "Counterexample"}},
+        {"id": "x4", "text": {"id": "n² + n + 41 untuk n = 40", "en": "n² + n + 41 at n = 40"}},
+        {"id": "x3", "text": {"id": "Bilangan prima tak terhingga (Euclid)", "en": "Infinitely many primes (Euclid)"}},
+        {"id": "x2", "text": {"id": "13 orang: 2 lahir di bulan yang sama", "en": "13 people: 2 share a birth month"}},
+        {"id": "x1", "text": {"id": "9 orang masing-masing salaman 3 kali: mustahil", "en": "9 people, 3 handshakes each: impossible"}}
+      ],
+      "solution_pairs": {"par": "x1", "pig": "x2", "con": "x3", "cex": "x4"},
+      "model_answer": {"id": "Paritas → salaman 9 orang × 3; sarang merpati → 13 orang dan 12 bulan; kontradiksi → bukti Euclid; contoh penyangkal → n = 40.", "en": "Parity → 9 people × 3 handshakes; pigeonhole → 13 people and 12 months; contradiction → Euclid's proof; counterexample → n = 40."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-01-013", "unit": "01", "audience": "adults", "level": "master", "step": 1, "type": "true_false", "skills": ["PROOF-PARITY"], "pool": "REMED", "prompt_id": "P-TF",
+      "help_lines": [{"word": "", "meaning": {"id": "Jumlah 5 bilangan ganjil selalu genap.", "en": "The sum of 5 odd numbers is always even."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}, "correct": true}
+      ],
+      "model_answer": {"id": "Salah. Empat bilangan ganjil berjumlah genap, ditambah satu ganjil lagi jadi ganjil. Contoh: 1 + 3 + 5 + 7 + 9 = 25.", "en": "False. Four odd numbers add up to an even number; one more odd number makes it odd. Example: 1 + 3 + 5 + 7 + 9 = 25."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-01-014", "unit": "01", "audience": "adults", "level": "master", "step": 1, "type": "number_input", "skills": ["PROOF-PIGEON"], "pool": "REMED", "prompt_id": "P-NUM",
+      "image": "pic_shirt",
+      "help_lines": [{"word": "", "meaning": {"id": "Lemari gelap berisi kemeja 4 warna. Minimal ambil berapa supaya pasti dapat 3 kemeja yang warnanya sama?", "en": "A dark wardrobe has shirts in 4 colours. What's the fewest you must take to be sure of 3 shirts of one colour?"}}],
+      "numeric": {"value": 9, "tolerance": 0},
+      "model_answer": {"id": "2 × 4 + 1 = 9: dengan 8 kemeja, bisa saja tiap warna hanya ada 2.", "en": "2 × 4 + 1 = 9: with 8 shirts, each colour could have just 2."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-01-015", "unit": "01", "audience": "adults", "level": "master", "step": 2, "type": "choose", "skills": ["PROOF-LOGIC"], "pool": "REMED", "prompt_id": "P-CHOOSE",
+      "help_lines": [{"word": "", "meaning": {"id": "Klaim: 2ⁿ − 1 selalu prima untuk n ≥ 2. Mana contoh penyangkalnya?", "en": "Claim: 2ⁿ − 1 is always prime for n ≥ 2. Which is a counterexample?"}}],
+      "options": [
+        {"id": "n3", "text": {"id": "n = 3", "en": "n = 3"}},
+        {"id": "n5", "text": {"id": "n = 5", "en": "n = 5"}},
+        {"id": "n4", "text": {"id": "n = 4", "en": "n = 4"}, "correct": true}
+      ],
+      "model_answer": {"id": "n = 4: 2⁴ − 1 = 15 = 3 × 5. Untuk n = 3 dan n = 5 hasilnya 7 dan 31, keduanya prima.", "en": "n = 4: 2⁴ − 1 = 15 = 3 × 5. For n = 3 and n = 5 you get 7 and 31, both prime."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-02-001", "unit": "02", "audience": "adults", "level": "master", "step": 1, "type": "sort_buckets", "skills": ["NT-PRIMES"], "pool": "PRACT", "order": 13, "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Prima atau bukan?", "en": "Prime or not?"}}],
+      "options": [
+        {"id": "b_p", "text": {"id": "Prima", "en": "Prime"}},
+        {"id": "b_n", "text": {"id": "Bukan prima", "en": "Not prime"}},
+        {"id": "c91", "text": {"id": "91", "en": "91"}},
+        {"id": "c53", "text": {"id": "53", "en": "53"}},
+        {"id": "c51", "text": {"id": "51", "en": "51"}},
+        {"id": "c97", "text": {"id": "97", "en": "97"}},
+        {"id": "c59", "text": {"id": "59", "en": "59"}},
+        {"id": "c57", "text": {"id": "57", "en": "57"}}
+      ],
+      "solution_pairs": {"c51": "b_n", "c53": "b_p", "c57": "b_n", "c59": "b_p", "c91": "b_n", "c97": "b_p"},
+      "model_answer": {"id": "Prima: 53, 59, 97. Bukan: 51 = 3 × 17, 57 = 3 × 19, 91 = 7 × 13.", "en": "Prime: 53, 59, 97. Not prime: 51 = 3 × 17, 57 = 3 × 19, 91 = 7 × 13."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-02-002", "unit": "02", "audience": "adults", "level": "master", "step": 1, "type": "number_input", "skills": ["NT-PRIMES"], "pool": "PRACT", "order": 14, "prompt_id": "P-NUM",
+      "help_lines": [{"word": "", "meaning": {"id": "Berapa banyak bilangan prima antara 1 dan 50?", "en": "How many primes are there between 1 and 50?"}}],
+      "numeric": {"value": 15, "tolerance": 0},
+      "model_answer": {"id": "Ada 15: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47.", "en": "There are 15: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-02-003", "unit": "02", "audience": "adults", "level": "master", "step": 1, "type": "fill_blank", "skills": ["NT-PRIMES"], "pool": "PRACT", "order": 15, "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "360 = 2³ × 3² × __", "en": "360 = 2³ × 3² × __"}}],
+      "options": [
+        {"id": "a", "text": {"id": "5", "en": "5"}},
+        {"id": "c", "text": {"id": "3", "en": "3"}},
+        {"id": "b", "text": {"id": "10", "en": "10"}}
+      ],
+      "solution": ["a"],
+      "model_answer": {"id": "2³ × 3² = 72, dan 360 : 72 = 5. Jadi 360 = 2³ × 3² × 5.", "en": "2³ × 3² = 72, and 360 ÷ 72 = 5. So 360 = 2³ × 3² × 5."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-02-004", "unit": "02", "audience": "adults", "level": "master", "step": 1, "type": "choose", "skills": ["NT-PRIMES"], "pool": "PRACT", "order": 16, "prompt_id": "P-CHOOSE",
+      "image": "pic_bus",
+      "help_lines": [{"word": "", "meaning": {"id": "Bus A berangkat tiap 12 menit, bus B tiap 18 menit. Keduanya berangkat bersama pukul 07.00. Kapan berangkat bersama lagi?", "en": "Bus A leaves every 12 minutes, bus B every 18 minutes. They leave together at 07:00. When do they next leave together?"}}],
+      "options": [
+        {"id": "m30", "text": {"id": "07.30", "en": "07:30"}},
+        {"id": "m72", "text": {"id": "08.12", "en": "08:12"}},
+        {"id": "m36", "text": {"id": "07.36", "en": "07:36"}, "correct": true}
+      ],
+      "model_answer": {"id": "KPK dari 12 dan 18 adalah 36: 12 = 2² × 3, 18 = 2 × 3², KPK = 2² × 3² = 36. Jadi pukul 07.36.", "en": "The LCM of 12 and 18 is 36: 12 = 2² × 3, 18 = 2 × 3², LCM = 2² × 3² = 36. So at 07:36."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MODEL", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-02-005", "unit": "02", "audience": "adults", "level": "master", "step": 1, "type": "match_pairs", "skills": ["NT-PRIMES"], "pool": "PRACT", "order": 17, "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [{"word": "", "meaning": {"id": "Pasangkan dengan faktorisasi primanya.", "en": "Match each with its prime factorisation."}}],
+      "options": [
+        {"id": "n84", "text": {"id": "84", "en": "84"}},
+        {"id": "n90", "text": {"id": "90", "en": "90"}},
+        {"id": "n100", "text": {"id": "100", "en": "100"}},
+        {"id": "n126", "text": {"id": "126", "en": "126"}},
+        {"id": "f100", "text": {"id": "2² × 5²", "en": "2² × 5²"}},
+        {"id": "f84", "text": {"id": "2² × 3 × 7", "en": "2² × 3 × 7"}},
+        {"id": "f126", "text": {"id": "2 × 3² × 7", "en": "2 × 3² × 7"}},
+        {"id": "f90", "text": {"id": "2 × 3² × 5", "en": "2 × 3² × 5"}}
+      ],
+      "solution_pairs": {"n84": "f84", "n90": "f90", "n100": "f100", "n126": "f126"},
+      "model_answer": {"id": "84 = 2² × 3 × 7; 90 = 2 × 3² × 5; 100 = 2² × 5²; 126 = 2 × 3² × 7.", "en": "84 = 2² × 3 × 7; 90 = 2 × 3² × 5; 100 = 2² × 5²; 126 = 2 × 3² × 7."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-02-006", "unit": "02", "audience": "adults", "level": "master", "step": 1, "type": "true_false", "skills": ["NT-PRIMES"], "pool": "PRACT", "order": 18, "prompt_id": "P-TF",
+      "help_lines": [{"word": "", "meaning": {"id": "Hasil kali dua bilangan prima selalu ganjil.", "en": "The product of two primes is always odd."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}, "correct": true}
+      ],
+      "model_answer": {"id": "Salah: 2 × 3 = 6. Bilangan prima 2 itu genap.", "en": "False: 2 × 3 = 6. The prime 2 is even."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-02-007", "unit": "02", "audience": "adults", "level": "master", "step": 2, "type": "pick_image", "skills": ["NT-MOD"], "pool": "PRACT", "order": 19, "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Sekarang pukul 9. Pukul berapa 50 jam lagi?", "en": "It's 9 o'clock now. What time will it be in 50 hours?"}}],
+      "options": [
+        {"id": "clock_10_00", "image": "clock_10_00"},
+        {"id": "clock_11_00", "image": "clock_11_00", "correct": true},
+        {"id": "clock_5_00", "image": "clock_5_00"}
+      ],
+      "model_answer": {"id": "50 = 4 × 12 + 2, jadi jarum jam maju 2 jam dari pukul 9: pukul 11.", "en": "50 = 4 × 12 + 2, so the hands move 2 hours on from 9 o'clock: 11 o'clock."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MOD", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-02-008", "unit": "02", "audience": "adults", "level": "master", "step": 2, "type": "number_input", "skills": ["NT-MOD"], "pool": "PRACT", "order": 20, "prompt_id": "P-NUM",
+      "image": "pic_phone",
+      "help_lines": [{"word": "", "meaning": {"id": "Unduhan mulai pukul 22.00 dan butuh 15 jam. Selesai pukul berapa? (Tulis jamnya saja, 0–23.)", "en": "A download starts at 22:00 and takes 15 hours. What time does it finish? (Type the hour only, 0–23.)"}}],
+      "numeric": {"value": 13, "tolerance": 0},
+      "model_answer": {"id": "22 + 15 = 37, dan 37 − 24 = 13. Selesai pukul 13.00 keesokan harinya.", "en": "22 + 15 = 37, and 37 − 24 = 13. It finishes at 13:00 the next day."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MOD", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-02-009", "unit": "02", "audience": "adults", "level": "master", "step": 2, "type": "choose", "skills": ["NT-MOD"], "pool": "PRACT", "order": 21, "prompt_id": "P-CHOOSE",
+      "help_lines": [{"word": "", "meaning": {"id": "Hari ini Senin. Hari apa 100 hari lagi?", "en": "Today is Monday. What day will it be in 100 days?"}}],
+      "options": [
+        {"id": "d1", "text": {"id": "Selasa", "en": "Tuesday"}},
+        {"id": "d3", "text": {"id": "Kamis", "en": "Thursday"}},
+        {"id": "d2", "text": {"id": "Rabu", "en": "Wednesday"}, "correct": true},
+        {"id": "d0", "text": {"id": "Senin", "en": "Monday"}}
+      ],
+      "model_answer": {"id": "100 = 14 × 7 + 2: 2 hari setelah Senin adalah Rabu.", "en": "100 = 14 × 7 + 2: 2 days after Monday is Wednesday."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MOD", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-02-010", "unit": "02", "audience": "adults", "level": "master", "step": 2, "type": "number_input", "skills": ["NT-CHECKDIGIT"], "pool": "PRACT", "order": 22, "prompt_id": "P-NUM",
+      "image": "pic_book",
+      "help_lines": [{"word": "", "meaning": {"id": "Contoh ISBN-13: 978-602-1234-56-?. Kalikan angkanya bergantian dengan 1 dan 3, jumlahkan, lalu cari angka cek agar totalnya kelipatan 10.", "en": "Sample ISBN-13: 978-602-1234-56-?. Multiply the digits alternately by 1 and 3, add them up, then find the check digit that makes the total a multiple of 10."}}],
+      "numeric": {"value": 3, "tolerance": 0},
+      "model_answer": {"id": "Total berbobot = 107. Angka ceknya 3, karena 107 + 3 = 110, kelipatan 10.", "en": "The weighted total is 107. The check digit is 3, because 107 + 3 = 110, a multiple of 10."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MOD", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-02-011", "unit": "02", "audience": "adults", "level": "master", "step": 2, "type": "true_false", "skills": ["NT-CHECKDIGIT"], "pool": "PRACT", "order": 23, "prompt_id": "P-TF",
+      "image": "pic_book",
+      "help_lines": [{"word": "", "meaning": {"id": "Pada ISBN-13, salah ketik satu angka selalu ketahuan.", "en": "In an ISBN-13, mistyping a single digit is always caught."}}],
+      "options": [
+        {"id": "t", "text": {"id": "Benar", "en": "True"}, "correct": true},
+        {"id": "f", "text": {"id": "Salah", "en": "False"}}
+      ],
+      "model_answer": {"id": "Benar. Bobotnya 1 dan 3, jadi mengubah satu angka (sebesar 1–9) tidak pernah menggeser total sebanyak kelipatan 10. Menukar dua angka bersebelahan kadang lolos.", "en": "True. The weights are 1 and 3, so changing one digit (by 1–9) never shifts the total by a multiple of 10. Swapping two neighbouring digits can slip through."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MOD", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-02-012", "unit": "02", "audience": "adults", "level": "master", "step": 2, "type": "order", "skills": ["NT-CHECKDIGIT"], "pool": "PRACT", "order": 24, "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Urutkan langkah memeriksa sebuah ISBN-13.", "en": "Order the steps for checking an ISBN-13."}}],
+      "options": [
+        {"id": "s3", "text": {"id": "Cek: apakah totalnya kelipatan 10?", "en": "Check: is the total a multiple of 10?"}},
+        {"id": "s4", "text": {"id": "Kalau bukan, ada angka yang salah ketik", "en": "If not, a digit has been mistyped"}},
+        {"id": "s1", "text": {"id": "Kalikan angkanya bergantian dengan 1 dan 3", "en": "Multiply the digits alternately by 1 and 3"}},
+        {"id": "s2", "text": {"id": "Jumlahkan semua hasilnya", "en": "Add up all the results"}}
+      ],
+      "solution": ["s1", "s2", "s3", "s4"],
+      "model_answer": {"id": "Kali 1 dan 3 bergantian → jumlahkan → cek kelipatan 10 → kalau tidak, ada salah ketik.", "en": "Multiply by 1 and 3 in turn → add up → check for a multiple of 10 → if not, something was mistyped."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MOD", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-02-013", "unit": "02", "audience": "adults", "level": "master", "step": 1, "type": "sort_buckets", "skills": ["NT-PRIMES"], "pool": "REMED", "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [{"word": "", "meaning": {"id": "Prima atau bukan?", "en": "Prime or not?"}}],
+      "options": [
+        {"id": "b_p", "text": {"id": "Prima", "en": "Prime"}},
+        {"id": "b_n", "text": {"id": "Bukan prima", "en": "Not prime"}},
+        {"id": "c49", "text": {"id": "49", "en": "49"}},
+        {"id": "c29", "text": {"id": "29", "en": "29"}},
+        {"id": "c23", "text": {"id": "23", "en": "23"}},
+        {"id": "c27", "text": {"id": "27", "en": "27"}},
+        {"id": "c41", "text": {"id": "41", "en": "41"}},
+        {"id": "c21", "text": {"id": "21", "en": "21"}}
+      ],
+      "solution_pairs": {"c21": "b_n", "c23": "b_p", "c27": "b_n", "c29": "b_p", "c49": "b_n", "c41": "b_p"},
+      "model_answer": {"id": "Prima: 23, 29, 41. Bukan: 21 = 3 × 7, 27 = 3 × 9, 49 = 7 × 7.", "en": "Prime: 23, 29, 41. Not prime: 21 = 3 × 7, 27 = 3 × 9, 49 = 7 × 7."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-PROOF", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-02-014", "unit": "02", "audience": "adults", "level": "master", "step": 2, "type": "pick_image", "skills": ["NT-MOD"], "pool": "REMED", "prompt_id": "P-PICK",
+      "help_lines": [{"word": "", "meaning": {"id": "Sekarang pukul 4. Pukul berapa 30 jam lagi?", "en": "It's 4 o'clock now. What time will it be in 30 hours?"}}],
+      "options": [
+        {"id": "clock_10_00", "image": "clock_10_00", "correct": true},
+        {"id": "clock_9_00", "image": "clock_9_00"},
+        {"id": "clock_6_00", "image": "clock_6_00"}
+      ],
+      "model_answer": {"id": "30 = 2 × 12 + 6, jadi maju 6 jam dari pukul 4: pukul 10.", "en": "30 = 2 × 12 + 6, so move 6 hours on from 4 o'clock: 10 o'clock."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MOD", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-02-015", "unit": "02", "audience": "adults", "level": "master", "step": 2, "type": "choose", "skills": ["NT-CHECKDIGIT"], "pool": "REMED", "prompt_id": "P-CHOOSE",
+      "help_lines": [{"word": "", "meaning": {"id": "Mana ISBN-13 yang valid?", "en": "Which ISBN-13 is valid?"}}],
+      "options": [
+        {"id": "i1", "text": {"id": "978-602-1234-56-3", "en": "978-602-1234-56-3"}, "correct": true},
+        {"id": "i0", "text": {"id": "978-602-2134-56-3", "en": "978-602-2134-56-3"}},
+        {"id": "i2", "text": {"id": "978-602-1234-56-8", "en": "978-602-1234-56-8"}}
+      ],
+      "model_answer": {"id": "978-602-1234-56-3: total berbobotnya 110, kelipatan 10. Dua lainnya tidak.", "en": "978-602-1234-56-3: its weighted total is 110, a multiple of 10. The other two aren't."},
+      "feedback_ids": {"correct": "FB-OK-MODEL", "wrong": "FB-NO-MOD", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-02-016", "unit": "02", "audience": "adults", "level": "master", "step": 2, "type": "info_card", "skills": ["NT-PRIMES"], "pool": "GEM", "gem": true, "prompt_id": "P-GEM",
+      "source": "J. C. Lagarias, 'The 3x+1 problem and its generalizations', American Mathematical Monthly 92 (1985): 3-23; Wolfram MathWorld, 'Collatz Problem'.",
+      "model_answer": {"id": "Masalah Collatz (1937): mulai dari bilangan bulat positif mana pun; kalau genap, bagi 2; kalau ganjil, kali 3 lalu tambah 1. Semua bilangan yang pernah dicoba komputer akhirnya sampai ke 1, tetapi belum ada yang bisa membuktikan bahwa itu selalu terjadi.", "en": "The Collatz problem (1937): start with any positive whole number; if it's even, divide by 2; if it's odd, multiply by 3 and add 1. Every number ever tried by computer ends up at 1, yet nobody has proved that it always happens."},
+      "feedback_ids": {"correct": "FB-GEM"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    },
+    {
+      "item_id": "MAT-A-X-DP-01", "unit": "01", "audience": "adults", "level": "master", "type": "daily_puzzle", "skills": ["PUZZLE"], "pool": "SPARE", "prompt_id": "P-PUZZLE",
+      "help_lines": [{"word": "", "meaning": {"id": "Sebuah bilangan dibagi 3 bersisa 2, dibagi 5 bersisa 3, dan dibagi 7 bersisa 2. Berapa bilangan terkecil itu?", "en": "A number leaves 2 when divided by 3, 3 when divided by 5, and 2 when divided by 7. What is the smallest such number?"}}],
+      "numeric": {"value": 23, "tolerance": 0},
+      "model_answer": {"id": "23 = 7 × 3 + 2 = 4 × 5 + 3 = 3 × 7 + 2. Teka-teki ini berasal dari buku Tiongkok kuno Sunzi Suanjing.", "en": "23 = 7 × 3 + 2 = 4 × 5 + 3 = 3 × 7 + 2. This puzzle comes from the ancient Chinese book Sunzi Suanjing."},
+      "feedback_ids": {"correct": "FB-OK-PUZZLE", "wrong": "FB-NO-PUZZLE", "dont_know": "FB-DONTKNOW"},
+      "review_status": "draft", "content_version": "mat-a-x-0.1"
+    }
+  ]
+}

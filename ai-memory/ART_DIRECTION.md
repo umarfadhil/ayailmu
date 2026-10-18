@@ -48,7 +48,8 @@ Where to find illustrators: Behance/Dribbble filtered for editorial + risograph 
 
 - Image generators (any) may be used only for private mood boards or to sketch a composition idea for the brief. Their output is never traced, never shipped, never shown in marketing.
 - Claude may draft **vector glyphs and layout diagrams** (SVG/Compose Canvas) that follow §2 — varied stroke widths, deliberate wobble, texture overlay slot, ≤ 6 colours — but they ship only after a human redraws or approves them against §7. Claude may also write Rive state-machine specs, animation timing sheets and illustrator briefs.
-- Video: no AI-generated video or voice. Narration, if any, is a real person.
+- Video: no AI-generated video or voice. Narration, if any, is a real person. Exception (Umar, 2026-10-18): pronunciation clips for the language tracks are generated with ElevenLabs, bundled, and heard by a native speaker before release (CR-SND-2).
+- Status 2026-10-17: Claude's draft set (543 keys, `docs/ART_CATALOG.md`, sources in `art/`, briefs in `art/briefs/`) is in the app as placeholders. Nothing from it ships to production until each key passes §7 — redrawn by the illustrator or approved by Umar — under the same key (CR-VIS-4).
 
 ## 7. Acceptance checklist (attach to the PR, CR-VIS-3)
 

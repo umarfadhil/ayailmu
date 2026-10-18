@@ -20,7 +20,35 @@ fun main(args: Array<String>) {
         println("validatePacks: no packs under ${File(root, "packs").path}; nothing to check")
         return
     }
+    // Art keys and published tap regions (written by art/tools); packs may only reference what exists.
+    val artFile = File(root, "art/index.json")
+    val art = if (artFile.isFile) ContentJson.json.decodeFromString(ArtIndex.serializer(), artFile.readText()) else null
+    if (art == null) println("validatePacks: no art/index.json - art keys not checked")
     var failures = 0
+    // Stroke data for trace items (INTERACTIONS_AUDIO.md section 4); trace keys must exist in it.
+    val strokesFile = File(root, "strokes/index.json")
+    val strokes =
+        if (!strokesFile.isFile) {
+            println("validatePacks: no strokes/index.json - trace keys not checked")
+            null
+        } else {
+            try {
+                StrokeIndex.parse(strokesFile.readText()).also { index ->
+                    val problems = index.problems()
+                    if (problems.isEmpty()) {
+                        println("ok   strokes/index.json (${index.keys.size} glyphs)")
+                    } else {
+                        println("FAIL strokes/index.json")
+                        problems.forEach { println("     - $it") }
+                        failures++
+                    }
+                }
+            } catch (e: Exception) {
+                println("FAIL strokes/index.json: cannot parse: ${e.message}")
+                failures++
+                null
+            }
+        }
     for (file in packFiles) {
         val rel = file.relativeTo(root).path
         val pack =
@@ -31,9 +59,10 @@ fun main(args: Array<String>) {
                 failures++
                 continue
             }
-        val problems = PackValidator.validate(pack)
+        val problems = PackValidator.validate(pack, art, strokes)
         if (problems.isEmpty()) {
-            println("ok   $rel (${pack.items.size} items, ${pack.meta.instructionLangs.joinToString("+") { it.tag }})")
+            val stories = if (pack.stories.isEmpty()) "" else ", ${pack.stories.size} stories"
+            println("ok   $rel (${pack.items.size} items$stories, ${pack.meta.instructionLangs.joinToString("+") { it.tag }})")
         } else {
             println("FAIL $rel")
             problems.forEach { println("     - $it") }
@@ -41,7 +70,7 @@ fun main(args: Array<String>) {
         }
     }
     if (failures > 0) {
-        System.err.println("validatePacks: $failures pack(s) failed")
+        System.err.println("validatePacks: $failures file(s) failed")
         exitProcess(1)
     }
 }

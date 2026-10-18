@@ -67,13 +67,14 @@ class SessionController(
         response: Response,
         timeOnItemMs: Long,
         hintUsed: Boolean = false,
+        reportFlag: Boolean = false,
     ): SaveResult =
         guarded {
             val r =
                 Session.submit(
                     state,
                     response,
-                    Env(content, rules, history, clock.now().toEpochMilli(), timeOnItemMs, hintUsed, ids),
+                    Env(content, rules, history, clock.now().toEpochMilli(), timeOnItemMs, hintUsed, ids, reportFlag),
                 )
             val event = r.event ?: return@guarded SaveResult.IGNORED
             store.recordAnswer(event, r.state) // atomic: answer + snapshot

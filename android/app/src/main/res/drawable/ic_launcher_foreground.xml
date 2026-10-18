@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- P4 DRAFT launcher foreground: Claude's vector draft of Aya (art_app_icon_draft, :core:design), inset so the
+     figure sits inside the adaptive icon's 66 dp safe zone. Replaced when the illustrator delivers the icon
+     (ART_DIRECTION section 4 and 7); the colours follow @color/art_* so it stays readable at night. -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/art_app_icon_draft"
+    android:inset="16%" />

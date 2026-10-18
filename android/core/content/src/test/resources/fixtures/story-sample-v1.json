@@ -1,0 +1,127 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "story-sample-0.1",
+    "subject": "sejarah",
+    "track": "sej-t-m",
+    "level": "menengah",
+    "mode": "casual",
+    "audiences": ["kids"],
+    "instruction_langs": ["id", "en"],
+    "title": { "id": "Sejarah — contoh uji", "en": "History — test sample" }
+  },
+  "synthetic": true,
+  "note": "TEST FIXTURE (follow-up 12, MODULES_LEVELS_STORIES.md section 2): a story with panels, layers, every motion type, narration, a story item and questions about it. Tests depend on its exact items.",
+  "prompts": {
+    "P-STORY": { "id": "Simak ceritanya.", "en": "Watch the story." },
+    "P-PICK": { "id": "Pilih gambarnya.", "en": "Pick the picture." },
+    "P-ORDER": { "id": "Urutkan kejadiannya.", "en": "Put the events in order." },
+    "P-TF": { "id": "Benar atau salah?", "en": "True or false?" },
+    "P-GEM": { "id": "Tahukah kamu?", "en": "Did you know?" }
+  },
+  "feedback": {
+    "FB-OK": { "id": "Betul!", "en": "That's right!" },
+    "FB-NO": { "id": "Belum tepat. {model}", "en": "Not yet. {model}" },
+    "FB-DONTKNOW": { "id": "Tidak apa-apa. {model}", "en": "That's fine. {model}" },
+    "FB-SEEN": { "id": "Ayo lanjut!", "en": "Let's go on!" }
+  },
+  "units": [ { "unit": "01", "title": { "id": "Pahlawan pendidikan", "en": "Heroes of education" } } ],
+  "stories": {
+    "ST-KARTINI": {
+      "figure": "Raden Ajeng Kartini (1879–1904)",
+      "title": { "id": "Kartini dan surat-suratnya", "en": "Kartini and her letters" },
+      "source": "Kartini, Habis Gelap Terbitlah Terang (1911); Britannica: Kartini",
+      "emblem": "hist_kartini_letters",
+      "panels": [
+        {
+          "scene": "hist_bg_room_lamp",
+          "caption": { "id": "Kartini suka membaca sampai larut malam.", "en": "Kartini loved reading late into the night." },
+          "narration": { "id": "id/sej_kartini_01", "en": "en/sej_kartini_01" },
+          "layers": [
+            { "art": "hist_sil_woman_kebaya", "x": 0.08, "y": 0.30, "w": 0.30, "motion": { "type": "fade_in", "ms": 600 } },
+            { "art": "hist_oil_lamp", "x": 0.62, "y": 0.22, "w": 0.16, "motion": { "type": "glow", "ms": 2400, "loop": true } },
+            { "art": "hist_kartini_letters", "x": 0.40, "y": 0.62, "w": 0.26, "motion": { "type": "slide_in", "from": "bottom", "ms": 600, "delay_ms": 300 } }
+          ]
+        },
+        {
+          "scene": "hist_bg_room_lamp",
+          "zoom": { "scale_from": 1.0, "scale_to": 1.06, "ms": 5000 },
+          "caption": { "id": "Ia menulis surat kepada sahabat-sahabatnya di Belanda.", "en": "She wrote letters to her friends in the Netherlands." },
+          "narration": { "id": "id/sej_kartini_02", "en": "en/sej_kartini_02" },
+          "layers": [
+            { "art": "hist_kartini_letters", "x": 0.30, "y": 0.40, "w": 0.40, "z": 2, "motion": { "type": "reveal", "from": "left", "ms": 1200 } },
+            { "art": "hist_quill", "x": 0.68, "y": 0.30, "w": 0.12, "z": 3, "motion": { "type": "sway", "deg": 4, "ms": 2400, "loop": true } },
+            { "art": "hist_book_stack", "x": 0.05, "y": 0.60, "w": 0.20, "z": 1 }
+          ]
+        },
+        {
+          "scene": "hist_bg_classroom_old",
+          "caption": { "id": "Surat-suratnya dibukukan pada tahun 1911. R.A. Kartini ingin semua anak perempuan bisa sekolah.", "en": "Her letters became a book in 1911. R.A. Kartini wanted every girl to go to school." },
+          "narration": { "id": "id/sej_kartini_03" },
+          "layers": [
+            { "art": "hist_sil_girl", "x": 0.10, "y": 0.55, "w": 0.18, "flip": true, "motion": { "type": "path", "points": [[0.10, 0.55], [0.30, 0.50], [0.45, 0.55]], "ms": 3000, "delay_ms": 200 } },
+            { "art": "hist_book_stack", "x": 0.70, "y": 0.62, "w": 0.18, "motion": { "type": "bob", "amp": 0.01, "ms": 2000, "loop": true } },
+            { "art": "hist_sunrise", "x": 0.00, "y": 0.00, "w": 1.00, "motion": { "type": "drift", "dx": 0.04, "dy": -0.02, "ms": 4000, "loop": true } }
+          ]
+        }
+      ]
+    }
+  },
+  "items": [
+    { "item_id": "SEJ-T-M-01-001", "unit": "01", "audience": "kids", "level": "menengah", "step": 1, "type": "story",
+      "story_id": "ST-KARTINI", "skills": ["SEJ-KARTINI"], "pool": "PRACT", "order": 1, "prompt_id": "P-STORY",
+      "feedback_ids": { "correct": "FB-SEEN" },
+      "review_status": "draft", "content_version": "story-sample-0.1" },
+
+    { "item_id": "SEJ-T-M-01-002", "unit": "01", "audience": "kids", "level": "menengah", "step": 1, "type": "pick_image",
+      "story_id": "ST-KARTINI", "skills": ["SEJ-KARTINI"], "pool": "PRACT", "order": 2, "prompt_id": "P-PICK",
+      "model_answer": { "id": "Kartini menulis surat.", "en": "Kartini wrote letters." },
+      "options": [
+        { "id": "letters", "image": "hist_kartini_letters", "correct": true },
+        { "id": "plane", "image": "hist_habibie_plane" },
+        { "id": "telescope", "image": "hist_telescope" }
+      ],
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "story-sample-0.1" },
+
+    { "item_id": "SEJ-T-M-01-003", "unit": "01", "audience": "kids", "level": "menengah", "step": 1, "type": "order",
+      "story_id": "ST-KARTINI", "skills": ["SEJ-KARTINI"], "pool": "PRACT", "order": 3, "prompt_id": "P-ORDER",
+      "model_answer": { "id": "Membaca, menulis surat, lalu suratnya dibukukan.", "en": "Reading, writing letters, then the letters became a book." },
+      "options": [
+        { "id": "book", "image": "hist_book_stack", "text": { "id": "surat dibukukan", "en": "letters become a book" } },
+        { "id": "read", "image": "hist_oil_lamp", "text": { "id": "membaca malam hari", "en": "reading at night" } },
+        { "id": "write", "image": "hist_kartini_letters", "text": { "id": "menulis surat", "en": "writing letters" } }
+      ],
+      "solution": ["read", "write", "book"],
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "story-sample-0.1" },
+
+    { "item_id": "SEJ-T-M-01-004", "unit": "01", "audience": "kids", "level": "menengah", "step": 2, "type": "true_false",
+      "story_id": "ST-KARTINI", "skills": ["SEJ-KARTINI"], "pool": "PRACT", "order": 4, "prompt_id": "P-TF",
+      "image": "hist_kartini_letters",
+      "model_answer": { "id": "Benar: Kartini ingin semua anak perempuan bisa sekolah.", "en": "True: Kartini wanted every girl to go to school." },
+      "options": [
+        { "id": "t", "text": { "id": "Benar", "en": "True" }, "correct": true },
+        { "id": "f", "text": { "id": "Salah", "en": "False" } }
+      ],
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "story-sample-0.1" },
+
+    { "item_id": "SEJ-T-M-01-R01", "unit": "01", "audience": "kids", "level": "menengah", "step": 2, "type": "pick_image",
+      "story_id": "ST-KARTINI", "skills": ["SEJ-KARTINI"], "pool": "REMED", "order": 5, "prompt_id": "P-PICK",
+      "model_answer": { "id": "Kartini membaca di bawah lampu minyak.", "en": "Kartini read by an oil lamp." },
+      "options": [
+        { "id": "lamp", "image": "hist_oil_lamp", "correct": true },
+        { "id": "compass", "image": "hist_compass_old" }
+      ],
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "story-sample-0.1" },
+
+    { "item_id": "SEJ-T-M-01-G01", "unit": "01", "audience": "kids", "level": "menengah", "type": "info_card",
+      "skills": ["SEJ-KARTINI"], "pool": "GEM", "gem": true, "prompt_id": "P-GEM",
+      "source": "Britannica: Kartini",
+      "model_answer": { "id": "Hari Kartini diperingati setiap 21 April.", "en": "Kartini Day is marked every 21 April." },
+      "feedback_ids": { "correct": "FB-SEEN" },
+      "review_status": "draft", "content_version": "story-sample-0.1" }
+  ]
+}

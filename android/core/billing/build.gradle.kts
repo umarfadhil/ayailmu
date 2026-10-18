@@ -1,7 +1,8 @@
-// :core:billing — Play Billing 8 wrapper and entitlement repository. Implementation arrives in P5 (CR-BIL-*).
+// :core:billing — Play Billing 8 wrapper, purchase verification, entitlement cache and repository (P5, CR-BIL-1..6).
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 }
@@ -31,6 +32,9 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.datastore)
     implementation(libs.play.billing.ktx)
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

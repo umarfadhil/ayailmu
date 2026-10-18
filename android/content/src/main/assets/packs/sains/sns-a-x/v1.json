@@ -1,0 +1,2173 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "sns-a-x-0.1",
+    "subject": "sains",
+    "track": "sns-a-x",
+    "level": "master",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Sains — Master (Dewasa)",
+      "en": "Science — Master (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Draft written 2026-10-18 (follow-up 12, starter level: 2 units) for subject + language review: needs a science reviewer (physics, biotechnology) and a health reviewer for the vaccine and therapy items and the Indonesian and English language reviewers before any item is approved (docs/syllabus/03_SAINS.md, Adults Master units 1-2; MODULES_LEVELS_STORIES.md). New sci_/pic_ art keys (contract section 6) are drafts being drawn.",
+  "prompts": {
+    "P-PICK": {
+      "id": "Pilih gambar yang tepat.",
+      "en": "Pick the right picture."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban yang tepat.",
+      "en": "Choose the right answer."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-MYTH": {
+      "id": "Mitos atau fakta?",
+      "en": "Myth or fact?"
+    },
+    "P-CONNECT": {
+      "id": "Tarik garis ke pasangannya.",
+      "en": "Draw a line to each match."
+    },
+    "P-DRAG": {
+      "id": "Seret gambar ke pasangannya.",
+      "en": "Drag each picture to its match."
+    },
+    "P-SORT": {
+      "id": "Seret ke keranjang yang tepat.",
+      "en": "Drag each into the right basket."
+    },
+    "P-ORDER": {
+      "id": "Seret ke urutan yang benar.",
+      "en": "Drag them into the right order."
+    },
+    "P-FILL": {
+      "id": "Seret ke bagian yang kosong.",
+      "en": "Drag into the gap."
+    },
+    "P-EST": {
+      "id": "Perkirakan, lalu geser.",
+      "en": "Estimate, then slide."
+    },
+    "P-STORY": {
+      "id": "Baca situasinya, lalu pilih.",
+      "en": "Read the situation, then choose."
+    },
+    "P-TRY": {
+      "id": "Coba di rumah",
+      "en": "Try at home"
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    },
+    "P-PUZZLE": {
+      "id": "Teka-teki hari ini",
+      "en": "Today's puzzle"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Correct. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. {model}",
+      "en": "Not quite. {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa. {model}",
+      "en": "No problem. {model}"
+    },
+    "FB-SEEN": {
+      "id": "Baik, kita lanjut.",
+      "en": "Good, let's continue."
+    },
+    "FB-GEM": {
+      "id": "Permata ini masuk ke Kotak Permata Anda.",
+      "en": "This gem goes into your Gem box."
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Fisika modern intuitif",
+        "en": "Modern physics, intuitively"
+      },
+      "sticker": "sticker_compass"
+    },
+    {
+      "unit": "02",
+      "title": {
+        "id": "Bioteknologi",
+        "en": "Biotechnology"
+      },
+      "sticker": "sticker_rice_field"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "SNS-A-X-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Fisika modern",
+        "en": "Modern physics"
+      },
+      "body": [
+        {
+          "id": "Cahaya punya batas kecepatan, sekitar 300.000 km per detik. Melihat jauh berarti melihat masa lalu.",
+          "en": "Light has a speed limit, about 300,000 km per second. Looking far away means looking into the past."
+        },
+        {
+          "id": "Relativitas: waktu berjalan berbeda bagi yang bergerak sangat cepat atau berada di gravitasi berbeda. GPS harus memperhitungkannya.",
+          "en": "Relativity: time runs differently for things moving very fast or sitting in different gravity. GPS has to allow for it."
+        },
+        {
+          "id": "Kuantum: cahaya dan energi datang dalam paket kecil (foton). LED, panel surya, dan chip ponsel dirancang dengan fisika ini.",
+          "en": "Quantum: light and energy come in tiny packets (photons). LEDs, solar panels and phone chips are designed with this physics."
+        }
+      ],
+      "review_status": "draft"
+    },
+    {
+      "screen_id": "SNS-A-X-02-S1",
+      "unit": "02",
+      "audience": "adults",
+      "title": {
+        "id": "Bioteknologi",
+        "en": "Biotechnology"
+      },
+      "body": [
+        {
+          "id": "Rekayasa genetika memindahkan gen antarspesies; sejak 1982 bakteri membuat insulin manusia.",
+          "en": "Genetic engineering moves genes between species; since 1982 bacteria have made human insulin."
+        },
+        {
+          "id": "CRISPR seperti fitur \"cari dan potong\": RNA pemandu menemukan urutan DNA, enzim Cas9 memotongnya. Terapi CRISPR pertama disetujui akhir 2023 untuk penyakit sel sabit dan thalassemia beta.",
+          "en": "CRISPR works like \"find and cut\": a guide RNA finds a DNA sequence and the Cas9 enzyme cuts it. The first CRISPR therapy was approved in late 2023 for sickle-cell disease and beta thalassaemia."
+        },
+        {
+          "id": "Vaksin mRNA memberi sel \"resep\" sementara untuk satu protein virus agar sistem imun belajar mengenalinya.",
+          "en": "mRNA vaccines give cells a temporary \"recipe\" for one viral protein so the immune system learns to recognise it."
+        }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "readings": {
+    "R-SNSAX-CHAIN": {
+      "title": {
+        "id": "Pesan berantai",
+        "en": "A chain message"
+      },
+      "body": [
+        {
+          "id": "Bu Wati menerima pesan di grup keluarga: \"Vaksin mRNA mengubah DNA Anda selamanya! Sebarkan!\"",
+          "en": "Bu Wati gets a message in the family group: \"mRNA vaccines change your DNA forever! Pass it on!\""
+        },
+        {
+          "id": "Pesan itu tidak menyebut sumber, nama peneliti, atau lembaga mana pun.",
+          "en": "The message names no source, no researcher and no institution."
+        }
+      ],
+      "review_status": "draft"
+    }
+  },
+  "items": [
+    {
+      "item_id": "SNS-A-X-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "MOD-LIGHT"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Cahaya siapa yang paling cepat sampai ke mata kita?",
+            "en": "Whose light reaches our eyes soonest?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sun",
+          "text": {
+            "id": "Matahari",
+            "en": "The Sun"
+          },
+          "image": "pic_sun"
+        },
+        {
+          "id": "star",
+          "text": {
+            "id": "Bintang terdekat sesudah Matahari",
+            "en": "The nearest star after the Sun"
+          },
+          "image": "pic_star"
+        },
+        {
+          "id": "moon",
+          "text": {
+            "id": "Bulan",
+            "en": "The Moon"
+          },
+          "image": "pic_moon"
+        },
+        {
+          "id": "jupiter",
+          "text": {
+            "id": "Jupiter",
+            "en": "Jupiter"
+          },
+          "image": "hist_jupiter_moons"
+        }
+      ],
+      "solution": [
+        "moon",
+        "sun",
+        "jupiter",
+        "star"
+      ],
+      "model_answer": {
+        "id": "Bulan ±1,3 detik → Matahari ±8 menit → Jupiter ±35–52 menit → Proxima Centauri ±4,2 tahun.",
+        "en": "Moon about 1.3 seconds → Sun about 8 minutes → Jupiter about 35–52 minutes → Proxima Centauri about 4.2 years."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "estimate_slider",
+      "skills": [
+        "MOD-LIGHT"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-EST",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Berapa menit cahaya Matahari sampai ke Bumi?",
+            "en": "How many minutes does sunlight take to reach Earth?"
+          }
+        }
+      ],
+      "image": "pic_sun",
+      "numeric": {
+        "value": 8,
+        "tolerance": 1.5,
+        "unit": {
+          "id": "menit",
+          "en": "minutes"
+        }
+      },
+      "slider": {
+        "min": 0,
+        "max": 60,
+        "step": 0.5
+      },
+      "model_answer": {
+        "id": "Sekitar 8 menit 20 detik. Matahari yang Anda lihat adalah Matahari 8 menit yang lalu.",
+        "en": "About 8 minutes 20 seconds. The Sun you see is the Sun of 8 minutes ago."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "MOD-RELAT",
+        "MOD-QUANT"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-DRAG",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Fenomena dan gagasan di baliknya.",
+            "en": "Phenomenon and the idea behind it."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "gps",
+          "text": {
+            "id": "GPS di ponsel",
+            "en": "GPS on your phone"
+          },
+          "image": "pic_phone"
+        },
+        {
+          "id": "star",
+          "text": {
+            "id": "Cahaya bintang",
+            "en": "Starlight"
+          },
+          "image": "pic_star"
+        },
+        {
+          "id": "led",
+          "text": {
+            "id": "Lampu LED",
+            "en": "An LED lamp"
+          },
+          "image": "sci_battery_bulb"
+        },
+        {
+          "id": "sun",
+          "text": {
+            "id": "Energi Matahari",
+            "en": "The Sun's energy"
+          },
+          "image": "pic_sun"
+        },
+        {
+          "id": "i_rel",
+          "text": {
+            "id": "Jam satelit berdetak sedikit berbeda (relativitas)",
+            "en": "Satellite clocks tick slightly differently (relativity)"
+          }
+        },
+        {
+          "id": "i_speed",
+          "text": {
+            "id": "Cahaya butuh waktu untuk tiba (kecepatan terbatas)",
+            "en": "Light takes time to arrive (a finite speed)"
+          }
+        },
+        {
+          "id": "i_photon",
+          "text": {
+            "id": "Elektron melepas energi dalam paket (foton)",
+            "en": "Electrons release energy in packets (photons)"
+          }
+        },
+        {
+          "id": "i_emc2",
+          "text": {
+            "id": "Sebagian kecil massa berubah menjadi energi (E = mc²)",
+            "en": "A little mass turns into energy (E = mc²)"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "gps": "i_rel",
+        "star": "i_speed",
+        "led": "i_photon",
+        "sun": "i_emc2"
+      },
+      "model_answer": {
+        "id": "GPS: relativitas. Cahaya bintang: kecepatan cahaya. LED: foton. Matahari: E = mc².",
+        "en": "GPS: relativity. Starlight: the speed of light. LED: photons. The Sun: E = mc²."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "fill_blank",
+      "skills": [
+        "MOD-RELAT"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Matahari bersinar karena sebagian kecil ____-nya berubah menjadi energi.",
+            "en": "The Sun shines because a little of its ____ turns into energy."
+          }
+        }
+      ],
+      "image": "pic_sun",
+      "options": [
+        {
+          "id": "light",
+          "text": {
+            "id": "cahaya",
+            "en": "light"
+          }
+        },
+        {
+          "id": "mass",
+          "text": {
+            "id": "massa",
+            "en": "mass"
+          }
+        },
+        {
+          "id": "time",
+          "text": {
+            "id": "waktu",
+            "en": "time"
+          }
+        }
+      ],
+      "solution": [
+        "mass"
+      ],
+      "model_answer": {
+        "id": "Massa. Setiap detik Matahari mengubah sekitar 4 juta ton massa menjadi energi (E = mc²).",
+        "en": "Mass. Every second the Sun turns about 4 million tonnes of mass into energy (E = mc²)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "MOD-QUANT"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dirancang dengan fisika kuantum, atau cukup fisika Newton?",
+            "en": "Designed with quantum physics, or is Newton's physics enough?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_q",
+          "text": {
+            "id": "Fisika kuantum",
+            "en": "Quantum physics"
+          }
+        },
+        {
+          "id": "b_c",
+          "text": {
+            "id": "Cukup fisika Newton",
+            "en": "Newton's physics is enough"
+          }
+        },
+        {
+          "id": "chip",
+          "text": {
+            "id": "Chip komputer (transistor)",
+            "en": "A computer chip (transistors)"
+          },
+          "image": "pic_computer"
+        },
+        {
+          "id": "brake",
+          "text": {
+            "id": "Rem sepeda",
+            "en": "Bicycle brakes"
+          },
+          "image": "pic_bicycle"
+        },
+        {
+          "id": "led",
+          "text": {
+            "id": "Lampu LED",
+            "en": "An LED lamp"
+          },
+          "image": "sci_battery_bulb"
+        },
+        {
+          "id": "ball",
+          "text": {
+            "id": "Lintasan bola yang ditendang",
+            "en": "The path of a kicked ball"
+          },
+          "image": "pic_ball"
+        },
+        {
+          "id": "sensor",
+          "text": {
+            "id": "Sensor kamera ponsel",
+            "en": "A phone camera sensor"
+          },
+          "image": "pic_camera"
+        }
+      ],
+      "solution_pairs": {
+        "chip": "b_q",
+        "brake": "b_c",
+        "led": "b_q",
+        "ball": "b_c",
+        "sensor": "b_q"
+      },
+      "model_answer": {
+        "id": "Chip, LED, dan sensor kamera bergantung pada perilaku kuantum elektron; rem dan bola cukup dijelaskan Newton.",
+        "en": "Chips, LEDs and camera sensors rely on the quantum behaviour of electrons; brakes and a kicked ball are explained by Newton."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "MOD-QUANT"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Produk berlabel \"kuantum\" (gelang, liontin, air) pasti didukung fisika kuantum.",
+            "en": "Products labelled \"quantum\" (bracelets, pendants, water) must be backed by quantum physics."
+          }
+        }
+      ],
+      "image": "pic_phone",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. \"Kuantum\" sering dipakai sebagai pemanis iklan. Tanyakan: mana uji klinisnya, dan apakah izin edarnya jelas?",
+        "en": "Myth. \"Quantum\" is often just advertising gloss. Ask: where are the clinical trials, and is the product properly registered?"
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "MOD-RELAT"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mana yang harus mengoreksi efek relativitas setiap hari?",
+            "en": "Which one must correct for relativity every day?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_bicycle",
+          "image": "pic_bicycle"
+        },
+        {
+          "id": "pic_radio",
+          "image": "pic_radio"
+        },
+        {
+          "id": "pic_phone",
+          "image": "pic_phone",
+          "correct": true
+        },
+        {
+          "id": "pic_camera",
+          "image": "pic_camera"
+        }
+      ],
+      "model_answer": {
+        "id": "GPS di ponsel. Tanpa koreksi, jam satelit bergeser ±38 mikrodetik sehari dan posisi meleset sekitar 10 km per hari.",
+        "en": "Phone GPS. Without correction, satellite clocks drift about 38 microseconds a day and positions would be off by about 10 km a day."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "MOD-LIGHT"
+      ],
+      "pool": "PRACT",
+      "order": 8,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bintang berjarak 100 tahun cahaya: cahayanya berangkat ____ tahun lalu.",
+            "en": "A star 100 light years away: its light left ____ years ago."
+          }
+        }
+      ],
+      "image": "pic_star",
+      "options": [
+        {
+          "id": "one",
+          "text": {
+            "id": "1",
+            "en": "1"
+          }
+        },
+        {
+          "id": "hundred",
+          "text": {
+            "id": "100",
+            "en": "100"
+          }
+        },
+        {
+          "id": "thousand",
+          "text": {
+            "id": "1.000",
+            "en": "1,000"
+          }
+        }
+      ],
+      "solution": [
+        "hundred"
+      ],
+      "model_answer": {
+        "id": "100 tahun lalu. Bintang itu mungkin sudah berubah sejak cahayanya berangkat.",
+        "en": "100 years ago. The star may have changed since its light set off."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "MOD-RELAT"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mengapa kita tidak merasakan relativitas sehari-hari?",
+            "en": "Why don't we notice relativity in daily life?"
+          }
+        }
+      ],
+      "image": "pic_plane",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Relativitas hanya berlaku di luar angkasa",
+            "en": "Relativity only applies in space"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Kecepatan kita jauh lebih kecil daripada kecepatan cahaya",
+            "en": "Our speeds are tiny compared with the speed of light"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Gravitasi Bumi membatalkan efeknya",
+            "en": "Earth's gravity cancels it out"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Pesawat jet pun hanya sekitar sepersejuta kecepatan cahaya. Jam yang dibawa terbang keliling dunia (percobaan Hafele–Keating, 1971) hanya bergeser puluhan sampai ratusan nanodetik.",
+        "en": "Even a jet flies at about a millionth of light speed. Clocks flown round the world (the Hafele–Keating experiment, 1971) shifted by only tens to hundreds of nanoseconds."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "MOD-LIGHT"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-TRY",
+      "image": "math_ruler",
+      "model_answer": {
+        "id": "Ukur kecepatan cahaya dengan microwave: lepas piringan putarnya, panaskan sebatang cokelat di piring 15–20 detik sampai muncul titik-titik leleh. Ukur jarak antartitik (±6 cm), kalikan 2, lalu kalikan frekuensi pada label (2,45 GHz). Hasilnya mendekati 300.000 km per detik!",
+        "en": "Measure the speed of light with a microwave: take out the turntable and heat a chocolate bar on a plate for 15–20 seconds until melted spots appear. Measure the gap between spots (about 6 cm), double it, then multiply by the frequency on the label (2.45 GHz). You get close to 300,000 km per second!"
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "MOD-QUANT"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Energi tiap foton, dari terkecil ke terbesar.",
+            "en": "Energy per photon, from smallest to largest."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "green",
+          "text": {
+            "id": "Hijau",
+            "en": "Green"
+          },
+          "image": "pic_color_green"
+        },
+        {
+          "id": "red",
+          "text": {
+            "id": "Merah",
+            "en": "Red"
+          },
+          "image": "pic_color_red"
+        },
+        {
+          "id": "purple",
+          "text": {
+            "id": "Ungu",
+            "en": "Violet"
+          },
+          "image": "pic_color_purple"
+        },
+        {
+          "id": "yellow",
+          "text": {
+            "id": "Kuning",
+            "en": "Yellow"
+          },
+          "image": "pic_color_yellow"
+        },
+        {
+          "id": "blue",
+          "text": {
+            "id": "Biru",
+            "en": "Blue"
+          },
+          "image": "pic_color_blue"
+        }
+      ],
+      "solution": [
+        "red",
+        "yellow",
+        "green",
+        "blue",
+        "purple"
+      ],
+      "model_answer": {
+        "id": "Merah → kuning → hijau → biru → ungu. Makin pendek gelombangnya, makin besar energi tiap foton.",
+        "en": "Red → yellow → green → blue → violet. The shorter the wavelength, the more energy per photon."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "MOD-QUANT"
+      ],
+      "pool": "PRACT",
+      "order": 12,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sinar UV yang membuat kulit terbakar ada di luar warna…",
+            "en": "The UV light that burns skin lies beyond which colour?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_color_purple",
+          "image": "pic_color_purple",
+          "correct": true
+        },
+        {
+          "id": "pic_color_red",
+          "image": "pic_color_red"
+        },
+        {
+          "id": "pic_color_green",
+          "image": "pic_color_green"
+        }
+      ],
+      "model_answer": {
+        "id": "Ungu: ultra-violet berarti \"di luar ungu\". Fotonnya cukup kuat untuk merusak DNA sel kulit.",
+        "en": "Violet: ultraviolet means \"beyond violet\". Its photons are strong enough to damage skin-cell DNA."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "MOD-LIGHT"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Cahaya dari mana yang paling cepat sampai ke kita?",
+            "en": "Whose light reaches us fastest?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_sun",
+          "image": "pic_sun"
+        },
+        {
+          "id": "pic_star",
+          "image": "pic_star"
+        },
+        {
+          "id": "pic_moon",
+          "image": "pic_moon",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Bulan, sekitar 1,3 detik, karena paling dekat.",
+        "en": "The Moon, about 1.3 seconds, because it's closest."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "MOD-RELAT"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tanpa koreksi relativitas, apa yang terjadi pada GPS?",
+            "en": "Without relativity corrections, what happens to GPS?"
+          }
+        }
+      ],
+      "image": "pic_phone",
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Ponsel cepat panas",
+            "en": "Phones heat up faster"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Tidak ada bedanya",
+            "en": "Nothing changes"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Posisinya meleset beberapa kilometer per hari",
+            "en": "Positions drift by kilometres a day"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Posisi meleset sekitar 10 km per hari.",
+        "en": "Positions drift by about 10 km a day."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-01-015",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "pick_image",
+      "skills": [
+        "MOD-QUANT"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Foton warna mana yang paling berenergi?",
+            "en": "Which colour's photons carry the most energy?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_color_red",
+          "image": "pic_color_red"
+        },
+        {
+          "id": "pic_color_purple",
+          "image": "pic_color_purple",
+          "correct": true
+        },
+        {
+          "id": "pic_color_orange",
+          "image": "pic_color_orange"
+        }
+      ],
+      "model_answer": {
+        "id": "Ungu, karena gelombangnya paling pendek.",
+        "en": "Violet, because its wavelength is shortest."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-02-001",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "order",
+      "skills": [
+        "BIO-MRNA"
+      ],
+      "pool": "PRACT",
+      "order": 13,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Cara kerja vaksin mRNA.",
+            "en": "How an mRNA vaccine works."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "immune",
+          "text": {
+            "id": "Sistem imun belajar mengenali protein itu",
+            "en": "The immune system learns to recognise the protein"
+          }
+        },
+        {
+          "id": "inject",
+          "text": {
+            "id": "Vaksin berisi mRNA disuntikkan",
+            "en": "The mRNA vaccine is injected"
+          },
+          "image": "pic_medicine"
+        },
+        {
+          "id": "gone",
+          "text": {
+            "id": "mRNA terurai; memori imun tetap ada",
+            "en": "The mRNA breaks down; immune memory stays"
+          }
+        },
+        {
+          "id": "read",
+          "text": {
+            "id": "Sel membaca resep mRNA dan membuat satu protein virus",
+            "en": "Cells read the mRNA recipe and make one viral protein"
+          },
+          "image": "hist_notebook"
+        }
+      ],
+      "solution": [
+        "inject",
+        "read",
+        "immune",
+        "gone"
+      ],
+      "model_answer": {
+        "id": "Suntik → sel membuat protein → imun belajar → mRNA terurai, memori tetap.",
+        "en": "Injection → cells make the protein → immunity learns → mRNA breaks down, memory stays."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-02-002",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "BIO-GENE"
+      ],
+      "pool": "PRACT",
+      "order": 14,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "CRISPR awalnya adalah sistem pertahanan makhluk apa?",
+            "en": "CRISPR was first a defence system of which organisms?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "sci_microscope",
+          "image": "sci_microscope",
+          "correct": true
+        },
+        {
+          "id": "pic_orangutan",
+          "image": "pic_orangutan"
+        },
+        {
+          "id": "pic_tree",
+          "image": "pic_tree"
+        },
+        {
+          "id": "pic_fish",
+          "image": "pic_fish"
+        }
+      ],
+      "model_answer": {
+        "id": "Bakteri. Mereka menyimpan potongan DNA virus untuk mengenali dan memotong serangan berikutnya.",
+        "en": "Bacteria. They store snippets of viral DNA to recognise and cut the next attack."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-02-003",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "sort_buckets",
+      "skills": [
+        "BIO-ETHICS"
+      ],
+      "pool": "PRACT",
+      "order": 15,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pertanyaan sains, atau pertanyaan nilai?",
+            "en": "A science question, or a values question?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_sci",
+          "text": {
+            "id": "Sains: bisa diuji",
+            "en": "Science: can be tested"
+          }
+        },
+        {
+          "id": "b_val",
+          "text": {
+            "id": "Nilai: perlu musyawarah",
+            "en": "Values: needs public deliberation"
+          }
+        },
+        {
+          "id": "safe",
+          "text": {
+            "id": "Apakah padi rekayasa ini aman dimakan?",
+            "en": "Is this engineered rice safe to eat?"
+          },
+          "image": "pic_rice_bowl"
+        },
+        {
+          "id": "patent",
+          "text": {
+            "id": "Siapa yang boleh mematenkan benih?",
+            "en": "Who should be allowed to patent seeds?"
+          },
+          "image": "pic_farmer"
+        },
+        {
+          "id": "spread",
+          "text": {
+            "id": "Apakah gennya menyebar ke tanaman liar?",
+            "en": "Do its genes spread to wild plants?"
+          },
+          "image": "hist_tree_seedlings"
+        },
+        {
+          "id": "embryo",
+          "text": {
+            "id": "Bolehkah mengedit gen embrio manusia?",
+            "en": "Should human embryos be gene-edited?"
+          },
+          "image": "fam_baby"
+        },
+        {
+          "id": "hosp",
+          "text": {
+            "id": "Apakah vaksin ini mengurangi rawat inap?",
+            "en": "Does this vaccine reduce hospital stays?"
+          },
+          "image": "pic_hospital"
+        }
+      ],
+      "solution_pairs": {
+        "safe": "b_sci",
+        "patent": "b_val",
+        "spread": "b_sci",
+        "embryo": "b_val",
+        "hosp": "b_sci"
+      },
+      "model_answer": {
+        "id": "Sains menjawab \"apa yang terjadi\"; nilai dan kebijakan menjawab \"apa yang sebaiknya\". Keduanya perlu, tetapi berbeda.",
+        "en": "Science answers \"what happens\"; values and policy answer \"what should we do\". Both matter, but they differ."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-02-004",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "BIO-GENE"
+      ],
+      "pool": "PRACT",
+      "order": 16,
+      "prompt_id": "P-MYTH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Makan makanan rekayasa genetika (PRG) bisa mengubah DNA tubuh kita.",
+            "en": "Eating genetically modified (GM) food can change our own DNA."
+          }
+        }
+      ],
+      "image": "pic_rice_bowl",
+      "options": [
+        {
+          "id": "fakta",
+          "text": {
+            "id": "Fakta",
+            "en": "Fact"
+          }
+        },
+        {
+          "id": "mitos",
+          "text": {
+            "id": "Mitos",
+            "en": "Myth"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mitos. Semua makanan mengandung DNA, PRG atau bukan, dan pencernaan menguraikannya; DNA makanan tidak masuk ke gen kita.",
+        "en": "Myth. All food contains DNA, GM or not, and digestion breaks it down; food DNA doesn't enter our genes."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-02-005",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "BIO-GENE"
+      ],
+      "pool": "PRACT",
+      "order": 17,
+      "prompt_id": "P-CONNECT",
+      "gesture": "connect",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Teknik dan contohnya.",
+            "en": "Technique and example."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "breed",
+          "text": {
+            "id": "Pemuliaan (seleksi) biasa",
+            "en": "Conventional breeding"
+          }
+        },
+        {
+          "id": "gmo",
+          "text": {
+            "id": "Rekayasa genetika (transgenik)",
+            "en": "Genetic engineering (transgenic)"
+          }
+        },
+        {
+          "id": "crispr",
+          "text": {
+            "id": "Penyuntingan gen (CRISPR)",
+            "en": "Gene editing (CRISPR)"
+          }
+        },
+        {
+          "id": "mrna",
+          "text": {
+            "id": "Vaksin mRNA",
+            "en": "mRNA vaccine"
+          }
+        },
+        {
+          "id": "e_cabbage",
+          "text": {
+            "id": "Kubis, brokoli, dan kembang kol dari satu tumbuhan liar",
+            "en": "Cabbage, broccoli and cauliflower from one wild plant"
+          },
+          "image": "pic_vegetables"
+        },
+        {
+          "id": "e_insulin",
+          "text": {
+            "id": "Bakteri pembuat insulin manusia",
+            "en": "Bacteria that make human insulin"
+          },
+          "image": "pic_medicine"
+        },
+        {
+          "id": "e_thal",
+          "text": {
+            "id": "Terapi sel darah untuk thalassemia",
+            "en": "A blood-cell therapy for thalassaemia"
+          },
+          "image": "pic_hospital"
+        },
+        {
+          "id": "e_vax",
+          "text": {
+            "id": "Melatih imun mengenali protein virus",
+            "en": "Training immunity to recognise a viral protein"
+          },
+          "image": "pic_doctor"
+        }
+      ],
+      "solution_pairs": {
+        "breed": "e_cabbage",
+        "gmo": "e_insulin",
+        "crispr": "e_thal",
+        "mrna": "e_vax"
+      },
+      "model_answer": {
+        "id": "Seleksi: sayuran kol. Transgenik: insulin. CRISPR: terapi thalassemia. mRNA: vaksin.",
+        "en": "Breeding: the cabbage family. Transgenic: insulin. CRISPR: thalassaemia therapy. mRNA: vaccines."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-02-006",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 1,
+      "type": "pick_image",
+      "skills": [
+        "BIO-GENE"
+      ],
+      "pool": "PRACT",
+      "order": 18,
+      "prompt_id": "P-PICK",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Sebagian besar insulin kini dibuat oleh…",
+            "en": "Most insulin today is made by…"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "pic_cow",
+          "image": "pic_cow"
+        },
+        {
+          "id": "pic_tree",
+          "image": "pic_tree"
+        },
+        {
+          "id": "pic_fish",
+          "image": "pic_fish"
+        },
+        {
+          "id": "sci_microscope",
+          "image": "sci_microscope",
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "Mikroba hasil rekayasa (bakteri atau ragi). Dulu insulin diambil dari pankreas sapi dan babi.",
+        "en": "Engineered microbes (bacteria or yeast). Insulin used to come from cow and pig pancreases."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-02-007",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "BIO-MRNA"
+      ],
+      "pool": "PRACT",
+      "order": 19,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "mRNA vaksin tidak masuk ke ____ sel, tempat DNA disimpan.",
+            "en": "Vaccine mRNA doesn't enter the cell's ____, where DNA is kept."
+          }
+        }
+      ],
+      "image": "sci_microscope",
+      "options": [
+        {
+          "id": "membrane",
+          "text": {
+            "id": "membran",
+            "en": "membrane"
+          }
+        },
+        {
+          "id": "nucleus",
+          "text": {
+            "id": "inti",
+            "en": "nucleus"
+          }
+        },
+        {
+          "id": "blood",
+          "text": {
+            "id": "darah",
+            "en": "blood"
+          }
+        }
+      ],
+      "solution": [
+        "nucleus"
+      ],
+      "model_answer": {
+        "id": "Inti sel. mRNA bekerja di luar inti, lalu terurai.",
+        "en": "The nucleus. mRNA works outside it, then breaks down."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-02-008",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "story_choice",
+      "skills": [
+        "BIO-MRNA",
+        "BIO-ETHICS"
+      ],
+      "pool": "PRACT",
+      "order": 20,
+      "prompt_id": "P-STORY",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tanggapan apa yang paling tepat?",
+            "en": "What is the best response?"
+          }
+        }
+      ],
+      "image": "pic_phone",
+      "reading_id": "R-SNSAX-CHAIN",
+      "options": [
+        {
+          "id": "b",
+          "text": {
+            "id": "Cek sumber resmi: mRNA tidak masuk ke inti sel dan cepat diuraikan tubuh",
+            "en": "Check official sources: mRNA doesn't enter the nucleus and is soon broken down"
+          },
+          "correct": true
+        },
+        {
+          "id": "a",
+          "text": {
+            "id": "Teruskan saja, siapa tahu benar",
+            "en": "Forward it anyway, just in case"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Hapus semua vaksin dari jadwal keluarga",
+            "en": "Drop every vaccine from the family schedule"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Cek dulu ke Kemenkes, BPOM, atau WHO. Pesan tanpa sumber yang mendesak \"sebarkan!\" patut dicurigai.",
+        "en": "Check with the Ministry of Health, BPOM or WHO first. An unsourced message urging \"pass it on!\" deserves suspicion."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-02-009",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "order",
+      "skills": [
+        "BIO-GENE"
+      ],
+      "pool": "PRACT",
+      "order": 21,
+      "prompt_id": "P-ORDER",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Langkah penyuntingan gen dengan CRISPR.",
+            "en": "The steps of CRISPR gene editing."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "cut",
+          "text": {
+            "id": "Cas9 memotong DNA di titik itu",
+            "en": "Cas9 cuts the DNA at that spot"
+          }
+        },
+        {
+          "id": "design",
+          "text": {
+            "id": "RNA pemandu dirancang cocok dengan DNA sasaran",
+            "en": "A guide RNA is designed to match the target DNA"
+          },
+          "image": "hist_notebook"
+        },
+        {
+          "id": "repair",
+          "text": {
+            "id": "Sel memperbaiki potongan: gen dimatikan atau diganti",
+            "en": "The cell repairs the cut: the gene is switched off or changed"
+          }
+        },
+        {
+          "id": "find",
+          "text": {
+            "id": "RNA pemandu membawa Cas9 mencari urutan yang cocok",
+            "en": "The guide RNA leads Cas9 to the matching sequence"
+          },
+          "image": "sci_microscope"
+        }
+      ],
+      "solution": [
+        "design",
+        "find",
+        "cut",
+        "repair"
+      ],
+      "model_answer": {
+        "id": "Rancang pemandu → cari → potong → sel memperbaiki.",
+        "en": "Design the guide → find → cut → the cell repairs."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-02-010",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "BIO-ETHICS"
+      ],
+      "pool": "PRACT",
+      "order": 22,
+      "prompt_id": "P-TRY",
+      "image": "pic_phone",
+      "model_answer": {
+        "id": "Sebelum meneruskan klaim sains, tanyakan tiga hal: siapa sumbernya, adakah studi atau lembaga resmi yang bisa dicek (Kemenkes, BPOM, WHO), dan apakah klaimnya terlalu indah atau terlalu menakutkan? Coba pada satu pesan berantai minggu ini.",
+        "en": "Before passing on a science claim, ask three things: who is the source, is there a study or official body you can check (Ministry of Health, BPOM, WHO), and does it sound too good or too scary to be true? Try it on one chain message this week."
+      },
+      "feedback_ids": {
+        "correct": "FB-SEEN"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-02-011",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "BIO-ETHICS"
+      ],
+      "pool": "PRACT",
+      "order": 23,
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Mengedit gen embrio dikecam luas karena perubahannya ____ ke keturunan.",
+            "en": "Editing embryo genes is widely condemned because the changes are ____ to descendants."
+          }
+        }
+      ],
+      "image": "fam_baby",
+      "options": [
+        {
+          "id": "passed",
+          "text": {
+            "id": "diwariskan",
+            "en": "passed on"
+          }
+        },
+        {
+          "id": "none",
+          "text": {
+            "id": "tidak berpengaruh",
+            "en": "of no effect"
+          }
+        },
+        {
+          "id": "gone",
+          "text": {
+            "id": "hilang sendiri",
+            "en": "lost by themselves"
+          }
+        }
+      ],
+      "solution": [
+        "passed"
+      ],
+      "model_answer": {
+        "id": "Diwariskan. Tahun 2018, penyuntingan embrio bayi kembar di Tiongkok dikecam ilmuwan dunia: risikonya belum diketahui dan perubahannya menurun.",
+        "en": "Passed on. In 2018, the gene-editing of twin embryos in China was condemned by scientists worldwide: the risks were unknown and the changes are inherited."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-02-012",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "BIO-MRNA"
+      ],
+      "pool": "PRACT",
+      "order": 24,
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Benar tentang vaksin mRNA, atau keliru?",
+            "en": "True of mRNA vaccines, or not?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_yes",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          }
+        },
+        {
+          "id": "b_no",
+          "text": {
+            "id": "Keliru",
+            "en": "Not true"
+          }
+        },
+        {
+          "id": "recipe",
+          "text": {
+            "id": "Membawa resep sementara untuk satu protein virus",
+            "en": "Carries a temporary recipe for one viral protein"
+          },
+          "image": "hist_notebook"
+        },
+        {
+          "id": "live",
+          "text": {
+            "id": "Berisi virus hidup yang dilemahkan",
+            "en": "Contains a weakened live virus"
+          }
+        },
+        {
+          "id": "memory",
+          "text": {
+            "id": "Membuat tubuh membentuk antibodi dan sel memori",
+            "en": "Leads the body to make antibodies and memory cells"
+          },
+          "image": "pic_doctor"
+        },
+        {
+          "id": "dna",
+          "text": {
+            "id": "Mengubah DNA penerima",
+            "en": "Changes the recipient's DNA"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "recipe": "b_yes",
+        "live": "b_no",
+        "memory": "b_yes",
+        "dna": "b_no"
+      },
+      "model_answer": {
+        "id": "Vaksin mRNA tidak berisi virus hidup dan tidak mengubah DNA; ia memberi resep sementara agar imun belajar.",
+        "en": "mRNA vaccines contain no live virus and don't change DNA; they give a temporary recipe so immunity learns."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-02-013",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "BIO-GENE"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-FILL",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Dalam CRISPR, enzim yang memotong DNA bernama ____.",
+            "en": "In CRISPR, the enzyme that cuts DNA is called ____."
+          }
+        }
+      ],
+      "image": "sci_microscope",
+      "options": [
+        {
+          "id": "ins",
+          "text": {
+            "id": "insulin",
+            "en": "insulin"
+          }
+        },
+        {
+          "id": "cas9",
+          "text": {
+            "id": "Cas9",
+            "en": "Cas9"
+          }
+        },
+        {
+          "id": "mrna",
+          "text": {
+            "id": "mRNA",
+            "en": "mRNA"
+          }
+        }
+      ],
+      "solution": [
+        "cas9"
+      ],
+      "model_answer": {
+        "id": "Cas9, dipandu oleh RNA pemandu.",
+        "en": "Cas9, led by a guide RNA."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-02-014",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "true_false",
+      "skills": [
+        "BIO-MRNA"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "mRNA dari vaksin tidak bertahan selamanya; tubuh menguraikannya.",
+            "en": "Vaccine mRNA doesn't last for ever; the body breaks it down."
+          }
+        }
+      ],
+      "image": "pic_medicine",
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. Yang bertahan adalah memori sistem imun, bukan mRNA-nya.",
+        "en": "True. What lasts is the immune system's memory, not the mRNA."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-02-015",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "sort_buckets",
+      "skills": [
+        "BIO-ETHICS"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-SORT",
+      "gesture": "drag",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Bisa diuji ilmuwan, atau perlu musyawarah nilai?",
+            "en": "Testable by scientists, or a question of values?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "b_sci",
+          "text": {
+            "id": "Bisa diuji",
+            "en": "Testable"
+          }
+        },
+        {
+          "id": "b_val",
+          "text": {
+            "id": "Perlu musyawarah",
+            "en": "Needs deliberation"
+          }
+        },
+        {
+          "id": "drought",
+          "text": {
+            "id": "Apakah tanaman ini tahan kekeringan?",
+            "en": "Is this crop drought-tolerant?"
+          },
+          "image": "pic_farmer"
+        },
+        {
+          "id": "cost",
+          "text": {
+            "id": "Siapa yang menanggung biaya terapi mahal?",
+            "en": "Who pays for an expensive therapy?"
+          },
+          "image": "math_money_notes"
+        },
+        {
+          "id": "cure",
+          "text": {
+            "id": "Apakah terapi ini menyembuhkan lebih banyak pasien?",
+            "en": "Does this therapy cure more patients?"
+          },
+          "image": "pic_hospital"
+        }
+      ],
+      "solution_pairs": {
+        "drought": "b_sci",
+        "cost": "b_val",
+        "cure": "b_sci"
+      },
+      "model_answer": {
+        "id": "Ketahanan tanaman dan hasil terapi bisa diuji; pembagian biaya adalah soal nilai dan kebijakan.",
+        "en": "Crop tolerance and therapy outcomes can be tested; who pays is a question of values and policy."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-02-016",
+      "unit": "02",
+      "audience": "adults",
+      "level": "master",
+      "step": 2,
+      "type": "info_card",
+      "skills": [
+        "BIO-MRNA"
+      ],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "image": "hist_notebook",
+      "gem": true,
+      "source": "NobelPrize.org, \"The Nobel Prize in Physiology or Medicine 2023\" (press release, 2 October 2023: Katalin Karikó and Drew Weissman); K. Karikó et al., Immunity 23(2):165-175 (2005).",
+      "model_answer": {
+        "id": "Vaksin mRNA tidak muncul tiba-tiba pada 2020. Katalin Karikó meneliti mRNA sejak 1990-an, sering tanpa dana. Bersama Drew Weissman ia menemukan (2005) cara membuat mRNA tidak memicu peradangan. Keduanya meraih Nobel 2023.",
+        "en": "mRNA vaccines didn't appear out of nowhere in 2020. Katalin Karikó worked on mRNA from the 1990s, often without funding. With Drew Weissman she found (2005) how to stop mRNA triggering inflammation. They shared the 2023 Nobel Prize."
+      },
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    },
+    {
+      "item_id": "SNS-A-X-DP-01",
+      "unit": "01",
+      "audience": "adults",
+      "level": "master",
+      "type": "daily_puzzle",
+      "skills": [
+        "PUZZLE"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P-PUZZLE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Cahaya menempuh 300.000 km per detik. Jarak Bumi–Bulan sekitar 384.000 km. Berapa detik cahaya Bulan sampai ke kita?",
+            "en": "Light travels 300,000 km per second. The Moon is about 384,000 km away. How many seconds does moonlight take to reach us?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 1.3,
+        "tolerance": 0.1,
+        "unit": {
+          "id": "detik",
+          "en": "seconds"
+        }
+      },
+      "model_answer": {
+        "id": "Sekitar 1,3 detik (384.000 : 300.000 ≈ 1,28).",
+        "en": "About 1.3 seconds (384,000 ÷ 300,000 ≈ 1.28)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "draft",
+      "content_version": "sns-a-x-0.1"
+    }
+  ]
+}

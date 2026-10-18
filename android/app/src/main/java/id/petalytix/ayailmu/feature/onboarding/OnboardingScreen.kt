@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -31,10 +32,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.petalytix.ayailmu.AppLocale
 import id.petalytix.ayailmu.R
+import id.petalytix.ayailmu.core.design.art.ArtImage
+import id.petalytix.ayailmu.core.design.art.AyaFigure
+import id.petalytix.ayailmu.core.design.art.AyaPose
 import id.petalytix.ayailmu.core.design.components.AyaButton
 import id.petalytix.ayailmu.core.design.components.AyaTextField
 import id.petalytix.ayailmu.core.design.components.ChoiceState
@@ -46,6 +51,7 @@ import id.petalytix.ayailmu.core.design.theme.AyaSpacing
 import id.petalytix.ayailmu.core.design.theme.AyaTheme
 import id.petalytix.ayailmu.core.design.theme.AyaThemeTokens
 import id.petalytix.ayailmu.core.model.Lang
+import id.petalytix.ayailmu.feature.home.AvatarPicker
 
 /**
  * First-run onboarding and "add a profile" (same three steps: language, a neutral age screen, a nickname).
@@ -128,6 +134,8 @@ private fun LanguageStep(
 ) {
     val colors = AyaThemeTokens.colors
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(AyaSpacing.md)) {
+        // Aya waves hello on first run only (draft character, ART_DIRECTION section 7).
+        if (state.firstRun) AyaFigure(pose = AyaPose.WAVE, contentDescription = stringResource(R.string.cd_aya_mascot), size = 120.dp)
         Text(
             text = stringResource(if (state.firstRun) R.string.onb_welcome_title else R.string.onb_add_title),
             style = MaterialTheme.typography.headlineMedium,
@@ -182,6 +190,11 @@ private fun AgeStep(
 private fun GuardianStep() {
     val colors = AyaThemeTokens.colors
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(AyaSpacing.md)) {
+        // A grown-up's picture first: the message is "ask a parent", before a child reads a word.
+        Row(horizontalArrangement = Arrangement.spacedBy(AyaSpacing.sm), verticalAlignment = Alignment.CenterVertically) {
+            ArtImage("pic_woman", contentDescription = null, modifier = Modifier.width(GUARDIAN_ART))
+            ArtImage("pic_man", contentDescription = null, modifier = Modifier.width(GUARDIAN_ART))
+        }
         PaperCard(edge = colors.ochre) {
             Text(stringResource(R.string.onb_guardian_title), style = MaterialTheme.typography.titleLarge, color = colors.ink)
             Text(stringResource(R.string.onb_guardian_body), style = MaterialTheme.typography.bodyLarge, color = colors.ink)
@@ -214,11 +227,16 @@ private fun NameStep(
             keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words, imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { onEvent(OnboardingEvent.Next) }),
         )
+        // Follow-up 12: a picture for the profile (shown on Home instead of a letter); optional, a default is chosen.
+        Text(stringResource(R.string.avatar_pick_prompt), style = MaterialTheme.typography.bodyLarge, color = colors.ink)
+        AvatarPicker(chosen = state.avatar, enabled = !state.busy, onPick = { onEvent(OnboardingEvent.PickAvatar(it)) })
         if (state.error) {
             Text(stringResource(R.string.onb_error), style = MaterialTheme.typography.bodyMedium, color = colors.notYet)
         }
     }
 }
+
+private val GUARDIAN_ART = 96.dp
 
 @Preview(name = "id · light", showBackground = true, locale = "id")
 @Preview(name = "en · dark", showBackground = true, locale = "en", uiMode = android.content.res.Configuration.UI_MODE_NIGHT_YES)

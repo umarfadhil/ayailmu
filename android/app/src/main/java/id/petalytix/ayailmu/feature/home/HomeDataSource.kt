@@ -3,17 +3,31 @@ package id.petalytix.ayailmu.feature.home
 import id.petalytix.ayailmu.core.data.Profile
 import id.petalytix.ayailmu.core.data.ProfileKind
 import id.petalytix.ayailmu.core.data.repo.AnswerRepository
+import id.petalytix.ayailmu.core.data.repo.AppConfigRepository
 import id.petalytix.ayailmu.core.data.repo.ContentRepository
 import id.petalytix.ayailmu.core.data.repo.LoadedTrack
 import id.petalytix.ayailmu.core.data.repo.ProfileRepository
+import id.petalytix.ayailmu.core.data.repo.SurveyRepository
+import id.petalytix.ayailmu.core.data.settings.DailyPuzzleStore
+import id.petalytix.ayailmu.core.data.settings.DevOptionsStore
+import id.petalytix.ayailmu.core.data.settings.ModuleChoice
+import id.petalytix.ayailmu.core.data.settings.ProfileChoiceStore
+import id.petalytix.ayailmu.core.data.settings.PuzzleMark
+import id.petalytix.ayailmu.core.data.settings.TrialStore
 import id.petalytix.ayailmu.core.engine.Clock
 import id.petalytix.ayailmu.core.engine.Dates
 import id.petalytix.ayailmu.core.model.Lang
-import id.petalytix.ayailmu.feature.consent.Consent
-import id.petalytix.ayailmu.feature.session.SessionContent
+import id.petalytix.ayailmu.feature.modules.ModuleAssembler
+import id.petalytix.ayailmu.feature.modules.ModuleCard
+import id.petalytix.ayailmu.feature.puzzle.DailyPuzzle
+import id.petalytix.ayailmu.feature.store.AccessContext
+import id.petalytix.ayailmu.feature.store.AccessSource
+import id.petalytix.ayailmu.feature.trial.SurveyKind
+import id.petalytix.ayailmu.feature.trial.SurveyRules
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
+import java.time.LocalDate
 import javax.inject.Inject
 
 /** Developer-check numbers shown on Home in the demo build: proves content and storage work on device. */
@@ -26,26 +40,38 @@ data class DevCheck(
     val activeLabel: String? = null,
     val activeLang: Lang? = null,
     val loadError: String? = null,
+    /** Demo build: "simulate the free tier" (locks and store as in prod) instead of every unit open. */
+    val freeTier: Boolean = false,
 )
 
-/** One subject on the shelf, already filtered for the active profile's language and audience. */
-data class TrackCard(
+/** Home's daily puzzle (P6): one a day per profile, from any subject on the shelf. */
+data class PuzzleCard(
     val track: String,
-    val title: String,
-    val items: Int,
-    /** An unfinished session from today exists for this profile. */
-    val resumable: Boolean,
-    /** Shown content includes unapproved items (demo build only). */
-    val unreviewed: Boolean,
-    /** Evidence track and this profile has not consented to the current text yet: open the consent screen first. */
-    val needsConsent: Boolean = false,
+    val itemId: String,
+    /** Title of the subject the puzzle comes from. */
+    val subjectTitle: String,
+    /** Answered today; a new one comes tomorrow. */
+    val done: Boolean,
 )
 
+/** P7: a trial survey is due for this profile (day 7 or end of trial); "Nanti saja" hides it until tomorrow. */
+data class SurveyCard(
+    val track: String,
+    val kind: SurveyKind,
+)
+
+/**
+ * Home (follow-up 12): one card per module ([modules], MODULES_LEVELS_STORIES.md section 1) instead of one per track.
+ * [avatars]: profile id to its picture (every profile, for the switcher).
+ */
 data class HomeData(
     val profile: Profile?,
     val profiles: List<Profile>,
-    val tracks: List<TrackCard>,
+    val modules: List<ModuleCard>,
     val loadError: Boolean = false,
+    val puzzle: PuzzleCard? = null,
+    val survey: SurveyCard? = null,
+    val avatars: Map<String, String> = emptyMap(),
 )
 
 /** What Home needs from the data layer; an interface so the ViewModel is testable with a fake. */
@@ -60,7 +86,15 @@ interface HomeDataSource {
         label: String,
         lang: Lang,
     )
+
+    suspend fun setFreeTier(on: Boolean) {}
+
+    /** "Nanti saja" on the survey card: not again today for the active profile. */
+    suspend fun snoozeSurvey() {}
 }
+
+/** The tracks a profile sees on its shelf: its language and its audience (kids or adults). */
+fun LoadedTrack.fits(profile: Profile): Boolean = profile.lang in pack.meta.instructionLangs && profile.audience in pack.meta.audiences
 
 class DefaultHomeDataSource
     @Inject
@@ -69,33 +103,102 @@ class DefaultHomeDataSource
         private val profiles: ProfileRepository,
         private val answers: AnswerRepository,
         private val clock: Clock,
+        private val access: AccessSource,
+        private val puzzles: DailyPuzzleStore,
+        private val dev: DevOptionsStore,
+        private val config: AppConfigRepository,
+        private val surveys: SurveyRepository,
+        private val trialStore: TrialStore,
+        private val choices: ProfileChoiceStore,
+        private val assembler: ModuleAssembler,
     ) : HomeDataSource {
-        /** Re-evaluated whenever the active profile, the profile list or the number of saved answers changes. */
-        override fun home(): Flow<HomeData> =
-            combine(profiles.observeActive(), profiles.observeProfiles(), answers.observeCount()) { active, all, _ ->
-                val loaded = runCatching { content.tracks() }
-                val tracks = if (active == null) emptyList() else loaded.getOrDefault(emptyList()).mapNotNull { card(it, active) }
-                HomeData(profile = active, profiles = all, tracks = tracks, loadError = loaded.isFailure)
-            }
+        private class Inputs(
+            val active: Profile?,
+            val all: List<Profile>,
+            val ctx: AccessContext,
+            val marks: Map<String, PuzzleMark>,
+        )
 
-        private suspend fun card(
-            t: LoadedTrack,
+        /**
+         * Re-evaluated whenever the active profile, the profile list, the number of saved answers, what is
+         * unlocked (a purchase, a refund), today's puzzle mark, a module choice or an avatar changes.
+         */
+        override fun home(): Flow<HomeData> =
+            combine(
+                profiles.observeActive(),
+                profiles.observeProfiles(),
+                answers.observeCount(),
+                access.observe(),
+                puzzles.marks,
+            ) { active, all, _, ctx, marks -> Inputs(active, all, ctx, marks) }
+                .combine(choices.choices) { inputs, chosen -> build(inputs, chosen) }
+                .combine(choices.avatars) { home, avatars -> home.copy(avatars = Avatars.resolve(home.profiles, avatars)) }
+                .combine(trialStore.surveySnoozed) { home, snoozed ->
+                    val p = home.profile
+                    if (p == null) home else home.copy(survey = runCatching { surveyCard(p, snoozed[p.id] == today()) }.getOrNull())
+                }
+
+        private suspend fun build(
+            inputs: Inputs,
+            chosen: Map<String, Map<String, ModuleChoice>>,
+        ): HomeData {
+            val active = inputs.active ?: return HomeData(profile = null, profiles = inputs.all, modules = emptyList())
+            val loaded = runCatching { content.tracks() }
+            val mine = loaded.getOrDefault(emptyList()).filter { it.fits(active) }
+            val modules =
+                if (loaded.isFailure) {
+                    emptyList()
+                } else {
+                    runCatching { assembler.modules(active, inputs.ctx, chosen[active.id].orEmpty(), today()) }.getOrDefault(emptyList())
+                }
+            return HomeData(
+                profile = active,
+                profiles = inputs.all,
+                modules = modules.map { it.card },
+                loadError = loaded.isFailure,
+                puzzle = puzzleCard(mine, active, inputs.marks[active.id]),
+            )
+        }
+
+        /** The trial survey due today (P7), from `trial` in app_config.json; null when none, or config is invalid. */
+        private suspend fun surveyCard(
             profile: Profile,
-        ): TrackCard? {
-            val meta = t.pack.meta
-            if (profile.lang !in meta.instructionLangs || profile.audience !in meta.audiences) return null
-            val playable = SessionContent.playable(t.content)
-            val count = playable.items.count { it.audience == null || it.audience == profile.audience }
-            if (count == 0) return null
-            val today = Dates.localDate(clock.now().toEpochMilli(), clock.zone)
-            val snap = runCatching { answers.resumable(profile.id, playable) }.getOrNull()
-            return TrackCard(
-                track = t.track,
-                title = meta.title.resolve(profile.lang),
-                items = count,
-                resumable = snap != null && SessionContent.canResume(snap, profile.id, today),
-                unreviewed = playable.unreviewed,
-                needsConsent = Consent.required(meta.mode, profile),
+            snoozedToday: Boolean,
+        ): SurveyCard? {
+            val trial = config.trial()
+            val done = surveys.forProfile(profile.id).filter { it.track == trial.track }.mapNotNull { SurveyKind.of(it.kind) }.toSet()
+            val kind =
+                SurveyRules.forProfile(
+                    profile = profile,
+                    trial = trial,
+                    history = answers.history(profile.id, trial.track),
+                    done = done,
+                    today = LocalDate.parse(today()),
+                    snoozedToday = snoozedToday,
+                ) ?: return null
+            return SurveyCard(trial.track, kind)
+        }
+
+        override suspend fun snoozeSurvey() {
+            val p = profiles.activeProfile() ?: return
+            trialStore.snoozeSurvey(p.id, today())
+        }
+
+        private fun today(): String = Dates.localDate(clock.now().toEpochMilli(), clock.zone)
+
+        private fun puzzleCard(
+            mine: List<LoadedTrack>,
+            profile: Profile,
+            mark: PuzzleMark?,
+        ): PuzzleCard? {
+            val today = today()
+            val pick = DailyPuzzle.pick(DailyPuzzle.candidates(mine, profile), today, profile.id) ?: return null
+            val track = mine.firstOrNull { it.track == pick.track } ?: return null
+            return PuzzleCard(
+                track = pick.track,
+                itemId = pick.item.itemId,
+                subjectTitle = track.pack.meta.title.resolve(profile.lang),
+                done = mark != null && mark.date == today,
             )
         }
 
@@ -110,8 +213,8 @@ class DefaultHomeDataSource
             }
 
         override fun devCheck(): Flow<DevCheck> =
-            combine(contentStats(), profiles.observeProfiles(), answers.observeCount(), profiles.observeActive()) { c, all, count, active ->
-                c.copy(profiles = all.size, answers = count, activeLabel = active?.label, activeLang = active?.lang)
+            combine(contentStats(), profiles.observeProfiles(), answers.observeCount(), profiles.observeActive(), dev.freeTier) { c, all, count, active, freeTier ->
+                c.copy(profiles = all.size, answers = count, activeLabel = active?.label, activeLang = active?.lang, freeTier = freeTier)
             }
 
         override suspend fun switchProfile(id: String) = profiles.setActive(id)
@@ -122,4 +225,6 @@ class DefaultHomeDataSource
         ) {
             profiles.create(label = label, kind = ProfileKind.ADULT, lang = lang)
         }
+
+        override suspend fun setFreeTier(on: Boolean) = dev.setFreeTier(on)
     }

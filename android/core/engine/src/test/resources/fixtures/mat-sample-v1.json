@@ -1,0 +1,199 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "mat-sample-0.2",
+    "subject": "matematika",
+    "track": "mat",
+    "mode": "casual",
+    "audiences": ["kids"],
+    "instruction_langs": ["id", "en"],
+    "title": { "id": "Matematika — Pemula, Unit 1: Bilangan sampai 100", "en": "Mathematics — Beginner, Unit 1: Numbers to 100" }
+  },
+  "synthetic": true,
+  "note": "TEST FIXTURE (frozen copy of the P1 sample; tests depend on its exact items). 12-item developer sample exercising casual mode and the v1 renderer types in both languages (docs/syllabus/02_MATEMATIKA.md, Kids Pemula unit 1). Draft until a math reviewer and both language reviewers approve. Images are placeholders until P4.",
+  "prompts": {
+    "P-COUNT": { "id": "Ada berapa?", "en": "How many?" },
+    "P-TF": { "id": "Benar atau salah?", "en": "True or false?" },
+    "P-NUM": { "id": "Masukkan angkanya.", "en": "Enter the number." },
+    "P-ORDER": { "id": "Urutkan dari yang terkecil.", "en": "Put them in order, smallest first." },
+    "P-MATCH": { "id": "Pasangkan angka dengan kata.", "en": "Match each numeral to its word." },
+    "P-SORT": { "id": "Kelompokkan: genap atau ganjil?", "en": "Sort: even or odd?" },
+    "P-TILES": { "id": "Isi titik-titiknya.", "en": "Fill in the blank." },
+    "P-PICK": { "id": "Pilih gambar yang jumlahnya sesuai.", "en": "Pick the picture with the right amount." },
+    "P-GEM": { "id": "Tahukah kamu?", "en": "Did you know?" },
+    "P-COMPARE": { "id": "Mana yang lebih besar?", "en": "Which is bigger?" }
+  },
+  "feedback": {
+    "FB-OK": { "id": "Betul!", "en": "That's right!" },
+    "FB-OK-MODEL": { "id": "Betul. Jawabannya {model}.", "en": "Right. The answer is {model}." },
+    "FB-NO": { "id": "Belum tepat. Coba lihat lagi: jawabannya {model}.", "en": "Not quite. Look again: the answer is {model}." },
+    "FB-NO-TENS": { "id": "Lihat angka puluhannya dulu, baru satuannya.", "en": "Look at the tens digit first, then the ones." },
+    "FB-NO-COUNT": { "id": "Coba hitung pelan-pelan, satu per satu.", "en": "Try counting slowly, one at a time." },
+    "FB-DONTKNOW": { "id": "Tidak apa-apa. Jawabannya {model}.", "en": "That's okay. The answer is {model}." },
+    "FB-PEND": { "id": "Jawabanmu kami simpan dulu.", "en": "We saved your answer for now." },
+    "FB-GEM": { "id": "Permata ini masuk ke Kotak Permatamu.", "en": "This gem goes into your Gem box." }
+  },
+  "screens": [
+    {
+      "screen_id": "MAT-K-P-01-S1",
+      "unit": "01",
+      "audience": "kids",
+      "title": { "id": "Bilangan sampai 100", "en": "Numbers to 100" },
+      "body": [
+        { "id": "Setiap bilangan punya puluhan dan satuan. 47 artinya 4 puluhan dan 7 satuan.", "en": "Every number has tens and ones. 47 means 4 tens and 7 ones." },
+        { "id": "Kalau ragu, hitung pelan-pelan. Tidak ada yang buru-buru di sini.", "en": "If you're unsure, count slowly. Nobody is in a hurry here." }
+      ],
+      "review_status": "draft"
+    }
+  ],
+  "items": [
+    {
+      "item_id": "MAT-K-P-01-001", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "choose", "skills": ["NUM-COUNT-20"], "pool": "PRACT", "order": 1,
+      "prompt_id": "P-COUNT",
+      "help_lines": [{ "word": "", "meaning": { "id": "Hitung titiknya: ●  ●  ●  ●  ●  ●  ●", "en": "Count the dots: ●  ●  ●  ●  ●  ●  ●" } }],
+      "model_answer": { "id": "7", "en": "7" },
+      "options": [
+        { "id": "a", "text": { "id": "6", "en": "6" } },
+        { "id": "b", "text": { "id": "7", "en": "7" }, "correct": true },
+        { "id": "c", "text": { "id": "8", "en": "8" } }
+      ],
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO-COUNT", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "mat-sample-0.2"
+    },
+    {
+      "item_id": "MAT-K-P-01-002", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "pick_image", "skills": ["NUM-COUNT-20"], "pool": "PRACT", "order": 2,
+      "prompt_id": "P-PICK",
+      "model_answer": { "id": "12 mangga", "en": "12 mangoes" },
+      "options": [
+        { "id": "a", "image": "count_mango_9" },
+        { "id": "b", "image": "count_mango_12", "correct": true },
+        { "id": "c", "image": "count_mango_15" }
+      ],
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO-COUNT", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "mat-sample-0.2"
+    },
+    {
+      "item_id": "MAT-K-P-01-003", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "true_false", "skills": ["NUM-COMPARE"], "pool": "PRACT", "order": 3,
+      "prompt_id": "P-TF",
+      "model_answer": { "id": "Salah — 34 lebih kecil dari 43", "en": "False — 34 is smaller than 43" },
+      "options": [
+        { "id": "t", "text": { "id": "34 lebih besar dari 43 — benar", "en": "34 is bigger than 43 — true" } },
+        { "id": "f", "text": { "id": "34 lebih besar dari 43 — salah", "en": "34 is bigger than 43 — false" }, "correct": true }
+      ],
+      "feedback_ids": { "correct": "FB-OK-MODEL", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "mat-sample-0.2"
+    },
+    {
+      "item_id": "MAT-K-P-01-004", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "number_input", "skills": ["NUM-TENS-ONES"], "pool": "PRACT", "order": 4,
+      "prompt_id": "P-NUM",
+      "model_answer": { "id": "58", "en": "58" },
+      "help_lines": [{ "word": "5 puluhan dan 8 satuan", "meaning": { "id": "5 puluhan dan 8 satuan = ?", "en": "5 tens and 8 ones = ?" } }],
+      "numeric": { "value": 58, "tolerance": 0 },
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "mat-sample-0.2"
+    },
+    {
+      "item_id": "MAT-K-P-01-005", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "order", "skills": ["NUM-COMPARE"], "pool": "PRACT", "order": 5,
+      "prompt_id": "P-ORDER",
+      "model_answer": { "id": "19, 23, 32, 41", "en": "19, 23, 32, 41" },
+      "options": [
+        { "id": "n32", "text": { "id": "32", "en": "32" } },
+        { "id": "n19", "text": { "id": "19", "en": "19" } },
+        { "id": "n41", "text": { "id": "41", "en": "41" } },
+        { "id": "n23", "text": { "id": "23", "en": "23" } }
+      ],
+      "solution": ["n19", "n23", "n32", "n41"],
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "mat-sample-0.2"
+    },
+    {
+      "item_id": "MAT-K-P-01-006", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "info_card", "skills": [], "pool": "GEM", "gem": true,
+      "source": "Babylonian sexagesimal system; see e.g. Britannica, \"Babylonian mathematics\".",
+      "prompt_id": "P-GEM",
+      "help_lines": [],
+      "model_answer": {
+        "id": "Satu jam punya 60 menit karena orang Babilonia, 4.000 tahun lalu, suka menghitung dengan 60 — angka yang bisa dibagi 2, 3, 4, 5, 6, 10, 12, 15, 20 dan 30.",
+        "en": "An hour has 60 minutes because the Babylonians, 4,000 years ago, liked counting in 60s — a number you can split by 2, 3, 4, 5, 6, 10, 12, 15, 20 and 30."
+      },
+      "feedback_ids": { "correct": "FB-GEM" },
+      "review_status": "draft", "content_version": "mat-sample-0.2"
+    },
+    {
+      "item_id": "MAT-K-P-01-007", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "match_pairs", "skills": ["NUM-READ"], "pool": "PRACT", "order": 6,
+      "prompt_id": "P-MATCH",
+      "model_answer": { "id": "25 = dua puluh lima, 52 = lima puluh dua, 15 = lima belas", "en": "25 = twenty-five, 52 = fifty-two, 15 = fifteen" },
+      "options": [
+        { "id": "n25", "text": { "id": "25", "en": "25" } },
+        { "id": "n52", "text": { "id": "52", "en": "52" } },
+        { "id": "n15", "text": { "id": "15", "en": "15" } },
+        { "id": "w25", "text": { "id": "dua puluh lima", "en": "twenty-five" } },
+        { "id": "w52", "text": { "id": "lima puluh dua", "en": "fifty-two" } },
+        { "id": "w15", "text": { "id": "lima belas", "en": "fifteen" } }
+      ],
+      "solution_pairs": { "n25": "w25", "n52": "w52", "n15": "w15" },
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "mat-sample-0.2"
+    },
+    {
+      "item_id": "MAT-K-P-01-008", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "sort_buckets", "skills": ["NUM-EVEN-ODD"], "pool": "PRACT", "order": 7,
+      "prompt_id": "P-SORT",
+      "model_answer": { "id": "Genap: 14, 30. Ganjil: 27, 9.", "en": "Even: 14, 30. Odd: 27, 9." },
+      "options": [
+        { "id": "b_even", "text": { "id": "Genap", "en": "Even" } },
+        { "id": "b_odd", "text": { "id": "Ganjil", "en": "Odd" } },
+        { "id": "n14", "text": { "id": "14", "en": "14" } },
+        { "id": "n27", "text": { "id": "27", "en": "27" } },
+        { "id": "n30", "text": { "id": "30", "en": "30" } },
+        { "id": "n9", "text": { "id": "9", "en": "9" } }
+      ],
+      "solution_pairs": { "n14": "b_even", "n27": "b_odd", "n30": "b_even", "n9": "b_odd" },
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "mat-sample-0.2"
+    },
+    {
+      "item_id": "MAT-K-P-01-009", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "fill_blank", "skills": ["NUM-SEQUENCE"], "pool": "PRACT", "order": 8,
+      "prompt_id": "P-TILES",
+      "model_answer": { "id": "36, 37, 38, 39", "en": "36, 37, 38, 39" },
+      "help_lines": [{ "word": "36, 37, __, 39", "meaning": { "id": "36, 37, __, 39 — angka berapa yang hilang?", "en": "36, 37, __, 39 — which number is missing?" } }],
+      "options": [
+        { "id": "t38", "text": { "id": "38", "en": "38" } },
+        { "id": "t40", "text": { "id": "40", "en": "40" } },
+        { "id": "t83", "text": { "id": "83", "en": "83" } }
+      ],
+      "solution": ["t38"],
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "mat-sample-0.2"
+    },
+    {
+      "item_id": "MAT-K-P-01-010", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "choose", "skills": ["NUM-COMPARE"], "pool": "PRACT", "order": 9,
+      "prompt_id": "P-COMPARE",
+      "model_answer": { "id": "71", "en": "71" },
+      "options": [
+        { "id": "a", "text": { "id": "17", "en": "17" } },
+        { "id": "b", "text": { "id": "71", "en": "71" }, "correct": true }
+      ],
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "mat-sample-0.2"
+    },
+    {
+      "item_id": "MAT-K-P-01-011", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "number_input", "skills": ["NUM-TENS-ONES"], "pool": "REMED",
+      "prompt_id": "P-NUM",
+      "model_answer": { "id": "63", "en": "63" },
+      "help_lines": [{ "word": "6 puluhan dan 3 satuan", "meaning": { "id": "6 puluhan dan 3 satuan = ?", "en": "6 tens and 3 ones = ?" } }],
+      "numeric": { "value": 63, "tolerance": 0 },
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO-TENS", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "mat-sample-0.2"
+    },
+    {
+      "item_id": "MAT-K-P-01-012", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "true_false", "skills": ["NUM-EVEN-ODD"], "pool": "REMED",
+      "prompt_id": "P-TF",
+      "model_answer": { "id": "Benar — 48 genap", "en": "True — 48 is even" },
+      "options": [
+        { "id": "t", "text": { "id": "48 adalah bilangan genap — benar", "en": "48 is an even number — true" }, "correct": true },
+        { "id": "f", "text": { "id": "48 adalah bilangan genap — salah", "en": "48 is an even number — false" } }
+      ],
+      "feedback_ids": { "correct": "FB-OK-MODEL", "wrong": "FB-NO", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "mat-sample-0.2"
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "lang-sample-0.1",
+    "subject": "bahasa",
+    "track": "jpn-t",
+    "mode": "casual",
+    "audiences": ["kids"],
+    "instruction_langs": ["id", "en"],
+    "target_lang": "ja",
+    "title": { "id": "Bahasa Jepang — contoh uji", "en": "Japanese — test sample" }
+  },
+  "synthetic": true,
+  "note": "TEST FIXTURE (follow-up 11, INTERACTIONS_AUDIO.md): trace, gestures, picture audio_match, option audio and romanization. Tests depend on its exact items.",
+  "prompts": {
+    "P-TRACE": { "id": "Tulis hurufnya.", "en": "Trace the letter." },
+    "P-LISTEN": { "id": "Dengar, lalu pilih.", "en": "Listen, then pick." },
+    "P-MATCH": { "id": "Pasangkan gambar dan katanya.", "en": "Match picture and word." },
+    "P-SORT": { "id": "Masukkan ke keranjang.", "en": "Put them in the baskets." },
+    "P-ORDER": { "id": "Susun katanya.", "en": "Build the word." },
+    "P-CHOOSE": { "id": "Pilih artinya.", "en": "Pick the meaning." },
+    "P-GEM": { "id": "Tahukah kamu?", "en": "Did you know?" }
+  },
+  "feedback": {
+    "FB-OK": { "id": "Betul!", "en": "That's right!" },
+    "FB-NO": { "id": "Belum tepat. {model}", "en": "Not yet. {model}" },
+    "FB-DONTKNOW": { "id": "Tidak apa-apa. {model}", "en": "That's fine. {model}" },
+    "FB-GEM": { "id": "Permata baru!", "en": "A new gem!" }
+  },
+  "units": [ { "unit": "01", "title": { "id": "Hiragana あ–お", "en": "Hiragana あ–お" } } ],
+  "items": [
+    { "item_id": "JPN-T-P-01-001", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "trace",
+      "skills": ["KANA-A"], "pool": "PRACT", "order": 1, "prompt_id": "P-TRACE",
+      "trace": "hira_a", "target_text": "あ", "romanization": "a", "audio": "ja/a",
+      "model_answer": { "id": "あ dibaca \"a\".", "en": "あ is read \"a\"." },
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "lang-sample-0.1" },
+
+    { "item_id": "JPN-T-P-01-002", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "audio_match",
+      "skills": ["VOCAB-FOOD"], "pool": "PRACT", "order": 2, "prompt_id": "P-LISTEN", "audio": "ja/ringo",
+      "model_answer": { "id": "りんご = apel", "en": "りんご = apple" },
+      "options": [
+        { "id": "apple", "image": "pic_apple", "correct": true },
+        { "id": "cat", "image": "pic_cat" },
+        { "id": "book", "image": "pic_book" }
+      ],
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "lang-sample-0.1" },
+
+    { "item_id": "JPN-T-P-01-003", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "match_pairs",
+      "skills": ["VOCAB-FOOD"], "pool": "PRACT", "order": 3, "prompt_id": "P-MATCH", "gesture": "drag",
+      "model_answer": { "id": "りんご = apel, ねこ = kucing", "en": "りんご = apple, ねこ = cat" },
+      "options": [
+        { "id": "p_apple", "image": "pic_apple" },
+        { "id": "p_cat", "image": "pic_cat" },
+        { "id": "w_ringo", "target_text": "りんご", "romanization": "ringo", "audio": "ja/ringo" },
+        { "id": "w_neko", "target_text": "ねこ", "romanization": "neko", "audio": "ja/neko" }
+      ],
+      "solution_pairs": { "p_apple": "w_ringo", "p_cat": "w_neko" },
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "lang-sample-0.1" },
+
+    { "item_id": "JPN-T-P-01-004", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "match_pairs",
+      "skills": ["VOCAB-FOOD"], "pool": "PRACT", "order": 4, "prompt_id": "P-MATCH",
+      "model_answer": { "id": "いぬ = anjing", "en": "いぬ = dog" },
+      "options": [
+        { "id": "p_dog", "image": "pic_dog" },
+        { "id": "p_fish", "image": "pic_fish" },
+        { "id": "w_inu", "target_text": "いぬ", "romanization": "inu" },
+        { "id": "w_sakana", "target_text": "さかな", "romanization": "sakana" }
+      ],
+      "solution_pairs": { "p_dog": "w_inu", "p_fish": "w_sakana" },
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "lang-sample-0.1" },
+
+    { "item_id": "JPN-T-P-01-005", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "sort_buckets",
+      "skills": ["VOCAB-FOOD"], "pool": "PRACT", "order": 5, "prompt_id": "P-SORT", "gesture": "drag",
+      "model_answer": { "id": "Apel dan nasi makanan; kucing hewan.", "en": "Apple and rice are food; the cat is an animal." },
+      "options": [
+        { "id": "b_food", "text": { "id": "makanan", "en": "food" } },
+        { "id": "b_animal", "text": { "id": "hewan", "en": "animals" } },
+        { "id": "apple", "image": "pic_apple" },
+        { "id": "rice", "image": "pic_rice_bowl" },
+        { "id": "cat", "image": "pic_cat" }
+      ],
+      "solution_pairs": { "apple": "b_food", "rice": "b_food", "cat": "b_animal" },
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "lang-sample-0.1" },
+
+    { "item_id": "JPN-T-P-01-006", "unit": "01", "audience": "kids", "level": "pemula", "step": 2, "type": "order",
+      "skills": ["KANA-A"], "pool": "PRACT", "order": 6, "prompt_id": "P-ORDER", "gesture": "tap", "image": "pic_dog",
+      "model_answer": { "id": "い・ぬ", "en": "い・ぬ" },
+      "options": [
+        { "id": "nu", "target_text": "ぬ", "romanization": "nu" },
+        { "id": "i", "target_text": "い", "romanization": "i" }
+      ],
+      "solution": ["i", "nu"],
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "lang-sample-0.1" },
+
+    { "item_id": "JPN-T-P-01-R01", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "trace",
+      "skills": ["KANA-A"], "pool": "REMED", "prompt_id": "P-TRACE",
+      "trace": "hira_i", "target_text": "い", "romanization": "i", "audio": "ja/i",
+      "model_answer": { "id": "い dibaca \"i\".", "en": "い is read \"i\"." },
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "lang-sample-0.1" },
+
+    { "item_id": "JPN-T-P-01-R02", "unit": "01", "audience": "kids", "level": "pemula", "step": 1, "type": "pick_image",
+      "skills": ["VOCAB-FOOD"], "pool": "REMED", "prompt_id": "P-CHOOSE", "target_text": "りんご", "romanization": "ringo",
+      "audio": "ja/ringo",
+      "model_answer": { "id": "りんご = apel", "en": "りんご = apple" },
+      "options": [
+        { "id": "apple", "image": "pic_apple", "correct": true },
+        { "id": "dog", "image": "pic_dog" }
+      ],
+      "feedback_ids": { "correct": "FB-OK", "wrong": "FB-NO", "dont_know": "FB-DONTKNOW" },
+      "review_status": "draft", "content_version": "lang-sample-0.1" },
+
+    { "item_id": "JPN-T-P-01-G01", "unit": "01", "audience": "kids", "level": "pemula", "type": "info_card",
+      "skills": ["KANA-A"], "pool": "GEM", "gem": true, "prompt_id": "P-GEM",
+      "source": "Encyclopaedia Britannica, \"Hiragana\"",
+      "model_answer": { "id": "Hiragana punya 46 huruf dasar.", "en": "Hiragana has 46 basic letters." },
+      "feedback_ids": { "correct": "FB-GEM" },
+      "review_status": "draft", "content_version": "lang-sample-0.1" }
+  ]
+}

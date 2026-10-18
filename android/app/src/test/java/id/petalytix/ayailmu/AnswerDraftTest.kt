@@ -11,6 +11,7 @@ import id.petalytix.ayailmu.feature.session.RenderKind
 import id.petalytix.ayailmu.feature.session.StepUi
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /** UI input → engine Response, the single conversion point; null means "Check" stays disabled. */
@@ -20,6 +21,7 @@ class AnswerDraftTest {
         slots: Int = 0,
         left: List<String> = emptyList(),
         audioMissing: Boolean = false,
+        listen: Boolean = false,
     ) = StepUi.Question(
         itemId = "X",
         kind = kind,
@@ -30,6 +32,7 @@ class AnswerDraftTest {
         left = left.map { OptionUi(it, it, null, null) },
         slots = slots,
         audioMissing = audioMissing,
+        listen = listen,
     )
 
     @Test
@@ -104,5 +107,66 @@ class AnswerDraftTest {
     @Test
     fun `gem and info cards are recorded as seen`() {
         assertEquals(Response.choice(AnswerDraft.SEEN), AnswerDraft().toResponse(q(RenderKind.GEM)))
+    }
+
+    @Test
+    fun `listening answers say whether the clip could play`() {
+        val d = AnswerDraft()
+        d.choice = "a"
+        assertEquals(AudioStatus.PLAYED, d.toResponse(q(RenderKind.CHOICE, listen = true))!!.audioStatus)
+        d.voiceMissing = true
+        assertEquals(AudioStatus.UNAVAILABLE, d.toResponse(q(RenderKind.CHOICE, listen = true))!!.audioStatus)
+        assertEquals(Response.choice("a"), d.toResponse(q(RenderKind.CHOICE)))
+    }
+
+    @Test
+    fun `trace is done when every stroke is traced, or skipped as dont know without stroke data`() {
+        val trace = q(RenderKind.TRACE)
+        val d = AnswerDraft()
+        assertNull(d.toResponse(trace))
+        d.traceStrokes = 3
+        d.strokeDone(0)
+        d.strokeDone(1)
+        d.strokeDone(1) // a stroke counts once
+        assertNull(d.toResponse(trace))
+        d.strokeDone(2)
+        assertEquals(Response.sequence(listOf("1", "2", "3")), d.toResponse(trace))
+
+        val none = AnswerDraft()
+        assertNull(none.toResponse(trace))
+        none.traceSkipped = true
+        assertEquals(Response.dontKnow(), none.toResponse(trace))
+    }
+
+    @Test
+    fun `drag and connect link directly, dropping a pick, and unlinking frees the card`() {
+        val pairs = q(RenderKind.PAIRS, left = listOf("n1", "n2"))
+        val d = AnswerDraft()
+        d.tapLeft("n1")
+        assertEquals("n1", d.activeLeft)
+        assertTrue(d.link("n2", "w2", oneToOne = true))
+        assertNull(d.pick)
+        d.link("n1", "w1", oneToOne = true)
+        assertEquals(Response.pairs(listOf(Response.Pairing("n1", "w1"), Response.Pairing("n2", "w2"))), d.toResponse(pairs))
+        assertTrue(d.unlink("n1"))
+        assertNull(d.toResponse(pairs))
+        // Right card first, then the left one: the same link.
+        d.tapRight("w1", oneToOne = true)
+        d.tapLeft("n1")
+        assertEquals("w1", d.pairs["n1"])
+    }
+
+    @Test
+    fun `dragged tiles go into their place and reorder`() {
+        val seq = q(RenderKind.SEQUENCE, slots = 3)
+        val d = AnswerDraft()
+        d.dropInSlot("c", 2, 3)
+        d.dropInSlot("a", 0, 3)
+        d.dropInSlot("b", 1, 3)
+        assertEquals(Response.sequence(listOf("a", "b", "c")), d.toResponse(seq))
+        d.dropInSlot("c", 0, 3)
+        assertEquals(listOf("c", "a", "b"), d.placed.toList())
+        assertTrue(d.takeBack("a"))
+        assertNull(d.toResponse(seq))
     }
 }
