@@ -1,27 +1,39 @@
-import { LinearGradient } from 'expo-linear-gradient';
-import { Redirect, router, type Href } from 'expo-router';
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
+import { router, useFocusEffect, type Href } from 'expo-router';
+import { Fragment, useCallback, type ReactNode } from 'react';
+import { ActivityIndicator, Pressable, StyleSheet, Text, View, type ViewStyle } from 'react-native';
 
 import { useApp } from '@/ui/AppContext';
+import {
+  ArabicText,
+  Btn,
+  Chip,
+  DraftChip,
+  EmptyState,
+  Icon,
+  IconButton,
+  ModeNote,
+  Notice,
+  P,
+  Page,
+  ReadOnlyNotice,
+  StorageRefused,
+  Wordmark,
+  type IconName,
+} from '@/ui/components';
+import { NEUTRAL_PREVIEW, UNIT_TITLE, unitLabel } from '@/ui/labels';
+import { UNIT_STATE_LABEL, unitStates, type UnitState } from '@/ui/learningPath';
 import { MigrationNotice } from '@/ui/notices';
-import { formatDue, isLearningError, useLearning } from '@/ui/useLearning';
-import { Btn, EmptyState, Eyebrow, H1, H2, Icon, MixedText, Muted, Notice, P, Page, ReadOnlyNotice, StorageRefused, useIsDesktop } from '@/ui/components';
-import { colors, radius } from '@/ui/theme';
-
-// Unit names from Lessons_Unit_A_B_Draft.md Part 2 / Part 3. Unit B in this slice is its basic part only
-// (who did it); the speech part is locked while the learned rule is pending.
-const UNIT_TITLE = { A: 'Unit A — Siapa yang dijelaskan?', B: 'Unit B (dasar) — Siapa yang melakukan?' } as const;
-const OUTLINE_ACCENTS = [colors.topicBar, colors.exampleBar, colors.clueBar];
+import { colors, fonts, radius, shadow, typography } from '@/ui/theme';
+import { formatDue, formatLongDate, isLearningError, useLearning, type LearningState } from '@/ui/useLearning';
 
 export default function Home() {
-  const { ready, error, readOnly, rules, content, learner } = useApp();
-  const desktop = useIsDesktop();
+  const { ready, error, content, learner } = useApp();
   const learning = useLearning();
 
   if (!ready) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center' }}>
-        <ActivityIndicator color={colors.indigo} accessibilityLabel="Memuat" />
+      <View style={styles.center}>
+        <ActivityIndicator color={colors.accent} accessibilityLabel="Memuat" />
       </View>
     );
   }
@@ -38,145 +50,274 @@ export default function Home() {
             materi yang sudah disetujui untuk uji coba. Silakan kembali lagi nanti.
           </P>
         </EmptyState>
+        <ModeNote />
       </Page>
     );
   }
 
-  if (!learner) return <Redirect href="/consent" />;
+  if (!learner) return <Welcome />;
+  return <Today learning={learning} />;
+}
 
-  const unit = learning?.open[learning.open.length - 1] ?? 'A';
-  const unitScreens = content.screens.filter((sc) => sc.unit === unit);
-  const practiceCount = content.items.filter((i) => i.unit === unit && i.pool === 'PRACT').length;
-  const snap = learning?.snapshot;
+/** Guest-first welcome (board 13). Nothing is saved until the profile and consent step. */
+function Welcome() {
+  const { rules, content } = useApp();
+  return (
+    <Page
+      footer={
+        <>
+          <Btn testID="welcome-start" label="Mulai" icon="arrow-forward" onPress={() => router.push('/consent')} />
+          <Text style={styles.modeCaption}>{rules.mode === 'tester' ? 'Prototipe · mode penguji' : 'Prototipe pengembang'}</Text>
+        </>
+      }
+    >
+      <View style={styles.welcomeTop}>
+        <Wordmark />
+        {content.unreviewed ? <Chip tone="draft" label="Konten contoh · belum ditinjau" /> : null}
+      </View>
+      <View style={styles.figure}>
+        <ArabicText size={52} weight="medium" testID="welcome-preview">
+          {NEUTRAL_PREVIEW}
+        </ArabicText>
+        <Text style={styles.figureCaption}>Huruf Arab berharakat</Text>
+      </View>
+      <View style={styles.welcomeText}>
+        <Text accessibilityRole="header" style={styles.welcomeTitle}>
+          Pahami kalimat Arab pendek, langkah demi langkah.
+        </Text>
+        <Text style={typography.body}>Penjelasan dalam bahasa Indonesia. Satu sesi singkat setiap hari.</Text>
+      </View>
+    </Page>
+  );
+}
+
+function StatusLine({ icon, tone = 'plain', testID, children }: { icon: IconName; tone?: 'plain' | 'accent' | 'good'; testID?: string; children: string }) {
+  const ink = tone === 'good' ? colors.goodInk : colors.text;
+  return (
+    <View style={styles.status}>
+      <Icon name={icon} size={18} color={tone === 'accent' ? colors.accent : tone === 'good' ? colors.goodInk : colors.muted} />
+      <Text testID={testID} style={[styles.statusText, { color: ink }, tone === 'good' && styles.statusStrong]}>
+        {children}
+      </Text>
+    </View>
+  );
+}
+
+const DOT: Record<UnitState, ViewStyle> = {
+  due: { backgroundColor: colors.accent, borderColor: colors.missBg, borderWidth: 4 },
+  practising: { backgroundColor: colors.accent, borderColor: colors.accentSoft, borderWidth: 4 },
+  available: { backgroundColor: colors.sheet, borderColor: colors.accent, borderWidth: 3 },
+  closed: { backgroundColor: colors.sheet, borderColor: '#A89A84', borderWidth: 2 },
+};
+
+/**
+ * Home (board 01): one hero card with the unit, today's state and ONE primary action, then the
+ * learning path. Every date and count comes from the saved projection; there are no lesson previews
+ * here (they live in Panduan, where each view is dated).
+ */
+function Today({ learning }: { learning: LearningState }) {
+  const { readOnly, content, learner, flash, setFlash } = useApp();
+  // The note left by closing a session is for this visit to Home only.
+  useFocusEffect(useCallback(() => () => setFlash(null), [setFlash]));
+  if (!learner) return null;
+
+  const data = learning && !isLearningError(learning) ? learning : null;
+  const unit = data?.open[data.open.length - 1] ?? 'A';
+  const snap = data?.snapshot;
   const inProgress = snap?.kind === 'ok' && snap.state.phase !== 'done';
-  const doneToday = snap?.kind === 'ok' && snap.state.phase === 'done' && snap.state.local_date === learning?.today;
+  const doneToday = snap?.kind === 'ok' && snap.state.phase === 'done' && snap.state.local_date === data?.today;
   const oldFormat = snap?.kind === 'legacy' || snap?.kind === 'content-changed';
-  const nextDue = learning?.progress.next_due;
+  const nextDue = data?.progress.next_due ?? null;
+  const minutes = learner.session_minutes;
+
+  let status: ReactNode;
+  if (inProgress) {
+    status = <StatusLine icon="bookmark-outline" testID="session-status">{`Sesi belum selesai · ${snap.state.results.length} jawaban tersimpan`}</StatusLine>;
+  } else if (doneToday) {
+    status = (
+      <View style={styles.statusGroup}>
+        <StatusLine icon="checkmark-circle-outline" tone="good" testID="session-status">
+          Sesi hari ini selesai
+        </StatusLine>
+        {data && nextDue ? (
+          <Text testID="next-due" style={styles.statusSub}>{`Ulasan/cek berikutnya: ${formatDue(nextDue, data.today)}.`}</Text>
+        ) : null}
+      </View>
+    );
+  } else if (data && nextDue && nextDue <= data.today) {
+    status = (
+      <StatusLine icon="calendar-outline" tone="accent" testID="next-due">
+        {`Ada ulasan hari ini · sesi ± ${minutes} menit`}
+      </StatusLine>
+    );
+  } else {
+    status = <StatusLine icon="time-outline">{`Sesi ± ${minutes} menit`}</StatusLine>;
+  }
+
+  const action =
+    learning === undefined ? (
+      <ActivityIndicator color={colors.accent} accessibilityLabel="Memuat" />
+    ) : doneToday ? (
+      <Btn testID="home-summary" label="Lihat ringkasan" onPress={() => router.push('/summary')} />
+    ) : (
+      <Btn
+        testID="start-session"
+        label={inProgress ? 'Lanjutkan sesi' : 'Mulai sesi'}
+        icon="arrow-forward"
+        disabled={!!readOnly}
+        onPress={() => {
+          setFlash(null);
+          router.push('/session');
+        }}
+      />
+    );
+
+  const states = data ? unitStates(data, content) : [];
 
   return (
-    <Page width="wide">
+    <Page>
+      <View style={styles.header}>
+        <Wordmark />
+        <View style={styles.headerActions}>
+          <DraftChip />
+          <IconButton icon="options-outline" label="Pengaturan" testID="home-settings" onPress={() => router.push('/settings')} />
+        </View>
+      </View>
       <MigrationNotice />
       {readOnly ? <ReadOnlyNotice reason={readOnly} /> : null}
-      <H1>Sesi hari ini</H1>
+      {flash ? (
+        <View accessibilityLiveRegion="polite" role="status">
+          <Notice tone="info" icon="bookmark-outline" testID="home-flash">
+            {flash}
+          </Notice>
+        </View>
+      ) : null}
+      {oldFormat ? (
+        <Notice tone="info" testID="session-status">
+          Sesi lama memakai format soal sebelumnya dan akan diarsipkan saat Anda mulai. Semua jawaban tetap tersimpan.
+        </Notice>
+      ) : null}
 
-      <View style={styles.unit}>
-        <LinearGradient
-          colors={[colors.unitPanelA, colors.unitPanelB]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={[StyleSheet.absoluteFill, { borderRadius: radius.md }]}
-          pointerEvents="none"
-        />
-        <Eyebrow tone="mint">{`Unit ${unit}`}</Eyebrow>
-        <Text accessibilityRole="header" testID="unit-title" style={[styles.unitTitle, desktop && styles.unitTitleDesktop]}>
+      <View style={styles.hero} testID="home-hero">
+        <View style={styles.heroTop}>
+          <Text style={typography.eyebrow}>{unitLabel(unit)}</Text>
+          {data ? <Text style={styles.date}>{formatLongDate(data.today)}</Text> : null}
+        </View>
+        <Text accessibilityRole="header" accessibilityLabel={`Unit ${unit}: ${UNIT_TITLE[unit]}`} testID="unit-title" style={styles.unitTitle}>
           {UNIT_TITLE[unit]}
         </Text>
-        {unitScreens[0] ? <MixedText scale={learner.arabic_scale}>{unitScreens[0].body[0]}</MixedText> : null}
-        <Muted testID="unit-inventory">
-          {unitScreens.length} panduan · {practiceCount} soal latihan · {learner.session_minutes} menit per sesi
-        </Muted>
-        {inProgress ? (
-          <Muted testID="session-status">
-            Sesi sebelumnya belum selesai: {snap.state.results.length} jawaban tersimpan. Anda bisa melanjutkannya.
-          </Muted>
-        ) : null}
-        {doneToday ? <Muted testID="session-status">Sesi hari ini sudah selesai. Terima kasih.</Muted> : null}
-        {oldFormat ? (
-          <Muted testID="session-status">
-            Sesi lama memakai format soal sebelumnya dan akan diarsipkan saat Anda mulai. Semua jawaban tetap tersimpan.
-          </Muted>
-        ) : null}
-        {nextDue ? <Muted testID="next-due">Jadwal ulasan atau cek berikutnya: {formatDue(nextDue, learning!.today)}.</Muted> : null}
-        {learning === undefined ? (
-          <ActivityIndicator color={colors.indigo} />
-        ) : (
-          <View style={[styles.actions, !desktop && styles.actionsStack]}>
-            <Btn
-              testID="start-session"
-              label={inProgress ? 'Lanjutkan sesi' : 'Mulai sesi'}
-              disabled={!!readOnly}
-              onPress={() => router.push('/session')}
-            />
-            <Btn kind="secondary" label="Lihat panduan" icon="document-text-outline" onPress={() => router.push('/guide' as Href)} />
-            {doneToday ? <Btn kind="secondary" label="Lihat ringkasan" onPress={() => router.push('/summary')} /> : null}
-          </View>
-        )}
+        {status}
+        <View style={styles.action}>{action}</View>
       </View>
 
-      <View style={{ gap: 4, marginTop: 6 }}>
-        <H2>Daftar materi dalam unit ini</H2>
-        <Muted>Ikuti panduan secara berurutan, lalu kerjakan latihannya.</Muted>
-      </View>
-      {unitScreens.map((s, n) => (
-        <Pressable
-          key={s.screen_id}
-          testID={`outline-${s.screen_id}`}
-          accessibilityRole="link"
-          accessibilityLabel={`${n + 1}. ${s.title}`}
-          onPress={() => router.push(`/guide?screen=${s.screen_id}` as unknown as Href)}
-          style={({ pressed }) => [styles.outline, { borderLeftColor: OUTLINE_ACCENTS[n % 3] }, pressed && styles.outlinePressed]}
-        >
-          <View style={styles.num}>
-            <Text style={styles.numText}>{n + 1}</Text>
-          </View>
-          <View style={{ flex: 1, gap: 2 }}>
-            <MixedText scale={learner.arabic_scale} style={styles.outlineTitle}>
-              {s.title}
-            </MixedText>
-            <MixedText scale={learner.arabic_scale} style={styles.outlineBody} numberOfLines={2}>
-              {s.body[0]}
-            </MixedText>
-          </View>
-          <Icon name="chevron-forward" color={colors.muted} />
-        </Pressable>
-      ))}
-
-      <Notice tone="info">
-        Cek Awal (bacaan dengan audio): {rules.audio_enabled ? 'aktif' : 'audio tidak tersedia (opsional, dinonaktifkan)'}.
-      </Notice>
-      {rules.mode === 'developer-demo' ? (
-        <Btn kind="quiet" label="Data pengembang" icon="code-slash" testID="open-dev" onPress={() => router.push('/dev')} />
+      {states.length ? (
+        <View style={styles.pathSection}>
+          <Text accessibilityRole="header" style={styles.pathTitle}>
+            Jalur belajar
+          </Text>
+          <Pressable
+            testID="home-path"
+            accessibilityRole="link"
+            accessibilityLabel={`Jalur belajar: ${states.map((s) => `Unit ${s.unit} ${UNIT_STATE_LABEL[s.state].toLowerCase()}`).join(', ')}. Buka Kemajuan.`}
+            onPress={() => router.dismissTo('/progress' as Href)}
+            style={({ pressed }) => [styles.path, pressed && styles.pathPressed]}
+          >
+            <View style={styles.pathUnits}>
+              {states.map((s, n) => (
+                <Fragment key={s.unit}>
+                  {n > 0 ? <View style={[styles.connector, s.state === 'closed' && styles.connectorOff]} /> : null}
+                  <View style={styles.pathUnit}>
+                    <View style={[styles.dot, DOT[s.state]]} />
+                    <Text style={styles.pathUnitLabel}>{`Unit ${s.unit}`}</Text>
+                    <Text style={[styles.pathState, s.state === 'closed' && styles.pathStateOff]}>{UNIT_STATE_LABEL[s.state]}</Text>
+                  </View>
+                </Fragment>
+              ))}
+            </View>
+            <Icon name="chevron-forward" color={colors.muted} />
+          </Pressable>
+        </View>
       ) : null}
+
+      <View style={styles.storage}>
+        <Icon name="phone-portrait-outline" size={16} color={colors.muted} />
+        <Text style={styles.storageText}>Tersimpan di perangkat ini · tanpa akun</Text>
+      </View>
     </Page>
   );
 }
 
 const styles = StyleSheet.create({
-  unit: {
-    borderRadius: radius.md,
+  center: { flex: 1, justifyContent: 'center' },
+
+  welcomeTop: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 8, minHeight: 44 },
+  figure: {
+    alignItems: 'center',
+    gap: 2,
+    paddingTop: 22,
+    paddingBottom: 20,
+    paddingHorizontal: 20,
+    borderRadius: radius.xl,
+    backgroundColor: colors.sheet,
     borderWidth: 1,
-    borderColor: '#D7E3DD',
-    padding: 20,
-    gap: 8,
-    overflow: 'hidden',
+    borderColor: colors.line,
+    marginTop: 8,
+    ...shadow,
   },
-  unitTitle: { fontSize: 24, lineHeight: 30, fontWeight: '800', color: colors.ink, writingDirection: 'ltr', textAlign: 'left' },
-  unitTitleDesktop: { fontSize: 30, lineHeight: 38 },
-  actions: { flexDirection: 'row', gap: 12, marginTop: 6, flexWrap: 'wrap' },
-  actionsStack: { flexDirection: 'column', alignItems: 'stretch' },
-  outline: {
+  figureCaption: { fontFamily: fonts.bold, fontSize: 15, lineHeight: 22, color: colors.ink, textAlign: 'center' },
+  welcomeText: { gap: 10, marginTop: 6 },
+  welcomeTitle: { ...typography.display, fontSize: 32, lineHeight: 38 },
+  modeCaption: { fontFamily: fonts.regular, fontSize: 12, lineHeight: 16, color: colors.muted, textAlign: 'center', marginTop: 2 },
+
+  header: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 8, minHeight: 52 },
+  headerActions: { flexDirection: 'row', alignItems: 'center', gap: 2 },
+
+  hero: {
+    backgroundColor: colors.sheet,
+    borderWidth: 1,
+    borderColor: colors.line,
+    borderRadius: radius.xl,
+    paddingTop: 24,
+    paddingBottom: 22,
+    paddingHorizontal: 22,
+    gap: 14,
+    ...shadow,
+  },
+  heroTop: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
+  date: { ...typography.caption },
+  unitTitle: { ...typography.display },
+  status: { flexDirection: 'row', alignItems: 'flex-start', gap: 8 },
+  statusText: { flex: 1, fontFamily: fonts.regular, fontSize: 15, lineHeight: 22, writingDirection: 'ltr', textAlign: 'left' },
+  statusStrong: { fontFamily: fonts.semibold },
+  statusGroup: { gap: 4 },
+  statusSub: { fontFamily: fonts.regular, fontSize: 14, lineHeight: 20, color: colors.muted, marginLeft: 26, writingDirection: 'ltr', textAlign: 'left' },
+  action: { marginTop: 6 },
+
+  pathSection: { gap: 10, marginTop: 4 },
+  pathTitle: { fontFamily: fonts.bold, fontSize: 13, lineHeight: 18, letterSpacing: 0.5, color: colors.muted, marginHorizontal: 4 },
+  path: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 14,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderLeftWidth: 4,
-    borderRadius: radius.md,
+    gap: 8,
+    minHeight: 72,
     paddingVertical: 14,
-    paddingHorizontal: 14,
-    minHeight: 64,
+    paddingLeft: 16,
+    paddingRight: 10,
+    borderRadius: radius.card,
+    backgroundColor: colors.sheet2,
+    borderWidth: 1,
+    borderColor: colors.line,
   },
-  outlinePressed: { backgroundColor: colors.paper },
-  num: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: colors.indigoSoft,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  numText: { fontSize: 16, fontWeight: '700', color: colors.ink },
-  outlineTitle: { fontSize: 17, fontWeight: '700', color: colors.ink, writingDirection: 'ltr', textAlign: 'left' },
-  outlineBody: { fontSize: 14, lineHeight: 20, color: colors.body, writingDirection: 'ltr', textAlign: 'left' },
+  pathPressed: { backgroundColor: colors.chipBg },
+  pathUnits: { flex: 1, flexDirection: 'row', alignItems: 'flex-start', gap: 6 },
+  connector: { flex: 1, height: 2, marginTop: 7, borderRadius: 2, backgroundColor: colors.lineStrong },
+  connectorOff: { backgroundColor: colors.line },
+  pathUnit: { alignItems: 'flex-start', gap: 6, flexShrink: 1 },
+  dot: { width: 16, height: 16, borderRadius: radius.pill },
+  pathUnitLabel: { fontFamily: fonts.bold, fontSize: 13, lineHeight: 16, color: colors.ink },
+  pathState: { fontFamily: fonts.semibold, fontSize: 12, lineHeight: 16, color: colors.accentInk },
+  pathStateOff: { fontFamily: fonts.regular, color: colors.muted },
+
+  storage: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 8, marginHorizontal: 4 },
+  storageText: { fontFamily: fonts.regular, fontSize: 13, lineHeight: 18, color: colors.muted },
 });

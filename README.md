@@ -1,5 +1,7 @@
 # Ayailmu — Arabic Trial App
 
+> **Amar WIP checkpoint (2026-10-18): app not complete.** See [Amar WIP handoff](docs/Amar_WIP_Handoff.md) for this branch's scope, related branches and remaining account/sync work. This source checkpoint is not a release or deployment.
+
 A local Expo/React Native prototype for Indonesian-speaking adults learning to understand short Arabic sentences. It includes a responsive menu, guided lessons, four-choice practice with feedback, spaced reviews, timed checks, factual progress, settings and session summaries.
 
 **Developer prototype only.** The bundled Arabic exercises are synthetic, unreviewed draft examples (see `docs/Four_Choice_Content_Review.md`). Mastery is not assessed while the four-choice "learned" rule is pending. Tester mode intentionally displays no lessons until a non-synthetic content pack is approved. The complete pilot is not implemented, and native device testing remains outstanding.

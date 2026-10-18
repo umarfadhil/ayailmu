@@ -34,7 +34,14 @@ interface AppState {
   consentReceipt: ConsentReceipt | null;
   /** Throws unless both the 18+ and the agreement boxes are ticked. */
   giveConsent: (answers: { adult: boolean; agreed: boolean }) => ConsentReceipt;
-  createLearner: (minutes: number) => Promise<Learner>;
+  /**
+   * Creates the local learner (basic profile) only with an affirmative consent receipt from this app run:
+   * the one passed (the profile form gives consent and creates the learner in one step) or the stored one.
+   */
+  createLearner: (minutes: number, options?: { arabicScale?: number; receipt?: ConsentReceipt }) => Promise<Learner>;
+  /** A one-time note for Home (e.g. after a session is closed); cleared when Home is left. */
+  flash: string | null;
+  setFlash: (note: string | null) => void;
   updateLearner: (patch: Partial<Learner>) => Promise<void>;
   resetAll: () => Promise<void>;
   refreshLearner: () => Promise<void>;
@@ -51,6 +58,7 @@ export function AppProvider({ children, storeFactory = openStore }: { children: 
   const [error, setError] = useState<string | null>(null);
   const [readOnly, setReadOnly] = useState<string | null>(null);
   const [consentReceipt, setConsentReceipt] = useState<ConsentReceipt | null>(null);
+  const [flash, setFlash] = useState<string | null>(null);
 
   useEffect(() => {
     let alive = true;
@@ -104,21 +112,22 @@ export function AppProvider({ children, storeFactory = openStore }: { children: 
   }, []);
 
   const createLearner = useCallback(
-    async (minutes: number) => {
+    async (minutes: number, options?: { arabicScale?: number; receipt?: ConsentReceipt }) => {
       if (!store) throw new Error('Penyimpanan belum siap');
       // No learner ID and no data without an affirmative consent receipt from this app run.
-      if (!consentReceipt || consentReceipt.adult !== true || consentReceipt.agreed !== true) {
+      const receipt = options?.receipt ?? consentReceipt;
+      if (!receipt || receipt.adult !== true || receipt.agreed !== true) {
         throw new Error('No consent receipt: learner not created');
       }
       const now = new Date().toISOString();
       const l: Learner = {
         learner_id: newId('lrn'),
         created_at: now,
-        consent_version: consentReceipt.consent_version,
-        consent_at: consentReceipt.at,
-        age_confirmed: consentReceipt.adult,
+        consent_version: receipt.consent_version,
+        consent_at: receipt.at,
+        age_confirmed: receipt.adult,
         session_minutes: minutes,
-        arabic_scale: 1,
+        arabic_scale: options?.arabicScale ?? 1,
         screens_seen: [],
       };
       await store.saveLearner(l);
@@ -163,6 +172,8 @@ export function AppProvider({ children, storeFactory = openStore }: { children: 
     consentReceipt,
     giveConsent,
     createLearner,
+    flash,
+    setFlash,
     updateLearner,
     resetAll,
     refreshLearner,

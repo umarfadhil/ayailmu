@@ -97,9 +97,38 @@ const MONTHS = [
   "Des",
 ];
 
+const DAYS_SHORT = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
+const MONTHS_LONG = [
+  "Januari",
+  "Februari",
+  "Maret",
+  "April",
+  "Mei",
+  "Juni",
+  "Juli",
+  "Agustus",
+  "September",
+  "Oktober",
+  "November",
+  "Desember",
+];
+
 /** «Jumat, 16 Okt», or «hari ini» when the date is today (or overdue). */
 export function formatDue(iso: string, today: string): string {
   if (iso <= today) return "hari ini";
   const d = new Date(`${iso}T00:00:00Z`);
   return `${DAYS[d.getUTCDay()]}, ${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]}`;
+}
+
+/** Compact form for state chips: «Sab, 24 Okt», or «hari ini» when the date is today (or overdue). */
+export function formatDueShort(iso: string, today: string): string {
+  if (iso <= today) return "hari ini";
+  const d = new Date(`${iso}T00:00:00Z`);
+  return `${DAYS_SHORT[d.getUTCDay()]}, ${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]}`;
+}
+
+/** A local calendar date written out: «Minggu, 18 Oktober». */
+export function formatLongDate(iso: string): string {
+  const d = new Date(`${iso}T00:00:00Z`);
+  return `${DAYS[d.getUTCDay()]}, ${d.getUTCDate()} ${MONTHS_LONG[d.getUTCMonth()]}`;
 }

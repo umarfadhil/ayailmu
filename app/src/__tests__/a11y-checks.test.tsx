@@ -1,6 +1,6 @@
 // Repair 2026-10-16 UI regressions: neutral timed-check feedback (F03), accessible feedback and answer
 // semantics (UI-01), read-only web tabs (ENG-R01), honest summary/progress wording.
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react-native';
 import { router } from 'expo-router';
 import { renderRouter } from 'expo-router/testing-library';
 import { StyleSheet } from 'react-native';
@@ -12,7 +12,7 @@ import { addDays, localDate } from '@/engine/util';
 import { loadRules } from '@/config/rules';
 import { KvStore, memoryKv, type KvBackend } from '@/storage/kvStore';
 import type { AnswerRecord, Learner } from '@/storage/types';
-import { ARABIC_FONT, arabicRuns, MixedText } from '@/ui/components';
+import { ARABIC_FONT, arabicRuns, MixedText, revealOffset } from '@/ui/components';
 import { AppProvider, useApp } from '@/ui/AppContext';
 import { colors } from '@/ui/theme';
 
@@ -55,7 +55,21 @@ jest.mock('@/storage/openStore', () => ({
 }));
 
 const routes = { _layout: RootLayout, index: Home, consent: Consent, setup: Setup, session: SessionScreen, summary: Summary, settings: Settings, guide: Guide, progress: Progress };
-const start = (initialUrl = '/') => renderRouter(routes, { initialUrl });
+// These pre-existing tests verify the detailed evidence copy. Kemajuan shows it directly (Calm Paper port);
+// open its one optional panel («Rincian latihan») as well, so nothing stays collapsed.
+const start = async (initialUrl = '/') => {
+  await renderRouter(routes, { initialUrl });
+  if (initialUrl === '/progress') {
+    await screen.findByTestId('progress-overview');
+    for (const id of ['progress-skills']) {
+      await fireEvent.press(screen.getByTestId(id));
+      expect(screen.getByTestId(id).props.accessibilityState.expanded).toBe(true);
+    }
+    // Only the navigation menu stays closed: a «not shown» check cannot pass because a panel was never opened.
+    const closed = screen.queryAllByRole('button').filter((b) => b.props.accessibilityState?.expanded === false);
+    expect(closed.map((b) => b.props.testID).filter((id) => id !== 'menu-open')).toEqual([]);
+  }
+};
 const tap = async (id: string) => {
   await waitFor(() => expect(screen.getByTestId(id)).toBeEnabled());
   await fireEvent.press(screen.getByTestId(id));
@@ -163,8 +177,12 @@ describe('timed-check feedback stays neutral (F03) and accessible (UI-01)', () =
     const wrongStyle = flat(`option-${first.wrong}`);
     expect(wrongStyle.backgroundColor).not.toBe(colors.dangerBg);
     expect(wrongStyle.backgroundColor).not.toBe(colors.mintBg);
+    // Calm Paper marks a wrong practice answer in the «miss» colour and the key in «good»: neither appears in a check.
+    expect(wrongStyle.backgroundColor).not.toBe(colors.missBg);
+    expect(wrongStyle.backgroundColor).not.toBe(colors.goodBg);
     const keyStyle = flat(`option-${first.key}`);
     expect(keyStyle.backgroundColor).not.toBe(colors.mintBg);
+    expect(keyStyle.backgroundColor).not.toBe(colors.goodBg);
     const card = StyleSheet.flatten(screen.getByTestId('result-card').props.style);
     // the heading is the keyboard focus target
     expect(screen.getByTestId('result-heading').props.tabIndex).toBe(-1);
@@ -187,8 +205,11 @@ describe('timed-check feedback stays neutral (F03) and accessible (UI-01)', () =
     await tap(`option-${first.wrong}`);
     await waitFor(() => expect(screen.getByTestId('result-title')).toHaveTextContent('Jawaban tersimpan'));
     await waitFor(() => expect(stored().answers).toHaveLength(8));
+    await cleanup(); // one app instance at a time: the session is left (unmounted) before Ringkasan opens
     await start('/summary');
-    await waitFor(() => expect(screen.getByTestId('summary-counts')).toHaveTextContent(/Anda menjawab 0 soal/));
+    // Compatibility update (premium-feel audit): the hidden check answer is checked in the stats, not the removed sentence.
+    await waitFor(() => expect(screen.getByTestId('summary-answered')).toHaveTextContent('0'));
+    expect(screen.getByTestId('summary-wrong')).toHaveTextContent('0');
     expect(screen.getByTestId('summary-checks')).toHaveTextContent(/1 jawaban cek tersimpan; hasilnya ditampilkan setelah semua soal cek itu dijawab/);
   }, 30000);
 
@@ -210,6 +231,7 @@ describe('read-only tab (ENG-R01)', () => {
     await waitFor(() => expect(screen.getByTestId('read-only')).toHaveTextContent(/tab lain/));
     await waitFor(() => expect(screen.getByTestId('start-session')).toBeDisabled());
     for (const url of ['/session', '/guide', '/settings']) {
+      await cleanup(); // one app instance at a time
       await start(url);
       await waitFor(() => expect(screen.getByTestId('read-only')).toBeTruthy());
       expect(screen.queryByTestId('answer-tiles')).toBeNull();
@@ -267,6 +289,7 @@ describe('check outcomes stay hidden until the whole check is answered (whole-br
     await tap(`option-${first.wrong}`);
     await waitFor(() => expect(screen.getByTestId('result-title')).toHaveTextContent('Jawaban tersimpan'));
     await waitFor(() => expect(stored().answers).toHaveLength(8));
+    await cleanup(); // one app instance at a time: the session is left (unmounted) before Kemajuan opens
     await start('/progress');
     await waitFor(() => expect(screen.getByTestId('check-d7-A')).toHaveTextContent(/1 dari 8 soal dijawab \(hasilnya ditampilkan setelah semua soal cek ini dijawab\)/));
     expect(screen.getByTestId('check-d7-A')).not.toHaveTextContent(/\d+ benar/);
@@ -284,6 +307,7 @@ describe('check outcomes stay hidden until the whole check is answered (whole-br
     await waitFor(() => expect(screen.getByTestId('result-title')).toHaveTextContent('Jawaban tersimpan'));
     await waitFor(() => expect(stored().answers).toHaveLength(8));
     expect(stored().answers[7].serious_tag).toBeTruthy(); // recorded durably (engine follow-ups still use it)
+    await cleanup(); // one app instance at a time: the session is left (unmounted) before Kemajuan opens
     await start('/progress');
     await waitFor(() => expect(screen.getByTestId('check-d7-A')).toBeTruthy());
     expect(screen.queryByText(/Ada kesalahan penting/)).toBeNull();
@@ -292,6 +316,9 @@ describe('check outcomes stay hidden until the whole check is answered (whole-br
   it('the question header and progress bar look the same after a correct, a lexical-wrong and a serious-wrong check answer', async () => {
     const seen: { header: string; track: unknown; hint: boolean; queued: number }[] = [];
     for (const pick of ['key', 'lexical', 'serious'] as const) {
+      // Unmount the previous pick's session before its storage is replaced: the clock checkpoint it saves
+      // on unmount lands in that old storage, never in this pick's freshly seeded one.
+      await cleanup();
       mockKv = memoryKv();
       const first = await openCheckBlock();
       const opts = first.item.options!;
@@ -324,7 +351,10 @@ describe('check outcomes stay hidden until the whole check is answered (whole-br
     seed(answers, done);
     await start('/summary');
     await waitFor(() => expect(screen.getByTestId('summary-title')).toHaveTextContent('Sesi selesai'));
-    expect(screen.getByTestId('summary-counts')).toHaveTextContent(/Anda menjawab 0 soal: 0 benar, 0 belum tepat/);
+    // Compatibility update (premium-feel audit): same counts, from the stats instead of the removed sentence.
+    expect(screen.getByTestId('summary-answered')).toHaveTextContent('0');
+    expect(screen.getByTestId('summary-correct')).toHaveTextContent('0');
+    expect(screen.getByTestId('summary-wrong')).toHaveTextContent('0');
     expect(screen.getByTestId('summary-checks')).toHaveTextContent(/1 jawaban cek tersimpan; hasilnya ditampilkan setelah semua soal cek itu dijawab/);
   });
 });
@@ -343,7 +373,9 @@ describe('honest summary and progress wording', () => {
     };
     seed([], done);
     await start('/summary');
-    await waitFor(() => expect(screen.getByTestId('summary-minutes')).toHaveTextContent('Waktu: tidak tercatat.'));
+    // Calm Paper subtitle («Sekitar N menit · tersimpan di perangkat ini»): unrecorded time is said, never «0 menit».
+    await waitFor(() => expect(screen.getByTestId('summary-minutes')).toHaveTextContent(/^Waktu tidak tercatat\b/));
+    expect(screen.getByTestId('summary-minutes')).not.toHaveTextContent(/\d+ menit/);
     expect(screen.getByTestId('summary-checks')).toHaveTextContent(/2 soal adalah cek ulang.*1 di antaranya .* tidak dihitung sebagai cek ingatan/);
   });
 
@@ -357,7 +389,8 @@ describe('honest summary and progress wording', () => {
     await waitFor(() => expect(screen.getAllByTestId('check-d7-note-A')[0]).toBeTruthy());
     const notes = screen.getAllByTestId('check-d7-note-A').map((x) => String(x.props.children));
     expect(notes.join(' ')).toMatch(/1 soal dijawab setelah materinya dilihat pada hari yang sama; dicatat, tetapi tidak dihitung/);
-    expect(notes.join(' ')).toMatch(/belum lengkap/);
+    // Compatibility update (premium-feel audit): missing check content is explained once per unit, not per window.
+    expect(screen.getByTestId('retention-note-A')).toHaveTextContent(/belum lengkap/);
     expect(screen.getByTestId('check-d7-A')).toHaveTextContent(/0 dari \d+ soal dijawab/);
   });
 });
@@ -414,7 +447,8 @@ describe('inline Arabic in Indonesian text (UI-02)', () => {
       expect(sp.props.lang).toBe('ar');
       const st = StyleSheet.flatten(sp.props.style);
       expect(st.fontFamily).toBe(ARABIC_FONT);
-      expect(st.fontSize).toBe(Math.round(16 * 1.35 * 1.3));
+      // Compatibility update (Calm Paper port): the body text is 17 px; inline Arabic stays 1.35× it, times the learner scale.
+      expect(st.fontSize).toBe(Math.round(17 * 1.35 * 1.3));
     }
   });
 
@@ -462,6 +496,86 @@ describe('keyboard focus follows the learner (UI-01, Chromium focus probe)', () 
     await tap(`option-${first.key}`);
     await waitFor(() => expect(lastFocused()).toBe('result-heading'));
   }, 30000);
+
+  // Choosing a lesson closes the Guide topic picker, which removes the pressed link: focus must move on.
+  it('Guide topic picker: choosing the lesson already shown moves focus to its title, not to the removed link', async () => {
+    seed(A_CORE.map((id) => rec(id, addDays(today(), -1))));
+    await start('/guide');
+    await waitFor(() => expect(screen.getByTestId('lesson-title')).toHaveTextContent('Tujuan'));
+    await waitFor(() => expect(lastFocused()).toBe('lesson-heading'));
+    // Another lesson: focus moves to its title once its dated view is saved.
+    await tap('guide-topics');
+    (moveFocus as jest.Mock).mockClear();
+    await tap('guide-DEMO-S2');
+    await waitFor(() => expect(screen.getByTestId('lesson-title')).toHaveTextContent('هُوَ dan هِيَ'));
+    await waitFor(() => expect(lastFocused()).toBe('lesson-heading'));
+    // The lesson already shown: no new view is saved, but the pressed link is removed all the same.
+    await tap('guide-topics');
+    (moveFocus as jest.Mock).mockClear();
+    await tap('guide-DEMO-S2');
+    expect(screen.queryByTestId('guide-DEMO-S2')).toBeNull();
+    await waitFor(() => expect(lastFocused()).toBe('lesson-heading'));
+  }, 30000);
+
+  it('Guide topic picker: a lesson whose dated view cannot be saved moves focus to the error notice, not to the removed link', async () => {
+    seed(A_CORE.map((id) => rec(id, addDays(today(), -1))));
+    await start('/guide');
+    await waitFor(() => expect(lastFocused()).toBe('lesson-heading'));
+    await tap('guide-topics');
+    mockFailWrites = true;
+    (moveFocus as jest.Mock).mockClear();
+    await tap('guide-DEMO-S2');
+    await waitFor(() => expect(screen.getByTestId('guide-record-error')).toBeTruthy());
+    expect(screen.queryByTestId('lesson-panel')).toBeNull();
+    expect(screen.queryByTestId('guide-DEMO-S2')).toBeNull();
+    await waitFor(() => expect(lastFocused()).toMatch(/^guide-record-error/));
+  }, 30000);
+});
+
+describe('answer feedback is one complete block for every outcome (premium-feel audit fix 1)', () => {
+  // The page scrolls this block into view after an answer, the same way for every outcome; the scroll
+  // itself is checked in rendered QA. Here: the block is the same and complete, and nothing advances.
+  const optionId = (itemId: string, correct: boolean) => content.items.find((i) => i.item_id === itemId)!.options!.find((o) => !!o.correct === correct)!.id;
+  const expectCompleteBlock = async (title: string) => {
+    await waitFor(() => expect(within(screen.getByTestId('feedback-block')).getByTestId('next')).toBeEnabled());
+    const block = within(screen.getByTestId('feedback-block'));
+    expect(block.getByTestId('result-title')).toHaveTextContent(title);
+    const snap = JSON.parse(stored().snapshot);
+    expect(snap.phase).toBe('feedback'); // no auto-advance
+    expect(block.queryAllByTestId('feedback-message')).toHaveLength(snap.feedback.messages.length); // all teaching, inside the block
+    expect(screen.getAllByTestId(/^option-/)).toHaveLength(4);
+    expect(screen.getByTestId('result-live').props.accessibilityLiveRegion).toBe('polite');
+    expect(screen.getByTestId('result-live')).toHaveTextContent(title);
+    await waitFor(() => expect(lastFocused()).toBe('result-heading'));
+  };
+
+  it.each([
+    ['correct', 'Benar', `option-${optionId('A3-M01', true)}`],
+    ['wrong', 'Belum tepat', `option-${optionId('A3-M01', false)}`],
+    ['«belum tahu»', 'Tidak apa-apa', 'dont-know'],
+  ])('%s: the focused result, all its teaching and Lanjut, with four tiles kept', async (_outcome, title, control) => {
+    seed([]);
+    await start('/session');
+    await waitFor(() => expect(screen.getByTestId('item-arabic')).toHaveTextContent('صَادِقٌ'));
+    await tap(control);
+    await waitFor(() => expect(screen.getByTestId('result-title')).toHaveTextContent(title));
+    await expectCompleteBlock(title);
+  }, 30000);
+
+  it('a timed check: the same complete block, neutral and without a follow-up hint', async () => {
+    const first = await openCheckBlock();
+    await tap(`option-${first.wrong}`);
+    await waitFor(() => expect(screen.getByTestId('result-title')).toHaveTextContent('Jawaban tersimpan'));
+    await expectCompleteBlock('Jawaban tersimpan');
+    expect(screen.queryByTestId('follow-up-hint')).toBeNull();
+  }, 30000);
+
+  it('reveal offset: a block that fits is shown whole; a taller one starts at its heading; nothing moves for a block already on the first screen', () => {
+    // 700 px view, 16 px margin
+    expect(revealOffset(900, 300, 700)).toBe(516); // bottom (1200) + 16 at the bottom of the view
+    expect(revealOffset(900, 800, 700)).toBe(884); // top (900) - 16 at the top of the view
+    expect(revealOffset(100, 200, 700)).toBe(0);
+  });
 });
 
 describe('single-choice controls work from the keyboard (Space as well as Enter/tap)', () => {

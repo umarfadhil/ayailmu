@@ -25,16 +25,16 @@ export const READ_ONLY_NO_LOCKS = 'this browser has no Web Locks API, so concurr
 export const READ_ONLY_RELEASED = 'this tab handed the writer lock to another tab';
 
 /**
- * Requests the exclusive writer lock. Resolves with a release function once held, or null
+ * Requests the exclusive writer lock `name`. Resolves with a release function once held, or null
  * when `ifAvailable` and another tab holds it. The lock is held until release is called (or
  * the tab closes, which the browser handles). It is never stolen.
  */
-function acquire(locks: LockManagerLike, ifAvailable: boolean): Promise<(() => void) | null> {
+function acquire(locks: LockManagerLike, name: string, ifAvailable: boolean): Promise<(() => void) | null> {
   return new Promise((resolve, reject) => {
     let release: () => void = () => undefined;
     const held = new Promise<void>((r) => (release = r));
     locks
-      .request(WRITER_LOCK, { mode: 'exclusive', ifAvailable }, async (lock) => {
+      .request(name, { mode: 'exclusive', ifAvailable }, async (lock) => {
         if (!lock) {
           resolve(null);
           return;
@@ -46,15 +46,35 @@ function acquire(locks: LockManagerLike, ifAvailable: boolean): Promise<(() => v
   });
 }
 
-async function fresh(kv: KvBackend, readOnly: string | null): Promise<KvStore> {
-  const store = new KvStore(kv, readOnly);
+async function fresh(kv: KvBackend, readOnly: string | null, key: string): Promise<KvStore> {
+  const store = new KvStore(kv, readOnly, key);
   await store.init();
   return store;
 }
 
-export async function openWebStore({ kv, locks }: { kv: KvBackend; locks: LockManagerLike | undefined }): Promise<OpenedWebStore> {
+/** An opened web dataset: its stores are KvStores, so raw exports and copies can go through them. */
+export interface OpenedKvStore extends OpenedWebStore {
+  store: KvStore;
+  whenWritable?(): Promise<KvStore>;
+}
+
+/**
+ * Opens one web dataset under ENG-R01. `key` and `lock` default to the guest dataset (KvStore.KEY and WRITER_LOCK);
+ * an account dataset passes its own pair, so it never shares stored data or a writer lock with the guest.
+ */
+export async function openWebStore({
+  kv,
+  locks,
+  key = KvStore.KEY,
+  lock = WRITER_LOCK,
+}: {
+  kv: KvBackend;
+  locks: LockManagerLike | undefined;
+  key?: string;
+  lock?: string;
+}): Promise<OpenedKvStore> {
   if (!locks) {
-    return { store: await fresh(kv, READ_ONLY_NO_LOCKS), access: 'read-only', reason: READ_ONLY_NO_LOCKS, release: () => undefined };
+    return { store: await fresh(kv, READ_ONLY_NO_LOCKS, key), access: 'read-only', reason: READ_ONLY_NO_LOCKS, release: () => undefined };
   }
   // The writable store and its lock. Releasing revokes the store first (after its queued writes),
   // then frees the lock, so a released tab can never write again (ENG-R01 lifecycle).
@@ -70,10 +90,10 @@ export async function openWebStore({ kv, locks }: { kv: KvBackend; locks: LockMa
     else free();
   };
 
-  unlock = await acquire(locks, true);
+  unlock = await acquire(locks, lock, true);
   if (unlock) {
     try {
-      writable = await fresh(kv, null);
+      writable = await fresh(kv, null, key);
     } catch (e) {
       release();
       throw e;
@@ -81,17 +101,17 @@ export async function openWebStore({ kv, locks }: { kv: KvBackend; locks: LockMa
     return { store: writable, access: 'owner', release };
   }
   return {
-    store: await fresh(kv, READ_ONLY_OTHER_TAB),
+    store: await fresh(kv, READ_ONLY_OTHER_TAB, key),
     access: 'read-only',
     reason: READ_ONLY_OTHER_TAB,
     release,
     async whenWritable() {
-      const free = await acquire(locks, false);
+      const free = await acquire(locks, lock, false);
       if (!free) throw new Error('Writer lock was not granted');
       unlock = free;
       // Re-read storage: the previous owner's writes since this tab opened must not be lost.
       try {
-        writable = await fresh(kv, null);
+        writable = await fresh(kv, null, key);
       } catch (e) {
         release();
         throw e;

@@ -1,4 +1,5 @@
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
+import { router } from 'expo-router';
 import { renderRouter } from 'expo-router/testing-library';
 
 import { KvStore, memoryKv, type KvBackend } from '@/storage/kvStore';
@@ -68,19 +69,21 @@ describe('developer-demo flow (four-choice)', () => {
   it('consent → lesson → four-choice practice with feedback and fresh retry → restart/resume in the same order → summary', async () => {
     const first = await start();
 
-    // Banner and consent; no data before consent
+    // Draft notice, welcome and consent; no data before consent.
+    // Compatibility update (Calm Paper port): a guest-first welcome comes before the consent, and the session
+    // length is chosen on the consent screen itself (one «Mulai belajar» creates the local learner).
     expect(await screen.findByText(/Konten contoh · belum ditinjau/)).toBeTruthy();
     expect(screen.getByText(/Prototipe pengembang/)).toBeTruthy();
+    await tap('welcome-start');
     await screen.findByText('Persetujuan (versi demo)');
     expect(mockKv.getItem(KvStore.KEY)).toBeNull();
     expect(screen.getByTestId('consent-continue')).toBeDisabled();
+    await press('minutes-10');
+    expect(mockKv.getItem(KvStore.KEY)).toBeNull();
     await press('consent-adult');
     await press('consent-agree');
     await tap('consent-continue');
 
-    await screen.findByText(/Berapa lama/);
-    await press('minutes-10');
-    await tap('setup-continue');
     await tap('start-session');
 
     // Guided lesson screens with vowelled Arabic
@@ -165,20 +168,23 @@ describe('developer-demo flow (four-choice)', () => {
       await tap('next');
     }
     await screen.findByText('Sesi selesai');
-    expect(screen.getByTestId('summary-counts')).toHaveTextContent(
-      /Anda menjawab 10 soal: 4 benar, 2 belum tepat, 0 disimpan untuk diperiksa, 4 «belum tahu»/
-    );
+    // Compatibility update (premium-feel audit): the sentence restating these counts was removed; same counts, from the stats.
+    expect(screen.getByTestId('summary-answered')).toHaveTextContent('10');
+    expect(screen.getByTestId('summary-correct')).toHaveTextContent('4');
+    expect(screen.getByTestId('summary-wrong')).toHaveTextContent('2');
+    expect(screen.getByTestId('summary-dont-know')).toHaveTextContent('4');
+    expect(screen.queryByTestId('summary-pending')).toBeNull(); // 0 pending: shown only when an answer is pending
     expect(screen.queryByText(/sudah dipelajari|streak|%/i)).toBeNull();
     expect(storedAnswers()).toHaveLength(10);
   }, 30000);
 
   it('a rapid double tap on a tile produces exactly one answer event', async () => {
     await start();
+    await tap('welcome-start');
     await screen.findByTestId('consent-adult');
     await press('consent-adult');
     await press('consent-agree');
     await tap('consent-continue');
-    await tap('setup-continue');
     await tap('start-session');
     for (let i = 0; i < 4; i++) await tap('next'); // 4 Unit A lesson screens (incl. the word table)
     await arabicShown('صَادِقٌ');
@@ -193,11 +199,11 @@ describe('developer-demo flow (four-choice)', () => {
 
   it('does not repeat lesson screens or answered items in the next session', async () => {
     const first = await start();
+    await tap('welcome-start');
     await screen.findByTestId('consent-adult');
     await press('consent-adult');
     await press('consent-agree');
     await tap('consent-continue');
-    await tap('setup-continue');
     await tap('start-session');
     for (let i = 0; i < 4; i++) await tap('next'); // 4 Unit A lesson screens (incl. the word table)
     await arabicShown('صَادِقٌ');
@@ -269,46 +275,41 @@ describe('tester mode', () => {
   });
 });
 
+// Compatibility update (Calm Paper port): the drawer is replaced by the three-destination tab bar. A session
+// and Ringkasan are reached from their own actions or routes, Pengaturan from its own control.
 describe('navigation (redesign)', () => {
   const blob = () => JSON.parse(mockKv.getItem(KvStore.KEY) ?? 'null');
+  const tabs = () => screen.queryAllByRole('tab');
 
   async function onboard() {
     await start();
+    await screen.findByTestId('welcome-start');
+    // No learner navigation before the welcome, consent and basic profile are done
+    expect(tabs()).toHaveLength(0);
+    await tap('welcome-start');
     await screen.findByTestId('consent-adult');
-    // No learner navigation before consent/setup
-    expect(screen.queryByTestId('menu-open')).toBeNull();
+    expect(tabs()).toHaveLength(0);
     await press('consent-adult');
     await press('consent-agree');
     await tap('consent-continue');
-    await screen.findByText(/Berapa lama/);
-    expect(screen.queryByTestId('menu-open')).toBeNull();
-    await tap('setup-continue');
     await screen.findByTestId('start-session');
   }
 
-  async function openMenuAndChoose(key: string) {
-    await tap('menu-open');
-    await screen.findByTestId('drawer');
-    await press(`nav-${key}`);
-    await waitFor(() => expect(screen.queryByTestId('drawer')).toBeNull());
-  }
-
-  it('drawer lists only approved routes, marks the active one and closes on route choice', async () => {
+  it('the tab bar lists only the approved destinations, marks the active one, and Pengaturan is reached apart from it', async () => {
     await onboard();
-    await tap('menu-open');
-    await screen.findByTestId('drawer');
-    for (const key of ['home', 'guide', 'practice', 'summary', 'settings', 'dev']) {
-      expect(screen.getByTestId(`nav-${key}`)).toBeTruthy();
-    }
-    expect(screen.getByTestId('nav-home')).toBeSelected();
-    expect(screen.getByTestId('nav-guide')).not.toBeSelected();
+    expect(tabs().map((t) => t.props.testID)).toEqual(['tab-learn', 'tab-guide', 'tab-progress']);
+    expect(screen.getByTestId('tab-learn')).toBeSelected();
+    expect(screen.getByTestId('tab-guide')).not.toBeSelected();
     for (const banned of [/Pro\b/, /Store/, /Leaderboard/, /Quran/, /Messages/, /Social/]) {
       expect(screen.queryByText(banned)).toBeNull();
     }
-    await press('menu-close');
-    await waitFor(() => expect(screen.queryByTestId('drawer')).toBeNull());
+    await press('tab-guide');
+    await waitFor(() => expect(screen.getByTestId('tab-guide')).toBeSelected());
+    expect(screen.getByTestId('tab-learn')).not.toBeSelected();
+    await press('tab-learn');
+    await screen.findByTestId('start-session');
 
-    await openMenuAndChoose('settings');
+    await fireEvent.press(screen.getAllByRole(/^(button|link)$/, { name: /Pengaturan/ })[0]);
     await screen.findByTestId('learner-id');
   }, 30000);
 
@@ -318,7 +319,7 @@ describe('navigation (redesign)', () => {
     expect(before.snapshot).toBeNull();
     expect(before.learner.screens_seen).toEqual([]);
 
-    await openMenuAndChoose('guide');
+    await press('tab-guide');
     await waitFor(() => expect(screen.getByTestId('lesson-title')).toHaveTextContent('Tujuan'));
     await tap('guide-next');
     await waitFor(() => expect(screen.getByTestId('lesson-title')).toHaveTextContent('هُوَ dan هِيَ'));
@@ -340,8 +341,10 @@ describe('navigation (redesign)', () => {
     expect({ ...after, meta: metaRest }).toEqual(before);
 
     // Practice from the guide starts the canonical session, which still shows the lesson screens first
+    // (Calm Paper port: the lesson count is in the session bar above the lesson).
     await tap('guide-practice');
-    await waitFor(() => expect(screen.getByTestId('lesson-panel')).toHaveTextContent(/Pelajaran 1 dari 4/));
+    await waitFor(() => expect(screen.getByTestId('step-progress')).toHaveTextContent(/Pelajaran 1 dari 4/));
+    expect(screen.getByTestId('lesson-panel')).toBeTruthy();
     await waitFor(() => expect(blob().snapshot).not.toBeNull());
     const snap = JSON.parse(blob().snapshot);
     expect(snap.queue.slice(0, 4).map((q: { screen_id?: string }) => q.screen_id)).toEqual(['DEMO-S1', 'DEMO-S2', 'DEMO-S4', 'DEMO-S3']);
@@ -350,7 +353,7 @@ describe('navigation (redesign)', () => {
 
   it('Ringkasan before any session shows an honest empty state', async () => {
     await onboard();
-    await openMenuAndChoose('summary');
+    await act(async () => router.navigate('/summary'));
     expect(await screen.findByText('Belum ada sesi')).toBeTruthy();
     expect(screen.queryByText('Sesi selesai')).toBeNull();
   }, 30000);
@@ -364,11 +367,14 @@ describe('navigation (redesign)', () => {
     await waitFor(() => expect(screen.getByTestId('result-title')).toHaveTextContent('Benar'));
     const savedBefore = blob();
 
-    await openMenuAndChoose('summary');
+    await act(async () => router.navigate('/summary'));
     await waitFor(() => expect(screen.getByTestId('summary-title')).toHaveTextContent('Sesi belum selesai'));
     expect(screen.queryByText('Sesi selesai')).toBeNull();
     expect(screen.getByTestId('summary-interim')).toBeTruthy();
-    expect(screen.getByTestId('summary-counts')).toHaveTextContent(/Anda menjawab 1 soal: 1 benar, 0 belum tepat/);
+    // Compatibility update (premium-feel audit): counts from the stats instead of the removed sentence.
+    expect(screen.getByTestId('summary-answered')).toHaveTextContent('1');
+    expect(screen.getByTestId('summary-correct')).toHaveTextContent('1');
+    expect(screen.getByTestId('summary-wrong')).toHaveTextContent('0');
     expect(screen.queryByTestId('summary-next')).toBeNull();
     // Visiting the summary changes no answers, learner or session content; leaving the session route only
     // checkpoints the step's active time (ENG-04: clock stopped while away, nothing charged for the visit).
@@ -408,11 +414,11 @@ describe('responsive shell (regression from browser QA)', () => {
   it('crossing the desktop breakpoint keeps the question, its saved order, and an unsent report draft', async () => {
     await setWidth(390);
     await start();
+    await tap('welcome-start');
     await screen.findByTestId('consent-adult');
     await press('consent-adult');
     await press('consent-agree');
     await tap('consent-continue');
-    await tap('setup-continue');
     await tap('start-session');
     for (let i = 0; i < 4; i++) await tap('next'); // 4 Unit A lesson screens (incl. the word table)
     await arabicShown('صَادِقٌ');
@@ -424,7 +430,9 @@ describe('responsive shell (regression from browser QA)', () => {
     await press('report-reason-1');
     await fireEvent.changeText(screen.getByTestId('report-text'), 'harakat?');
     await setWidth(1440);
-    await screen.findByTestId('sidebar');
+    // Compatibility update (Calm Paper port): a session runs full screen at every width (no rail beside it);
+    // the desktop layout only changes spacing, and nothing in the route may remount.
+    expect(screen.queryByTestId('sidebar')).toBeNull();
     expect(screen.getByTestId('report-text').props.value).toBe('harakat?');
     expect(screen.getByTestId('report-reason-1')).toBeSelected();
     expect(screen.getByTestId('report-send')).toBeEnabled();
@@ -435,7 +443,7 @@ describe('responsive shell (regression from browser QA)', () => {
     await tap('option-k');
     await waitFor(() => expect(screen.getByTestId('result-title')).toHaveTextContent('Benar'));
     await setWidth(390);
-    await waitFor(() => expect(screen.queryByTestId('sidebar')).toBeNull());
+    expect(screen.queryByTestId('sidebar')).toBeNull();
     expect(screen.getByTestId('result-title')).toHaveTextContent('Benar');
     expect(storedAnswers()).toHaveLength(1);
     expect(JSON.parse(mockKv.getItem(KvStore.KEY)!).reports).toHaveLength(1);

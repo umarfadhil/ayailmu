@@ -1,3 +1,4 @@
+import { arrayElements, objectMembers, parseCopy, type CopyResult, type ParsedCopy, type RawDataset, type RawRecord } from './rawRecords';
 import { createSerialQueue } from './serial';
 import { answerProblem, learnerProblem, reportProblem } from './validate';
 import { STORAGE_SCHEMA, type AnswerRecord, type ArchivedSnapshot, type Learner, type ReportRecord, type Snapshot, type Store } from './types';
@@ -17,6 +18,11 @@ interface Blob {
   /** Kept as a string so an unreadable snapshot never breaks the answer log. */
   snapshot: string | null;
   reports: ReportRecord[];
+  /**
+   * Exact text of the answers and reports copied in from another dataset (an account's copy of guest data). Every
+   * later write carries it unchanged, so those original bytes survive the whole-blob serialization of each save.
+   */
+  originals?: { answers: RawRecord[]; reports: RawRecord[] };
 }
 
 const EMPTY: Blob = { schema: STORAGE_SCHEMA, meta: {}, learner: null, answers: [], snapshot: null, reports: [] };
@@ -57,6 +63,53 @@ export function memoryKv(): KvBackend {
   };
 }
 
+/** The exact text of copied answers and reports, by ID. Malformed bookkeeping is refused, never guessed at. */
+function originalTexts(blob: Blob): { answers: Map<string, string>; reports: Map<string, string> } {
+  const texts = { answers: new Map<string, string>(), reports: new Map<string, string>() };
+  const originals: unknown = blob.originals;
+  if (originals === undefined) return texts;
+  const isList = (v: unknown): v is RawRecord[] => Array.isArray(v) && v.every((r) => isObj(r) && isStr(r.id) && isStr(r.json));
+  if (!isObj(originals) || !isList(originals.answers) || !isList(originals.reports)) {
+    throw new Error('Stored data is malformed (originals); it was not modified.');
+  }
+  for (const r of originals.answers) texts.answers.set(r.id, r.json);
+  for (const r of originals.reports) texts.reports.set(r.id, r.json);
+  return texts;
+}
+
+/**
+ * The dataset stored under `key`, every record exactly as stored: values are located in the stored text, never
+ * re-serialized, and copied answers and reports keep their original text. Null when nothing is stored there.
+ * Unreadable or unsupported data is refused. Reads only.
+ */
+export function readKvRaw(kv: KvBackend, key: string): RawDataset | null {
+  const text = kv.getItem(key);
+  if (!text) return null;
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(text);
+  } catch {
+    throw new Error('Stored data is unreadable; it was not modified.');
+  }
+  const problem = envelopeProblem(parsed);
+  if (problem) throw new Error(`Stored data is ${problem}; it was not modified.`);
+  const blob = parsed as Blob;
+  const originals = originalTexts(blob);
+  const members = objectMembers(text);
+  const answers = arrayElements(members.get('answers') ?? '[]').map((json, n) => {
+    const id = blob.answers[n].answer_id;
+    return { id, json: originals.answers.get(id) ?? json };
+  });
+  const reports = arrayElements(members.get('reports') ?? '[]').map((json, n) => {
+    const id = blob.reports[n].report_id;
+    return { id, json: originals.reports.get(id) ?? json };
+  });
+  const learner = blob.learner === null ? null : (members.get('learner') ?? null);
+  const meta = { ...(blob.meta ?? {}) };
+  if (learner === null && !answers.length && blob.snapshot === null && !Object.keys(meta).length && !reports.length) return null;
+  return { learner, answers, snapshot: blob.snapshot, meta, reports };
+}
+
 /**
  * Web-preview store: the whole state is one JSON value written with a single
  * setItem, so each save is all-or-nothing. In-memory state changes only after
@@ -72,14 +125,16 @@ export class KvStore implements Store {
   /**
    * `readOnly`: the reason this instance may not write (ENG-R01: another tab owns the web
    * writer lock, or Web Locks is unavailable). Reads work; every write is refused.
+   * `key`: where this dataset is stored. The guest dataset by default; an account dataset has its own key.
    */
   constructor(
     private kv: KvBackend,
-    private readOnly: string | null = null
+    private readOnly: string | null = null,
+    private readonly key: string = KvStore.KEY
   ) {}
 
   async init(): Promise<void> {
-    const raw = this.kv.getItem(KvStore.KEY);
+    const raw = this.kv.getItem(this.key);
     if (!raw) return;
     let parsed: unknown;
     try {
@@ -110,7 +165,7 @@ export class KvStore implements Store {
       const next = update(this.blob);
       if (!next) return;
       const stamped = { ...next, schema: STORAGE_SCHEMA };
-      this.kv.setItem(KvStore.KEY, JSON.stringify(stamped));
+      this.kv.setItem(this.key, JSON.stringify(stamped));
       this.blob = stamped;
     });
   }
@@ -205,5 +260,53 @@ export class KvStore implements Store {
 
   reset() {
     return this.commit(() => ({ ...EMPTY, meta: {} }));
+  }
+
+  /** Every record exactly as stored (see readKvRaw), after the writes already queued here. */
+  readRaw(): Promise<RawDataset | null> {
+    return this.enqueue(async () => readKvRaw(this.kv, this.key));
+  }
+
+  /**
+   * Adds the records this dataset lacks in one write, through the same queue, state and writer guard as every other
+   * write. What it already has is kept (answers and reports by ID, its learner, its snapshot, its metadata keys), and
+   * a copy that adds nothing writes nothing. Copied answers and reports keep their exact text in `originals`.
+   */
+  addCopy(copy: RawDataset): Promise<CopyResult> {
+    let incoming: ParsedCopy;
+    try {
+      incoming = parseCopy(copy);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+    const added: CopyResult = { answers: 0, reports: 0 };
+    return this.commit((b) => {
+      originalTexts(b); // refuses malformed bookkeeping before anything is merged
+      const kept = b.originals ?? { answers: [], reports: [] };
+      const haveAnswers = new Set(b.answers.map((a) => a.answer_id));
+      const haveReports = new Set(b.reports.map((r) => r.report_id));
+      const answers = incoming.answers.filter((a) => !haveAnswers.has(a.id));
+      const reports = incoming.reports.filter((r) => !haveReports.has(r.id));
+      const meta = { ...(b.meta ?? {}) };
+      const newMeta = incoming.meta.filter(([key]) => !Object.prototype.hasOwnProperty.call(meta, key));
+      const learner = b.learner === null && incoming.learner ? incoming.learner.value : null;
+      const snapshot = b.snapshot === null ? incoming.snapshot : null;
+      if (!answers.length && !reports.length && !newMeta.length && learner === null && snapshot === null) return null;
+      for (const [key, value] of newMeta) meta[key] = value;
+      added.answers = answers.length;
+      added.reports = reports.length;
+      return {
+        ...b,
+        meta,
+        learner: learner ?? b.learner,
+        answers: [...b.answers, ...answers.map((a) => a.value)],
+        snapshot: snapshot ?? b.snapshot,
+        reports: [...b.reports, ...reports.map((r) => r.value)],
+        originals: {
+          answers: [...kept.answers, ...answers.map(({ id, json }) => ({ id, json }))],
+          reports: [...kept.reports, ...reports.map(({ id, json }) => ({ id, json }))],
+        },
+      };
+    }).then(() => added);
   }
 }

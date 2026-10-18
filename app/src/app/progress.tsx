@@ -1,62 +1,81 @@
 import { Redirect } from 'expo-router';
-import { StyleSheet, Text, View } from 'react-native';
+import type { ReactNode } from 'react';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
-import type { CheckLine, SkillProgress } from '@/engine/progress';
+import type { CheckLine, SkillProgress, UnitProgress } from '@/engine/progress';
 import { useApp } from '@/ui/AppContext';
-import { ArabicText, Card, Eyebrow, H1, H2, Icon, Muted, Notice, Page, StorageRefused } from '@/ui/components';
-import { colors, radius } from '@/ui/theme';
-import { formatDue, isLearningError, useLearning } from '@/ui/useLearning';
+import { ArabicText, Chip, DraftChip, Icon, Muted, Notice, Page, ScreenHeader, StorageRefused } from '@/ui/components';
+import { Disclosure } from '@/ui/Disclosure';
+import { SKILL_LABEL, UNIT_ORDER, UNIT_TITLE, unitLabel } from '@/ui/labels';
+import { UNIT_STATE_LABEL, unitStates } from '@/ui/learningPath';
+import { colors, fonts, radius } from '@/ui/theme';
+import { formatDue, formatDueShort, isLearningError, useLearning } from '@/ui/useLearning';
 import { HydrationGate } from '@/ui/Hydration';
 
-const SKILL_LABEL: Record<string, string> = {
-  'NOM-01': 'Memahami kalimat «dia + sifat»',
-  'NOM-02': 'Memilih bentuk yang cocok',
-  'LEX-P3': 'Laki-laki atau perempuan (kata pertama)',
-  'VRB-01': 'Siapa yang melakukan (akhir kata kerja)',
-  'LEX-B': 'Arti kata kerja',
-};
-
-function checkText(c: CheckLine, today: string): string {
+/** The value of one check window, and whether it is short enough for a chip. */
+function checkText(c: CheckLine, today: string): { text: string; short: boolean } {
+  // A window without check items in this content version is never scheduled: no status or date to show.
+  if (c.available === 0) return { text: 'Belum ada soal cek di versi ini.', short: false };
   const legacy = c.legacy_attempted ? ` · ${c.legacy_attempted} jawaban format lama` : '';
   // Outcomes stay hidden until every item of this check is answered (no lookup between dependent checks).
   const result = c.correct === null ? 'hasilnya ditampilkan setelah semua soal cek ini dijawab' : `${c.correct} benar`;
   const counts = `${c.attempted} dari ${c.available} soal dijawab (${result})${legacy}`;
   switch (c.status) {
     case 'not-started':
-      return 'Belum dimulai.';
+      return { text: 'Belum dimulai.', short: true };
     case 'not-due':
       return c.waiting_new_teaching && c.waiting_until
-        ? `Belum waktunya; mulai ${formatDue(c.waiting_until, today)} (dihitung dari saat materi baru diajarkan).`
+        ? { text: `Mulai ${formatDueShort(c.waiting_until, today)} (dihitung dari saat materi baru diajarkan).`, short: false }
         : c.waiting_new_teaching
-          ? 'Belum waktunya; menunggu materi baru diajarkan lebih dulu.'
-          : `Belum waktunya; mulai ${formatDue(c.due_date!, today)}.`;
+          ? { text: 'Belum waktunya; menunggu materi baru diajarkan lebih dulu.', short: false }
+          : { text: `Mulai ${formatDueShort(c.due_date!, today)}`, short: true };
     case 'due':
-      return `Sudah waktunya. ${counts}.`;
+      return { text: `Sudah waktunya. ${counts}.`, short: false };
     case 'partial':
-      return `Sebagian: ${counts}.`;
+      return { text: `Sebagian: ${counts}.`, short: false };
     case 'answered':
-      return `Semua soal yang tersedia sudah dijawab: ${counts}.`;
+      return { text: `Semua soal yang tersedia sudah dijawab: ${counts}.`, short: false };
   }
 }
 
-/** Honest qualifiers for a check line: not-counted answers, items waiting for new teaching, missing content. */
+/** Honest qualifiers for one check window: not-counted answers, and items waiting for new teaching. */
 function checkNotes(c: CheckLine, today: string): string[] {
   const notes: string[] = [];
   if (c.assisted) notes.push(`${c.assisted} soal dijawab setelah materinya dilihat pada hari yang sama; dicatat, tetapi tidak dihitung sebagai bukti ingatan.`);
-  if (c.waiting_new_teaching && c.status !== 'not-due')
+  // Only while the check runs: before a unit starts nothing is scheduled, and a not-due line already says what it waits for.
+  if (c.waiting_new_teaching && (c.status === 'due' || c.status === 'partial'))
     notes.push(
       c.waiting_until
         ? `${c.waiting_new_teaching} soal menunggu sampai ${formatDue(c.waiting_until, today)}, dihitung dari saat materi barunya diajarkan.`
         : `${c.waiting_new_teaching} soal menunggu materi barunya diajarkan lebih dulu.`
     );
-  if (c.missing_content) notes.push('Soal cek untuk bagian ini belum lengkap, jadi status ini tetap «sebagian» meskipun semua soal yang ada sudah dijawab.');
   return notes;
 }
 
-function Line({ title, children, testID }: { title: string; children: React.ReactNode; testID?: string }) {
+/**
+ * Check coverage and "not judged pass/fail", stated once per unit rather than per window. That a
+ * check with too few items stays «sebagian» after its items are answered is said only once it happens.
+ */
+function retentionNote(u: UnitProgress): string {
+  const windows = [u.retention_d7, u.retention_d30];
+  const counts = 'Angka cek hanya menghitung jawaban; tidak dinilai lulus atau gagal.';
+  if (!windows.some((c) => c.missing_content)) return counts;
+  const stays = windows.some(
+    (c) => c.missing_content && c.status === 'partial' && c.available > 0 && c.attempted + c.assisted + c.legacy_attempted >= c.available
+  );
+  return `Soal cek untuk unit ini belum lengkap: sebagian keterampilan punya kurang dari 2 soal cek${
+    stays ? ', jadi cek yang semua soalnya sudah dijawab tetap «sebagian»' : ''
+  }. ${counts}`;
+}
+
+/** One evidence row: its title and a factual value (a chip when short, a line when it carries counts). */
+function EvidenceRow({ title, value, short, testID, children }: { title: string; value: string; short: boolean; testID?: string; children?: ReactNode }) {
   return (
-    <View style={styles.line} testID={testID}>
-      <Text style={styles.lineTitle}>{title}</Text>
+    <View style={styles.row}>
+      <View style={[styles.rowHead, !short && styles.rowHeadStacked]}>
+        <Text style={styles.rowTitle}>{title}</Text>
+        {short ? <Chip label={value} testID={testID} /> : <Muted testID={testID}>{value}</Muted>}
+      </View>
       {children}
     </View>
   );
@@ -77,111 +96,250 @@ function SkillRow({ s }: { s: SkillProgress }) {
   );
 }
 
-/** «Kemajuan»: separate factual lines; mastery, retention and transfer are not judged (rule pending). */
+/**
+ * «Kemajuan» (board 10): a learning path with factual state chips and evidence rows. Mastery, retention
+ * and transfer are not judged (the learned rule is pending); the recognition note, the reasons and the
+ * locked paths stay visible. Only the per-skill counts open on demand.
+ */
 function ProgressRoute() {
   const { content } = useApp();
   const learning = useLearning();
   if (content.empty) return <Redirect href="/" />;
-  if (learning === undefined) return null;
+  if (learning === undefined)
+    return (
+      <Page>
+        <ActivityIndicator color={colors.accent} accessibilityLabel="Memuat kemajuan" />
+      </Page>
+    );
   if (isLearningError(learning)) return <StorageRefused message={learning.error} />;
   if (learning === null) return <Redirect href="/" />;
   const { progress: p, today } = learning;
+  // Count saved records once, not skill totals (one answer may cover several skills).
+  const practice = learning.answers.filter((r) => r.pool !== 'D7' && r.pool !== 'D30' && r.role !== 'check');
+  const states = new Map(unitStates(learning, content).map((s) => [s.unit, s.state]));
+  const skills = p.skills.filter((s) => SKILL_LABEL[s.skill] && (s.attempts || s.legacy.attempts || s.review_attempts));
 
   return (
     <Page>
-      <Eyebrow tone="indigo">Kemajuan</Eyebrow>
-      <H1>Kemajuan Anda</H1>
-      <Notice tone="info">{p.evidence_note} Status «sudah dipelajari» belum dinilai sampai aturannya diputuskan.</Notice>
-
-      {p.units.map((u) => (
-        <Card key={u.unit} testID={`unit-${u.unit}`}>
-          <H2>{`Unit ${u.unit}`}</H2>
-          {!u.open ? (
-            <Muted>Belum dibuka. Unit ini dimulai setelah panduan dan latihan inti unit sebelumnya dikerjakan.</Muted>
-          ) : (
-            <>
-              <Line title="Sudah dipelajari" testID={`line-learned-${u.unit}`}>
-                <Muted>Belum dinilai. {u.learned.reason}</Muted>
-              </Line>
-              <Line title="Masih ingat setelah 7 / 30 hari" testID={`line-retention-${u.unit}`}>
-                <Muted testID={`check-d7-${u.unit}`}>7 hari: {checkText(u.retention_d7, today)}</Muted>
-                {checkNotes(u.retention_d7, today).map((t) => (
-                  <Muted key={`d7-${t}`} testID={`check-d7-note-${u.unit}`}>{`7 hari: ${t}`}</Muted>
-                ))}
-                <Muted testID={`check-d30-${u.unit}`}>30 hari: {checkText(u.retention_d30, today)}</Muted>
-                {checkNotes(u.retention_d30, today).map((t) => (
-                  <Muted key={`d30-${t}`} testID={`check-d30-note-${u.unit}`}>{`30 hari: ${t}`}</Muted>
-                ))}
-                {u.retention_d7.sparse_skills.length || u.retention_d30.sparse_skills.length ? (
-                  <Muted>Cakupan soal cek belum lengkap untuk sebagian keterampilan (kurang dari 2 soal); angka di atas tidak dinilai lulus atau gagal.</Muted>
-                ) : (
-                  <Muted>Angka di atas hanya jumlah jawaban; tidak dinilai lulus atau gagal.</Muted>
-                )}
-              </Line>
-              <Line title="Bisa memahami kalimat baru" testID={`line-transfer-${u.unit}`}>
-                <Muted>Belum dinilai. {u.transfer.reason}</Muted>
-              </Line>
-            </>
-          )}
-        </Card>
-      ))}
-
-      <H2>Latihan per keterampilan</H2>
-      <Card>
-        {p.skills
-          .filter((s) => SKILL_LABEL[s.skill] && (s.attempts || s.legacy.attempts || s.review_attempts))
-          .map((s) => (
-            <SkillRow key={s.skill} s={s} />
-          ))}
-        {!p.skills.some((s) => s.attempts || s.legacy.attempts) ? <Muted>Belum ada latihan.</Muted> : null}
-      </Card>
-
-      <H2>Daftar kata</H2>
-      <Card testID="word-list">
-        {p.words.length === 0 ? <Muted>Kata muncul di sini setelah Anda melatihnya.</Muted> : null}
-        {p.words.map((w) => (
-          <View key={w.word_id} style={styles.word}>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.wordMeaning} testID={`word-meaning-${w.word_id}`}>
-                {w.meaning_hidden ? 'Arti disembunyikan sampai cek ulang yang memakai kata ini selesai.' : w.meaning}
-              </Text>
-              <Muted>{w.state === 'needs-review' ? 'Perlu diulas' : `Sedang dilatih · ulasan ${formatDue(w.next_due, today)}`}</Muted>
+      <ScreenHeader title="Kemajuan">
+        <DraftChip />
+      </ScreenHeader>
+      <View testID="progress-overview" style={styles.overview}>
+        <Text style={styles.subtitle}>Catatan latihan, bukan nilai penguasaan.</Text>
+        <Notice tone="info">Jawaban empat pilihan dicatat sebagai pengenalan, bukan jawaban yang ditulis sendiri.</Notice>
+        {p.next_due ? (
+          <View style={styles.next}>
+            <View style={styles.nextIcon}>
+              <Icon name="calendar-outline" size={20} color={colors.accentInk} />
             </View>
-            <ArabicText size={26}>{w.display}</ArabicText>
+            <View style={styles.nextBody}>
+              <Text style={styles.nextLabel}>Ulasan/cek berikutnya</Text>
+              <Text style={styles.nextDate}>{`${formatDue(p.next_due, today)}.`}</Text>
+            </View>
           </View>
-        ))}
-      </Card>
+        ) : null}
+      </View>
 
-      <H2>Belum tersedia</H2>
-      <Card>
+      <Text accessibilityRole="header" style={styles.h2}>
+        Jalur belajar
+      </Text>
+      <View>
+        {p.units.map((u) => {
+          const state = states.get(u.unit) ?? 'closed';
+          const previous = UNIT_ORDER[UNIT_ORDER.indexOf(u.unit) - 1];
+          return (
+            <View key={u.unit} style={styles.step}>
+              <View style={styles.rail}>
+                <View style={[styles.dot, u.open ? styles.dotOpen : styles.dotClosed]} />
+                <View style={[styles.railLine, !u.open && styles.railLineClosed]} />
+              </View>
+              <View testID={`unit-${u.unit}`} style={[styles.unit, !u.open && styles.unitClosed]}>
+                <View style={styles.unitHead}>
+                  <View style={styles.unitTitles}>
+                    <Text style={[styles.unitEyebrow, !u.open && styles.unitEyebrowClosed]}>{unitLabel(u.unit)}</Text>
+                    <Text accessibilityRole="header" style={styles.unitTitle}>
+                      {UNIT_TITLE[u.unit]}
+                    </Text>
+                  </View>
+                  <Chip label={UNIT_STATE_LABEL[state]} tone={u.open ? 'accent' : 'neutral'} testID={`unit-state-${u.unit}`} />
+                </View>
+                {!u.open ? (
+                  <Muted>
+                    {previous ? `Dibuka setelah panduan dan latihan inti Unit ${previous} dikerjakan.` : 'Belum dibuka.'}
+                  </Muted>
+                ) : (
+                  <>
+                    <View testID={`line-learned-${u.unit}`}>
+                      <EvidenceRow title="Sudah dipelajari" value="Belum dinilai" short />
+                    </View>
+                    <View testID={`line-retention-${u.unit}`}>
+                      {(['d7', 'd30'] as const).map((w) => {
+                        const c = w === 'd7' ? u.retention_d7 : u.retention_d30;
+                        const v = checkText(c, today);
+                        return (
+                          <EvidenceRow
+                            key={w}
+                            title={`Masih ingat setelah ${w === 'd7' ? 7 : 30} hari`}
+                            value={v.text}
+                            short={v.short}
+                            testID={`check-${w}-${u.unit}`}
+                          >
+                            {checkNotes(c, today).map((t) => (
+                              <Muted key={t} testID={`check-${w}-note-${u.unit}`}>
+                                {t}
+                              </Muted>
+                            ))}
+                          </EvidenceRow>
+                        );
+                      })}
+                      <Muted testID={`retention-note-${u.unit}`} style={styles.unitNote}>
+                        {retentionNote(u)}
+                      </Muted>
+                    </View>
+                    <View testID={`line-transfer-${u.unit}`}>
+                      <EvidenceRow title="Bisa memahami kalimat baru" value="Belum dinilai" short />
+                    </View>
+                    <View style={styles.reasons}>
+                      <Text style={styles.reasonsTitle}>Kenapa belum dinilai?</Text>
+                      <Muted>{u.learned.reason}</Muted>
+                      <Muted>{u.transfer.reason}</Muted>
+                    </View>
+                  </>
+                )}
+              </View>
+            </View>
+          );
+        })}
         {p.locked.map((l) => (
-          <View key={l.path} style={styles.locked}>
-            <Icon name="lock-closed" size={18} color={colors.muted} />
-            <Muted style={{ flex: 1 }}>{`${l.path} — terkunci sampai aturan «sudah dipelajari» diputuskan.`}</Muted>
+          <View key={l.path} style={styles.step}>
+            <View style={styles.rail}>
+              <Icon name="lock-closed-outline" size={18} color={colors.muted} />
+            </View>
+            <View style={styles.locked}>
+              <View style={styles.unitHead}>
+                <Text accessibilityRole="header" style={styles.lockedTitle}>
+                  {l.path}
+                </Text>
+                <Chip label="Terkunci" />
+              </View>
+              <Muted>Terkunci sampai aturan «sudah dipelajari» diputuskan.</Muted>
+            </View>
           </View>
         ))}
-      </Card>
-      <Muted>{`Aturan ${p.rules_version} · konten ${p.content_version}`}</Muted>
+      </View>
+
+      <Text accessibilityRole="header" style={styles.h2}>
+        Kata yang dilatih
+      </Text>
+      <View testID="word-list" style={styles.words}>
+        {p.words.length === 0 ? <Muted style={styles.wordsEmpty}>Kata muncul di sini setelah Anda melatihnya.</Muted> : null}
+        {p.words.map((w, n) => (
+          <View key={w.word_id} style={[styles.word, n > 0 && styles.wordDivider]}>
+            <View style={styles.wordBody}>
+              <Text style={[styles.wordMeaning, w.meaning_hidden && styles.wordHidden]} testID={`word-meaning-${w.word_id}`}>
+                {w.meaning_hidden ? 'Arti disembunyikan sampai cek ulang selesai.' : w.meaning}
+              </Text>
+              <Text style={styles.wordState}>{w.state === 'needs-review' ? 'Perlu diulas' : `Sedang dilatih · ulasan ${formatDueShort(w.next_due, today)}`}</Text>
+            </View>
+            <ArabicText size={30}>{w.display}</ArabicText>
+          </View>
+        ))}
+      </View>
+
+      <Disclosure title="Rincian latihan" summary={`Per keterampilan · ${skills.length} keterampilan`} testID="progress-skills">
+        <Muted>
+          <Text testID="progress-attempts" style={styles.strong}>
+            {practice.length}
+          </Text>
+          {' jawaban latihan tersimpan (tanpa cek ulang).'}
+        </Muted>
+        {skills.map((s) => (
+          <SkillRow key={s.skill} s={s} />
+        ))}
+        {!p.skills.some((s) => s.attempts || s.legacy.attempts) ? <Muted>Belum ada latihan.</Muted> : null}
+      </Disclosure>
     </Page>
   );
 }
 
 const styles = StyleSheet.create({
-  line: { gap: 2, paddingVertical: 6, borderTopWidth: 1, borderTopColor: colors.border },
-  lineTitle: { fontSize: 16, fontWeight: '700', color: colors.ink, writingDirection: 'ltr', textAlign: 'left' },
-  skill: { gap: 2, paddingVertical: 6 },
-  skillTitle: { fontSize: 15, fontWeight: '700', color: colors.ink, writingDirection: 'ltr', textAlign: 'left' },
-  word: {
+  overview: { gap: 12 },
+  subtitle: { fontFamily: fonts.regular, fontSize: 15, lineHeight: 22, color: colors.muted, writingDirection: 'ltr', textAlign: 'left' },
+  next: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
-    paddingVertical: 6,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-    borderRadius: radius.sm,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    borderRadius: 18,
+    backgroundColor: colors.sheet,
+    borderWidth: 1,
+    borderColor: colors.line,
   },
-  wordMeaning: { fontSize: 16, color: colors.ink, fontWeight: '600', writingDirection: 'ltr', textAlign: 'left' },
-  locked: { flexDirection: 'row', gap: 8, alignItems: 'center', paddingVertical: 4 },
+  nextIcon: { width: 40, height: 40, borderRadius: radius.sm, backgroundColor: colors.accentSoft, alignItems: 'center', justifyContent: 'center' },
+  nextBody: { flex: 1 },
+  nextLabel: { fontFamily: fonts.regular, fontSize: 13, lineHeight: 18, color: colors.muted },
+  nextDate: { fontFamily: fonts.extrabold, fontSize: 17, lineHeight: 24, color: colors.ink },
+  h2: { fontFamily: fonts.extrabold, fontSize: 19, lineHeight: 26, color: colors.ink, marginTop: 10, writingDirection: 'ltr', textAlign: 'left' },
+
+  step: { flexDirection: 'row', gap: 12 },
+  rail: { width: 22, alignItems: 'center', paddingTop: 22 },
+  dot: { width: 16, height: 16, borderRadius: radius.pill },
+  dotOpen: { backgroundColor: colors.accent, borderWidth: 4, borderColor: colors.accentSoft },
+  dotClosed: { backgroundColor: colors.ground, borderWidth: 2, borderColor: '#A89A84' },
+  railLine: { flex: 1, width: 2, marginTop: 8, backgroundColor: colors.lineStrong },
+  railLineClosed: { backgroundColor: colors.line },
+  unit: {
+    flex: 1,
+    minWidth: 0,
+    marginBottom: 12,
+    paddingTop: 16,
+    paddingBottom: 12,
+    paddingHorizontal: 16,
+    gap: 10,
+    borderRadius: radius.card,
+    backgroundColor: colors.sheet,
+    borderWidth: 1,
+    borderColor: colors.line,
+  },
+  unitClosed: { backgroundColor: colors.sheet2 },
+  unitHead: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 },
+  unitTitles: { flexShrink: 1, gap: 2 },
+  unitEyebrow: { fontFamily: fonts.extrabold, fontSize: 12, lineHeight: 16, letterSpacing: 0.8, textTransform: 'uppercase', color: colors.accent },
+  unitEyebrowClosed: { color: colors.muted },
+  unitTitle: { fontFamily: fonts.extrabold, fontSize: 18, lineHeight: 24, color: colors.ink, writingDirection: 'ltr', textAlign: 'left' },
+  row: { gap: 4, paddingTop: 10, paddingBottom: 6, borderTopWidth: 1, borderTopColor: colors.lineSoft },
+  rowHead: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 8, minHeight: 32 },
+  rowHeadStacked: { flexDirection: 'column', alignItems: 'flex-start', gap: 2 },
+  rowTitle: { fontFamily: fonts.semibold, fontSize: 14, lineHeight: 20, color: colors.ink, writingDirection: 'ltr', textAlign: 'left' },
+  unitNote: { marginTop: 4 },
+  reasons: { gap: 4, paddingTop: 10, borderTopWidth: 1, borderTopColor: colors.lineSoft },
+  reasonsTitle: { fontFamily: fonts.bold, fontSize: 14, lineHeight: 20, color: colors.accentInk },
+  locked: {
+    flex: 1,
+    minWidth: 0,
+    marginBottom: 12,
+    padding: 16,
+    gap: 8,
+    borderRadius: radius.card,
+    borderWidth: 1,
+    borderStyle: 'dashed',
+    borderColor: '#CDBFA8',
+  },
+  lockedTitle: { flexShrink: 1, fontFamily: fonts.extrabold, fontSize: 16, lineHeight: 22, color: colors.ink, writingDirection: 'ltr', textAlign: 'left' },
+
+  words: { paddingHorizontal: 16, borderRadius: radius.card, backgroundColor: colors.sheet, borderWidth: 1, borderColor: colors.line },
+  wordsEmpty: { paddingVertical: 14 },
+  word: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 76, paddingVertical: 10 },
+  wordDivider: { borderTopWidth: 1, borderTopColor: colors.lineSoft },
+  wordBody: { flex: 1, gap: 4 },
+  wordMeaning: { fontFamily: fonts.semibold, fontSize: 16, lineHeight: 22, color: colors.ink, writingDirection: 'ltr', textAlign: 'left' },
+  wordHidden: { fontFamily: fonts.regular, fontSize: 14, lineHeight: 20, color: colors.muted },
+  wordState: { fontFamily: fonts.bold, fontSize: 13, lineHeight: 18, color: colors.accentInk, writingDirection: 'ltr', textAlign: 'left' },
+
+  skill: { gap: 2, paddingVertical: 6 },
+  skillTitle: { fontFamily: fonts.extrabold, fontSize: 15, lineHeight: 22, color: colors.ink, writingDirection: 'ltr', textAlign: 'left' },
+  strong: { fontFamily: fonts.extrabold, color: colors.ink },
 });
 
 export default function ProgressScreen() {
