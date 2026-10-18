@@ -86,3 +86,5 @@ art/                         # source files for hand-made assets (not shipped): 
 
 - Rules: CODE_RULES.md (cite as CR-xxx-n). Money: MONETIZATION_SCHEME.md. Visual standard: ART_DIRECTION.md. History: SESSION_LEARNINGS.md (grep by feature or date).
 - Sibling product memory for conventions and shared "Aya" character: `C:\Users\Umar Fadhil Ramadhan\OneDrive\Documents\ayakasir\ai-memory\` (read-only from here; do not copy its content in).
+
+- `docs/Amar_WIP_Handoff.md`: 2026-10-18 source-checkpoint branch scope, verification and remaining Amar account/sync integration.
