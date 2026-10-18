@@ -43,7 +43,10 @@ Keycloak needs several seconds after its database is healthy. `registrationAllow
 is false. The native public client has authorization code + S256 PKCE enabled;
 implicit, password and service-account flows are disabled. The only redirect is a
 local test callback. No native client, production redirect or release permission is
-added. Login identity is not age proof; the synthetic adult declaration is separate.
+added. Existing realms are not overwritten by Keycloak startup imports; after
+editing the realm file, use `python3 scripts/configure-local-auth.py` to reconcile
+only this local prototype client. The smoke fixture permits Secure cookies solely
+for the exact loopback auth address; production clients must use TLS. Login identity is not age proof; the synthetic adult declaration is separate.
 
 Stop the API with Ctrl-C. Stop only this project's services with:
 
@@ -71,7 +74,10 @@ python3 scripts/keycloak-smoke.py
 executes `go test -count=1 -race -v ./...`, stops that cluster and removes only its
 own temporary directory. On this Mac it uses Postgres.app 16; elsewhere set
 `PG_BIN=/directory/with/initdb-and-pg_ctl`. It never uses the persistent app DB.
-The Keycloak smoke test requires the local stack + API and creates a new synthetic
+`scripts/integration-compose.sh` alternatively creates a fresh throwaway test
+database inside only this project’s Compose Postgres 17 instance, runs the full
+race suite, then removes only that database. The persistent `umar_native` database
+is not used for integration tests. The Keycloak smoke test requires the local stack + API and creates a new synthetic
 identity in this project's realm. It exercises real code+PKCE login, checks rejection
 of an ID token as API bearer, registered trace/story events, byte preservation,
 replay receipts and consent withdrawal. It prints no tokens or credentials.

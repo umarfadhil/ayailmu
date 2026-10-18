@@ -82,7 +82,8 @@ Batch is atomic, including conflicts mid-batch; clients keep their outbox until 
 200 receipt, retry network failures, stop on 409, and never skip rejected events.
 Unknown versions/items remain `unregistered` and are retained, not projected.
 Registered metadata disagreements are rejected. No server scoring or mastery.
-Raw response shape/type is validated; free text is forbidden for ANAK. Draft or
+Raw response shape/type and exact property names/nullability are validated; free
+text is forbidden for ANAK. Draft or
 synthetic registry entries never imply approved content. GET returns history only.
 
 Per-learner locked transactions assign sequence numbers only after acquiring the
@@ -95,6 +96,7 @@ active consent. Regrant restores existing history without mutating events.
 
 Before real integration: Umar's native policy decision; purpose-specific adult and
 guardian consent and age assurance review; updated store/privacy statements;
+per-learner Arabic trial 18+ eligibility and separate trial consent;
 export/deletion/retention design; threat review, operational TLS/backups/rate limits,
 OIDC browser client and device opt-in UX. Native mastery remains unchanged and must
 not ingest this history until a separately reviewed adapter/reconciliation design.
