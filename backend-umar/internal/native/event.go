@@ -56,8 +56,8 @@ type Response struct {
 	Ref         *string  `json:"ref"`
 	OptionID    *string  `json:"option_id"`
 	Value       *float64 `json:"value"`
-	Sequence    []string `json:"sequence"`
-	Pairs       []Pair   `json:"pairs"`
+	Sequence    []string `json:"sequence" jsonnull:"true"`
+	Pairs       []Pair   `json:"pairs" jsonnull:"true"`
 	AudioStatus *string  `json:"audio_status"`
 }
 

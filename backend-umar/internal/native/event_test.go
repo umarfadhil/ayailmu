@@ -62,3 +62,41 @@ func TestRejectUnsafeOrMalformedEvents(t *testing.T) {
 		t.Fatal("trace evidence accepted")
 	}
 }
+
+func TestRejectCaseAliasesThatChangePreservedNativeMeaning(t *testing.T) {
+	base := fixture("choose", `{"kind":"choice","option_id":"a"}`)
+	for _, payload := range []string{
+		strings.Replace(base, `"synthetic":true`, `"synthetic":false,"SYNTHETIC":true`, 1),
+		strings.Replace(base, `"synthetic":true`, `"SYNTHETIC":true`, 1),
+		strings.Replace(base, `"learner_id":"lrn-local-1"`, `"learner_id":"foreign-learner","LEARNER_ID":"lrn-local-1"`, 1),
+		fixture("choose", `{"kind":"choice","option_id":"a","OPTION_ID":"b"}`),
+		fixture("match_pairs", `{"kind":"pairs","pairs":[{"left":"a","LEFT":"other","right":"b"}]}`),
+	} {
+		if _, err := Parse([]byte(payload), false); err == nil {
+			t.Error("case alias accepted")
+		}
+	}
+}
+
+func TestChildTypedResponseCannotUseCaseAliases(t *testing.T) {
+	payload := fixture("choose", `{"kind":"typed","text":"private","KIND":"choice","TEXT":null,"option_id":"a"}`)
+	if _, err := Parse([]byte(payload), true); err == nil {
+		t.Fatal("child typed response hidden by case aliases")
+	}
+}
+
+func TestRejectNullsOutsideNativeNullableFields(t *testing.T) {
+	base := fixture("choose", `{"kind":"choice","option_id":"a"}`)
+	for _, field := range []string{`"hint_used":null,`, `"time_on_item_ms":null,`, `"help_lines_shown":[null],`, `"error_tags":null,`} {
+		if _, err := Parse([]byte(strings.Replace(base, `"outcome":`, field+`"outcome":`, 1)), false); err == nil {
+			t.Errorf("nonnullable field accepted: %s", field)
+		}
+	}
+	if _, err := Parse([]byte(strings.Replace(base, `"auto_score":{}`, `"auto_score":{"meaning":null}`, 1)), false); err == nil {
+		t.Fatal("null score accepted")
+	}
+	valid := fixture("choose", `{"kind":"choice","option_id":"a","text":null,"sequence":null,"pairs":null,"audio_status":null}`)
+	if _, err := Parse([]byte(valid), false); err != nil {
+		t.Fatal("native nullable response fields rejected", err)
+	}
+}

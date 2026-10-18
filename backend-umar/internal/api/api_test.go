@@ -91,6 +91,7 @@ func TestHTTPAccountOwnershipAndSync(t *testing.T) {
 	}
 	call("POST", path+"/events", envelope(payload), foreign, 404)
 	call("POST", path+"/events", envelope(strings.Replace(payload, "http-native", "foreign-native", 1)), token, 400)
+	call("POST", path+"/events", strings.Replace(envelope(payload), `"synthetic":true`, `"synthetic":false,"SYNTHETIC":true`, 1), token, 400)
 	call("POST", path+"/events", envelope(payload), token, 200)
 	var receipts []store.Receipt
 	json.Unmarshal(call("POST", path+"/events", envelope(payload), token, 200), &receipts)
