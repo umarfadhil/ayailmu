@@ -229,6 +229,24 @@ export class SqlStore implements Store {
     return this.enqueue(() => readSqlRaw(this.db));
   }
 
+  /** A side document of this dataset (the sync journal), kept in the same database. */
+  loadDoc(name: string): Promise<string | null> {
+    return this.enqueue(async () => {
+      const table = await this.db.all<{ name: string }>(`SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'docs'`);
+      if (!table.length) return null;
+      const rows = await this.db.all<{ json: string }>('SELECT json FROM docs WHERE name = ?', [name]);
+      return rows.length ? rows[0].json : null;
+    });
+  }
+
+  /** Replaces a side document in one statement, through the same queue as every other write. */
+  saveDoc(name: string, text: string): Promise<void> {
+    return this.enqueue(async () => {
+      await this.db.exec('CREATE TABLE IF NOT EXISTS docs (name TEXT PRIMARY KEY NOT NULL, json TEXT NOT NULL);');
+      await this.db.run('INSERT OR REPLACE INTO docs (name, json) VALUES (?, ?)', [name, text]);
+    });
+  }
+
   /**
    * Adds the records this dataset lacks in one transaction, through the same queue as every other write. What it
    * already has is kept (answers and reports by ID, its learner, its snapshot, its metadata keys), copied records

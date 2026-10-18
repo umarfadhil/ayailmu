@@ -1,7 +1,8 @@
-import { Redirect, router } from 'expo-router';
+import { Redirect, router, type Href } from 'expo-router';
 import { useState, type ReactNode } from 'react';
 import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { useAccount } from '@/ui/AccountContext';
 import { useApp } from '@/ui/AppContext';
 import { BackLink } from '@/ui/BackLink';
 import { ArabicText, Chip, Icon, ModeNote, Muted, Page, SectionLabel, Segmented } from '@/ui/components';
@@ -67,7 +68,9 @@ function CopyId({ id }: { id: string }) {
 /** Board 15: the guest's local profile and truthful data facts. Values persist on the local learner record. */
 function SettingsRoute() {
   const { learner, rules, content, updateLearner } = useApp();
+  const account = useAccount();
   if (!learner) return <Redirect href="/" />;
+  const accountLabel = account.signedIn ? 'Kelola akun lokal' : 'Masuk atau buat akun lokal';
 
   return (
     <Page>
@@ -109,7 +112,11 @@ function SettingsRoute() {
         </View>
         <View style={styles.localBody}>
           <Text style={styles.localTitle}>Tersimpan di perangkat ini</Text>
-          <Text style={styles.localText}>Tanpa akun. Data tidak dikirim ke mana pun.</Text>
+          <Text style={styles.localText}>
+            {account.connected
+              ? 'Akun lokal: jawaban dan pengaturan dikirim ke layanan akun lokal (uji coba) hanya saat Anda menekan «Sinkronkan sekarang».'
+              : 'Tanpa akun. Data tidak dikirim ke mana pun.'}
+          </Text>
         </View>
       </View>
       <View style={styles.list}>
@@ -127,6 +134,31 @@ function SettingsRoute() {
         <Row title="Persetujuan">
           <Muted>{`Versi ${learner.consent_version} · ${new Date(learner.consent_at).toLocaleDateString('id-ID')}`}</Muted>
         </Row>
+      </View>
+
+      <SectionLabel>Akun lokal</SectionLabel>
+      <View style={styles.list}>
+        {account.enabled ? (
+          <Pressable
+            testID="account-open"
+            accessibilityRole="link"
+            accessibilityLabel={accountLabel}
+            onPress={() => router.push('/account' as Href)}
+            style={({ pressed }) => [styles.row, styles.linkRow, pressed && styles.pressed]}
+          >
+            <View style={styles.linkBody}>
+              <Text style={styles.rowTitle}>{accountLabel}</Text>
+              <Muted>
+                {account.connected
+                  ? 'Jawaban disimpan di perangkat ini dan dikirim ke layanan akun lokal saat Anda menekan «Sinkronkan sekarang».'
+                  : 'Akun uji coba lokal, khusus pengembangan. Tanpa akun, data tetap di perangkat ini.'}
+              </Muted>
+            </View>
+            <Icon name="chevron-forward" size={18} color={colors.muted} />
+          </Pressable>
+        ) : (
+          <Row title="Akun lokal" unavailable first />
+        )}
       </View>
 
       <SectionLabel>Lainnya</SectionLabel>
@@ -174,6 +206,7 @@ const styles = StyleSheet.create({
   rowHead: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
   rowTitle: { fontFamily: fonts.bold, fontSize: 15, lineHeight: 22, color: colors.ink, writingDirection: 'ltr', textAlign: 'left' },
   linkRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  linkBody: { flex: 1, gap: 4 },
   pressed: { backgroundColor: colors.sheet2 },
   id: {
     fontFamily: Platform.select({ ios: 'Menlo', android: 'monospace', default: 'monospace' }),

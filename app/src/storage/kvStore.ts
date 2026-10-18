@@ -267,6 +267,20 @@ export class KvStore implements Store {
     return this.enqueue(async () => readKvRaw(this.kv, this.key));
   }
 
+  /** A side document of this dataset (the sync journal), stored beside it under "<key>/<name>". */
+  loadDoc(name: string): Promise<string | null> {
+    return this.enqueue(async () => this.kv.getItem(`${this.key}/${name}`));
+  }
+
+  /** Replaces a side document in one write, through the same queue and writer guard as every other write. */
+  saveDoc(name: string, text: string): Promise<void> {
+    return this.enqueue(async () => {
+      if (this.refused) throw new Error('Storage refused: the stored data was not accepted, so nothing is written.');
+      if (this.readOnly) throw new Error(`Storage is read-only: ${this.readOnly}`);
+      this.kv.setItem(`${this.key}/${name}`, text);
+    });
+  }
+
   /**
    * Adds the records this dataset lacks in one write, through the same queue, state and writer guard as every other
    * write. What it already has is kept (answers and reports by ID, its learner, its snapshot, its metadata keys), and

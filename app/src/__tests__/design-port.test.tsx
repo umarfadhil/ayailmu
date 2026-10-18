@@ -283,6 +283,23 @@ describe('phone shell: three learner destinations, Pengaturan apart, no route me
 
 describe('consent and Kemajuan claim nothing the app does not do', () => {
   it('consent ties no deletion, reminder, export or sync to Pengaturan and keeps the data on this device; unconfigured data and account controls stay unavailable', async () => {
+    // Test-premise fix (local account pilot): this case is about a build WITHOUT the local account service, but the
+    // test runner configures that service through EXPO_PUBLIC_*. Its three variables are cleared for this case only
+    // and restored afterwards; every assertion below is unchanged.
+    const accountEnv = ['EXPO_PUBLIC_API_BASE_URL', 'EXPO_PUBLIC_AUTH_EMULATOR_URL', 'EXPO_PUBLIC_FIREBASE_PROJECT_ID'] as const;
+    const savedEnv = accountEnv.map((name) => [name, process.env[name]] as const);
+    for (const name of accountEnv) delete process.env[name];
+    try {
+      await unconfiguredControls();
+    } finally {
+      for (const [name, value] of savedEnv) {
+        if (value === undefined) delete process.env[name];
+        else process.env[name] = value;
+      }
+    }
+  }, 30000);
+
+  async function unconfiguredControls() {
     await start('/');
     // The guest-first welcome comes before the consent (board 13 → 14); neither shows learner navigation.
     await screen.findByTestId('welcome-start');
@@ -304,7 +321,7 @@ describe('consent and Kemajuan claim nothing the app does not do', () => {
     for (const control of screen.queryAllByRole(/^(button|link|switch|checkbox)$/, { name: unconfigured })) {
       expect(control).toBeDisabled();
     }
-  }, 30000);
+  }
 
   it('Kemajuan shows the recognition, pending and transfer caveats as soon as it opens, without opening a panel', async () => {
     const answers = [...A_CORE.map((id) => rec(id, addDays(today(), -8))), rec('A3-D7S3', today(), { role: 'check', feedback_deferred: true })];

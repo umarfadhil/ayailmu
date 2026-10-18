@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
 import { loadRules, type RulesConfig } from '@/config/rules';
 import { gateContent, type GatedContent } from '@/content/gating';
@@ -10,6 +10,15 @@ import type { OpenedWebStore } from '@/storage/webStore';
 
 export const APP_VERSION = '0.2.0';
 export const CONSENT_VERSION = 'demo-consent-0.1';
+
+/** A signed-in account's opened dataset, used for learning instead of the guest's. */
+export interface DatasetSelection {
+  store: Store;
+  /** Why this store may not write (another tab owns the dataset), or null. */
+  readOnly: string | null;
+  /** Records session-length and Arabic-size changes through the account's journal: the intent first, then the learner. */
+  savePreferences?: (patch: { session_minutes?: number; arabic_scale?: number }) => Promise<void>;
+}
 
 /** In-memory proof that the learner ticked both consent boxes in this app run. Never persisted on its own. */
 export interface ConsentReceipt {
@@ -45,20 +54,51 @@ interface AppState {
   updateLearner: (patch: Partial<Learner>) => Promise<void>;
   resetAll: () => Promise<void>;
   refreshLearner: () => Promise<void>;
+  /** The guest's own store. It stays open while a signed-in account's dataset is in use. */
+  guestStore: Store | null;
+  /** Which dataset the learning screens use. */
+  dataset: 'guest' | 'account';
+  /** Uses a signed-in account's opened dataset for learning, or the guest's again (null). Only called explicitly. */
+  selectDataset: (selection: DatasetSelection | null) => Promise<void>;
 }
+
+const PREFERENCE_FIELDS = ['session_minutes', 'arabic_scale'] as const;
 
 const Ctx = createContext<AppState | null>(null);
 
 export function AppProvider({ children, storeFactory = openStore }: { children: ReactNode; storeFactory?: () => Promise<Store | OpenedWebStore> }) {
   const rules = useMemo(() => loadRules(), []);
   const content = useMemo(() => gateContent(activePack, rules.mode), [rules.mode]);
-  const [store, setStore] = useState<Store | null>(null);
-  const [learner, setLearner] = useState<Learner | null>(null);
+  // The guest dataset: opened once, kept open while an account dataset is in use.
+  const [guestStore, setStore] = useState<Store | null>(null);
+  const [guestLearner, setLearner] = useState<Learner | null>(null);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [readOnly, setReadOnly] = useState<string | null>(null);
+  const [guestReadOnly, setReadOnly] = useState<string | null>(null);
   const [consentReceipt, setConsentReceipt] = useState<ConsentReceipt | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
+  // A signed-in account's dataset, when one is selected explicitly.
+  const [selection, setSelection] = useState<DatasetSelection | null>(null);
+  const [accountLearner, setAccountLearner] = useState<Learner | null>(null);
+  const selecting = useRef(0);
+
+  const store = selection ? selection.store : guestStore;
+  const learner = selection ? accountLearner : guestLearner;
+  const readOnly = selection ? selection.readOnly : guestReadOnly;
+  const setActiveLearner = useCallback((l: Learner | null) => (selection ? setAccountLearner(l) : setLearner(l)), [selection]);
+
+  const selectDataset = useCallback(async (next: DatasetSelection | null) => {
+    const turn = ++selecting.current; // a newer selection (or sign-out) wins over one still loading
+    if (!next) {
+      setSelection(null);
+      setAccountLearner(null);
+      return;
+    }
+    const l = await next.store.getLearner();
+    if (turn !== selecting.current) return;
+    setAccountLearner(l);
+    setSelection(next);
+  }, []);
 
   useEffect(() => {
     let alive = true;
@@ -131,11 +171,11 @@ export function AppProvider({ children, storeFactory = openStore }: { children: 
         screens_seen: [],
       };
       await store.saveLearner(l);
-      setLearner(l);
+      setActiveLearner(l);
       setConsentReceipt(null);
       return l;
     },
-    [store, consentReceipt]
+    [store, consentReceipt, setActiveLearner]
   );
 
   const updateLearner = useCallback(
@@ -143,23 +183,38 @@ export function AppProvider({ children, storeFactory = openStore }: { children: 
       if (!store) return;
       const current = (await store.getLearner()) ?? learner;
       if (!current) return;
+      const save = selection?.savePreferences;
+      if (save) {
+        // A signed-in account's preferences go through its journal (the intent first); other fields are saved as usual.
+        const prefs: { session_minutes?: number; arabic_scale?: number } = {};
+        const rest: Partial<Learner> = { ...patch };
+        for (const field of PREFERENCE_FIELDS) {
+          const value = patch[field];
+          if (value !== undefined) prefs[field] = value;
+          delete rest[field];
+        }
+        if (Object.keys(prefs).length) await save(prefs);
+        if (Object.keys(rest).length) await store.saveLearner({ ...((await store.getLearner()) ?? current), ...rest });
+        setActiveLearner(await store.getLearner());
+        return;
+      }
       const next = { ...current, ...patch };
       await store.saveLearner(next);
-      setLearner(next);
+      setActiveLearner(next);
     },
-    [store, learner]
+    [store, learner, selection, setActiveLearner]
   );
 
   const resetAll = useCallback(async () => {
     if (!store) return;
     await store.reset();
     setConsentReceipt(null);
-    setLearner(null);
-  }, [store]);
+    setActiveLearner(null);
+  }, [store, setActiveLearner]);
 
   const refreshLearner = useCallback(async () => {
-    if (store) setLearner(await store.getLearner());
-  }, [store]);
+    if (store) setActiveLearner(await store.getLearner());
+  }, [store, setActiveLearner]);
 
   const value: AppState = {
     ready,
@@ -177,6 +232,9 @@ export function AppProvider({ children, storeFactory = openStore }: { children: 
     updateLearner,
     resetAll,
     refreshLearner,
+    guestStore,
+    dataset: selection ? 'account' : 'guest',
+    selectDataset,
   };
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

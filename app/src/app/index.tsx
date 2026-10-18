@@ -2,6 +2,7 @@ import { router, useFocusEffect, type Href } from 'expo-router';
 import { Fragment, useCallback, type ReactNode } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View, type ViewStyle } from 'react-native';
 
+import { useAccount } from '@/ui/AccountContext';
 import { useApp } from '@/ui/AppContext';
 import {
   ArabicText,
@@ -62,11 +63,15 @@ export default function Home() {
 /** Guest-first welcome (board 13). Nothing is saved until the profile and consent step. */
 function Welcome() {
   const { rules, content } = useApp();
+  const account = useAccount();
   return (
     <Page
       footer={
         <>
           <Btn testID="welcome-start" label="Mulai" icon="arrow-forward" onPress={() => router.push('/consent')} />
+          {account.enabled ? (
+            <Btn testID="welcome-account" kind="quiet" label="Sudah punya akun lokal? Masuk di sini" onPress={() => router.push('/account' as Href)} />
+          ) : null}
           <Text style={styles.modeCaption}>{rules.mode === 'tester' ? 'Prototipe · mode penguji' : 'Prototipe pengembang'}</Text>
         </>
       }
@@ -116,7 +121,7 @@ const DOT: Record<UnitState, ViewStyle> = {
  * here (they live in Panduan, where each view is dated).
  */
 function Today({ learning }: { learning: LearningState }) {
-  const { readOnly, content, learner, flash, setFlash } = useApp();
+  const { readOnly, content, learner, flash, setFlash, dataset } = useApp();
   // The note left by closing a session is for this visit to Home only.
   useFocusEffect(useCallback(() => () => setFlash(null), [setFlash]));
   if (!learner) return null;
@@ -241,7 +246,9 @@ function Today({ learning }: { learning: LearningState }) {
 
       <View style={styles.storage}>
         <Icon name="phone-portrait-outline" size={16} color={colors.muted} />
-        <Text style={styles.storageText}>Tersimpan di perangkat ini · tanpa akun</Text>
+        <Text style={styles.storageText}>
+          {dataset === 'account' ? 'Tersimpan di perangkat ini · akun lokal, dikirim saat Anda menyinkronkan' : 'Tersimpan di perangkat ini · tanpa akun'}
+        </Text>
       </View>
     </Page>
   );

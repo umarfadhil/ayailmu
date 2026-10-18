@@ -87,11 +87,16 @@ export interface RawTarget extends RawSource {
   addCopy(copy: RawDataset, consent: GuestCopyConsent): Promise<CopyResult>;
 }
 
-/** The two learning stores (KvStore, SqlStore), as far as raw export and copy are concerned. */
+/** The two learning stores (KvStore, SqlStore), as far as raw export, copy and the journal document are concerned. */
 interface RawCapableStore {
   readRaw(): Promise<RawDataset | null>;
   addCopy(copy: RawDataset): Promise<CopyResult>;
+  loadDoc(name: string): Promise<string | null>;
+  saveDoc(name: string, text: string): Promise<void>;
 }
+
+/** The name of the sync journal's document beside an account dataset. */
+const JOURNAL_DOC = 'journal';
 
 /** The raw surface of an opened dataset: every call goes to `store()`, the dataset's current learning store. */
 function rawTarget(namespace: Namespace, store: () => RawCapableStore): RawTarget {
@@ -126,11 +131,14 @@ export interface JournalStorage {
   save(text: string): Promise<void>;
 }
 
-/** Not implemented yet: the journal document of an opened dataset. */
-const journalStorageStub: JournalStorage = {
-  load: () => Promise.reject(new Error('JournalStorage is not implemented yet')),
-  save: () => Promise.reject(new Error('JournalStorage is not implemented yet')),
-};
+/** The journal document of an opened dataset, through its current store. The guest dataset never has one. */
+function journalStorage(namespace: Namespace, store: () => RawCapableStore): JournalStorage {
+  const guest = isGuest(namespace);
+  return {
+    load: () => (guest ? Promise.resolve(null) : store().loadDoc(JOURNAL_DOC)),
+    save: (text) => (guest ? Promise.reject(new DatasetError('guest_read_only')) : store().saveDoc(JOURNAL_DOC, text)),
+  };
+}
 
 export interface OpenedKvDataset extends OpenedWebStore {
   /** Writes through this tab's current learning store: a read-only or released store refuses here too. */
@@ -144,7 +152,7 @@ export async function openKvDataset({ kv, locks, namespace }: { kv: KvBackend; l
   const opened = await openWebStore({ kv, locks, key: namespace.kvKey, lock: namespace.writerLock });
   // This tab's current store: the one opened now, or the one a takeover makes writable later.
   let current: KvStore = opened.store;
-  const dataset: OpenedKvDataset = { ...opened, raw: rawTarget(namespace, () => current), journal: journalStorageStub };
+  const dataset: OpenedKvDataset = { ...opened, raw: rawTarget(namespace, () => current), journal: journalStorage(namespace, () => current) };
   if (opened.whenWritable) {
     dataset.whenWritable = async () => {
       const store = await opened.whenWritable!();
@@ -162,11 +170,22 @@ export interface OpenedSqlDataset {
   journal: JournalStorage;
 }
 
+/** An account dataset opened for this app run (web or native), with its writer state and its release. */
+export interface OpenedAccountDataset {
+  store: Store;
+  raw: RawTarget;
+  journal: JournalStorage;
+  access: 'owner' | 'read-only';
+  /** Why the dataset is read-only here (shown to the learner). */
+  reason?: string;
+  release(): void;
+}
+
 /** Opens a native dataset's SQLite database as a learning store with its raw surface (one store, one queue). */
 export async function openSqlDataset(db: SqlDb, namespace: Namespace): Promise<OpenedSqlDataset> {
   const store = new SqlStore(db);
   await store.init();
-  return { store, raw: rawTarget(namespace, () => store), journal: journalStorageStub };
+  return { store, raw: rawTarget(namespace, () => store), journal: journalStorage(namespace, () => store) };
 }
 
 /**

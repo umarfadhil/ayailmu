@@ -65,12 +65,16 @@ const PROBLEM_CODE = /^[a-z][a-z0-9_]{0,63}$/;
 /** An RFC 6750 bearer token. Anything else is never put in a header. */
 const BEARER_TOKEN = /^[A-Za-z0-9._~+/-]+=*$/;
 
+/** A path under /v1/ with an optional plain query: no scheme, host, dot segments or empty segments. */
+const API_PATH = /^\/v1(\/[A-Za-z0-9._~-]+)+(\?[A-Za-z0-9._~&=-]*)?$/;
+
 /** A fetch reply, as far as it is read here. */
 interface Reply {
   ok: boolean;
   status: number;
   url?: string;
   redirected?: boolean;
+  headers?: { get(name: string): string | null };
   text(): Promise<string>;
 }
 
@@ -99,15 +103,26 @@ export function createApiClient(options: { baseUrl: string; fetch?: typeof fetch
   if (!base) throw new Error('createApiClient needs the local pilot API address; nothing was sent.');
   const injected = options.fetch;
 
-  /** One authenticated GET. Every failure becomes an ApiError with a stable code. */
-  const get = async (path: string, token: string, signal?: AbortSignal): Promise<{ status: number; body: unknown }> => {
+  /**
+   * One authenticated request with exactly `body`: the token in the Authorization header only, no cookies, no
+   * redirects. A transport failure or a reply from anywhere else becomes an ApiError; any HTTP status is returned.
+   */
+  const send = async (req: ApiRequest): Promise<ApiReply & { ok: boolean }> => {
+    const { method, path, token, signal, body, contentType, ifMatch } = req;
     if (typeof token !== 'string' || !BEARER_TOKEN.test(token)) throw new ApiError(0, 'unexpected');
+    if (typeof path !== 'string' || !API_PATH.test(path) || path.split('?')[0].split('/').some((s) => s === '.' || s === '..')) {
+      throw new ApiError(0, 'unexpected');
+    }
+    const headers: Record<string, string> = { Accept: 'application/json', Authorization: `Bearer ${token}` };
+    if (body !== undefined) headers['Content-Type'] = contentType ?? 'application/json';
+    if (ifMatch !== undefined) headers['If-Match'] = ifMatch;
     const url = `${base}${path}`;
     const init: RequestInit = {
-      method: 'GET',
-      headers: { Accept: 'application/json', Authorization: `Bearer ${token}` },
+      method,
+      headers,
       credentials: 'omit',
       redirect: 'error',
+      ...(body !== undefined ? { body } : {}),
       ...(signal ? { signal } : {}),
     };
     const failed = (error: unknown) => new ApiError(0, isAbort(error) || signal?.aborted === true ? 'aborted' : 'network');
@@ -128,32 +143,43 @@ export function createApiClient(options: { baseUrl: string; fetch?: typeof fetch
     } catch (error) {
       throw failed(error);
     }
-    let body: unknown;
-    let readable = true;
-    try {
-      body = JSON.parse(text);
-    } catch {
-      readable = false;
-    }
-    if (reply.ok !== true) {
-      // Only the problem's stable code is kept: never its title, detail or any other reply text.
-      const code = readable && isRecord(body) && typeof body.code === 'string' && PROBLEM_CODE.test(body.code) ? body.code : 'unexpected';
-      throw new ApiError(status, code);
-    }
-    if (!readable) throw new ApiError(status, 'bad_response');
-    return { status, body };
+    const etag = typeof reply.headers?.get === 'function' ? reply.headers.get('etag') : null;
+    return { ok: reply.ok === true, status, text, etag };
   };
 
   return {
     async me(token, signal) {
-      const { status, body } = await get('/v1/me', token, signal);
-      const account = verifiedAccount(body);
-      if (!account) throw new ApiError(status, 'bad_response');
+      const reply = await send({ method: 'GET', path: '/v1/me', token, signal });
+      let body: unknown;
+      let readable = true;
+      try {
+        body = JSON.parse(reply.text);
+      } catch {
+        readable = false;
+      }
+      if (!reply.ok) {
+        // Only the problem's stable code is kept: never its title, detail or any other reply text.
+        const code = readable && isRecord(body) && typeof body.code === 'string' && PROBLEM_CODE.test(body.code) ? body.code : 'unexpected';
+        throw new ApiError(reply.status, code);
+      }
+      const account = readable ? verifiedAccount(body) : null;
+      if (!account) throw new ApiError(reply.status, 'bad_response');
       return account;
     },
 
-    async request(_req) {
-      throw new Error('ApiClient.request is not implemented yet');
+    async request(req) {
+      const { status, text, etag } = await send(req);
+      return { status, text, etag };
     },
   };
+}
+
+/** The stable problem code of an error reply (RFC 9457 `code`), or null. Never its title, detail or other text. */
+export function problemCode(text: string): string | null {
+  try {
+    const body: unknown = JSON.parse(text);
+    return isRecord(body) && typeof body.code === 'string' && PROBLEM_CODE.test(body.code) ? body.code : null;
+  } catch {
+    return null;
+  }
 }

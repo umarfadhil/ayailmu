@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
+import { AccountProvider } from '@/ui/AccountContext';
 import { AppProvider } from '@/ui/AppContext';
 import { useIsDesktop } from '@/ui/components';
 import { isTabRoute, SideRail, TabBar, useLearnerNav } from '@/ui/Nav';
@@ -70,7 +71,9 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <AppProvider>
-        <Shell />
+        <AccountProvider>
+          <Shell />
+        </AccountProvider>
       </AppProvider>
     </SafeAreaProvider>
   );
