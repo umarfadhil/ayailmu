@@ -102,3 +102,7 @@ Compaction (run when `check_budget.py` reports over budget, or quarterly): entri
 ## 2026-10-18 — Amar WIP checkpoint (IN SOURCE)
 
 Separate RN, local backend and earlier integration snapshots are preserved on named branches. `docs/Amar_WIP_Handoff.md` records exact scope and remaining13 RN sync contracts. No main merge, native release, deployment or completed-app claim accompanies this checkpoint.
+
+## 2026-10-18 — Amar local account/sync verification (IN SOURCE; native/device pending)
+
+The separate RN branch now implements the local account/profile/journal path:466 unit tests and the real48-check account/93-check guest browser flows pass. This branch keeps its existing source snapshot; `docs/Amar_WIP_Handoff.md` identifies the separate client/backend branches and remaining native/content/deployment gates. No main merge or deployment.
