@@ -10,13 +10,17 @@ export const UNIT_TITLE: Record<UnitId, string> = { A: 'Siapa yang dijelaskan?',
 /** «Unit A», «Unit B · Dasar». */
 export const unitLabel = (unit: UnitId) => `Unit ${unit}${unit === 'B' ? ' · Dasar' : ''}`;
 
-/** Practice skills with a learner-facing name. Skills without one (per-word skills) are not listed by name. */
+/**
+ * Practice skills with a learner-facing name. Skills without one (per-word skills) are not listed by name. Their counts
+ * score whole four-choice answers, so the names describe the group of questions answered, never one part of an answer
+ * (for example, not the person alone). Unit B's verb questions ask what happened and who did it (lessons §3.4).
+ */
 export const SKILL_LABEL: Record<string, string> = {
   'NOM-01': 'Memahami kalimat «dia + sifat»',
   'NOM-02': 'Memilih bentuk yang cocok',
-  'LEX-P3': 'Laki-laki atau perempuan (kata pertama)',
-  'VRB-01': 'Siapa yang melakukan (akhir kata kerja)',
-  'LEX-B': 'Arti kata kerja',
+  'LEX-P3': 'Kalimat tentang dia (laki-laki atau perempuan)',
+  'VRB-01': 'Kata kerja: apa yang terjadi dan siapa pelakunya',
+  'LEX-B': 'Arti kata kerja beserta pelakunya',
 };
 
 /** Arabic text size on the local learner record. */

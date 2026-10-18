@@ -10,6 +10,12 @@ import type { OpenedWebStore } from '@/storage/webStore';
 
 export const APP_VERSION = '0.2.0';
 export const CONSENT_VERSION = 'demo-consent-0.1';
+/**
+ * Version of the consent given in «Akun lokal» before an adult profile is created («Saya setuju jawaban dan pengaturan
+ * saya disimpan di profil akun lokal ini.»). Its text differs from the guest consent above, so new account profiles and
+ * their new local learners record this version; receipts already recorded under either version are never rewritten.
+ */
+export const LOCAL_ACCOUNT_CONSENT_VERSION = 'demo-local-account-sync-consent-0.1';
 
 /** A signed-in account's opened dataset, used for learning instead of the guest's. */
 export interface DatasetSelection {

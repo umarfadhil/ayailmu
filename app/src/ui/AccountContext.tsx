@@ -17,7 +17,7 @@ import type { RawDataset } from '@/storage/rawRecords';
 import type { Store } from '@/storage/types';
 import { openJournal, SyncError, type JournalView, type LinkChoice, type SyncConnection, type SyncJournal } from '@/sync/journal';
 import type { AccountBusy, AccountMode, AccountPanelProps, AccountProfileChoice, ConnectedProfile } from '@/ui/account/AccountPanel';
-import { APP_VERSION, CONSENT_VERSION, useApp } from '@/ui/AppContext';
+import { APP_VERSION, LOCAL_ACCOUNT_CONSENT_VERSION, useApp } from '@/ui/AppContext';
 
 export interface AccountContextValue {
   /** The local account service is configured for this build. */
@@ -362,7 +362,8 @@ export function AccountProvider({
       const t = turn.current;
       setBusy('profile');
       setError(null);
-      const consent = { version: CONSENT_VERSION, at: new Date().toISOString() };
+      // The consent ticked in this panel, under its own version (not the guest's device-only consent).
+      const consent = { version: LOCAL_ACCOUNT_CONSENT_VERSION, at: new Date().toISOString() };
       try {
         await ensureLearner(o, consent);
         await selectAccountDataset(o, j);

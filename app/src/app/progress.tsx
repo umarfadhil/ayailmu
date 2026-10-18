@@ -253,6 +253,11 @@ function ProgressRoute() {
           </Text>
           {' jawaban latihan tersimpan (tanpa cek ulang).'}
         </Muted>
+        <Muted testID="skills-whole-answer-note">
+          Setiap kelompok menghitung jawaban empat pilihan yang utuh. Jawaban baru dihitung benar bila semua bagiannya
+          tepat, misalnya orangnya dan artinya; satu bagian yang keliru membuat seluruh jawaban belum tepat. Satu jawaban
+          bisa masuk ke lebih dari satu kelompok.
+        </Muted>
         {skills.map((s) => (
           <SkillRow key={s.skill} s={s} />
         ))}
