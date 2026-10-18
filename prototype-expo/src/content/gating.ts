@@ -1,8 +1,15 @@
 import type { AppMode } from '@/config/rules';
+import { buildLineageMap } from './load';
+import { normalize } from '@/engine/scoring';
 import type { ContentPack, Item, LessonScreen, ReviewStatus } from './schema';
 
 export interface GatedContent {
   content_version: string;
+  /** Authoritative pack flag: synthetic developer material (never inferred from item IDs). */
+  synthetic: boolean;
+  answer_format?: 'mcq4';
+  /** Active + legacy item ID → lineage (freshness/review identity across content versions). */
+  lineage: Record<string, string>;
   /** True when anything shown is not approved-for-trial (developer demo). */
   unreviewed: boolean;
   /** True when nothing can be shown (tester mode before approval). */
@@ -28,6 +35,9 @@ export function gateContent(pack: ContentPack, mode: AppMode): GatedContent {
     screens.some((s) => s.review_status !== 'approved-for-trial');
   return {
     content_version: pack.content_version,
+    synthetic: pack.synthetic,
+    answer_format: pack.answer_format,
+    lineage: buildLineageMap(pack),
     unreviewed,
     empty: items.length === 0,
     prompts: pack.prompts,
@@ -79,6 +89,10 @@ export function validatePack(pack: ContentPack): string[] {
     if (bare.length) errors.push(`${id}: harakat missing in ${bare.join(' ')}`);
     for (const fid of Object.values(item.feedback_ids)) checkFeedback(id, fid);
 
+    if (pack.answer_format === 'mcq4') {
+      errors.push(...validateMcq4(item, pack));
+      continue;
+    }
     if (item.type === 'q-form2' || item.type === 'choose' || item.type === 'q-ref') {
       const correct = (item.options ?? []).filter((o) => o.correct).length;
       if (correct !== 1) errors.push(`${id}: choice item needs exactly one correct option`);
@@ -92,5 +106,37 @@ export function validatePack(pack: ContentPack): string[] {
     if (item.type === 'q-para' && !item.referent) errors.push(`${id}: q-para needs a referent`);
     if (item.pool === 'FOCUS' && !item.focus_for) errors.push(`${id}: FOCUS item needs focus_for`);
   }
+  return errors;
+}
+
+/** Four-choice rules (content v0.2). A validator cannot certify pedagogy; content review still applies. */
+function validateMcq4(item: Item, pack: ContentPack): string[] {
+  const id = item.item_id;
+  const errors: string[] = [];
+  if (item.type !== 'mcq4') return [`${id}: active items must be mcq4 (got ${item.type})`];
+  if (!item.format) errors.push(`${id}: mcq4 needs a format`);
+  if (!item.lineage) errors.push(`${id}: mcq4 needs a lineage`);
+  const opts = item.options ?? [];
+  if (opts.length !== 4) errors.push(`${id}: needs exactly 4 options (got ${opts.length})`);
+  if (new Set(opts.map((o) => o.id)).size !== opts.length) errors.push(`${id}: duplicate option id`);
+  const texts = opts.map((o) => (o.arabic ? o.text : normalize(o.text)));
+  if (new Set(texts).size !== texts.length) errors.push(`${id}: duplicate option text`);
+  if (opts.filter((o) => o.correct).length !== 1) errors.push(`${id}: needs exactly one correct option`);
+  for (const o of opts) {
+    if (o.arabic && missingHarakat(o.text).length) errors.push(`${id}/${o.id}: harakat missing in option`);
+    if (o.correct) continue;
+    if (!o.misconceptions?.length) errors.push(`${id}/${o.id}: wrong option needs a misconception`);
+    if (typeof o.serious !== 'boolean') errors.push(`${id}/${o.id}: wrong option needs serious true/false`);
+    if (!o.feedback_ids?.length) errors.push(`${id}/${o.id}: wrong option needs feedback`);
+    for (const f of o.feedback_ids ?? []) if (!pack.feedback[f]) errors.push(`${id}/${o.id}: unknown feedback id ${f}`);
+  }
+  if (item.feedback_ids.correct && !pack.feedback[item.feedback_ids.correct]) {
+    errors.push(`${id}: unknown feedback id ${item.feedback_ids.correct}`);
+  }
+  if (!pack.prompts[item.prompt_id]) errors.push(`${id}: unknown prompt_id ${item.prompt_id}`);
+  if (item.content_version !== pack.content_version) errors.push(`${id}: content_version mismatch`);
+  const bare = [...missingHarakat(item.arabic), ...item.help_lines.flatMap((h) => missingHarakat(h.word))];
+  if (bare.length) errors.push(`${id}: harakat missing in ${bare.join(' ')}`);
+  if (item.pool === 'FOCUS' && !item.focus_for) errors.push(`${id}: FOCUS item needs focus_for`);
   return errors;
 }

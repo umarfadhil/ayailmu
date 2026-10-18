@@ -1,6 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useState, type ComponentProps, type ReactNode } from 'react';
+import { useCallback, useEffect, useImperativeHandle, useRef, useState, type ComponentProps, type ReactNode, type Ref } from 'react';
 import {
   Modal,
   Pressable,
@@ -16,6 +16,8 @@ import {
 } from 'react-native';
 
 import type { HelpLine } from '@/content/schema';
+import { moveFocus } from './a11y';
+import { useApp } from './AppContext';
 import { colors, DESKTOP_MIN_WIDTH, radius, shadow } from './theme';
 
 export const ARABIC_FONT = 'NotoNaskhArabic_400Regular';
@@ -82,19 +84,106 @@ export function Canvas() {
   );
 }
 
+/** Brings part of a Page into view, immediately (never an animated scroll). */
+export interface PageHandle {
+  /**
+   * Shows `target` whole, bringing it up from below (e.g. the answer feedback and Lanjut). A target
+   * taller than the view is aligned at its top instead, so its heading stays readable. Asked before
+   * the page is laid out, or while its route is hidden, it waits until the page can be measured.
+   */
+  reveal: (target: View | null) => void;
+  /** Back to the top of the page: a new question or lesson screen starts at its heading. Drops a waiting reveal. */
+  toTop: () => void;
+}
+
+/** Scroll offset that shows the block [top, top + height] of the content in a view `viewport` px tall. */
+export function revealOffset(top: number, height: number, viewport: number, margin = 16): number {
+  return Math.max(0, Math.min(top - margin, top + height + margin - viewport));
+}
+
 /** Scrollable page column on the canvas. `width`: exercise ≈ 620, content ≈ 760, wide ≈ 980. */
-export function Page({ children, width = 'content' }: { children: ReactNode; width?: 'exercise' | 'content' | 'wide' }) {
+export function Page({ children, width = 'content', ref }: { children: ReactNode; width?: 'exercise' | 'content' | 'wide'; ref?: Ref<PageHandle> }) {
   const desktop = useIsDesktop();
   const maxWidth = width === 'exercise' ? 620 : width === 'wide' ? 980 : 760;
+  const scroll = useRef<ScrollView>(null);
+  const column = useRef<View>(null);
+  const viewport = useRef(0); // visible height of the scroll view; 0 until laid out and while the route is hidden
+  const columnTop = useRef<number | null>(null); // offset of the column in the scrolled content (page padding); null until shown
+  const pending = useRef<View | null>(null); // a reveal waiting until the page can be measured
+  const request = useRef(0); // a newer reveal, toTop or unmount supersedes a measurement still in flight
+
+  // Runs the waiting reveal once the page is laid out and shown. A session reopened on its feedback
+  // lays the feedback out before the page around it, and a retained route measures zero while hidden.
+  // Measured against the column, not the screen, so the current scroll position does not matter.
+  const flush = useCallback(() => {
+    const target = pending.current;
+    if (!target || !column.current || !viewport.current || columnTop.current === null) return;
+    pending.current = null;
+    request.current += 1;
+    const id = request.current;
+    try {
+      target.measureLayout(column.current as never, (_x, y, _width, height) => {
+        if (id !== request.current) return; // superseded by a newer reveal, by toTop (Lanjut) or by unmounting
+        if (!viewport.current || columnTop.current === null || height <= 0) {
+          if (!pending.current) pending.current = target; // hidden again or not laid out yet: retry on the next layout
+          return;
+        }
+        scroll.current?.scrollTo({ y: revealOffset(columnTop.current + y, height, viewport.current), animated: false });
+      });
+    } catch {
+      // Scrolling is an enhancement: focus and the live region still present the content.
+    }
+  }, []);
+  useImperativeHandle(
+    ref,
+    () => ({
+      reveal: (target: View | null) => {
+        pending.current = target;
+        flush();
+      },
+      toTop: () => {
+        pending.current = null;
+        request.current += 1;
+        try {
+          scroll.current?.scrollTo({ y: 0, animated: false });
+        } catch {
+          // as above
+        }
+      },
+    }),
+    [flush]
+  );
+  useEffect(
+    () => () => {
+      pending.current = null;
+      request.current += 1;
+    },
+    []
+  );
   return (
     <View style={styles.pageRoot}>
       <Canvas />
       <ScrollView
-      style={styles.scroll}
-      contentContainerStyle={[styles.page, desktop && styles.pageDesktop]}
-      keyboardShouldPersistTaps="handled"
-    >
-        <View style={[styles.column, { maxWidth }]}>{children}</View>
+        ref={scroll}
+        style={styles.scroll}
+        contentContainerStyle={[styles.page, desktop && styles.pageDesktop]}
+        keyboardShouldPersistTaps="handled"
+        onLayout={(e) => {
+          viewport.current = e.nativeEvent.layout.height;
+          flush();
+        }}
+      >
+        <View
+          ref={column}
+          style={[styles.column, { maxWidth }]}
+          onLayout={(e) => {
+            const { y, height } = e.nativeEvent.layout;
+            columnTop.current = height > 0 ? y : null;
+            flush();
+          }}
+        >
+          {children}
+        </View>
       </ScrollView>
     </View>
   );
@@ -216,8 +305,55 @@ export function ArabicText({
       testID={testID}
       style={[styles.arabic, { fontSize, lineHeight: Math.round(fontSize * 1.9), textAlign: align }]}
       accessibilityLanguage="ar"
+      lang="ar"
     >
       {children}
+    </Text>
+  );
+}
+
+const ARABIC_RUN = /([\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]+(?:[ \u00A0]+[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]+)*)/;
+
+/** Splits text into Latin and Arabic runs (consecutive Arabic words stay one run). */
+export function arabicRuns(text: string): { text: string; arabic: boolean }[] {
+  return text
+    .split(ARABIC_RUN)
+    .filter((t) => t.length > 0)
+    .map((t) => ({ text: t, arabic: ARABIC_RUN.test(t) && /^[^A-Za-z0-9]*$/.test(t) }));
+}
+
+/**
+ * UI-02: Indonesian text with inline Arabic (lesson titles, body, prompts, feedback). Arabic runs are
+ * marked lang="ar", set right-to-left in the Arabic font and follow the learner's Arabic text size.
+ */
+export function MixedText({
+  children,
+  scale = 1,
+  style,
+  testID,
+  header,
+  numberOfLines,
+}: {
+  children: string;
+  scale?: number;
+  style?: StyleProp<TextStyle>;
+  testID?: string;
+  header?: boolean;
+  numberOfLines?: number;
+}) {
+  const base = StyleSheet.flatten([styles.p, style]);
+  const size = Math.round((base.fontSize ?? 16) * 1.35 * scale);
+  return (
+    <Text style={base} testID={testID} accessibilityRole={header ? 'header' : undefined} numberOfLines={numberOfLines}>
+      {arabicRuns(children).map((r, n) =>
+        r.arabic ? (
+          <Text key={n} lang="ar" accessibilityLanguage="ar" style={[styles.inlineArabic, { fontSize: size, lineHeight: Math.round(size * 1.7) }]}>
+            {r.text}
+          </Text>
+        ) : (
+          r.text
+        )
+      )}
     </Text>
   );
 }
@@ -285,6 +421,23 @@ export function Btn({
   );
 }
 
+/**
+ * Keyboard activation for single-choice radios (UI-01). react-native-web activates role="radio" on
+ * Enter only; ARIA radios select on Space too. Space is also kept from scrolling the page.
+ */
+export function selectOnSpace(select: () => void): object {
+  // `onKeyDown` is a react-native-web prop (not in the native Pressable types); native ignores it.
+  return {
+    onKeyDown: (e: { key?: string; nativeEvent?: { key?: string }; preventDefault?: () => void }) => {
+      const key = e.nativeEvent?.key ?? e.key;
+      if (key === ' ' || key === 'Spacebar') {
+        e.preventDefault?.();
+        select();
+      }
+    },
+  };
+}
+
 /** Two-up segmented choice (S09 Unvocalized/Vocalized toggle anatomy). */
 export function Segmented<T extends string | number>({
   options,
@@ -308,6 +461,7 @@ export function Segmented<T extends string | number>({
             accessibilityRole="radio"
             accessibilityState={{ checked: on, selected: on }}
             onPress={() => onChange(o.value)}
+            {...selectOnSpace(() => onChange(o.value))}
             style={[styles.segment, on && styles.segmentOn]}
           >
             <Text style={[styles.segmentText, on && styles.segmentTextOn]}>{o.label}</Text>
@@ -318,10 +472,11 @@ export function Segmented<T extends string | number>({
   );
 }
 
-export function ProgressTrack({ value, max, label }: { value: number; max: number; label: string }) {
+export function ProgressTrack({ value, max, label, testID }: { value: number; max: number; label: string; testID?: string }) {
   const pct = max > 0 ? Math.min(1, Math.max(0, value / max)) : 0;
   return (
     <View
+      testID={testID}
       style={styles.track}
       accessibilityRole="progressbar"
       accessibilityLabel={label}
@@ -346,7 +501,7 @@ export function HelpLines({ lines, scale }: { lines: HelpLine[]; scale: number }
           <ArabicText size={20} scale={scale}>
             {h.word}
           </ArabicText>
-          <Text style={styles.helpLabel}> = {h.meaning}</Text>
+          <MixedText scale={scale} style={styles.helpLabel}>{` = ${h.meaning}`}</MixedText>
         </View>
       ))}
     </View>
@@ -360,17 +515,21 @@ export function ExampleBlock({ arabic, gloss, scale }: { arabic: string; gloss: 
       <ArabicText scale={scale} size={30} align="right">
         {arabic}
       </ArabicText>
-      <Text style={styles.exampleGloss}>{gloss}</Text>
+      <MixedText scale={scale} style={styles.exampleGloss}>
+        {gloss}
+      </MixedText>
     </View>
   );
 }
 
 /** Reading-clue block (S19–S22), used only for an existing explanation paragraph. */
-export function ClueBlock({ children }: { children: string }) {
+export function ClueBlock({ children, scale = 1 }: { children: string; scale?: number }) {
   return (
     <View style={styles.clue}>
       <Text style={styles.clueLabel}>Petunjuk membaca</Text>
-      <Text style={styles.clueText}>{children}</Text>
+      <MixedText scale={scale} style={styles.clueText}>
+        {children}
+      </MixedText>
     </View>
   );
 }
@@ -412,6 +571,11 @@ export function ReportButton({ onSubmit }: { onSubmit: (reason: string, text: st
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const dialogHeading = useRef<View>(null);
+  useEffect(() => {
+    if (open) setTimeout(() => moveFocus(dialogHeading), 0); // after the modal mounts
+  }, [open]);
+
   const close = () => {
     setOpen(false);
     setReason(null);
@@ -421,15 +585,22 @@ export function ReportButton({ onSubmit }: { onSubmit: (reason: string, text: st
 
   return (
     <View>
-      <Pressable onPress={() => setOpen(true)} accessibilityRole="button" testID="report-open" style={styles.reportBtn}>
+      <Pressable
+        onPress={() => setOpen(true)}
+        accessibilityRole="button"
+        accessibilityLabel={sent ? 'Laporan terkirim. Laporkan soal lagi' : 'Laporkan soal'}
+        accessibilityHint="Membuka formulir laporan"
+        testID="report-open"
+        style={styles.reportBtn}
+      >
         <Icon name={sent ? 'checkmark-circle-outline' : 'flag-outline'} size={14} color={colors.muted} />
         <Text style={styles.reportLink}>{sent ? 'Laporan terkirim' : 'Laporkan soal'}</Text>
       </Pressable>
       <Modal visible={open} transparent animationType="fade" onRequestClose={close}>
         <View style={styles.modalBack}>
-          <View style={styles.modal} accessibilityViewIsModal>
+          <View style={styles.modal} accessibilityViewIsModal role="dialog" aria-modal accessibilityLabel="Laporkan soal" testID="report-dialog">
             <View style={styles.modalHead}>
-              <View style={{ flex: 1 }}>
+              <View style={{ flex: 1 }} ref={dialogHeading} tabIndex={-1}>
                 <Eyebrow tone="indigo">Laporan</Eyebrow>
                 <H2>Laporkan soal</H2>
               </View>
@@ -437,11 +608,29 @@ export function ReportButton({ onSubmit }: { onSubmit: (reason: string, text: st
                 <Icon name="close" color={colors.ink} />
               </Pressable>
             </View>
-            {REPORT_REASONS.map((r) => (
-              <Btn key={r} label={r} kind="secondary" selected={reason === r} onPress={() => setReason(r)} />
-            ))}
-            <Field value={text} onChangeText={setText} placeholder="Keterangan (boleh kosong)" />
-            {error ? <Notice tone="danger">{error}</Notice> : null}
+            <View role="radiogroup" accessibilityLabel="Alasan laporan" style={{ gap: 8 }} testID="report-reasons">
+              {REPORT_REASONS.map((r, n) => (
+                <Pressable
+                  key={r}
+                  testID={`report-reason-${n}`}
+                  accessibilityRole="radio"
+                  accessibilityState={{ checked: reason === r, selected: reason === r }}
+                  onPress={() => setReason(r)}
+                  {...selectOnSpace(() => setReason(r))}
+                  style={[styles.btn, styles.btn_secondary, reason === r && styles.btnSelected]}
+                >
+                  <Text style={styles.reasonText}>{r}</Text>
+                </Pressable>
+              ))}
+            </View>
+            <Field testID="report-text" value={text} onChangeText={setText} placeholder="Keterangan (boleh kosong)" />
+            {error ? (
+              <View role="alert" accessibilityLiveRegion="assertive">
+                <Notice tone="danger" testID="report-error">
+                  {error}
+                </Notice>
+              </View>
+            ) : null}
             <View style={styles.modalActions}>
               <View style={{ flex: 1 }}>
                 <Btn label="Batal" kind="secondary" onPress={close} />
@@ -538,6 +727,8 @@ const styles = StyleSheet.create({
   noticeBody: { flex: 1, fontSize: 15, lineHeight: 21, writingDirection: 'ltr', textAlign: 'left' },
 
   arabic: { fontFamily: ARABIC_FONT, writingDirection: 'rtl', color: colors.ink },
+  inlineArabic: { fontFamily: ARABIC_FONT, writingDirection: 'rtl', color: colors.ink },
+  reasonText: { fontSize: 16, fontWeight: '600', color: colors.ink, textAlign: 'center' },
 
   btn: {
     borderRadius: radius.md,
@@ -641,3 +832,50 @@ const styles = StyleSheet.create({
   modalClose: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: radius.md },
   modalActions: { flexDirection: 'row', gap: 10, marginTop: 4 },
 });
+
+/** Saved data could not be read: nothing was changed; tell the learner what that means (ENG-06). */
+export function StorageRefused({ message }: { message: string }) {
+  return (
+    <Page>
+      <View testID="storage-refused" style={{ gap: 12 }}>
+        <H1>Data tersimpan tidak dapat dibaca</H1>
+        <Notice tone="danger">
+          Data yang tersimpan di perangkat ini tidak diubah dan tidak dihapus. Aplikasi tidak akan menyimpan apa pun sampai data
+          dapat dibaca.
+        </Notice>
+        <P>Hubungi tim kursus dengan ID peserta Anda bila masalah ini berlanjut.</P>
+        <ErrorDetail message={message} />
+      </View>
+    </Page>
+  );
+}
+
+/** The technical cause of an error, for developers only: learners (tester mode) see the Indonesian message alone. */
+export function ErrorDetail({ message }: { message: string }) {
+  const { rules } = useApp();
+  if (rules.mode !== 'developer-demo') return null;
+  return <Muted testID="error-detail">{`Detail teknis (mode pengembang): ${message}`}</Muted>;
+}
+
+/**
+ * ENG-R01: this tab may not write (another tab is the writer, or the browser cannot keep tabs
+ * apart). Shown on routes that save, instead of their content. The tab takes over by itself
+ * once the other tab is closed.
+ */
+export function ReadOnlyNotice({ reason }: { reason: string }) {
+  const otherTab = /another tab/i.test(reason);
+  return (
+    <View testID="read-only" accessibilityRole="alert" style={{ gap: 8 }}>
+      <Notice tone="warn">
+        {otherTab
+          ? 'Aplikasi ini sedang terbuka di tab lain. Agar jawaban tidak saling menimpa, tab ini hanya bisa dibaca.'
+          : 'Peramban ini tidak dapat menjaga agar beberapa tab tidak saling menimpa data, jadi aplikasi hanya bisa dibaca di sini.'}
+      </Notice>
+      <Muted>
+        {otherTab
+          ? 'Tutup tab lain itu; tab ini akan otomatis bisa dipakai lagi dengan data terbaru. Tidak ada data yang diubah.'
+          : 'Tidak ada data yang diubah. Gunakan peramban versi terbaru untuk menyimpan jawaban.'}
+      </Muted>
+    </View>
+  );
+}

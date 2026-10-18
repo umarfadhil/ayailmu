@@ -83,7 +83,7 @@ Kids profiles: default 10 minutes, speed rounds off, reminder off, story context
 
 | Track | Target | Instruction langs | Note |
 |---|---|---|---|
-| Arab / Arabic | ar | id (v1), en (later) | Reviewed curriculum; evidence mode |
+| Arab / Arabic | ar | id (v1), en (later) | Draft curriculum, no qualified reviewer sign-off; evidence mode |
 | Inggris / English | en | id; en allowed from Mahir (immersion) | Kids + adults |
 | Bahasa Indonesia (Literasi) | id | id | Indonesian kids literacy & adult writing craft |
 | Indonesian for English speakers | id | en | Adults (expats, diaspora); kids later |

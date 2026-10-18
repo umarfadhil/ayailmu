@@ -6,6 +6,13 @@ Budget: ≤ 60 KB active. Newest first. One entry per session (or per follow-up 
 
 Compaction (run when `check_budget.py` reports over budget, or quarterly): entries older than 90 days or fully superseded move verbatim to `archive/SESSION_LEARNINGS_<YYYY-Qn>.md`; anything still true becomes a numbered rule in CODE_RULES or a row in FILE_MAP first, then the entry is removed here. A learning never lives in two files.
 
+## 2026-10-17 (follow-up 6) — Expo reference integrated with native main; current docs reconciled (IN SOURCE; no new native verification)
+
+- **Change:** `integration/native-expo-premium-20261017` combines `origin/main` @ 117df50 with `feature/four-choice-learning-loop` @ ef28606 and 11 approved premium source/test/doc files, relocated into `prototype-expo/`. Reconciliation changed docs only; the approved prototype source snapshot and native Android source were preserved. Current paths, historical plan notices, readiness and file-map entries were reconciled.
+- **Why:** owner direction is Kotlin Android and Swift iOS at launch; Expo is reference only. Swift is not implemented. PROJECT_OVERVIEW also records the separately approved local Go/PostgreSQL/Firebase workstream; no backend implementation is included here.
+- **Verified by (integration coordinator):** 23 Jest suites / 381 tests, typecheck and Expo lint pass on Node 22.16.0 with existing dependencies and ignored Expo-generated environment types; no install. Known warnings: Expo Router multiple-linking and Node SQLite experimental. No new Gradle, native build/device run, Expo export or rendered/browser QA; these checks establish no native release readiness.
+- **Open:** native Arabic remains typed/binary v0.1; the latest four-choice Arabic v0.3 contract is unported and native parity unestablished. The four-choice "learned" rule and seven full-sentence question-format decision remain distinct. Content is unreviewed, tester mode shows no lessons, premium fixes need rendered QA/Indonesian review, and iOS counterparts of Play-specific decisions remain open.
+
 ## 2026-10-17 (follow-up 5) — P3b written (IN SOURCE); `.github` moved into the repo
 
 - **Change:** Settings (language, session length, Arabic size, daily reminder, consent withdrawal, export, delete profile/all, learner ID, support@petalytix.id), Progress (three honest lines / one bar), Arabic trial consent gate (v arab-trial-1, 18+), interim count in the leave dialog, heading semantics, Roborazzi screenshot tests (27 shots), export/delete moved from the dev card to Settings. `.github/` files moved from `Claude outputs/` with `mv` on the device bridge (hashes match the session copies).
@@ -98,3 +105,7 @@ Compaction (run when `check_budget.py` reports over budget, or quarterly): entri
 - **Verified by:** not verified — no code written; Android project does not exist yet (M0 pending).
 - **Open:** move `app/` → `prototype-expo/`; remote config override yes/no; pack prices; illustrator; package id; Play Families self-review before the first closed test.
 - **Housekeeping found:** `git status` shows all 55 tracked files modified with equal insertions/deletions — CRLF/LF line-ending drift between the commit and the Windows checkout, not real changes. At M0 add `.gitattributes` (`* text=auto eol=lf`), run `git add --renormalize .`, commit once as `chore: normalize line endings`.
+
+## 2026-10-18 — Amar WIP checkpoint (IN SOURCE)
+
+Separate RN, local backend and earlier integration snapshots are preserved on named branches. `docs/Amar_WIP_Handoff.md` records exact scope and remaining13 RN sync contracts. No main merge, native release, deployment or completed-app claim accompanies this checkpoint.

@@ -1,5 +1,7 @@
 # AyaIlmu Build Plan
 
+> **Current scope (notice added 2026-10-17):** this is the plan for the Kotlin **Android** app only; the text below it is unchanged. The owner's launch direction is now Kotlin Android **and** Swift iOS (`ai-memory/PROJECT_OVERVIEW.md` §Platforms). No iOS plan exists yet, and nothing here covers iOS. P1's port from `prototype-expo/src/engine` covers the pre-four-choice prototype. Native Arabic still uses typed/binary v0.1; the latest four-choice Arabic v0.3 contract has not been ported and native parity is not established.
+
 **Status:** PLANNED 2026-10-16. Phases map to the milestones in `ai-memory/PROJECT_OVERVIEW.md` (M0–M7) but are cut small enough that one phase = one well-produced piece of work with its own gate. Rules referenced as `CR-xxx-n` live in `ai-memory/CODE_RULES.md`. Umar approves the scope of each phase before it starts and signs its gate before the next one (CR-SES-2).
 
 ## 0. Where work happens (checked 2026-10-16)

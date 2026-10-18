@@ -3,7 +3,8 @@ import { NotoNaskhArabic_400Regular } from '@expo-google-fonts/noto-naskh-arabic
 import { useFonts } from 'expo-font';
 import { DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import { useEffect } from 'react';
+import { Platform, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppProvider, useApp } from '@/ui/AppContext';
@@ -49,6 +50,10 @@ function Shell() {
 }
 
 export default function RootLayout() {
+  // UI-02: the interface language is Indonesian; Arabic runs carry lang="ar" themselves.
+  useEffect(() => {
+    if (Platform.OS === 'web' && typeof document !== 'undefined') document.documentElement.lang = 'id';
+  }, []);
   // Bundled fonts (no network). Falls back to system fonts if loading fails.
   const [loaded, error] = useFonts({ NotoNaskhArabic_400Regular, ...Ionicons.font });
   if (!loaded && !error) return null;

@@ -8,7 +8,7 @@ Cross-track essentials (every language track, every level): a counted word list;
 
 ## A. Arab / Arabic (target `ar`, instruction `id` first) — evidence mode
 
-Source of truth for content: `docs/Arabic_Course_Current_Plan.md` and `docs/Lessons_Unit_A_B_Draft.md`. Units below marked **(course)** are the reviewed plan; units marked **(proposed, OPEN)** are additions that need the curriculum owner and both reviewers before they exist.
+Source of truth for content: `docs/Arabic_Course_Current_Plan.md` and `docs/Lessons_Unit_A_B_Draft.md`. Units below marked **(course)** are the draft course plan, without qualified reviewer sign-off; units marked **(proposed, OPEN)** are additions that need the curriculum owner and both reviewers before they exist.
 
 ### Adults
 

@@ -5,6 +5,7 @@ import { Pressable, Text, View } from 'react-native';
 import { useApp } from '@/ui/AppContext';
 import { Btn, Card, Eyebrow, H1, H2, Notice, P, Page } from '@/ui/components';
 import { colors } from '@/ui/theme';
+import { HydrationGate } from '@/ui/Hydration';
 
 function Check({ value, onChange, label, testID }: { value: boolean; onChange: (v: boolean) => void; label: string; testID: string }) {
   return (
@@ -35,7 +36,7 @@ function Check({ value, onChange, label, testID }: { value: boolean; onChange: (
 }
 
 /** Demo consent (spec §11). No learner ID or data is created until the learner agrees. */
-export default function Consent() {
+function ConsentRoute() {
   const { learner, content, giveConsent } = useApp();
   const [adult, setAdult] = useState(false);
   const [agree, setAgree] = useState(false);
@@ -76,5 +77,13 @@ export default function Consent() {
         }}
       />
     </Page>
+  );
+}
+
+export default function Consent() {
+  return (
+    <HydrationGate write>
+      <ConsentRoute />
+    </HydrationGate>
   );
 }

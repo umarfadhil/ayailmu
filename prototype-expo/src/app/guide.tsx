@@ -1,26 +1,75 @@
-import { Redirect, router, useLocalSearchParams, type Href } from 'expo-router';
-import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Redirect, router, useFocusEffect, useLocalSearchParams, type Href } from 'expo-router';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { ActivityIndicator, AppState, Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { recordScreenView } from '@/engine/exposure';
+import { localDate } from '@/engine/util';
 import { useApp } from '@/ui/AppContext';
-import { Btn, Eyebrow, H1, Muted, Page, useIsDesktop } from '@/ui/components';
+import { Btn, ErrorDetail, Eyebrow, H1, MixedText, Muted, Notice, Page, StorageRefused, useIsDesktop } from '@/ui/components';
 import { LessonPanel } from '@/ui/LessonPanel';
 import { colors, radius } from '@/ui/theme';
+import { isLearningError, useLearning } from '@/ui/useLearning';
+import { HydrationGate } from '@/ui/Hydration';
+
+/** Wall clock for dated views (read in callbacks and effects, never during render). */
+const clock = () => Date.now();
 
 /**
- * Read-only browser for the existing lesson screens (S19–S22 guide anatomy).
- * Browsing never writes: it does not mark screens seen, touch the session snapshot
- * or log answers. Practice always goes to the canonical /session.
+ * Browser for the lesson screens of units already open (S19–S22 guide anatomy). It never marks
+ * screens seen, touches the session snapshot or logs answers; it records only a dated view of each
+ * screen shown (teaching provenance), and shows a screen only once that view is saved, so a timed
+ * check after a same-day Guide view is postponed or recorded as not counted. Locked/advanced
+ * material (e.g. Unit B speech) is never shown here. Practice always goes to the canonical /session.
  */
-export default function Guide() {
-  const { learner, content } = useApp();
+function GuideRoute() {
+  const { learner, content, store } = useApp();
+  const [recorded, setRecorded] = useState<string | null>(null);
+  const [recordError, setRecordError] = useState<{ key: string; message: string } | null>(null);
   const desktop = useIsDesktop();
   const params = useLocalSearchParams<{ screen?: string }>();
-  const initial = Math.max(0, content.screens.findIndex((s) => s.screen_id === params.screen));
-  const [index, setIndex] = useState(initial);
+  const learning = useLearning();
+  const [chosen, setIndex] = useState<number | null>(null);
+  const open = learning && !isLearningError(learning) ? learning.open : [];
+  const screens = content.screens.filter((s) => open.includes(s.unit));
+  const index = chosen ?? Math.max(0, screens.findIndex((s) => s.screen_id === params.screen));
+  const shownId = screens[index]?.screen_id;
+  // Expo Router keeps this route mounted while hidden: every focus of the route (and every return of
+  // the app to the foreground) is a new viewing, possibly on a later day. The view key carries that
+  // viewing and its date, so a view saved on an earlier visit never unlocks today's display.
+  const [visit, setVisit] = useState<{ seq: number; day: string } | null>(null);
+  const visits = useRef(0);
+  const newVisit = useCallback(() => {
+    visits.current += 1;
+    setVisit({ seq: visits.current, day: localDate(clock()) });
+  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      newVisit();
+      const sub = AppState.addEventListener('change', (st) => st === 'active' && newVisit());
+      return () => {
+        sub.remove();
+        setVisit(null); // hidden: nothing is shown until the next visit is recorded
+      };
+    }, [newVisit])
+  );
+  const viewKey = visit && shownId ? `${shownId}|${visit.day}|${visit.seq}` : null;
+  useEffect(() => {
+    if (!store || !shownId || !viewKey) return;
+    let alive = true;
+    const now = clock();
+    recordScreenView(store, { screen_id: shownId, local_date: localDate(now), source: 'guide', at: new Date(now).toISOString() }).then(
+      () => alive && setRecorded(viewKey),
+      (e) => alive && setRecordError({ key: viewKey, message: e instanceof Error ? e.message : String(e) })
+    );
+    return () => {
+      alive = false;
+    };
+  }, [store, shownId, viewKey]);
 
   if (!learner || content.empty) return <Redirect href="/" />;
-  const screens = content.screens;
+  if (learning === undefined) return null;
+  if (isLearningError(learning)) return <StorageRefused message={learning.error} />;
+  if (learning === null) return <Redirect href="/" />;
   const screen = screens[index];
   if (!screen) return <Redirect href="/" />;
 
@@ -38,9 +87,9 @@ export default function Guide() {
             onPress={() => setIndex(n)}
             style={[styles.contentsRow, on && styles.contentsRowOn]}
           >
-            <Text style={[styles.contentsText, on && styles.contentsTextOn]}>
-              {n + 1}. {s.title}
-            </Text>
+            <MixedText scale={learner.arabic_scale} style={[styles.contentsText, on && styles.contentsTextOn]}>
+              {`${s.unit}${screens.filter((x) => x.unit === s.unit).indexOf(s) + 1}. ${s.title}`}
+            </MixedText>
           </Pressable>
         );
       })}
@@ -50,16 +99,29 @@ export default function Guide() {
   return (
     <Page width="wide">
       <View style={styles.band}>
-        <Eyebrow tone="mint">Unit A · Panduan</Eyebrow>
-        <H1>Panduan Unit A</H1>
+        <Eyebrow tone="mint">Panduan</Eyebrow>
+        <H1>{learning.open.length > 1 ? 'Panduan Unit A dan B' : 'Panduan Unit A'}</H1>
         <Muted>
-          Bacaan pendukung dari awal sesi. Membuka panduan tidak dihitung sebagai latihan dan tidak mengubah sesi Anda.
+          Bacaan pendukung dari awal sesi. Membuka panduan tidak dihitung sebagai latihan dan tidak mengubah sesi Anda. Tanggal
+          Anda membuka materi dicatat: cek ulang yang memakai materi ini ditunda ke hari lain, atau tidak dihitung sebagai cek
+          ingatan bila cek itu sudah berjalan hari ini.
         </Muted>
       </View>
       <View style={[desktop && styles.split]}>
         {contents}
         <View style={[styles.mainCol, desktop && { flex: 1 }]}>
-          <LessonPanel screen={screen} scale={learner.arabic_scale} eyebrow={`Panduan ${index + 1} dari ${screens.length}`} />
+          {recordError && recordError.key === viewKey ? (
+            <>
+              <Notice tone="danger" testID="guide-record-error">
+                Panduan tidak dapat dibuka karena tanggal Anda membuka materi ini tidak bisa disimpan. Silakan coba lagi nanti.
+              </Notice>
+              <ErrorDetail message={recordError.message} />
+            </>
+          ) : viewKey !== null && recorded === viewKey ? (
+            <LessonPanel screen={screen} scale={learner.arabic_scale} eyebrow={`Unit ${screen.unit} · Panduan ${index + 1} dari ${screens.length}`} />
+          ) : (
+            <ActivityIndicator color={colors.indigo} accessibilityLabel="Memuat panduan" />
+          )}
           <View style={styles.pager}>
             <View style={{ flex: 1 }}>
               <Btn
@@ -126,3 +188,11 @@ const styles = StyleSheet.create({
     gap: 6,
   },
 });
+
+export default function Guide() {
+  return (
+    <HydrationGate write>
+      <GuideRoute />
+    </HydrationGate>
+  );
+}

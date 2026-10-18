@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 
 import { validatePack } from '@/content/gating';
-import { demoPack } from '@/content/load';
+import { activePack } from '@/content/load';
 import { findFormClashes } from '@/engine/freshness';
 import { unresolvedSerious } from '@/engine/session';
 import { STORAGE_KIND } from '@/storage/openStore';
@@ -15,12 +15,12 @@ import { colors } from '@/ui/theme';
 
 /** Developer-demo only: answer log, config and content checks, local reset. */
 export default function Dev() {
-  const { store, rules, content, resetAll } = useApp();
+  const { store, readOnly, rules, content, resetAll } = useApp();
   const [answers, setAnswers] = useState<AnswerRecord[]>([]);
   const [reports, setReports] = useState<ReportRecord[]>([]);
   const [confirm, setConfirm] = useState(false);
   const [showJson, setShowJson] = useState(false);
-  const problems = useMemo(() => [...validatePack(demoPack), ...findFormClashes(demoPack.items).map((c) => JSON.stringify(c))], []);
+  const problems = useMemo(() => [...validatePack(activePack), ...findFormClashes(activePack.items).map((c) => JSON.stringify(c))], []);
 
   useFocusEffect(
     useCallback(() => {
@@ -81,7 +81,7 @@ export default function Dev() {
           <Btn kind="quiet" label="Batal" onPress={() => setConfirm(false)} />
         </Card>
       ) : (
-        <Btn kind="quiet" label="Hapus semua data lokal" onPress={() => setConfirm(true)} />
+        <Btn kind="quiet" label="Hapus semua data lokal" disabled={!!readOnly} testID="reset-open" onPress={() => setConfirm(true)} />
       )}
     </Page>
   );

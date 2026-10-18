@@ -1,5 +1,7 @@
 # Trial App Spec (Arabic track, evidence mode)
 
+> **Current scope notice (2026-10-17):** the Android-only statement in §3 and no-backend policy in §12 record the earlier baseline. Current direction is Kotlin Android and Swift iOS at launch, with a separately approved local backend workstream; see [`../ai-memory/PROJECT_OVERVIEW.md`](../ai-memory/PROJECT_OVERVIEW.md). This integration contains no backend implementation. The current four-choice Arabic reference behaviour is documented in [`../prototype-expo/README.md`](../prototype-expo/README.md); native Arabic remains typed/binary v0.1, and parity with that reference is not established.
+
 **Status:** behaviour spec for the Arabic trial, written 2026-10-14; **trimmed 2026-10-16** after the project became AyaIlmu. Sections that were decided or superseded now point to `ai-memory/` instead of repeating it. What remains (purpose, scope, learner flow, question types, planner, learning rules, progress screen, content format, data stored, privacy, acceptance checks) is still the authoritative detail for the Arabic track and is referenced by `docs/syllabus/01_BAHASA.md`.
 **Inputs:** `Arabic_Course_Current_Plan.md` (decisions), `Lessons_Unit_A_B_Draft.md` (content). **Only reviewer-approved content may be shown to testers.**
 

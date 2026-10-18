@@ -20,9 +20,22 @@ export type Pool =
   | 'ENTRY'
   | 'REPROBE'
   // Focused questions after a serious mistake. Never evidence, may repeat.
-  | 'FOCUS';
+  | 'FOCUS'
+  // Answer-record pool for scheduled reviews of already-seen material (never fresh evidence).
+  | 'REVIEW';
 
-export type ItemType = 'q-mean' | 'q-para' | 'q-form2' | 'q-ref' | 'choose';
+/** Legacy (v0.1) types are kept for history/analysis only. Active content uses 'mcq4'. */
+export type ItemType = 'q-mean' | 'q-para' | 'q-form2' | 'q-ref' | 'choose' | 'mcq4';
+
+/** Four-choice question formats (content v0.2). */
+export type McqFormat =
+  | 'word-meaning'
+  | 'interpretation'
+  | 'form-grid'
+  | 'verb-identify'
+  | 'verb-interpretation'
+  // Choose the Arabic verb form for a target meaning (Unit B remediation).
+  | 'verb-form-grid';
 
 export type Referent = 'laki-laki' | 'perempuan';
 
@@ -32,7 +45,8 @@ export type ErrorTag =
   | 'invented-action'
   | 'wrong-form'
   | 'lexical'
-  | 'look-alike';
+  | 'look-alike'
+  | 'ta-confusion';
 
 export interface HelpLine {
   word: string;
@@ -45,8 +59,17 @@ export interface ChoiceOption {
   /** Render as Arabic (RTL, Arabic font). */
   arabic?: boolean;
   correct?: boolean;
+  /** Legacy single tag (v0.1 choice items). */
   error_tag?: ErrorTag;
   feedback_id?: string;
+  /** mcq4: every misconception this wrong option represents (a compound distractor names each). */
+  misconceptions?: ErrorTag[];
+  /** mcq4: a serious mistake (spec §7) — triggers FOCUS + fresh REMED. */
+  serious?: boolean;
+  /** mcq4: feedback messages for this option, in order. */
+  feedback_ids?: string[];
+  /** mcq4: why this distractor is plausible (content review audit). */
+  rationale?: string;
 }
 
 export interface KnownError {
@@ -98,6 +121,26 @@ export interface Item {
   reserve_forms?: boolean;
   /** Needs an earlier-day attempt on the same skill (e.g. "READY, later session"). */
   later_day?: boolean;
+  /** mcq4 only: question format. */
+  format?: McqFormat;
+  /** mcq4 only: Indonesian target meaning shown with form-grid prompts. */
+  target?: string;
+  /**
+   * Identity of the underlying word form/sentence across content versions. Freshness uses it,
+   * so material seen under an old item ID is never fresh again.
+   */
+  lineage?: string;
+  /** Review key (a word or a sentence lineage) for spaced review. Absent = never reviewed. */
+  review_key?: string;
+  /** Legacy (v0.1) item IDs this item replaces. Raw legacy answers are never re-graded. */
+  legacy_item_ids?: string[];
+  /**
+   * Arabic forms whose meaning the learner needs and that must be taught on a lesson screen
+   * before this item is scored (content repair 2026-10-16, CONTENT-F02).
+   */
+  requires_taught?: string[];
+  /** Practice only: never counts as evidence for any skill. */
+  practice_only?: boolean;
   /** FOCUS items only: which serious mistake (and referent) this question follows up. */
   focus_for?: { tag: ErrorTag; referent?: Referent };
   /** Order in which the planner offers PRACT items. */
@@ -119,6 +162,8 @@ export interface LessonScreen {
 
 export interface ContentPack {
   content_version: string;
+  /** 'mcq4' for the active four-choice pack; absent for the legacy v0.1 pack. */
+  answer_format?: 'mcq4';
   /** True for made-up developer fixtures. Never shown in tester mode. */
   synthetic: boolean;
   note?: string;

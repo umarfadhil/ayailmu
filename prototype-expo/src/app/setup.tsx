@@ -4,9 +4,10 @@ import { StyleSheet, View } from 'react-native';
 
 import { useApp } from '@/ui/AppContext';
 import { Btn, Eyebrow, H1, Muted, Notice, Page } from '@/ui/components';
+import { HydrationGate } from '@/ui/Hydration';
 
 /** Session length (E-B4 equivalent). Creates the local learner ID only after an in-app consent receipt. */
-export default function Setup() {
+function SetupRoute() {
   const { learner, rules, consentReceipt, createLearner } = useApp();
   const [minutes, setMinutes] = useState(rules.default_session_minutes);
   const [busy, setBusy] = useState(false);
@@ -61,3 +62,11 @@ const styles = StyleSheet.create({
   options: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
   option: { flexGrow: 1, flexBasis: 100 },
 });
+
+export default function Setup() {
+  return (
+    <HydrationGate write>
+      <SetupRoute />
+    </HydrationGate>
+  );
+}
