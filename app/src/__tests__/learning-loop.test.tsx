@@ -61,6 +61,19 @@ const tap = async (id: string) => {
 };
 const blob = () => JSON.parse(mockKv.getItem(KvStore.KEY)!);
 const tileIds = () => screen.getAllByTestId(/^option-/).map((t) => String(t.props.testID).replace('option-', ''));
+// Kemajuan shows units, caveats, words and locked paths directly (Calm Paper port); only the per-skill counts
+// («Rincian latihan») open on demand. Tests of the details open it, and no other panel may stay closed, so a
+// «not shown» check cannot pass merely because something was collapsed.
+const PROGRESS_PANELS = ['progress-skills'];
+const openProgressPanels = async () => {
+  await screen.findByTestId('progress-overview');
+  for (const id of PROGRESS_PANELS) {
+    await press(id);
+    expect(screen.getByTestId(id).props.accessibilityState.expanded).toBe(true);
+  }
+  const closed = screen.queryAllByRole('button').filter((b) => b.props.accessibilityState?.expanded === false);
+  expect(closed.map((b) => b.props.testID).filter((id) => id !== 'menu-open')).toEqual([]);
+};
 
 const DAY = 86_400_000;
 const daysAgo = (d: number) => localDate(Date.now() - d * DAY);
@@ -127,7 +140,9 @@ describe('four answers everywhere (review, readiness, Unit B, focus)', () => {
     seed({ learner, answers: A_CORE.map((id) => v2(id, daysAgo(2))) });
     await start();
     await waitFor(() => expect(screen.getByTestId('next-due')).toHaveTextContent(/hari ini/));
-    expect(screen.getByTestId('unit-title')).toHaveTextContent(/^Unit B \(dasar\)/);
+    // Home shows Unit B, its basic part: the unit label, then the unit's question as its title.
+    expect(screen.getByText(/^Unit B\W+dasar\b/i)).toBeTruthy();
+    expect(screen.getByTestId('unit-title')).toHaveTextContent('Siapa yang melakukan?');
     await tap('start-session');
 
     const seenRoles = new Set<string>();
@@ -245,13 +260,17 @@ describe('Kemajuan (progress) and next-due labels', () => {
     seed({ learner, answers: A_CORE.map((id) => v2(id, daysAgo(1))) });
     await start('/progress');
     await screen.findByTestId('unit-A');
+    await openProgressPanels();
     expect(screen.getByTestId('line-learned-A')).toHaveTextContent(/Belum dinilai/);
     expect(screen.getByTestId('line-transfer-A')).toHaveTextContent(/Belum dinilai/);
-    expect(screen.getByTestId('line-retention-A')).toHaveTextContent(/7 hari: Belum waktunya/);
+    // Calm Paper copy: the 7-day row shows when its check starts («Mulai <date>»), not a result.
+    expect(screen.getByTestId('line-retention-A')).toHaveTextContent(/setelah 7 hari\s*Mulai /);
     expect(screen.getByTestId('word-list')).toHaveTextContent(/orang yang jujur/);
     expect(screen.getByTestId('word-list')).toHaveTextContent(/صَادِقٌ/);
     expect(screen.queryByText(/رَجَعَ|سَمِعَ|قَالَ/)).toBeNull();
-    expect(screen.getByText(/OPR-01 \/ PRC-04: siapa yang berkata — terkunci/)).toBeTruthy();
+    // A locked path is titled only from its catalog label and says why it is locked.
+    expect(screen.getByText(/OPR-01 \/ PRC-04: siapa yang berkata/)).toBeTruthy();
+    expect(screen.getAllByText(/Terkunci sampai aturan «sudah dipelajari» diputuskan/).length).toBeGreaterThan(0);
     expect(screen.queryByText(/%|sudah dikuasai/)).toBeNull(); // ("tidak dinilai lulus atau gagal" is the disclaimer)
   }, 30000);
 
