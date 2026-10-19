@@ -1,5 +1,7 @@
 # Umar native sync laboratory
 
+> **WIP draft:** [current evidence and unresolved account/learning race findings](../docs/integration/2026-10-19-wip-checkpoint.md). Use fabricated data only.
+
 This is a local **synthetic adult-only** integration of the Kotlin app and the
 separate `backend-umar` API. It is not a real-data or release configuration. The
 backend API/schema and native scoring/mastery algorithms are unchanged. The
@@ -29,6 +31,27 @@ password/implicit/service grants and self-registration are disabled for that
 client. A fixture helper uses the local administrative bootstrap account solely
 to provision fabricated accounts, then signs them in through code + PKCE.
 
+## The GoTrue lab stack (current lab flow)
+
+The lab now authenticates against an isolated Supabase GoTrue provider instead of
+the Keycloak browser flow (Keycloak remains for regression coverage). Bring the
+new stack up alongside the preserved services, then run the GoTrue-backed API:
+
+```sh
+sh integration/init-gotrue.sh
+docker compose -f integration/gotrue.compose.yaml up -d
+sh integration/run-gotrue-api.sh
+```
+
+GoTrue binds loopback `8287` (JWKS at `/.well-known/jwks.json`), the GoTrue-mode
+API binds `8187`, and the local Mailpit UI binds `8387`. Confirmation and recovery
+require the six-digit codes delivered only to the local Mailpit inbox; autoconfirm
+is off and access tokens expire after 60 seconds (refresh rotation is exercised
+for real). Google sign-in is prepared but disabled
+(`GOTRUE_EXTERNAL_GOOGLE_ENABLED=false`); no Google project/client/credential was
+created or configured by this task — see
+`docs/integration/2026-10-19-gotrue-google-setup.md`.
+
 ## Verify the native flows
 
 ```sh
@@ -54,21 +77,22 @@ only the real-service tests; the E2E scripts supply that environment explicitly.
 
 ```sh
 python3 integration/make-fixtures.py
-adb reverse tcp:8186 tcp:8186
-adb reverse tcp:8286 tcp:8286
+adb reverse tcp:8187 tcp:8187
+adb reverse tcp:8287 tcp:8287
 adb install -r android/app/build/outputs/apk/syncLab/debug/app-syncLab-debug.apk
 adb shell am start -n id.petalytix.ayailmu.synclab/id.petalytix.ayailmu.MainActivity
 ```
 
-Use a disposable emulator/device and only the fabricated accounts from ignored
-`integration/.local/synthetic-accounts.json`. Delete the generated token fixture
-file after any manual setup. The application has its own `.synclab` ID and local
-database. Loopback cleartext is restricted to this flavor. Sign-in opens the
-system browser; tokens stay in memory, and app restart requires another sign-in
-for network access. Local logout clears the active account/profile and tokens;
-it does not terminate the provider's browser session. Subsequent sign-in requests
-fresh authentication (`prompt=login`, `max_age=0`). A production redirect/TLS/logout
-policy needs separate review.
+Use a disposable emulator/device and only fabricated `@example.invalid` accounts
+(sign up in-app, then read the six-digit confirmation code from the local Mailpit
+UI at `127.0.0.1:8387`). The application has its own `.synclab` ID and local
+database. Loopback cleartext is restricted to this flavor. Sign-in happens in-app
+with email/password (no browser); the persisted provider session lives in a Tink
+AEAD + Android Keystore vault under no-backup storage, so a restart restores the
+durable owner and rotates expired tokens transparently. Local sign-out clears the
+account, credentials, selection and profile immediately and attempts provider
+logout best-effort; it cannot promise immediate remote revocation of already-issued
+tokens. A production redirect/TLS/logout policy needs separate review.
 
 The hub creates fabricated ADULT profiles with a fixed placeholder year (1980),
 not a real age declaration. A separate synthetic sync acknowledgement and opt-in

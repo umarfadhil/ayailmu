@@ -134,7 +134,7 @@ internal class SyncLabAccount @Inject constructor(
         } catch (e: Exception) {
             if (accepted()) {
                 clearIfCurrent(accepted, e)
-                republishRepository(e)
+                republishRepository(e, accepted)
                 publishIfCurrent(accepted, busy = false, message = messageFor(e))
             }
             false
@@ -170,7 +170,7 @@ internal class SyncLabAccount @Inject constructor(
         } catch (e: Exception) {
             if (accepted()) {
                 clearIfCurrent(accepted, e)
-                republishRepository(e)
+                republishRepository(e, accepted)
                 publishIfCurrent(accepted, busy = false, message = messageFor(e))
             }
             false
@@ -181,19 +181,18 @@ internal class SyncLabAccount @Inject constructor(
         if (!syntheticIdentity(email)) return false
         val (attempt, accepted) = begin()
         publish(busy = true)
+        var committed = false
         return try {
             val session = auth.signIn(email, password)
             repository.login(session.accessToken, accepted)
+            committed = true
             install(accepted, session)
             true
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
             if (accepted()) {
-                // Failed installation must not leave a live session behind a false result.
-                runCatching { repository.expireSession() }
-                runCatching { vault.write(null) }
-                publishIfCurrent(accepted, busy = false, message = messageFor(e))
+                cleanupFailedInstall(accepted, e, committed)
             }
             false
         }
@@ -220,18 +219,18 @@ internal class SyncLabAccount @Inject constructor(
         if (!syntheticIdentity(email)) return false
         val (attempt, accepted) = begin()
         publish(busy = true)
+        var committed = false
         return try {
             val session = auth.verifyOtp(email, code, "signup")
             repository.login(session.accessToken, accepted)
+            committed = true
             install(accepted, session)
             true
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
             if (accepted()) {
-                runCatching { repository.expireSession() }
-                runCatching { vault.write(null) }
-                publishIfCurrent(accepted, busy = false, message = messageFor(e))
+                cleanupFailedInstall(accepted, e, committed)
             }
             false
         }
@@ -311,7 +310,9 @@ internal class SyncLabAccount @Inject constructor(
     private var googleAttempt = 0L
     private data class PendingGoogle(val verifier: String, val state: String, val generation: Long, val createdAtMs: Long)
 
-    fun beginGoogle(): String {
+    /** Prepared Google sign-in only ever runs from a fully signed-out state; linking/re-auth is not supported. */
+    fun beginGoogle(): String? {
+        if (repository.savedOwner() != null) return null
         val verifier = CodeVerifierUtil.generateRandomCodeVerifier()
         val state = randomAlphanumeric(16)
         val url = auth.googleUrl(CodeVerifierUtil.deriveCodeVerifierChallenge(verifier), "$GOOGLE_REDIRECT/$state")
@@ -328,7 +329,10 @@ internal class SyncLabAccount @Inject constructor(
     /**
      * Binds a native callback to its exact pending intent: any logout/account change since
      * begin(), a wrong state path, a replay, expiry, or a clock rollback fails closed before
-     * any code exchange; cancelling or replacing the intent mid-exchange discards the result.
+     * any code exchange. The combined account-generation + Google-attempt fence then stays in
+     * force through the backend learner load and the credential installation: cancelling or
+     * replacing the intent at any point before installation discards the result and leaves no
+     * cancelled authentication alive (without ever clearing a previous genuine session).
      */
     suspend fun completeGoogle(state: String, code: String): Boolean {
         val pending = pendingGoogle
@@ -337,20 +341,33 @@ internal class SyncLabAccount @Inject constructor(
             pending.generation == currentGeneration() &&
             pending.state == state &&
             code.isNotBlank() && code.length <= 4096 &&
-            now() - pending.createdAtMs in 0..GOOGLE_INTENT_MS
+            now() - pending.createdAtMs in 0..GOOGLE_INTENT_MS &&
+            repository.savedOwner() == null
         if (!fresh) return false
         val (attempt, accepted) = begin()
         val myAttempt = synchronized(lock) { googleAttempt }
+        val fence = { synchronized(lock) { googleAttempt == myAttempt } && accepted() }
         publish(busy = true)
+        var committed = false
         return try {
             val session = auth.exchangeCode(code, pending.verifier)
             synchronized(lock) { check(googleAttempt == myAttempt) { "Google sign-in cancelled" } }
-            repository.login(session.accessToken, accepted)
-            install(accepted, session)
+            repository.login(session.accessToken, fence)
+            committed = true
+            synchronized(lock) { check(googleAttempt == myAttempt) { "Google sign-in cancelled" } }
+            install(fence, session)
             true
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
+            // Any failure after the attempt was cancelled/replaced (or a newer account op began) must
+            // only drop effects this attempt actually installed: never a genuine previous vault session.
+            val googleCancelled = synchronized(lock) { googleAttempt != myAttempt }
+            if (googleCancelled) {
+                if (committed) runCatching { repository.expireSession(accepted) }
+            } else {
+                cleanupFailedInstall(accepted, e, committed)
+            }
             publishIfCurrent(accepted, busy = false, message = messageFor(e))
             false
         }
@@ -358,7 +375,19 @@ internal class SyncLabAccount @Inject constructor(
 
     /** Clears persisted material only for conclusively invalid auth, and only while no newer account owns the vault. */
     private fun clearIfCurrent(accepted: () -> Boolean, e: Exception) {
-        if (conclusivelyInvalid(e) && accepted()) runCatching { vault.write(null) }
+        if (conclusivelyInvalid(e)) clearVaultIfCurrent(accepted)
+    }
+
+    /**
+     * Fail-closed cleanup after a failed credential flow: the vault is cleared atomically and, only
+     * when this operation actually committed a login, the in-memory session is expired — with the
+     * operation fence carried to each mutation, so a newer login that completes during the
+     * suspending repository work is never erased or expired.
+     */
+    private suspend fun cleanupFailedInstall(accepted: () -> Boolean, e: Exception, committed: Boolean) {
+        clearVaultIfCurrent(accepted)
+        if (committed) runCatching { repository.expireSession(accepted) }
+        publishIfCurrent(accepted, busy = false, message = messageFor(e))
     }
 
     private fun conclusivelyInvalid(e: Exception): Boolean = when {
@@ -381,9 +410,9 @@ internal class SyncLabAccount @Inject constructor(
         mutable.value = AccountUi(email = email, busy = busy, message = message)
     }
 
-    /** Reflects a dead/changed session in the owner-scoped UI state without disturbing a newer account. */
-    private suspend fun republishRepository(e: Exception) {
-        try { repository.failed(e) } catch (ignored: Exception) { }
+    /** Reflects a failure in the owner-scoped UI state; the fence keeps a stale failure from publishing over a newer account. */
+    private suspend fun republishRepository(e: Exception, accepted: () -> Boolean) {
+        try { repository.failed(e, accepted) } catch (ignored: Exception) { }
     }
 
     private fun messageFor(e: Exception): Int = when {

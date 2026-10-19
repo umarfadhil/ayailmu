@@ -31,6 +31,7 @@ import id.petalytix.ayailmu.feature.consent.ConsentRoute
 import id.petalytix.ayailmu.feature.session.SessionRoute
 import id.petalytix.ayailmu.navigation.AyaRoute
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
@@ -59,25 +60,40 @@ internal class SyncLabViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.Eagerly, SyncLabScreen(SyncLabState(), AccountUi()))
     /** Excludes overlapping repository mutations; auth and logout deliberately stay outside so logout can cancel a refresh. */
     private val actionLock = Mutex()
+    /** Route instances currently composed; auth completion callbacks navigate only when their origin is still visible. */
+    private val visibleOrigins = MutableStateFlow<Set<Any>>(emptySet())
     init { viewModelScope.launch { account.restore() } }
+    /** Session identity captured when an action starts; a stale failure must not mutate or publish over a newer one. */
     private fun action(block: suspend () -> Unit) {
+        val origin = repository.sessionMark()
         viewModelScope.launch {
-            try { block() } catch (e: Exception) { repository.failed(e) }
+            try { block() } catch (e: Exception) {
+                repository.failed(e) { repository.sessionMark() == origin }
+            }
         }
     }
     private fun exclusive(block: suspend () -> Unit) = action {
         if (!actionLock.tryLock()) return@action
         try { block() } finally { actionLock.unlock() }
     }
-    fun signIn(email: String, password: String, done: () -> Unit) = action { if (account.signIn(email, password)) done() }
-    fun signUp(email: String, password: String, needsConfirm: (String) -> Unit) = action {
-        if (account.signUp(email, password)) needsConfirm(email)
+    fun routeVisible(origin: Any) { visibleOrigins.value = visibleOrigins.value + origin }
+    fun routeGone(origin: Any) { visibleOrigins.value = visibleOrigins.value - origin }
+    private fun completeOn(origin: Any, block: () -> Unit) { if (origin in visibleOrigins.value) block() }
+    fun signIn(email: String, password: String, origin: Any, done: () -> Unit) = action {
+        if (account.signIn(email, password)) completeOn(origin, done)
     }
-    fun confirm(email: String, code: String, done: () -> Unit) = action { if (account.confirm(email, code)) done() }
+    fun signUp(email: String, password: String, origin: Any, needsConfirm: (String) -> Unit) = action {
+        if (account.signUp(email, password)) completeOn(origin) { needsConfirm(email) }
+    }
+    fun confirm(email: String, code: String, origin: Any, done: () -> Unit) = action {
+        if (account.confirm(email, code)) completeOn(origin, done)
+    }
     fun resend(email: String) = action { account.resend(email) }
-    fun recover(email: String, sent: (String) -> Unit) = action { if (account.recover(email)) sent(email) }
-    fun reset(email: String, code: String, newPassword: String, done: () -> Unit) = action {
-        if (account.reset(email, code, newPassword)) done()
+    fun recover(email: String, origin: Any, sent: (String) -> Unit) = action {
+        if (account.recover(email)) completeOn(origin) { sent(email) }
+    }
+    fun reset(email: String, code: String, newPassword: String, origin: Any, done: () -> Unit) = action {
+        if (account.reset(email, code, newPassword)) completeOn(origin, done)
     }
     fun signOut() = action { account.signOut() }
     /** Attempts silent session recovery first, then reloads the account's learners. */
@@ -91,7 +107,18 @@ internal class SyncLabViewModel @Inject constructor(
     fun enable() = exclusive { repository.enable() }
     fun disable() = exclusive { repository.disable() }
     fun sync() = exclusive { repository.sync() }
-    fun learn(ready: (Boolean) -> Unit) = exclusive { ready(repository.prepareLearning()) }
+    fun learn(ready: (LearningReadiness) -> Unit) = exclusive { ready(repository.prepareLearning()) }
+}
+
+/** Tracks this auth route instance so a completion that lands after Back/disposal cannot navigate. */
+@Composable
+private fun rememberAuthOrigin(vm: SyncLabViewModel): Any {
+    val origin = remember { Any() }
+    DisposableEffect(origin) {
+        vm.routeVisible(origin)
+        onDispose { vm.routeGone(origin) }
+    }
+    return origin
 }
 
 /** This graph is compiled into syncLab only; no ordinary profile picker, purchases or real-data entry. */
@@ -110,7 +137,17 @@ fun SyncLabApp() {
                 onSignIn = { nav.navigate(SyncLabSignIn) },
                 onSignUp = { nav.navigate(SyncLabSignUp) },
                 onSettings = { nav.navigate(SyncLabSettings) },
-                onLearn = { vm.learn { consent -> nav.navigate(if (consent) AyaRoute.Consent("arab") else AyaRoute.Session("arab")) } },
+                onLearn = {
+                    vm.learn { readiness ->
+                        when (readiness) {
+                            LearningReadiness.READY -> nav.navigate(AyaRoute.Session("arab"))
+                            LearningReadiness.CONSENT_NEEDED -> nav.navigate(AyaRoute.Consent("arab"))
+                            // NOT_READY (e.g. failed local activation): never open native learning
+                            // under a previously active profile.
+                            LearningReadiness.NOT_READY -> Unit
+                        }
+                    }
+                },
             )
         }
         composable<SyncLabSignIn> {
@@ -239,8 +276,9 @@ private fun SignInScreen(state: SyncLabScreen, vm: SyncLabViewModel, onBack: () 
         Text(stringResource(R.string.sync_lab_login), style = MaterialTheme.typography.headlineMedium)
         Text(stringResource(R.string.sync_lab_warning))
         AccountMessage(state.account.message)
+        val origin = rememberAuthOrigin(vm)
         AuthFields(email, { email = it }, password, { password = it }, R.string.sync_lab_email, R.string.sync_lab_password, enabled = !busy)
-        AyaButton(text = stringResource(R.string.sync_lab_login), onClick = { vm.signIn(email.trim(), password) { onSignedIn() } }, enabled = !busy && email.trim().endsWith("@example.invalid") && password.isNotBlank())
+        AyaButton(text = stringResource(R.string.sync_lab_login), onClick = { vm.signIn(email.trim(), password, origin) { onSignedIn() } }, enabled = !busy && email.trim().endsWith("@example.invalid") && password.isNotBlank())
         AyaSecondaryButton(text = stringResource(R.string.sync_lab_create_account), onClick = onCreateAccount, enabled = !busy)
         AyaSecondaryButton(text = stringResource(R.string.sync_lab_forgot), onClick = onForgot, enabled = !busy)
         AyaSecondaryButton(text = stringResource(R.string.sync_lab_back), onClick = onBack, enabled = !busy)
@@ -256,9 +294,10 @@ private fun SignUpScreen(state: SyncLabScreen, vm: SyncLabViewModel, onBack: () 
         Text(stringResource(R.string.sync_lab_sign_up_title), style = MaterialTheme.typography.headlineMedium)
         Text(stringResource(R.string.sync_lab_warning))
         AccountMessage(state.account.message)
+        val origin = rememberAuthOrigin(vm)
         AuthFields(email, { email = it }, password, { password = it }, R.string.sync_lab_email, R.string.sync_lab_password, enabled = !busy)
         Text(stringResource(R.string.sync_lab_password_hint), style = MaterialTheme.typography.bodySmall)
-        AyaButton(text = stringResource(R.string.sync_lab_sign_up_action), onClick = { vm.signUp(email.trim(), password) { onNeedConfirm(it) } }, enabled = !busy && email.trim().endsWith("@example.invalid") && password.isNotBlank())
+        AyaButton(text = stringResource(R.string.sync_lab_sign_up_action), onClick = { vm.signUp(email.trim(), password, origin) { onNeedConfirm(it) } }, enabled = !busy && email.trim().endsWith("@example.invalid") && password.isNotBlank())
         AyaSecondaryButton(text = stringResource(R.string.sync_lab_back), onClick = onBack, enabled = !busy)
     }
 }
@@ -271,8 +310,9 @@ private fun ConfirmScreen(state: SyncLabScreen, vm: SyncLabViewModel, email: Str
         Text(stringResource(R.string.sync_lab_confirm_title), style = MaterialTheme.typography.headlineMedium)
         Text(stringResource(R.string.sync_lab_confirm_body, email))
         AccountMessage(state.account.message)
+        val origin = rememberAuthOrigin(vm)
         AyaTextField(value = code, onValueChange = { code = it.filter(Char::isDigit).take(6) }, label = stringResource(R.string.sync_lab_code), enabled = !busy, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword))
-        AyaButton(text = stringResource(R.string.sync_lab_confirm_action), onClick = { vm.confirm(email, code) { onConfirmed() } }, enabled = !busy && code.length == 6)
+        AyaButton(text = stringResource(R.string.sync_lab_confirm_action), onClick = { vm.confirm(email, code, origin) { onConfirmed() } }, enabled = !busy && code.length == 6)
         AyaSecondaryButton(text = stringResource(R.string.sync_lab_resend), onClick = { vm.resend(email) }, enabled = !busy)
         AyaSecondaryButton(text = stringResource(R.string.sync_lab_back), onClick = onBack, enabled = !busy)
     }
@@ -286,8 +326,9 @@ private fun RecoverScreen(state: SyncLabScreen, vm: SyncLabViewModel, email: Str
         Text(stringResource(R.string.sync_lab_recover_title), style = MaterialTheme.typography.headlineMedium)
         Text(stringResource(R.string.sync_lab_recover_body, value))
         AccountMessage(state.account.message)
+        val origin = rememberAuthOrigin(vm)
         AyaTextField(value = value, onValueChange = { value = it }, label = stringResource(R.string.sync_lab_email), enabled = !busy, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email))
-        AyaButton(text = stringResource(R.string.sync_lab_recover_action), onClick = { vm.recover(value.trim()) { onSent(it) } }, enabled = !busy && value.trim().endsWith("@example.invalid"))
+        AyaButton(text = stringResource(R.string.sync_lab_recover_action), onClick = { vm.recover(value.trim(), origin) { onSent(it) } }, enabled = !busy && value.trim().endsWith("@example.invalid"))
         AyaSecondaryButton(text = stringResource(R.string.sync_lab_back), onClick = onBack, enabled = !busy)
     }
 }
@@ -301,10 +342,11 @@ private fun ResetScreen(state: SyncLabScreen, vm: SyncLabViewModel, email: Strin
         Text(stringResource(R.string.sync_lab_reset_title), style = MaterialTheme.typography.headlineMedium)
         Text(stringResource(R.string.sync_lab_recover_body, email))
         AccountMessage(state.account.message)
+        val origin = rememberAuthOrigin(vm)
         AyaTextField(value = code, onValueChange = { code = it.filter(Char::isDigit).take(6) }, label = stringResource(R.string.sync_lab_code), enabled = !busy, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword))
         AyaTextField(value = password, onValueChange = { password = it }, label = stringResource(R.string.sync_lab_new_password), enabled = !busy, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password), visualTransformation = PasswordVisualTransformation())
         Text(stringResource(R.string.sync_lab_password_hint), style = MaterialTheme.typography.bodySmall)
-        AyaButton(text = stringResource(R.string.sync_lab_reset_action), onClick = { vm.reset(email, code, password) { onReset() } }, enabled = !busy && code.length == 6 && password.isNotBlank())
+        AyaButton(text = stringResource(R.string.sync_lab_reset_action), onClick = { vm.reset(email, code, password, origin) { onReset() } }, enabled = !busy && code.length == 6 && password.isNotBlank())
         AyaSecondaryButton(text = stringResource(R.string.sync_lab_back), onClick = onBack, enabled = !busy)
     }
 }

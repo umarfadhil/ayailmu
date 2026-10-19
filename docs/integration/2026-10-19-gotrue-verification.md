@@ -1,5 +1,11 @@
 # GoTrue Android account connection — verification
 
+> **Current status: WIP.** See [the final checkpoint](2026-10-19-wip-checkpoint.md)
+> for fresh K3/max verification, the quota interruption and unresolved Important
+> findings. The repair-round narrative and earlier counts below are historical;
+> they do not establish that every session-boundary defect is closed. The user
+> subsequently authorized checkpoint push and an explicitly incomplete draft PR.
+
 Verified on 19 October 2026 by the Kimi Code CLI writer (K2.8 Preview, max
 thinking), sole implementation/test writer for this checkpoint. Branch
 `feature/umar-native-integration-20261019`, local only. Base checkpoints:
@@ -74,6 +80,92 @@ direct API pull of A's learner with C's token returns 404. The test no
 longer depends on fixture B at all, so the suite is repeatable in any method
 order. Fixture files remain private/synthetic (chmod 600, deleted after
 runs, nothing printed).
+
+**Round 3** (`.runtime/umar-integration/kimi-review-round3.md`, review of the repair
+draft; four Important findings, each reproduced at its later suspension
+boundary with controlled gates — no network-timeout escapes):
+
+1. *Failure cleanup could expire/erase a newer session.* The sign-in/confirm
+   cleanup now expires the in-memory session **only when that operation
+   actually committed a login**, clears the vault with the
+   generation-atomic check-and-act helper, and carries the operation fence
+   into `repository.expireSession`'s mutation after IO dispatch.
+   `repository.failed` no longer expires anything (engine paths already
+   fence their own sessions). Tests: `oldFailureCleanupKeepsNewerInstalledSession`
+   and `failedSignInThatCommittedNothingKeepsNewerInstalledSession` park the
+   old cleanup inside its vault clear while the newer account installs.
+2. *Native activation raced owner B with no binding.* `activateLocally` now
+   re-verifies the durable owner/binding **after** the suspending
+   active-store write, undoes a stale activation before releasing the local
+   boundary, and fails closed (no observation, no success) when the
+   active-profile store throws. Tests: `lateActivationCannotOwnCurrentSession`
+   (B signs in with no binding while A's activation is parked inside the
+   store write), `failedActiveStoreFailsLearningClosed`.
+3. *Google cancellation during the backend learner load still installed.*
+   `completeGoogle` now keeps the combined account-generation + Google-attempt
+   fence through the learner load and the atomic installation; cancelling or
+   replacing the intent after the exchange discards the result and expires
+   the half-committed session without touching a previous genuine vault
+   session. Test: `googleCancelDuringLearnerLoadDiscardsSession`.
+4. *System Back / route disposal left navigation callbacks alive.* Auth
+   completion callbacks are now bound to the originating route instance via
+   `rememberAuthOrigin` (DisposableEffect) and the ViewModel navigates only
+   while that instance is composed; a completed sign-in still installs its
+   session even when its route was disposed. Tests:
+   `disposedRouteDoesNotNavigateOnDelayedSignup`,
+   `keptRouteNavigatesOnCompletion`,
+   `disposedRouteDoesNotNavigateButInstalledSessionSurvives`. Full NavHost
+   instrumentation was not run (no Hilt test seam in this project); the
+   regression exercises the same ViewModel seam the composables call, with
+   the composable wiring in place for the coordinator's emulator pass.
+
+**Round 4** (`.runtime/umar-integration/kimi-review-round4.md`, review during the
+round-3 repair; three Important caller-level findings, each fixed with an
+actual-caller regression):
+
+1. *A failed activation still navigated into native learning under a previous
+   profile.* `prepareLearning` now returns a tri-state `LearningReadiness`
+   (READY / CONSENT_NEEDED / NOT_READY); `NOT_READY` (failed local
+   activation, no binding) never navigates, and the hub only opens
+   Consent/Session for the matching states. Test:
+   `failedActivationYieldsNotReadyAndNeverOpensLearning` keeps A active while
+   B's activation fails and proves the ViewModel reports NOT_READY — never a
+   false "consent granted" — with no navigation.
+2. *Google cancellation cleanup was not scoped to the attempt's own effects.*
+   `completeGoogle` now passes the combined account-generation + exact
+   Google-attempt fence through `repository.login` (backend commit and
+   native activation included), and the catch only drops effects the attempt
+   actually installed: a cancel before `repository.login` expires nothing,
+   the vault is never cleared, and a cancel during the learner load leaves
+   the durable owner/selection matched to the preserved older vault (a
+   restore then recovers the genuine session). Tests:
+   `googleCancelWithExistingSessionPreservesIt`,
+   `googleCancelDuringLoadWithSelectedProfilePreservesSelection`, plus the
+   round-3 learner-load discard test. Live Google stays disabled and
+   unconfigured.
+3. *A late ordinary-action failure could still expire a newer account.* The
+   ViewModel binds every action's failure handling to the originating
+   session (owner/authenticated captured at start); `repository.failed`
+   keeps its 401-expiry but only behind the fence and never publishes when
+   superseded. Test: `staleOrdinaryActionFailureDoesNotExpireNewerSession`
+   gates "Load this account's learners", logs out, signs in B, then releases
+   the old request with a 401 using a fresh per-request entered milestone
+   (the harness now records every learners() call's entered/exit deferreds).
+
+Test-harness repairs from the same review: the atomic-clear tests now
+serialize B behind the clear and release before asserting survival (the
+previously impossible "B finishes while A holds the atomic-clear lock"
+schedule was removed), and the ViewModel route tests pump Robolectric's
+main looper (`Shadows.idle()`) with cooperative timeouts instead of the
+stalled `Thread.sleep` poll. The durable-invariant assertions (empty new
+owner, cross-owner 404, exact-byte/offline isolation) are unchanged.
+
+Two calibrated Minor boundaries remain documented, not blocking: departing
+route composition is not current-entry visibility during transition
+animations, and B-with-no-binding now joins an in-progress local activation
+(`localLock` join in `finishLogin`) before reporting completion, though a
+pending activation's compensation still runs to completion rather than
+being eagerly awaited by B.
 
 ## Scope
 

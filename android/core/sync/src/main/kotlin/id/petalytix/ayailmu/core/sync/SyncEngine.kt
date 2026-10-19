@@ -20,6 +20,8 @@ class SyncEngine(private val api: Backend, private val journal: JournalStore) {
 
     fun owner(): String? = journal.read().activeOwner
     fun authenticated(): Boolean = synchronized(lock) { session != null }
+    /** An opaque marker of the current session attempt; a new login/refresh/logout supersedes it. */
+    fun sessionMark(): Long = synchronized(lock) { generation }
     fun binding(): Binding? = journal.read().let { s -> s.owners[s.activeOwner]?.get(s.activeLearner) }
     fun knownLearners(): List<Learner> = journal.read().let { it.owners[it.activeOwner].orEmpty().values.map(Binding::learner) }
     fun pendingCount(): Int = binding()?.local?.values?.count { it.acknowledgedSequence == null } ?: 0

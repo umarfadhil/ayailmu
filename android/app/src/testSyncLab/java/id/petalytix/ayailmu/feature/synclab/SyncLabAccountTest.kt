@@ -45,10 +45,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.withTimeoutOrNull
+import kotlinx.coroutines.yield
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.jsonArray
@@ -247,6 +253,11 @@ private class FakeApi(
     val currentEntered = CompletableDeferred<Unit>()
     var currentGate: java.util.concurrent.CountDownLatch? = null
     var serverError = false
+    var failLearnersWith503 = false
+    /** Fresh per-call milestones: every learners() call offers an entered and an exit deferred. */
+    val learnersCalls = java.util.concurrent.LinkedBlockingQueue<CompletableDeferred<Unit>>()
+    val learnersExits = java.util.concurrent.LinkedBlockingQueue<CompletableDeferred<Unit>>()
+    var failLearnersWith401 = false
     val profiles = mutableMapOf<String, MutableList<Learner>>()
     private fun owner(token: String): String {
         if (serverError) throw ApiFailure(503, "temporarily_unavailable")
@@ -264,9 +275,29 @@ private class FakeApi(
         return owner(token)
     }
     override suspend fun learners(token: String): List<Learner> {
+        val entered = CompletableDeferred<Unit>()
+        // Capture the gate before publishing the milestone, so a completed entered always means
+        // this call already captured its gate (no scheduling gap).
+        val gate = learnersGate
+        learnersCalls.add(entered)
         learnersEntered.complete(Unit)
-        learnersGate?.await()
-        return profiles[token].orEmpty()
+        var waited = false
+        if (gate != null) {
+            entered.complete(Unit)
+            gate.await()
+            waited = true
+        } else {
+            entered.complete(Unit)
+        }
+        val exit = CompletableDeferred<Unit>()
+        learnersExits.add(exit)
+        try {
+            if (waited && failLearnersWith401) throw ApiFailure(401, "unauthorized")
+            if (failLearnersWith503) throw ApiFailure(503, "temporarily_unavailable")
+            return profiles[token].orEmpty()
+        } finally {
+            exit.complete(Unit)
+        }
     }
     override suspend fun createLearner(token: String, clientId: String): Learner {
         owner(token)
@@ -296,6 +327,22 @@ class SyncLabAccountTest {
     private fun assets() = AssetSource { path ->
         requireNotNull(requireNotNull(javaClass.classLoader).getResourceAsStream(path)).use { it.readBytes().decodeToString() }
     }
+    private fun pumpMain() {
+        org.robolectric.Shadows.shadowOf(android.os.Looper.getMainLooper()).idle()
+    }
+
+    /** Drives a ViewModel whose viewModelScope runs on the test scheduler (Dispatchers.setMain). */
+    private suspend fun awaitCondition(scheduler: TestCoroutineScheduler, timeoutMs: Long, condition: () -> Boolean) {
+        withContext(Dispatchers.Default) {
+            withTimeoutOrNull(timeoutMs) {
+                while (!condition()) {
+                    scheduler.runCurrent()
+                    kotlinx.coroutines.delay(10)
+                }
+            } ?: fail("Condition was not reached within ${timeoutMs}ms")
+        }
+    }
+
     private class Harness(
         dir: File,
         auth: GoTrueAuth,
@@ -513,7 +560,7 @@ class SyncLabAccountTest {
             fake.fabricate("syn-a@example.invalid", "password-one")
             val clock = FixedClock(Instant.parse("2026-10-19T02:00:00Z"))
             val harness = newHarness(dir, fake, clock = clock)
-            val url = harness.account.beginGoogle()
+            val url = harness.account.beginGoogle()!!
             assertTrue(url.startsWith("http://127.0.0.1:${fake.http.port}/authorize?provider=google"))
             assertTrue(url.contains("code_challenge_method=s256"))
             val state = harness.account.googleState()!!
@@ -522,25 +569,26 @@ class SyncLabAccountTest {
             // A pending intent completes once with its exact state; replays and wrong states fail closed.
             assertTrue(harness.account.completeGoogle(state, "auth-code-1"))
             assertFalse(harness.account.completeGoogle(state, "auth-code-1"))
-            val second = harness.account.beginGoogle()
+            harness.account.signOut()
+            val second = harness.account.beginGoogle()!!
             assertFalse(harness.account.completeGoogle("wrong-state", "auth-code-2"))
             // Cancellation fails closed.
-            val third = harness.account.beginGoogle()
+            val third = harness.account.beginGoogle()!!
             val state3 = harness.account.googleState()!!
             harness.account.cancelGoogle()
             assertFalse(harness.account.completeGoogle(state3, "auth-code-3"))
             // Any account change (e.g. sign-out) invalidates the pending intent generation.
             fake.fabricate("syn-c@example.invalid", "password-four")
-            val fourth = harness.account.beginGoogle()
+            val fourth = harness.account.beginGoogle()!!
             val state4 = harness.account.googleState()!!
             harness.account.signOut()
             assertFalse(harness.account.completeGoogle(state4, "auth-code-4"))
             // A stale intent expires without exchanging; a clock rollback also fails closed.
-            harness.account.beginGoogle()
+            harness.account.beginGoogle() ?: fail("beginGoogle must return a URL when signed out")
             val state5 = harness.account.googleState()!!
             clock.advanceSeconds(601)
             assertFalse(harness.account.completeGoogle(state5, "auth-code-5"))
-            harness.account.beginGoogle()
+            harness.account.beginGoogle() ?: fail("beginGoogle must return a URL when signed out")
             val state6 = harness.account.googleState()!!
             clock.advanceSeconds(-3601)
             assertFalse(harness.account.completeGoogle(state6, "auth-code-6"))
@@ -626,12 +674,13 @@ class SyncLabAccountTest {
             assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
             val newer = harness.vault.read()!!
             assertFalse(restoring.isCompleted, "The stale restore must still be blocked before the release")
-            refreshGate.countDown()
+            withContext(Dispatchers.Default) { refreshGate.countDown() }
             // Failsafe below the client's 5s read timeout: progress must come from the gate, never from a timeout.
             assertFalse(withContext(Dispatchers.Default) { withTimeout(4_000) { restoring.await() } }, "The stale restore must fail")
             assertEquals(newer.session.accessToken, harness.vault.read()!!.session.accessToken, "Stale failure must not wipe the newer session")
             assertTrue(harness.repository.state.value.authenticated)
             assertNull(harness.account.state.value.message, "A superseded failure must not publish over the newer account")
+
             harness.repository.stop()
         } finally {
             fake.http.stop()
@@ -913,7 +962,7 @@ class SyncLabAccountTest {
         try {
             fake.fabricate("syn-a@example.invalid", "password-one")
             val harness = newHarness(dir, fake)
-            harness.account.beginGoogle()
+            harness.account.beginGoogle() ?: fail("beginGoogle must return a URL when signed out")
             val state = harness.account.googleState()!!
             val gate = java.util.concurrent.CountDownLatch(1)
             fake.pkceGate = gate
@@ -975,6 +1024,448 @@ class SyncLabAccountTest {
             assertNull(restarted.state.value.owner)
             assertNull(restarted.state.value.selected)
             restarted.stop()
+        } finally {
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
+    @Test fun lateActivationCannotOwnCurrentSession() = runTest {
+        val fake = FakeGoTrue()
+        val dir = File.createTempFile("account", "").apply { delete() }
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            fake.fabricate("syn-b@example.invalid", "password-two")
+            val aead = softwareAead()
+            val pack = assets().read("packs/bahasa/arab/v1.json").encodeToByteArray()
+            val rules = assets().read("config/rules.arab.json").encodeToByteArray()
+            val proof = PackProof.fromBytes(pack, rules, TEST_SOURCE_COMMIT)
+            val proofCatalog = Catalog(proof.sourceCommit, listOf(CatalogPack(proof.track, proof.contentVersion, proof.rulesVersion, proof.packSha256, proof.rulesSha256)))
+            val api = FakeApi(fake, proofCatalog)
+            val first = newHarness(dir, fake, api, aead = aead)
+            assertTrue(first.account.signIn("syn-a@example.invalid", "password-one"))
+            first.repository.create()
+            first.repository.stop()
+            // Simulated restart: init begins activating A's durable binding and parks inside the
+            // active-store write while holding the local boundary.
+            val storeEntered = CompletableDeferred<Unit>()
+            val gate = java.util.concurrent.CountDownLatch(1)
+            val delegate = InMemoryActiveProfileStore()
+            val gatedStore = object : id.petalytix.ayailmu.core.data.settings.ActiveProfileStore {
+                override val activeId = delegate.activeId
+                override suspend fun setActive(id: String?) { storeEntered.complete(Unit); gate.await(); delegate.setActive(id) }
+            }
+            val context = object : ContextWrapper(base) {
+                override fun getNoBackupFilesDir() = dir.apply { mkdirs() }
+            }
+            val restarted = SyncLabRepository(
+                context, db(context), gatedStore, assets(), ContentRepository(assets(), AppBuildInfo(true, "test")),
+                SystemClock(), api,
+            )
+            storeEntered.await()
+            // B (with no binding) signs in and changes ownership while A's activation is parked.
+            val account = SyncLabAccount(GoTrueAuth("http://127.0.0.1:${fake.http.port}"), KeystoreAuthVault(context, aead), restarted, FixedClock(Instant.parse("2026-10-19T02:00:00Z")))
+            assertTrue(account.signIn("syn-b@example.invalid", "password-two"))
+            assertEquals(LearningReadiness.NOT_READY, restarted.prepareLearning(), "B with no binding cannot open learning while A's activation is parked")
+            gate.countDown()
+            // A's stale activation is undone on the repository's IO thread; await it deterministically.
+            withContext(Dispatchers.Default) {
+                withTimeout(4_000) { delegate.activeId.first { it == null } }
+            }
+            assertEquals("owner-user-2", restarted.state.value.owner)
+            assertTrue(restarted.state.value.authenticated)
+            assertNull(delegate.activeId.first(), "A stale activation must never leave A active after B signed in")
+            restarted.stop()
+        } finally {
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
+    @Test fun googleCancelDuringLearnerLoadDiscardsSession() = runTest {
+        val fake = FakeGoTrue()
+        val api = FakeApi(fake)
+        val dir = File.createTempFile("account", "").apply { delete() }
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            val harness = newHarness(dir, fake, api)
+            harness.account.beginGoogle() ?: fail("beginGoogle must return a URL when signed out")
+            val state = harness.account.googleState()!!
+            val learnersGate = CompletableDeferred<Unit>()
+            api.learnersGate = learnersGate
+            val completing = async { harness.account.completeGoogle(state, "auth-code") }
+            api.learnersEntered.await()
+            // The PKCE exchange succeeded; the flow is cancelled while the backend learner load is pending.
+            harness.account.cancelGoogle()
+            learnersGate.complete(Unit)
+            assertFalse(withContext(Dispatchers.Default) { withTimeout(4_000) { completing.await() } }, "A flow cancelled during learner load must be discarded")
+            assertFalse(harness.repository.state.value.authenticated, "A cancelled attempt must leave no live authentication")
+            assertNull(harness.vault.read(), "A cancelled attempt must never install credentials")
+            harness.repository.stop()
+        } finally {
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
+@Test fun googleRejectsWhenASessionAlreadyExists() = runTest {
+        // Prepared Google sign-in is sign-in-only: linking/re-auth on an existing session is
+        // rejected without touching the genuine credentials, session, selection or active profile.
+        val fake = FakeGoTrue()
+        val dir = File.createTempFile("account", "").apply { delete() }
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            val pack = assets().read("packs/bahasa/arab/v1.json").encodeToByteArray()
+            val rules = assets().read("config/rules.arab.json").encodeToByteArray()
+            val proof = PackProof.fromBytes(pack, rules, TEST_SOURCE_COMMIT)
+            val proofCatalog = Catalog(proof.sourceCommit, listOf(CatalogPack(proof.track, proof.contentVersion, proof.rulesVersion, proof.packSha256, proof.rulesSha256)))
+            val harness = newHarness(dir, fake, FakeApi(fake, proofCatalog))
+            assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
+            harness.repository.create()
+            val selected = assertNotNull(harness.repository.state.value.selected)
+            val activeProfile = assertNotNull(harness.active.activeId.first())
+            val callsBefore = fake.tokenCalls
+            assertNull(harness.account.beginGoogle(), "beginGoogle must reject when a session exists")
+            assertNull(harness.account.googleState())
+            assertFalse(harness.account.completeGoogle("any-state", "any-code"), "Without a pending intent no code may be exchanged")
+            assertEquals(callsBefore, fake.tokenCalls, "The rejected attempt never reaches the provider")
+            assertEquals("syn-a@example.invalid", harness.vault.read()!!.session.user.email, "Existing vault session preserved")
+            assertEquals("owner-user-1", harness.repository.state.value.owner)
+            assertTrue(harness.repository.state.value.authenticated)
+            assertEquals(selected.id, harness.repository.state.value.selected!!.id)
+            assertEquals(activeProfile, harness.active.activeId.first())
+            harness.repository.stop()
+        } finally {
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
+@Test fun googleCancelDuringLoadPreservesSignedOutStateForRestore() = runTest {
+        // Signed-out precondition; a cancelled in-flight attempt installs nothing and leaves
+        // the fully signed-out state intact.
+        val fake = FakeGoTrue()
+        val dir = File.createTempFile("account", "").apply { delete() }
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            val pack = assets().read("packs/bahasa/arab/v1.json").encodeToByteArray()
+            val rules = assets().read("config/rules.arab.json").encodeToByteArray()
+            val proof = PackProof.fromBytes(pack, rules, TEST_SOURCE_COMMIT)
+            val proofCatalog = Catalog(proof.sourceCommit, listOf(CatalogPack(proof.track, proof.contentVersion, proof.rulesVersion, proof.packSha256, proof.rulesSha256)))
+            val api = FakeApi(fake, proofCatalog)
+            val harness = newHarness(dir, fake, api)
+            assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
+            harness.repository.create()
+            assertNotNull(harness.repository.state.value.selected)
+            harness.account.signOut()
+            assertNull(harness.repository.state.value.owner)
+            harness.account.beginGoogle() ?: fail("beginGoogle must return a URL when signed out")
+            val state = harness.account.googleState()!!
+            val learnersGate = CompletableDeferred<Unit>()
+            api.learnersGate = learnersGate
+            val completing = async { harness.account.completeGoogle(state, "auth-code") }
+            api.learnersEntered.await()
+            harness.account.cancelGoogle()
+            learnersGate.complete(Unit)
+            assertFalse(withContext(Dispatchers.Default) { withTimeout(4_000) { completing.await() } }, "A flow cancelled during learner load must be discarded")
+            assertNull(harness.vault.read(), "A cancelled attempt must never install credentials")
+            assertFalse(harness.repository.state.value.authenticated)
+            harness.repository.stop()
+        } finally {
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
+    @Test fun failedActiveStoreFailsLearningClosed() = runTest {
+        val fake = FakeGoTrue()
+        val dir = File.createTempFile("account", "").apply { delete() }
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            val pack = assets().read("packs/bahasa/arab/v1.json").encodeToByteArray()
+            val rules = assets().read("config/rules.arab.json").encodeToByteArray()
+            val proof = PackProof.fromBytes(pack, rules, TEST_SOURCE_COMMIT)
+            val proofCatalog = Catalog(proof.sourceCommit, listOf(CatalogPack(proof.track, proof.contentVersion, proof.rulesVersion, proof.packSha256, proof.rulesSha256)))
+            val delegate = InMemoryActiveProfileStore()
+            val failingStore = object : id.petalytix.ayailmu.core.data.settings.ActiveProfileStore {
+                override val activeId = delegate.activeId
+                override suspend fun setActive(id: String?) { throw java.io.IOException("Synthetic active-store failure") }
+            }
+            val harness = Harness(dir, GoTrueAuth("http://127.0.0.1:${fake.http.port}"), FakeApi(fake, proofCatalog), softwareAead(), activeStore = failingStore)
+            assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
+            harness.repository.create()
+            assertNull(delegate.activeId.first(), "A failed activation must never publish an active profile")
+            assertEquals(LearningReadiness.NOT_READY, harness.repository.prepareLearning(), "Learning must fail closed when the active-profile store fails")
+            harness.repository.stop()
+        } finally {
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
+    @Test fun disposedRouteDoesNotNavigateOnDelayedSignup() = runTest {
+        Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(testScheduler))
+        try {
+            val fake = FakeGoTrue()
+            val dir = File.createTempFile("account", "").apply { delete() }
+            try {
+                val harness = newHarness(dir, fake)
+                val vm = SyncLabViewModel(harness.repository, harness.account)
+                val origin = Any()
+                vm.routeVisible(origin)
+                val gate = java.util.concurrent.CountDownLatch(1)
+                fake.signupGate = gate
+                var navigated = false
+                vm.signUp("syn-a@example.invalid", "password-one", origin) { navigated = true }
+                testScheduler.runCurrent()
+                fake.signupEntered.await()
+                vm.routeGone(origin)
+                gate.countDown()
+                awaitCondition(testScheduler, 4_000) { !harness.account.state.value.busy }
+                assertFalse(navigated, "A route disposed before completion must not navigate")
+                harness.repository.stop()
+            } finally {
+                fake.http.stop()
+                dir.deleteRecursively()
+            }
+        } finally {
+            Dispatchers.resetMain()
+        }
+    }
+
+    @Test fun keptRouteNavigatesOnCompletion() = runTest {
+        Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(testScheduler))
+        try {
+            val fake = FakeGoTrue()
+            val dir = File.createTempFile("account", "").apply { delete() }
+            try {
+                val harness = newHarness(dir, fake)
+                val vm = SyncLabViewModel(harness.repository, harness.account)
+                val origin = Any()
+                vm.routeVisible(origin)
+                var navigated = false
+                vm.signUp("syn-a@example.invalid", "password-one", origin) { navigated = true }
+                testScheduler.runCurrent()
+                awaitCondition(testScheduler, 4_000) { !harness.account.state.value.busy }
+                assertTrue(navigated, "A still-visible route must receive its completion navigation")
+                harness.repository.stop()
+            } finally {
+                fake.http.stop()
+                dir.deleteRecursively()
+            }
+        } finally {
+            Dispatchers.resetMain()
+        }
+    }
+
+    @Test fun disposedRouteDoesNotNavigateButInstalledSessionSurvives() = runTest {
+        Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(testScheduler))
+        try {
+            val fake = FakeGoTrue()
+            val api = FakeApi(fake)
+            val dir = File.createTempFile("account", "").apply { delete() }
+            try {
+                fake.fabricate("syn-a@example.invalid", "password-one")
+                val harness = newHarness(dir, fake, api)
+                val vm = SyncLabViewModel(harness.repository, harness.account)
+                val gate = CompletableDeferred<Unit>()
+                api.accountGate = gate
+                val origin = Any()
+                vm.routeVisible(origin)
+                var navigated = false
+                vm.signIn("syn-a@example.invalid", "password-one", origin) { navigated = true }
+                testScheduler.runCurrent()
+                api.accountEntered.await()
+                vm.routeGone(origin)
+                gate.complete(Unit)
+                awaitCondition(testScheduler, 4_000) { !harness.account.state.value.busy }
+                assertFalse(navigated, "Disposing the route must suppress its navigation callback")
+                assertTrue(harness.repository.state.value.authenticated, "The completed sign-in must still install its session")
+                harness.repository.stop()
+            } finally {
+                fake.http.stop()
+                dir.deleteRecursively()
+            }
+        } finally {
+            Dispatchers.resetMain()
+        }
+    }
+
+    @Test fun staleOrdinaryActionFailureDoesNotExpireNewerSession() = runTest {
+        Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(testScheduler))
+        try {
+        val fake = FakeGoTrue()
+        val api = FakeApi(fake)
+        val dir = File.createTempFile("account", "").apply { delete() }
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            fake.fabricate("syn-b@example.invalid", "password-two")
+            val harness = newHarness(dir, fake, api)
+            val vm = SyncLabViewModel(harness.repository, harness.account)
+            assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
+            api.learnersCalls.poll() // drain the initial sign-in's learner load
+            api.learnersExits.poll() // and its exit, so later polls observe the gated call
+            // A's "Load this account's learners" begins and parks at a fresh per-request call.
+            val gate = CompletableDeferred<Unit>()
+            api.learnersGate = gate
+            vm.refresh()
+            testScheduler.runCurrent()
+            val gatedCall = withContext(Dispatchers.Default) { api.learnersCalls.poll(4, java.util.concurrent.TimeUnit.SECONDS) }
+            assertNotNull(gatedCall, "The later request must register its own entered milestone")
+            // A logs out and B signs in while A's old request is still suspended at the backend.
+            // Clearing the field first lets B's own learner load through; the parked call keeps its
+            // captured gate and is released afterwards with a 401.
+            harness.account.signOut()
+            api.learnersGate = null
+            assertTrue(harness.account.signIn("syn-b@example.invalid", "password-two"))
+            assertTrue(harness.repository.state.value.authenticated)
+            assertEquals("owner-user-2", harness.repository.state.value.owner)
+            // The old request is released with a 401; its stale failure must not expire or publish over B.
+            api.failLearnersWith401 = true
+            gate.complete(Unit)
+            withContext(Dispatchers.Default) {
+                val exit = api.learnersExits.poll(4, java.util.concurrent.TimeUnit.SECONDS)
+                assertNotNull(exit)
+                exit!!.await()
+            }
+            testScheduler.runCurrent()
+            assertTrue(harness.repository.state.value.authenticated, "A stale ordinary-action failure must not expire the newer session")
+            assertEquals("owner-user-2", harness.repository.state.value.owner)
+            assertEquals("syn-b@example.invalid", harness.account.state.value.email)
+            harness.repository.stop()
+        } finally {
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+        } finally {
+            Dispatchers.resetMain()
+        }
+    }
+
+    @Test fun failedActivationYieldsNotReadyAndNeverOpensLearning() = runTest {
+        Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(testScheduler))
+        try {
+        val fake = FakeGoTrue()
+        val dir = File.createTempFile("account", "").apply { delete() }
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            fake.fabricate("syn-b@example.invalid", "password-two")
+            val pack = assets().read("packs/bahasa/arab/v1.json").encodeToByteArray()
+            val rules = assets().read("config/rules.arab.json").encodeToByteArray()
+            val proof = PackProof.fromBytes(pack, rules, TEST_SOURCE_COMMIT)
+            val proofCatalog = Catalog(proof.sourceCommit, listOf(CatalogPack(proof.track, proof.contentVersion, proof.rulesVersion, proof.packSha256, proof.rulesSha256)))
+            val delegate = InMemoryActiveProfileStore()
+            val toggle = object : id.petalytix.ayailmu.core.data.settings.ActiveProfileStore {
+                var fail = false
+                override val activeId = delegate.activeId
+                override suspend fun setActive(id: String?) {
+                    if (fail) throw java.io.IOException("Synthetic active-store failure")
+                    delegate.setActive(id)
+                }
+            }
+            val harness = Harness(dir, GoTrueAuth("http://127.0.0.1:${fake.http.port}"), FakeApi(fake, proofCatalog), softwareAead(), activeStore = toggle)
+            assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
+            harness.repository.create()
+            val aProfile = assertNotNull(delegate.activeId.first())
+            // B signs in and selects a learner, but B's native activation now fails: A must be retained.
+            toggle.fail = true
+            assertTrue(harness.account.signIn("syn-b@example.invalid", "password-two"))
+            harness.repository.create()
+            assertEquals(aProfile, delegate.activeId.first(), "A stays active when B's activation fails")
+            assertEquals(LearningReadiness.NOT_READY, harness.repository.prepareLearning())
+            val vm = SyncLabViewModel(harness.repository, harness.account)
+            val readiness = java.util.concurrent.atomic.AtomicReference<LearningReadiness?>(null)
+            vm.learn { readiness.set(it) }
+            testScheduler.runCurrent()
+            awaitCondition(testScheduler, 4_000) { readiness.get() != null }
+            assertEquals(LearningReadiness.NOT_READY, readiness.get(), "The ViewModel must report NOT_READY, never consent-granted")
+            var navigated = false
+            when (readiness.get()!!) {
+                LearningReadiness.READY, LearningReadiness.CONSENT_NEEDED -> navigated = true
+                LearningReadiness.NOT_READY -> Unit
+            }
+            assertFalse(navigated, "NOT_READY must never navigate into native learning under a previous profile")
+            assertEquals(aProfile, delegate.activeId.first())
+            harness.repository.stop()
+        } finally {
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+        } finally {
+            Dispatchers.resetMain()
+        }
+    }
+
+    @Test fun staleFailureCannotExpireReinstalledSameOwnerSession() = runTest {
+        Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(testScheduler))
+        try {
+            val fake = FakeGoTrue()
+            val api = FakeApi(fake)
+            val dir = File.createTempFile("account", "").apply { delete() }
+            try {
+                fake.fabricate("syn-a@example.invalid", "password-one")
+                val harness = newHarness(dir, fake, api)
+                val vm = SyncLabViewModel(harness.repository, harness.account)
+                assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
+                api.learnersCalls.poll() // drain the initial sign-in's learner load
+                api.learnersExits.poll()
+                // A1's "Load this account's learners" begins and parks at a fresh per-request call.
+                val gate = CompletableDeferred<Unit>()
+                api.learnersGate = gate
+                vm.refresh()
+                testScheduler.runCurrent()
+                val gatedCall = withContext(Dispatchers.Default) { api.learnersCalls.poll(4, java.util.concurrent.TimeUnit.SECONDS) }
+                assertNotNull(gatedCall, "The later request must register its own entered milestone")
+                gatedCall!!.await() // entered completes only after the call captured its gate
+                // Same owner re-authenticates through logout + a fresh sign-in (A2) while A1's
+                // request is still suspended: owner and authenticated state are identical, so the
+                // origin must be the opaque session mark, not (owner, authenticated).
+                // Clear the field first so A2's own learner load passes; the parked call keeps its
+                // captured gate and is released afterwards with a 401.
+                harness.account.signOut()
+                api.learnersGate = null
+                assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
+                assertTrue(harness.repository.state.value.authenticated)
+                assertEquals("owner-user-1", harness.repository.state.value.owner)
+                api.failLearnersWith401 = true
+                gate.complete(Unit)
+                withContext(Dispatchers.Default) {
+                    val exit = api.learnersExits.poll(4, java.util.concurrent.TimeUnit.SECONDS)
+                    assertNotNull(exit)
+                    exit!!.await()
+                }
+                testScheduler.runCurrent()
+                assertTrue(harness.repository.state.value.authenticated, "A1's stale failure must not expire the reinstalled A2 session")
+                assertEquals("owner-user-1", harness.repository.state.value.owner)
+                assertEquals("syn-a@example.invalid", harness.account.state.value.email)
+                harness.repository.stop()
+            } finally {
+                fake.http.stop()
+                dir.deleteRecursively()
+            }
+        } finally {
+            Dispatchers.resetMain()
+        }
+    }
+
+    @Test fun signInLearnerLoadFailureKeepsInstalledAuthenticatedSession() = runTest {
+        val fake = FakeGoTrue()
+        val api = FakeApi(fake)
+        val dir = File.createTempFile("account", "").apply { delete() }
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            val harness = newHarness(dir, fake, api)
+            api.failLearnersWith503 = true
+            assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"), "A transient learner-load failure must not fail the sign-in")
+            assertTrue(harness.repository.state.value.authenticated, "The committed session stays installed")
+            assertNotNull(harness.vault.read(), "The session must be persisted, not left behind a false result")
+            assertEquals("owner-user-1", harness.repository.state.value.owner)
+            assertTrue(harness.repository.state.value.learners.isEmpty())
+            assertEquals(R.string.sync_lab_failed, harness.repository.state.value.notice)
+            api.failLearnersWith503 = false
+            harness.repository.refresh()
+            assertEquals(R.string.sync_lab_saved, harness.repository.state.value.notice, "The learner load recovers on retry")
+            harness.repository.stop()
         } finally {
             fake.http.stop()
             dir.deleteRecursively()

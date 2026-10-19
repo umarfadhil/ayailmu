@@ -15,6 +15,7 @@ import id.petalytix.ayailmu.core.engine.SkillProjector
 import id.petalytix.ayailmu.core.model.AnswerEvent
 import id.petalytix.ayailmu.core.sync.*
 import java.io.File
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.*
@@ -36,6 +37,9 @@ internal data class SyncLabState(
     val notice: Int = R.string.sync_lab_signed_out,
     val busy: Boolean = false,
 )
+
+/** What the native learning entry-point decided; [NOT_READY] must never navigate into a session. */
+internal enum class LearningReadiness { READY, CONSENT_NEEDED, NOT_READY }
 
 /** A singleton owns the only writer of the lab journal; ordinary app profile databases are a different app ID. */
 @Singleton
@@ -74,6 +78,8 @@ internal class SyncLabRepository @Inject constructor(
         finishLogin(owner, accepted)
     }
     fun savedOwner(): String? = engine.owner()
+    /** An opaque marker of the engine's session attempt; login/refresh/logout supersede it. */
+    fun sessionMark(): Long = engine.sessionMark()
     suspend fun resume(token: String, accepted: () -> Boolean = { true }) = withContext(Dispatchers.IO) {
         engine.resume(token, accepted)
         finishLogin(requireNotNull(engine.owner()), accepted)
@@ -87,7 +93,15 @@ internal class SyncLabRepository @Inject constructor(
         val withdrawn = engine.flushWithdrawals()
         if (withdrawn != SyncResult.SYNCED) { publish(notice(withdrawn)); return }
         if (!ownerCurrent(owner, accepted)) return
-        remoteLearners = owner to engine.availableLearners()
+        // The engine commit is established; a transient learner-load failure is recoverable and
+        // must not discard the just-installed session (the queue/profile stay local).
+        remoteLearners = try {
+            owner to engine.availableLearners()
+        } catch (e: Exception) {
+            if (e is CancellationException) throw e
+            publish(if (e is IOException) R.string.sync_lab_offline else R.string.sync_lab_failed)
+            return
+        }
         if (!ownerCurrent(owner, accepted)) return
         val binding = engine.binding() ?: run { publish(); return }
         if (!ownerCurrent(owner, accepted) || engine.binding()?.learner?.id != binding.learner.id) return
@@ -96,14 +110,25 @@ internal class SyncLabRepository @Inject constructor(
     }
     /**
      * Activates a learner locally (Room profile, active-profile store, payload observer) under the
-     * local ordering boundary. Re-verifies the durable owner/binding after acquiring the boundary so a
-     * logout or account change that completed during an earlier suspension wins; never touches network.
+     * local ordering boundary. Re-verifies the durable owner/binding after acquiring the boundary and
+     * again after the suspending active-store write, so an owner change that completed during local
+     * storage is undone before the boundary is released; an active-store failure fails closed (no
+     * observation, no success reported). Never touches network under the boundary.
      */
     private suspend fun activateLocally(learner: Learner, observe: Boolean): Boolean = localLock.withLock {
-        if (engine.owner() == null || engine.binding()?.learner?.id != learner.id) return@withLock false
+        fun current() = engine.owner() != null && engine.binding()?.learner?.id == learner.id
+        if (!current()) return@withLock false
         ensureNative(learner)
-        if (engine.owner() == null || engine.binding()?.learner?.id != learner.id) return@withLock false
-        runCatching { active.setActive(learner.clientLearnerId) }
+        if (!current()) return@withLock false
+        try {
+            active.setActive(learner.clientLearnerId)
+        } catch (e: Exception) {
+            return@withLock false
+        }
+        if (!current()) {
+            runCatching { active.setActive(null) }
+            return@withLock false
+        }
         if (observe) this.observe(learner)
         true
     }
@@ -164,19 +189,28 @@ internal class SyncLabRepository @Inject constructor(
         committed
     }
     /** Drops an in-memory session (e.g. after a failed credential installation) and republishes. */
-    suspend fun expireSession() = withContext(Dispatchers.IO) {
-        engine.expireSession()
+    suspend fun expireSession(accepted: () -> Boolean = { true }) = withContext(Dispatchers.IO) {
+        if (accepted()) engine.expireSession()
         publish()
     }
-    suspend fun failed(error: Exception? = null) = withContext(Dispatchers.IO) {
+    /**
+     * Reflects an ordinary-action failure in the owner-scoped UI state. The 401 expiry only runs
+     * while [accepted] holds at the actual mutation, and a superseded failure never publishes over
+     * a newer account — callers bind [accepted] to the originating operation/session.
+     */
+    suspend fun failed(error: Exception? = null, accepted: () -> Boolean = { true }) = withContext(Dispatchers.IO) {
         if (error is CancellationException) throw error
+        if (!accepted()) return@withContext
         if (error is ApiFailure && (error.status == 401 || error.code == "fresh_authentication_required")) engine.expireSession()
         publish(if (!engine.authenticated() && engine.owner() != null) R.string.sync_lab_login_required else R.string.sync_lab_failed)
     }
-    suspend fun prepareLearning(): Boolean = withContext(Dispatchers.IO) {
-        val learner = requireNotNull(engine.binding()).learner
-        if (!activateLocally(learner, observe = false)) return@withContext false
-        db.profiles().get(learner.clientLearnerId)?.consentVersion != id.petalytix.ayailmu.feature.consent.Consent.VERSION
+    suspend fun prepareLearning(): LearningReadiness = withContext(Dispatchers.IO) {
+        val learner = engine.binding()?.learner ?: return@withContext LearningReadiness.NOT_READY
+        // A failed local activation must never report "consent already granted": the caller would
+        // open native learning under whatever profile was previously active.
+        if (!activateLocally(learner, observe = false)) return@withContext LearningReadiness.NOT_READY
+        if (db.profiles().get(learner.clientLearnerId)?.consentVersion != id.petalytix.ayailmu.feature.consent.Consent.VERSION)
+            LearningReadiness.CONSENT_NEEDED else LearningReadiness.READY
     }
     private suspend fun ensureNative(learner: Learner) {
         require(learner.kind == "ADULT" && learner.clientLearnerId.startsWith("syn_"))
