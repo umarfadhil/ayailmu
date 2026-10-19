@@ -9,7 +9,8 @@ import (
 	"strings"
 )
 
-// The deploy modes (Phase 8). Neither is production: ModeProduction stays refused.
+// The deploy modes (Phase 8). Neither is production: ModeProduction shares their loader only with its exact staging
+// opt-in (production_staging.go).
 const (
 	// ModeDeploySmoke is the deny-all verifier of a deployment's containers, TLS, readiness and database isolation. It takes
 	// only the exact deploy settings below, serves health and readiness, and accepts no token at all, so no data can be read
@@ -24,10 +25,12 @@ const (
 
 // Deploy settings. A list is comma-separated, without spaces, and names each entry once.
 const (
-	// EnvAllowedHosts lists the exact Host header values the service answers: lowercase host names or IP literals, each
-	// with an optional port. The container's own loopback health probe (127.0.0.1:<listen port>) is added; nothing else is.
+	// EnvAllowedHosts lists the exact Host header values the service answers: lowercase host names or IP literals (in
+	// production, public DNS names only), each with an optional port. The container's own loopback health probe
+	// (127.0.0.1:<listen port>) is added; nothing else is.
 	EnvAllowedHosts = "AYA_ALLOWED_HOSTS"
-	// EnvCORSOrigins lists the exact https web origins the CORS gate grants. Unset or empty means native clients only.
+	// EnvCORSOrigins lists the exact https web origins the CORS gate grants (in production, by public DNS name). Unset or
+	// empty means native clients only, which production refuses.
 	EnvCORSOrigins = "AYA_CORS_ORIGINS"
 	// EnvDBHosts lists the exact database hosts (host names, IP literals or socket directories, without ports): every host
 	// the database URL names, and every host pgx parses from it, must be one of them.
@@ -45,10 +48,10 @@ const maxSocketDirBytes = 1 << 10
 
 // Deploy guard failures. Like the others, Load wraps exactly one of them with the variable's name and never its value.
 var (
-	// ErrInvalidHostList reports a malformed AYA_ALLOWED_HOSTS, AYA_DB_HOSTS or AYA_AUTH_HOSTS.
-	ErrInvalidHostList = errors.New("config: a host list must name exact lowercase host names or IP literals (with a port where the setting takes one), comma-separated without spaces, each once")
+	// ErrInvalidHostList reports a malformed AYA_ALLOWED_HOSTS, AYA_DB_HOSTS, AYA_AUTH_HOSTS or AYA_TRUSTED_PROXIES.
+	ErrInvalidHostList = errors.New("config: a host list must name exact lowercase host names or IP literals as its setting takes them (with a port where it takes one; in production, public DNS names as Host values and unicast IP literals as trusted proxies), comma-separated without spaces, each once")
 	// ErrInvalidOrigins reports a malformed AYA_CORS_ORIGINS.
-	ErrInvalidOrigins = errors.New("config: the web origins must be exact https origins (a lowercase host and an optional non-default port, no path), comma-separated without spaces, each once")
+	ErrInvalidOrigins = errors.New("config: the web origins must be exact https origins (a lowercase host, in production a public DNS name, and an optional non-default port, no path), comma-separated without spaces, each once")
 	// ErrDatabaseHostNotAllowed reports a database URL that names a host outside AYA_DB_HOSTS, or no host at all.
 	ErrDatabaseHostNotAllowed = errors.New("config: every database host the database URL names must be one of AYA_DB_HOSTS")
 	// ErrAuthHostNotAllowed reports, in ModeLocalCompose, a Supabase Auth URL whose host and port are not exactly one of
@@ -61,8 +64,9 @@ var (
 	// ErrNotDeployListen reports a deploy listen address that is not 0.0.0.0 or a literal IPv4 loopback address with an
 	// explicit non-zero port.
 	ErrNotDeployListen = errors.New("config: the deploy listen address must be 0.0.0.0 or a literal IPv4 loopback address with an explicit non-zero port")
-	// ErrSettingNotUsed reports a setting of another mode, which a deploy mode refuses rather than ignores.
-	ErrSettingNotUsed = errors.New("config: a setting of another mode is set; a deploy mode takes only its own settings")
+	// ErrSettingNotUsed reports a setting of another mode, which a deploy mode or production refuses rather than ignores;
+	// every other mode refuses production's own settings likewise.
+	ErrSettingNotUsed = errors.New("config: a setting of another mode is set; it is refused rather than ignored")
 )
 
 // Migration is the configuration of the migration job (cmd/ayailmu-migrate), which applies the embedded migrations as
@@ -97,21 +101,28 @@ func LoadMigration(lookup func(string) (string, bool)) (Migration, error) {
 	return Migration{DatabaseURL: dsn, Schema: schema, DBHosts: hosts}, nil
 }
 
-// loadDeploy reads a deploy mode's settings, which are all explicit: no listen address, Host or database default, and
-// no fallback to the loopback modes' local web preview. A setting of another mode is refused, not ignored.
+// loadDeploy reads the settings of a deploy mode, or of production once Load has seen its exact opt-in. They are all
+// explicit: no listen address, Host or database default, and no fallback to the loopback modes' local web preview. A
+// setting of another mode is refused, not ignored. Production's guards are stricter (production_staging.go): public Host
+// values, required public https origins, its trusted proxies, and its own Auth by public name over https.
 func loadDeploy(mode string, lookup func(string) (string, bool)) (Config, error) {
 	get := getter(lookup)
 	if err := refuseLocalVariables(lookup); err != nil {
 		return Config{}, err
 	}
 	foreign := []string{EnvProjectID}
-	if mode == ModeDeploySmoke {
+	switch mode {
+	case ModeDeploySmoke:
 		foreign = append(foreign, EnvSupabaseURL, EnvAuthHosts, EnvSupabaseIssuer, EnvSupabaseAudience, EnvSupabaseAdminKeyFile)
+		foreign = append(foreign, stagingSettings...)
+	case ModeLocalCompose:
+		foreign = append(foreign, stagingSettings...)
+	case ModeProduction:
+		// Production reaches its Auth by public name, never through a stack-internal host list.
+		foreign = append(foreign, EnvAuthHosts)
 	}
-	for _, name := range foreign {
-		if _, set := lookup(name); set {
-			return Config{}, refuse(ErrSettingNotUsed, name)
-		}
+	if err := refuseSettings(lookup, foreign...); err != nil {
+		return Config{}, err
 	}
 	dsn, dbHosts, err := loadDeployDatabase(lookup)
 	if err != nil {
@@ -126,7 +137,11 @@ func loadDeploy(mode string, lookup func(string) (string, bool)) (Config, error)
 	if !ok {
 		return Config{}, refuse(ErrNotDeployListen, EnvListen)
 	}
-	hosts, err := loadList(get, EnvAllowedHosts, isAllowedHost)
+	validHost, validOrigin := isAllowedHost, isWebOrigin
+	if mode == ModeProduction {
+		validHost, validOrigin = isPublicHost, isPublicWebOrigin
+	}
+	hosts, err := loadList(get, EnvAllowedHosts, validHost)
 	if err != nil {
 		return Config{}, err
 	}
@@ -134,9 +149,19 @@ func loadDeploy(mode string, lookup func(string) (string, bool)) (Config, error)
 		hosts = append(hosts, probe)
 	}
 	var origins []string
-	if v := get(EnvCORSOrigins); v != "" {
-		if origins, ok = splitList(v, isWebOrigin); !ok {
+	switch v := get(EnvCORSOrigins); {
+	case v != "":
+		if origins, ok = splitList(v, validOrigin); !ok {
 			return Config{}, refuse(ErrInvalidOrigins, EnvCORSOrigins)
+		}
+	case mode == ModeProduction:
+		// Production names its web origins explicitly; only a deploy mode may serve native clients alone.
+		return Config{}, refuse(ErrMissing, EnvCORSOrigins)
+	}
+	var proxies []string
+	if mode == ModeProduction {
+		if proxies, err = loadList(get, EnvTrustedProxies, isTrustedProxy); err != nil {
+			return Config{}, err
 		}
 	}
 
@@ -149,8 +174,13 @@ func loadDeploy(mode string, lookup func(string) (string, bool)) (Config, error)
 		return Config{}, err
 	}
 	var supabase Supabase
-	if mode == ModeLocalCompose {
+	switch mode {
+	case ModeLocalCompose:
 		if supabase, err = loadComposeAuth(get); err != nil {
+			return Config{}, err
+		}
+	case ModeProduction:
+		if supabase, err = loadStagingAuth(get); err != nil {
 			return Config{}, err
 		}
 	}
@@ -158,6 +188,7 @@ func loadDeploy(mode string, lookup func(string) (string, bool)) (Config, error)
 		Mode:           mode,
 		Listen:         listen,
 		AllowedHosts:   hosts,
+		TrustedProxies: proxies,
 		CORSOrigins:    origins,
 		DatabaseURL:    dsn,
 		DBHosts:        dbHosts,
@@ -226,6 +257,17 @@ func refuseLocalVariables(lookup func(string) (string, bool)) error {
 	}
 	if _, set := lookup(EnvGoogleCreds); set {
 		return ErrRealCredentials
+	}
+	return nil
+}
+
+// refuseSettings refuses the first of names that is set, even empty: a setting of another mode, refused rather than
+// ignored.
+func refuseSettings(lookup func(string) (string, bool), names ...string) error {
+	for _, name := range names {
+		if _, set := lookup(name); set {
+			return refuse(ErrSettingNotUsed, name)
+		}
 	}
 	return nil
 }

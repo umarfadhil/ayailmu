@@ -6,7 +6,8 @@
 // explicitly configured Supabase Auth on literal loopback, whose server-only admin credential it reads
 // from a private file. The deploy modes (deploy.go) take only exact, explicit settings instead: the Host
 // values, web origins and database hosts they allow, and the database URL from a private file. Production
-// mode is refused outright: production token verification does not exist yet.
+// mode is refused unless it opts in exactly to its one supported deployment, staging with its own
+// standalone GoTrue (production_staging.go), whose stricter settings extend the deploy modes'.
 package config
 
 import (
@@ -25,7 +26,7 @@ import (
 )
 
 // Modes. ModeEmulator and ModeLocalSupabase start, as do the deploy modes of deploy.go; ModeProduction is
-// always refused.
+// refused without its exact staging opt-in (production_staging.go).
 const (
 	ModeEmulator = "emulator"
 	// ModeLocalSupabase is the local synthetic Supabase mode: it trusts one explicitly configured local
@@ -83,7 +84,7 @@ const (
 var (
 	ErrMissing           = errors.New("config: required setting is missing")
 	ErrInvalidMode       = errors.New("config: unknown mode")
-	ErrProductionRefused = errors.New("config: production mode is refused (production token verification is not implemented)")
+	ErrProductionRefused = errors.New("config: production mode is refused without its exact opt-in: AYA_AUTH_PROVIDER and AYA_DEPLOYMENT_ENV must name its one supported staging deployment")
 	ErrNotLoopback       = errors.New("config: address must be a literal loopback IP with an explicit non-zero port")
 	ErrNotDemoProject    = errors.New(`config: Firebase project ID must start with "demo-"`)
 	ErrDatabaseNotLocal  = errors.New("config: every database host must be a literal loopback IP or a Unix socket directory")
@@ -139,19 +140,24 @@ func (Secret) LogValue() slog.Value {
 // Config is a configuration that passed every guard.
 type Config struct {
 	Mode string
-	// Listen is a literal loopback host:port (default 127.0.0.1:8091); in the deploy modes, 0.0.0.0 or
-	// IPv4 loopback with an explicit port.
+	// Listen is a literal loopback host:port (default 127.0.0.1:8091); in the deploy modes and production,
+	// 0.0.0.0 or IPv4 loopback with an explicit port.
 	Listen string
 	// AllowedHosts are the exact Host header values the server accepts: Listen itself and
-	// "localhost:<port>" (DNS-rebinding guard); in the deploy modes, AYA_ALLOWED_HOSTS and the container's
-	// own loopback health probe.
+	// "localhost:<port>" (DNS-rebinding guard); in the deploy modes and production, AYA_ALLOWED_HOSTS (public
+	// DNS names in production) and the container's own loopback health probe.
 	AllowedHosts []string
-	// CORSOrigins are, in the deploy modes, the exact web origins the CORS gate grants (AYA_CORS_ORIGINS; none means
-	// native clients only). Nil in the loopback modes, whose gate grants only the local Expo web preview.
+	// TrustedProxies are, in ModeProduction, the exact addresses of the TLS-terminating proxies in front of the service
+	// (AYA_TRUSTED_PROXIES): canonical unicast IP literals, never unspecified or loopback, so a peer's parsed address
+	// matches one exactly. Nil in every other mode.
+	TrustedProxies []string
+	// CORSOrigins are, in the deploy modes and production, the exact web origins the CORS gate grants (AYA_CORS_ORIGINS;
+	// none means native clients only, which production refuses). Nil in the loopback modes, whose gate grants only the
+	// local Expo web preview.
 	CORSOrigins []string
 	DatabaseURL Secret
-	// DBHosts are, in the deploy modes, the exact database hosts pgx may dial (AYA_DB_HOSTS). Nil in the loopback modes,
-	// whose database must be on literal loopback or a Unix socket.
+	// DBHosts are, in the deploy modes and production, the exact database hosts pgx may dial (AYA_DB_HOSTS). Nil in the
+	// loopback modes, whose database must be on literal loopback or a Unix socket.
 	DBHosts []string
 	// Schema is the PostgreSQL schema that holds every table (default "ayailmu").
 	Schema    string
@@ -161,15 +167,17 @@ type Config struct {
 	// ExportMaxBytes is the largest account export served, in encoded bytes (default and maximum
 	// MaxExportBytes).
 	ExportMaxBytes int
-	// Supabase is the local Supabase Auth in ModeLocalSupabase and ModeLocalCompose; zero in emulator and
-	// deploy-smoke modes.
+	// Supabase is the local Supabase Auth in ModeLocalSupabase and ModeLocalCompose, and the deployment's own
+	// standalone GoTrue in ModeProduction; zero in emulator and deploy-smoke modes.
 	Supabase Supabase
 }
 
-// Supabase is the local Supabase Auth of ModeLocalSupabase or ModeLocalCompose.
+// Supabase is the local Supabase Auth of ModeLocalSupabase or ModeLocalCompose, or the standalone GoTrue of
+// ModeProduction.
 type Supabase struct {
 	// URL is Auth's base URL: http or https on a literal loopback IP and port, or in ModeLocalCompose to
-	// exactly one of AuthHosts.
+	// exactly one of AuthHosts, or in ModeProduction exactly https:// and Auth's own public DNS name,
+	// optionally with the private port 9443.
 	URL string
 	// Issuer and Audience are the exact iss and aud claims of its access tokens.
 	Issuer   string
@@ -177,7 +185,7 @@ type Supabase struct {
 	// AdminKey is the server-only admin credential, read from the private file.
 	AdminKey Secret
 	// AuthHosts are, in ModeLocalCompose, the exact host:port values URL may name on the stack's internal network
-	// (AYA_AUTH_HOSTS). Nil in ModeLocalSupabase.
+	// (AYA_AUTH_HOSTS). Nil in ModeLocalSupabase and ModeProduction.
 	AuthHosts []string
 }
 
@@ -197,13 +205,21 @@ func Load(lookup func(string) (string, bool)) (Config, error) {
 	case "":
 		return Config{}, refuse(ErrMissing, EnvMode)
 	case ModeProduction:
-		return Config{}, ErrProductionRefused
+		// However complete the rest, production stays refused without its exact opt-in.
+		if !stagingOptedIn(get) {
+			return Config{}, ErrProductionRefused
+		}
+		return loadDeploy(mode, lookup)
 	default:
 		return Config{}, refuse(ErrInvalidMode, EnvMode)
 	}
 	// Google client libraries load this file on their own, so it is refused even when empty.
 	if _, set := lookup(EnvGoogleCreds); set {
 		return Config{}, ErrRealCredentials
+	}
+	// Production's own settings are refused, even empty, rather than ignored.
+	if err := refuseSettings(lookup, stagingSettings...); err != nil {
+		return Config{}, err
 	}
 
 	listen := get(EnvListen)
