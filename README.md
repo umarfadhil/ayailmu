@@ -1,5 +1,7 @@
 # AyaIlmu
 
+> **Amar WIP checkpoint (2026-10-18): app not complete.** See [Amar WIP handoff](docs/Amar_WIP_Handoff.md) for this branch's scope, related branches and remaining account/sync work. This source checkpoint is not a release or deployment.
+
 Android-native learning app by PT Petalytix Teknologi Indonesia: languages, mathematics, science, social studies & arts, for kids (7–12) and adults, in Bahasa Indonesia and English. Offline-first, no backend, hand-made illustrations, freemium with one-time unlocks.
 
 **Start here:** [`ai-memory/README.md`](ai-memory/README.md) — reading order, decisions, rules, file map. Build phases: [`docs/BUILD_PLAN.md`](docs/BUILD_PLAN.md).

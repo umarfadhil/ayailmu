@@ -153,3 +153,11 @@ Compaction (run when `check_budget.py` reports over budget, or quarterly): entri
 - **Verified by:** not verified — no code written; Android project does not exist yet (M0 pending).
 - **Open:** move `app/` → `prototype-expo/`; remote config override yes/no; pack prices; illustrator; package id; Play Families self-review before the first closed test.
 - **Housekeeping found:** `git status` shows all 55 tracked files modified with equal insertions/deletions — CRLF/LF line-ending drift between the commit and the Windows checkout, not real changes. At M0 add `.gitattributes` (`* text=auto eol=lf`), run `git add --renormalize .`, commit once as `chore: normalize line endings`.
+
+## 2026-10-18 — Amar WIP checkpoint (IN SOURCE)
+
+Separate RN, local backend and earlier integration snapshots are preserved on named branches. `docs/Amar_WIP_Handoff.md` records exact scope and remaining13 RN sync contracts. No main merge, native release, deployment or completed-app claim accompanies this checkpoint.
+
+## 2026-10-18 — Amar local account/sync verification (IN SOURCE; native/device pending)
+
+The separate RN branch now implements the local account/profile/journal path:466 unit tests and the real48-check account/93-check guest browser flows pass. This branch keeps its existing source snapshot; `docs/Amar_WIP_Handoff.md` identifies the separate client/backend branches and remaining native/content/deployment gates. No main merge or deployment.
