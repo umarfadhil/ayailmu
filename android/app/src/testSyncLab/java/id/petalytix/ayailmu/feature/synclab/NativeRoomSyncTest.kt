@@ -3,7 +3,6 @@ package id.petalytix.ayailmu.feature.synclab
 import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
-import android.net.Uri
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import id.petalytix.ayailmu.core.content.*
@@ -30,20 +29,22 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import net.openid.appauth.AuthorizationServiceConfiguration
+import net.openid.appauth.CodeVerifierUtil
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [28], application = Application::class)
 class NativeRoomSyncTest {
-    @Test fun appAuthBuildsFreshCodePkceRequestWithSupportedParameters() {
-        val issuer = SyncLabAuth.ISSUER
-        val config = AuthorizationServiceConfiguration(Uri.parse("$issuer/protocol/openid-connect/auth"), Uri.parse("$issuer/protocol/openid-connect/token"))
-        val request = SyncLabAuth.authorizationRequest(config)
-        assertEquals("umar-native", request.clientId); assertEquals("code", request.responseType)
-        assertEquals(SyncLabAuth.REDIRECT, request.redirectUri.toString())
-        assertEquals("login", request.prompt); assertEquals("0", request.additionalParameters["max_age"])
-        assertEquals("S256", request.codeVerifierChallengeMethod)
-        assertFalse(request.state.isNullOrBlank()); assertFalse(request.codeVerifier.isNullOrBlank())
+    @Test fun googlePreparationUsesAppAuthPkceAndStaysDisabledWithoutSetup() {
+        val verifier = CodeVerifierUtil.generateRandomCodeVerifier()
+        CodeVerifierUtil.checkCodeVerifier(verifier)
+        assertEquals("S256", CodeVerifierUtil.getCodeVerifierChallengeMethod())
+        val challenge = CodeVerifierUtil.deriveCodeVerifierChallenge(verifier)
+        val url = GoTrueAuth("http://127.0.0.1:8287").googleUrl(challenge, "id.petalytix.ayailmu.synclab://auth-callback/nonce1")
+        assertTrue(url.contains("provider=google"))
+        assertTrue(url.contains("code_challenge_method=s256"))
+        assertTrue(url.contains("redirect_to="))
+        assertFalse(url.contains("client_secret"))
+        assertFalse(url.contains("gmail"))
     }
     private val assets = AssetSource { path -> requireNotNull(requireNotNull(javaClass.classLoader).getResourceAsStream(path)).use { it.readBytes().decodeToString() } }
     private val clock = SystemClock()

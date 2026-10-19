@@ -25,12 +25,12 @@ class SyncEngine(private val api: Backend, private val journal: JournalStore) {
     fun pendingCount(): Int = binding()?.local?.values?.count { it.acknowledgedSequence == null } ?: 0
     fun history(): List<RemoteRecord> = binding()?.takeIf { it.enabled }?.remote.orEmpty()
 
-    suspend fun login(token: String): String {
-        val attempt = synchronized(lock) { session = null; ++generation }
+    suspend fun login(token: String, accepted: () -> Boolean = { true }): String {
+        val attempt = synchronized(lock) { check(accepted()) { "Sign-in cancelled" }; session = null; ++generation }
         val owner = api.account(token)
         require(owner.matches(Regex("[A-Za-z0-9_-]{1,128}")))
         synchronized(lock) {
-            check(generation == attempt) { "Sign-in session changed" }
+            check(generation == attempt && accepted()) { "Sign-in session changed" }
             session = Session(owner, token, attempt)
             journal.update { it.copy(activeOwner = owner, activeLearner = it.activeLearner.takeIf { _ -> it.activeOwner == owner }) }
         }
@@ -38,15 +38,16 @@ class SyncEngine(private val api: Backend, private val journal: JournalStore) {
     }
     fun expireSession() = synchronized(lock) { session = null; generation++; Unit }
     /** Refresh/restore never repeats an adult declaration or resurrects a logged-out owner. */
-    suspend fun resume(token: String) {
+    suspend fun resume(token: String, accepted: () -> Boolean = { true }) {
         val (expected, attempt) = synchronized(lock) {
+            check(accepted()) { "Sign-in cancelled" }
             val owner = requireNotNull(journal.read().activeOwner) { "Explicit sign-in required" }
             session = null
             owner to ++generation
         }
         val verified = api.currentAccount(token)
         synchronized(lock) {
-            check(generation == attempt) { "Sign-in session changed" }
+            check(generation == attempt && accepted()) { "Sign-in session changed" }
             require(verified == expected && journal.read().activeOwner == expected) { "Refreshed account changed" }
             session = Session(verified, token, attempt)
         }

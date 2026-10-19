@@ -4,6 +4,16 @@ User decision: standardize Umar on maintained self-hosted Supabase Auth/GoTrue.
 Published integration checkpoint is `3b4f2064103fe6514c314b9e9b60adcf6c9479ff`.
 Implement follow-up commits locally, one Codex writer; no further push/deployment.
 
+> Status 2026-10-19 (Kimi writer): the "missing flows" listed below are now
+> implemented locally on `feature/umar-native-integration-20261019`: in-app
+> email/password sign-in, signup with synthetic-mail confirmation, recovery and
+> password reset, account/settings with logout, Tink/Keystore-encrypted session
+> restore with serialized refresh rotation and generation fences, and disabled
+> Google login preparation (`SyncLabAccount` + `AuthVault` in
+> `android/app/src/syncLab/.../synclab/`). Evidence:
+> `2026-10-19-gotrue-verification.md`. The inventory paragraph below records the
+> pre-implementation state for context.
+
 ## Current inventory and missing flows
 
 Only Android Kotlin/Compose syncLab is integrated. Demo/prod retain the ordinary

@@ -33,6 +33,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import id.petalytix.ayailmu.core.design.theme.AyaMotion
@@ -75,6 +76,7 @@ fun AyaTextField(
     textStyle: TextStyle = MaterialTheme.typography.bodyLarge,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
     val colors = AyaThemeTokens.colors
     OutlinedTextField(
@@ -87,6 +89,7 @@ fun AyaTextField(
         textStyle = textStyle.copy(color = colors.ink),
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
+        visualTransformation = visualTransformation,
         shape = AyaRadius.md,
         modifier = modifier.fillMaxWidth(),
         colors =

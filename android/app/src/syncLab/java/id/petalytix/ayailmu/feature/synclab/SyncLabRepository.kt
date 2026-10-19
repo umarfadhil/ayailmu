@@ -48,7 +48,7 @@ internal class SyncLabRepository @Inject constructor(
     private val clock: Clock,
     api: Backend,
 ) {
-    private val engine = SyncEngine(api, FileJournal(File(context.noBackupFilesDir, "synthetic-sync/journal.json")))
+    private val engine = SyncEngine(api, FileJournal(File(context.noBackupFilesDir, "synthetic-gotrue-sync/journal.json")))
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private var observed: Job? = null
     private var remoteLearners: Pair<String, List<Learner>>? = null
@@ -60,18 +60,39 @@ internal class SyncLabRepository @Inject constructor(
     }
     init {
         scope.launch {
-            try { engine.binding()?.let { ensureNative(it.learner); observe(it.learner) }; publish() }
+            try {
+                engine.binding()?.let { ensureNative(it.learner); active.setActive(it.learner.clientLearnerId); observe(it.learner) }
+                publish()
+            }
             catch (e: Exception) { if (e is CancellationException) throw e; mutable.value = SyncLabState(notice = R.string.sync_lab_blocked) }
         }
     }
-    suspend fun login(token: String) = withContext(Dispatchers.IO) {
-        val owner = engine.login(token)
+    suspend fun login(token: String, accepted: () -> Boolean = { true }) = withContext(Dispatchers.IO) {
+        val owner = engine.login(token, accepted)
+        finishLogin(owner, accepted)
+    }
+    fun savedOwner(): String? = engine.owner()
+    suspend fun resume(token: String, accepted: () -> Boolean = { true }) = withContext(Dispatchers.IO) {
+        engine.resume(token, accepted)
+        finishLogin(requireNotNull(engine.owner()), accepted)
+    }
+    private fun ownerCurrent(owner: String, accepted: () -> Boolean): Boolean =
+        accepted() && engine.authenticated() && engine.owner() == owner
+    /** Native activation and observers start only for the owner that is still current after each suspension. */
+    private suspend fun finishLogin(owner: String, accepted: () -> Boolean) {
         remoteLearners = null
         publish(R.string.sync_lab_saved)
         val withdrawn = engine.flushWithdrawals()
-        if (withdrawn != SyncResult.SYNCED) { publish(notice(withdrawn)); return@withContext }
+        if (withdrawn != SyncResult.SYNCED) { publish(notice(withdrawn)); return }
+        if (!ownerCurrent(owner, accepted)) return
         remoteLearners = owner to engine.availableLearners()
-        engine.binding()?.let { ensureNative(it.learner); observe(it.learner) }
+        if (!ownerCurrent(owner, accepted)) return
+        val binding = engine.binding() ?: run { publish(); return }
+        if (!ownerCurrent(owner, accepted) || engine.binding()?.learner?.id != binding.learner.id) return
+        ensureNative(binding.learner)
+        if (!ownerCurrent(owner, accepted) || engine.binding()?.learner?.id != binding.learner.id) return
+        active.setActive(binding.learner.clientLearnerId)
+        observe(binding.learner)
         publish()
     }
     suspend fun refresh() = withContext(Dispatchers.IO) {
@@ -85,9 +106,15 @@ internal class SyncLabRepository @Inject constructor(
         remoteLearners = requireNotNull(engine.owner()) to engine.availableLearners()
         publish(R.string.sync_lab_saved)
     }
-    suspend fun select(learner: Learner) = withContext(Dispatchers.IO) {
+    private fun selectionCurrent(owner: String?, learnerId: String, accepted: () -> Boolean): Boolean =
+        accepted() && engine.owner() == owner && engine.binding()?.learner?.id == learnerId
+    suspend fun select(learner: Learner, accepted: () -> Boolean = { true }) = withContext(Dispatchers.IO) {
+        val owner = engine.owner()
         if (engine.authenticated()) engine.select(learner, proof) else engine.selectKnown(learner.id)
+        if (!selectionCurrent(owner, learner.id, accepted)) { publish(); return@withContext }
         ensureNative(learner)
+        if (!selectionCurrent(owner, learner.id, accepted)) { publish(); return@withContext }
+        active.setActive(learner.clientLearnerId)
         observe(learner)
         publish(R.string.sync_lab_saved)
     }
@@ -118,8 +145,11 @@ internal class SyncLabRepository @Inject constructor(
         publish(if (!engine.authenticated() && engine.owner() != null) R.string.sync_lab_login_required else R.string.sync_lab_failed)
     }
     suspend fun prepareLearning(): Boolean = withContext(Dispatchers.IO) {
+        val owner = engine.owner()
         val learner = requireNotNull(engine.binding()).learner
         ensureNative(learner)
+        if (!selectionCurrent(owner, learner.id) { true }) return@withContext false
+        active.setActive(learner.clientLearnerId)
         db.profiles().get(learner.clientLearnerId)?.consentVersion != id.petalytix.ayailmu.feature.consent.Consent.VERSION
     }
     private suspend fun ensureNative(learner: Learner) {
@@ -134,7 +164,6 @@ internal class SyncLabRepository @Inject constructor(
                 ))
             } else require(existing.label == SYNTHETIC_LABEL && existing.kind == "ADULT" && existing.birthYear == 1980) { "Not a synthetic lab profile" }
         }
-        active.setActive(learner.clientLearnerId)
     }
     private fun observe(learner: Learner) {
         observed?.cancel()

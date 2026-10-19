@@ -20,7 +20,10 @@ project = 'android' if mode == 'android' else 'integration-jvm'
 gradle = ['sh', 'android/gradlew', '-p', project]
 options = ['--no-daemon', '--max-workers=2']
 compile_task = ':app:compileSyncLabDebugUnitTestKotlin' if mode == 'android' else ':core:sync:testClasses'
-test_tasks = [':app:testSyncLabDebugUnitTest', '--rerun', '--tests', '*NativeRoomSyncTest'] if mode == 'android' else [':core:sync:test']
+test_tasks = (
+    [':app:testSyncLabDebugUnitTest', '--rerun', '--tests', '*NativeRoomSyncTest', '--tests', '*SyncLabAccountTest']
+    if mode == 'android' else [':core:sync:test']
+)
 with fixture_lock():
     try:
         subprocess.run(gradle + [compile_task] + options, env=env, check=True)

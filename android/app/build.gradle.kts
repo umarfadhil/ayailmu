@@ -131,6 +131,7 @@ dependencies {
     "syncLabImplementation"(libs.appauth)
     "syncLabImplementation"(libs.room.runtime)
     "syncLabImplementation"(libs.room.ktx)
+    "syncLabImplementation"("com.google.crypto.tink:tink-android:1.24.0")
     implementation(project(":core:model"))
     implementation(project(":core:engine"))
     implementation(project(":core:content"))

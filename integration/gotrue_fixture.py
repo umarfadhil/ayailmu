@@ -92,7 +92,8 @@ def generate(wait_expired=True):
             time.sleep(min(5, max(0.1, until - time.monotonic())))
         req(API, '/v1/account', token=expired['access_token'], expected=(401,))
     tokens = {label: sign_in(**user)['access_token'] for label, user in users.items()}
-    tokens.update(expired=expired['access_token'], api=API)
+    tokens.update(expired=expired['access_token'], expired_refresh=expired['refresh_token'], api=API)
+    tokens['accounts'] = {label: {'email': user['email'], 'password': user['password']} for label, user in users.items()}
     private = ROOT / '.local/gotrue'
     private.mkdir(exist_ok=True)
     for name, value in [('synthetic-accounts.json', users), ('token-fixtures.json', tokens)]:
