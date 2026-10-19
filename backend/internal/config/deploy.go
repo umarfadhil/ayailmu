@@ -78,9 +78,10 @@ type Migration struct {
 	DBHosts     []string
 }
 
-// IsDeployMode reports whether mode is one of the deploy modes, whose service verifies its schema instead of migrating it.
+// IsDeployMode reports whether mode is one of the deploy modes or production, whose service verifies its schema instead
+// of migrating it and serves as a deployment: exact web origins, HTTPS only, and public readiness.
 func IsDeployMode(mode string) bool {
-	return mode == ModeDeploySmoke || mode == ModeLocalCompose
+	return mode == ModeDeploySmoke || mode == ModeLocalCompose || mode == ModeProduction
 }
 
 // LoadMigration reads the migration job's settings through lookup, under the deploy guards that apply to it: the

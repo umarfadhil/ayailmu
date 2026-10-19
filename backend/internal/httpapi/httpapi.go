@@ -2,7 +2,8 @@
 // allow-list, a CORS gate for the local web app (or a deploy mode's exact origins), bearer
 // authentication, the deleted-account gate, typed and bounded bodies, RFC 9457 problems, Cache-Control:
 // no-store, and the account, account export and deletion, profile, import, event, pull, progress and
-// curriculum routes. A deploy mode also asks browsers to keep to HTTPS and serves public readiness.
+// curriculum routes. A deploy mode also asks browsers to keep to HTTPS and serves public readiness;
+// production also admits requests only through its trusted proxy over HTTPS.
 package httpapi
 
 import (
@@ -33,9 +34,13 @@ type Deps struct {
 	// Supabase Auth also is). Empty means Mode.
 	AccountMode  string
 	AllowedHosts []string
-	// Deploy marks a deploy mode (config.ModeDeploySmoke or config.ModeLocalCompose): the CORS gate grants
-	// exactly CORSOrigins instead of the local web preview, every answer asks browsers to keep to HTTPS,
-	// and the public readiness route GET /v1/readyz is served.
+	// TrustedProxies are, in production, the exact addresses of the TLS-terminating proxies in front of
+	// the service, as canonical IP literals (config.Config's TrustedProxies). With them the admission gate
+	// (admitted) replaces the bare Host check. Nil in every other mode.
+	TrustedProxies []string
+	// Deploy marks a deploy mode (config.ModeDeploySmoke or config.ModeLocalCompose) or production: the CORS
+	// gate grants exactly CORSOrigins instead of the local web preview, every answer asks browsers to keep
+	// to HTTPS, and the public readiness route GET /v1/readyz is served.
 	Deploy bool
 	// CORSOrigins are a deploy mode's exact https web origins; none means native clients only. The
 	// loopback modes ignore them.
@@ -67,6 +72,7 @@ type handler struct {
 	mode                   string
 	accountMode            string
 	hosts                  []string
+	proxies                []string // production's trusted proxy addresses; nil elsewhere
 	deploy                 bool
 	origins                []string // the exact web origins the CORS gate grants
 	verifier               authn.Verifier
@@ -99,6 +105,7 @@ func New(d Deps) http.Handler {
 		mode:                   d.Mode,
 		accountMode:            accountMode,
 		hosts:                  slices.Clone(d.AllowedHosts),
+		proxies:                slices.Clone(d.TrustedProxies),
 		deploy:                 d.Deploy,
 		origins:                origins,
 		verifier:               d.Verifier,
@@ -122,10 +129,10 @@ func New(d Deps) http.Handler {
 	return h
 }
 
-// ServeHTTP applies the guards in the documented order (contract §2): Host; the CORS gate, which answers
-// preflights; authentication on every route but health (and a deploy mode's readiness); the
-// deleted-account gate; route; method; then, for body routes, media type, size and JSON syntax. The
-// route's own checks follow in its handler.
+// ServeHTTP applies the guards in the documented order (contract §2): Host (in production, the
+// admission gate, which includes it); the CORS gate, which answers preflights; authentication on every
+// route but health (and a deploy mode's readiness); the deleted-account gate; route; method; then, for
+// body routes, media type, size and JSON syntax. The route's own checks follow in its handler.
 func (h *handler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	w := &responseWriter{ResponseWriter: rw}
 	w.Header().Set("Cache-Control", "no-store")
@@ -135,7 +142,7 @@ func (h *handler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 	defer h.recoverPanic(w)
 
-	if !h.hostAllowed(r.Host) {
+	if !h.admitted(r) {
 		writeProblem(w, newProblem(http.StatusMisdirectedRequest, codeHostNotAllowed, "this service does not answer to the request's Host"))
 		return
 	}

@@ -1,9 +1,10 @@
 // Package server assembles the local backend: configuration guards, the configured mode's verifier (the
 // Supabase verifier with its Auth's key set fetched at startup, deploy-smoke's deny-all verifier or,
 // only in a build with the firebase_emulator tag, the legacy emulator verifier), the guarded store,
-// migrated in the loopback modes and only verified in the deploy modes, and the HTTP handler. A default
-// build refuses emulator mode with authn.ErrEmulatorDisabled before it opens the store. Every guard runs
-// before any socket is bound; production mode is refused by package config.
+// migrated in the loopback modes and only verified in the deploy modes and production, and the HTTP
+// handler. A default build refuses emulator mode with authn.ErrEmulatorDisabled before it opens the
+// store. Every guard runs before any socket is bound; package config refuses production mode without
+// its exact staging opt-in.
 package server
 
 import (
@@ -39,7 +40,7 @@ type Options struct {
 	// AuthHTTPClient, when set, is the HTTP client the Supabase verifier of a production (staging) service sends every
 	// request to Auth with, in place of its own dedicated client: tests give one that trusts a test certificate authority
 	// and reaches a stand-in for the staging network. It must verify TLS certificates (authn refuses one that skips
-	// verification). Nil in production. Production mode is not implemented yet, so nothing reads it.
+	// verification). Nil in production; the other modes never read it.
 	AuthHTTPClient *http.Client
 }
 
@@ -52,16 +53,17 @@ type Service struct {
 
 // New loads the configuration through lookup and applies, in order, the configuration guards, the
 // verifier guards and the store guards, then migrates the schema in a loopback mode, or only verifies it
-// in a deploy mode (store.ErrSchemaNotCurrent unless it is exactly this binary's: the migration job
-// changes it, never the service). In ModeLocalSupabase and ModeLocalCompose the verifier guards include
-// fetching Auth's key set: without a usable one the service refuses to start. Nothing is opened before
-// the configuration and verifier guards pass, and no socket is bound.
+// in a deploy mode or production (store.ErrSchemaNotCurrent unless it is exactly this binary's: the
+// migration job changes it, never the service). In ModeLocalSupabase, ModeLocalCompose and
+// ModeProduction the verifier guards include fetching Auth's key set: without a usable one the service
+// refuses to start. Nothing is opened before the configuration and verifier guards pass, and no socket
+// is bound.
 func New(ctx context.Context, lookup func(string) (string, bool), opts Options) (*Service, error) {
 	cfg, err := config.Load(lookup)
 	if err != nil {
 		return nil, err
 	}
-	verifier, err := newVerifier(ctx, cfg, opts.Now)
+	verifier, err := newVerifier(ctx, cfg, opts)
 	if err != nil {
 		return nil, err
 	}
@@ -70,11 +72,13 @@ func New(ctx context.Context, lookup func(string) (string, bool), opts Options) 
 		return nil, err
 	}
 	// Every verifier also reports sign-in times and deletes its provider's accounts, so it serves the
-	// account controls; deploy-smoke's verifies nothing, so they answer its uniform 401.
+	// account controls; deploy-smoke's verifies nothing, so they answer its uniform 401. Production's
+	// trusted proxies replace the bare Host check with the handler's admission gate.
 	h := httpapi.New(httpapi.Deps{
 		Mode:                   cfg.Mode,
 		AccountMode:            accountMode(cfg.Mode),
 		AllowedHosts:           cfg.AllowedHosts,
+		TrustedProxies:         cfg.TrustedProxies,
 		Deploy:                 config.IsDeployMode(cfg.Mode),
 		CORSOrigins:            cfg.CORSOrigins,
 		Verifier:               verifier,
@@ -99,27 +103,27 @@ type accountVerifier interface {
 // newVerifier builds the configured mode's verifier. In ModeLocalSupabase that is the Supabase verifier
 // for the configured loopback Auth (plain http accepted there, as a synthetic local fixture), and in
 // ModeLocalCompose the same verifier for the stack's own Auth at its allowlisted internal name (plain
-// http accepted only for exactly that host and port). Either fetches Auth's key set from that Auth only
+// http accepted only for exactly that host and port). In ModeProduction it is the same verifier, not in
+// synthetic mode, for the staging deployment's own standalone GoTrue by its public name over https only,
+// whose certificate must verify; it sends every request to Auth with opts.AuthHTTPClient when set, which
+// must verify certificates too (authn.ErrUnsafeConfig). Each fetches Auth's key set from that Auth only
 // and must establish it now: a service never starts without a usable trusted key set
-// (authn.ErrKeySetUnavailable). now is its clock (Options.Now; nil means time.Now). In ModeDeploySmoke it
-// is the deny-all verifier, which contacts nothing. In ModeEmulator it is newEmulatorVerifier's: the
-// legacy emulator verifier in a build with the firebase_emulator tag, and authn.ErrEmulatorDisabled in a
+// (authn.ErrKeySetUnavailable). opts.Now is its clock (nil means time.Now). In ModeDeploySmoke it is the
+// deny-all verifier, which contacts nothing. In ModeEmulator it is newEmulatorVerifier's: the legacy
+// emulator verifier in a build with the firebase_emulator tag, and authn.ErrEmulatorDisabled in a
 // default build, which never falls back to another verifier.
-func newVerifier(ctx context.Context, cfg config.Config, now func() time.Time) (accountVerifier, error) {
+func newVerifier(ctx context.Context, cfg config.Config, opts Options) (accountVerifier, error) {
 	switch cfg.Mode {
 	case config.ModeEmulator:
 		return newEmulatorVerifier(ctx, cfg)
 	case config.ModeLocalSupabase, config.ModeLocalCompose:
-		v, err := authn.NewSupabaseVerifier(authn.SupabaseConfig{BaseURL: cfg.Supabase.URL, Issuer: cfg.Supabase.Issuer,
+		return supabaseVerifier(ctx, authn.SupabaseConfig{BaseURL: cfg.Supabase.URL, Issuer: cfg.Supabase.Issuer,
 			Audience: cfg.Supabase.Audience, FetchJWKS: true, AdminKey: cfg.Supabase.AdminKey, LocalSynthetic: true,
-			InternalHosts: cfg.Supabase.AuthHosts, Now: now})
-		if err != nil {
-			return nil, err
-		}
-		if err := v.RefreshKeys(ctx); err != nil {
-			return nil, err
-		}
-		return v, nil
+			InternalHosts: cfg.Supabase.AuthHosts, Now: opts.Now})
+	case config.ModeProduction:
+		return supabaseVerifier(ctx, authn.SupabaseConfig{BaseURL: cfg.Supabase.URL, Issuer: cfg.Supabase.Issuer,
+			Audience: cfg.Supabase.Audience, FetchJWKS: true, AdminKey: cfg.Supabase.AdminKey,
+			HTTPClient: opts.AuthHTTPClient, Now: opts.Now})
 	case config.ModeDeploySmoke:
 		return denyAll{}, nil
 	default:
@@ -127,9 +131,21 @@ func newVerifier(ctx context.Context, cfg config.Config, now func() time.Time) (
 	}
 }
 
+// supabaseVerifier builds the Supabase verifier c configures and establishes Auth's key set now.
+func supabaseVerifier(ctx context.Context, c authn.SupabaseConfig) (accountVerifier, error) {
+	v, err := authn.NewSupabaseVerifier(c)
+	if err != nil {
+		return nil, err
+	}
+	if err := v.RefreshKeys(ctx); err != nil {
+		return nil, err
+	}
+	return v, nil
+}
+
 // openStore opens the configured database. A loopback mode opens it on loopback or a Unix socket and
-// migrates the schema. A deploy mode opens only AYA_DB_HOSTS, as pgx parsed them, and verifies the schema
-// with reads only, so its runtime role needs no DDL right.
+// migrates the schema. A deploy mode or production opens only AYA_DB_HOSTS, as pgx parsed them, and
+// verifies the schema with reads only, so its runtime role needs no DDL right.
 func openStore(ctx context.Context, cfg config.Config) (*store.Store, error) {
 	if !config.IsDeployMode(cfg.Mode) {
 		st, err := store.Open(ctx, cfg.DatabaseURL.Reveal(), cfg.Schema)
@@ -154,10 +170,11 @@ func openStore(ctx context.Context, cfg config.Config) (*store.Store, error) {
 }
 
 // accountMode is the auth_mode an account created in mode records: the kind of provider that verified it.
-// local-compose's Auth is a local synthetic Supabase Auth, so its accounts are local-supabase accounts and
-// the account schema needs no new mode. Every other mode records itself.
+// local-compose's Auth is a local synthetic Supabase Auth and production's the deployment's own
+// standalone one, so their accounts are local-supabase accounts, told apart by their issuer, and the
+// account schema needs no new mode. Every other mode records itself.
 func accountMode(mode string) string {
-	if mode == config.ModeLocalCompose {
+	if mode == config.ModeLocalCompose || mode == config.ModeProduction {
 		return config.ModeLocalSupabase
 	}
 	return mode
