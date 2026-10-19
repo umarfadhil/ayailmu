@@ -25,10 +25,13 @@ internal data class AccountUi(
 
 /**
  * Connects the fabricated account UX to GoTrue and the owner-scoped sync engine.
- * Provider sessions are persisted only through [AuthVault] (Tink + Keystore, no-backup);
- * every credential write/clear and UI publish is fenced so a late provider response can
- * never restore another session after logout, overwrite a newer account, or reactivate
- * an old profile. Only fabricated `@example.invalid` identities ever reach the network.
+ * Provider sessions are persisted only through [AuthVault] (Tink + Keystore, no-backup).
+ *
+ * Concurrency contract: every late effect — credential install/clear, UI publish, provider
+ * logout — is bound to the generation captured when its operation began ([begin]) or observed
+ * ([fence]). Check-and-act pairs that must survive generation changes on other dispatchers run
+ * atomically under [lock]; no network runs under that lock, and the lock is never held across
+ * provider/backend calls. Only fabricated `@example.invalid` identities ever reach the network.
  * The app never sees or stores passwords beyond transient fields.
  */
 @Singleton
@@ -40,15 +43,15 @@ internal class SyncLabAccount @Inject constructor(
 ) {
     private val lock = Any()
     private var generation = 0L
-    private val rotation = Mutex()
-    /** Serializes cold restore and runtime refresh so a concurrent pair rotates the provider token at most once. */
-    private val sessionMutex = Mutex()
     private val random = SecureRandom()
+    /** Serializes restore/refresh so a concurrent pair rotates the provider token at most once. */
+    private val sessionMutex = Mutex()
     private val mutable = MutableStateFlow(AccountUi())
     val state = mutable.asStateFlow()
 
     private fun begin(): Pair<Long, () -> Boolean> {
-        val attempt = synchronized(lock) { ++generation }
+        val attempt: Long
+        synchronized(lock) { generation++; googleAttempt++; attempt = generation }
         pendingGoogle = null
         return attempt to { synchronized(lock) { generation == attempt } }
     }
@@ -69,47 +72,71 @@ internal class SyncLabAccount @Inject constructor(
         return ok
     }
 
+    /** Atomically installs a provider session and its UI state, or throws if superseded/storage fails. */
+    private fun install(accepted: () -> Boolean, session: AuthSession) {
+        synchronized(lock) {
+            check(accepted()) { "Sign-in cancelled" }
+            vault.write(SavedAuth(session, expiry(session), now()))
+            mutable.value = AccountUi(email = session.user.email, busy = false)
+        }
+    }
+
+    private fun publishIfCurrent(accepted: () -> Boolean, email: String? = mutable.value.email, busy: Boolean = mutable.value.busy, message: Int? = null) {
+        synchronized(lock) { if (accepted()) mutable.value = AccountUi(email = email, busy = busy, message = message) }
+    }
+
+    private fun clearVaultIfCurrent(accepted: () -> Boolean) {
+        synchronized(lock) { if (accepted()) runCatching { vault.write(null) } }
+    }
+
+    private fun writeVaultIfCurrent(accepted: () -> Boolean, value: SavedAuth) {
+        synchronized(lock) {
+            check(accepted()) { "Sign-in cancelled" }
+            vault.write(value)
+        }
+    }
+
     /**
      * Restores the durable owner on launch: reuse a live access token, else rotate the refresh
-     * token once (serialized so rotation happens exactly once). Revoked/invalid material is
-     * cleared only when no newer account has taken over in the meantime.
+     * token once (serialized so rotation happens exactly once). Transient provider/backend
+     * failures keep the persisted material for retry; only conclusively invalid material is
+     * cleared, and only while no newer account has taken over.
      */
     suspend fun restore(): Boolean {
         val (attempt, accepted) = fence()
         publish(busy = true)
         return try {
             sessionMutex.withLock {
-                rotation.withLock {
-                    check(accepted()) { "Sign-in cancelled" }
-                    val saved = try { vault.read() } catch (e: Exception) { null }
-                    if (saved == null) {
-                        publish(busy = false)
-                        false
-                    } else {
-                        val live = try {
-                            repository.resume(saved.session.accessToken, accepted)
-                            saved.session
-                        } catch (e: Exception) {
-                            if (e is CancellationException) throw e
-                            if (e !is ApiFailure || e.status != 401) throw e
-                            val rotated = auth.refresh(saved.session.refreshToken)
-                            checkSubject(saved.session, rotated)
-                            check(accepted()) { "Sign-in cancelled" }
-                            vault.write(SavedAuth(rotated, expiry(rotated), now()))
-                            repository.resume(rotated.accessToken, accepted)
-                            rotated
-                        }
-                        publish(email = live.user.email, busy = false)
-                        true
+                check(accepted()) { "Sign-in cancelled" }
+                val saved = try { vault.read() } catch (e: Exception) { null }
+                if (saved == null) {
+                    publishIfCurrent(accepted, busy = false)
+                    false
+                } else {
+                    val live = try {
+                        repository.resume(saved.session.accessToken, accepted)
+                        saved.session
+                    } catch (e: Exception) {
+                        if (e is CancellationException) throw e
+                        if (e !is ApiFailure || e.status != 401) throw e
+                        val rotated = auth.refresh(saved.session.refreshToken)
+                        checkSubject(saved.session, rotated)
+                        writeVaultIfCurrent(accepted, SavedAuth(rotated, expiry(rotated), now()))
+                        repository.resume(rotated.accessToken, accepted)
+                        rotated
                     }
+                    publishIfCurrent(accepted, email = live.user.email, busy = false)
+                    accepted()
                 }
             }
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            clearIfCurrent(accepted, e)
-            republishRepository(e)
-            publish(busy = false, message = messageFor(e))
+            if (accepted()) {
+                clearIfCurrent(accepted, e)
+                republishRepository(e)
+                publishIfCurrent(accepted, busy = false, message = messageFor(e))
+            }
             false
         }
     }
@@ -120,33 +147,32 @@ internal class SyncLabAccount @Inject constructor(
         publish(busy = true)
         return try {
             sessionMutex.withLock {
-                rotation.withLock {
-                    check(accepted()) { "Sign-in cancelled" }
-                    val saved = try { vault.read() } catch (e: Exception) { null }
-                        ?: throw ApiFailure(401, "unauthorized")
-                    val live = try {
-                        repository.resume(saved.session.accessToken, accepted)
-                        saved.session
-                    } catch (e: Exception) {
-                        if (e is CancellationException) throw e
-                        if (e !is ApiFailure || e.status != 401) throw e
-                        val rotated = auth.refresh(saved.session.refreshToken)
-                        checkSubject(saved.session, rotated)
-                        check(accepted()) { "Sign-in cancelled" }
-                        vault.write(SavedAuth(rotated, expiry(rotated), now()))
-                        repository.resume(rotated.accessToken, accepted)
-                        rotated
-                    }
-                    publish(email = live.user.email, busy = false)
+                check(accepted()) { "Sign-in cancelled" }
+                val saved = try { vault.read() } catch (e: Exception) { null }
+                    ?: throw ApiFailure(401, "unauthorized")
+                val live = try {
+                    repository.resume(saved.session.accessToken, accepted)
+                    saved.session
+                } catch (e: Exception) {
+                    if (e is CancellationException) throw e
+                    if (e !is ApiFailure || e.status != 401) throw e
+                    val rotated = auth.refresh(saved.session.refreshToken)
+                    checkSubject(saved.session, rotated)
+                    writeVaultIfCurrent(accepted, SavedAuth(rotated, expiry(rotated), now()))
+                    repository.resume(rotated.accessToken, accepted)
+                    rotated
                 }
+                publishIfCurrent(accepted, email = live.user.email, busy = false)
             }
-            true
+            accepted()
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            clearIfCurrent(accepted, e)
-            republishRepository(e)
-            publish(busy = false, message = messageFor(e))
+            if (accepted()) {
+                clearIfCurrent(accepted, e)
+                republishRepository(e)
+                publishIfCurrent(accepted, busy = false, message = messageFor(e))
+            }
             false
         }
     }
@@ -158,14 +184,17 @@ internal class SyncLabAccount @Inject constructor(
         return try {
             val session = auth.signIn(email, password)
             repository.login(session.accessToken, accepted)
-            check(accepted()) { "Sign-in cancelled" }
-            rotation.withLock { check(accepted()); vault.write(SavedAuth(session, expiry(session), now())) }
-            publish(email = session.user.email, busy = false)
+            install(accepted, session)
             true
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            publish(busy = false, message = messageFor(e))
+            if (accepted()) {
+                // Failed installation must not leave a live session behind a false result.
+                runCatching { repository.expireSession() }
+                runCatching { vault.write(null) }
+                publishIfCurrent(accepted, busy = false, message = messageFor(e))
+            }
             false
         }
     }
@@ -173,16 +202,16 @@ internal class SyncLabAccount @Inject constructor(
     /** Creates an unconfirmed fabricated account; GoTrue emails a synthetic confirmation code. */
     suspend fun signUp(email: String, password: String): Boolean {
         if (!syntheticIdentity(email)) return false
-        begin()
+        val (attempt, accepted) = begin()
         publish(busy = true)
         return try {
             auth.signUp(email, password)
-            publish(busy = false)
-            true
+            publishIfCurrent(accepted, busy = false)
+            accepted()
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            publish(busy = false, message = messageFor(e))
+            publishIfCurrent(accepted, busy = false, message = messageFor(e))
             false
         }
     }
@@ -194,46 +223,48 @@ internal class SyncLabAccount @Inject constructor(
         return try {
             val session = auth.verifyOtp(email, code, "signup")
             repository.login(session.accessToken, accepted)
-            check(accepted()) { "Sign-in cancelled" }
-            rotation.withLock { check(accepted()); vault.write(SavedAuth(session, expiry(session), now())) }
-            publish(email = session.user.email, busy = false)
+            install(accepted, session)
             true
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            publish(busy = false, message = messageFor(e))
+            if (accepted()) {
+                runCatching { repository.expireSession() }
+                runCatching { vault.write(null) }
+                publishIfCurrent(accepted, busy = false, message = messageFor(e))
+            }
             false
         }
     }
 
     suspend fun resend(email: String): Boolean {
         if (!syntheticIdentity(email)) return false
-        begin()
+        val (attempt, accepted) = begin()
         publish(busy = true)
         return try {
             auth.resend(email)
-            publish(busy = false)
-            true
+            publishIfCurrent(accepted, busy = false)
+            accepted()
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            publish(busy = false, message = messageFor(e))
+            publishIfCurrent(accepted, busy = false, message = messageFor(e))
             false
         }
     }
 
     suspend fun recover(email: String): Boolean {
         if (!syntheticIdentity(email)) return false
-        begin()
+        val (attempt, accepted) = begin()
         publish(busy = true)
         return try {
             auth.recover(email)
-            publish(busy = false)
-            true
+            publishIfCurrent(accepted, busy = false)
+            accepted()
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            publish(busy = false, message = messageFor(e))
+            publishIfCurrent(accepted, busy = false, message = messageFor(e))
             false
         }
     }
@@ -241,38 +272,35 @@ internal class SyncLabAccount @Inject constructor(
     /** Consumes a recovery code, sets the new password and ends the recovery session; fresh sign-in follows. */
     suspend fun reset(email: String, code: String, newPassword: String): Boolean {
         if (!syntheticIdentity(email)) return false
-        begin()
+        val (attempt, accepted) = begin()
         publish(busy = true)
         return try {
             val recovery = auth.verifyOtp(email, code, "recovery")
             auth.updatePassword(recovery.accessToken, newPassword)
             runCatching { auth.signOut(recovery.accessToken) }
-            publish(busy = false)
-            true
+            publishIfCurrent(accepted, busy = false)
+            accepted()
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            publish(busy = false, message = messageFor(e))
+            publishIfCurrent(accepted, busy = false, message = messageFor(e))
             false
         }
     }
 
     /**
      * Clears local credentials and selection immediately — without waiting for any in-flight
-     * refresh — and attempts provider logout best-effort. A storage failure cannot keep local
-     * authentication alive; the durable owner/session are dropped first.
+     * refresh — and attempts provider logout best-effort. A storage failure in any one local
+     * component cannot keep local authentication alive or skip another component's cleanup, and
+     * a superseded logout never erases a newer account's credentials or UI.
      */
     suspend fun signOut() {
-        begin()
+        val (attempt, accepted) = begin()
         publish(busy = true)
         val saved = try { vault.read() } catch (e: Exception) { null }
-        repository.logout()
-        try {
-            vault.write(null)
-        } catch (e: Exception) {
-            // Storage failure must not resurrect local auth; the provider session is ended below.
-        }
-        publish(email = null, busy = false)
+        repository.logout(accepted)
+        clearVaultIfCurrent(accepted)
+        publishIfCurrent(accepted, email = null, busy = false)
         val access = saved?.session?.accessToken
         if (access != null) runCatching { auth.signOut(access) }
     }
@@ -280,22 +308,27 @@ internal class SyncLabAccount @Inject constructor(
     // --- Disabled Google preparation: no live provider, fails closed until credentials are approved. ---
 
     private var pendingGoogle: PendingGoogle? = null
+    private var googleAttempt = 0L
     private data class PendingGoogle(val verifier: String, val state: String, val generation: Long, val createdAtMs: Long)
 
     fun beginGoogle(): String {
         val verifier = CodeVerifierUtil.generateRandomCodeVerifier()
         val state = randomAlphanumeric(16)
         val url = auth.googleUrl(CodeVerifierUtil.deriveCodeVerifierChallenge(verifier), "$GOOGLE_REDIRECT/$state")
+        synchronized(lock) { googleAttempt++ }
         pendingGoogle = PendingGoogle(verifier, state, currentGeneration(), now())
         return url
     }
     fun googleState(): String? = pendingGoogle?.state
-    fun cancelGoogle() { pendingGoogle = null }
+    fun cancelGoogle() {
+        synchronized(lock) { googleAttempt++ }
+        pendingGoogle = null
+    }
 
     /**
      * Binds a native callback to its exact pending intent: any logout/account change since
      * begin(), a wrong state path, a replay, expiry, or a clock rollback fails closed before
-     * any code exchange.
+     * any code exchange; cancelling or replacing the intent mid-exchange discards the result.
      */
     suspend fun completeGoogle(state: String, code: String): Boolean {
         val pending = pendingGoogle
@@ -305,34 +338,34 @@ internal class SyncLabAccount @Inject constructor(
             pending.state == state &&
             code.isNotBlank() && code.length <= 4096 &&
             now() - pending.createdAtMs in 0..GOOGLE_INTENT_MS
-        if (!fresh) { publish(busy = false); return false }
+        if (!fresh) return false
         val (attempt, accepted) = begin()
+        val myAttempt = synchronized(lock) { googleAttempt }
         publish(busy = true)
         return try {
             val session = auth.exchangeCode(code, pending.verifier)
+            synchronized(lock) { check(googleAttempt == myAttempt) { "Google sign-in cancelled" } }
             repository.login(session.accessToken, accepted)
-            check(accepted()) { "Sign-in cancelled" }
-            rotation.withLock { check(accepted()); vault.write(SavedAuth(session, expiry(session), now())) }
-            publish(email = session.user.email, busy = false)
+            install(accepted, session)
             true
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            publish(busy = false, message = messageFor(e))
+            publishIfCurrent(accepted, busy = false, message = messageFor(e))
             false
         }
     }
 
-    /** Clears unusable persisted material, but only when no newer account owns the vault now. */
+    /** Clears persisted material only for conclusively invalid auth, and only while no newer account owns the vault. */
     private fun clearIfCurrent(accepted: () -> Boolean, e: Exception) {
-        val invalid = (e is AuthFailure && (e.status == 400 || e.status == 401)) ||
-            e is ApiFailure || e.message == "Refreshed account changed" || e.message == "Provider subject changed"
-        if (invalid && accepted()) runCatching { vault.write(null) }
+        if (conclusivelyInvalid(e) && accepted()) runCatching { vault.write(null) }
     }
 
-    /** Reflects a dead/changed session in the owner-scoped UI state without disturbing a newer account. */
-    private suspend fun republishRepository(e: Exception) {
-        try { repository.failed(e) } catch (ignored: Exception) { }
+    private fun conclusivelyInvalid(e: Exception): Boolean = when {
+        e is AuthFailure && (e.status == 400 || e.status == 401) -> true
+        e is ApiFailure && e.status == 401 -> true
+        e.message == "Refreshed account changed" || e.message == "Provider subject changed" -> true
+        else -> false
     }
 
     private fun checkSubject(previous: AuthSession, rotated: AuthSession) {
@@ -346,6 +379,11 @@ internal class SyncLabAccount @Inject constructor(
 
     private fun publish(email: String? = mutable.value.email, busy: Boolean = mutable.value.busy, message: Int? = null) {
         mutable.value = AccountUi(email = email, busy = busy, message = message)
+    }
+
+    /** Reflects a dead/changed session in the owner-scoped UI state without disturbing a newer account. */
+    private suspend fun republishRepository(e: Exception) {
+        try { repository.failed(e) } catch (ignored: Exception) { }
     }
 
     private fun messageFor(e: Exception): Int = when {

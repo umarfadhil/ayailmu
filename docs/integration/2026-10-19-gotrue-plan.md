@@ -49,7 +49,13 @@ local secret/init/launch and fixture scripts.
 
 ### Task2: Native account/session boundary
 
-Status 2026-10-19: implemented by the Kimi writer; verified in this checkpoint.
+Status 2026-10-19: implemented by the Kimi writer; two review rounds closed; verified in
+this checkpoint (see `2026-10-19-gotrue-verification.md`). Round 2 hardened local
+commit/activation coordination: generation-atomic credential installs/clears and UI
+publishes, a local ordering boundary for native activation/cleanup (never across
+network), independent fail-closed cleanup, narrow conclusive-invalid classification
+(5xx/offline preserve sessions), origin-fenced auth-flow results, and in-flight Google
+exchange invalidation.
 
 Files: new `android/core/sync/.../GoTrueAuth.kt`, auth tests; sync contracts/engine;
 Android lab auth repository/vault/callback; lab resources/manifest/build dependencies.

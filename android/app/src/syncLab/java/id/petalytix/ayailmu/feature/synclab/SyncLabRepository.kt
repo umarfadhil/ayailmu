@@ -53,6 +53,8 @@ internal class SyncLabRepository @Inject constructor(
     private var observed: Job? = null
     private var remoteLearners: Pair<String, List<Learner>>? = null
     private val publishLock = Mutex()
+    /** Local activation/cleanup ordering boundary: held only across Room/DataStore/file work, never across network. */
+    private val localLock = Mutex()
     private val mutable = MutableStateFlow(SyncLabState())
     val state = mutable.asStateFlow()
     private val proof by lazy {
@@ -61,7 +63,7 @@ internal class SyncLabRepository @Inject constructor(
     init {
         scope.launch {
             try {
-                engine.binding()?.let { ensureNative(it.learner); active.setActive(it.learner.clientLearnerId); observe(it.learner) }
+                engine.binding()?.let { activateLocally(it.learner, observe = true) }
                 publish()
             }
             catch (e: Exception) { if (e is CancellationException) throw e; mutable.value = SyncLabState(notice = R.string.sync_lab_blocked) }
@@ -89,11 +91,21 @@ internal class SyncLabRepository @Inject constructor(
         if (!ownerCurrent(owner, accepted)) return
         val binding = engine.binding() ?: run { publish(); return }
         if (!ownerCurrent(owner, accepted) || engine.binding()?.learner?.id != binding.learner.id) return
-        ensureNative(binding.learner)
-        if (!ownerCurrent(owner, accepted) || engine.binding()?.learner?.id != binding.learner.id) return
-        active.setActive(binding.learner.clientLearnerId)
-        observe(binding.learner)
+        activateLocally(binding.learner, observe = true)
         publish()
+    }
+    /**
+     * Activates a learner locally (Room profile, active-profile store, payload observer) under the
+     * local ordering boundary. Re-verifies the durable owner/binding after acquiring the boundary so a
+     * logout or account change that completed during an earlier suspension wins; never touches network.
+     */
+    private suspend fun activateLocally(learner: Learner, observe: Boolean): Boolean = localLock.withLock {
+        if (engine.owner() == null || engine.binding()?.learner?.id != learner.id) return@withLock false
+        ensureNative(learner)
+        if (engine.owner() == null || engine.binding()?.learner?.id != learner.id) return@withLock false
+        runCatching { active.setActive(learner.clientLearnerId) }
+        if (observe) this.observe(learner)
+        true
     }
     suspend fun refresh() = withContext(Dispatchers.IO) {
         val owner = requireNotNull(engine.owner())
@@ -112,10 +124,7 @@ internal class SyncLabRepository @Inject constructor(
         val owner = engine.owner()
         if (engine.authenticated()) engine.select(learner, proof) else engine.selectKnown(learner.id)
         if (!selectionCurrent(owner, learner.id, accepted)) { publish(); return@withContext }
-        ensureNative(learner)
-        if (!selectionCurrent(owner, learner.id, accepted)) { publish(); return@withContext }
-        active.setActive(learner.clientLearnerId)
-        observe(learner)
+        activateLocally(learner, observe = true)
         publish(R.string.sync_lab_saved)
     }
     suspend fun enable() = withContext(Dispatchers.IO) {
@@ -134,10 +143,30 @@ internal class SyncLabRepository @Inject constructor(
         val result = if (withdrawal == SyncResult.SYNCED) engine.sync() else withdrawal
         publish(notice(result))
     }
-    suspend fun logout() = withContext(Dispatchers.IO) {
-        observed?.cancel(); observed = null
-        engine.logout(); remoteLearners = null; active.setActive(null)
-        publish(R.string.sync_lab_signed_out)
+    /**
+     * Local sign-out under the ordering boundary: cancels observation, drops the durable
+     * owner/session and clears the active profile. Each cleanup step is independent — a failing
+     * journal or active-profile store cannot block another component's cleanup. Runs only while
+     * [accepted] holds, so a superseded logout never erases a newer account. Provider logout
+     * stays outside (network).
+     */
+    suspend fun logout(accepted: () -> Boolean = { true }): Boolean = withContext(Dispatchers.IO) {
+        var committed = false
+        localLock.withLock {
+            if (!accepted()) return@withLock
+            committed = true
+            observed?.cancel(); observed = null
+            runCatching { engine.logout() }
+            runCatching { active.setActive(null) }
+            remoteLearners = null
+        }
+        if (committed) runCatching { publish(R.string.sync_lab_signed_out) }
+        committed
+    }
+    /** Drops an in-memory session (e.g. after a failed credential installation) and republishes. */
+    suspend fun expireSession() = withContext(Dispatchers.IO) {
+        engine.expireSession()
+        publish()
     }
     suspend fun failed(error: Exception? = null) = withContext(Dispatchers.IO) {
         if (error is CancellationException) throw error
@@ -145,11 +174,8 @@ internal class SyncLabRepository @Inject constructor(
         publish(if (!engine.authenticated() && engine.owner() != null) R.string.sync_lab_login_required else R.string.sync_lab_failed)
     }
     suspend fun prepareLearning(): Boolean = withContext(Dispatchers.IO) {
-        val owner = engine.owner()
         val learner = requireNotNull(engine.binding()).learner
-        ensureNative(learner)
-        if (!selectionCurrent(owner, learner.id) { true }) return@withContext false
-        active.setActive(learner.clientLearnerId)
+        if (!activateLocally(learner, observe = false)) return@withContext false
         db.profiles().get(learner.clientLearnerId)?.consentVersion != id.petalytix.ayailmu.feature.consent.Consent.VERSION
     }
     private suspend fun ensureNative(learner: Learner) {

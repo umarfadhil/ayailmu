@@ -35,6 +35,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
 import kotlinx.serialization.Serializable
 
 @Serializable private data object SyncLabHub
@@ -56,11 +57,17 @@ internal class SyncLabViewModel @Inject constructor(
 ) : ViewModel() {
     val state = combine(repository.state, account.state, ::SyncLabScreen)
         .stateIn(viewModelScope, SharingStarted.Eagerly, SyncLabScreen(SyncLabState(), AccountUi()))
+    /** Excludes overlapping repository mutations; auth and logout deliberately stay outside so logout can cancel a refresh. */
+    private val actionLock = Mutex()
     init { viewModelScope.launch { account.restore() } }
     private fun action(block: suspend () -> Unit) {
         viewModelScope.launch {
             try { block() } catch (e: Exception) { repository.failed(e) }
         }
+    }
+    private fun exclusive(block: suspend () -> Unit) = action {
+        if (!actionLock.tryLock()) return@action
+        try { block() } finally { actionLock.unlock() }
     }
     fun signIn(email: String, password: String, done: () -> Unit) = action { if (account.signIn(email, password)) done() }
     fun signUp(email: String, password: String, needsConfirm: (String) -> Unit) = action {
@@ -74,17 +81,17 @@ internal class SyncLabViewModel @Inject constructor(
     }
     fun signOut() = action { account.signOut() }
     /** Attempts silent session recovery first, then reloads the account's learners. */
-    fun refresh() = action {
+    fun refresh() = exclusive {
         if (!repository.state.value.authenticated) account.refreshSession()
         repository.refresh()
     }
-    fun restoreSession() = action { account.refreshSession() }
-    fun create() = action { repository.create() }
-    fun select(learner: Learner) = action { repository.select(learner) }
-    fun enable() = action { repository.enable() }
-    fun disable() = action { repository.disable() }
-    fun sync() = action { repository.sync() }
-    fun learn(ready: (Boolean) -> Unit) = action { ready(repository.prepareLearning()) }
+    fun restoreSession() = exclusive { account.refreshSession() }
+    fun create() = exclusive { repository.create() }
+    fun select(learner: Learner) = exclusive { repository.select(learner) }
+    fun enable() = exclusive { repository.enable() }
+    fun disable() = exclusive { repository.disable() }
+    fun sync() = exclusive { repository.sync() }
+    fun learn(ready: (Boolean) -> Unit) = exclusive { ready(repository.prepareLearning()) }
 }
 
 /** This graph is compiled into syncLab only; no ordinary profile picker, purchases or real-data entry. */
@@ -305,6 +312,7 @@ private fun ResetScreen(state: SyncLabScreen, vm: SyncLabViewModel, email: Strin
 @Composable
 private fun SettingsScreen(state: SyncLabScreen, vm: SyncLabViewModel, onBack: () -> Unit) {
     val lab = state.lab
+    val busy = state.busy
     Column(Modifier.fillMaxSize().safeDrawingPadding().verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(stringResource(R.string.sync_lab_settings), style = MaterialTheme.typography.headlineMedium)
         Text(stringResource(R.string.sync_lab_hub_signed_in, state.account.email ?: lab.owner.orEmpty()))
@@ -314,8 +322,8 @@ private fun SettingsScreen(state: SyncLabScreen, vm: SyncLabViewModel, onBack: (
         if (lab.withdrawalPending) Text(stringResource(R.string.sync_lab_withdraw_pending))
         Text(stringResource(R.string.sync_lab_pending, lab.pending))
         Text(stringResource(R.string.sync_lab_local_only))
-        AyaSecondaryButton(text = stringResource(R.string.sync_lab_disable), onClick = vm::disable, enabled = lab.enabled && !lab.busy)
-        AyaSecondaryButton(text = stringResource(R.string.sync_lab_logout), onClick = vm::signOut, enabled = !lab.busy)
-        AyaSecondaryButton(text = stringResource(R.string.sync_lab_back), onClick = onBack, enabled = !lab.busy)
+        AyaSecondaryButton(text = stringResource(R.string.sync_lab_disable), onClick = vm::disable, enabled = lab.enabled && !busy)
+        AyaSecondaryButton(text = stringResource(R.string.sync_lab_logout), onClick = vm::signOut, enabled = !busy)
+        AyaSecondaryButton(text = stringResource(R.string.sync_lab_back), onClick = onBack, enabled = !busy)
     }
 }
