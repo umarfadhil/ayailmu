@@ -36,6 +36,11 @@ type Options struct {
 	// its SDK's own clock. Tests use it to stand at a chosen instant; no time window, token or OS clock
 	// changes. Nil means time.Now.
 	Now func() time.Time
+	// AuthHTTPClient, when set, is the HTTP client the Supabase verifier of a production (staging) service sends every
+	// request to Auth with, in place of its own dedicated client: tests give one that trusts a test certificate authority
+	// and reaches a stand-in for the staging network. It must verify TLS certificates (authn refuses one that skips
+	// verification). Nil in production. Production mode is not implemented yet, so nothing reads it.
+	AuthHTTPClient *http.Client
 }
 
 // Service is an assembled backend that has not bound a socket yet.
