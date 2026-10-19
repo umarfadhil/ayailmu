@@ -24,6 +24,7 @@ android {
         vectorDrawables { useSupportLibrary = true }
         // Optional static config override (CR-CFG-2). Empty = disabled. Never required.
         buildConfigField("String", "REMOTE_CONFIG_URL", "\"\"")
+        buildConfigField("boolean", "SYNC_LAB_ENABLED", "false")
         // Play licence key (Play Console > Monetisation setup) for the local purchase signature check (CR-BIL-4).
         // Set `ayailmu.playLicenseKey=...` in ~/.gradle/gradle.properties on the build machine; never commit it.
         // Empty (the default) skips the check, which is fine for demo builds and before the Play app exists.
@@ -39,6 +40,14 @@ android {
             applicationIdSuffix = ".demo"
             versionNameSuffix = "-demo"
             buildConfigField("boolean", "DEVELOPER_DEMO", "true")
+        }
+        create("syncLab") {
+            dimension = "mode"
+            applicationIdSuffix = ".synclab"
+            versionNameSuffix = "-synclab"
+            buildConfigField("boolean", "DEVELOPER_DEMO", "true")
+            buildConfigField("boolean", "SYNC_LAB_ENABLED", "true")
+            manifestPlaceholders["appAuthRedirectScheme"] = "id.petalytix.ayailmu.synclab"
         }
         create("prod") {
             dimension = "mode"
@@ -88,6 +97,8 @@ android {
 
     // App unit tests run the real session loop on the bundled packs (SessionViewModelTest, StepMapperTest).
     sourceSets {
+        getByName("demo").java.srcDir("src/nonLab/java")
+        getByName("prod").java.srcDir("src/nonLab/java")
         getByName("test") {
             resources.srcDir(rootProject.file("content/src/main/assets"))
         }
@@ -103,6 +114,10 @@ roborazzi {
 // The Compose test activity (ui-test-manifest) is debug-only, so screenshot tests run in debug variants only.
 tasks.withType<Test>().configureEach {
     if (name.contains("Release")) exclude("**/Screenshot*")
+    if (name.contains("SyncLab")) {
+        systemProperty("robolectric.dependency.repo.url", "https://repo.maven.apache.org/maven2")
+        testLogging { events("passed", "failed", "skipped"); showStandardStreams = true }
+    }
 }
 
 kotlin {
@@ -112,6 +127,10 @@ kotlin {
 }
 
 dependencies {
+    "syncLabImplementation"(project(":core:sync"))
+    "syncLabImplementation"(libs.appauth)
+    "syncLabImplementation"(libs.room.runtime)
+    "syncLabImplementation"(libs.room.ktx)
     implementation(project(":core:model"))
     implementation(project(":core:engine"))
     implementation(project(":core:content"))
@@ -137,6 +156,7 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
 
     testImplementation(libs.junit)
+    "testSyncLabImplementation"(libs.kotlin.test.junit)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
     testImplementation(libs.robolectric)

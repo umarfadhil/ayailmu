@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="sync_lab_title">Synthetic sync lab</string>
+    <string name="sync_lab_warning">Fabricated accounts and learners only. Do not enter real adult or child data. This is not production consent or a release.</string>
+    <string name="sync_lab_ack">I am using a fabricated adult identity for testing.</string>
+    <string name="sync_lab_login">Sign in through browser</string>
+    <string name="sync_lab_logout">Sign out of this account</string>
+    <string name="sync_lab_new">Create a fabricated adult learner</string>
+    <string name="sync_lab_refresh">Load this account’s learners</string>
+    <string name="sync_lab_choose">Select learner %1$s</string>
+    <string name="sync_lab_opt_in">Enable synthetic sync</string>
+    <string name="sync_lab_opt_in_detail">Send new DEMO answers after this choice and previously opted-in pending answers. Earlier answers are not uploaded automatically. Synced history stays separate from local progress.</string>
+    <string name="sync_lab_disable">Turn off and withdraw sync consent</string>
+    <string name="sync_lab_sync">Sync now</string>
+    <string name="sync_lab_learn">Learn the Arabic DEMO offline</string>
+    <string name="sync_lab_back">Back to synthetic lab</string>
+    <string name="sync_lab_pending">Pending answers: %1$d</string>
+    <string name="sync_lab_remote">Synced history: %1$d answers; %2$d skills learned under native rules.</string>
+    <string name="sync_lab_local_only">Offline learning still works. Nothing uploads without an active sync choice.</string>
+    <string name="sync_lab_signed_out">Sign in to link a fabricated account. Tokens are not saved on the device.</string>
+    <string name="sync_lab_login_required">Your sign-in session expired. Local learning remains available; sign in again to sync.</string>
+    <string name="sync_lab_offline">Network unavailable. Your queue is saved for retry.</string>
+    <string name="sync_lab_disabled">Sync is off. No new answers will upload.</string>
+    <string name="sync_lab_synced">Sync finished.</string>
+    <string name="sync_lab_blocked">Sync stopped because data, versions or a response did not match. Your queue was kept.</string>
+    <string name="sync_lab_changed">Account changed; the previous session’s response was ignored.</string>
+    <string name="sync_lab_failed">The action did not finish. Local data is unchanged.</string>
+    <string name="sync_lab_saved">Choice saved.</string>
+    <string name="sync_lab_enabled">Sync is enabled for the selected learner.</string>
+    <string name="sync_lab_withdraw_pending">Withdrawal waits for a connection and fresh sign-in. Uploads have already stopped on this device.</string>
+    <string name="app_name">AyaIlmu Synthetic Lab</string>
+    <string name="consent_intro">Fabricated simulation of the Arabic trial gate. This is not consent from a real person. The fabricated profile uses a fixed test birth year.</string>
+    <string name="consent_where_body">DEMO answers stay on the device. If synthetic sync is separately enabled in the lab, new DEMO answers may be sent to the local test backend.</string>
+    <string name="consent_why_body">Only to verify device/backend behavior using fabricated data. Production policy and real-person consent remain unresolved.</string>
+    <string name="consent_keep_body">Production retention, export and deletion remain release blockers. Do not use this lab for real people.</string>
+</resources>

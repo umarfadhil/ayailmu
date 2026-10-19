@@ -74,6 +74,13 @@ interface AnswerDao {
     @Query("SELECT * FROM answer_events ORDER BY profile_id, local_date, timestamp")
     suspend fun all(): List<AnswerEventEntity>
 
+    /** Exact original payload strings, for the explicitly opted-in synthetic integration only. */
+    @Query("SELECT payload FROM answer_events WHERE profile_id = :profileId ORDER BY timestamp, answer_id")
+    fun observePayloads(profileId: String): Flow<List<String>>
+
+    @Query("SELECT payload FROM answer_events WHERE profile_id = :profileId ORDER BY timestamp, answer_id")
+    suspend fun payloads(profileId: String): List<String>
+
     @Query("SELECT COUNT(*) FROM answer_events")
     fun observeCount(): Flow<Int>
 
