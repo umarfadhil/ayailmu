@@ -1,11 +1,11 @@
+//go:build firebase_emulator
+
 package authn_test
 
 import (
 	"bytes"
 	"context"
-	"crypto/rand"
 	"encoding/base64"
-	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"io"
@@ -37,15 +37,6 @@ func emulatorHost(t *testing.T) string {
 		t.Fatal("FIREBASE_AUTH_EMULATOR_HOST must be a literal loopback host:port")
 	}
 	return h
-}
-
-func randomHex(t *testing.T, n int) string {
-	t.Helper()
-	b := make([]byte, n)
-	if _, err := rand.Read(b); err != nil {
-		t.Fatalf("random: %v", err)
-	}
-	return hex.EncodeToString(b)
 }
 
 type emuUser struct {
@@ -277,5 +268,79 @@ func TestNewEmulatorVerifierRefusesUnsafeSetups(t *testing.T) {
 				t.Fatalf("NewEmulatorVerifier = %v, %v; want ErrUnsafeConfig", v, err)
 			}
 		})
+	}
+}
+
+// VerifySession reports the verified sign-in time, the token's auth_time, which token refreshes keep: never the
+// token's issue time. Without auth_time the sign-in time is unknown.
+func TestVerifySessionReportsTheVerifiedSignInTime(t *testing.T) {
+	host := emulatorHost(t)
+	v := newVerifier(t, host)
+	u := signUp(t, host)
+	ctx := context.Background()
+
+	s, err := v.VerifySession(ctx, u.token)
+	if err != nil {
+		t.Fatalf("VerifySession(emulator-issued password token): %v", err)
+	}
+	id, err := v.Verify(ctx, u.token)
+	if err != nil || s.Identity != id {
+		t.Fatalf("session identity = %+v, want Verify's %+v (%v)", s.Identity, id, err)
+	}
+	if now := time.Now(); s.AuthTime.IsZero() || s.AuthTime.Before(now.Add(-5*time.Minute)) || s.AuthTime.After(now.Add(time.Minute)) {
+		t.Fatalf("sign-in time %v of a fresh sign-in is not about now", s.AuthTime)
+	}
+
+	signedIn := time.Now().Add(-2 * time.Hour).Unix()
+	old, err := v.VerifySession(ctx, mutate(t, u.token, func(c map[string]any) { c["auth_time"] = float64(signedIn) }))
+	if err != nil {
+		t.Fatalf("VerifySession(sign-in two hours ago, fresh iat; mutated unsigned): %v", err)
+	}
+	if !old.AuthTime.Equal(time.Unix(signedIn, 0)) || old.Identity != id {
+		t.Fatalf("session = %+v, want the token's auth_time %v, not its issue time", old, time.Unix(signedIn, 0))
+	}
+
+	// The SDK may refuse a token without auth_time; if it accepts one, the sign-in time stays unknown.
+	missing, err := v.VerifySession(ctx, mutate(t, u.token, func(c map[string]any) { delete(c, "auth_time") }))
+	switch {
+	case err != nil && !errors.Is(err, authn.ErrUnauthenticated):
+		t.Fatalf("VerifySession(no auth_time) = %v, want ErrUnauthenticated or success", err)
+	case err == nil && !missing.AuthTime.IsZero():
+		t.Fatalf("sign-in time %v without an auth_time claim, want zero", missing.AuthTime)
+	}
+}
+
+// DeleteIdentity removes exactly the identity's emulator account: its tokens stop verifying, a repeat counts as
+// deleted, and another account is untouched. An identity of another issuer is refused, deleting nothing.
+func TestDeleteIdentityRemovesOnlyThatEmulatorAccount(t *testing.T) {
+	host := emulatorHost(t)
+	v := newVerifier(t, host)
+	u, other := signUp(t, host), signUp(t, host)
+	ctx := context.Background()
+	id, err := v.Verify(ctx, u.token)
+	if err != nil {
+		t.Fatalf("Verify: %v", err)
+	}
+
+	foreign := id
+	foreign.Issuer = "https://securetoken.google.com/demo-other"
+	if err := v.DeleteIdentity(ctx, foreign); !errors.Is(err, authn.ErrIdentityNotDeleted) || strings.Contains(err.Error(), u.uid) {
+		t.Fatalf("DeleteIdentity(another issuer) = %v, want ErrIdentityNotDeleted without the subject", err)
+	}
+	if _, err := v.Verify(ctx, u.token); err != nil {
+		t.Fatalf("a refused deletion removed the account: %v", err)
+	}
+
+	if err := v.DeleteIdentity(ctx, id); err != nil {
+		t.Fatalf("DeleteIdentity: %v", err)
+	}
+	if _, err := v.Verify(ctx, u.token); !errors.Is(err, authn.ErrUnauthenticated) {
+		t.Fatalf("Verify after the deletion = %v, want ErrUnauthenticated", err)
+	}
+	if err := v.DeleteIdentity(ctx, id); err != nil {
+		t.Fatalf("repeated DeleteIdentity = %v, want nil: an account that is gone counts as deleted", err)
+	}
+	if _, err := v.Verify(ctx, other.token); err != nil {
+		t.Fatalf("the other account no longer verifies: %v", err)
 	}
 }

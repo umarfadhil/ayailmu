@@ -96,6 +96,9 @@ func (h *handler) progress(w http.ResponseWriter, r *http.Request, c *call) {
 	case errors.Is(err, store.ErrNotFound):
 		writeNotFound(w)
 		return
+	case errors.Is(err, store.ErrAccountDeleted):
+		writeAccountDeleted(w)
+		return
 	case err != nil:
 		h.internal(w, "read family events", err)
 		return

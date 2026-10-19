@@ -1,0 +1,8 @@
+# Build context of deploy/api/Dockerfile (backend/): only what the two default-build binaries need. No test, doc,
+# editor, VCS or runtime file, so no secret can reach the build or an image layer.
+*
+!go.mod
+!go.sum
+!cmd
+!internal
+**/*_test.go

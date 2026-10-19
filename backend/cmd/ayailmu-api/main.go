@@ -1,12 +1,20 @@
-// Command ayailmu-api runs the local AyaIlmu backend in emulator mode: a loopback listener, a demo
-// Firebase project through the local Auth emulator, and a loopback or Unix-socket PostgreSQL. Every
-// guard runs before the socket is bound, and production mode is refused. Settings come from the
-// environment; see backend/docs/Backend_Local_Contract.md §12.
+// Command ayailmu-api runs the local AyaIlmu backend: a loopback listener and a loopback or Unix-socket
+// PostgreSQL, in the local synthetic Supabase mode (one configured loopback Supabase Auth, whose key set
+// it fetches before it serves) or, only when built with the firebase_emulator tag, in the legacy emulator
+// mode (a demo Firebase project through the local Auth emulator). A default build refuses emulator mode
+// (authn.ErrEmulatorDisabled). In a container it also runs the deploy modes, deploy-smoke (deny-all) and
+// local-compose (the synthetic Compose stack's own Auth), which only verify their schema: the migration
+// job (cmd/ayailmu-migrate) migrates it. Every guard runs before the socket is bound, and production
+// mode is refused. Settings come from the environment; see backend/docs/Backend_Local_Contract.md §12.
+//
+// `ayailmu-api probe <url>` is the container healthcheck instead: one bounded GET of a literal-loopback
+// http URL (probe.go).
 package main
 
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log/slog"
 	"net"
 	"os"
@@ -19,14 +27,26 @@ import (
 	"ayailmu.local/backend/internal/store"
 )
 
-// guardErrors are refusals whose messages name a setting and never quote its value.
+// guardErrors are refusals whose messages name a setting or give a fixed reason, and never quote a
+// value, a path, a credential or an answer of Auth.
 var guardErrors = []error{
 	config.ErrMissing, config.ErrInvalidMode, config.ErrProductionRefused, config.ErrNotLoopback,
 	config.ErrNotDemoProject, config.ErrDatabaseNotLocal, config.ErrInvalidSchema, config.ErrRealCredentials,
-	authn.ErrUnsafeConfig, store.ErrDatabaseNotLocal, store.ErrInvalidDatabaseURL, store.ErrInvalidSchema,
+	config.ErrInvalidExportLimit, config.ErrNotLocalAuth, config.ErrInvalidAuthSetting, config.ErrUnsafeSecretFile,
+	config.ErrInvalidHostList, config.ErrInvalidOrigins, config.ErrDatabaseHostNotAllowed, config.ErrAuthHostNotAllowed,
+	config.ErrEmulatorEnvironment, config.ErrSecretInEnvironment, config.ErrNotDeployListen, config.ErrSettingNotUsed,
+	authn.ErrUnsafeConfig, authn.ErrKeySetUnavailable, authn.ErrEmulatorDisabled, store.ErrDatabaseNotLocal,
+	store.ErrInvalidDatabaseURL, store.ErrInvalidSchema, store.ErrDatabaseHostNotAllowed, store.ErrSchemaNotCurrent,
 }
 
 func main() {
+	if len(os.Args) > 1 {
+		if os.Args[1] == "probe" {
+			os.Exit(probe(os.Args[2:], os.Stderr))
+		}
+		fmt.Fprintln(os.Stderr, "usage: ayailmu-api, or ayailmu-api probe <url>")
+		os.Exit(probeRefused)
+	}
 	os.Exit(run())
 }
 
@@ -42,7 +62,7 @@ func run() int {
 		return 1
 	}
 	defer svc.Close()
-	logger.Info("ayailmu-api: serving", "listen", svc.ListenAddr(), "mode", config.ModeEmulator)
+	logger.Info("ayailmu-api: serving", "listen", svc.ListenAddr(), "mode", svc.Mode())
 	if err := svc.ListenAndServe(ctx); err != nil {
 		logger.Error("ayailmu-api: stopped", "reason", reason(err))
 		return 1

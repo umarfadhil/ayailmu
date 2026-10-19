@@ -84,10 +84,13 @@ func writeRevisionConflict(w http.ResponseWriter, cur store.Profile) {
 }
 
 // ownedProfile answers 404 unless the caller owns the {pid} profile, and reports whether it does. A
-// malformed ID, a missing profile and another account's profile get the same response.
+// malformed ID, a missing profile and another account's profile get the same response; a profile an
+// erasure removed after the request was authenticated gets 410.
 func (h *handler) ownedProfile(w http.ResponseWriter, r *http.Request, c *call) bool {
 	owned, err := h.store.OwnsProfile(r.Context(), c.accountID, c.profileID)
 	switch {
+	case errors.Is(err, store.ErrAccountDeleted):
+		writeAccountDeleted(w)
 	case err != nil:
 		h.internal(w, "resolve profile", err)
 	case !owned:
@@ -101,6 +104,8 @@ func (h *handler) getProfile(w http.ResponseWriter, r *http.Request, c *call) {
 	switch {
 	case errors.Is(err, store.ErrNotFound):
 		writeNotFound(w)
+	case errors.Is(err, store.ErrAccountDeleted):
+		writeAccountDeleted(w)
 	case err != nil:
 		h.internal(w, "read profile", err)
 	default:
@@ -115,6 +120,10 @@ func (h *handler) patchProfile(w http.ResponseWriter, r *http.Request, c *call) 
 	cur, err := h.store.Profile(r.Context(), c.accountID, c.profileID)
 	if errors.Is(err, store.ErrNotFound) {
 		writeNotFound(w)
+		return
+	}
+	if errors.Is(err, store.ErrAccountDeleted) {
+		writeAccountDeleted(w)
 		return
 	}
 	if err != nil {
@@ -146,6 +155,8 @@ func (h *handler) patchProfile(w http.ResponseWriter, r *http.Request, c *call) 
 		writeRevisionConflict(w, updated)
 	case errors.Is(err, store.ErrNotFound):
 		writeNotFound(w)
+	case errors.Is(err, store.ErrAccountDeleted):
+		writeAccountDeleted(w)
 	case err != nil:
 		h.internal(w, "update profile", err)
 	default:

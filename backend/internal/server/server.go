@@ -1,6 +1,9 @@
-// Package server assembles the local backend: configuration guards, the emulator verifier, the guarded
-// and migrated store, and the HTTP handler. Every guard runs before any socket is bound; production
-// mode is refused by package config.
+// Package server assembles the local backend: configuration guards, the configured mode's verifier (the
+// Supabase verifier with its Auth's key set fetched at startup, deploy-smoke's deny-all verifier or,
+// only in a build with the firebase_emulator tag, the legacy emulator verifier), the guarded store,
+// migrated in the loopback modes and only verified in the deploy modes, and the HTTP handler. A default
+// build refuses emulator mode with authn.ErrEmulatorDisabled before it opens the store. Every guard runs
+// before any socket is bound; production mode is refused by package config.
 package server
 
 import (
@@ -19,10 +22,20 @@ import (
 
 // Options are test seams. The zero value is the production configuration.
 type Options struct {
-	// BeforeCommit, when set, runs inside each event-ingest and import transaction after its rows are
-	// written and before COMMIT, while the profile row is still locked. Concurrency tests use it as a
-	// deterministic barrier; it cannot change what is written or bypass any check.
+	// BeforeCommit, when set, runs inside each event-ingest, import and account-erasure transaction
+	// after its rows are written and before COMMIT, while its row locks are still held. Concurrency
+	// tests use it as a deterministic barrier; it cannot change what is written or bypass any check.
 	BeforeCommit func(ctx context.Context)
+	// BeforeIdentityDeletion, when set, runs before each attempt to delete the caller's identity-provider
+	// account during an account deletion, after the server data was erased. A non-nil error stands in for
+	// a provider failure: the provider is not called and the attempt counts as failed. Tests use it to
+	// inject outages; nil in production.
+	BeforeIdentityDeletion func(ctx context.Context) error
+	// Now, when set, is the service's clock for the recent sign-in the account controls need and, in
+	// ModeLocalSupabase, for verifying tokens and aging the fetched key set; the emulator verifier keeps
+	// its SDK's own clock. Tests use it to stand at a chosen instant; no time window, token or OS clock
+	// changes. Nil means time.Now.
+	Now func() time.Time
 }
 
 // Service is an assembled backend that has not bound a socket yet.
@@ -33,34 +46,121 @@ type Service struct {
 }
 
 // New loads the configuration through lookup and applies, in order, the configuration guards, the
-// verifier guards and the store guards, then migrates the schema. Nothing is opened before the
-// configuration and verifier guards pass, and no socket is bound.
+// verifier guards and the store guards, then migrates the schema in a loopback mode, or only verifies it
+// in a deploy mode (store.ErrSchemaNotCurrent unless it is exactly this binary's: the migration job
+// changes it, never the service). In ModeLocalSupabase and ModeLocalCompose the verifier guards include
+// fetching Auth's key set: without a usable one the service refuses to start. Nothing is opened before
+// the configuration and verifier guards pass, and no socket is bound.
 func New(ctx context.Context, lookup func(string) (string, bool), opts Options) (*Service, error) {
 	cfg, err := config.Load(lookup)
 	if err != nil {
 		return nil, err
 	}
-	verifier, err := authn.NewEmulatorVerifier(ctx, authn.EmulatorConfig{ProjectID: cfg.ProjectID, EmulatorHost: cfg.EmulatorHost})
+	verifier, err := newVerifier(ctx, cfg, opts.Now)
 	if err != nil {
 		return nil, err
 	}
-	st, err := store.Open(ctx, cfg.DatabaseURL.Reveal(), cfg.Schema)
+	st, err := openStore(ctx, cfg)
 	if err != nil {
 		return nil, err
 	}
-	if err := st.Migrate(ctx); err != nil {
+	// Every verifier also reports sign-in times and deletes its provider's accounts, so it serves the
+	// account controls; deploy-smoke's verifies nothing, so they answer its uniform 401.
+	h := httpapi.New(httpapi.Deps{
+		Mode:                   cfg.Mode,
+		AccountMode:            accountMode(cfg.Mode),
+		AllowedHosts:           cfg.AllowedHosts,
+		Deploy:                 config.IsDeployMode(cfg.Mode),
+		CORSOrigins:            cfg.CORSOrigins,
+		Verifier:               verifier,
+		IdentityDeleter:        verifier,
+		Store:                  st,
+		Registry:               curriculum.Default(),
+		ExportMaxBytes:         cfg.ExportMaxBytes,
+		BeforeCommit:           opts.BeforeCommit,
+		BeforeIdentityDeletion: opts.BeforeIdentityDeletion,
+		Now:                    opts.Now,
+	})
+	return &Service{cfg: cfg, store: st, handler: h}, nil
+}
+
+// accountVerifier is what the handler needs of a verifier to serve every route, the account controls
+// included: verified sessions with their sign-in time, and deletion of the verified identity's account.
+type accountVerifier interface {
+	authn.SessionVerifier
+	authn.IdentityDeleter
+}
+
+// newVerifier builds the configured mode's verifier. In ModeLocalSupabase that is the Supabase verifier
+// for the configured loopback Auth (plain http accepted there, as a synthetic local fixture), and in
+// ModeLocalCompose the same verifier for the stack's own Auth at its allowlisted internal name (plain
+// http accepted only for exactly that host and port). Either fetches Auth's key set from that Auth only
+// and must establish it now: a service never starts without a usable trusted key set
+// (authn.ErrKeySetUnavailable). now is its clock (Options.Now; nil means time.Now). In ModeDeploySmoke it
+// is the deny-all verifier, which contacts nothing. In ModeEmulator it is newEmulatorVerifier's: the
+// legacy emulator verifier in a build with the firebase_emulator tag, and authn.ErrEmulatorDisabled in a
+// default build, which never falls back to another verifier.
+func newVerifier(ctx context.Context, cfg config.Config, now func() time.Time) (accountVerifier, error) {
+	switch cfg.Mode {
+	case config.ModeEmulator:
+		return newEmulatorVerifier(ctx, cfg)
+	case config.ModeLocalSupabase, config.ModeLocalCompose:
+		v, err := authn.NewSupabaseVerifier(authn.SupabaseConfig{BaseURL: cfg.Supabase.URL, Issuer: cfg.Supabase.Issuer,
+			Audience: cfg.Supabase.Audience, FetchJWKS: true, AdminKey: cfg.Supabase.AdminKey, LocalSynthetic: true,
+			InternalHosts: cfg.Supabase.AuthHosts, Now: now})
+		if err != nil {
+			return nil, err
+		}
+		if err := v.RefreshKeys(ctx); err != nil {
+			return nil, err
+		}
+		return v, nil
+	case config.ModeDeploySmoke:
+		return denyAll{}, nil
+	default:
+		return nil, config.ErrInvalidMode
+	}
+}
+
+// openStore opens the configured database. A loopback mode opens it on loopback or a Unix socket and
+// migrates the schema. A deploy mode opens only AYA_DB_HOSTS, as pgx parsed them, and verifies the schema
+// with reads only, so its runtime role needs no DDL right.
+func openStore(ctx context.Context, cfg config.Config) (*store.Store, error) {
+	if !config.IsDeployMode(cfg.Mode) {
+		st, err := store.Open(ctx, cfg.DatabaseURL.Reveal(), cfg.Schema)
+		if err != nil {
+			return nil, err
+		}
+		if err := st.Migrate(ctx); err != nil {
+			st.Close()
+			return nil, err
+		}
+		return st, nil
+	}
+	st, err := store.OpenAllowing(ctx, cfg.DatabaseURL.Reveal(), cfg.Schema, cfg.DBHosts)
+	if err != nil {
+		return nil, err
+	}
+	if err := st.VerifySchema(ctx); err != nil {
 		st.Close()
 		return nil, err
 	}
-	h := httpapi.New(httpapi.Deps{
-		Mode:         cfg.Mode,
-		AllowedHosts: cfg.AllowedHosts,
-		Verifier:     verifier,
-		Store:        st,
-		Registry:     curriculum.Default(),
-		BeforeCommit: opts.BeforeCommit,
-	})
-	return &Service{cfg: cfg, store: st, handler: h}, nil
+	return st, nil
+}
+
+// accountMode is the auth_mode an account created in mode records: the kind of provider that verified it.
+// local-compose's Auth is a local synthetic Supabase Auth, so its accounts are local-supabase accounts and
+// the account schema needs no new mode. Every other mode records itself.
+func accountMode(mode string) string {
+	if mode == config.ModeLocalCompose {
+		return config.ModeLocalSupabase
+	}
+	return mode
+}
+
+// Mode returns the configured mode, as the startup log and health report it.
+func (s *Service) Mode() string {
+	return s.cfg.Mode
 }
 
 // Handler returns the v1 HTTP handler.
@@ -68,12 +168,13 @@ func (s *Service) Handler() http.Handler {
 	return s.handler
 }
 
-// ListenAddr returns the configured loopback address that ListenAndServe binds.
+// ListenAddr returns the configured address that ListenAndServe binds: loopback, or in a deploy mode
+// 0.0.0.0 or IPv4 loopback inside its container.
 func (s *Service) ListenAddr() string {
 	return s.cfg.Listen
 }
 
-// ListenAndServe binds the configured loopback address and serves until ctx is done, then shuts down.
+// ListenAndServe binds the configured address and serves until ctx is done, then shuts down.
 func (s *Service) ListenAndServe(ctx context.Context) error {
 	ln, err := net.Listen("tcp", s.cfg.Listen)
 	if err != nil {

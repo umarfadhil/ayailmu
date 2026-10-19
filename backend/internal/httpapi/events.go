@@ -69,6 +69,9 @@ func (h *handler) postEvents(w http.ResponseWriter, r *http.Request, c *call) {
 	case errors.Is(err, store.ErrNotFound):
 		writeNotFound(w)
 		return
+	case errors.Is(err, store.ErrAccountDeleted):
+		writeAccountDeleted(w)
+		return
 	case errors.Is(err, store.ErrSourceNotLinked):
 		writeProblem(w, newProblem(http.StatusConflict, codeSourceNotLinked, "an event comes from a device profile that is not linked to this profile; nothing was stored"))
 		return

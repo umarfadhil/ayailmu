@@ -11,9 +11,10 @@ const (
 	mediaJSON       = "application/json"
 	mediaMergePatch = "application/merge-patch+json"
 
-	maxEventsBody = 4 << 20
-	maxImportBody = 16 << 20
-	maxPatchBody  = 16 << 10
+	maxEventsBody   = 4 << 20
+	maxImportBody   = 16 << 20
+	maxPatchBody    = 16 << 10
+	maxDeletionBody = 1 << 10
 )
 
 // pidSegment marks the profile ID segment. Any non-empty segment matches: the profile routes resolve
@@ -26,7 +27,7 @@ type handlerFunc func(w http.ResponseWriter, r *http.Request, c *call)
 
 // call carries what the guards established.
 type call struct {
-	accountID string // empty only on the public route
+	caller           // the authenticated caller; zero only on the public route
 	profileID string // the raw {pid} segment; the profile routes resolve it against the account
 	body      []byte // the exact body of a body route, syntactically valid JSON
 }
@@ -40,10 +41,13 @@ type endpoint struct {
 }
 
 type route struct {
-	segs    []string
-	public  bool
-	methods map[string]endpoint
-	allow   string // the methods, sorted and comma-separated, for the Allow header
+	segs   []string
+	public bool
+	// allowDeleted exempts the route from the deleted-account gate: a deleted account still reads and
+	// retries its deletion there.
+	allowDeleted bool
+	methods      map[string]endpoint
+	allow        string // the methods, sorted and comma-separated, for the Allow header
 }
 
 func (h *handler) routeTable() []*route {
@@ -65,6 +69,21 @@ func (h *handler) routeTable() []*route {
 			http.MethodPost: write(mediaJSON, maxEventsBody, h.postEvents),
 		}},
 		{segs: []string{"v1", "profiles", pidSegment, "progress"}, methods: map[string]endpoint{http.MethodGet: read(h.progress)}},
+	}
+	// A deploy mode's container healthcheck and front ask readiness, which follows the database and schema.
+	if h.deploy {
+		routes = append(routes, &route{segs: []string{"v1", "readyz"}, public: true, methods: map[string]endpoint{http.MethodGet: read(h.ready)}})
+	}
+	// The account controls need the verified sign-in time, and deletion needs the identity deleter too.
+	// Without them they are not served (404), so they fail closed.
+	if h.sessions != nil {
+		routes = append(routes, &route{segs: []string{"v1", "me", "export"}, methods: map[string]endpoint{http.MethodGet: read(h.exportAccount)}})
+		if h.deleter != nil {
+			routes = append(routes, &route{segs: []string{"v1", "me", "deletion"}, allowDeleted: true, methods: map[string]endpoint{
+				http.MethodGet:  read(h.getDeletion),
+				http.MethodPost: write(mediaJSON, maxDeletionBody, h.postDeletion),
+			}})
+		}
 	}
 	for _, rt := range routes {
 		methods := make([]string, 0, len(rt.methods))

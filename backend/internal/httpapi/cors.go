@@ -6,9 +6,10 @@ import (
 	"strings"
 )
 
-// webOrigins are the only cross-origin callers the API answers: the local Expo web preview, under both
-// loopback names. Nothing else ever gets a grant, there is no wildcard, and credentials are never
-// allowed: the API takes bearer tokens, not cookies.
+// webOrigins are the only cross-origin callers the loopback modes answer: the local Expo web preview,
+// under both loopback names. A deploy mode answers exactly its configured https origins instead, and none
+// of these. Nothing else ever gets a grant, there is no wildcard, and credentials are never allowed: the
+// API takes bearer tokens, not cookies.
 var webOrigins = []string{"http://localhost:8087", "http://127.0.0.1:8087"}
 
 // corsRequestHeaders are the request headers a preflight may ask for, lowercased.
@@ -37,7 +38,7 @@ func (h *handler) cors(w http.ResponseWriter, r *http.Request) bool {
 	if len(origins) == 0 {
 		return false
 	}
-	allowed := len(origins) == 1 && slices.Contains(webOrigins, origins[0])
+	allowed := len(origins) == 1 && slices.Contains(h.origins, origins[0])
 	hdr := w.Header()
 	methods := r.Header.Values("Access-Control-Request-Method")
 	if r.Method != http.MethodOptions || len(methods) == 0 {
@@ -50,7 +51,7 @@ func (h *handler) cors(w http.ResponseWriter, r *http.Request) bool {
 	}
 	hdr.Add("Vary", "Origin, Access-Control-Request-Method, Access-Control-Request-Headers")
 	if !allowed {
-		writeProblem(w, newProblem(http.StatusForbidden, codeOriginNotAllowed, "only the local web app may make cross-origin requests to this service"))
+		writeProblem(w, newProblem(http.StatusForbidden, codeOriginNotAllowed, h.originRefusal()))
 		return true
 	}
 	rt, _ := h.match(r.URL.Path)
@@ -68,6 +69,14 @@ func (h *handler) cors(w http.ResponseWriter, r *http.Request) bool {
 	hdr.Set("Access-Control-Max-Age", corsMaxAge)
 	w.WriteHeader(http.StatusNoContent)
 	return true
+}
+
+// originRefusal is the fixed detail of the 403 for an origin the gate does not grant.
+func (h *handler) originRefusal() string {
+	if h.deploy {
+		return "only this deployment's web app may make cross-origin requests to this service"
+	}
+	return "only the local web app may make cross-origin requests to this service"
 }
 
 func invalidPreflight() *problem {

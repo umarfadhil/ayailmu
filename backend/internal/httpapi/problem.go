@@ -40,6 +40,12 @@ const (
 	codeEventConflict          = "event_conflict"
 	codeImportRejected         = "import_rejected"
 
+	codeAccountDeleted           = "account_deleted"
+	codeReauthenticationRequired = "reauthentication_required"
+	codeDeletionNotConfirmed     = "deletion_not_confirmed"
+	codeAccountDeletionFailed    = "account_deletion_failed"
+	codeExportTooLarge           = "export_too_large"
+
 	codeInternal = "internal_error"
 )
 
@@ -70,6 +76,12 @@ var problemTitles = map[string]string{
 	codeSourceNotLinked:        "Source not linked",
 	codeEventConflict:          "Event conflict",
 	codeImportRejected:         "Import rejected",
+
+	codeAccountDeleted:           "Account deleted",
+	codeReauthenticationRequired: "Reauthentication required",
+	codeDeletionNotConfirmed:     "Deletion not confirmed",
+	codeAccountDeletionFailed:    "Account deletion failed",
+	codeExportTooLarge:           "Export too large",
 
 	codeInternal: "Internal error",
 }
@@ -105,6 +117,19 @@ func writeUnauthenticated(w http.ResponseWriter) {
 // writeNotFound is the one 404 body: for unknown routes and for any profile the caller does not own.
 func writeNotFound(w http.ResponseWriter) {
 	writeProblem(w, newProblem(http.StatusNotFound, codeNotFound, "no such resource"))
+}
+
+// writeAccountDeleted is the one 410 body, whatever the route: the account's deletion is recorded.
+func writeAccountDeleted(w http.ResponseWriter) {
+	writeProblem(w, newProblem(http.StatusGone, codeAccountDeleted, "this account was deleted: its server data is erased and nothing more is accepted for it"))
+}
+
+// writeReauthenticationRequired refuses an action that needs a recent sign-in with the RFC 9470
+// step-up challenge on the RFC 6750 bearer scheme. The token stays valid for every other route.
+func writeReauthenticationRequired(w http.ResponseWriter) {
+	w.Header().Set("WWW-Authenticate", stepUpChallenge)
+	writeProblem(w, newProblem(http.StatusUnauthorized, codeReauthenticationRequired,
+		"this action needs a sign-in from the last 5 minutes: sign in again, then repeat it"))
 }
 
 func writeProblem(w http.ResponseWriter, p *problem) {

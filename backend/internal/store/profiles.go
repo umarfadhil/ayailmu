@@ -51,10 +51,11 @@ type querier interface {
 	QueryRow(ctx context.Context, sql string, args ...any) pgx.Row
 }
 
-// Profile reads one profile of the account and its linked sources from one snapshot.
+// Profile reads one profile of the account and its linked sources from one snapshot. Like every profile
+// lookup, it returns ErrAccountDeleted instead of ErrNotFound when the account's deletion is recorded.
 func (s *Store) Profile(ctx context.Context, accountID, profileID string) (Profile, error) {
 	if !validUUID(profileID) {
-		return Profile{}, ErrNotFound
+		return Profile{}, missingProfile(ctx, s.pool, accountID)
 	}
 	tx, err := s.pool.BeginTx(ctx, pgx.TxOptions{IsoLevel: pgx.RepeatableRead, AccessMode: pgx.ReadOnly})
 	if err != nil {
@@ -64,17 +65,28 @@ func (s *Store) Profile(ctx context.Context, accountID, profileID string) (Profi
 	return loadProfile(ctx, tx, accountID, profileID)
 }
 
-// OwnsProfile reports whether the account owns the profile.
+// OwnsProfile reports whether the account owns the profile. When it does not and the account's
+// deletion is recorded, it returns ErrAccountDeleted: a request authenticated just before an erasure
+// committed gets account_deleted, never not_found.
 func (s *Store) OwnsProfile(ctx context.Context, accountID, profileID string) (bool, error) {
-	return ownsProfile(ctx, s.pool, accountID, profileID)
+	owned, err := ownsProfile(ctx, s.pool, accountID, profileID)
+	if err != nil || owned {
+		return owned, err
+	}
+	if err := missingProfile(ctx, s.pool, accountID); !errors.Is(err, ErrNotFound) {
+		return false, err
+	}
+	return false, nil
 }
 
 // UpdateSettings replaces the profile's settings and increments its revision, provided the revision is
 // still the given one. Otherwise it changes nothing and returns the current profile with
-// ErrRevisionConflict. Event uploads and imports never call it, so they never change a revision.
+// ErrRevisionConflict. Event uploads and imports never call it, so they never change a revision. A
+// profile an erasure removed while this waited for its row is ErrAccountDeleted, checked after that
+// erasure committed.
 func (s *Store) UpdateSettings(ctx context.Context, accountID, profileID string, revision int64, next Settings) (Profile, error) {
 	if !validUUID(profileID) {
-		return Profile{}, ErrNotFound
+		return Profile{}, missingProfile(ctx, s.pool, accountID)
 	}
 	tx, err := s.pool.Begin(ctx)
 	if err != nil {
@@ -109,7 +121,7 @@ func loadProfile(ctx context.Context, q querier, accountID, profileID string) (P
 		Scan(&p.ProfileID, &p.Kind, &p.Revision, &p.HighSeq, &p.Settings.InstructionLang, &p.Settings.SessionMinutes,
 			&p.Settings.ArabicScale, &p.ConsentVersion, &p.ConsentAt)
 	if errors.Is(err, pgx.ErrNoRows) {
-		return Profile{}, ErrNotFound
+		return Profile{}, missingProfile(ctx, q, accountID)
 	}
 	if err != nil {
 		return Profile{}, fmt.Errorf("store: read profile: %w", err)

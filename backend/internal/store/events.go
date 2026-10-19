@@ -55,12 +55,17 @@ type IngestResult struct {
 }
 
 // Ingest stores one batch in a transaction under the profile row lock. It returns ErrNotFound when the
-// account does not own the profile, and ErrSourceNotLinked, writing nothing, when any event comes from
-// a device profile not linked to it. An identical event keeps the stored copy, a conflicting one leaves
-// it untouched, and only new events advance high_seq.
+// account does not own the profile, ErrAccountDeleted when the account's deletion is recorded, and
+// ErrSourceNotLinked, writing nothing, when any event comes from a device profile not linked to it. An
+// identical event keeps the stored copy, a conflicting one leaves it untouched, and only new events
+// advance high_seq.
+//
+// An erasure must take this profile's row lock too, so an ingest holding it commits first and is
+// erased with the rest, and an ingest that waited for the erasure finds no profile and gets
+// ErrAccountDeleted.
 func (s *Store) Ingest(ctx context.Context, in IngestInput) (IngestResult, error) {
 	if !validUUID(in.ProfileID) {
-		return IngestResult{}, ErrNotFound
+		return IngestResult{}, missingProfile(ctx, s.pool, in.AccountID)
 	}
 	tx, err := s.pool.Begin(ctx)
 	if err != nil {
@@ -76,7 +81,7 @@ func (s *Store) Ingest(ctx context.Context, in IngestInput) (IngestResult, error
 	err = tx.QueryRow(ctx, `SELECT high_seq, now() FROM profiles WHERE profile_id = $1::uuid AND account_id = $2::uuid`+lock,
 		in.ProfileID, in.AccountID).Scan(&highSeq, &receivedAt)
 	if errors.Is(err, pgx.ErrNoRows) {
-		return IngestResult{}, ErrNotFound
+		return IngestResult{}, missingProfile(ctx, tx, in.AccountID)
 	}
 	if err != nil {
 		return IngestResult{}, fmt.Errorf("store: lock profile: %w", err)
@@ -191,10 +196,11 @@ func (s *Store) FamilyEvents(ctx context.Context, accountID, profileID, family s
 
 // snapshot reads the profile's high_seq and then runs read, both in one read-only REPEATABLE READ
 // transaction, so they see one committed state; it never waits for writers. It returns ErrNotFound when
-// the account does not own the profile.
+// the account does not own the profile, and ErrAccountDeleted when the snapshot holds the account's
+// deletion.
 func (s *Store) snapshot(ctx context.Context, accountID, profileID string, read func(tx pgx.Tx, highSeq int64) error) error {
 	if !validUUID(profileID) {
-		return ErrNotFound
+		return missingProfile(ctx, s.pool, accountID)
 	}
 	tx, err := s.pool.BeginTx(ctx, pgx.TxOptions{IsoLevel: pgx.RepeatableRead, AccessMode: pgx.ReadOnly})
 	if err != nil {
@@ -205,7 +211,7 @@ func (s *Store) snapshot(ctx context.Context, accountID, profileID string, read 
 	err = tx.QueryRow(ctx, `SELECT high_seq FROM profiles WHERE profile_id = $1::uuid AND account_id = $2::uuid`,
 		profileID, accountID).Scan(&highSeq)
 	if errors.Is(err, pgx.ErrNoRows) {
-		return ErrNotFound
+		return missingProfile(ctx, tx, accountID)
 	}
 	if err != nil {
 		return fmt.Errorf("store: read events: %w", err)
@@ -221,20 +227,30 @@ func scanStoredEvents(rows pgx.Rows) ([]StoredEvent, error) {
 	defer rows.Close()
 	var events []StoredEvent
 	for rows.Next() {
-		var e StoredEvent
-		var payload string
-		var sum []byte
-		if err := rows.Scan(&e.Seq, &e.EventID, &e.Kind, &e.Schema, &e.SchemaVersion, &e.Curriculum.Family, &e.Curriculum.Track,
-			&e.Curriculum.ContentVersion, &e.Curriculum.RulesVersion, &e.CurriculumStatus, &e.Source.App, &e.Source.InstallID,
-			&e.Source.AppVersion, &e.Source.LocalProfileID, &payload, &sum, &e.ClockFlags, &e.OccurredAt, &e.ReceivedAt); err != nil {
+		e, err := scanStoredEvent(rows)
+		if err != nil {
 			return nil, err
 		}
-		e.Payload = []byte(payload)
-		copy(e.SemanticSHA256[:], sum)
-		e.ClockFlags = nonNil(e.ClockFlags)
 		events = append(events, e)
 	}
 	return events, rows.Err()
+}
+
+// scanStoredEvent reads one row of storedEventColumns, then any further columns into extra.
+func scanStoredEvent(row pgx.Row, extra ...any) (StoredEvent, error) {
+	var e StoredEvent
+	var payload string
+	var sum []byte
+	dest := []any{&e.Seq, &e.EventID, &e.Kind, &e.Schema, &e.SchemaVersion, &e.Curriculum.Family, &e.Curriculum.Track,
+		&e.Curriculum.ContentVersion, &e.Curriculum.RulesVersion, &e.CurriculumStatus, &e.Source.App, &e.Source.InstallID,
+		&e.Source.AppVersion, &e.Source.LocalProfileID, &payload, &sum, &e.ClockFlags, &e.OccurredAt, &e.ReceivedAt}
+	if err := row.Scan(append(dest, extra...)...); err != nil {
+		return StoredEvent{}, err
+	}
+	e.Payload = []byte(payload)
+	copy(e.SemanticSHA256[:], sum)
+	e.ClockFlags = nonNil(e.ClockFlags)
+	return e, nil
 }
 
 // eventPlan classifies a profile's incoming events against what it already holds.

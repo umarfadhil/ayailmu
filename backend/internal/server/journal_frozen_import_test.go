@@ -1,3 +1,5 @@
+//go:build firebase_emulator
+
 package server_test
 
 import (

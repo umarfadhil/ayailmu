@@ -63,6 +63,8 @@ func (h *handler) pullEvents(w http.ResponseWriter, r *http.Request, c *call) {
 	switch {
 	case errors.Is(err, store.ErrNotFound):
 		writeNotFound(w)
+	case errors.Is(err, store.ErrAccountDeleted):
+		writeAccountDeleted(w)
 	case err != nil:
 		h.internal(w, "pull events", err)
 	default:

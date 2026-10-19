@@ -79,14 +79,24 @@ func (s *Store) LookupImport(ctx context.Context, accountID, importID string, re
 // agree with that link (else ErrSourceAlreadyLinked); otherwise the import creates the new profile and
 // links the source. Events are persisted under the profile row lock, and any conflict rolls back
 // everything, the new profile and link included.
+//
+// An erasure takes the same advisory lock first, so it waits for an import holding the lock and erases
+// what it committed; an import that got the lock after an erasure committed finds the deletion recorded
+// and returns ErrAccountDeleted, writing nothing.
 func (s *Store) Import(ctx context.Context, in ImportInput) (ImportResult, error) {
 	tx, err := s.pool.Begin(ctx)
 	if err != nil {
 		return ImportResult{}, fmt.Errorf("store: import: %w", err)
 	}
 	defer tx.Rollback(ctx) // a no-op after Commit
-	if _, err := tx.Exec(ctx, "SELECT pg_advisory_xact_lock(hashtext($1))", "ayailmu-import:"+s.schema+":"+in.AccountID); err != nil {
+	if _, err := tx.Exec(ctx, "SELECT pg_advisory_xact_lock(hashtext($1))", accountLockKey(s.schema, in.AccountID)); err != nil {
 		return ImportResult{}, fmt.Errorf("store: import lock: %w", err)
+	}
+	if deleted, err := accountDeleted(ctx, tx, in.AccountID); err != nil || deleted {
+		if err == nil {
+			err = ErrAccountDeleted
+		}
+		return ImportResult{}, err
 	}
 	if receipt, found, err := storedImport(ctx, tx, in.AccountID, in.ImportID, in.RequestSHA256); err != nil || found {
 		receipt.Replayed = found

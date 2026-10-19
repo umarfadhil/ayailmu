@@ -2,8 +2,9 @@
 //
 // A pool is opened only after the configuration pgx actually parsed has been checked: the primary
 // host and every fallback, after pgx applied PG* environment variables and service files, must be a
-// literal loopback IP or a Unix socket directory. This is independent of the string check in package
-// config, which never sees what pgx derives from the environment.
+// literal loopback IP or a Unix socket directory, or in the deploy modes exactly one of the deployment's
+// database hosts (deploy.go). This is independent of the string check in package config, which never
+// sees what pgx derives from the environment.
 package store
 
 import (
@@ -40,6 +41,12 @@ type Store struct {
 // ParseConfig parses dsn with pgx and refuses it unless every host pgx would dial is a literal loopback
 // IP or a Unix socket directory. It opens nothing. The schema becomes the connections' search_path.
 func ParseConfig(dsn, schema string) (*pgxpool.Config, error) {
+	return parseConfig(dsn, schema, localHost, ErrDatabaseNotLocal)
+}
+
+// parseConfig parses dsn with pgx and refuses it with refusal unless allowed accepts every host pgx would
+// dial: the primary and each fallback, after pgx applied the PG* environment and service files.
+func parseConfig(dsn, schema string, allowed func(host string) bool, refusal error) (*pgxpool.Config, error) {
 	if !validSchema(schema) {
 		return nil, ErrInvalidSchema
 	}
@@ -48,12 +55,12 @@ func ParseConfig(dsn, schema string) (*pgxpool.Config, error) {
 		return nil, ErrInvalidDatabaseURL
 	}
 	cc := cfg.ConnConfig
-	if !localHost(cc.Host) {
-		return nil, ErrDatabaseNotLocal
+	if !allowed(cc.Host) {
+		return nil, refusal
 	}
 	for _, fb := range cc.Fallbacks {
-		if !localHost(fb.Host) {
-			return nil, ErrDatabaseNotLocal
+		if !allowed(fb.Host) {
+			return nil, refusal
 		}
 	}
 	cc.RuntimeParams["search_path"] = schema
@@ -69,6 +76,11 @@ func Open(ctx context.Context, dsn, schema string) (*Store, error) {
 	if err != nil {
 		return nil, err
 	}
+	return openPool(ctx, cfg, schema)
+}
+
+// openPool creates the pool of a guarded configuration and checks it with one ping.
+func openPool(ctx context.Context, cfg *pgxpool.Config, schema string) (*Store, error) {
 	pool, err := pgxpool.NewWithConfig(ctx, cfg)
 	if err != nil {
 		return nil, fmt.Errorf("store: create pool: %w", connectCause(err))

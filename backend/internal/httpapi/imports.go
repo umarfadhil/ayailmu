@@ -100,6 +100,8 @@ func (h *handler) importGuest(w http.ResponseWriter, r *http.Request, c *call) {
 	switch {
 	case errors.Is(err, store.ErrNotFound):
 		writeNotFound(w)
+	case errors.Is(err, store.ErrAccountDeleted):
+		writeAccountDeleted(w)
 	case errors.Is(err, store.ErrImportIDReused):
 		writeImportIDReused(w)
 	case errors.Is(err, store.ErrSourceAlreadyLinked):

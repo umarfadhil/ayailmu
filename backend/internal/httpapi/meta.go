@@ -1,9 +1,13 @@
 package httpapi
 
 import (
+	"context"
+	"errors"
 	"net/http"
+	"time"
 
 	"ayailmu.local/backend/internal/curriculum"
+	"ayailmu.local/backend/internal/store"
 )
 
 type healthDoc struct {
@@ -15,6 +19,31 @@ type healthDoc struct {
 // the emulator is reachable.
 func (h *handler) health(w http.ResponseWriter, _ *http.Request, _ *call) {
 	writeJSON(w, http.StatusOK, healthDoc{Status: "ok", Mode: h.mode})
+}
+
+// readyTimeout bounds one readiness check.
+const readyTimeout = 3 * time.Second
+
+type readyDoc struct {
+	Status string `json:"status"`
+}
+
+// ready answers a deploy mode's readiness without authentication: ready while the database answers and
+// its schema records exactly this binary's migrations (store.VerifySchema, which only reads), not_ready
+// otherwise, without any detail. The reason is logged by class only.
+func (h *handler) ready(w http.ResponseWriter, r *http.Request, _ *call) {
+	ctx, cancel := context.WithTimeout(r.Context(), readyTimeout)
+	defer cancel()
+	if err := h.store.VerifySchema(ctx); err != nil {
+		class := store.ErrorClass(err)
+		if errors.Is(err, store.ErrSchemaNotCurrent) {
+			class = "schema not current"
+		}
+		h.log.Warn("httpapi: not ready", "error_class", class)
+		writeJSON(w, http.StatusServiceUnavailable, readyDoc{Status: "not_ready"})
+		return
+	}
+	writeJSON(w, http.StatusOK, readyDoc{Status: "ready"})
 }
 
 type meProfile struct {
@@ -31,6 +60,10 @@ type meDoc struct {
 // me lists the caller's account and profiles. Authentication has already created the account.
 func (h *handler) me(w http.ResponseWriter, r *http.Request, c *call) {
 	list, err := h.store.AccountProfiles(r.Context(), c.accountID)
+	if errors.Is(err, store.ErrAccountDeleted) {
+		writeAccountDeleted(w)
+		return
+	}
 	if err != nil {
 		h.internal(w, "list profiles", err)
 		return

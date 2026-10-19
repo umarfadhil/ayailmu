@@ -150,3 +150,28 @@ func TestLoadRefusesUnsafeOrUnsupportedSetups(t *testing.T) {
 		})
 	}
 }
+
+// AYA_EXPORT_MAX_BYTES can only lower the 16 MiB export limit: plain decimal bytes from 1024 to 16777216. Anything
+// else refuses the configuration with an error naming the variable.
+func TestLoadExportLimitCanOnlyBeLowered(t *testing.T) {
+	cfg, err := config.Load(lookupIn(baseEnv()))
+	if err != nil || cfg.ExportMaxBytes != config.MaxExportBytes || config.MaxExportBytes != 16<<20 {
+		t.Fatalf("Load without the setting = %d, %v; want the 16 MiB default", cfg.ExportMaxBytes, err)
+	}
+	for value, want := range map[string]int{"": 16 << 20, "1024": 1024, "65536": 65536, "16777216": 16 << 20} {
+		env := baseEnv()
+		env[config.EnvExportMaxBytes] = value
+		cfg, err := config.Load(lookupIn(env))
+		if err != nil || cfg.ExportMaxBytes != want {
+			t.Fatalf("Load with %s=%q = %d, %v; want %d", config.EnvExportMaxBytes, value, cfg.ExportMaxBytes, err, want)
+		}
+	}
+	for _, value := range []string{"0", "1023", "16777217", "99999999999", "-1", "+2048", "02048", " 2048", "2048 ", "2e4", "16MiB", "unlimited"} {
+		env := baseEnv()
+		env[config.EnvExportMaxBytes] = value
+		_, err := config.Load(lookupIn(env))
+		if !errors.Is(err, config.ErrInvalidExportLimit) || !strings.Contains(err.Error(), config.EnvExportMaxBytes) {
+			t.Fatalf("Load with %s=%q: error %v, want ErrInvalidExportLimit naming the variable", config.EnvExportMaxBytes, value, err)
+		}
+	}
+}

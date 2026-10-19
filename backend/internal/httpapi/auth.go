@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net/http"
 	"strings"
+	"time"
 	"unicode/utf8"
 
 	"ayailmu.local/backend/internal/authn"
@@ -20,18 +21,40 @@ const (
 	maxSubjectBytes = 128
 )
 
-// authenticate verifies the bearer token and returns the caller's account ID, creating the account on
-// first use. Every rejection is errUnauthenticated; any other error is a store failure.
-func (h *handler) authenticate(r *http.Request) (string, error) {
+// caller is an authenticated request's account and verified identity.
+type caller struct {
+	accountID string
+	// deleted reports that the account's deletion is recorded (the deleted-account gate).
+	deleted  bool
+	identity authn.Identity
+	// authTime is the verified sign-in time; zero when the verifier cannot report it or the token
+	// carries none.
+	authTime time.Time
+}
+
+// authenticate verifies the bearer token and returns the caller, creating the account on first use
+// under the configured account mode. With a session-capable verifier, the one verification also yields
+// the sign-in time. Every rejection is errUnauthenticated; any other error is a store failure.
+func (h *handler) authenticate(r *http.Request) (caller, error) {
 	token, ok := bearerToken(r.Header.Values("Authorization"))
 	if !ok {
-		return "", errUnauthenticated
+		return caller{}, errUnauthenticated
 	}
-	id, err := h.verifier.Verify(r.Context(), token)
-	if err != nil || !storableIdentity(id) {
-		return "", errUnauthenticated
+	var s authn.Session
+	var err error
+	if h.sessions != nil {
+		s, err = h.sessions.VerifySession(r.Context(), token)
+	} else {
+		s.Identity, err = h.verifier.Verify(r.Context(), token)
 	}
-	return h.store.EnsureAccount(r.Context(), id.Issuer, id.Subject)
+	if err != nil || !storableIdentity(s.Identity) {
+		return caller{}, errUnauthenticated
+	}
+	acct, err := h.store.EnsureAccount(r.Context(), h.accountMode, s.Issuer, s.Subject)
+	if err != nil {
+		return caller{}, err
+	}
+	return caller{accountID: acct.ID, deleted: acct.Deleted, identity: s.Identity, authTime: s.AuthTime}, nil
 }
 
 // bearerToken returns the token of exactly one "Authorization: Bearer <token>" header: scheme
