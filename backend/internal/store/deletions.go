@@ -76,7 +76,9 @@ func (s *Store) EraseAccount(ctx context.Context, accountID string, beforeCommit
 	failed := func(err error) (Deletion, error) {
 		return Deletion{}, fmt.Errorf("%w: %w", ErrErasureFailed, err)
 	}
-	tx, err := s.pool.Begin(ctx)
+	// READ COMMITTED whatever the session's default: under REPEATABLE READ the snapshot would date from before a lock
+	// wait, and the erasure would miss what the writer that held the lock committed.
+	tx, err := s.pool.BeginTx(ctx, pgx.TxOptions{IsoLevel: pgx.ReadCommitted})
 	if err != nil {
 		return failed(err)
 	}

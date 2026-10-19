@@ -39,7 +39,8 @@ type Store struct {
 }
 
 // ParseConfig parses dsn with pgx and refuses it unless every host pgx would dial is a literal loopback
-// IP or a Unix socket directory. It opens nothing. The schema becomes the connections' search_path.
+// IP or a Unix socket directory. It opens nothing. The schema becomes the connections' search_path, and
+// READ COMMITTED their default transaction isolation.
 func ParseConfig(dsn, schema string) (*pgxpool.Config, error) {
 	return parseConfig(dsn, schema, localHost, ErrDatabaseNotLocal)
 }
@@ -64,6 +65,11 @@ func parseConfig(dsn, schema string, allowed func(host string) bool, refusal err
 		}
 	}
 	cc.RuntimeParams["search_path"] = schema
+	// A transaction that sets no isolation of its own runs READ COMMITTED, whatever the database URL, role, database or
+	// server default: as a startup parameter this outranks all of them. The writers lock, then read what the lock's
+	// holder committed, which only READ COMMITTED sees; under REPEATABLE READ or SERIALIZABLE a writer that waited on a
+	// lock would fail with a serialization error instead. Read-only snapshots and ledger replay set their own isolation.
+	cc.RuntimeParams["default_transaction_isolation"] = "read committed"
 	if cc.ConnectTimeout == 0 {
 		cc.ConnectTimeout = 5 * time.Second
 	}
