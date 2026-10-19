@@ -3,7 +3,7 @@
 // named by the verified account ID (see datasets.ts), never by an address or an earlier session.
 import { accountNamespace, type Namespace } from '@/account/datasets';
 import type { ApiClient, ProfileSummary } from '@/api/client';
-import { AuthError, type AuthStatus, type EmulatorAuth } from '@/auth/emulatorAuth';
+import { AuthError, type AuthStatus, type SessionAuth } from '@/auth/types';
 
 export interface VerifiedAccount {
   accountId: string;
@@ -29,7 +29,7 @@ const copyOf = (account: VerifiedAccount): VerifiedAccount => ({
   namespace: { ...account.namespace },
 });
 
-export function createAccountSession({ auth, api }: { auth: EmulatorAuth; api: ApiClient }): AccountSession {
+export function createAccountSession({ auth, api }: { auth: SessionAuth; api: ApiClient }): AccountSession {
   /** The verified account and the sign-in (session number) it belongs to; visible only while that sign-in is current. */
   let verified: { session: number; account: VerifiedAccount } | null = null;
 

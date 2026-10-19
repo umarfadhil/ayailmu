@@ -10,7 +10,7 @@ import type { JournalStorage, RawTarget } from '@/account/datasets';
 import { isCanonicalUuid } from '@/account/ids';
 import type { AccountSession, VerifiedAccount } from '@/account/session';
 import { ApiError, problemCode, type ApiClient, type ApiReply, type ApiRequest } from '@/api/client';
-import type { EmulatorAuth } from '@/auth/emulatorAuth';
+import type { ConnectionAuth } from '@/auth/types';
 import { newId } from '@/engine/util';
 import { createSerialQueue } from '@/storage/serial';
 import type { Learner, Store } from '@/storage/types';
@@ -46,7 +46,7 @@ export interface JournalDataset {
 
 /** The signed-in connection a sync runs on. Every request goes through auth.authorized, so a sign-out or a newer sign-in drops it. */
 export interface SyncConnection {
-  auth: EmulatorAuth;
+  auth: ConnectionAuth;
   session: AccountSession;
   api: ApiClient;
 }

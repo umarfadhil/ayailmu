@@ -2,7 +2,7 @@
 // bearer token travels only in the Authorization header: no cookies (credentials: 'omit'), no redirects,
 // nothing in URLs. Errors carry the HTTP status and the API's stable problem code, never response text or
 // the token.
-import { localPilotOrigin, PILOT_API_PORT } from '@/account/config';
+import { localPilotOrigin, PILOT_API_PORT } from '@/account/loopback';
 import { isCanonicalUuid } from '@/account/ids';
 
 export class ApiError extends Error {

@@ -1,3 +1,6 @@
+import { router, useLocalSearchParams, type Href } from 'expo-router';
+import { useEffect } from 'react';
+
 import { useAccount } from '@/ui/AccountContext';
 import { AccountPanel } from '@/ui/account/AccountPanel';
 import { BackLink } from '@/ui/BackLink';
@@ -22,6 +25,14 @@ function AccountRoute() {
 }
 
 export default function Account() {
+  // A Google callback's query or fragment (its single-use code, or a refusal) never stays in the router's cached params:
+  // this route is replaced by its bare self. The Google boundary took the real URL when the app loaded, before the
+  // router could change it, and cleans the address bar itself.
+  const params = useLocalSearchParams();
+  const withParams = Object.keys(params).length > 0;
+  useEffect(() => {
+    if (withParams) router.replace('/account' as Href);
+  }, [withParams]);
   return (
     <HydrationGate>
       <AccountRoute />

@@ -2,44 +2,14 @@
 // emulator-only way to create a synthetic local account. Addresses must use a .test domain. The ID token,
 // its expiry and the identity live in memory only; nothing here is ever stored, logged or put in a URL.
 import { isDemoProjectId, localPilotOrigin, PILOT_AUTH_EMULATOR_PORT, type EnabledAccountConfig } from '@/account/config';
+import { AuthError, type AuthErrorCode, type AuthIdentity, type AuthStatus } from '@/auth/types';
+
+// The provider-neutral sign-in errors and states: one AuthError class for every provider.
+export { AuthError };
+export type { AuthErrorCode, AuthIdentity, AuthStatus };
 
 /** A label for the emulator's key parameter. The emulator accepts any key; this is not a credential. */
 export const EMULATOR_API_KEY = 'demo-ayailmu-local-web';
-
-export type AuthErrorCode =
-  /** The address is not a synthetic local-demo address (a .test domain). */
-  | 'not_synthetic'
-  | 'invalid_credentials'
-  | 'email_exists'
-  | 'weak_password'
-  | 'bad_response'
-  | 'network'
-  /** The token expired or the API answered 401: sign in again. Local data is kept. */
-  | 'expired'
-  /** The session ended before this settled; its result was dropped. */
-  | 'signed_out'
-  /** A newer sign-in replaced this one; its result was dropped. */
-  | 'superseded';
-
-export class AuthError extends Error {
-  constructor(readonly code: AuthErrorCode) {
-    super(`Account sign-in problem: ${code}`);
-    this.name = 'AuthError';
-  }
-}
-
-export interface AuthIdentity {
-  uid: string;
-  email: string;
-  /** When the ID token expires (ms since the epoch), or null when the emulator gave no expiry. */
-  expiresAt: number | null;
-}
-
-export type AuthStatus =
-  | { state: 'signed-out' }
-  /** session numbers each sign-in, so later work can tell sessions apart. */
-  | { state: 'signed-in'; identity: AuthIdentity; session: number }
-  | { state: 'expired'; identity: AuthIdentity };
 
 export interface EmulatorAuth {
   signIn(email: string, password: string): Promise<AuthIdentity>;

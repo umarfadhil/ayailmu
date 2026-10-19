@@ -1,23 +1,71 @@
-// Test-only model of the local account API (backend/docs/Backend_Local_Contract.md §3 to §8) and of the Auth
-// emulator's password sign-in, behind one injected fetch. Receipts, checksums and semantic hashes come from
-// referenceCjson (Node's crypto, independent of the app's canonicalizer); payloads are stored and pulled back as the
-// exact text received. Hooks let a test lose a response after the server committed, hold a request, rewrite a receipt
-// or upload results, corrupt a pull page or take the network away. Request records never keep the Authorization
-// header: it carries the token.
-import { randomUUID } from 'crypto';
+// Test-only model of the local account API (backend/docs/Backend_Local_Contract.md §3 to §8), of the local GoTrue as
+// the maintained @supabase/auth-js SDK calls it (password and refresh grants, logout; sign-up is off, as at the
+// prepared server) and of the legacy Auth emulator's password sign-in, behind one injected fetch. Receipts, checksums
+// and semantic hashes come from referenceCjson (Node's crypto, independent of the app's canonicalizer); payloads are
+// stored and pulled back as the exact text received. Hooks let a test lose a response after the server committed, hold
+// a request, rewrite a receipt or upload results, corrupt a pull page or take the network away, and steer the GoTrue
+// (an outage, a held or refused logout, sessions revoked elsewhere). Request records never keep the Authorization
+// header or a GoTrue request's body: they carry tokens and passwords.
+import { createHash, randomBytes, randomUUID } from 'crypto';
 
 import { arrayElements, objectMembers } from '../src/storage/rawRecords';
 import { referenceIdsChecksum, referenceSemanticSha256, sha256 } from './referenceCjson';
 
 export const FAKE_API = 'http://127.0.0.1:8092';
 export const FAKE_EMULATOR = 'http://127.0.0.1:9099';
+/** The fake local GoTrue's root: its endpoints are at the root of its own loopback port, as the real one's. */
+export const FAKE_GOTRUE = 'http://127.0.0.1:54321';
+/** The issuer the fake GoTrue names in its tokens: a logical name, never a transport address. */
+export const FAKE_GOTRUE_ISSUER = 'https://auth.ayailmu-local.test/auth/v1';
+/** How long the fake GoTrue's access tokens live, in seconds (GoTrue's default). */
+export const FAKE_GOTRUE_TOKEN_SECONDS = 3600;
+
+/** The app's explicit local-supabase build variables for this fake deployment (the account API stays at FAKE_API). */
+export const FAKE_LOCAL_SUPABASE_ENV = { EXPO_PUBLIC_AUTH_PROVIDER: 'local-supabase', EXPO_PUBLIC_SUPABASE_AUTH_URL: FAKE_GOTRUE } as const;
+
+// Each test of a suite that imports this fixture (at its top) runs with FAKE_LOCAL_SUPABASE_ENV, restored after the
+// test, so it never reaches another test or suite. A suite that builds the app's default account services (the
+// AccountProvider) thereby reaches this fake GoTrue through the maintained SDK; suites that build their own auth (the
+// emulator pilot's) never read it, and the app itself never falls back to the legacy emulator variables.
+const suiteEnv: [string, string | undefined][] = [];
+beforeEach(() => {
+  suiteEnv.length = 0;
+  for (const [name, value] of Object.entries(FAKE_LOCAL_SUPABASE_ENV)) {
+    suiteEnv.push([name, process.env[name]]);
+    process.env[name] = value;
+  }
+});
+afterEach(() => {
+  for (const [name, value] of suiteEnv) {
+    if (value === undefined) delete process.env[name];
+    else process.env[name] = value;
+  }
+});
 
 export interface FakeUser {
   email: string;
   password: string;
+  /** The legacy emulator's local ID (any string). The fake GoTrue gives the user providerUserId(user) instead. */
   uid: string;
+  /** The legacy emulator's ID token. */
   token: string;
   accountId: string;
+}
+
+/** The canonical user ID (a UUID) the fake GoTrue gives a user: derived from its legacy uid, but never that uid. */
+export function providerUserId(user: FakeUser): string {
+  const h = createHash('sha256').update(`fake-gotrue-user ${user.uid}`).digest('hex');
+  const variant = ((parseInt(h[16], 16) & 0x3) | 0x8).toString(16);
+  return `${h.slice(0, 8)}-${h.slice(8, 12)}-4${h.slice(13, 16)}-${variant}${h.slice(17, 20)}-${h.slice(20, 32)}`;
+}
+
+/** One request as the wire saw it, in order across the fake servers: never a body, a token or any other header. */
+export interface WireRecord {
+  server: 'api' | 'auth' | 'emulator' | 'elsewhere';
+  method: string;
+  path: string;
+  /** The query string, without its "?". */
+  query: string;
 }
 
 export interface SentRequest {
@@ -80,6 +128,55 @@ function headerMap(headers: unknown): Record<string, string> {
 }
 
 const RECEIVED_AT = '2026-10-18T03:00:00Z';
+const USER_CREATED_AT = '2026-10-18T00:00:00Z';
+
+/** A session of the fake GoTrue: its user, its current refresh token, and every access token issued to it. */
+interface GoTrueSession {
+  id: string;
+  user: FakeUser;
+  refreshToken: string;
+  /** Access token → its expiry (ms since the epoch). */
+  accessTokens: Map<string, number>;
+  live: boolean;
+  signedInAt: number;
+}
+
+/** What a held logout does when released: revoke the session (204), refuse (403, nothing revoked), or never answer. */
+export type LogoutOutcome = 'accept' | 'refuse' | 'lost';
+
+const base64url = (value: unknown) => Buffer.from(JSON.stringify(value)).toString('base64url');
+
+/** A JWT-shaped access token (header.claims.signature), as GoTrue issues them. The signature is random: nothing checks it. */
+const fakeAccessToken = (claims: Json) =>
+  `${base64url({ alg: 'ES256', kid: 'fake-gotrue', typ: 'JWT' })}.${base64url(claims)}.${randomBytes(32).toString('base64url')}`;
+
+/** GoTrue's user document of a prepared user: a confirmed email, no metadata. */
+const gotrueUser = (user: FakeUser): Json => ({
+  id: providerUserId(user),
+  aud: 'authenticated',
+  role: 'authenticated',
+  email: user.email,
+  email_confirmed_at: USER_CREATED_AT,
+  phone: '',
+  confirmed_at: USER_CREATED_AT,
+  app_metadata: { provider: 'email', providers: ['email'] },
+  user_metadata: {},
+  identities: [],
+  created_at: USER_CREATED_AT,
+  updated_at: USER_CREATED_AT,
+  is_anonymous: false,
+});
+
+const bodyOf = (body: unknown): Json => {
+  try {
+    const value: unknown = JSON.parse(String(body));
+    return value !== null && typeof value === 'object' && !Array.isArray(value) ? (value as Json) : {};
+  } catch {
+    return {};
+  }
+};
+
+const bearerOf = (authorization: string | undefined) => (authorization?.startsWith('Bearer ') ? authorization.slice('Bearer '.length) : '');
 
 function routeOf(method: string, path: string): FakeRoute | null {
   if (path === '/v1/me' && method === 'GET') return 'me';
@@ -105,6 +202,15 @@ export function fakeAccountApi(users: FakeUser[], options: { pageSize?: number }
   let resultsRewrite: ((results: Json[]) => Json[]) | null = null;
   let corruptPage = 0;
   const hooks: { beforeImport: ((body: string) => void) | null } = { beforeImport: null };
+  /** Every request in order, across the API, the GoTrue, the emulator and anywhere else. */
+  const wire: WireRecord[] = [];
+  const authSent: SentRequest[] = [];
+  const authSessions: GoTrueSession[] = [];
+  const issued: string[] = [];
+  const logoutOutcomes: Promise<LogoutOutcome>[] = [];
+  const authOutage: { on: boolean; onAttempt: (() => void) | null } = { on: false, onAttempt: null };
+  /** The fake servers' clock: the test's Date.now, read at each request. */
+  const now = () => Date.now();
 
   const respond = (status: number, body: unknown, url: string, extra: Record<string, string> = {}) => {
     const text = typeof body === 'string' ? body : JSON.stringify(body);
@@ -363,6 +469,94 @@ export function fakeAccountApi(users: FakeUser[], options: { pageSize?: number }
     }
   }
 
+  const authReply = (status: number, body: unknown, url: string) =>
+    respond(status, body, url, { 'content-type': 'application/json', 'x-supabase-api-version': '2024-01-01' });
+  const authRefusal = (status: number, errorCode: string, msg: string, url: string) => authReply(status, { code: status, error_code: errorCode, msg }, url);
+
+  /** A grant's reply: a new access token, and the refresh token rotated (the previous one stops working). */
+  const issue = (session: GoTrueSession) => {
+    const iat = Math.floor(now() / 1000);
+    const exp = iat + FAKE_GOTRUE_TOKEN_SECONDS;
+    const accessToken = fakeAccessToken({
+      aud: 'authenticated',
+      exp,
+      iat,
+      iss: FAKE_GOTRUE_ISSUER,
+      sub: providerUserId(session.user),
+      email: session.user.email,
+      role: 'authenticated',
+      aal: 'aal1',
+      amr: [{ method: 'password', timestamp: session.signedInAt }],
+      session_id: session.id,
+      is_anonymous: false,
+    });
+    session.refreshToken = randomBytes(12).toString('base64url');
+    session.accessTokens.set(accessToken, exp * 1000);
+    issued.push(accessToken, session.refreshToken);
+    return { access_token: accessToken, token_type: 'bearer', expires_in: FAKE_GOTRUE_TOKEN_SECONDS, expires_at: exp, refresh_token: session.refreshToken, user: gotrueUser(session.user) };
+  };
+
+  /** The session of an access token while the token has not expired (live or not). */
+  const sessionOf = (authorization: string | undefined) => {
+    const token = bearerOf(authorization);
+    const session = authSessions.find((s) => s.accessTokens.has(token));
+    return session && now() < (session.accessTokens.get(token) ?? 0) ? session : null;
+  };
+
+  /** The account a bearer token signs in: a legacy emulator ID token, or an unexpired access token of a live GoTrue session. */
+  const accountOf = (authorization: string | undefined) => {
+    const legacy = users.find((u) => authorization === `Bearer ${u.token}`);
+    if (legacy) return legacy.accountId;
+    const session = sessionOf(authorization);
+    return session?.live ? session.user.accountId : undefined;
+  };
+
+  async function gotrue(url: string, init: FetchInit) {
+    const { pathname, search } = new URL(url);
+    const method = init.method ?? 'GET';
+    const all = headerMap(init.headers);
+    const query = search.replace(/^\?/, '');
+    authSent.push({ method, path: pathname, query, headers: Object.fromEntries(Object.entries(all).filter(([name]) => name !== 'authorization')), bearer: all.authorization !== undefined, body: '' });
+    wire.push({ server: 'auth', method, path: pathname, query });
+    if (authOutage.on) {
+      authOutage.onAttempt?.();
+      throw new TypeError('Network request failed');
+    }
+    const params = new URLSearchParams(query);
+    if (method === 'POST' && pathname === '/token') {
+      const body = bodyOf(init.body);
+      if (params.get('grant_type') === 'password') {
+        const email = typeof body.email === 'string' ? body.email.toLowerCase() : null;
+        const user = users.find((u) => u.email.toLowerCase() === email && u.password === body.password);
+        if (!user) return authRefusal(400, 'invalid_credentials', 'Invalid login credentials', url);
+        const session: GoTrueSession = { id: randomUUID(), user, refreshToken: '', accessTokens: new Map(), live: true, signedInAt: Math.floor(now() / 1000) };
+        authSessions.push(session);
+        return authReply(200, issue(session), url);
+      }
+      if (params.get('grant_type') === 'refresh_token') {
+        const session = authSessions.find((s) => s.live && s.refreshToken !== '' && s.refreshToken === body.refresh_token);
+        return session ? authReply(200, issue(session), url) : authRefusal(400, 'refresh_token_not_found', 'Invalid Refresh Token: Refresh Token Not Found', url);
+      }
+      return authRefusal(400, 'validation_failed', 'Unsupported grant type', url);
+    }
+    if (method === 'POST' && pathname === '/logout') {
+      const outcome = await (logoutOutcomes.shift() ?? 'accept');
+      if (outcome === 'lost') throw new TypeError('Network request failed');
+      if (outcome === 'refuse') return authRefusal(403, 'forbidden', 'Refused by the fake Auth server', url);
+      const session = sessionOf(all.authorization);
+      if (!session) return authRefusal(403, 'bad_jwt', 'invalid JWT', url);
+      if (!session.live) return authRefusal(403, 'session_not_found', 'Session from session_id claim in JWT does not exist', url);
+      const scope = params.get('scope') ?? 'global';
+      for (const s of authSessions) {
+        if (s.user === session.user && (scope === 'local' ? s === session : scope === 'others' ? s !== session : true)) s.live = false;
+      }
+      return authReply(204, '', url);
+    }
+    // Sign-up is off at the prepared local GoTrue.
+    if (method === 'POST' && pathname === '/signup') return authRefusal(422, 'signup_disabled', 'Signups not allowed for this instance', url);
+    return authRefusal(404, 'not_found', 'Not found', url);
+  }
+
   function emulator(url: string, init: FetchInit) {
     if (!url.startsWith(`${FAKE_EMULATOR}/identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?`)) return Promise.reject(new TypeError('Network request failed'));
     const body = JSON.parse(String(init.body)) as { email?: string; password?: string };
@@ -376,8 +570,16 @@ export function fakeAccountApi(users: FakeUser[], options: { pageSize?: number }
 
   const fetchImpl = async (input: unknown, init: FetchInit = {}) => {
     const url = String(input);
-    if (url.startsWith(`${FAKE_EMULATOR}/`)) return emulator(url, init);
-    if (!url.startsWith(`${FAKE_API}/`)) throw new TypeError('Network request failed');
+    if (url.startsWith(`${FAKE_GOTRUE}/`)) return gotrue(url, init);
+    if (url.startsWith(`${FAKE_EMULATOR}/`)) {
+      const { pathname, search } = new URL(url);
+      wire.push({ server: 'emulator', method: init.method ?? 'GET', path: pathname, query: search.replace(/^\?/, '') });
+      return emulator(url, init);
+    }
+    if (!url.startsWith(`${FAKE_API}/`)) {
+      wire.push({ server: 'elsewhere', method: init.method ?? 'GET', path: '', query: '' });
+      throw new TypeError('Network request failed');
+    }
     const { pathname, search } = new URL(url);
     const method = init.method ?? 'GET';
     const all = headerMap(init.headers);
@@ -385,6 +587,7 @@ export function fakeAccountApi(users: FakeUser[], options: { pageSize?: number }
     const body = typeof init.body === 'string' ? init.body : '';
     const query = search.replace(/^\?/, '');
     sent.push({ method, path: pathname, query, headers, bearer: all.authorization !== undefined, body });
+    wire.push({ server: 'api', method, path: pathname, query });
     if (offline) throw new TypeError('Network request failed');
     const route = routeOf(method, pathname);
     if (route === 'import') hooks.beforeImport?.(body);
@@ -393,7 +596,7 @@ export function fakeAccountApi(users: FakeUser[], options: { pageSize?: number }
       holds.delete(route);
       await gate;
     }
-    const account = users.find((u) => all.authorization === `Bearer ${u.token}`)?.accountId;
+    const account = accountOf(all.authorization);
     if (!account) return problem(401, 'unauthenticated', url);
     const response = handle(route, account, pathname, query, headers, body, url);
     if (route && lose.delete(route)) throw new TypeError('Network request failed'); // committed, but the response is lost
@@ -403,8 +606,34 @@ export function fakeAccountApi(users: FakeUser[], options: { pageSize?: number }
   return {
     fetch: fetchImpl as unknown as typeof fetch,
     sent,
+    wire,
     profiles,
     hooks,
+    /** The fake local GoTrue at FAKE_GOTRUE: what reached it (never a body or a token) and how a test steers it. */
+    auth: {
+      sent: authSent,
+      /** While on, every request fails as a lost connection, after `onAttempt` (where a test moves its clock on). */
+      setOffline(on: boolean, onAttempt?: () => void) {
+        authOutage.on = on;
+        authOutage.onAttempt = on ? (onAttempt ?? null) : null;
+      },
+      /** The next logout waits until released: accepted (that session is revoked), refused (403, nothing revoked) or lost. */
+      holdNextLogout() {
+        let release: (outcome: LogoutOutcome) => void = () => undefined;
+        logoutOutcomes.push(new Promise<LogoutOutcome>((resolve) => (release = resolve)));
+        return { release: (outcome: LogoutOutcome = 'accept') => release(outcome) };
+      },
+      /** The user's sessions end at the server, as when they sign out elsewhere. */
+      revokeAll(email: string) {
+        for (const s of authSessions) if (s.user.email === email) s.live = false;
+      },
+      /** How many of the user's sessions the server still accepts. */
+      liveSessions(email: string) {
+        return authSessions.filter((s) => s.live && s.user.email === email).length;
+      },
+      /** Every access and refresh token issued so far, so a test can show none was stored. */
+      issued: () => [...issued],
+    },
     /** The server commits the next request of this route; then its response is lost. */
     loseNext(route: FakeRoute) {
       lose.add(route);

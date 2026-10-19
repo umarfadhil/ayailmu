@@ -1,7 +1,8 @@
 // «Akun lokal»: the account and profile panel of the local developer pilot, presentational only. The caller owns
 // sign-in, profiles, guest-data copying and sync, and supplies every fact and callback. The panel keeps only
 // transient form and checkbox state: the typed password leaves it once per submit and is never kept, logged or
-// stored, and every tick starts over with each sign-in.
+// stored, and every tick starts over with each sign-in. Where the caller offers Continue with Google, it sits in the
+// same form, beside the password sign-in: it hands nothing typed over, and leaves no typed password behind.
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View, type TextInputProps } from 'react-native';
 
@@ -42,8 +43,12 @@ export interface AccountPanelProps {
   connected?: ConnectedProfile | null;
   /** Device and account settings differ (with an optional caller-worded detail); the learner chooses which to use. */
   prefsConflict?: { detail?: string } | null;
+  /** Whether creating a test account is offered (true unless set). False where the provider has sign-up off: sign-in only. */
+  signUp?: boolean;
   /** Gets the typed values once per submit; the panel keeps no password afterwards. */
   onSubmit: (request: { mode: AccountMode; email: string; password: string }) => void;
+  /** Continue with Google, where the caller offers it (signed out only, beside the password form): called with nothing. */
+  onGoogle?: () => void;
   onGuestCopy: () => void;
   onGuestSkip: () => void;
   /** Gets a profile's id back unchanged. */
@@ -71,8 +76,20 @@ const MODES: { value: AccountMode; label: string }[] = [
 
 const OWN_PASSWORD = 'Pakai kata sandi khusus uji coba, bukan yang Anda pakai di tempat lain.';
 
+/** What the panel is for. With Google offered, the .test rule is stated for email and password only: a Google address needs none. */
+function introNote(signUp: boolean, google: boolean): string {
+  if (google) {
+    return signUp
+      ? 'Akun uji coba di layanan akun lokal, khusus untuk pengembangan. Untuk email dan kata sandi, pakai alamat email berakhiran .test: tidak ada email yang dikirim, dan ini bukan pendaftaran sungguhan.'
+      : 'Masuk dengan akun yang sudah disiapkan di layanan akun lokal, khusus untuk pengembangan; pendaftaran baru tidak tersedia. Untuk masuk dengan email dan kata sandi, pakai alamat email uji berakhiran .test: tidak ada email yang dikirim.';
+  }
+  return signUp
+    ? 'Akun uji coba di layanan akun lokal, khusus untuk pengembangan. Pakai alamat email berakhiran .test: tidak ada email yang dikirim, dan ini bukan pendaftaran sungguhan.'
+    : 'Masuk dengan akun uji coba yang sudah disiapkan di layanan akun lokal, khusus untuk pengembangan; pendaftaran baru tidak tersedia. Pakai alamat email berakhiran .test: tidak ada email yang dikirim.';
+}
+
 export function AccountPanel(props: AccountPanelProps) {
-  const { account, busy = null, error = null } = props;
+  const { account, busy = null, error = null, signUp = true } = props;
   const errorRegion = useRef<View>(null);
   useEffect(() => {
     if (error) moveFocus(errorRegion);
@@ -84,10 +101,7 @@ export function AccountPanel(props: AccountPanelProps) {
         <Text accessibilityRole="header" testID="account-title" style={styles.title}>
           Akun lokal
         </Text>
-        <Text style={styles.note}>
-          Akun uji coba di emulator lokal, khusus untuk pengembangan. Pakai alamat email berakhiran .test: tidak ada email yang
-          dikirim, dan ini bukan pendaftaran sungguhan.
-        </Text>
+        <Text style={styles.note}>{introNote(signUp, props.onGoogle !== undefined)}</Text>
         <Text style={styles.note}>Belajar tetap bisa tanpa akun. Setelah aplikasi ditutup atau dimuat ulang, Anda perlu masuk lagi.</Text>
         <View role="status" accessibilityLiveRegion="polite">
           <Text testID="account-status" style={styles.status}>
@@ -104,14 +118,31 @@ export function AccountPanel(props: AccountPanelProps) {
         </View>
       ) : null}
       {/* Keyed by the sign-in: another session never inherits a tick. Signed out, only the form is shown. */}
-      {account ? <SignedIn key={account.key} {...props} busy={busy} /> : <SignInForm busy={busy} onSubmit={props.onSubmit} />}
+      {account ? (
+        <SignedIn key={account.key} {...props} busy={busy} />
+      ) : (
+        <SignInForm busy={busy} signUp={signUp} onSubmit={props.onSubmit} onGoogle={props.onGoogle} />
+      )}
     </View>
   );
 }
 
-/** The sign-in and synthetic sign-up form. Its values live only here and are gone once signed in or unmounted. */
-function SignInForm({ busy, onSubmit }: { busy: AccountBusy | null; onSubmit: AccountPanelProps['onSubmit'] }) {
-  const [mode, setMode] = useState<AccountMode>('create');
+/**
+ * The sign-in (and, where offered, synthetic sign-up) form, with Continue with Google beside it where the caller offers
+ * it. Its values live only here and are gone once signed in or unmounted.
+ */
+function SignInForm({
+  busy,
+  signUp,
+  onSubmit,
+  onGoogle,
+}: {
+  busy: AccountBusy | null;
+  signUp: boolean;
+  onSubmit: AccountPanelProps['onSubmit'];
+  onGoogle?: () => void;
+}) {
+  const [mode, setMode] = useState<AccountMode>(signUp ? 'create' : 'signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const working = busy !== null;
@@ -122,10 +153,15 @@ function SignInForm({ busy, onSubmit }: { busy: AccountBusy | null; onSubmit: Ac
     setPassword(''); // handed over once: the panel keeps no password
     onSubmit(request);
   };
+  const google = () => {
+    if (working || !onGoogle) return;
+    setPassword(''); // nothing typed is handed over, and no typed password stays behind
+    onGoogle();
+  };
 
   return (
     <View style={styles.card} testID="account-form">
-      <Segmented testIDPrefix="account-mode-" accessibilityLabel="Akun uji coba" value={mode} onChange={setMode} options={MODES} />
+      {signUp ? <Segmented testIDPrefix="account-mode-" accessibilityLabel="Akun uji coba" value={mode} onChange={setMode} options={MODES} /> : null}
       <LabeledInput
         label="Email uji (.test)"
         testID="account-email"
@@ -153,6 +189,7 @@ function SignInForm({ busy, onSubmit }: { busy: AccountBusy | null; onSubmit: Ac
         onPress={submit}
       />
       {ready || working ? null : <Text style={styles.hint}>Isi email .test dan kata sandi untuk melanjutkan.</Text>}
+      {onGoogle ? <Btn testID="account-google" kind="secondary" icon="logo-google" label="Lanjutkan dengan Google" disabled={working} onPress={google} /> : null}
     </View>
   );
 }

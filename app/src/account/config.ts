@@ -1,8 +1,10 @@
 // Local account sync configuration for the developer pilot: the loopback account API on port 8092 and the
 // Firebase Auth emulator on port 9099, for a demo project. Anything absent or unsafe turns account sync off;
 // guest learning never depends on it.
+import { localPilotOrigin, PILOT_API_PORT } from '@/account/loopback';
 
-export const PILOT_API_PORT = 8092;
+// The shared loopback checks, still offered here for the legacy pilot.
+export { localPilotOrigin, PILOT_API_PORT };
 export const PILOT_AUTH_EMULATOR_PORT = 9099;
 
 /** The build-time variables read. Expo inlines EXPO_PUBLIC_* values when it bundles the app. */
@@ -30,20 +32,8 @@ export interface DisabledAccountConfig {
 
 export type AccountConfig = EnabledAccountConfig | DisabledAccountConfig;
 
-/**
- * http, a loopback host, a port, and at most a root slash. Matched whole, so credentials, another host, a path,
- * a query or a fragment can never match (no URL parsing: React Native's URL does not implement its parts).
- */
-const LOCAL_ORIGIN = /^http:\/\/(127\.0\.0\.1|localhost):(\d{1,5})\/?$/;
 /** A Firebase demo project ID: the emulators accept it, and it cannot reach real resources. */
 const DEMO_PROJECT = /^demo-[a-z0-9-]{1,25}$/;
-
-/** The normalized origin (http://host:port) when `value` is exactly the local pilot address on `port`; otherwise null. */
-export function localPilotOrigin(value: unknown, port: number): string | null {
-  if (typeof value !== 'string') return null;
-  const match = LOCAL_ORIGIN.exec(value);
-  return match !== null && match[2] === String(port) ? `http://${match[1]}:${port}` : null;
-}
 
 export function isDemoProjectId(value: unknown): value is string {
   return typeof value === 'string' && DEMO_PROJECT.test(value);
