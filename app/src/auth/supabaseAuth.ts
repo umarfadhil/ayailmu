@@ -1,5 +1,6 @@
-// Sign-in against the local Supabase Auth server through its maintained SDK (@supabase/auth-js AuthClient): a password
-// sign-in for the prepared synthetic .test identities only (sign-up is off), and, where the build turns it on, Continue
+// Sign-in against the local Supabase Auth server (in a staging build, the standalone staging one, also at its root)
+// through its maintained SDK (@supabase/auth-js AuthClient): a password sign-in for the prepared synthetic .test
+// identities only (sign-up is off), and, where the build turns it on, Continue
 // with Google through the Auth server's authorization code + PKCE flow. Each sign-in gets its own SDK client, kept in
 // memory only (no persistence, no URL detection, no debug output, no background refresh, no API key), which reaches the
 // Auth root only through a bounded transport without cookies or redirects. The latest sign-in wins; a client that loses
@@ -20,9 +21,9 @@ import {
   type SupportedStorage,
 } from '@supabase/auth-js';
 import { isSafeGoogleConfig } from '@/account/googleConfig';
-import { localPilotOrigin, PILOT_API_PORT } from '@/account/loopback';
+import { accountApiOrigin } from '@/account/staging';
 import { isCanonicalUuid } from '@/account/ids';
-import { LOCAL_SUPABASE, localAuthOrigin, type EnabledSupabaseConfig } from '@/account/supabaseConfig';
+import { accountAuthOrigin, LOCAL_SUPABASE, type EnabledSupabaseConfig } from '@/account/supabaseConfig';
 import {
   attemptRecord,
   GOOGLE_ATTEMPT_TTL_MS,
@@ -319,15 +320,17 @@ function ramStorage(memory: Map<string, string>): SupportedStorage {
 }
 
 export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
-  // Revalidated here too: an unsafe or legacy configuration builds no client and sends nothing.
+  // Revalidated here too, under the configuration's own profile: an unsafe or legacy configuration, an unknown profile,
+  // an API or Auth address that is not exactly that profile's (local, or under the staging profile a staging root origin,
+  // so Auth is always at its root), or a Google web callback of the other profile builds no client and sends nothing.
   const config = options.config;
   const authUrl =
-    config?.enabled === true && config.provider === LOCAL_SUPABASE && localPilotOrigin(config.apiBaseUrl, PILOT_API_PORT) !== null
-      ? localAuthOrigin(config.authUrl)
+    config?.enabled === true && config.provider === LOCAL_SUPABASE && accountApiOrigin(config.apiBaseUrl, config.environment) !== null
+      ? accountAuthOrigin(config.authUrl, config.environment)
       : null;
-  if (!authUrl) throw new Error('createSupabaseAuth needs the local Supabase Auth configuration; nothing was sent.');
+  if (!authUrl) throw new Error('createSupabaseAuth needs a local or staging Supabase Auth configuration; nothing was sent.');
   const googleOptions = options.google;
-  if (googleOptions !== undefined && (!isSafeGoogleConfig(googleOptions.config) || !googleOptions.store)) {
+  if (googleOptions !== undefined && (!isSafeGoogleConfig(googleOptions.config, config.environment) || !googleOptions.store)) {
     throw new Error('createSupabaseAuth needs a safe Google sign-in configuration; nothing was sent.');
   }
   const createClient = options.createClient ?? createAuthClient;

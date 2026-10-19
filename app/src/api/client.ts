@@ -1,8 +1,8 @@
-// Client of the local account API (backend/docs/Backend_Local_Contract.md in the backend worktree). The
-// bearer token travels only in the Authorization header: no cookies (credentials: 'omit'), no redirects,
-// nothing in URLs. Errors carry the HTTP status and the API's stable problem code, never response text or
-// the token.
-import { localPilotOrigin, PILOT_API_PORT } from '@/account/loopback';
+// Client of the local account API (backend/docs/Backend_Local_Contract.md in the backend worktree), or, under the
+// explicit staging profile, of the staging API at its root origin. The bearer token travels only in the Authorization
+// header: no cookies (credentials: 'omit'), no redirects, nothing in URLs. Errors carry the HTTP status and the API's
+// stable problem code, never response text or the token.
+import { accountApiOrigin } from '@/account/staging';
 import { isCanonicalUuid } from '@/account/ids';
 
 export class ApiError extends Error {
@@ -97,10 +97,16 @@ function verifiedAccount(body: unknown): AccountMe | null {
   return { accountId, profiles };
 }
 
-export function createApiClient(options: { baseUrl: string; fetch?: typeof fetch }): ApiClient {
-  // Revalidated here too: an address other than the local pilot API never receives a token.
-  const base = localPilotOrigin(options?.baseUrl, PILOT_API_PORT);
-  if (!base) throw new Error('createApiClient needs the local pilot API address; nothing was sent.');
+export function createApiClient(options: {
+  baseUrl: string;
+  /** The account profile: absent for the local pilot API; exactly "staging" for the staging API's root origin. */
+  environment?: string;
+  fetch?: typeof fetch;
+}): ApiClient {
+  // Revalidated here too, with its profile: an address other than that profile's API (the local pilot API, or a staging
+  // root origin under exactly the staging profile), or an unknown profile, never receives a token.
+  const base = accountApiOrigin(options?.baseUrl, options?.environment);
+  if (!base) throw new Error("createApiClient needs its profile's account API address; nothing was sent.");
   const injected = options.fetch;
 
   /**

@@ -16,6 +16,12 @@ export const CONSENT_VERSION = 'demo-consent-0.1';
  * their new local learners record this version; receipts already recorded under either version are never rewritten.
  */
 export const LOCAL_ACCOUNT_CONSENT_VERSION = 'demo-local-account-sync-consent-0.1';
+/**
+ * Version of the consent given in a staging build's «Akun staging» before an adult profile is created: its statement
+ * names the remote staging server («… dikirim ke server akun staging jarak jauh dan disimpan di profil akun staging
+ * ini.»), so profiles created there and their new local learners record this version, never the local one above.
+ */
+export const STAGING_ACCOUNT_CONSENT_VERSION = 'demo-staging-account-sync-consent-0.1';
 
 /** A signed-in account's opened dataset, used for learning instead of the guest's. */
 export interface DatasetSelection {

@@ -1,5 +1,6 @@
-// «Akun lokal»: the account and profile panel of the local developer pilot, presentational only. The caller owns
-// sign-in, profiles, guest-data copying and sync, and supplies every fact and callback. The panel keeps only
+// «Akun lokal»: the account and profile panel of the local developer pilot, presentational only; in a staging build
+// («Akun staging») the same panel names the remote staging server instead, its consent statement included. The caller
+// owns sign-in, profiles, guest-data copying and sync, and supplies every fact and callback. The panel keeps only
 // transient form and checkbox state: the typed password leaves it once per submit and is never kept, logged or
 // stored, and every tick starts over with each sign-in. Where the caller offers Continue with Google, it sits in the
 // same form, beside the password sign-in: it hands nothing typed over, and leaves no typed password behind.
@@ -45,6 +46,8 @@ export interface AccountPanelProps {
   prefsConflict?: { detail?: string } | null;
   /** Whether creating a test account is offered (true unless set). False where the provider has sign-up off: sign-in only. */
   signUp?: boolean;
+  /** The caller's validated account profile: 'staging' where the account service is the remote staging server; absent: the local one. */
+  environment?: 'staging';
   /** Gets the typed values once per submit; the panel keeps no password afterwards. */
   onSubmit: (request: { mode: AccountMode; email: string; password: string }) => void;
   /** Continue with Google, where the caller offers it (signed out only, beside the password form): called with nothing. */
@@ -60,14 +63,41 @@ export interface AccountPanelProps {
   onSignOut: () => void;
 }
 
-const BUSY: Record<AccountBusy, string> = {
-  auth: 'Sedang masuk ke akun lokal…',
+/** How the panel names the account service: the local one, or in a staging build the remote staging server. */
+interface ServiceWords {
+  title: string;
+  /** Mid-sentence, e.g. «akun lokal». */
+  account: string;
+  /** Mid-sentence: where the prepared accounts are. */
+  service: string;
+  /** The adult profile's consent statement (the caller records its version). */
+  consent: string;
+}
+
+const LOCAL_WORDS: ServiceWords = {
+  title: 'Akun lokal',
+  account: 'akun lokal',
+  service: 'layanan akun lokal',
+  consent: 'Saya setuju jawaban dan pengaturan saya disimpan di profil akun lokal ini.',
+};
+
+const STAGING_WORDS: ServiceWords = {
+  title: 'Akun staging',
+  account: 'akun staging',
+  service: 'server akun staging jarak jauh',
+  consent: 'Saya setuju jawaban dan pengaturan saya dikirim ke server akun staging jarak jauh dan disimpan di profil akun staging ini.',
+};
+
+const BUSY: Record<Exclude<AccountBusy, 'auth'>, string> = {
   'guest-copy': 'Sedang menyalin data tamu…',
   profile: 'Sedang menyiapkan profil…',
   sync: 'Sedang menyinkronkan…',
   prefs: 'Sedang menerapkan pilihan pengaturan…',
   signout: 'Sedang keluar dari akun…',
 };
+
+/** The wait announced for `busy`; signing in names the account. */
+const busyNote = (busy: AccountBusy, words: ServiceWords): string => (busy === 'auth' ? `Sedang masuk ke ${words.account}…` : BUSY[busy]);
 
 const MODES: { value: AccountMode; label: string }[] = [
   { value: 'create', label: 'Buat akun uji coba' },
@@ -76,20 +106,24 @@ const MODES: { value: AccountMode; label: string }[] = [
 
 const OWN_PASSWORD = 'Pakai kata sandi khusus uji coba, bukan yang Anda pakai di tempat lain.';
 
-/** What the panel is for. With Google offered, the .test rule is stated for email and password only: a Google address needs none. */
-function introNote(signUp: boolean, google: boolean): string {
+/**
+ * What the panel is for, at `service` (where the prepared accounts are). With Google offered, the .test rule is stated
+ * for email and password only: a Google address needs none.
+ */
+function introNote(signUp: boolean, google: boolean, service: string): string {
   if (google) {
     return signUp
-      ? 'Akun uji coba di layanan akun lokal, khusus untuk pengembangan. Untuk email dan kata sandi, pakai alamat email berakhiran .test: tidak ada email yang dikirim, dan ini bukan pendaftaran sungguhan.'
-      : 'Masuk dengan akun yang sudah disiapkan di layanan akun lokal, khusus untuk pengembangan; pendaftaran baru tidak tersedia. Untuk masuk dengan email dan kata sandi, pakai alamat email uji berakhiran .test: tidak ada email yang dikirim.';
+      ? `Akun uji coba di ${service}, khusus untuk pengembangan. Untuk email dan kata sandi, pakai alamat email berakhiran .test: tidak ada email yang dikirim, dan ini bukan pendaftaran sungguhan.`
+      : `Masuk dengan akun yang sudah disiapkan di ${service}, khusus untuk pengembangan; pendaftaran baru tidak tersedia. Untuk masuk dengan email dan kata sandi, pakai alamat email uji berakhiran .test: tidak ada email yang dikirim.`;
   }
   return signUp
-    ? 'Akun uji coba di layanan akun lokal, khusus untuk pengembangan. Pakai alamat email berakhiran .test: tidak ada email yang dikirim, dan ini bukan pendaftaran sungguhan.'
-    : 'Masuk dengan akun uji coba yang sudah disiapkan di layanan akun lokal, khusus untuk pengembangan; pendaftaran baru tidak tersedia. Pakai alamat email berakhiran .test: tidak ada email yang dikirim.';
+    ? `Akun uji coba di ${service}, khusus untuk pengembangan. Pakai alamat email berakhiran .test: tidak ada email yang dikirim, dan ini bukan pendaftaran sungguhan.`
+    : `Masuk dengan akun uji coba yang sudah disiapkan di ${service}, khusus untuk pengembangan; pendaftaran baru tidak tersedia. Pakai alamat email berakhiran .test: tidak ada email yang dikirim.`;
 }
 
 export function AccountPanel(props: AccountPanelProps) {
   const { account, busy = null, error = null, signUp = true } = props;
+  const words = props.environment === 'staging' ? STAGING_WORDS : LOCAL_WORDS;
   const errorRegion = useRef<View>(null);
   useEffect(() => {
     if (error) moveFocus(errorRegion);
@@ -99,9 +133,9 @@ export function AccountPanel(props: AccountPanelProps) {
     <View style={styles.panel} testID="account-panel">
       <View style={styles.head}>
         <Text accessibilityRole="header" testID="account-title" style={styles.title}>
-          Akun lokal
+          {words.title}
         </Text>
-        <Text style={styles.note}>{introNote(signUp, props.onGoogle !== undefined)}</Text>
+        <Text style={styles.note}>{introNote(signUp, props.onGoogle !== undefined, words.service)}</Text>
         <Text style={styles.note}>Belajar tetap bisa tanpa akun. Setelah aplikasi ditutup atau dimuat ulang, Anda perlu masuk lagi.</Text>
         <View role="status" accessibilityLiveRegion="polite">
           <Text testID="account-status" style={styles.status}>
@@ -110,7 +144,7 @@ export function AccountPanel(props: AccountPanelProps) {
         </View>
       </View>
       <View role="status" accessibilityLiveRegion="polite" testID="account-busy">
-        {busy ? <Text style={styles.busy}>{BUSY[busy]}</Text> : null}
+        {busy ? <Text style={styles.busy}>{busyNote(busy, words)}</Text> : null}
       </View>
       {error ? (
         <View ref={errorRegion} role="alert" accessibilityLiveRegion="assertive" tabIndex={-1} testID="account-error">
@@ -119,9 +153,9 @@ export function AccountPanel(props: AccountPanelProps) {
       ) : null}
       {/* Keyed by the sign-in: another session never inherits a tick. Signed out, only the form is shown. */}
       {account ? (
-        <SignedIn key={account.key} {...props} busy={busy} />
+        <SignedIn key={account.key} {...props} busy={busy} words={words} />
       ) : (
-        <SignInForm busy={busy} signUp={signUp} onSubmit={props.onSubmit} onGoogle={props.onGoogle} />
+        <SignInForm busy={busy} signUp={signUp} words={words} onSubmit={props.onSubmit} onGoogle={props.onGoogle} />
       )}
     </View>
   );
@@ -134,11 +168,13 @@ export function AccountPanel(props: AccountPanelProps) {
 function SignInForm({
   busy,
   signUp,
+  words,
   onSubmit,
   onGoogle,
 }: {
   busy: AccountBusy | null;
   signUp: boolean;
+  words: ServiceWords;
   onSubmit: AccountPanelProps['onSubmit'];
   onGoogle?: () => void;
 }) {
@@ -183,7 +219,7 @@ function SignInForm({
       />
       <Btn
         testID="account-submit"
-        label={mode === 'create' ? 'Buat akun dan masuk' : 'Masuk ke akun lokal'}
+        label={mode === 'create' ? 'Buat akun dan masuk' : `Masuk ke ${words.account}`}
         icon="arrow-forward"
         disabled={!ready || working}
         onPress={submit}
@@ -194,16 +230,16 @@ function SignInForm({
   );
 }
 
-function SignedIn(props: AccountPanelProps & { busy: AccountBusy | null }) {
-  const { busy, guestCopy, connected, prefsConflict } = props;
+function SignedIn(props: AccountPanelProps & { busy: AccountBusy | null; words: ServiceWords }) {
+  const { busy, guestCopy, connected, prefsConflict, words } = props;
   const working = busy !== null;
   return (
     <View style={styles.panel}>
-      {guestCopy ? <GuestCopy offer={guestCopy} working={working} onCopy={props.onGuestCopy} onSkip={props.onGuestSkip} /> : null}
+      {guestCopy ? <GuestCopy offer={guestCopy} working={working} words={words} onCopy={props.onGuestCopy} onSkip={props.onGuestSkip} /> : null}
       {connected ? (
         <Connected profile={connected} working={working} onSyncNow={props.onSyncNow} />
       ) : (
-        <ProfileChoice profiles={props.profiles ?? []} working={working} onLink={props.onLinkProfile} onCreate={props.onCreateProfile} />
+        <ProfileChoice profiles={props.profiles ?? []} working={working} words={words} onLink={props.onLinkProfile} onCreate={props.onCreateProfile} />
       )}
       {prefsConflict ? (
         <Section title="Pengaturan berbeda" testID="prefs-conflict">
@@ -226,11 +262,13 @@ function SignedIn(props: AccountPanelProps & { busy: AccountBusy | null }) {
 function GuestCopy({
   offer,
   working,
+  words,
   onCopy,
   onSkip,
 }: {
   offer: NonNullable<AccountPanelProps['guestCopy']>;
   working: boolean;
+  words: ServiceWords;
   onCopy: () => void;
   onSkip: () => void;
 }) {
@@ -248,7 +286,7 @@ function GuestCopy({
   return (
     <Section title="Data tamu di perangkat ini" testID="guest-copy">
       <Text style={styles.body}>
-        {`${offer.answers} jawaban tersimpan di perangkat ini tanpa akun. Menyalinnya ke akun lokal tidak menghapus data di perangkat ini.`}
+        {`${offer.answers} jawaban tersimpan di perangkat ini tanpa akun. Menyalinnya ke ${words.account} tidak menghapus data di perangkat ini.`}
       </Text>
       <Check testID="guest-copy-consent" label="Salin data tamu" value={consent} onChange={setConsent} disabled={working} />
       <Btn testID="guest-copy-confirm" kind="secondary" label="Salin sekarang" disabled={!consent || working} onPress={() => consent && !working && onCopy()} />
@@ -262,11 +300,13 @@ function GuestCopy({
 function ProfileChoice({
   profiles,
   working,
+  words,
   onLink,
   onCreate,
 }: {
   profiles: AccountProfileChoice[];
   working: boolean;
+  words: ServiceWords;
   onLink: (id: string) => void;
   onCreate: AccountPanelProps['onCreateProfile'];
 }) {
@@ -296,7 +336,7 @@ function ProfileChoice({
         <Check testID="profile-adult" label="Saya berusia 18 tahun atau lebih." value={adult} onChange={setAdult} disabled={working} />
         <Check
           testID="profile-agree"
-          label="Saya setuju jawaban dan pengaturan saya disimpan di profil akun lokal ini."
+          label={words.consent}
           value={agreed}
           onChange={setAgreed}
           disabled={working}

@@ -5,7 +5,9 @@
 // the presentational AccountPanel and selects the account's dataset for learning only after an explicit profile choice;
 // a Google identity is never consent. Both sign-ins end in the same verification and dataset opening. An expired session
 // is refreshed before anything is verified or synced. Signing out (or another sign-in) drops every late result and
-// returns learning to the guest's dataset at once; nothing stored is deleted.
+// returns learning to the guest's dataset at once; nothing stored is deleted. In a staging build (the validated
+// configuration's staging profile) the same layer reaches the staging Auth server and API, names the remote staging
+// server wherever it named the local service, and records the staging consent version for a new adult profile.
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
 import { copyGuestToAccount, GUEST_NAMESPACE, type Namespace, type OpenedAccountDataset, type RawSource } from '@/account/datasets';
@@ -13,6 +15,7 @@ import { loadGoogleConfig } from '@/account/googleConfig';
 import { isCanonicalUuid } from '@/account/ids';
 import { openAccountDataset } from '@/account/openAccountDataset';
 import { createAccountSession } from '@/account/session';
+import { STAGING } from '@/account/staging';
 import { loadSupabaseConfig } from '@/account/supabaseConfig';
 import { ApiError, createApiClient } from '@/api/client';
 import type { PendingGoogleStore } from '@/auth/google';
@@ -25,10 +28,10 @@ import type { RawDataset } from '@/storage/rawRecords';
 import type { Store } from '@/storage/types';
 import { openJournal, SyncError, type JournalView, type LinkChoice, type SyncConnection, type SyncJournal } from '@/sync/journal';
 import type { AccountBusy, AccountMode, AccountPanelProps, AccountProfileChoice, ConnectedProfile } from '@/ui/account/AccountPanel';
-import { APP_VERSION, LOCAL_ACCOUNT_CONSENT_VERSION, useApp } from '@/ui/AppContext';
+import { APP_VERSION, LOCAL_ACCOUNT_CONSENT_VERSION, STAGING_ACCOUNT_CONSENT_VERSION, useApp } from '@/ui/AppContext';
 
 export interface AccountContextValue {
-  /** The local account service is configured for this build. */
+  /** The account service (the local one, or a staging build's staging server) is configured for this build. */
   enabled: boolean;
   /** A signed-in, verified account. */
   signedIn: boolean;
@@ -68,14 +71,32 @@ const PREFERENCE_FIELDS = ['session_minutes', 'arabic_scale'] as const;
 const PROFILE_LABEL = 'Profil dewasa';
 const LOST_RESPONSE = 'Respons layanan akun belum diterima. Jawaban tetap tersimpan di perangkat ini; sinkronkan lagi untuk mengirim ulang permintaan yang sama.';
 const ENDED = 'Sesi akun berakhir. Masuk lagi; data di perangkat ini tetap ada.';
-const NOT_REVOKED = 'Sudah keluar di perangkat ini, tetapi layanan akun lokal belum memastikan sesinya dicabut. Data di perangkat ini tetap ada.';
-const OFFLINE = 'Tidak ada koneksi ke layanan akun lokal. Jawaban tetap tersimpan di perangkat ini.';
+
+/**
+ * The account service as this layer's messages name it, and the version its adult-profile consent records: the local
+ * account service by default, or the remote staging server under the validated configuration's staging profile.
+ */
+interface AccountService {
+  /** Mid-sentence, e.g. «layanan akun lokal». */
+  name: string;
+  /** Mid-sentence, e.g. «akun lokal». */
+  account: string;
+  consentVersion: string;
+}
+const LOCAL_SERVICE: AccountService = { name: 'layanan akun lokal', account: 'akun lokal', consentVersion: LOCAL_ACCOUNT_CONSENT_VERSION };
+const STAGING_SERVICE: AccountService = { name: 'server akun staging', account: 'akun staging', consentVersion: STAGING_ACCOUNT_CONSENT_VERSION };
+
+/** `text` starting a sentence. */
+const upperFirst = (text: string): string => text.charAt(0).toUpperCase() + text.slice(1);
+const notRevoked = (s: AccountService) => `Sudah keluar di perangkat ini, tetapi ${s.name} belum memastikan sesinya dicabut. Data di perangkat ini tetap ada.`;
+const offline = (s: AccountService) => `Tidak ada koneksi ke ${s.name}. Jawaban tetap tersimpan di perangkat ini.`;
 
 /** The sign-in this work belonged to is gone (expired, or ended without this layer's sign-out): sign out visibly. */
 const sessionEnded = (e: unknown): boolean => e instanceof AuthError && (e.code === 'expired' || e.code === 'signed_out' || e.code === 'superseded');
 
-/** A fixed message for a sign-in failure: never the server's text, the address or the password. */
-function authMessage(e: unknown): string {
+/** A fixed message for a sign-in failure at service `s`: never the server's text, the address or the password. */
+function authMessage(e: unknown, s: AccountService): string {
+  const unreachable = `${upperFirst(s.name)} tidak terjangkau. Belajar tetap bisa tanpa akun.`;
   if (e instanceof AuthError) {
     switch (e.code) {
       case 'not_synthetic':
@@ -83,35 +104,35 @@ function authMessage(e: unknown): string {
       case 'invalid_credentials':
         return 'Email atau kata sandi tidak cocok.';
       case 'network':
-        return 'Layanan akun lokal tidak terjangkau. Belajar tetap bisa tanpa akun.';
+        return unreachable;
       case 'expired':
         return ENDED;
       case 'cancelled':
         return 'Masuk dengan Google dibatalkan. Belajar tetap bisa tanpa akun.';
       case 'not_registered':
-        return 'Akun Google ini belum terdaftar di layanan akun lokal, dan pendaftaran baru tidak tersedia. Belajar tetap bisa tanpa akun.';
+        return `Akun Google ini belum terdaftar di ${s.name}, dan pendaftaran baru tidak tersedia. Belajar tetap bisa tanpa akun.`;
       case 'bad_callback':
         return 'Masuk dengan Google tidak bisa diselesaikan. Mulai lagi dari tombol Google; data di perangkat ini tetap ada.';
       case 'provider_refused':
-        return 'Google atau layanan akun lokal menolak permintaan masuk ini. Coba lagi nanti; belajar tetap bisa tanpa akun.';
+        return `Google atau ${s.name} menolak permintaan masuk ini. Coba lagi nanti; belajar tetap bisa tanpa akun.`;
       case 'unavailable':
         return 'Masuk dengan Google belum bisa dipakai di perangkat ini. Belajar tetap bisa tanpa akun.';
       default:
-        return 'Belum bisa masuk ke akun lokal. Belajar tetap bisa tanpa akun.';
+        return `Belum bisa masuk ke ${s.account}. Belajar tetap bisa tanpa akun.`;
     }
   }
-  if (e instanceof ApiError && (e.code === 'network' || e.code === 'aborted')) return 'Layanan akun lokal tidak terjangkau. Belajar tetap bisa tanpa akun.';
-  if (e instanceof ApiError) return 'Layanan akun lokal belum bisa memastikan akun ini. Coba lagi.';
-  return 'Akun lokal belum bisa dibuka di perangkat ini. Data di perangkat ini tetap ada.';
+  if (e instanceof ApiError && (e.code === 'network' || e.code === 'aborted')) return unreachable;
+  if (e instanceof ApiError) return `${upperFirst(s.name)} belum bisa memastikan akun ini. Coba lagi.`;
+  return `${upperFirst(s.account)} belum bisa dibuka di perangkat ini. Data di perangkat ini tetap ada.`;
 }
 
-/** A fixed, truthful status for a sync that stopped; local data is never touched by a failure. */
-function syncFailure(e: unknown, view: JournalView): string {
+/** A fixed, truthful status for a sync with service `s` that stopped; local data is never touched by a failure. */
+function syncFailure(e: unknown, view: JournalView, s: AccountService): string {
   if (e instanceof ApiError && (e.code === 'network' || e.code === 'aborted')) {
-    return view.sources.some((s) => s.frozen !== null) ? LOST_RESPONSE : OFFLINE;
+    return view.sources.some((source) => source.frozen !== null) ? LOST_RESPONSE : offline(s);
   }
   // The session could not be refreshed for now: nothing was sent, and it may be tried again.
-  if (e instanceof AuthError && e.code === 'network') return OFFLINE;
+  if (e instanceof AuthError && e.code === 'network') return offline(s);
   if (e instanceof SyncError) {
     switch (e.code) {
       case 'unverified_receipt':
@@ -161,6 +182,9 @@ export function AccountProvider({
   });
 
   const config = useMemo(() => loadSupabaseConfig(), []);
+  // The validated configuration's own profile (never a guess from an address): 'staging' in a staging build, else absent.
+  const environment = config.enabled ? config.environment : undefined;
+  const service = environment === STAGING ? STAGING_SERVICE : LOCAL_SERVICE;
   // Continue with Google: only with the account service on, in a build that turns it on, where its platform can run it.
   const google = useMemo(() => {
     if (!config.enabled) return null;
@@ -175,7 +199,8 @@ export function AccountProvider({
     if (!config.enabled) return null;
     // The platform's fetch as this provider found it: a sign-out still on its way after leaving uses the same one.
     const auth = createSupabaseAuth({ config, fetch: globalThis.fetch, google: google ? { config: google.settings, store: google.store } : undefined });
-    const api = createApiClient({ baseUrl: config.apiBaseUrl });
+    // The API client revalidates its address under the same profile the Auth adapter takes from `config`.
+    const api = createApiClient({ baseUrl: config.apiBaseUrl, environment: config.environment });
     const session = createAccountSession({ auth, api });
     const conn: SyncConnection = { auth, session, api };
     return { auth, api, session, conn, google };
@@ -254,7 +279,7 @@ export function AccountProvider({
       setError(message);
       setBusy(null);
       const { revoked } = await revocation;
-      if (hadSession && !revoked && message === null && live(t)) setError(NOT_REVOKED);
+      if (hadSession && !revoked && message === null && live(t)) setError(notRevoked(service));
     }
 
     /**
@@ -294,7 +319,7 @@ export function AccountProvider({
           await signOut(ENDED);
           return;
         }
-        status = syncFailure(e, j.view());
+        status = syncFailure(e, j.view(), service);
       }
       let savedAnswers = connectedRef.current?.savedAnswers ?? 0;
       try {
@@ -375,7 +400,7 @@ export function AccountProvider({
       if (services.auth.status().state !== 'signed-out') void services.auth.signOut();
       close();
       clear();
-      setError(authMessage(e));
+      setError(authMessage(e, service));
       setBusy(null);
     }
 
@@ -511,8 +536,9 @@ export function AccountProvider({
       const t = turn.current;
       setBusy('profile');
       setError(null);
-      // The consent ticked in this panel, under its own version (not the guest's device-only consent).
-      const consent = { version: LOCAL_ACCOUNT_CONSENT_VERSION, at: new Date().toISOString() };
+      // The consent ticked in this panel, under its own version (not the guest's device-only consent): the local
+      // account's, or in a staging build the staging one, whose statement names the remote staging server.
+      const consent = { version: service.consentVersion, at: new Date().toISOString() };
       try {
         await ensureLearner(o, consent);
         await selectAccountDataset(o, j);
@@ -604,7 +630,7 @@ export function AccountProvider({
     }
 
     return { signOut, sync, submit, continueWithGoogle, resumeGoogle, copyGuest, skipGuest, createProfile, linkProfile, resolvePrefs };
-  }, [services, openDataset, setConnected]);
+  }, [services, service, openDataset, setConnected]);
 
   // Leaving the app run (unmount) drops all account work and its session (which no later run could use), and lets go of
   // the account dataset; nothing is deleted.
@@ -641,6 +667,7 @@ export function AccountProvider({
           connected,
           prefsConflict,
           signUp: false,
+          environment,
           onSubmit: (request) => void actions.submit(request),
           // Only where the build turns Google on, with the account service, and the platform can run its browser and store.
           onGoogle: services.google && services.auth.google ? () => void actions.continueWithGoogle() : undefined,
