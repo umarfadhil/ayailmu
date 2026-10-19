@@ -13,6 +13,7 @@ import (
 )
 
 type Config struct {
+	Provider                            string
 	Issuer, JWKSURL, Audience, ClientID string
 	AllowLoopbackHTTP                   bool
 }
@@ -42,12 +43,19 @@ func validURL(raw string, allow bool) bool {
 	return allow && u.Scheme == "http" && (host == "localhost" || ip != nil && ip.IsLoopback())
 }
 func New(ctx context.Context, cfg Config) (*Verifier, error) {
-	if !validURL(cfg.Issuer, cfg.AllowLoopbackHTTP) || !validURL(cfg.JWKSURL, cfg.AllowLoopbackHTTP) || cfg.Audience == "" || cfg.ClientID == "" {
+	if cfg.Provider == "" {
+		cfg.Provider = "keycloak"
+	}
+	if (cfg.Provider != "keycloak" && cfg.Provider != "gotrue") || !validURL(cfg.Issuer, cfg.AllowLoopbackHTTP) || !validURL(cfg.JWKSURL, cfg.AllowLoopbackHTTP) || cfg.Audience == "" || (cfg.Provider == "keycloak" && cfg.ClientID == "") || (cfg.Provider == "gotrue" && cfg.Audience != "authenticated") {
 		return nil, errors.New("invalid OIDC configuration")
 	}
 	client := &http.Client{Timeout: 5 * time.Second, CheckRedirect: func(r *http.Request, via []*http.Request) error { return errors.New("JWKS redirect refused") }}
 	keys := oidc.NewRemoteKeySet(oidc.ClientContext(ctx, client), cfg.JWKSURL)
-	return &Verifier{inner: oidc.NewVerifier(cfg.Issuer, keys, &oidc.Config{ClientID: cfg.Audience, SupportedSigningAlgs: []string{oidc.RS256}}), cfg: cfg}, nil
+	algorithms := []string{oidc.RS256}
+	if cfg.Provider == "gotrue" {
+		algorithms = []string{oidc.ES256}
+	}
+	return &Verifier{inner: oidc.NewVerifier(cfg.Issuer, keys, &oidc.Config{ClientID: cfg.Audience, SupportedSigningAlgs: algorithms}), cfg: cfg}, nil
 }
 func (v *Verifier) Verify(ctx context.Context, raw string) (Principal, error) {
 	deny := errors.New("invalid access token")
@@ -57,6 +65,9 @@ func (v *Verifier) Verify(ctx context.Context, raw string) (Principal, error) {
 	tok, err := v.inner.Verify(ctx, raw)
 	if err != nil {
 		return Principal{}, deny
+	}
+	if v.cfg.Provider == "gotrue" {
+		return v.verifyGoTrue(tok)
 	}
 	var claims struct {
 		Type      string `json:"typ"`

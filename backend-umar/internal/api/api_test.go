@@ -69,6 +69,8 @@ func TestHTTPAccountOwnershipAndSync(t *testing.T) {
 	call("POST", "/v1/account", declaration, issuer.Token(t, map[string]any{"auth_time": time.Now().Unix() - 600}), 403)
 	call("POST", "/v1/account", strings.Replace(declaration, `"synthetic":true`, `"synthetic":false`, 1), token, 400)
 	call("POST", "/v1/account", declaration, token, 200)
+	call("GET", "/v1/account", "", issuer.Token(t, map[string]any{"sub": t.Name(), "auth_time": time.Now().Unix() - 600}), 200)
+	call("GET", "/v1/account", "", issuer.Token(t, map[string]any{"sub": "unknown-readonly-account"}), 403)
 	call("POST", "/v1/account", declaration, foreign, 200)
 	input := `{"client_learner_id":"http-native","kind":"ADULT","lang":"id","synthetic":true}`
 	call("POST", "/v1/learners", strings.Replace(input, `"kind":`, `"label":"private","kind":`, 1), token, 400)

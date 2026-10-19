@@ -32,6 +32,7 @@ class SyncEngineTest {
         val events = mutableMapOf<String, LinkedHashMap<String, String>>()
         val profiles = mutableMapOf<String, MutableList<Learner>>()
         override suspend fun account(token: String): String { checkNetwork(); return "owner-$token" }
+        override suspend fun currentAccount(token: String): String { checkNetwork(); return "owner-$token" }
         override suspend fun learners(token: String): List<Learner> { checkNetwork(); return profiles[token].orEmpty() }
         override suspend fun createLearner(token: String, clientId: String): Learner { checkNetwork(); val l=Learner("remote-$clientId",clientId,"ADULT","adults","id");profiles.getOrPut(token){ mutableListOf() }.add(l);return l }
         override suspend fun catalog(token: String): Catalog { checkNetwork();return Catalog(proof.sourceCommit,listOf(CatalogPack(proof.track,proof.contentVersion,proof.rulesVersion,proof.packSha256,proof.rulesSha256))) }
@@ -141,6 +142,12 @@ class SyncEngineTest {
         val disabling=async { e.disable() };runCurrent();assertFalse(e.binding()!!.enabled)
         api.withdrawBlock!!.complete(Unit);enabling.await();disabling.await()
         assertFalse(e.binding()!!.enabled);assertFalse(e.binding()!!.withdrawalPending);assertTrue(api.remoteRevoked)
+    }
+    @Test fun refreshedSessionResumesOnlyItsDurableOwnerAndCannotUndoLogout() = runTest {
+        val api=FakeBackend(proof);val e=ready(api);e.enable(emptyList());e.capture(listOf(payload("a1")))
+        e.expireSession();e.resume("A");assertTrue(e.authenticated());assertEquals(1,e.pendingCount())
+        e.expireSession();assertFailsWith<IllegalArgumentException>{e.resume("B")};assertFalse(e.authenticated());assertEquals("owner-A",e.owner())
+        e.logout();assertFailsWith<IllegalArgumentException>{e.resume("A")};assertNull(e.owner())
     }
 
 }

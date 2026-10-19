@@ -36,6 +36,11 @@ func New(s *store.Store, v *auth.Verifier, r *catalog.Registry) http.Handler {
 		write(w, 200, map[string]string{"status": "ready"})
 	})
 	m.HandleFunc("POST /v1/account", a.secure(a.account))
+	m.HandleFunc("GET /v1/account", a.secure(func(w http.ResponseWriter, r *http.Request, p auth.Principal) {
+		if id, ok := a.owner(w, r, p); ok {
+			write(w, 200, map[string]string{"account_id": id})
+		}
+	}))
 	m.HandleFunc("POST /v1/learners", a.secure(a.createProfile))
 	m.HandleFunc("GET /v1/learners", a.secure(a.profiles))
 	m.HandleFunc("POST /v1/learners/{id}/consent", a.secure(a.consent))

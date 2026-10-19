@@ -4,6 +4,11 @@ import os
 import subprocess
 import sys
 from fixtures import ROOT, fixture_lock, generate
+if os.environ.get('UMAR_E2E_PROVIDER', 'gotrue') == 'gotrue':
+    from gotrue_fixture import generate
+    fixture_path = ROOT / '.local/gotrue/token-fixtures.json'
+else:
+    fixture_path = ROOT / '.local/token-fixtures.json'
 
 mode = sys.argv[1]
 if mode not in ('jvm', 'android'):
@@ -20,7 +25,7 @@ with fixture_lock():
     try:
         subprocess.run(gradle + [compile_task] + options, env=env, check=True)
         generate()
-        env['UMAR_E2E_FIXTURES'] = str(ROOT / '.local/token-fixtures.json')
+        env['UMAR_E2E_FIXTURES'] = str(fixture_path)
         subprocess.run(gradle + test_tasks + options, env=env, check=True)
     finally:
-        (ROOT / '.local/token-fixtures.json').unlink(missing_ok=True)
+        fixture_path.unlink(missing_ok=True)

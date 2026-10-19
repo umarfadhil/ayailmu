@@ -52,7 +52,12 @@ func run() error {
 	if err = s.Migrate(startup); err != nil {
 		return errors.New("database migration failed")
 	}
-	v, err := auth.New(ctx, auth.Config{Issuer: env("UMAR_OIDC_ISSUER", "http://127.0.0.1:8285/realms/umar"), JWKSURL: env("UMAR_OIDC_JWKS_URL", "http://127.0.0.1:8285/realms/umar/protocol/openid-connect/certs"), Audience: "umar-api", ClientID: "umar-native", AllowLoopbackHTTP: true})
+	provider := env("UMAR_AUTH_PROVIDER", "gotrue")
+	issuer, jwks, audience := "http://127.0.0.1:8287", "http://127.0.0.1:8287/.well-known/jwks.json", "authenticated"
+	if provider == "keycloak" {
+		issuer, jwks, audience = "http://127.0.0.1:8285/realms/umar", "http://127.0.0.1:8285/realms/umar/protocol/openid-connect/certs", "umar-api"
+	}
+	v, err := auth.New(ctx, auth.Config{Provider: provider, Issuer: env("UMAR_OIDC_ISSUER", issuer), JWKSURL: env("UMAR_OIDC_JWKS_URL", jwks), Audience: audience, ClientID: "umar-native", AllowLoopbackHTTP: true})
 	if err != nil {
 		return err
 	}

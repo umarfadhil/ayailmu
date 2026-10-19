@@ -55,6 +55,7 @@ class HttpBackend(baseUrl: String) : Backend {
     }
     private fun learnerPath(id: String): String { require(id.matches(Regex("[A-Za-z0-9_-]{1,128}"))); return "/v1/learners/$id" }
     override suspend fun account(token: String): String = request<JsonObject>("POST", "/v1/account", token, buildJsonObject { put("declaration_version", "adult-owner-v1"); put("adult_confirmed", true); put("synthetic", true) }).getValue("account_id").jsonPrimitive.content
+    override suspend fun currentAccount(token: String): String = request<JsonObject>("GET", "/v1/account", token).getValue("account_id").jsonPrimitive.content
     override suspend fun learners(token: String): List<Learner> = request("GET", "/v1/learners", token)
     override suspend fun createLearner(token: String, clientId: String): Learner = request("POST", "/v1/learners", token, buildJsonObject { put("client_learner_id", clientId); put("kind", "ADULT"); put("lang", "id"); put("synthetic", true) })
     override suspend fun catalog(token: String): Catalog = request("GET", "/v1/packs", token)

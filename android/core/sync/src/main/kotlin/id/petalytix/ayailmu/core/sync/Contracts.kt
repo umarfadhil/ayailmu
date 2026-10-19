@@ -38,6 +38,7 @@ data class PackProof(val track: String, val contentVersion: String, val rulesVer
 
 interface Backend {
     suspend fun account(token: String): String
+    suspend fun currentAccount(token: String): String
     suspend fun learners(token: String): List<Learner>
     suspend fun createLearner(token: String, clientId: String): Learner
     suspend fun catalog(token: String): Catalog

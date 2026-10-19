@@ -91,7 +91,7 @@ class NativeRoomSyncTest {
         fun context(name: String) = object : ContextWrapper(base) { override fun getNoBackupFilesDir() = File(dir, name).apply { mkdirs() } }
         val dbA = db(base); val dbB = db(base)
         val activeA = InMemoryActiveProfileStore(); val activeB = InMemoryActiveProfileStore()
-        val api = HttpBackend("http://127.0.0.1:8186"); val network = NetworkGate(api)
+        val api = HttpBackend(tokens["api"]?.jsonPrimitive?.content ?: "http://127.0.0.1:8186"); val network = NetworkGate(api)
         val first = SyncLabRepository(context("client-a"), dbA, activeA, assets, ContentRepository(assets, AppBuildInfo(true, "test")), clock, network)
         val second = SyncLabRepository(context("client-b"), dbB, activeB, assets, ContentRepository(assets, AppBuildInfo(true, "test")), clock, api)
         try {

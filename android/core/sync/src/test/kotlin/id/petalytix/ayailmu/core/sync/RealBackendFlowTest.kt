@@ -39,7 +39,7 @@ class RealBackendFlowTest {
         assumeTrue("Run integration/run-e2e.sh for real local services",!fixture.isNullOrBlank())
         val tokens=Json.parseToJsonElement(File(fixture!!).readText()).jsonObject
         val tokenA=tokens.getValue("A").jsonPrimitive.content;val tokenB=tokens.getValue("B").jsonPrimitive.content
-        val actual=HttpBackend("http://127.0.0.1:8186");val faults=Faults(actual,tokens.getValue("expired").jsonPrimitive.content)
+        val actual=HttpBackend(tokens["api"]?.jsonPrimitive?.content ?: "http://127.0.0.1:8186");val faults=Faults(actual,tokens.getValue("expired").jsonPrimitive.content)
         val packBytes=resource("packs/bahasa/arab/v1.json");val rulesBytes=resource("config/rules.arab.json")
         val proof=PackProof.fromBytes(packBytes,rulesBytes,"815e30f0da284b9818fadc0143f4da92544384d3")
         val pack=PackLoader.parse(packBytes.decodeToString());val content=Gating.gate(pack,true);val rules=RuleConfig.parse(rulesBytes.decodeToString())
@@ -78,7 +78,7 @@ class RealBackendFlowTest {
             restored.capture(nativeAnswers(other.clientLearnerId,content,rules).take(1));assertEquals(SyncResult.SYNCED,restored.sync());assertEquals(1,restored.history().size)
             restored.logout();restored.login(tokenA);restored.select(learner,proof);assertFalse(restored.binding()!!.enabled);assertTrue(restored.history().isEmpty())
             assertFalse(journal.readText().contains(tokenA));assertFalse(journal.readText().contains(tokenB))
-            println("REAL_NATIVE_E2E_PASS: code+PKCE identities; offline native Session; persisted exact-byte outbox; server-committed retry; second-client native SkillProjector; revocation; signed expired token; logout; owner/learner isolation")
+            println("REAL_NATIVE_E2E_PASS: verified provider sessions; offline native Session; persisted exact-byte outbox; server-committed retry; second-client native SkillProjector; revocation; signed expired token; logout; owner/learner isolation")
         } finally {dir.deleteRecursively()}
     }
     private fun id(raw:String)=decode(raw).answerId

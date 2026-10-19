@@ -37,6 +37,20 @@ class SyncEngine(private val api: Backend, private val journal: JournalStore) {
         return owner
     }
     fun expireSession() = synchronized(lock) { session = null; generation++; Unit }
+    /** Refresh/restore never repeats an adult declaration or resurrects a logged-out owner. */
+    suspend fun resume(token: String) {
+        val (expected, attempt) = synchronized(lock) {
+            val owner = requireNotNull(journal.read().activeOwner) { "Explicit sign-in required" }
+            session = null
+            owner to ++generation
+        }
+        val verified = api.currentAccount(token)
+        synchronized(lock) {
+            check(generation == attempt) { "Sign-in session changed" }
+            require(verified == expected && journal.read().activeOwner == expected) { "Refreshed account changed" }
+            session = Session(verified, token, attempt)
+        }
+    }
     fun logout() = synchronized(lock) {
         session = null; generation++
         journal.update { it.copy(activeOwner = null, activeLearner = null) }
