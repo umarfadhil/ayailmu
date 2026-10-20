@@ -1,0 +1,47 @@
+{
+  "format": "ayailmu-cloudrun-input/1",
+  "example": true,
+  "api": {
+    "origin": "https://api.example.com",
+    "min_instances": 0,
+    "max_instances": 2,
+    "db_pool_max_conns": 3
+  },
+  "auth": {
+    "origin": "https://auth.example.com",
+    "min_instances": 0,
+    "max_instances": 2,
+    "db_pool_max_size": 2,
+    "google_enabled": false
+  },
+  "database": {
+    "host": "db.example.com",
+    "port": 5432,
+    "connection_mode": "session",
+    "tls_mode": "verify-full",
+    "connection_limit": 60,
+    "migration_connections": 1,
+    "backup_connections": 1,
+    "headroom_connections": 5
+  },
+  "schemas": {
+    "app": "ayailmu",
+    "auth": "aya_auth"
+  },
+  "roles": {
+    "app_owner": "aya_owner",
+    "app_runtime": "aya_runtime",
+    "auth_owner": "aya_auth_owner",
+    "backup": "aya_backup"
+  },
+  "secret_references": {
+    "api_database_url": {"secret": "aya-api-database-url", "version": "1"},
+    "api_auth_admin_credential": {"secret": "aya-api-auth-admin-credential", "version": "1"},
+    "migration_database_url": {"secret": "aya-migration-database-url", "version": "1"},
+    "auth_database_url": {"secret": "aya-auth-database-url", "version": "1"},
+    "auth_jwt_keys": {"secret": "aya-auth-jwt-keys", "version": "1"},
+    "auth_jwt_secret": {"secret": "aya-auth-jwt-secret", "version": "1"},
+    "auth_smtp_password": {"secret": "aya-auth-smtp-password", "version": "1"},
+    "database_root_ca": {"secret": "aya-database-root-ca", "version": "1"}
+  }
+}
