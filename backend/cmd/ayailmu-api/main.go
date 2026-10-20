@@ -6,6 +6,8 @@
 // local-compose (the synthetic Compose stack's own Auth), which only verify their schema: the migration
 // job (cmd/ayailmu-migrate) migrates it. Every guard runs before the socket is bound, and production
 // mode is refused. Settings come from the environment; see backend/docs/Backend_Local_Contract.md §12.
+// Before anything is refused or served, it logs once which build it is, as the Go toolchain stamped it
+// (internal/provenance): a revision and dirty state, or unknown. Nothing of it is served.
 //
 // `ayailmu-api probe <url>` is the container healthcheck instead: one bounded GET of a literal-loopback
 // http URL (probe.go).
@@ -19,10 +21,12 @@ import (
 	"net"
 	"os"
 	"os/signal"
+	"runtime/debug"
 	"syscall"
 
 	"ayailmu.local/backend/internal/authn"
 	"ayailmu.local/backend/internal/config"
+	"ayailmu.local/backend/internal/provenance"
 	"ayailmu.local/backend/internal/server"
 	"ayailmu.local/backend/internal/store"
 )
@@ -54,6 +58,8 @@ func main() {
 func run() int {
 	logger := slog.New(slog.NewTextHandler(os.Stderr, nil))
 	slog.SetDefault(logger)
+	stamp := provenance.FromBuildInfo(debug.ReadBuildInfo())
+	logger.Info("ayailmu-api: build", "revision", stamp.Revision, "dirty", stamp.Dirty)
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
