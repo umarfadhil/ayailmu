@@ -99,7 +99,11 @@ internal class SyncLabRepository @Inject constructor(
             owner to engine.availableLearners()
         } catch (e: Exception) {
             if (e is CancellationException) throw e
-            publish(if (e is IOException) R.string.sync_lab_offline else R.string.sync_lab_failed)
+            // A newer account may have signed in while the load was parked; only a failure of the
+            // still-current owner may publish (publish re-checks the owner across its own waits).
+            if (ownerCurrent(owner, accepted)) {
+                publish(if (e is IOException) R.string.sync_lab_offline else R.string.sync_lab_failed)
+            }
             return
         }
         if (!ownerCurrent(owner, accepted)) return

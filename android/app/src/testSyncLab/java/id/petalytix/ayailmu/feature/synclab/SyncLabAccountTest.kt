@@ -770,6 +770,42 @@ class SyncLabAccountTest {
         }
     }
 
+    @Test fun staleSignInLearnerFailureDoesNotPublishOverNewerAccount() = runTest {
+        val fake = FakeGoTrue()
+        val api = FakeApi(fake)
+        val dir = File.createTempFile("account", "").apply { delete() }
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            fake.fabricate("syn-b@example.invalid", "password-two")
+            val harness = newHarness(dir, fake, api)
+            val gate = CompletableDeferred<Unit>()
+            api.learnersGate = gate
+            val aSignIn = async { harness.account.signIn("syn-a@example.invalid", "password-one") }
+            // Park A's learner load inside the gate; a completed entered milestone means this
+            // exact call already captured the gate, so clearing the field cannot release it.
+            val aEntered = withContext(Dispatchers.Default) { withTimeout(4_000) { api.learnersCalls.take() } }
+            aEntered.await()
+            // The newer sign-in's learner load must pass: clear only the gate field, which A's
+            // parked call captured by value.
+            api.learnersGate = null
+            assertTrue(harness.account.signIn("syn-b@example.invalid", "password-two"))
+            val newer = harness.vault.read()!!
+            val newerNotice = harness.repository.state.value.notice
+            assertEquals(R.string.sync_lab_saved, newerNotice, "The newer sign-in publishes its own saved notice")
+            api.failLearnersWith503 = true
+            gate.complete(Unit)
+            withContext(Dispatchers.Default) { withTimeout(4_000) { aSignIn.await() } }
+            assertEquals(newerNotice, harness.repository.state.value.notice, "A stale learner-load failure must not publish over the newer account")
+            assertEquals("owner-user-2", harness.repository.state.value.owner)
+            assertTrue(harness.repository.state.value.authenticated, "The newer session stays active")
+            assertEquals(newer.session.accessToken, harness.vault.read()!!.session.accessToken, "The newer session stays in the vault")
+            harness.repository.stop()
+        } finally {
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
     @Test fun signOutIsImmediateDespiteInFlightRefreshAndStorageFailure() = runTest {
         val fake = FakeGoTrue()
         val dir = File.createTempFile("account", "").apply { delete() }
