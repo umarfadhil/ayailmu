@@ -2676,4 +2676,150 @@ class SyncLabAccountTest {
             dir.deleteRecursively()
         }
     }
+
+    @Test fun signInAfterPopWithComposedNonCurrentOriginDoesNotNavigate() = runTest {
+        // The outgoing sign-in entry stays composed/registered through its pop transition while a
+        // different entry is already current; its late successful callback must not navigate, but
+        // the account installation it completed must be preserved.
+        Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(testScheduler))
+        val fake = FakeGoTrue()
+        val api = FakeApi(fake)
+        val dir = File.createTempFile("account", "").apply { delete() }
+        val gate = CompletableDeferred<Unit>()
+        var harness: Harness? = null
+        var job: kotlinx.coroutines.Job? = null
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            val h = newHarness(dir, fake, api).also { harness = it }
+            val vm = SyncLabViewModel(h.repository, h.account)
+            testScheduler.runCurrent() // drain the empty-vault restore before account setup
+            val origin = Any()
+            vm.routeVisible(origin)
+            var current: Any? = origin
+            vm.currentEntry = { current } // stable reader, like the production adapter
+            api.accountGate = gate
+            var navigations = 0
+            job = vm.signIn("syn-a@example.invalid", "password-one", origin) { navigations++ }
+            testScheduler.runCurrent()
+            withContext(Dispatchers.Default) { withTimeout(4_000) { api.accountEntered.await() } }
+            // A different entry becomes current while the outgoing origin remains registered.
+            current = Any()
+            gate.complete(Unit)
+            awaitCondition(testScheduler, 4_000) { job!!.isCompleted }
+            assertEquals(0, navigations, "A popped-but-still-composed origin must not navigate on late auth completion")
+            val saved = assertNotNull(h.vault.read(), "The completed sign-in still installs credentials")
+            assertEquals("user-1", fake.accessOwner[saved.session.accessToken], "Valid sign-in credentials are preserved")
+            assertTrue(h.repository.state.value.authenticated)
+        } finally {
+            gate.complete(Unit)
+            job?.let { runCatching { withContext(Dispatchers.Default) { withTimeout(4_000) { it.join() } } } }
+            runCatching { harness?.repository?.stop() }
+            fake.http.stop()
+            dir.deleteRecursively()
+            Dispatchers.resetMain()
+        }
+    }
+
+    @Test fun signUpAfterReplacementWithComposedNonCurrentOriginDoesNotNavigate() = runTest {
+        // Same gap on the signup route: the replaced entry is still composed while another entry is
+        // current; the delayed needsConfirm redirect must be suppressed while signup still completes.
+        Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(testScheduler))
+        val fake = FakeGoTrue()
+        val dir = File.createTempFile("account", "").apply { delete() }
+        val gate = java.util.concurrent.CountDownLatch(1)
+        var harness: Harness? = null
+        var job: kotlinx.coroutines.Job? = null
+        try {
+            val h = newHarness(dir, fake).also { harness = it }
+            val vm = SyncLabViewModel(h.repository, h.account)
+            testScheduler.runCurrent() // drain the empty-vault restore before account setup
+            val origin = Any()
+            vm.routeVisible(origin)
+            var current: Any? = origin
+            vm.currentEntry = { current } // stable reader, like the production adapter
+            fake.signupGate = gate
+            var navigations = 0
+            job = vm.signUp("syn-a@example.invalid", "password-one", origin) { navigations++ }
+            testScheduler.runCurrent()
+            withContext(Dispatchers.Default) { withTimeout(4_000) { fake.signupEntered.await() } }
+            current = Any()
+            gate.countDown()
+            awaitCondition(testScheduler, 4_000) { job!!.isCompleted }
+            assertEquals(0, navigations, "A replaced-but-still-composed origin must not navigate on late auth completion")
+        } finally {
+            gate.countDown()
+            job?.let { runCatching { withContext(Dispatchers.Default) { withTimeout(4_000) { it.join() } } } }
+            runCatching { harness?.repository?.stop() }
+            fake.http.stop()
+            dir.deleteRecursively()
+            Dispatchers.resetMain()
+        }
+    }
+
+    @Test fun currentEntryAuthCompletionNavigatesExactlyOnce() = runTest {
+        Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(testScheduler))
+        val fake = FakeGoTrue()
+        val dir = File.createTempFile("account", "").apply { delete() }
+        var harness: Harness? = null
+        var job: kotlinx.coroutines.Job? = null
+        try {
+            val h = newHarness(dir, fake).also { harness = it }
+            val vm = SyncLabViewModel(h.repository, h.account)
+            testScheduler.runCurrent() // drain the empty-vault restore before account setup
+            val origin = Any()
+            vm.routeVisible(origin)
+            vm.currentEntry = { origin }
+            var navigations = 0
+            job = vm.signUp("syn-a@example.invalid", "password-one", origin) { navigations++ }
+            testScheduler.runCurrent()
+            awaitCondition(testScheduler, 4_000) { job!!.isCompleted }
+            assertEquals(1, navigations, "The current entry navigates exactly once on auth completion")
+        } finally {
+            job?.let { runCatching { withContext(Dispatchers.Default) { withTimeout(4_000) { it.join() } } } }
+            runCatching { harness?.repository?.stop() }
+            fake.http.stop()
+            dir.deleteRecursively()
+            Dispatchers.resetMain()
+        }
+    }
+
+    @Test fun nullCurrentEntrySuppressesAuthCompletion() = runTest {
+        // The adapter is installed but the controller has no current entry (e.g. a fully popped back
+        // stack): even a still-composed origin must not navigate, while the completed sign-in that
+        // never needed navigation keeps its installed session.
+        Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(testScheduler))
+        val fake = FakeGoTrue()
+        val api = FakeApi(fake)
+        val dir = File.createTempFile("account", "").apply { delete() }
+        val gate = CompletableDeferred<Unit>()
+        var harness: Harness? = null
+        var job: kotlinx.coroutines.Job? = null
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            val h = newHarness(dir, fake, api).also { harness = it }
+            val vm = SyncLabViewModel(h.repository, h.account)
+            testScheduler.runCurrent() // drain the empty-vault restore before account setup
+            val origin = Any()
+            vm.routeVisible(origin)
+            vm.currentEntry = { null }
+            api.accountGate = gate
+            var navigations = 0
+            job = vm.signIn("syn-a@example.invalid", "password-one", origin) { navigations++ }
+            testScheduler.runCurrent()
+            withContext(Dispatchers.Default) { withTimeout(4_000) { api.accountEntered.await() } }
+            gate.complete(Unit)
+            awaitCondition(testScheduler, 4_000) { job!!.isCompleted }
+            assertEquals(0, navigations, "An installed reader with no current entry must suppress navigation")
+            val saved = assertNotNull(h.vault.read(), "The completed sign-in still installs credentials")
+            assertEquals("user-1", fake.accessOwner[saved.session.accessToken], "Valid sign-in credentials are preserved")
+            assertTrue(h.repository.state.value.authenticated)
+        } finally {
+            gate.complete(Unit)
+            job?.let { runCatching { withContext(Dispatchers.Default) { withTimeout(4_000) { it.join() } } } }
+            runCatching { harness?.repository?.stop() }
+            fake.http.stop()
+            dir.deleteRecursively()
+            Dispatchers.resetMain()
+        }
+    }
 }

@@ -18,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -63,6 +64,9 @@ internal class SyncLabViewModel @Inject constructor(
     private val actionLock = Mutex()
     /** Test-only seam: invoked on Main after prepareLearning returns, before the readiness callback. */
     internal var learnDispatchProbe: (suspend () -> Unit)? = null
+    /** Current-entry reader installed by the NavHost; the auth callback consults the actual current
+     * NavBackStackEntry identity against it. Null means no adapter is present (tests). */
+    internal var currentEntry: (() -> Any?)? = null
     /** Route instances currently composed; auth completion callbacks navigate only when their origin is still visible. */
     private val visibleOrigins = MutableStateFlow<Set<Any>>(emptySet())
     init { viewModelScope.launch { account.restore() } }
@@ -81,7 +85,14 @@ internal class SyncLabViewModel @Inject constructor(
     }
     fun routeVisible(origin: Any) { visibleOrigins.value = visibleOrigins.value + origin }
     fun routeGone(origin: Any) { visibleOrigins.value = visibleOrigins.value - origin }
-    private fun completeOn(origin: Any, block: () -> Unit) { if (origin in visibleOrigins.value) block() }
+    private fun completeOn(origin: Any, block: () -> Unit) {
+        // Ownership closes over the actual current entry, read at the callback: an origin that is
+        // still composed during its pop/replace transition but no longer current must not navigate,
+        // and an installed reader with no current entry (e.g. an empty back stack) suppresses every
+        // late callback. Only the absence of an adapter (unit tests) falls back to composition.
+        val reader = currentEntry
+        if (origin in visibleOrigins.value && (reader == null || origin === reader())) block()
+    }
     fun signIn(email: String, password: String, origin: Any, done: () -> Unit) = action {
         if (account.signIn(email, password)) completeOn(origin, done)
     }
@@ -121,15 +132,15 @@ internal class SyncLabViewModel @Inject constructor(
     }
 }
 
-/** Tracks this auth route instance so a completion that lands after Back/disposal cannot navigate. */
+/** Tracks the actual auth route entry so a completion that lands after Back/disposal — or after a
+ * different entry became current during a transition — cannot navigate. */
 @Composable
-private fun rememberAuthOrigin(vm: SyncLabViewModel): Any {
-    val origin = remember { Any() }
-    DisposableEffect(origin) {
-        vm.routeVisible(origin)
-        onDispose { vm.routeGone(origin) }
+private fun rememberAuthOrigin(vm: SyncLabViewModel, entry: NavBackStackEntry): NavBackStackEntry {
+    DisposableEffect(entry) {
+        vm.routeVisible(entry)
+        onDispose { vm.routeGone(entry) }
     }
-    return origin
+    return entry
 }
 
 /** This graph is compiled into syncLab only; no ordinary profile picker, purchases or real-data entry. */
@@ -138,6 +149,9 @@ fun SyncLabApp() {
     val vm: SyncLabViewModel = hiltViewModel()
     val state by vm.state.collectAsStateWithLifecycle()
     val nav = rememberNavController()
+    // Read at each actual auth callback: a completion navigates only while its own entry is still
+    // the controller's current entry, so a composed-but-outgoing entry during a transition is stale.
+    vm.currentEntry = { nav.currentBackStackEntry }
     LaunchedEffect(state.lab.owner) {
         if (state.lab.owner == null) nav.popBackStack(SyncLabHub, inclusive = false)
     }
@@ -161,34 +175,34 @@ fun SyncLabApp() {
                 },
             )
         }
-        composable<SyncLabSignIn> {
-            SignInScreen(state, vm,
+        composable<SyncLabSignIn> { entry ->
+            SignInScreen(state, vm, origin = entry,
                 onBack = { nav.popBackStack() },
                 onSignedIn = { nav.popBackStack(SyncLabHub, inclusive = false) },
                 onCreateAccount = { nav.navigate(SyncLabSignUp) },
                 onForgot = { nav.navigate(SyncLabRecover("")) },
             )
         }
-        composable<SyncLabSignUp> {
-            SignUpScreen(state, vm,
+        composable<SyncLabSignUp> { entry ->
+            SignUpScreen(state, vm, origin = entry,
                 onBack = { nav.popBackStack() },
                 onNeedConfirm = { nav.navigate(SyncLabConfirm(it)) },
             )
         }
         composable<SyncLabConfirm> { entry ->
-            ConfirmScreen(state, vm, email = entry.arguments?.getString("email").orEmpty(),
+            ConfirmScreen(state, vm, origin = entry, email = entry.arguments?.getString("email").orEmpty(),
                 onBack = { nav.popBackStack() },
                 onConfirmed = { nav.popBackStack(SyncLabHub, inclusive = false) },
             )
         }
         composable<SyncLabRecover> { entry ->
-            RecoverScreen(state, vm, email = entry.arguments?.getString("email").orEmpty(),
+            RecoverScreen(state, vm, origin = entry, email = entry.arguments?.getString("email").orEmpty(),
                 onBack = { nav.popBackStack() },
                 onSent = { nav.navigate(SyncLabReset(it)) },
             )
         }
         composable<SyncLabReset> { entry ->
-            ResetScreen(state, vm, email = entry.arguments?.getString("email").orEmpty(),
+            ResetScreen(state, vm, origin = entry, email = entry.arguments?.getString("email").orEmpty(),
                 onBack = { nav.popBackStack() },
                 onReset = { nav.popBackStack(SyncLabSignIn, inclusive = false) },
             )
@@ -279,7 +293,7 @@ private fun AuthFields(email: String, onEmail: (String) -> Unit, password: Strin
 }
 
 @Composable
-private fun SignInScreen(state: SyncLabScreen, vm: SyncLabViewModel, onBack: () -> Unit, onSignedIn: () -> Unit, onCreateAccount: () -> Unit, onForgot: () -> Unit) {
+private fun SignInScreen(state: SyncLabScreen, vm: SyncLabViewModel, origin: NavBackStackEntry, onBack: () -> Unit, onSignedIn: () -> Unit, onCreateAccount: () -> Unit, onForgot: () -> Unit) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val busy = state.busy
@@ -287,7 +301,7 @@ private fun SignInScreen(state: SyncLabScreen, vm: SyncLabViewModel, onBack: () 
         Text(stringResource(R.string.sync_lab_login), style = MaterialTheme.typography.headlineMedium)
         Text(stringResource(R.string.sync_lab_warning))
         AccountMessage(state.account.message)
-        val origin = rememberAuthOrigin(vm)
+        val origin = rememberAuthOrigin(vm, origin)
         AuthFields(email, { email = it }, password, { password = it }, R.string.sync_lab_email, R.string.sync_lab_password, enabled = !busy)
         AyaButton(text = stringResource(R.string.sync_lab_login), onClick = { vm.signIn(email.trim(), password, origin) { onSignedIn() } }, enabled = !busy && email.trim().endsWith("@example.invalid") && password.isNotBlank())
         AyaSecondaryButton(text = stringResource(R.string.sync_lab_create_account), onClick = onCreateAccount, enabled = !busy)
@@ -297,7 +311,7 @@ private fun SignInScreen(state: SyncLabScreen, vm: SyncLabViewModel, onBack: () 
 }
 
 @Composable
-private fun SignUpScreen(state: SyncLabScreen, vm: SyncLabViewModel, onBack: () -> Unit, onNeedConfirm: (String) -> Unit) {
+private fun SignUpScreen(state: SyncLabScreen, vm: SyncLabViewModel, origin: NavBackStackEntry, onBack: () -> Unit, onNeedConfirm: (String) -> Unit) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val busy = state.busy
@@ -305,7 +319,7 @@ private fun SignUpScreen(state: SyncLabScreen, vm: SyncLabViewModel, onBack: () 
         Text(stringResource(R.string.sync_lab_sign_up_title), style = MaterialTheme.typography.headlineMedium)
         Text(stringResource(R.string.sync_lab_warning))
         AccountMessage(state.account.message)
-        val origin = rememberAuthOrigin(vm)
+        val origin = rememberAuthOrigin(vm, origin)
         AuthFields(email, { email = it }, password, { password = it }, R.string.sync_lab_email, R.string.sync_lab_password, enabled = !busy)
         Text(stringResource(R.string.sync_lab_password_hint), style = MaterialTheme.typography.bodySmall)
         AyaButton(text = stringResource(R.string.sync_lab_sign_up_action), onClick = { vm.signUp(email.trim(), password, origin) { onNeedConfirm(it) } }, enabled = !busy && email.trim().endsWith("@example.invalid") && password.isNotBlank())
@@ -314,14 +328,14 @@ private fun SignUpScreen(state: SyncLabScreen, vm: SyncLabViewModel, onBack: () 
 }
 
 @Composable
-private fun ConfirmScreen(state: SyncLabScreen, vm: SyncLabViewModel, email: String, onBack: () -> Unit, onConfirmed: () -> Unit) {
+private fun ConfirmScreen(state: SyncLabScreen, vm: SyncLabViewModel, origin: NavBackStackEntry, email: String, onBack: () -> Unit, onConfirmed: () -> Unit) {
     var code by remember { mutableStateOf("") }
     val busy = state.busy
     Column(Modifier.fillMaxSize().safeDrawingPadding().verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(stringResource(R.string.sync_lab_confirm_title), style = MaterialTheme.typography.headlineMedium)
         Text(stringResource(R.string.sync_lab_confirm_body, email))
         AccountMessage(state.account.message)
-        val origin = rememberAuthOrigin(vm)
+        val origin = rememberAuthOrigin(vm, origin)
         AyaTextField(value = code, onValueChange = { code = it.filter(Char::isDigit).take(6) }, label = stringResource(R.string.sync_lab_code), enabled = !busy, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword))
         AyaButton(text = stringResource(R.string.sync_lab_confirm_action), onClick = { vm.confirm(email, code, origin) { onConfirmed() } }, enabled = !busy && code.length == 6)
         AyaSecondaryButton(text = stringResource(R.string.sync_lab_resend), onClick = { vm.resend(email) }, enabled = !busy)
@@ -330,14 +344,14 @@ private fun ConfirmScreen(state: SyncLabScreen, vm: SyncLabViewModel, email: Str
 }
 
 @Composable
-private fun RecoverScreen(state: SyncLabScreen, vm: SyncLabViewModel, email: String, onBack: () -> Unit, onSent: (String) -> Unit) {
+private fun RecoverScreen(state: SyncLabScreen, vm: SyncLabViewModel, origin: NavBackStackEntry, email: String, onBack: () -> Unit, onSent: (String) -> Unit) {
     var value by rememberSaveable { mutableStateOf(email) }
     val busy = state.busy
     Column(Modifier.fillMaxSize().safeDrawingPadding().verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(stringResource(R.string.sync_lab_recover_title), style = MaterialTheme.typography.headlineMedium)
         Text(stringResource(R.string.sync_lab_recover_body, value))
         AccountMessage(state.account.message)
-        val origin = rememberAuthOrigin(vm)
+        val origin = rememberAuthOrigin(vm, origin)
         AyaTextField(value = value, onValueChange = { value = it }, label = stringResource(R.string.sync_lab_email), enabled = !busy, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email))
         AyaButton(text = stringResource(R.string.sync_lab_recover_action), onClick = { vm.recover(value.trim(), origin) { onSent(it) } }, enabled = !busy && value.trim().endsWith("@example.invalid"))
         AyaSecondaryButton(text = stringResource(R.string.sync_lab_back), onClick = onBack, enabled = !busy)
@@ -345,7 +359,7 @@ private fun RecoverScreen(state: SyncLabScreen, vm: SyncLabViewModel, email: Str
 }
 
 @Composable
-private fun ResetScreen(state: SyncLabScreen, vm: SyncLabViewModel, email: String, onBack: () -> Unit, onReset: () -> Unit) {
+private fun ResetScreen(state: SyncLabScreen, vm: SyncLabViewModel, origin: NavBackStackEntry, email: String, onBack: () -> Unit, onReset: () -> Unit) {
     var code by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val busy = state.busy
@@ -353,7 +367,7 @@ private fun ResetScreen(state: SyncLabScreen, vm: SyncLabViewModel, email: Strin
         Text(stringResource(R.string.sync_lab_reset_title), style = MaterialTheme.typography.headlineMedium)
         Text(stringResource(R.string.sync_lab_recover_body, email))
         AccountMessage(state.account.message)
-        val origin = rememberAuthOrigin(vm)
+        val origin = rememberAuthOrigin(vm, origin)
         AyaTextField(value = code, onValueChange = { code = it.filter(Char::isDigit).take(6) }, label = stringResource(R.string.sync_lab_code), enabled = !busy, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword))
         AyaTextField(value = password, onValueChange = { password = it }, label = stringResource(R.string.sync_lab_new_password), enabled = !busy, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password), visualTransformation = PasswordVisualTransformation())
         Text(stringResource(R.string.sync_lab_password_hint), style = MaterialTheme.typography.bodySmall)

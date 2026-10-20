@@ -15,7 +15,7 @@
 - Sole implementation writer: Kimi Code CLI, **K2.8 Preview** per the latest user instruction: actual `kimi-for-coding` / alias `kimi-code/kimi-for-coding`, thinking `max`; verify the request metadata before proceeding, with no fallback or parallel writer. Earlier K3 checkpoints remain historical evidence only.
 - Generation is authorized by the resumed task instruction. No merge, deployment, OAuth/credential changes or real learner data.
 - Give Kimi one defect and a small verbatim excerpt bundle; use bounded lookups, not whole-file reloads.
-- Read live quota first and choose an explicit affordable wall/capacity budget, including follow-up work after an edit. Stop transparently on that budget without automatic retries. Usage may settle only when a call completes or is cancelled, so a ratio limit is not a guaranteed billing cap.
+- Read live included quota and supervise actual usage. The user's later continuation supersedes earlier arbitrary time/attempt allocations: those alone are not completion or a quota rejection. Stop generation on an actual quota/auth rejection, preserve the checkpoint, and do not use overages, fallback models or duplicate writers. Usage may settle only when a call completes or is cancelled.
 - **20 October tooling correction:** retire the previous 90-second no-tool timer. A max-thinking request can be reasoning without a new tool call; absent progress telemetry is uncertainty, not proof of failure. Use the maintained native CLI with manual, allow-once tool approvals and audit canonical request/tool IDs. Classify explicit wall/capacity budget stops separately from failures. The local ACP monitor/client is an experimental offline-tested prototype: it still rejects live permission metadata and must not be used for app execution or treated as verified K2.8 automation.
 - Preserve tests/source/history and capture true command exits. A compiler error is not the required red regression.
 
@@ -78,11 +78,13 @@ Pin these cases to their owning task: publication lock wait (1); same-owner repl
 
 ## Task 5: Use current-route ownership during transitions (Minor)
 
+**Verified:** [Current-entry checkpoint](../../integration/2026-10-20-route-ownership-checkpoint.md): 7 focused, 20 JVM, 62 Android, syncLab assembly. The tests model the pop/replacement ownership schedule through a stable live-entry reader; the five actual NavHost adapters are reviewed separately. No instrumented animated-transition claim.
+
 **Small input:** V `visibleOrigins`, `completeOn`, `rememberAuthOrigin` and auth composable callbacks; T disposed/kept-route tests. No R/A changes initially.
 
-- [ ] Add `nonCurrentComposedRouteDoesNotNavigateOnAuthCompletion`: delay sign-in/signup completion, press Back to change the current navigation entry while the outgoing auth route remains composed for its transition, then await the exact completion. Authentication may install, but the old route must not navigate.
-- [ ] Kimi binds completion to the current entry at the actual callback, rather than composition membership alone. Exercise both pop and replacement, plus a positive current-entry callback exactly once. Use the existing test setup and a narrow navigation-ownership seam if necessary; no new broad UI framework.
-- [ ] Run the route red/green cases, preserve existing disposed/kept-route controls and review the NavHost adapter. Checkpoint separately from the Important repairs.
+- [x] Add the separate sign-in-after-pop and signup-after-replacement cases: delay completion, change the current entry while the outgoing origin remains registered, then await the exact action job. Authentication may install, but the old route must not navigate. Both fail the intended callback-count assertion before the guard; the positive current-entry case passes.
+- [x] Kimi binds completion to actual `NavBackStackEntry` identity read at the callback. Exercise pop/replacement, a positive callback exactly once, and an installed reader returning null. Use the existing test setup and a narrow navigation-ownership seam; no new broad UI framework.
+- [x] Run the route red/green cases, preserve existing disposed/kept-route controls and review all five NavHost adapters. Seven focused cases pass. Checkpoint separately from the Important repairs; independent full checks are recorded in the checkpoint.
 
 ## Verification and Handoff
 
