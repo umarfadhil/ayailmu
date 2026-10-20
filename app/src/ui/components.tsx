@@ -779,7 +779,7 @@ export function EmptyState({ icon, title, children }: { icon: IconName; title: s
 
 const REPORT_REASONS = ['Teks Arab salah', 'Terjemahan tidak tepat', 'Jawaban saya seharusnya benar', 'Soal membingungkan', 'Lainnya'];
 
-/** «Laporkan soal»: short reason list and a free-text field (S14 modal anatomy, shown as a sheet). */
+/** «Laporkan soal»: short reason list and a free-text field (S14 modal anatomy, shown as a sheet). Saved on this device only. */
 export function ReportButton({ onSubmit }: { onSubmit: (reason: string, text: string) => Promise<void> }) {
   const [open, setOpen] = useState(false);
   const [reason, setReason] = useState<string | null>(null);
@@ -806,13 +806,13 @@ export function ReportButton({ onSubmit }: { onSubmit: (reason: string, text: st
       <Pressable
         onPress={() => setOpen(true)}
         accessibilityRole="button"
-        accessibilityLabel={sent ? 'Laporan terkirim. Laporkan soal lagi' : 'Laporkan soal'}
+        accessibilityLabel={sent ? 'Laporan tersimpan di perangkat ini. Laporkan soal lagi' : 'Laporkan soal'}
         accessibilityHint="Membuka formulir laporan"
         testID="report-open"
         style={({ pressed }) => [styles.quietAction, pressed && styles.iconBtnPressed]}
       >
         <Icon name={sent ? 'checkmark-circle-outline' : 'flag-outline'} size={16} color={colors.muted} />
-        <Text style={styles.reportLink}>{sent ? 'Laporan terkirim' : 'Laporkan soal'}</Text>
+        <Text style={styles.reportLink}>{sent ? 'Laporan tersimpan di perangkat ini' : 'Laporkan soal'}</Text>
       </Pressable>
       <Modal visible={open} transparent animationType="none" onRequestClose={close}>
         <View style={styles.sheetWrap}>
@@ -854,6 +854,7 @@ export function ReportButton({ onSubmit }: { onSubmit: (reason: string, text: st
                 ))}
               </View>
               <Field testID="report-text" value={text} onChangeText={setText} placeholder="Keterangan (boleh kosong)" />
+              <Text style={styles.small}>Laporan hanya disimpan di perangkat ini dan tidak dikirim ke mana pun.</Text>
               {error ? (
                 <View role="alert" accessibilityLiveRegion="assertive">
                   <Notice tone="danger" testID="report-error">
@@ -867,7 +868,7 @@ export function ReportButton({ onSubmit }: { onSubmit: (reason: string, text: st
                 </View>
                 <View style={{ flex: 1.3 }}>
                   <Btn
-                    label="Kirim laporan"
+                    label="Simpan laporan"
                     disabled={!reason || busy}
                     testID="report-send"
                     onPress={async () => {

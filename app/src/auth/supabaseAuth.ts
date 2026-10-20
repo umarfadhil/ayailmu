@@ -716,12 +716,18 @@ export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
           reject(new AuthError(code));
         };
         s.calls.add(cancel);
-        /** Settles once; after a cancel, the call's late result or error changes nothing. */
+        /**
+         * Settles once; after a cancel, the call's late result or error changes nothing. Once it has settled, the call's
+         * signal is aborted (the session has let go of the call first, and `settled` guards re-entry), so work still
+         * running on it, such as a request the API client stopped waiting for at its deadline, is cancelled wherever
+         * fetch honours that.
+         */
         const finish = (settle: () => void) => {
           s.calls.delete(cancel);
           if (settled) return;
           settled = true;
           settle();
+          controller.abort();
         };
         let running: Promise<T>;
         try {
