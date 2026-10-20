@@ -55,13 +55,15 @@ Pin these cases to their owning task: publication lock wait (1); same-owner repl
 
 ## Task 3: Clean up the cancelled authentication attempt
 
+**Verified:** [Cancellation checkpoint](../../integration/2026-10-20-cancellation-cleanup-checkpoint.md).
+
 **Small input:** A `begin`, `install`, `signIn`, `confirm`, `completeGoogle`, cleanup helpers; R `login`, `finishLogin`, `logout`, `expireSession`; T learner gate, vault/harness and simulated Google-cancel tests. E authentication/session methods are reference only.
 
-- [ ] Add `cancelledCommittedCredentialAttemptCleansOnlyItself`, with sign-in/confirmation/simulated-Google variants. Starting signed out with an empty vault, park each flow after engine authentication commits but before vault installation; cancel its exact coroutine and `cancelAndJoin` it. After cleanup completion, assert busy is false, no live unpersisted authentication/vault and no selected owner/profile.
-- [ ] Repeat while B or same-owner A2 finishes before old cleanup is released; snapshot the newer vault and selection, join old cleanup, then assert they are unchanged and usable.
-- [ ] Exercise cancellation while cleanup's local storage boundary is suspended. A simulated abandoned Google attempt must not erase genuine credentials it did not install or retain a new owner. No live Google configuration or calls.
-- [ ] Kimi implements attempt-specific cancellation-safe cleanup; it must not depend on `committed` becoming true only after the suspending learner load returns.
-- [ ] Run these red/green cases and existing installation/storage/logout controls; review/checkpoint separately.
+- [x] Add `cancelledCommittedCredentialAttemptCleansOnlyItself`, with sign-in/confirmation/simulated-Google variants. Starting signed out with an empty vault, park each flow after engine authentication commits but before vault installation; cancel its exact coroutine and `cancelAndJoin` it. After cleanup completion, assert busy is false, no live unpersisted authentication/vault and no selected owner/profile.
+- [x] Repeat while B or same-owner A2 finishes before old cleanup is released; snapshot the newer vault and selection, join old cleanup, then assert they are unchanged and usable.
+- [x] Exercise cancellation while cleanup's local storage boundary is suspended. A simulated abandoned Google attempt must not erase genuine credentials it did not install or retain a new owner. No live Google configuration or calls.
+- [x] Kimi implements attempt-specific cancellation-safe cleanup; it must not depend on `committed` becoming true only after the suspending learner load returns.
+- [x] Run these red/green cases and existing installation/storage/logout controls; review/checkpoint separately.
 
 ## Task 4: Repair older completion proofs
 

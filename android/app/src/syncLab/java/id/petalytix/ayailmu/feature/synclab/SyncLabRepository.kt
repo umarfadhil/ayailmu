@@ -64,6 +64,9 @@ internal class SyncLabRepository @Inject constructor(
      * Room consent read; [learningResultProbe] observes the readiness result before it is returned. */
     internal var learningConsentProbe: (suspend () -> Unit)? = null
     internal var learningResultProbe: (suspend (LearningReadiness) -> Unit)? = null
+    /** Test-only cancellation seam: runs at the start of [revertLogin], before the local ordering
+     * boundary is acquired, so a test can hold the cleanup before any of its mutations. */
+    internal var revertProbe: (suspend () -> Unit)? = null
     /** Local activation/cleanup ordering boundary: held only across Room/DataStore/file work, never across network. */
     private val localLock = Mutex()
     private val mutable = MutableStateFlow(SyncLabState())
@@ -80,8 +83,18 @@ internal class SyncLabRepository @Inject constructor(
             catch (e: Exception) { if (e is CancellationException) throw e; mutable.value = SyncLabState(notice = R.string.sync_lab_blocked) }
         }
     }
-    suspend fun login(token: String, accepted: () -> Boolean = { true }) = withContext(Dispatchers.IO) {
-        val owner = engine.login(token, accepted)
+    /**
+     * Commits the engine login, then finishes it. [onCommitted] is invoked by the engine at the
+     * actual commit, before any suspending learner load, so a caller cancelled later in this login
+     * can still name the exact session it installed (an account nonce alone cannot: a newer
+     * refresh may move the engine generation without any account operation beginning).
+     */
+    suspend fun login(
+        token: String,
+        accepted: () -> Boolean = { true },
+        onCommitted: ((Long) -> Unit)? = null,
+    ) = withContext(Dispatchers.IO) {
+        val owner = engine.login(token, accepted, onCommitted)
         finishLogin(owner, accepted)
     }
     fun savedOwner(): String? = engine.owner()
@@ -206,6 +219,31 @@ internal class SyncLabRepository @Inject constructor(
         publish()
     }
     /**
+     * Reverts a cancelled credential installation: this attempt's login committed an engine session
+     * and durable owner that were never persisted to the vault, and the coroutine was cancelled
+     * before the vault installation. Drops only what [mark] still owns — the session check and the
+     * engine mutation are atomic, and the operation fence is re-verified after the suspending
+     * active-store clear and again at the final publication — so a newer account (even the same
+     * owner) that took over during the wait keeps its session, selection, remote learners, notice
+     * and vault.
+     */
+    suspend fun revertLogin(mark: Long, accepted: () -> Boolean): Boolean = withContext(Dispatchers.IO) {
+        revertProbe?.invoke()
+        var committed = false
+        localLock.withLock {
+            if (!accepted() || engine.sessionGeneration() != mark) return@withLock
+            committed = true
+            observed?.cancel(); observed = null
+            runCatching { active.setActive(null) }
+            if (!accepted() || !engine.logoutCommittedSession(mark)) { committed = false; return@withLock }
+            remoteLearners = null
+        }
+        if (committed && accepted()) {
+            runCatching { publish(R.string.sync_lab_signed_out, accepted = accepted) }
+        }
+        committed
+    }
+    /**
      * Reflects an ordinary-action failure in the owner-scoped UI state. The 401 expiry only runs
      * while [accepted] holds at the actual mutation, and a superseded failure never publishes over
      * a newer account — callers bind [accepted] to the originating operation/session.
@@ -293,8 +331,11 @@ internal class SyncLabRepository @Inject constructor(
         val learners = remoteLearners?.takeIf { it.first == owner }?.second ?: engine.knownLearners()
         // A notice bound to an originating owner is dropped unless that owner is still current at
         // the actual state mutation; every suspension above can outlive the pre-check that
-        // authorised this publish, and a newer account may have taken over meanwhile.
+        // authorised this publish, and a newer account may have taken over meanwhile. A caller-
+        // supplied operation fence is enforced here too, so a notice published with origin=null
+        // (e.g. a cancellation cleanup's signed-out state) is dropped once a newer account op began.
         if (origin != null && !ownerCurrent(origin, accepted ?: { true })) return@withLock
+        if (accepted != null && !accepted()) return@withLock
         if (engine.owner() != owner || engine.binding()?.learner?.id != binding?.learner?.id) return@withLock
         mutable.value = SyncLabState(
             owner = owner, authenticated = engine.authenticated(), learners = learners, selected = binding?.learner,

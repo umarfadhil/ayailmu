@@ -22,12 +22,14 @@ class SyncEngine(private val api: Backend, private val journal: JournalStore) {
     fun authenticated(): Boolean = synchronized(lock) { session != null }
     /** An opaque marker of the current session attempt; a new login/refresh/logout supersedes it. */
     fun sessionMark(): Long = synchronized(lock) { generation }
+    /** The engine generation of the currently committed session; superseded by any newer login/refresh/logout. */
+    fun sessionGeneration(): Long? = synchronized(lock) { session?.generation }
     fun binding(): Binding? = journal.read().let { s -> s.owners[s.activeOwner]?.get(s.activeLearner) }
     fun knownLearners(): List<Learner> = journal.read().let { it.owners[it.activeOwner].orEmpty().values.map(Binding::learner) }
     fun pendingCount(): Int = binding()?.local?.values?.count { it.acknowledgedSequence == null } ?: 0
     fun history(): List<RemoteRecord> = binding()?.takeIf { it.enabled }?.remote.orEmpty()
 
-    suspend fun login(token: String, accepted: () -> Boolean = { true }): String {
+    suspend fun login(token: String, accepted: () -> Boolean = { true }, onCommitted: ((Long) -> Unit)? = null): String {
         val attempt = synchronized(lock) { check(accepted()) { "Sign-in cancelled" }; session = null; ++generation }
         val owner = api.account(token)
         require(owner.matches(Regex("[A-Za-z0-9_-]{1,128}")))
@@ -35,8 +37,24 @@ class SyncEngine(private val api: Backend, private val journal: JournalStore) {
             check(generation == attempt && accepted()) { "Sign-in session changed" }
             session = Session(owner, token, attempt)
             journal.update { it.copy(activeOwner = owner, activeLearner = it.activeLearner.takeIf { _ -> it.activeOwner == owner }) }
+            // Hand the receipt to the caller at the actual commit, under the same lock: no suspension
+            // or supersession can intervene before effect ownership is recorded.
+            onCommitted?.invoke(attempt)
         }
         return owner
+    }
+    /**
+     * Drops the committed session and durable owner only while the live session is still the one
+     * [mark] identifies; a newer login/refresh/logout (even of the same owner) leaves it untouched.
+     * The ownership check and the mutation are atomic under the engine lock.
+     */
+    fun logoutCommittedSession(mark: Long): Boolean = synchronized(lock) {
+        if (session?.generation != mark) false
+        else {
+            session = null; generation++
+            journal.update { it.copy(activeOwner = null, activeLearner = null) }
+            true
+        }
     }
     fun expireSession() = synchronized(lock) { session = null; generation++; Unit }
     /** Refresh/restore never repeats an adult declaration or resurrects a logged-out owner. */

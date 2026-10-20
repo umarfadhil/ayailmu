@@ -11,10 +11,12 @@ import java.security.SecureRandom
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 import net.openid.appauth.CodeVerifierUtil
 
 internal data class AccountUi(
@@ -181,18 +183,18 @@ internal class SyncLabAccount @Inject constructor(
         if (!syntheticIdentity(email)) return false
         val (attempt, accepted) = begin()
         publish(busy = true)
-        var committed = false
+        var committed: Long? = null
         return try {
             val session = auth.signIn(email, password)
-            repository.login(session.accessToken, accepted)
-            committed = true
+            repository.login(session.accessToken, accepted) { mark -> committed = mark }
             install(accepted, session)
             true
         } catch (e: CancellationException) {
+            cleanupCancelledInstall(accepted, committed)
             throw e
         } catch (e: Exception) {
             if (accepted()) {
-                cleanupFailedInstall(accepted, e, committed)
+                cleanupFailedInstall(accepted, e, committed != null)
             }
             false
         }
@@ -219,18 +221,18 @@ internal class SyncLabAccount @Inject constructor(
         if (!syntheticIdentity(email)) return false
         val (attempt, accepted) = begin()
         publish(busy = true)
-        var committed = false
+        var committed: Long? = null
         return try {
             val session = auth.verifyOtp(email, code, "signup")
-            repository.login(session.accessToken, accepted)
-            committed = true
+            repository.login(session.accessToken, accepted) { mark -> committed = mark }
             install(accepted, session)
             true
         } catch (e: CancellationException) {
+            cleanupCancelledInstall(accepted, committed)
             throw e
         } catch (e: Exception) {
             if (accepted()) {
-                cleanupFailedInstall(accepted, e, committed)
+                cleanupFailedInstall(accepted, e, committed != null)
             }
             false
         }
@@ -348,25 +350,25 @@ internal class SyncLabAccount @Inject constructor(
         val myAttempt = synchronized(lock) { googleAttempt }
         val fence = { synchronized(lock) { googleAttempt == myAttempt } && accepted() }
         publish(busy = true)
-        var committed = false
+        var committed: Long? = null
         return try {
             val session = auth.exchangeCode(code, pending.verifier)
             synchronized(lock) { check(googleAttempt == myAttempt) { "Google sign-in cancelled" } }
-            repository.login(session.accessToken, fence)
-            committed = true
+            repository.login(session.accessToken, fence) { mark -> committed = mark }
             synchronized(lock) { check(googleAttempt == myAttempt) { "Google sign-in cancelled" } }
             install(fence, session)
             true
         } catch (e: CancellationException) {
+            cleanupCancelledInstall(accepted, committed)
             throw e
         } catch (e: Exception) {
             // Any failure after the attempt was cancelled/replaced (or a newer account op began) must
             // only drop effects this attempt actually installed: never a genuine previous vault session.
             val googleCancelled = synchronized(lock) { googleAttempt != myAttempt }
             if (googleCancelled) {
-                if (committed) runCatching { repository.expireSession(accepted) }
+                committed?.let { mark -> runCatching { repository.revertLogin(mark, accepted) } }
             } else {
-                cleanupFailedInstall(accepted, e, committed)
+                cleanupFailedInstall(accepted, e, committed != null)
             }
             publishIfCurrent(accepted, busy = false, message = messageFor(e))
             false
@@ -376,6 +378,20 @@ internal class SyncLabAccount @Inject constructor(
     /** Clears persisted material only for conclusively invalid auth, and only while no newer account owns the vault. */
     private fun clearIfCurrent(accepted: () -> Boolean, e: Exception) {
         if (conclusivelyInvalid(e)) clearVaultIfCurrent(accepted)
+    }
+
+    /**
+     * Attempt-owned cleanup when the coroutine itself is cancelled: bounded local work under
+     * NonCancellable, then the CancellationException propagates. The committed-session mark was
+     * recorded at the actual engine commit, so the revert only drops the session this attempt
+     * installed — never a newer or genuine one — and busy is reset only while this attempt is
+     * still current.
+     */
+    private suspend fun cleanupCancelledInstall(accepted: () -> Boolean, committed: Long?) {
+        withContext(NonCancellable) {
+            committed?.let { mark -> runCatching { repository.revertLogin(mark, accepted) } }
+            publishIfCurrent(accepted, busy = false)
+        }
     }
 
     /**

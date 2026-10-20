@@ -47,6 +47,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -1337,17 +1338,35 @@ class SyncLabAccountTest {
             assertNotNull(harness.repository.state.value.selected)
             harness.account.signOut()
             assertNull(harness.repository.state.value.owner)
+            // Drain every completed setup learners registration (sign-in, select, create) so the
+            // Google flow's fresh call is the one whose captured gate is awaited below.
+            while (true) {
+                val drained = withContext(Dispatchers.Default) {
+                    api.learnersCalls.poll(200, java.util.concurrent.TimeUnit.MILLISECONDS)
+                } ?: break
+                drained.await()
+            }
             harness.account.beginGoogle() ?: fail("beginGoogle must return a URL when signed out")
             val state = harness.account.googleState()!!
             val learnersGate = CompletableDeferred<Unit>()
             api.learnersGate = learnersGate
             val completing = async { harness.account.completeGoogle(state, "auth-code") }
-            api.learnersEntered.await()
+            val parked = withContext(Dispatchers.Default) {
+                withTimeout(4_000) { api.learnersCalls.poll(4, java.util.concurrent.TimeUnit.SECONDS) }
+            }
+            assertNotNull(parked, "The Google flow's learners call must enter and capture its gate")
+            parked!!.await()
+            assertNotNull(harness.repository.savedOwner(), "The Google attempt introduced a durable owner before the cancel")
+            assertTrue(harness.repository.state.value.authenticated, "The Google attempt introduced live auth before the cancel")
             harness.account.cancelGoogle()
             learnersGate.complete(Unit)
             assertFalse(withContext(Dispatchers.Default) { withTimeout(4_000) { completing.await() } }, "A flow cancelled during learner load must be discarded")
             assertNull(harness.vault.read(), "A cancelled attempt must never install credentials")
             assertFalse(harness.repository.state.value.authenticated)
+            assertNull(harness.repository.savedOwner(), "The cancelled attempt must leave no durable owner")
+            assertNull(harness.repository.state.value.owner)
+            assertNull(harness.active.activeId.first(), "No profile may remain selected for the cancelled attempt")
+            assertFalse(harness.account.state.value.busy, "Cancellation cleanup must clear busy")
             harness.repository.stop()
         } finally {
             fake.http.stop()
@@ -2158,6 +2177,444 @@ class SyncLabAccountTest {
             }
         } finally {
             Dispatchers.resetMain()
+        }
+    }
+
+    @Test fun cancelledSignInLeavesNoCommittedLiveAuth() = runTest {
+        // The engine commit precedes the suspending learner load; cancelling the exact coroutine
+        // while parked there must not leave live unpersisted auth, a durable owner, or busy set.
+        val fake = FakeGoTrue()
+        val api = FakeApi(fake)
+        val dir = File.createTempFile("account", "").apply { delete() }
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            val harness = newHarness(dir, fake, api)
+            val ioScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+            try {
+                val gate = CompletableDeferred<Unit>()
+                api.learnersGate = gate
+                val signingIn = ioScope.async { harness.account.signIn("syn-a@example.invalid", "password-one") }
+                // The entered milestone means this exact learners() call already captured its gate,
+                // so cancellation — never gate completion — is what releases the parked flow.
+                val parked = withContext(Dispatchers.Default) {
+                    withTimeout(4_000) { api.learnersCalls.poll(4, java.util.concurrent.TimeUnit.SECONDS) }
+                }
+                assertNotNull(parked, "The learners call must enter and capture its gate")
+                parked!!.await()
+                signingIn.cancel()
+                withContext(Dispatchers.Default) { withTimeout(4_000) { signingIn.cancelAndJoin() } }
+                assertFalse(harness.account.state.value.busy, "Cancellation cleanup must clear busy")
+                assertFalse(harness.repository.state.value.authenticated, "A cancelled install must leave no live unpersisted auth")
+                assertNull(harness.vault.read(), "A cancelled install must never install credentials")
+                assertNull(harness.repository.savedOwner(), "The cancelled attempt must drop its durable owner")
+                assertNull(harness.repository.state.value.owner)
+                assertNull(harness.repository.state.value.selected)
+                assertNull(harness.active.activeId.first())
+            } finally {
+                runCatching { harness.repository.stop() }
+                ioScope.cancel()
+            }
+        } finally {
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
+    @Test fun cancelledConfirmationLeavesNoCommittedLiveAuth() = runTest {
+        val fake = FakeGoTrue()
+        val api = FakeApi(fake)
+        val dir = File.createTempFile("account", "").apply { delete() }
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            val harness = newHarness(dir, fake, api)
+            val ioScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+            try {
+                assertTrue(harness.account.signUp("syn-a@example.invalid", "password-one"))
+                val gate = CompletableDeferred<Unit>()
+                api.learnersGate = gate
+                val confirming = ioScope.async { harness.account.confirm("syn-a@example.invalid", "111111") }
+                val parked = withContext(Dispatchers.Default) {
+                    withTimeout(4_000) { api.learnersCalls.poll(4, java.util.concurrent.TimeUnit.SECONDS) }
+                }
+                assertNotNull(parked, "The learners call must enter and capture its gate")
+                parked!!.await()
+                confirming.cancel()
+                withContext(Dispatchers.Default) { withTimeout(4_000) { confirming.cancelAndJoin() } }
+                assertFalse(harness.account.state.value.busy, "Cancellation cleanup must clear busy")
+                assertFalse(harness.repository.state.value.authenticated, "A cancelled confirmation must leave no live unpersisted auth")
+                assertNull(harness.vault.read(), "A cancelled confirmation must never install credentials")
+                assertNull(harness.repository.savedOwner(), "The cancelled attempt must drop its durable owner")
+                assertNull(harness.repository.state.value.owner)
+                assertNull(harness.repository.state.value.selected)
+                assertNull(harness.active.activeId.first())
+            } finally {
+                runCatching { harness.repository.stop() }
+                ioScope.cancel()
+            }
+        } finally {
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
+    @Test fun cancelledGoogleFlowLeavesNoCommittedLiveAuth() = runTest {
+        val fake = FakeGoTrue()
+        val api = FakeApi(fake)
+        val dir = File.createTempFile("account", "").apply { delete() }
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            val harness = newHarness(dir, fake, api)
+            val ioScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+            try {
+                harness.account.beginGoogle() ?: fail("beginGoogle must return a URL when signed out")
+                val state = harness.account.googleState()!!
+                val gate = CompletableDeferred<Unit>()
+                api.learnersGate = gate
+                val completing = ioScope.async { harness.account.completeGoogle(state, "auth-code") }
+                val parked = withContext(Dispatchers.Default) {
+                    withTimeout(4_000) { api.learnersCalls.poll(4, java.util.concurrent.TimeUnit.SECONDS) }
+                }
+                assertNotNull(parked, "The learners call must enter and capture its gate")
+                parked!!.await()
+                completing.cancel()
+                withContext(Dispatchers.Default) { withTimeout(4_000) { completing.cancelAndJoin() } }
+                assertFalse(harness.account.state.value.busy, "Cancellation cleanup must clear busy")
+                assertFalse(harness.repository.state.value.authenticated, "A cancelled Google flow must leave no live unpersisted auth")
+                assertNull(harness.vault.read(), "A cancelled Google flow must never install credentials")
+                assertNull(harness.repository.savedOwner(), "The cancelled attempt must drop its durable owner")
+                assertNull(harness.repository.state.value.owner)
+                assertNull(harness.repository.state.value.selected)
+                assertNull(harness.active.activeId.first())
+            } finally {
+                runCatching { harness.repository.stop() }
+                ioScope.cancel()
+            }
+        } finally {
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
+    @Test fun heldCancelledCleanupPreservesNewerBoundAccount() = runTest {
+        // A1's cancelled cleanup is held at the revert probe before the local ordering boundary.
+        // B then fully signs in and selects a profile: profile creation does need that boundary,
+        // but it is free because the probe holds the cleanup before the boundary is acquired.
+        val fake = FakeGoTrue()
+        val api = proofApi(fake)
+        val dir = File.createTempFile("account", "").apply { delete() }
+        val harness = newHarness(dir, fake, api)
+        val revertGate = CompletableDeferred<Unit>()
+        val ioScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        var owned: Deferred<Boolean>? = null
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            fake.fabricate("syn-b@example.invalid", "password-two")
+            val revertEntered = CompletableDeferred<Unit>()
+            harness.repository.revertProbe = {
+                revertEntered.complete(Unit)
+                revertGate.await()
+            }
+            val gate = CompletableDeferred<Unit>()
+            api.learnersGate = gate
+            val signingIn = ioScope.async { harness.account.signIn("syn-a@example.invalid", "password-one") }.also { owned = it }
+            val parked = withContext(Dispatchers.Default) {
+                withTimeout(4_000) { api.learnersCalls.poll(4, java.util.concurrent.TimeUnit.SECONDS) }
+            }
+            assertNotNull(parked, "A1's learners call must enter and capture its gate")
+            parked!!.await()
+            api.learnersGate = null
+            signingIn.cancel()
+            withContext(Dispatchers.Default) { withTimeout(4_000) { revertEntered.await() } }
+            // While A1's cleanup is held before its mutations, B completes bound, with a profile.
+            assertTrue(harness.account.signIn("syn-b@example.invalid", "password-two"))
+            harness.repository.create()
+            val saved = assertNotNull(harness.vault.read(), "B's session is persisted")
+            val owner = harness.repository.state.value.owner
+            val selected = harness.repository.state.value.selected
+            val activeProfile = harness.active.activeId.first()
+            val email = harness.account.state.value.email
+            assertNotNull(selected)
+            assertNotNull(activeProfile)
+            revertGate.complete(Unit)
+            withContext(Dispatchers.Default) { withTimeout(4_000) { signingIn.cancelAndJoin() } }
+            val kept = assertNotNull(harness.vault.read(), "B's credentials must survive the old cleanup")
+            assertEquals(saved, kept, "The whole newer SavedAuth snapshot is unchanged")
+            assertEquals(owner, harness.repository.state.value.owner)
+            assertTrue(harness.repository.state.value.authenticated, "B's live session is preserved")
+            assertEquals(selected!!.id, harness.repository.state.value.selected!!.id)
+            assertEquals(activeProfile, harness.active.activeId.first())
+            assertEquals(email, harness.account.state.value.email)
+            harness.repository.refresh()
+            assertEquals(R.string.sync_lab_saved, harness.repository.state.value.notice, "The preserved session stays usable")
+        } finally {
+            revertGate.complete(Unit)
+            owned?.let { runCatching { withContext(Dispatchers.Default) { withTimeout(4_000) { it.cancelAndJoin() } } } }
+            runCatching { harness.repository.stop() }
+            ioScope.cancel()
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
+    @Test fun heldCancelledCleanupPreservesSameOwnerReplacement() = runTest {
+        // Same schedule with a same-owner replacement: A2 re-signs the exact account A1 attempted,
+        // so the durable owner string never changes (A2's begin also moves the account nonce). The
+        // receipt recorded at A1's engine commit is the backstop that identifies A1's own effects.
+        val fake = FakeGoTrue()
+        val api = proofApi(fake)
+        val dir = File.createTempFile("account", "").apply { delete() }
+        val harness = newHarness(dir, fake, api)
+        val revertGate = CompletableDeferred<Unit>()
+        val ioScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        var owned: Deferred<Boolean>? = null
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            val revertEntered = CompletableDeferred<Unit>()
+            harness.repository.revertProbe = {
+                revertEntered.complete(Unit)
+                revertGate.await()
+            }
+            val gate = CompletableDeferred<Unit>()
+            api.learnersGate = gate
+            val signingIn = ioScope.async { harness.account.signIn("syn-a@example.invalid", "password-one") }.also { owned = it }
+            val parked = withContext(Dispatchers.Default) {
+                withTimeout(4_000) { api.learnersCalls.poll(4, java.util.concurrent.TimeUnit.SECONDS) }
+            }
+            assertNotNull(parked, "A1's learners call must enter and capture its gate")
+            parked!!.await()
+            api.learnersGate = null
+            signingIn.cancel()
+            withContext(Dispatchers.Default) { withTimeout(4_000) { revertEntered.await() } }
+            assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"), "The same-owner replacement succeeds")
+            harness.repository.create()
+            val saved = assertNotNull(harness.vault.read(), "A2's session is persisted")
+            val owner = harness.repository.state.value.owner
+            val selected = harness.repository.state.value.selected
+            val activeProfile = harness.active.activeId.first()
+            val email = harness.account.state.value.email
+            assertNotNull(selected)
+            assertNotNull(activeProfile)
+            revertGate.complete(Unit)
+            withContext(Dispatchers.Default) { withTimeout(4_000) { signingIn.cancelAndJoin() } }
+            val kept = assertNotNull(harness.vault.read(), "A2's credentials must survive A1's old cleanup")
+            assertEquals(saved, kept, "The whole replacement SavedAuth snapshot is unchanged")
+            assertEquals(owner, harness.repository.state.value.owner)
+            assertTrue(harness.repository.state.value.authenticated, "The replacement session stays live")
+            assertEquals(selected!!.id, harness.repository.state.value.selected!!.id)
+            assertEquals(activeProfile, harness.active.activeId.first())
+            assertEquals(email, harness.account.state.value.email)
+            harness.repository.refresh()
+            assertEquals(R.string.sync_lab_saved, harness.repository.state.value.notice, "The replacement session stays usable")
+        } finally {
+            revertGate.complete(Unit)
+            owned?.let { runCatching { withContext(Dispatchers.Default) { withTimeout(4_000) { it.cancelAndJoin() } } } }
+            runCatching { harness.repository.stop() }
+            ioScope.cancel()
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
+    @Test fun heldCancelledCleanupPreservesRefreshedSessionAtEqualAccountNonce() = runTest {
+        // A0 is genuinely installed; A1's re-sign-in of the same account is cancelled and its cleanup
+        // is held; a same-owner refresh then rotates and installs newer credentials without any
+        // account operation beginning — the account nonce stays equal, so only the engine receipt
+        // recorded at A1's commit can keep the old cleanup off the refreshed session.
+        val fake = FakeGoTrue()
+        val api = proofApi(fake)
+        val dir = File.createTempFile("account", "").apply { delete() }
+        val harness = newHarness(dir, fake, api)
+        val revertGate = CompletableDeferred<Unit>()
+        val ioScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        var owned: Deferred<Boolean>? = null
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
+            harness.repository.create()
+            val a0 = assertNotNull(harness.vault.read())
+            val revertEntered = CompletableDeferred<Unit>()
+            harness.repository.revertProbe = {
+                revertEntered.complete(Unit)
+                revertGate.await()
+            }
+            // Drain every completed setup learners registration (A0's sign-in, select and create)
+            // before launching A1's gated flow, so A1's fresh parked call is the awaited milestone.
+            while (true) {
+                val drained = withContext(Dispatchers.Default) {
+                    api.learnersCalls.poll(200, java.util.concurrent.TimeUnit.MILLISECONDS)
+                } ?: break
+                drained.await()
+            }
+            val gate = CompletableDeferred<Unit>()
+            api.learnersGate = gate
+            val signingIn = ioScope.async { harness.account.signIn("syn-a@example.invalid", "password-one") }.also { owned = it }
+            val parked = withContext(Dispatchers.Default) {
+                withTimeout(4_000) { api.learnersCalls.poll(4, java.util.concurrent.TimeUnit.SECONDS) }
+            }
+            assertNotNull(parked, "A1's learners call must enter and capture its gate")
+            parked!!.await()
+            api.learnersGate = null
+            signingIn.cancel()
+            withContext(Dispatchers.Default) { withTimeout(4_000) { revertEntered.await() } }
+            fake.expiredAccess += a0.session.accessToken
+            assertTrue(harness.account.refreshSession(), "The same-owner refresh rotates and installs newer credentials")
+            val saved = assertNotNull(harness.vault.read(), "The rotated session is persisted")
+            assertNotEquals(a0, saved, "The refresh installed newer credentials")
+            val owner = harness.repository.state.value.owner
+            val selected = harness.repository.state.value.selected
+            val activeProfile = harness.active.activeId.first()
+            val email = harness.account.state.value.email
+            revertGate.complete(Unit)
+            withContext(Dispatchers.Default) { withTimeout(4_000) { signingIn.cancelAndJoin() } }
+            val kept = assertNotNull(harness.vault.read(), "The rotated credentials must survive the old cleanup")
+            assertEquals(saved, kept, "The whole refreshed SavedAuth snapshot is unchanged")
+            assertEquals(owner, harness.repository.state.value.owner)
+            assertTrue(harness.repository.state.value.authenticated, "The refreshed session stays live")
+            assertEquals(selected!!.id, harness.repository.state.value.selected!!.id)
+            assertEquals(activeProfile, harness.active.activeId.first())
+            assertEquals(email, harness.account.state.value.email)
+            harness.repository.refresh()
+            assertEquals(R.string.sync_lab_saved, harness.repository.state.value.notice, "The refreshed session stays usable")
+        } finally {
+            revertGate.complete(Unit)
+            owned?.let { runCatching { withContext(Dispatchers.Default) { withTimeout(4_000) { it.cancelAndJoin() } } } }
+            runCatching { harness.repository.stop() }
+            ioScope.cancel()
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
+    @Test fun cancelledCleanupHeldInActiveStoreClearPreservesUnboundNewerAccount() = runTest {
+        // The cancelled cleanup parks inside the gated active-store clear under NonCancellable and
+        // stays pending until the clear is released; the newer account is unbound (a nonempty remote
+        // learner list, no local binding), so it finishes without the held local ordering boundary.
+        val fake = FakeGoTrue()
+        val raw = FakeApi(fake)
+        val learnerTokens = java.util.concurrent.CopyOnWriteArrayList<String>()
+        val api = object : Backend by raw {
+            override suspend fun learners(token: String): List<Learner> {
+                learnerTokens.add(token)
+                return raw.learners(token)
+            }
+        }
+        val dir = File.createTempFile("account", "").apply { delete() }
+        val storeEntered = CompletableDeferred<Unit>()
+        val storeGate = CompletableDeferred<Unit>()
+        val delegate = InMemoryActiveProfileStore()
+        val gatedStore = object : id.petalytix.ayailmu.core.data.settings.ActiveProfileStore {
+            override val activeId = delegate.activeId
+            override suspend fun setActive(id: String?) {
+                if (id == null) { storeEntered.complete(Unit); storeGate.await() }
+                delegate.setActive(id)
+            }
+        }
+        val harness = Harness(dir, GoTrueAuth("http://127.0.0.1:${fake.http.port}"), api, softwareAead(), activeStore = gatedStore)
+        val gateB = CompletableDeferred<Unit>()
+        val ioScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        var ownedOld: Deferred<Boolean>? = null
+        var ownedB: Deferred<Boolean>? = null
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            fake.fabricate("syn-b@example.invalid", "password-two")
+            val gateA = CompletableDeferred<Unit>()
+            raw.learnersGate = gateA
+            val signingIn = ioScope.async { harness.account.signIn("syn-a@example.invalid", "password-one") }.also { ownedOld = it }
+            val parkedA = withContext(Dispatchers.Default) {
+                withTimeout(4_000) { raw.learnersCalls.poll(4, java.util.concurrent.TimeUnit.SECONDS) }
+            }
+            assertNotNull(parkedA, "A1's learners call must enter and capture its gate")
+            parkedA!!.await()
+            signingIn.cancel()
+            withContext(Dispatchers.Default) { withTimeout(4_000) { storeEntered.await() } }
+            assertFalse(signingIn.isCompleted, "The old job must stay pending while its cleanup is held in the store clear")
+            // Unbound newer account with a nonempty remote learner list; never needs localLock.
+            raw.learnersGate = gateB
+            val signingB = ioScope.async { harness.account.signIn("syn-b@example.invalid", "password-two") }.also { ownedB = it }
+            val parkedB = withContext(Dispatchers.Default) {
+                withTimeout(4_000) { raw.learnersCalls.poll(4, java.util.concurrent.TimeUnit.SECONDS) }
+            }
+            assertNotNull(parkedB, "B's learners call must enter and capture its gate")
+            parkedB!!.await()
+            val remoteB = Learner("remote-b1", "syn_b_remote_1", "ADULT", "adults", "id")
+            raw.profiles[learnerTokens.last()] = mutableListOf(remoteB)
+            gateB.complete(Unit)
+            assertTrue(withContext(Dispatchers.Default) { withTimeout(4_000) { signingB.await() } })
+            assertFalse(signingIn.isCompleted, "The old job is still pending until the store clear is released")
+            val savedB = assertNotNull(harness.vault.read(), "B's session is persisted")
+            val ownerB = harness.repository.state.value.owner
+            assertEquals(listOf(remoteB), harness.repository.state.value.learners, "B's remote learner list is published")
+            assertEquals(R.string.sync_lab_saved, harness.repository.state.value.notice)
+            storeGate.complete(Unit)
+            withContext(Dispatchers.Default) { withTimeout(4_000) { signingIn.cancelAndJoin() } }
+            assertTrue(signingIn.isCompleted)
+            val kept = assertNotNull(harness.vault.read(), "B's credentials must survive the old cleanup")
+            assertEquals(savedB, kept, "The whole newer SavedAuth snapshot is unchanged")
+            assertEquals(ownerB, harness.repository.state.value.owner)
+            assertTrue(harness.repository.state.value.authenticated, "B's session stays live across the old store wait")
+            assertEquals(listOf(remoteB), harness.repository.state.value.learners, "The newer remote learner list is never cleared")
+            assertEquals(R.string.sync_lab_saved, harness.repository.state.value.notice, "No stale signed-out notice may publish over B")
+            assertEquals("syn-b@example.invalid", harness.account.state.value.email)
+            assertFalse(harness.account.state.value.busy)
+        } finally {
+            storeGate.complete(Unit)
+            gateB.complete(Unit)
+            ownedOld?.let { runCatching { withContext(Dispatchers.Default) { withTimeout(4_000) { it.cancelAndJoin() } } } }
+            ownedB?.let { runCatching { withContext(Dispatchers.Default) { withTimeout(4_000) { it.cancelAndJoin() } } } }
+            runCatching { harness.repository.stop() }
+            ioScope.cancel()
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
+    @Test fun cancelGoogleDuringLearnerLoadPreservesGenuineVault() = runTest {
+        // Genuine persisted credentials the Google attempt never installed must survive an intent
+        // cancellation at the learner load, while the durable owner that attempt introduced is gone.
+        // The valid synthetic provider session is issued and retained in the vault directly, so the
+        // durable engine owner stays null and the credentials are never revoked.
+        val fake = FakeGoTrue()
+        val api = FakeApi(fake)
+        val dir = File.createTempFile("account", "").apply { delete() }
+        val harness = newHarness(dir, fake, api)
+        val gate = CompletableDeferred<Unit>()
+        val ioScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        var owned: Deferred<Boolean>? = null
+        try {
+            fake.fabricate("syn-g@example.invalid", "password-one")
+            val provider = GoTrueAuth("http://127.0.0.1:${fake.http.port}")
+            val session = provider.signIn("syn-g@example.invalid", "password-one")
+            val now = harness.clock.now().toEpochMilli()
+            harness.vault.write(SavedAuth(session, now + session.expiresIn * 1_000, now))
+            val genuine = assertNotNull(harness.vault.read(), "A genuine session exists before the Google attempt")
+            assertNull(harness.repository.savedOwner(), "Signed out: only the genuine vault material is present")
+            harness.account.beginGoogle() ?: fail("beginGoogle must return a URL when signed out")
+            val state = harness.account.googleState()!!
+            api.learnersGate = gate
+            val completing = ioScope.async { harness.account.completeGoogle(state, "auth-code") }.also { owned = it }
+            val parked = withContext(Dispatchers.Default) {
+                withTimeout(4_000) { api.learnersCalls.poll(4, java.util.concurrent.TimeUnit.SECONDS) }
+            }
+            assertNotNull(parked, "The learners call must enter and capture its gate")
+            parked!!.await()
+            assertNotNull(harness.repository.savedOwner(), "The Google attempt introduced a durable owner before the cancel")
+            assertTrue(harness.repository.state.value.authenticated, "The Google attempt introduced live auth before the cancel")
+            harness.account.cancelGoogle()
+            gate.complete(Unit)
+            assertFalse(withContext(Dispatchers.Default) { withTimeout(4_000) { completing.await() } }, "A flow cancelled during learner load must be discarded")
+            assertNull(harness.repository.savedOwner(), "The cancelled attempt must leave no durable owner")
+            assertNull(harness.repository.state.value.owner)
+            assertFalse(harness.repository.state.value.authenticated, "The introduced live auth must be gone")
+            assertFalse(harness.account.state.value.busy)
+            val kept = assertNotNull(harness.vault.read(), "The genuine vault session must remain installed")
+            assertEquals(genuine, kept, "The whole genuine SavedAuth snapshot is unchanged")
+        } finally {
+            gate.complete(Unit)
+            owned?.let { runCatching { withContext(Dispatchers.Default) { withTimeout(4_000) { it.cancelAndJoin() } } } }
+            runCatching { harness.repository.stop() }
+            ioScope.cancel()
+            fake.http.stop()
+            dir.deleteRecursively()
         }
     }
 }
