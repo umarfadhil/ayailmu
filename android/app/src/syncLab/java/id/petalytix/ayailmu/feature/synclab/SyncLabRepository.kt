@@ -57,6 +57,8 @@ internal class SyncLabRepository @Inject constructor(
     private var observed: Job? = null
     private var remoteLearners: Pair<String, List<Learner>>? = null
     private val publishLock = Mutex()
+    /** Test-only publication coordinator: invoked under [publishLock] before each applied state mutation. */
+    internal var publishProbe: (suspend (Int?) -> Unit)? = null
     /** Local activation/cleanup ordering boundary: held only across Room/DataStore/file work, never across network. */
     private val localLock = Mutex()
     private val mutable = MutableStateFlow(SyncLabState())
@@ -99,10 +101,11 @@ internal class SyncLabRepository @Inject constructor(
             owner to engine.availableLearners()
         } catch (e: Exception) {
             if (e is CancellationException) throw e
-            // A newer account may have signed in while the load was parked; only a failure of the
-            // still-current owner may publish (publish re-checks the owner across its own waits).
+            // A newer account may have signed in while the load was parked; the failure notice is
+            // bound to this owner and re-checked under publishLock at the actual state mutation
+            // (see publish), so a stale failure can never be committed over a newer account.
             if (ownerCurrent(owner, accepted)) {
-                publish(if (e is IOException) R.string.sync_lab_offline else R.string.sync_lab_failed)
+                publish(if (e is IOException) R.string.sync_lab_offline else R.string.sync_lab_failed, owner, accepted)
             }
             return
         }
@@ -238,12 +241,21 @@ internal class SyncLabRepository @Inject constructor(
             }
         }
     }
-    private suspend fun publish(message: Int? = null) = publishLock.withLock {
+    private suspend fun publish(
+        message: Int? = null,
+        origin: String? = null,
+        accepted: (() -> Boolean)? = null,
+    ) = publishLock.withLock {
+        publishProbe?.invoke(message)
         val binding = engine.binding()
         val owner = engine.owner()
         val loaded = if (binding != null) content.track("arab") else null
         val projection = if (binding != null && loaded != null) SyncedProgress.project(binding, proof, loaded.rules, loaded.content) else null
         val learners = remoteLearners?.takeIf { it.first == owner }?.second ?: engine.knownLearners()
+        // A notice bound to an originating owner is dropped unless that owner is still current at
+        // the actual state mutation; every suspension above can outlive the pre-check that
+        // authorised this publish, and a newer account may have taken over meanwhile.
+        if (origin != null && !ownerCurrent(origin, accepted ?: { true })) return@withLock
         if (engine.owner() != owner || engine.binding()?.learner?.id != binding?.learner?.id) return@withLock
         mutable.value = SyncLabState(
             owner = owner, authenticated = engine.authenticated(), learners = learners, selected = binding?.learner,

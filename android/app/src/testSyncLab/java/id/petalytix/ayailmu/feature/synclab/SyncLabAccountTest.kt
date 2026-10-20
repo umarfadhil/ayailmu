@@ -41,8 +41,12 @@ import java.time.Instant
 import kotlin.concurrent.thread
 import kotlin.test.*
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -800,6 +804,143 @@ class SyncLabAccountTest {
             assertTrue(harness.repository.state.value.authenticated, "The newer session stays active")
             assertEquals(newer.session.accessToken, harness.vault.read()!!.session.accessToken, "The newer session stays in the vault")
             harness.repository.stop()
+        } finally {
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
+    /**
+     * A's parked learner load fails with 503 after its owner pre-check, but the failure publish
+     * then holds the publication boundary while a different-owner sign-in changes the engine
+     * account; the stale failure notice must never be applied tagged as the newer owner, and the
+     * newer sign-in's own success must not be able to hide the intermediate stale publication.
+     */
+    @Test fun staleLearnerFailureDroppedAcrossPublishWaitByDifferentOwnerSignIn() = runTest {
+        val fake = FakeGoTrue()
+        val api = FakeApi(fake)
+        val dir = File.createTempFile("account", "").apply { delete() }
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            fake.fabricate("syn-b@example.invalid", "password-two")
+            val harness = newHarness(dir, fake, api)
+            val ioScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+            try {
+                val gate = CompletableDeferred<Unit>()
+                api.learnersGate = gate
+                val committed = java.util.concurrent.CopyOnWriteArrayList<Pair<Int, String?>>()
+                val bSignIn = CompletableDeferred<Deferred<Boolean>>()
+                val once = java.util.concurrent.atomic.AtomicBoolean()
+                harness.repository.publishProbe = probe@{ message ->
+                    // Under publishLock this is exactly the state committed by the previous
+                    // publish, so B's later success cannot hide an intermediate stale A commit.
+                    committed += harness.repository.state.value.notice to harness.repository.state.value.owner
+                    if (message == R.string.sync_lab_failed && once.compareAndSet(false, true)) {
+                        // A is inside publishLock with its pre-check already passed; start B and let
+                        // it change the engine account (B's own publish queues on this same boundary).
+                        bSignIn.complete(ioScope.async { harness.account.signIn("syn-b@example.invalid", "password-two") })
+                        withContext(Dispatchers.Default) {
+                            withTimeout(8_000) {
+                                while (harness.repository.savedOwner() != "owner-user-2") kotlinx.coroutines.delay(5)
+                            }
+                        }
+                        api.learnersGate = null
+                        api.failLearnersWith503 = false
+                    }
+                }
+                val aSignIn = ioScope.async { harness.account.signIn("syn-a@example.invalid", "password-one") }
+                // Park A's learner load; a completed entered milestone means this exact call captured
+                // the gate, so clearing the field cannot release it.
+                val aEntered = withContext(Dispatchers.Default) { withTimeout(4_000) { api.learnersCalls.take() } }
+                aEntered.await()
+                api.failLearnersWith503 = true
+                gate.complete(Unit)
+                val newer = withContext(Dispatchers.Default) { withTimeout(10_000) { bSignIn.await() } }
+                withContext(Dispatchers.Default) {
+                    assertFalse(withTimeout(10_000) { aSignIn.await() }, "A's superseded sign-in must fail closed")
+                    assertTrue(withTimeout(10_000) { newer.await() }, "B's sign-in succeeds")
+                }
+                assertTrue(committed.none { it.first == R.string.sync_lab_failed && it.second == "owner-user-2" },
+                    "A stale learner-load failure must never be committed tagged as the newer owner: $committed")
+                assertEquals("owner-user-2", harness.repository.state.value.owner)
+                assertTrue(harness.repository.state.value.authenticated, "B's session stays active")
+                assertEquals(R.string.sync_lab_saved, harness.repository.state.value.notice)
+                val saved = harness.vault.read()
+                assertNotNull(saved, "B's session is persisted")
+                assertEquals("user-2", fake.accessOwner[saved!!.session.accessToken], "The vault holds B's session, not A's")
+            } finally {
+                runCatching { harness.repository.stop() }
+                ioScope.cancel()
+            }
+        } finally {
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
+    /**
+     * Same defect with a same-owner replacement: A's parked learner load fails with 503 after its
+     * pre-check, then the failure publish holds the publication boundary while a fresh sign-in of
+     * the same account supersedes A's attempt (the engine owner string is unchanged, only the
+     * session attempt moves on); the stale failure notice must still be dropped.
+     */
+    @Test fun staleLearnerFailureDroppedAcrossPublishWaitBySameOwnerReplacement() = runTest {
+        val fake = FakeGoTrue()
+        val api = FakeApi(fake)
+        val dir = File.createTempFile("account", "").apply { delete() }
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            val harness = newHarness(dir, fake, api)
+            val ioScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+            try {
+                assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"), "The first sign-in completes")
+                val firstToken = harness.vault.read()!!.session.accessToken
+                val gate = CompletableDeferred<Unit>()
+                api.learnersGate = gate
+                var parkedMark = -1L
+                val committed = java.util.concurrent.CopyOnWriteArrayList<Pair<Int, String?>>()
+                val replacement = CompletableDeferred<Deferred<Boolean>>()
+                val once = java.util.concurrent.atomic.AtomicBoolean()
+                harness.repository.publishProbe = probe@{ message ->
+                    committed += harness.repository.state.value.notice to harness.repository.state.value.owner
+                    if (message == R.string.sync_lab_failed && once.compareAndSet(false, true)) {
+                        replacement.complete(ioScope.async { harness.account.signIn("syn-a@example.invalid", "password-one") })
+                        withContext(Dispatchers.Default) {
+                            withTimeout(8_000) {
+                                while (harness.repository.sessionMark() == parkedMark) kotlinx.coroutines.delay(5)
+                            }
+                        }
+                        api.learnersGate = null
+                        api.failLearnersWith503 = false
+                    }
+                }
+                val aSignIn = ioScope.async { harness.account.signIn("syn-a@example.invalid", "password-one") }
+                // The parked retry is the second learners() call; the first belongs to the completed
+                // sign-in above.
+                withContext(Dispatchers.Default) { withTimeout(4_000) { api.learnersCalls.take() } }.await()
+                val parkedCall = withContext(Dispatchers.Default) { withTimeout(4_000) { api.learnersCalls.take() } }
+                parkedCall.await()
+                parkedMark = harness.repository.sessionMark()
+                api.failLearnersWith503 = true
+                gate.complete(Unit)
+                val newer = withContext(Dispatchers.Default) { withTimeout(10_000) { replacement.await() } }
+                withContext(Dispatchers.Default) {
+                    assertFalse(withTimeout(10_000) { aSignIn.await() }, "The superseded sign-in must fail closed")
+                    assertTrue(withTimeout(10_000) { newer.await() }, "The replacement sign-in succeeds")
+                }
+                assertTrue(committed.none { it.first == R.string.sync_lab_failed },
+                    "A stale learner-load failure must never be committed after a same-owner replacement: $committed")
+                assertEquals("owner-user-1", harness.repository.state.value.owner)
+                assertTrue(harness.repository.state.value.authenticated, "The replacement session stays active")
+                assertEquals(R.string.sync_lab_saved, harness.repository.state.value.notice)
+                val saved = harness.vault.read()
+                assertNotNull(saved, "The replacement session is persisted")
+                assertEquals("user-1", fake.accessOwner[saved!!.session.accessToken], "The vault holds the same owner's session")
+                assertNotEquals(firstToken, saved.session.accessToken, "The replacement session is a fresh one")
+            } finally {
+                runCatching { harness.repository.stop() }
+                ioScope.cancel()
+            }
         } finally {
             fake.http.stop()
             dir.deleteRecursively()
