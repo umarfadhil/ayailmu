@@ -262,6 +262,9 @@ private class FakeApi(
     /** Fresh per-call milestones: every learners() call offers an entered and an exit deferred. */
     val learnersCalls = java.util.concurrent.LinkedBlockingQueue<CompletableDeferred<Unit>>()
     val learnersExits = java.util.concurrent.LinkedBlockingQueue<CompletableDeferred<Unit>>()
+    /** Exact per-call pairing: entry and exit for the same invocation register together at call
+     * entry, so an awaited exit can only ever belong to its own captured entered milestone. */
+    val learnersPairs = java.util.concurrent.LinkedBlockingQueue<Pair<CompletableDeferred<Unit>, CompletableDeferred<Unit>>>()
     var failLearnersWith401 = false
     val profiles = mutableMapOf<String, MutableList<Learner>>()
     private fun owner(token: String): String {
@@ -281,27 +284,35 @@ private class FakeApi(
     }
     override suspend fun learners(token: String): List<Learner> {
         val entered = CompletableDeferred<Unit>()
+        val pairedExit = CompletableDeferred<Unit>()
+        learnersPairs.add(entered to pairedExit)
         // Capture the gate before publishing the milestone, so a completed entered always means
         // this call already captured its gate (no scheduling gap).
         val gate = learnersGate
         learnersCalls.add(entered)
         learnersEntered.complete(Unit)
         var waited = false
-        if (gate != null) {
-            entered.complete(Unit)
-            gate.await()
-            waited = true
-        } else {
-            entered.complete(Unit)
-        }
-        val exit = CompletableDeferred<Unit>()
-        learnersExits.add(exit)
         try {
-            if (waited && failLearnersWith401) throw ApiFailure(401, "unauthorized")
-            if (failLearnersWith503) throw ApiFailure(503, "temporarily_unavailable")
-            return profiles[token].orEmpty()
+            if (gate != null) {
+                entered.complete(Unit)
+                gate.await()
+                waited = true
+            } else {
+                entered.complete(Unit)
+            }
+            val exit = CompletableDeferred<Unit>()
+            learnersExits.add(exit)
+            try {
+                if (waited && failLearnersWith401) throw ApiFailure(401, "unauthorized")
+                if (failLearnersWith503) throw ApiFailure(503, "temporarily_unavailable")
+                return profiles[token].orEmpty()
+            } finally {
+                exit.complete(Unit)
+            }
         } finally {
-            exit.complete(Unit)
+            // The paired terminal signal covers the whole invocation, including a caller cancelled
+            // while waiting at the gate, so an exact pair can never dangle.
+            pairedExit.complete(Unit)
         }
     }
     override suspend fun createLearner(token: String, clientId: String): Learner {
@@ -1212,6 +1223,8 @@ class SyncLabAccountTest {
     @Test fun lateActivationCannotOwnCurrentSession() = runTest {
         val fake = FakeGoTrue()
         val dir = File.createTempFile("account", "").apply { delete() }
+        val gate = java.util.concurrent.CountDownLatch(1)
+        var restarted: SyncLabRepository? = null
         try {
             fake.fabricate("syn-a@example.invalid", "password-one")
             fake.fabricate("syn-b@example.invalid", "password-two")
@@ -1224,38 +1237,58 @@ class SyncLabAccountTest {
             val first = newHarness(dir, fake, api, aead = aead)
             assertTrue(first.account.signIn("syn-a@example.invalid", "password-one"))
             first.repository.create()
+            val aProfile = first.repository.state.value.selected!!.clientLearnerId
             first.repository.stop()
             // Simulated restart: init begins activating A's durable binding and parks inside the
-            // active-store write while holding the local boundary.
-            val storeEntered = CompletableDeferred<Unit>()
-            val gate = java.util.concurrent.CountDownLatch(1)
+            // active-store write while holding the local boundary. The requested id is captured as
+            // the precondition milestone; the applied value is recorded only after the delegate
+            // store accepted it, so the observed sequence is the actual A write then compensating clear.
+            val requested = CompletableDeferred<String?>()
+            val applied = java.util.concurrent.CopyOnWriteArrayList<String?>()
             val delegate = InMemoryActiveProfileStore()
             val gatedStore = object : id.petalytix.ayailmu.core.data.settings.ActiveProfileStore {
                 override val activeId = delegate.activeId
-                override suspend fun setActive(id: String?) { storeEntered.complete(Unit); gate.await(); delegate.setActive(id) }
+                override suspend fun setActive(id: String?) {
+                    requested.complete(id)
+                    gate.await()
+                    delegate.setActive(id)
+                    applied.add(id)
+                }
             }
             val context = object : ContextWrapper(base) {
                 override fun getNoBackupFilesDir() = dir.apply { mkdirs() }
             }
-            val restarted = SyncLabRepository(
+            val r = SyncLabRepository(
                 context, db(context), gatedStore, assets(), ContentRepository(assets(), AppBuildInfo(true, "test")),
                 SystemClock(), api,
             )
-            storeEntered.await()
+            restarted = r
+            val requestedId = withContext(Dispatchers.Default) { withTimeout(4_000) { requested.await() } }
+            assertEquals(aProfile, requestedId, "The parked write is A's activation, not an initial null")
+            assertFalse(r.initJob.isCompleted, "Init stays pending while its store milestone is held")
             // B (with no binding) signs in and changes ownership while A's activation is parked.
-            val account = SyncLabAccount(GoTrueAuth("http://127.0.0.1:${fake.http.port}"), KeystoreAuthVault(context, aead), restarted, FixedClock(Instant.parse("2026-10-19T02:00:00Z")))
+            val bVault = KeystoreAuthVault(context, aead)
+            val account = SyncLabAccount(GoTrueAuth("http://127.0.0.1:${fake.http.port}"), bVault, r, FixedClock(Instant.parse("2026-10-19T02:00:00Z")))
             assertTrue(account.signIn("syn-b@example.invalid", "password-two"))
-            assertEquals(LearningReadiness.NOT_READY, restarted.prepareLearning(), "B with no binding cannot open learning while A's activation is parked")
+            assertEquals(LearningReadiness.NOT_READY, r.prepareLearning(), "B with no binding cannot open learning while A's activation is parked")
+            val saved = assertNotNull(bVault.read(), "B's session is persisted")
+            val owner = r.state.value.owner
             gate.countDown()
-            // A's stale activation is undone on the repository's IO thread; await it deterministically.
-            withContext(Dispatchers.Default) {
-                withTimeout(4_000) { delegate.activeId.first { it == null } }
-            }
-            assertEquals("owner-user-2", restarted.state.value.owner)
-            assertTrue(restarted.state.value.authenticated)
+            // Join the exact init activation job: A's stale activation is undone before it completes.
+            withContext(Dispatchers.Default) { withTimeout(4_000) { r.initJob.join() } }
+            assertFalse(r.initJob.isActive)
+            assertEquals(listOf(aProfile, null), applied.toList(), "A's late write is applied, then compensated with a clear")
+            assertEquals(owner, r.state.value.owner)
+            assertEquals("owner-user-2", r.state.value.owner)
+            assertTrue(r.state.value.authenticated)
             assertNull(delegate.activeId.first(), "A stale activation must never leave A active after B signed in")
-            restarted.stop()
+            val kept = assertNotNull(bVault.read(), "B's credentials must survive the stale activation")
+            assertEquals(saved, kept, "The whole SavedAuth snapshot is unchanged")
+            r.stop()
         } finally {
+            gate.countDown()
+            restarted?.let { runCatching { withContext(Dispatchers.Default) { withTimeout(4_000) { it.initJob.join() } } } }
+            runCatching { restarted?.stop() }
             fake.http.stop()
             dir.deleteRecursively()
         }
@@ -1494,21 +1527,28 @@ class SyncLabAccountTest {
         val fake = FakeGoTrue()
         val api = FakeApi(fake)
         val dir = File.createTempFile("account", "").apply { delete() }
+        val gate = CompletableDeferred<Unit>()
+        var refreshing: kotlinx.coroutines.Job? = null
         try {
             fake.fabricate("syn-a@example.invalid", "password-one")
             fake.fabricate("syn-b@example.invalid", "password-two")
             val harness = newHarness(dir, fake, api)
             val vm = SyncLabViewModel(harness.repository, harness.account)
+            testScheduler.runCurrent() // drain the empty-vault restore before any account exists
             assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
-            api.learnersCalls.poll() // drain the initial sign-in's learner load
-            api.learnersExits.poll() // and its exit, so later polls observe the gated call
+            // Drain the initial sign-in's exact entry/exit pair.
+            val initial = withContext(Dispatchers.Default) { api.learnersPairs.poll(4, java.util.concurrent.TimeUnit.SECONDS) }
+            assertNotNull(initial, "The sign-in's learner load must register its entry/exit pair")
+            initial!!.first.await()
+            initial.second.await()
             // A's "Load this account's learners" begins and parks at a fresh per-request call.
-            val gate = CompletableDeferred<Unit>()
             api.learnersGate = gate
-            vm.refresh()
+            val refreshingJob = vm.refresh().also { refreshing = it }
             testScheduler.runCurrent()
-            val gatedCall = withContext(Dispatchers.Default) { api.learnersCalls.poll(4, java.util.concurrent.TimeUnit.SECONDS) }
-            assertNotNull(gatedCall, "The later request must register its own entered milestone")
+            val gatedCall = withContext(Dispatchers.Default) { api.learnersPairs.poll(4, java.util.concurrent.TimeUnit.SECONDS) }
+            assertNotNull(gatedCall, "The later request must register its own entry/exit pair")
+            gatedCall!!.first.await() // entered completes only after the call captured its gate
+            assertFalse(refreshingJob.isCompleted, "The action stays pending while its learners milestone is held")
             // A logs out and B signs in while A's old request is still suspended at the backend.
             // Clearing the field first lets B's own learner load through; the parked call keeps its
             // captured gate and is released afterwards with a 401.
@@ -1517,20 +1557,27 @@ class SyncLabAccountTest {
             assertTrue(harness.account.signIn("syn-b@example.invalid", "password-two"))
             assertTrue(harness.repository.state.value.authenticated)
             assertEquals("owner-user-2", harness.repository.state.value.owner)
-            // The old request is released with a 401; its stale failure must not expire or publish over B.
+            val saved = assertNotNull(harness.vault.read(), "B's session is persisted")
+            // The old request is released with a 401; its own paired exit is awaited exactly, then
+            // the action Job is joined through its failure handler.
             api.failLearnersWith401 = true
             gate.complete(Unit)
-            withContext(Dispatchers.Default) {
-                val exit = api.learnersExits.poll(4, java.util.concurrent.TimeUnit.SECONDS)
-                assertNotNull(exit)
-                exit!!.await()
-            }
+            withContext(Dispatchers.Default) { withTimeout(4_000) { gatedCall.second.await() } }
+            awaitCondition(testScheduler, 4_000) { refreshingJob.isCompleted }
+            assertFalse(refreshingJob.isActive, "The stale action completed only after its milestone released")
+            val kept = assertNotNull(harness.vault.read(), "B's credentials must survive the stale failure")
+            assertEquals(saved, kept, "The whole SavedAuth snapshot is unchanged")
             testScheduler.runCurrent()
             assertTrue(harness.repository.state.value.authenticated, "A stale ordinary-action failure must not expire the newer session")
             assertEquals("owner-user-2", harness.repository.state.value.owner)
             assertEquals("syn-b@example.invalid", harness.account.state.value.email)
             harness.repository.stop()
         } finally {
+            gate.complete(Unit)
+            refreshing?.let { job ->
+                job.cancel()
+                runCatching { withContext(Dispatchers.Default) { withTimeout(4_000) { job.join() } } }
+            }
             fake.http.stop()
             dir.deleteRecursively()
         }
@@ -1599,21 +1646,27 @@ class SyncLabAccountTest {
             val fake = FakeGoTrue()
             val api = FakeApi(fake)
             val dir = File.createTempFile("account", "").apply { delete() }
+            val gate = CompletableDeferred<Unit>()
+            var refreshing: kotlinx.coroutines.Job? = null
             try {
                 fake.fabricate("syn-a@example.invalid", "password-one")
                 val harness = newHarness(dir, fake, api)
                 val vm = SyncLabViewModel(harness.repository, harness.account)
+                testScheduler.runCurrent() // drain the empty-vault restore before any account exists
                 assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
-                api.learnersCalls.poll() // drain the initial sign-in's learner load
-                api.learnersExits.poll()
+                // Drain the initial sign-in's exact entry/exit pair.
+                val initial = withContext(Dispatchers.Default) { api.learnersPairs.poll(4, java.util.concurrent.TimeUnit.SECONDS) }
+                assertNotNull(initial, "The sign-in's learner load must register its entry/exit pair")
+                initial!!.first.await()
+                initial.second.await()
                 // A1's "Load this account's learners" begins and parks at a fresh per-request call.
-                val gate = CompletableDeferred<Unit>()
                 api.learnersGate = gate
-                vm.refresh()
+                val refreshingJob = vm.refresh().also { refreshing = it }
                 testScheduler.runCurrent()
-                val gatedCall = withContext(Dispatchers.Default) { api.learnersCalls.poll(4, java.util.concurrent.TimeUnit.SECONDS) }
-                assertNotNull(gatedCall, "The later request must register its own entered milestone")
-                gatedCall!!.await() // entered completes only after the call captured its gate
+                val gatedCall = withContext(Dispatchers.Default) { api.learnersPairs.poll(4, java.util.concurrent.TimeUnit.SECONDS) }
+                assertNotNull(gatedCall, "The later request must register its own entry/exit pair")
+                gatedCall!!.first.await() // entered completes only after the call captured its gate
+                assertFalse(refreshingJob.isCompleted, "The action stays pending while its learners milestone is held")
                 // Same owner re-authenticates through logout + a fresh sign-in (A2) while A1's
                 // request is still suspended: owner and authenticated state are identical, so the
                 // origin must be the opaque session mark, not (owner, authenticated).
@@ -1624,19 +1677,25 @@ class SyncLabAccountTest {
                 assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
                 assertTrue(harness.repository.state.value.authenticated)
                 assertEquals("owner-user-1", harness.repository.state.value.owner)
+                val saved = assertNotNull(harness.vault.read(), "A2's session is persisted")
                 api.failLearnersWith401 = true
                 gate.complete(Unit)
-                withContext(Dispatchers.Default) {
-                    val exit = api.learnersExits.poll(4, java.util.concurrent.TimeUnit.SECONDS)
-                    assertNotNull(exit)
-                    exit!!.await()
-                }
+                withContext(Dispatchers.Default) { withTimeout(4_000) { gatedCall.second.await() } }
+                awaitCondition(testScheduler, 4_000) { refreshingJob.isCompleted }
+                assertFalse(refreshingJob.isActive, "The stale action completed only after its milestone released")
+                val kept = assertNotNull(harness.vault.read(), "A2's credentials must survive A1's stale failure")
+                assertEquals(saved, kept, "The whole SavedAuth snapshot is unchanged")
                 testScheduler.runCurrent()
                 assertTrue(harness.repository.state.value.authenticated, "A1's stale failure must not expire the reinstalled A2 session")
                 assertEquals("owner-user-1", harness.repository.state.value.owner)
                 assertEquals("syn-a@example.invalid", harness.account.state.value.email)
                 harness.repository.stop()
             } finally {
+                gate.complete(Unit)
+                refreshing?.let { job ->
+                    job.cancel()
+                    runCatching { withContext(Dispatchers.Default) { withTimeout(4_000) { job.join() } } }
+                }
                 fake.http.stop()
                 dir.deleteRecursively()
             }

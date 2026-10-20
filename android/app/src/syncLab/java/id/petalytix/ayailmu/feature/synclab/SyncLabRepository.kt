@@ -74,8 +74,9 @@ internal class SyncLabRepository @Inject constructor(
     private val proof by lazy {
         PackProof.fromBytes(assets.read("packs/bahasa/arab/v1.json").encodeToByteArray(), assets.read("config/rules.arab.json").encodeToByteArray(), SOURCE_COMMIT)
     }
+    internal val initJob: Job
     init {
-        scope.launch {
+        initJob = scope.launch {
             try {
                 engine.binding()?.let { activateLocally(it.learner, observe = true) }
                 publish()

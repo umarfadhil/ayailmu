@@ -67,12 +67,14 @@ Pin these cases to their owning task: publication lock wait (1); same-owner repl
 
 ## Task 4: Repair older completion proofs
 
+**Verified:** [Completion proof checkpoint](../../integration/2026-10-20-completion-proof-checkpoint.md).
+
 **Small input:** T fake milestones and only `lateActivationCannotOwnCurrentSession`, `staleOrdinaryActionFailureDoesNotExpireNewerSession`, `staleFailureCannotExpireReinstalledSameOwnerSession`; V/R signatures only if a minimal completion seam is necessary.
 
-- [ ] Pair entry/exit signals with the exact gated request; B/A2's learner call must not satisfy A's wait.
-- [ ] In late activation, observe A's write and its later compensating clear, then await that activation's completion; initial null is not completion.
-- [ ] Await the ViewModel action/failure handler itself, beyond HTTP exit, before asserting owner, authentication, vault and profile stability. Prove the test stays pending until that milestone is released.
-- [ ] Kimi authors only necessary test/seam changes. Run the repaired cases and full focused suite; review/checkpoint.
+- [x] Pair entry/exit signals with the exact gated request; B/A2's learner call must not satisfy A's wait.
+- [x] In late activation, observe A's write and its later compensating clear, then await that activation's completion; initial null is not completion.
+- [x] Await the ViewModel action/failure handler itself, beyond HTTP exit, before asserting owner, authentication, vault and profile stability. Prove the test stays pending until that milestone is released.
+- [x] Kimi authors only necessary test/seam changes. Run the repaired cases and full focused suite; review/checkpoint.
 
 ## Task 5: Use current-route ownership during transitions (Minor)
 
