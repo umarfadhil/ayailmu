@@ -31,6 +31,7 @@ import id.petalytix.ayailmu.feature.consent.ConsentRoute
 import id.petalytix.ayailmu.feature.session.SessionRoute
 import id.petalytix.ayailmu.navigation.AyaRoute
 import javax.inject.Inject
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -60,13 +61,15 @@ internal class SyncLabViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.Eagerly, SyncLabScreen(SyncLabState(), AccountUi()))
     /** Excludes overlapping repository mutations; auth and logout deliberately stay outside so logout can cancel a refresh. */
     private val actionLock = Mutex()
+    /** Test-only seam: invoked on Main after prepareLearning returns, before the readiness callback. */
+    internal var learnDispatchProbe: (suspend () -> Unit)? = null
     /** Route instances currently composed; auth completion callbacks navigate only when their origin is still visible. */
     private val visibleOrigins = MutableStateFlow<Set<Any>>(emptySet())
     init { viewModelScope.launch { account.restore() } }
     /** Session identity captured when an action starts; a stale failure must not mutate or publish over a newer one. */
-    private fun action(block: suspend () -> Unit) {
+    private fun action(block: suspend () -> Unit): Job {
         val origin = repository.sessionMark()
-        viewModelScope.launch {
+        return viewModelScope.launch {
             try { block() } catch (e: Exception) {
                 repository.failed(e) { repository.sessionMark() == origin }
             }
@@ -107,7 +110,15 @@ internal class SyncLabViewModel @Inject constructor(
     fun enable() = exclusive { repository.enable() }
     fun disable() = exclusive { repository.disable() }
     fun sync() = exclusive { repository.sync() }
-    fun learn(ready: (LearningReadiness) -> Unit) = exclusive { ready(repository.prepareLearning()) }
+    fun learn(ready: (LearningReadiness) -> Unit) = exclusive {
+        val decision = repository.prepareLearningTracked()
+        // The IO-to-Main return can outlive the durable owner/binding/session that became ready;
+        // only a NOT_READY or an identity still current at dispatch may reach the callback.
+        learnDispatchProbe?.invoke()
+        if (decision.readiness == LearningReadiness.NOT_READY || repository.learningIdentity() == decision.identity) {
+            ready(decision.readiness)
+        }
+    }
 }
 
 /** Tracks this auth route instance so a completion that lands after Back/disposal cannot navigate. */

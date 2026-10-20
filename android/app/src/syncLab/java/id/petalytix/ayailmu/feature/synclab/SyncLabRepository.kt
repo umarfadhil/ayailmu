@@ -21,6 +21,7 @@ import javax.inject.Singleton
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -59,6 +60,10 @@ internal class SyncLabRepository @Inject constructor(
     private val publishLock = Mutex()
     /** Test-only publication coordinator: invoked under [publishLock] before each applied state mutation. */
     internal var publishProbe: (suspend (Int?) -> Unit)? = null
+    /** Test-only learning seams: [learningConsentProbe] runs after local activation and before the
+     * Room consent read; [learningResultProbe] observes the readiness result before it is returned. */
+    internal var learningConsentProbe: (suspend () -> Unit)? = null
+    internal var learningResultProbe: (suspend (LearningReadiness) -> Unit)? = null
     /** Local activation/cleanup ordering boundary: held only across Room/DataStore/file work, never across network. */
     private val localLock = Mutex()
     private val mutable = MutableStateFlow(SyncLabState())
@@ -211,14 +216,48 @@ internal class SyncLabRepository @Inject constructor(
         if (error is ApiFailure && (error.status == 401 || error.code == "fresh_authentication_required")) engine.expireSession()
         publish(if (!engine.authenticated() && engine.owner() != null) R.string.sync_lab_login_required else R.string.sync_lab_failed)
     }
-    suspend fun prepareLearning(): LearningReadiness = withContext(Dispatchers.IO) {
-        val learner = engine.binding()?.learner ?: return@withContext LearningReadiness.NOT_READY
+    suspend fun prepareLearning(): LearningReadiness = prepareLearningTracked().readiness
+    /** Readiness plus the durable owner/binding/session identity it was fenced against; the
+     * caller must re-verify [identity] at the actual callback dispatch, never published UI state. */
+    internal data class LearningDecision(
+        val readiness: LearningReadiness,
+        val identity: Triple<String?, String?, Long>,
+    )
+    internal suspend fun prepareLearningTracked(): LearningDecision = withContext(Dispatchers.IO) {
+        val learner = engine.binding()?.learner
+            ?: return@withContext LearningDecision(LearningReadiness.NOT_READY, learningIdentity())
+        val owner = engine.owner()
+        val mark = engine.sessionMark()
         // A failed local activation must never report "consent already granted": the caller would
         // open native learning under whatever profile was previously active.
-        if (!activateLocally(learner, observe = false)) return@withContext LearningReadiness.NOT_READY
-        if (db.profiles().get(learner.clientLearnerId)?.consentVersion != id.petalytix.ayailmu.feature.consent.Consent.VERSION)
-            LearningReadiness.CONSENT_NEEDED else LearningReadiness.READY
+        if (!activateLocally(learner, observe = false))
+            return@withContext LearningDecision(LearningReadiness.NOT_READY, Triple(owner, learner.id, mark))
+        learningConsentProbe?.invoke()
+        val consentVersion = db.profiles().get(learner.clientLearnerId)?.consentVersion
+        // The suspending consent read can outlive the session that authorised this call, so
+        // readiness is reported only while the durable owner/binding/session attempt is still the
+        // one activated above; otherwise fail closed and undo this activation when it no longer
+        // matches the current owner/binding — never clearing a newer activation of the same or
+        // another profile.
+        val decision = localLock.withLock {
+            val current = engine.owner() == owner && engine.binding()?.learner?.id == learner.id
+            if (current && engine.sessionMark() == mark) {
+                LearningDecision(
+                    if (consentVersion != id.petalytix.ayailmu.feature.consent.Consent.VERSION)
+                        LearningReadiness.CONSENT_NEEDED else LearningReadiness.READY,
+                    Triple(owner, learner.id, mark),
+                )
+            } else {
+                if (!current && active.activeId.first() == learner.clientLearnerId) runCatching { active.setActive(null) }
+                LearningDecision(LearningReadiness.NOT_READY, Triple(owner, learner.id, mark))
+            }
+        }
+        learningResultProbe?.invoke(decision.readiness)
+        decision
     }
+    /** Durable owner/binding/session identity for ownership fences; never the published UI snapshot. */
+    internal fun learningIdentity(): Triple<String?, String?, Long> =
+        Triple(engine.owner(), engine.binding()?.learner?.id, engine.sessionMark())
     private suspend fun ensureNative(learner: Learner) {
         require(learner.kind == "ADULT" && learner.clientLearnerId.startsWith("syn_"))
         db.withTransaction {

@@ -360,11 +360,12 @@ class SyncLabAccountTest {
         val vault: KeystoreAuthVault
         val active: InMemoryActiveProfileStore
         val context: Context
+        val db: AyaDatabase
         init {
             context = object : ContextWrapper(ApplicationProvider.getApplicationContext<Context>()) {
                 override fun getNoBackupFilesDir() = dir.apply { mkdirs() }
             }
-            val db = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
+            db = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
             val assetSource = AssetSource { path ->
                 requireNotNull(requireNotNull(javaClass.classLoader).getResourceAsStream(path)).use { it.readBytes().decodeToString() }
             }
@@ -1796,5 +1797,367 @@ class SyncLabAccountTest {
             Thread.sleep(250)
         }
         fail("Expected local synthetic confirmation/recovery email for $email")
+    }
+
+    /** FakeApi whose catalog satisfies PackProof.verify, so repository.create()/select() succeed. */
+    private fun proofApi(fake: FakeGoTrue): FakeApi {
+        val pack = assets().read("packs/bahasa/arab/v1.json").encodeToByteArray()
+        val rules = assets().read("config/rules.arab.json").encodeToByteArray()
+        val proof = PackProof.fromBytes(pack, rules, TEST_SOURCE_COMMIT)
+        return FakeApi(fake, Catalog(proof.sourceCommit, listOf(CatalogPack(proof.track, proof.contentVersion, proof.rulesVersion, proof.packSha256, proof.rulesSha256))))
+    }
+
+    @Test fun learningReadinessRejectsOwnerChangeDuringConsentRead() = runTest {
+        val fake = FakeGoTrue()
+        val dir = File.createTempFile("learning-readiness", "").apply { delete() }
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            fake.fabricate("syn-b@example.invalid", "password-two")
+            val harness = newHarness(dir, fake, api = proofApi(fake))
+            try {
+                assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
+                harness.repository.create()
+                val a1 = assertNotNull(harness.active.activeId.first())
+
+                val consentEntered = CompletableDeferred<Unit>()
+                val consentGate = CompletableDeferred<Unit>()
+                harness.repository.learningConsentProbe = {
+                    consentEntered.complete(Unit)
+                    consentGate.await()
+                }
+
+                // An unbound B supersedes A after the local activation but before the consent read
+                // completes; the stale readiness must fail closed and must not leave A's profile
+                // active under B.
+                val parked = async(Dispatchers.Default) { harness.repository.prepareLearning() }
+                withContext(Dispatchers.Default) { withTimeout(10_000) { consentEntered.await() } }
+                assertEquals(a1, harness.active.activeId.first(), "stale activation completed before the park")
+                assertTrue(harness.account.signIn("syn-b@example.invalid", "password-two"))
+                consentGate.complete(Unit)
+                assertEquals(
+                    LearningReadiness.NOT_READY,
+                    withContext(Dispatchers.Default) { withTimeout(10_000) { parked.await() } },
+                    "stale readiness must fail closed after an owner change",
+                )
+                assertNull(harness.active.activeId.first(), "the stale activation must not leave A active under B")
+                assertNotNull(harness.db.profiles().get(a1), "the readiness fence never deletes the local profile row")
+            } finally {
+                harness.repository.stop()
+            }
+        } finally {
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
+    @Test fun learningReadinessRetainsNewerSameOwnerSelection() = runTest {
+        val fake = FakeGoTrue()
+        val dir = File.createTempFile("learning-readiness-same-owner", "").apply { delete() }
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            val harness = newHarness(dir, fake, api = proofApi(fake))
+            try {
+                assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
+                harness.repository.create()
+                val a1 = assertNotNull(harness.active.activeId.first())
+
+                val consentEntered = CompletableDeferred<Unit>()
+                val consentGate = CompletableDeferred<Unit>()
+                harness.repository.learningConsentProbe = {
+                    consentEntered.complete(Unit)
+                    consentGate.await()
+                }
+
+                // The same owner selects A2 while the consent read is parked; the stale readiness
+                // must fail closed, the newer selection must be retained, and A2 keeps its local
+                // profile/credentials.
+                val parked = async(Dispatchers.Default) { harness.repository.prepareLearning() }
+                withContext(Dispatchers.Default) { withTimeout(10_000) { consentEntered.await() } }
+                harness.repository.create()
+                val a2 = assertNotNull(harness.active.activeId.first())
+                assertNotEquals(a1, a2)
+                consentGate.complete(Unit)
+                assertEquals(
+                    LearningReadiness.NOT_READY,
+                    withContext(Dispatchers.Default) { withTimeout(10_000) { parked.await() } },
+                    "a superseded learner selection must fail closed",
+                )
+                assertEquals(a2, harness.active.activeId.first(), "a newer same-owner selection must be retained")
+                assertNull(
+                    assertNotNull(harness.db.profiles().get(a2), "A2 keeps its local profile/credentials").consentVersion,
+                )
+                assertNotNull(harness.db.profiles().get(a1))
+            } finally {
+                harness.repository.stop()
+            }
+        } finally {
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
+    @Test fun learningCallbackRejectsOwnerChangeBeforeMainDispatch() = runTest {
+        val mainScheduler = TestCoroutineScheduler()
+        Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(mainScheduler))
+        try {
+            val fake = FakeGoTrue()
+            val dir = File.createTempFile("learning-callback", "").apply { delete() }
+            try {
+                fake.fabricate("syn-a@example.invalid", "password-one")
+                fake.fabricate("syn-b@example.invalid", "password-two")
+                val harness = newHarness(dir, fake, api = proofApi(fake))
+                try {
+                    val vm = SyncLabViewModel(harness.repository, harness.account)
+                    mainScheduler.runCurrent() // empty-vault initial restore completes before any account exists
+                    assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
+                    harness.repository.create()
+                    val a1 = assertNotNull(harness.active.activeId.first())
+                    // Grant consent so the stale readiness would be a success (READY) navigation.
+                    harness.db.profiles().setConsent(a1, id.petalytix.ayailmu.feature.consent.Consent.VERSION, harness.clock.now().toEpochMilli())
+
+                    val fenced = CompletableDeferred<Unit>()
+                    harness.repository.learningResultProbe = { fenced.complete(Unit) }
+                    val held = CompletableDeferred<Unit>()
+                    val holdGate = CompletableDeferred<Unit>()
+                    vm.learnDispatchProbe = { held.complete(Unit); holdGate.await() }
+                    val calls = java.util.concurrent.CopyOnWriteArrayList<LearningReadiness>()
+                    val job = vm.learn { calls.add(it) }
+                    mainScheduler.runCurrent() // start the action; it suspends in prepareLearning on real IO
+                    withContext(Dispatchers.Default) { withTimeout(10_000) { fenced.await() } } // readiness fenced on IO
+                    // Drive Main until the exact continuation is dispatched and holds before the callback.
+                    awaitCondition(mainScheduler, 10_000) { held.isCompleted }
+                    assertTrue(calls.isEmpty(), "callback is still held on Main before dispatch")
+                    assertTrue(harness.account.signIn("syn-b@example.invalid", "password-two"))
+                    holdGate.complete(Unit)
+                    mainScheduler.runCurrent()
+                    withContext(Dispatchers.Default) { withTimeout(10_000) { job.join() } }
+                    assertTrue(calls.isEmpty(), "a superseded owner must never receive the stale callback")
+                    assertEquals(LearningReadiness.NOT_READY, harness.repository.prepareLearning())
+                } finally {
+                    harness.repository.stop()
+                }
+            } finally {
+                fake.http.stop()
+                dir.deleteRecursively()
+            }
+        } finally {
+            Dispatchers.resetMain()
+        }
+    }
+
+    @Test fun learningCallbackRejectsSameOwnerSessionReplacement() = runTest {
+        val mainScheduler = TestCoroutineScheduler()
+        Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(mainScheduler))
+        try {
+            val fake = FakeGoTrue()
+            val dir = File.createTempFile("learning-callback-same-owner", "").apply { delete() }
+            try {
+                fake.fabricate("syn-a@example.invalid", "password-one")
+                val harness = newHarness(dir, fake, api = proofApi(fake))
+                try {
+                    val vm = SyncLabViewModel(harness.repository, harness.account)
+                    mainScheduler.runCurrent() // empty-vault initial restore completes before any account exists
+                    assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
+                    harness.repository.create()
+                    val a1 = assertNotNull(harness.active.activeId.first())
+                    harness.db.profiles().setConsent(a1, id.petalytix.ayailmu.feature.consent.Consent.VERSION, harness.clock.now().toEpochMilli())
+
+                    val fenced = CompletableDeferred<Unit>()
+                    harness.repository.learningResultProbe = { fenced.complete(Unit) }
+                    val held = CompletableDeferred<Unit>()
+                    val holdGate = CompletableDeferred<Unit>()
+                    vm.learnDispatchProbe = { held.complete(Unit); holdGate.await() }
+                    val calls = java.util.concurrent.CopyOnWriteArrayList<LearningReadiness>()
+                    val job = vm.learn { calls.add(it) }
+                    mainScheduler.runCurrent()
+                    withContext(Dispatchers.Default) { withTimeout(10_000) { fenced.await() } }
+                    awaitCondition(mainScheduler, 10_000) { held.isCompleted }
+                    assertTrue(calls.isEmpty(), "callback is still held on Main before dispatch")
+                    // Same-owner credential/session replacement supersedes the session attempt.
+                    assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
+                    holdGate.complete(Unit)
+                    mainScheduler.runCurrent()
+                    withContext(Dispatchers.Default) { withTimeout(10_000) { job.join() } }
+                    assertTrue(calls.isEmpty(), "a superseded session attempt must never receive the stale callback")
+                    // The newer vault and A's profile/consent survive the superseded callback.
+                    val saved = assertNotNull(harness.vault.read(), "the newer same-owner vault survives")
+                    assertEquals(
+                        harness.repository.state.first().owner,
+                        FakeApi(fake).currentAccount(saved.session.accessToken),
+                        "the newer vault stays valid for the same owner",
+                    )
+                    assertEquals(
+                        id.petalytix.ayailmu.feature.consent.Consent.VERSION,
+                        assertNotNull(harness.db.profiles().get(a1)).consentVersion,
+                    )
+                } finally {
+                    harness.repository.stop()
+                }
+            } finally {
+                fake.http.stop()
+                dir.deleteRecursively()
+            }
+        } finally {
+            Dispatchers.resetMain()
+        }
+    }
+
+    @Test fun learningReadinessRetainsNewerActivationAfterSameOwnerRelogin() = runTest {
+        val fake = FakeGoTrue()
+        val dir = File.createTempFile("learning-readiness-relogin", "").apply { delete() }
+        try {
+            fake.fabricate("syn-a@example.invalid", "password-one")
+            val harness = newHarness(dir, fake, api = proofApi(fake))
+            try {
+                assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
+                harness.repository.create()
+                val a1 = assertNotNull(harness.active.activeId.first())
+                harness.db.profiles().setConsent(a1, id.petalytix.ayailmu.feature.consent.Consent.VERSION, harness.clock.now().toEpochMilli())
+
+                val consentEntered = CompletableDeferred<Unit>()
+                val consentGate = CompletableDeferred<Unit>()
+                harness.repository.learningConsentProbe = {
+                    consentEntered.complete(Unit)
+                    consentGate.await()
+                }
+
+                // A same-owner re-login supersedes the session attempt but re-activates the SAME
+                // learner; the old readiness must fail closed while the newer activation and the
+                // newer vault survive.
+                val parked = async(Dispatchers.Default) { harness.repository.prepareLearning() }
+                withContext(Dispatchers.Default) { withTimeout(10_000) { consentEntered.await() } }
+                assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
+                assertEquals(a1, harness.active.activeId.first(), "the re-login re-activated the same profile")
+                val vaultSnapshot = harness.vault.read()
+                consentGate.complete(Unit)
+                assertEquals(
+                    LearningReadiness.NOT_READY,
+                    withContext(Dispatchers.Default) { withTimeout(10_000) { parked.await() } },
+                    "the superseded session attempt must fail closed",
+                )
+                assertEquals(a1, harness.active.activeId.first(), "the newer activation of the same profile survives")
+                val survived = harness.vault.read()
+                assertEquals(vaultSnapshot?.session?.accessToken, survived?.session?.accessToken, "the newer vault snapshot survives")
+                assertEquals(vaultSnapshot?.session?.refreshToken, survived?.session?.refreshToken)
+                assertEquals(vaultSnapshot?.expiresAtMs, survived?.expiresAtMs)
+            } finally {
+                harness.repository.stop()
+            }
+        } finally {
+            fake.http.stop()
+            dir.deleteRecursively()
+        }
+    }
+
+    @Test fun learningCallbackRejectsOfflineKnownLearnerSwitch() = runTest {
+        val mainScheduler = TestCoroutineScheduler()
+        Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(mainScheduler))
+        try {
+            val fake = FakeGoTrue()
+            val dir = File.createTempFile("learning-callback-offline", "").apply { delete() }
+            try {
+                fake.fabricate("syn-a@example.invalid", "password-one")
+                val harness = newHarness(dir, fake, api = proofApi(fake))
+                try {
+                    val vm = SyncLabViewModel(harness.repository, harness.account)
+                    mainScheduler.runCurrent() // empty-vault initial restore completes before any account exists
+                    assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
+                    harness.repository.create()
+                    val learnerA1 = assertNotNull(harness.repository.state.first().selected)
+                    val a1 = learnerA1.clientLearnerId
+                    harness.repository.create()
+                    val learnerA2 = assertNotNull(harness.repository.state.first().selected)
+                    val a2 = learnerA2.clientLearnerId
+                    harness.repository.select(learnerA1)
+                    assertEquals(a1, harness.active.activeId.first())
+                    harness.db.profiles().setConsent(a1, id.petalytix.ayailmu.feature.consent.Consent.VERSION, harness.clock.now().toEpochMilli())
+                    // Expire the in-memory session: durable owner/binding and offline learner
+                    // switching stay available, but selectKnown does not advance the session mark.
+                    harness.repository.expireSession()
+
+                    val fenced = CompletableDeferred<Unit>()
+                    harness.repository.learningResultProbe = { fenced.complete(Unit) }
+                    val held = CompletableDeferred<Unit>()
+                    val holdGate = CompletableDeferred<Unit>()
+                    vm.learnDispatchProbe = { held.complete(Unit); holdGate.await() }
+                    val calls = java.util.concurrent.CopyOnWriteArrayList<LearningReadiness>()
+                    val job = vm.learn { calls.add(it) }
+                    mainScheduler.runCurrent()
+                    withContext(Dispatchers.Default) { withTimeout(10_000) { fenced.await() } }
+                    awaitCondition(mainScheduler, 10_000) { held.isCompleted }
+                    assertTrue(calls.isEmpty(), "callback is still held on Main before dispatch")
+                    harness.repository.select(learnerA2)
+                    holdGate.complete(Unit)
+                    mainScheduler.runCurrent()
+                    withContext(Dispatchers.Default) { withTimeout(10_000) { job.join() } }
+                    assertTrue(calls.isEmpty(), "an offline known-learner switch must suppress the stale callback")
+                    assertEquals(a2, harness.active.activeId.first(), "the newer offline selection is retained")
+
+                    // Unchanged offline learning still reports READY exactly once.
+                    harness.repository.select(learnerA1)
+                    val offlineCalls = java.util.concurrent.CopyOnWriteArrayList<LearningReadiness>()
+                    val offlineJob = vm.learn { offlineCalls.add(it) }
+                    mainScheduler.runCurrent()
+                    awaitCondition(mainScheduler, 10_000) { offlineCalls.isNotEmpty() }
+                    mainScheduler.runCurrent()
+                    withContext(Dispatchers.Default) { withTimeout(10_000) { offlineJob.join() } }
+                    assertEquals(listOf(LearningReadiness.READY), offlineCalls, "unchanged offline learning reports READY")
+                    assertEquals(a1, harness.active.activeId.first())
+                } finally {
+                    harness.repository.stop()
+                }
+            } finally {
+                fake.http.stop()
+                dir.deleteRecursively()
+            }
+        } finally {
+            Dispatchers.resetMain()
+        }
+    }
+
+    @Test fun learningReadinessPositiveControls() = runTest {
+        Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(testScheduler))
+        try {
+            val fake = FakeGoTrue()
+            val dir = File.createTempFile("learning-positive", "").apply { delete() }
+            try {
+                fake.fabricate("syn-a@example.invalid", "password-one")
+                val harness = newHarness(dir, fake, api = proofApi(fake))
+                try {
+                    val vm = SyncLabViewModel(harness.repository, harness.account)
+                    testScheduler.runCurrent() // empty-vault initial restore completes before any account exists
+                    assertTrue(harness.account.signIn("syn-a@example.invalid", "password-one"))
+                    harness.repository.create()
+                    val a1 = assertNotNull(harness.active.activeId.first())
+                    val delivered = java.util.concurrent.CopyOnWriteArrayList<LearningReadiness>()
+                    val sessionNavigations = java.util.concurrent.atomic.AtomicInteger(0)
+                    fun learnOnce() = vm.learn { readiness ->
+                        delivered.add(readiness)
+                        if (readiness == LearningReadiness.READY) sessionNavigations.incrementAndGet()
+                    }
+
+                    learnOnce()
+                    testScheduler.runCurrent()
+                    awaitCondition(testScheduler, 4_000) { delivered.size == 1 }
+                    assertEquals(LearningReadiness.CONSENT_NEEDED, delivered[0], "consent-needed status stays accurate before consent")
+                    assertEquals(0, sessionNavigations.get())
+
+                    harness.db.profiles().setConsent(a1, id.petalytix.ayailmu.feature.consent.Consent.VERSION, harness.clock.now().toEpochMilli())
+                    learnOnce()
+                    testScheduler.runCurrent()
+                    awaitCondition(testScheduler, 4_000) { delivered.size == 2 }
+                    assertEquals(LearningReadiness.READY, delivered[1], "unchanged valid A reports READY")
+                    assertEquals(1, sessionNavigations.get(), "valid A navigates exactly once")
+                    assertEquals(a1, harness.active.activeId.first())
+                } finally {
+                    harness.repository.stop()
+                }
+            } finally {
+                fake.http.stop()
+                dir.deleteRecursively()
+            }
+        } finally {
+            Dispatchers.resetMain()
+        }
     }
 }

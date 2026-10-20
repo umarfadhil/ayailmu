@@ -48,10 +48,10 @@ Pin these cases to their owning task: publication lock wait (1); same-owner repl
 
 **Existing interfaces:** `prepareLearning(): LearningReadiness`; `learn(ready: (LearningReadiness) -> Unit)`.
 
-- [ ] Add `learningReadinessRejectsOwnerChangeDuringConsentRead`: activate A, park the exact profile/consent read after local activation, sign in unbound B, release/read completion, await the exact learning job; expect `NOT_READY`, no route callback for A and no active A profile.
-- [ ] Add `learningCallbackRejectsSessionChangeBeforeMainDispatch`: let readiness finish on IO but hold Main dispatch, change to B or A2, then dispatch the pending completion; assert no stale success callback after the exact action completes.
-- [ ] Kimi fences both boundaries without replacing native consent/mastery behavior. Positive controls: unchanged valid A navigates exactly once; current consent-needed state remains accurate.
-- [ ] Run those red/green cases and current activation tests; review/checkpoint this defect separately.
+- [x] Add `learningReadinessRejectsOwnerChangeDuringConsentRead`: activate A, park the exact profile/consent read after local activation, sign in unbound B, release/read completion, await the exact learning job; expect `NOT_READY`, no route callback for A and no active A profile.
+- [x] Add `learningCallbackRejectsSessionChangeBeforeMainDispatch`: let readiness finish on IO but hold Main dispatch, change to B or A2, then dispatch the pending completion; assert no stale success callback after the exact action completes.
+- [x] Kimi fences both boundaries without replacing native consent/mastery behavior. Positive controls: unchanged valid A navigates exactly once; current consent-needed state remains accurate.
+- [x] Run those red/green cases and current activation tests; review/checkpoint this defect separately.
 
 ## Task 3: Clean up the cancelled authentication attempt
 
