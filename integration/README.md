@@ -1,6 +1,6 @@
 # Umar native sync laboratory
 
-> **WIP draft:** [current evidence and unresolved account/learning race findings](../docs/integration/2026-10-19-wip-checkpoint.md). Use fabricated data only.
+> **Synthetic lab:** [current release/test preparation and limits](../docs/integration/2026-10-21-production-and-mac-test.md), [completed account-race checkpoint](../docs/integration/2026-10-20-route-ownership-checkpoint.md). Use fabricated data only.
 
 This is a local **synthetic adult-only** integration of the Kotlin app and the
 separate `backend-umar` API. It is not a real-data or release configuration. The
@@ -115,6 +115,8 @@ dependency despite the main manifest's comment; this integration adds no auth or
 sync implementation to those flavors and does not change that dependency.
 
 ## Release boundaries
+
+For optional remote synthetic testing, see [temporary Mac tunnel preparation](tunnel/README.md). The public-origin Gradle property produces a separate `.synclab.remote` app; it does not enable sync in demo/prod. No public tunnel has been approved or opened by preparing these files.
 
 Before real-data use: review actual purposes and consent/policy wording, adult and
 guardian ownership, per-learner eligibility including Arabic 18+, retention,

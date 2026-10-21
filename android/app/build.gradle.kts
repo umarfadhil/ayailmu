@@ -1,3 +1,6 @@
+import java.net.URI
+import java.util.Locale
+
 // :app — DI wiring, navigation and feature screens (features split into modules when > ~40 files, CR-ARC-1).
 plugins {
     alias(libs.plugins.android.application)
@@ -7,6 +10,19 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.roborazzi)
+}
+
+// Public URLs are configuration, never credentials. Reject malformed input before generating Java.
+val syncLabPublicOrigin = providers.gradleProperty("umar.syncLab.publicOrigin").orElse("").get()
+if (syncLabPublicOrigin.isNotEmpty()) {
+    val uri = runCatching { URI(syncLabPublicOrigin) }.getOrNull()
+    require(
+        uri != null && uri.scheme == "https" && !uri.host.isNullOrEmpty() &&
+            uri.host == uri.host.lowercase(Locale.ROOT) && uri.rawUserInfo == null &&
+            uri.rawQuery == null && uri.rawFragment == null && uri.rawPath.isNullOrEmpty() &&
+            (uri.port == -1 || uri.port in 1..65535) &&
+            uri.rawAuthority == uri.host + if (uri.port == -1) "" else ":${uri.port}",
+    ) { "umar.syncLab.publicOrigin must be a canonical HTTPS origin without credentials, path, query or fragment" }
 }
 
 android {
@@ -43,11 +59,12 @@ android {
         }
         create("syncLab") {
             dimension = "mode"
-            applicationIdSuffix = ".synclab"
+            applicationIdSuffix = if (syncLabPublicOrigin.isEmpty()) ".synclab" else ".synclab.remote"
             versionNameSuffix = "-synclab"
             buildConfigField("boolean", "DEVELOPER_DEMO", "true")
             buildConfigField("boolean", "SYNC_LAB_ENABLED", "true")
-            manifestPlaceholders["appAuthRedirectScheme"] = "id.petalytix.ayailmu.synclab"
+            buildConfigField("String", "SYNC_LAB_PUBLIC_ORIGIN", "\"$syncLabPublicOrigin\"")
+            manifestPlaceholders["appAuthRedirectScheme"] = "id.petalytix.ayailmu$applicationIdSuffix"
         }
         create("prod") {
             dimension = "mode"

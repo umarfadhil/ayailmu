@@ -14,6 +14,7 @@ import (
 	"github.com/umarfadhil/ayailmu/backend-umar/internal/api"
 	"github.com/umarfadhil/ayailmu/backend-umar/internal/auth"
 	"github.com/umarfadhil/ayailmu/backend-umar/internal/catalog"
+	"github.com/umarfadhil/ayailmu/backend-umar/internal/labconfig"
 	"github.com/umarfadhil/ayailmu/backend-umar/internal/store"
 )
 
@@ -38,6 +39,19 @@ func run() error {
 	if err != nil || ip == nil || !ip.IsLoopback() {
 		return errors.New("prototype must bind a loopback address")
 	}
+	provider := env("UMAR_AUTH_PROVIDER", "gotrue")
+	issuer, jwks, audience := "http://127.0.0.1:8287", "http://127.0.0.1:8287/.well-known/jwks.json", "authenticated"
+	if provider == "keycloak" {
+		issuer, jwks, audience = "http://127.0.0.1:8285/realms/umar", "http://127.0.0.1:8285/realms/umar/protocol/openid-connect/certs", "umar-api"
+	}
+	issuer, err = labconfig.Issuer(provider, os.Getenv("UMAR_PUBLIC_ORIGIN"), os.Getenv("UMAR_OIDC_ISSUER"), issuer)
+	if err != nil {
+		return err
+	}
+	v, err := auth.New(ctx, auth.Config{Provider: provider, Issuer: issuer, JWKSURL: env("UMAR_OIDC_JWKS_URL", jwks), Audience: audience, ClientID: "umar-native", AllowLoopbackHTTP: true})
+	if err != nil {
+		return err
+	}
 	r, err := catalog.Load()
 	if err != nil {
 		return errors.New("catalog initialization failed")
@@ -51,15 +65,6 @@ func run() error {
 	defer cancel()
 	if err = s.Migrate(startup); err != nil {
 		return errors.New("database migration failed")
-	}
-	provider := env("UMAR_AUTH_PROVIDER", "gotrue")
-	issuer, jwks, audience := "http://127.0.0.1:8287", "http://127.0.0.1:8287/.well-known/jwks.json", "authenticated"
-	if provider == "keycloak" {
-		issuer, jwks, audience = "http://127.0.0.1:8285/realms/umar", "http://127.0.0.1:8285/realms/umar/protocol/openid-connect/certs", "umar-api"
-	}
-	v, err := auth.New(ctx, auth.Config{Provider: provider, Issuer: env("UMAR_OIDC_ISSUER", issuer), JWKSURL: env("UMAR_OIDC_JWKS_URL", jwks), Audience: audience, ClientID: "umar-native", AllowLoopbackHTTP: true})
-	if err != nil {
-		return err
 	}
 	server := &http.Server{Addr: addr, Handler: api.New(s, v, r), ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 15 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 32768}
 	done := make(chan error, 1)

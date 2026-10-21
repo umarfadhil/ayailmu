@@ -1,0 +1,10 @@
+# Synthetic test origin only. Applying this restarts auth and requires action-time approval.
+# Do not change volumes, keys, passwords, database bindings or Mailpit bindings.
+services:
+  gotrue:
+    environment:
+      API_EXTERNAL_URL: ${UMAR_PUBLIC_ORIGIN:?Set the approved canonical HTTPS origin}
+      GOTRUE_JWT_ISSUER: ${UMAR_PUBLIC_ORIGIN:?Set the approved canonical HTTPS origin}
+      GOTRUE_SITE_URL: id.petalytix.ayailmu.synclab.remote://auth-callback
+      GOTRUE_URI_ALLOW_LIST: id.petalytix.ayailmu.synclab.remote://auth-callback
+      GOTRUE_DISABLE_SIGNUP: "true"
