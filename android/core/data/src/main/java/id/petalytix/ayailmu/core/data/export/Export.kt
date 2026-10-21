@@ -115,7 +115,7 @@ object ExportBuilder {
 
     /** One row per answer event; UTF-8 with BOM so spreadsheet apps show Arabic and Indonesian correctly. */
     fun csv(events: List<AnswerEvent>): String {
-        val sb = StringBuilder("﻿")
+        val sb = StringBuilder("\uFEFF")
         sb.append(CSV_COLUMNS.joinToString(",")).append("\r\n")
         for (e in events) {
             val row =

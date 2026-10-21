@@ -1,5 +1,6 @@
 package id.petalytix.ayailmu
 
+import androidx.lifecycle.viewModelScope
 import id.petalytix.ayailmu.core.content.ContentPack
 import id.petalytix.ayailmu.core.content.GatedContent
 import id.petalytix.ayailmu.core.content.Gating
@@ -43,6 +44,15 @@ import id.petalytix.ayailmu.feature.session.story.StoryTimeline
 import id.petalytix.ayailmu.feature.session.story.StoryUiMapper
 import id.petalytix.ayailmu.feature.speedround.SpeedRound
 import id.petalytix.ayailmu.feature.units.UnitPicks
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
@@ -543,14 +553,52 @@ class StoryTest {
     }
 
     @Test
-    fun `the gallery screen state comes from the data source`() {
-        val figures = FigureGallery.figures(listOf(TrackStories(content, emptyList())), Lang.ID)
-        val ready = FiguresViewModel(FiguresDataSource { figures }).state.value
-        assertEquals(FiguresUiState.Ready(figures), ready)
-        assertEquals(0, (ready as FiguresUiState.Ready).met)
-        assertEquals(FiguresUiState.Failed, FiguresViewModel(FiguresDataSource { null }).state.value)
-        assertEquals(FiguresUiState.Failed, FiguresViewModel(FiguresDataSource { error("disk") }).state.value)
-    }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    fun `the gallery screen state comes from the data source`() =
+        runTest {
+            Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+            val models = mutableListOf<FiguresViewModel>()
+            try {
+                val figures = FigureGallery.figures(listOf(TrackStories(content, emptyList())), Lang.ID)
+                val readyModel = FiguresViewModel(FiguresDataSource { figures }).also(models::add)
+                assertEquals(FiguresUiState.Loading, readyModel.state.value)
+                runCurrent()
+                val ready = readyModel.state.value
+                assertEquals(FiguresUiState.Ready(figures), ready)
+                assertEquals(0, (ready as FiguresUiState.Ready).met)
+
+                val missing = FiguresViewModel(FiguresDataSource { null }).also(models::add)
+                runCurrent()
+                assertEquals(FiguresUiState.Failed, missing.state.value)
+
+                val failed = FiguresViewModel(FiguresDataSource { error("disk") }).also(models::add)
+                runCurrent()
+                assertEquals(FiguresUiState.Failed, failed.state.value)
+            } finally {
+                models.forEach { it.viewModelScope.cancel() }
+                Dispatchers.resetMain()
+            }
+        }
+
+    @Test
+    @OptIn(ExperimentalCoroutinesApi::class)
+    fun `the gallery stays loading until its data source completes`() =
+        runTest {
+            Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+            val result = CompletableDeferred<List<FigureUi>?>()
+            val model = FiguresViewModel(FiguresDataSource { result.await() })
+            try {
+                runCurrent()
+                assertEquals(FiguresUiState.Loading, model.state.value)
+                val figures = FigureGallery.figures(listOf(TrackStories(content, emptyList())), Lang.ID)
+                result.complete(figures)
+                runCurrent()
+                assertEquals(FiguresUiState.Ready(figures), model.state.value)
+            } finally {
+                model.viewModelScope.cancel()
+                Dispatchers.resetMain()
+            }
+        }
 
     @Test
     fun `figures in the gallery replay the same story the session plays`() {
