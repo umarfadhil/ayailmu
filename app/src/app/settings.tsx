@@ -70,7 +70,7 @@ function SettingsRoute() {
   const { learner, rules, content, updateLearner } = useApp();
   const account = useAccount();
   if (!learner) return <Redirect href="/" />;
-  const accountLabel = account.signedIn ? 'Kelola akun lokal' : 'Masuk atau buat akun lokal';
+  const accountLabel = account.signedIn ? 'Kelola akun' : 'Masuk ke akun';
 
   return (
     <Page>
