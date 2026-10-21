@@ -35,6 +35,8 @@ export interface ConnectedProfile {
 export interface AccountPanelProps {
   /** The signed-in account, or null when signed out. `key` is opaque and changes with every sign-in; `label` is shown. */
   account: { key: string; label: string } | null;
+  /** Password recovery, when offered: its own flow, apart from the normal sign-in, which it never signs into. */
+  recovery?: RecoveryPanelModel;
   busy?: AccountBusy | null;
   /** A safe, already-worded message about the last action, shown as an alert. */
   error?: string | null;
@@ -48,8 +50,13 @@ export interface AccountPanelProps {
   signUp?: boolean;
   /** The caller's validated account profile: 'staging' where the account service is the remote staging server; absent: the local one. */
   environment?: 'staging';
+  /**
+   * Offers an unchecked choice, beside the password, to remember this email sign-in on this device. Only a remembering
+   * build with a secure session vault offers it, and never for Google. Each submit then says whether it was ticked.
+   */
+  rememberChoice?: boolean;
   /** Gets the typed values once per submit; the panel keeps no password afterwards. */
-  onSubmit: (request: { mode: AccountMode; email: string; password: string }) => void;
+  onSubmit: (request: { mode: AccountMode; email: string; password: string; remember?: boolean }) => void;
   /** Continue with Google, where the caller offers it (signed out only, beside the password form): called with nothing. */
   onGoogle?: () => void;
   onGuestCopy: () => void;
@@ -121,6 +128,154 @@ function introNote(signUp: boolean, google: boolean, service: string): string {
     : `Masuk dengan akun uji coba yang sudah disiapkan di ${service}, khusus untuk pengembangan; pendaftaran baru tidak tersedia. Pakai alamat email berakhiran .test: tidak ada email yang dikirim.`;
 }
 
+/** Password recovery as the account panel shows it: from the recovery controller, never the normal sign-in. */
+export interface RecoveryPanelModel {
+  stage: 'idle' | 'email' | 'sent' | 'ready' | 'done';
+  busy: boolean;
+  message: string | null;
+  available: boolean;
+  platform: 'web' | 'native';
+  onStart(): void;
+  onRequest(email: string): void;
+  onUpdate(password: string): void;
+  onCancel(): void;
+  onBack(): void;
+}
+
+const RECOVERY_MISMATCH = 'Kata sandi tidak sama.';
+
+/**
+ * Recovery's password step: the new password typed twice, with the step's status. The pair lives only while this step
+ * is shown: it goes once it is sent, on cancel, or when the step ends and this unmounts. Nothing is checked here beyond
+ * the pair matching: the server decides what is too weak.
+ */
+function RecoveryPasswordFields({ model }: { model: RecoveryPanelModel }) {
+  const [password, setPassword] = useState('');
+  const [confirmation, setConfirmation] = useState('');
+  const [mismatch, setMismatch] = useState<string | null>(null);
+  const blocked = model.busy || !model.available;
+
+  const update = () => {
+    if (blocked || !password || !confirmation) return;
+    if (password !== confirmation) {
+      setMismatch(RECOVERY_MISMATCH);
+      return;
+    }
+    const candidate = password;
+    setPassword('');
+    setConfirmation('');
+    setMismatch(null);
+    model.onUpdate(candidate);
+  };
+  const cancel = () => {
+    setPassword('');
+    setConfirmation('');
+    setMismatch(null);
+    model.onCancel();
+  };
+
+  return (
+    <>
+      <Text testID="account-recovery-status" style={styles.note} accessibilityLiveRegion="polite">
+        {mismatch ?? model.message ?? ''}
+      </Text>
+      <LabeledInput
+        label="Kata sandi baru"
+        testID="account-recovery-password"
+        value={password}
+        onChangeText={(value: string) => {
+          setPassword(value);
+          setMismatch(null);
+        }}
+        secureTextEntry
+        editable={!model.busy}
+      />
+      <LabeledInput
+        label="Ulangi kata sandi baru"
+        testID="account-recovery-confirm"
+        value={confirmation}
+        onChangeText={(value: string) => {
+          setConfirmation(value);
+          setMismatch(null);
+        }}
+        secureTextEntry
+        editable={!model.busy}
+        onSubmitEditing={update}
+      />
+      <Btn testID="account-recovery-update" label="Ganti kata sandi" onPress={update} disabled={blocked || !password || !confirmation} />
+      <Btn testID="account-recovery-cancel" label="Batal" onPress={cancel} disabled={false} kind="secondary" />
+    </>
+  );
+}
+
+/**
+ * The password recovery card: an address to ask a link for, the wait for that link, then the password step. What is
+ * typed stays in this form only; the recovery itself is the controller's, ended here only by an explicit cancel.
+ */
+export function RecoveryForm({ model }: { model: RecoveryPanelModel }) {
+  const [email, setEmail] = useState('');
+
+  if (model.stage === 'idle') return null;
+  const blocked = model.busy || !model.available;
+
+  const request = () => {
+    const address = email.trim();
+    if (blocked || !address) return;
+    model.onRequest(address);
+  };
+  const cancel = () => {
+    setEmail('');
+    model.onCancel();
+  };
+  const back = () => {
+    setEmail('');
+    model.onBack();
+  };
+
+  return (
+    <View style={styles.card}>
+      <Text style={styles.cardTitle}>Lupa kata sandi?</Text>
+      {model.stage === 'email' || model.stage === 'sent' ? (
+        <Text style={styles.hint}>
+          {model.platform === 'native'
+            ? 'Buka tautan pemulihan di perangkat ini, dan biarkan aplikasi tetap terbuka sampai selesai.'
+            : 'Buka tautan pemulihan di tab ini, pada peramban yang sama.'}
+        </Text>
+      ) : null}
+      {model.stage === 'ready' ? (
+        <RecoveryPasswordFields model={model} />
+      ) : (
+        <>
+          <Text testID="account-recovery-status" style={styles.note} accessibilityLiveRegion="polite">
+            {model.message ?? ''}
+          </Text>
+          {model.stage === 'email' ? (
+            <>
+              <LabeledInput
+                label="Email"
+                testID="account-recovery-email"
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+                placeholder="nama@contoh.test"
+                editable={!model.busy}
+                onSubmitEditing={request}
+              />
+              <Btn testID="account-recovery-request" label="Kirim tautan pemulihan" onPress={request} disabled={blocked || !email.trim()} />
+            </>
+          ) : null}
+          {model.stage === 'sent' ? <Text style={styles.note}>Menunggu tautan pemulihan dibuka.</Text> : null}
+          {model.stage === 'done' ? (
+            <Btn testID="account-recovery-back" label="Kembali ke masuk" onPress={back} disabled={false} />
+          ) : (
+            <Btn testID="account-recovery-cancel" label="Batal" onPress={cancel} disabled={false} kind="secondary" />
+          )}
+        </>
+      )}
+    </View>
+  );
+}
+
 export function AccountPanel(props: AccountPanelProps) {
   const { account, busy = null, error = null, signUp = true } = props;
   const words = props.environment === 'staging' ? STAGING_WORDS : LOCAL_WORDS;
@@ -136,7 +291,11 @@ export function AccountPanel(props: AccountPanelProps) {
           {words.title}
         </Text>
         <Text style={styles.note}>{introNote(signUp, props.onGoogle !== undefined, words.service)}</Text>
-        <Text style={styles.note}>Belajar tetap bisa tanpa akun. Setelah aplikasi ditutup atau dimuat ulang, Anda perlu masuk lagi.</Text>
+        <Text style={styles.note}>
+          {props.rememberChoice
+            ? 'Belajar tetap bisa tanpa akun. Setelah aplikasi ditutup atau dimuat ulang, Anda perlu masuk lagi, kecuali Anda memilih mengingat sesi masuk dengan email di perangkat ini.'
+            : 'Belajar tetap bisa tanpa akun. Setelah aplikasi ditutup atau dimuat ulang, Anda perlu masuk lagi.'}
+        </Text>
         <View role="status" accessibilityLiveRegion="polite">
           <Text testID="account-status" style={styles.status}>
             {account ? `Masuk sebagai ${account.label}` : 'Belum masuk'}
@@ -152,40 +311,49 @@ export function AccountPanel(props: AccountPanelProps) {
         </View>
       ) : null}
       {/* Keyed by the sign-in: another session never inherits a tick. Signed out, only the form is shown. */}
-      {account ? (
+      {props.recovery && props.recovery.stage !== 'idle' ? (
+        <RecoveryForm model={props.recovery} />
+      ) : account ? (
         <SignedIn key={account.key} {...props} busy={busy} words={words} />
       ) : (
-        <SignInForm busy={busy} signUp={signUp} words={words} onSubmit={props.onSubmit} onGoogle={props.onGoogle} />
+        <SignInForm busy={busy} signUp={signUp} words={words} rememberChoice={props.rememberChoice === true} onSubmit={props.onSubmit} onGoogle={props.onGoogle} />
       )}
+      {!account && props.recovery?.stage === 'idle' ? (
+        <Btn testID="account-recovery-start" label="Lupa kata sandi?" onPress={() => props.recovery?.onStart()} disabled={busy !== null} kind="secondary" />
+      ) : null}
     </View>
   );
 }
 
 /**
  * The sign-in (and, where offered, synthetic sign-up) form, with Continue with Google beside it where the caller offers
- * it. Its values live only here and are gone once signed in or unmounted.
+ * it, and the unchecked choice to remember the email sign-in where the caller offers that. Its values live only here
+ * and are gone once signed in or unmounted.
  */
 function SignInForm({
   busy,
   signUp,
   words,
+  rememberChoice,
   onSubmit,
   onGoogle,
 }: {
   busy: AccountBusy | null;
   signUp: boolean;
   words: ServiceWords;
+  rememberChoice: boolean;
   onSubmit: AccountPanelProps['onSubmit'];
   onGoogle?: () => void;
 }) {
   const [mode, setMode] = useState<AccountMode>(signUp ? 'create' : 'signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [remember, setRemember] = useState(false);
   const working = busy !== null;
   const ready = email.trim() !== '' && password !== '';
   const submit = () => {
     if (!ready || working) return;
-    const request = { mode, email: email.trim(), password };
+    const request = { mode, email: email.trim(), password, ...(rememberChoice ? { remember } : {}) };
     setPassword(''); // handed over once: the panel keeps no password
     onSubmit(request);
   };
@@ -217,6 +385,15 @@ function SignInForm({
         onSubmitEditing={submit}
         hint={mode === 'create' ? `Minimal 6 karakter. ${OWN_PASSWORD}` : OWN_PASSWORD}
       />
+      {rememberChoice ? (
+        <Check
+          testID="account-remember"
+          label="Ingat sesi masuk dengan email dan kata sandi di perangkat ini"
+          value={remember}
+          onChange={setRemember}
+          disabled={working}
+        />
+      ) : null}
       <Btn
         testID="account-submit"
         label={mode === 'create' ? 'Buat akun dan masuk' : `Masuk ke ${words.account}`}

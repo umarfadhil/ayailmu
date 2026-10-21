@@ -29,7 +29,12 @@ export type AuthErrorCode =
   /** Google: Google or the Auth server refused the sign-in for another reason. */
   | 'provider_refused'
   /** Google: this platform cannot run the flow safely (no secure WebCrypto, or no place for the attempt's record). */
-  | 'unavailable';
+  | 'unavailable'
+  /**
+   * A newer sign-in was refused before anything was sent: the secure vault would not clear the remembered sign-in's
+   * record, so it may still be there. The session in use, if any, stays as it was.
+   */
+  | 'not_forgotten';
 
 export class AuthError extends Error {
   constructor(readonly code: AuthErrorCode) {
@@ -56,6 +61,21 @@ export type AuthStatus =
 export interface SignOutOutcome {
   /** True when the provider confirmed it revoked the session; false when that request failed or was refused. */
   revoked: boolean;
+  /** Present, and false, only when a remembered sign-in could not be forgotten: its secure vault refused, so its record may still be there. */
+  forgotten?: boolean;
+}
+
+/**
+ * The secure session vault an adapter remembers one password sign-in in, on this device only: one small record, read and
+ * written synchronously (so nothing can run between a check and a write). Each call may throw when the store refuses.
+ */
+export interface SessionVault {
+  /** This installation's non-secret marker: created once per installation, never kept in the secure store. */
+  installation(): string;
+  read(): string | null;
+  write(text: string): void;
+  /** Overwrites the record at once: afterwards it reads as nothing. */
+  clear(): void;
 }
 
 /** An app's account sign-in. Tokens stay inside: only authorized calls receive the current access token. */

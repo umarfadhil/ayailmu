@@ -8,12 +8,17 @@
 // returns learning to the guest's dataset at once; nothing stored is deleted. In a staging build (the validated
 // configuration's staging profile) the same layer reaches the staging Auth server and API, names the remote staging
 // server wherever it named the local service, and records the staging consent version for a new adult profile.
+// Where a native build turns it on (EXPO_PUBLIC_REMEMBER_DEVICE=on, with the device's secure session vault), the learner
+// may tick the choice to remember an email sign-in. It is saved only after the account API verified the account, and
+// let go without a logout when the app run ends. The next run restores it through one refresh grant and continues as
+// after a password sign-in, for the same verified account only. Signing out forgets it.
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
 import { copyGuestToAccount, GUEST_NAMESPACE, type Namespace, type OpenedAccountDataset, type RawSource } from '@/account/datasets';
 import { loadGoogleConfig } from '@/account/googleConfig';
 import { isCanonicalUuid } from '@/account/ids';
 import { openAccountDataset } from '@/account/openAccountDataset';
+import { rememberDeviceEnabled } from '@/account/rememberConfig';
 import { createAccountSession } from '@/account/session';
 import { STAGING } from '@/account/staging';
 import { loadSupabaseConfig } from '@/account/supabaseConfig';
@@ -21,14 +26,17 @@ import { ApiError, createApiClient } from '@/api/client';
 import type { PendingGoogleStore } from '@/auth/google';
 import type { GoogleBrowser, GoogleBrowserResult } from '@/auth/googleBrowser';
 import { deviceGoogleBrowser, deviceGoogleStore } from '@/auth/googleDevice';
+import { prepareRecovery, type RecoveryAttemptStore, type RecoveryRuntime } from '@/auth/recoverySetup';
+import { deviceSessionVault } from '@/auth/sessionVault';
 import { createSupabaseAuth } from '@/auth/supabaseAuth';
-import { AuthError, type AuthIdentity } from '@/auth/types';
+import { AuthError, type AuthIdentity, type SessionVault } from '@/auth/types';
 import { newId } from '@/engine/util';
 import type { RawDataset } from '@/storage/rawRecords';
 import type { Store } from '@/storage/types';
 import { openJournal, SyncError, type JournalView, type LinkChoice, type SyncConnection, type SyncJournal } from '@/sync/journal';
 import type { AccountBusy, AccountMode, AccountPanelProps, AccountProfileChoice, ConnectedProfile } from '@/ui/account/AccountPanel';
 import { APP_VERSION, LOCAL_ACCOUNT_CONSENT_VERSION, STAGING_ACCOUNT_CONSENT_VERSION, useApp } from '@/ui/AppContext';
+import { usePasswordRecovery } from '@/ui/usePasswordRecovery';
 
 export interface AccountContextValue {
   /** The account service (the local one, or a staging build's staging server) is configured for this build. */
@@ -91,6 +99,14 @@ const upperFirst = (text: string): string => text.charAt(0).toUpperCase() + text
 const notRevoked = (s: AccountService) => `Sudah keluar di perangkat ini, tetapi ${s.name} belum memastikan sesinya dicabut. Data di perangkat ini tetap ada.`;
 const offline = (s: AccountService) => `Tidak ada koneksi ke ${s.name}. Jawaban tetap tersimpan di perangkat ini.`;
 
+// A remembered email sign-in, in fixed words that never claim more than the vault confirmed.
+const REMEMBER_NOT_SAVED = 'Masuk berhasil, tetapi sesi ini tidak bisa diingat di perangkat ini. Setelah aplikasi ditutup, masuk lagi dengan email dan kata sandi.';
+const REMEMBERED_MISMATCH = 'Sesi yang diingat tidak cocok dengan akun yang diverifikasi, jadi tidak dipakai. Masuk lagi dengan email dan kata sandi.';
+const REMEMBERED_ENDED = 'Sesi yang diingat sudah tidak berlaku. Masuk lagi dengan email dan kata sandi; data di perangkat ini tetap ada.';
+const NOT_FORGOTTEN = 'Sesi yang diingat belum bisa dihapus dari penyimpanan aman perangkat ini.';
+const rememberedOffline = (s: AccountService) =>
+  `${upperFirst(s.name)} tidak terjangkau. Sesi yang diingat tetap tersimpan di perangkat ini; buka aplikasi lagi nanti untuk mencobanya.`;
+
 /** The sign-in this work belonged to is gone (expired, or ended without this layer's sign-out): sign out visibly. */
 const sessionEnded = (e: unknown): boolean => e instanceof AuthError && (e.code === 'expired' || e.code === 'signed_out' || e.code === 'superseded');
 
@@ -117,6 +133,9 @@ function authMessage(e: unknown, s: AccountService): string {
         return `Google atau ${s.name} menolak permintaan masuk ini. Coba lagi nanti; belajar tetap bisa tanpa akun.`;
       case 'unavailable':
         return 'Masuk dengan Google belum bisa dipakai di perangkat ini. Belajar tetap bisa tanpa akun.';
+      case 'not_forgotten':
+        // Refused before anything was sent for it: never a claim that the earlier sign-in was forgotten.
+        return `${NOT_FORGOTTEN} Jadi masuk ini tidak dilanjutkan. Coba lagi nanti; data di perangkat ini tetap ada.`;
       default:
         return `Belum bisa masuk ke ${s.account}. Belajar tetap bisa tanpa akun.`;
     }
@@ -167,6 +186,9 @@ export function AccountProvider({
   openDataset = openAccountDataset,
   googleBrowser,
   googleStore,
+  sessionVault,
+  recoveryRuntime,
+  recoveryStore,
 }: {
   children: ReactNode;
   openDataset?: (namespace: Namespace) => Promise<OpenedAccountDataset>;
@@ -174,6 +196,18 @@ export function AccountProvider({
   googleBrowser?: GoogleBrowser;
   /** The short-lived store of a pending Google attempt; the platform's own by default. */
   googleStore?: PendingGoogleStore;
+  /**
+   * Where a remembering build remembers an email sign-in: the platform's own secure vault by default (the web has
+   * none). Null turns remembering off.
+   */
+  sessionVault?: SessionVault | null;
+  /** Password recovery's link boundary, in a build that turns recovery on: the platform's own by default. Null turns it off. */
+  recoveryRuntime?: RecoveryRuntime | null;
+  /**
+   * The short-lived store of a pending recovery attempt: the platform's own by default. Without one (null included),
+   * a recovery link is still recognized, but recovery cannot go on.
+   */
+  recoveryStore?: RecoveryAttemptStore | null;
 }) {
   const app = useApp();
   const appRef = useRef(app);
@@ -195,16 +229,30 @@ export function AccountProvider({
     const store = googleStore ?? deviceGoogleStore();
     return store ? { browser, settings, store } : null;
   }, [config, googleBrowser, googleStore]);
+  // Remembering an email sign-in: only with the account service on, in a build that turns it on, with a secure vault.
+  const vault = useMemo(() => {
+    if (!config.enabled || !rememberDeviceEnabled()) return null;
+    return sessionVault === undefined ? deviceSessionVault() : sessionVault;
+  }, [config, sessionVault]);
+  // Password recovery: only with the account service on, in a build that turns it on, with a callback this profile may use.
+  const recoverySetup = useMemo(() => prepareRecovery(config, recoveryRuntime, recoveryStore), [config, recoveryRuntime, recoveryStore]);
   const services = useMemo(() => {
     if (!config.enabled) return null;
     // The platform's fetch as this provider found it: a sign-out still on its way after leaving uses the same one.
-    const auth = createSupabaseAuth({ config, fetch: globalThis.fetch, google: google ? { config: google.settings, store: google.store } : undefined });
+    const auth = createSupabaseAuth({
+      config,
+      fetch: globalThis.fetch,
+      google: google ? { config: google.settings, store: google.store } : undefined,
+      ...(vault ? { remember: { vault } } : {}),
+      // Without a pending-attempt store the Auth adapter gets no recovery; recoverySetup still recognizes its links.
+      ...(recoverySetup?.store ? { recovery: { config: recoverySetup.config, store: recoverySetup.store } } : {}),
+    });
     // The API client revalidates its address under the same profile the Auth adapter takes from `config`.
     const api = createApiClient({ baseUrl: config.apiBaseUrl, environment: config.environment });
     const session = createAccountSession({ auth, api });
     const conn: SyncConnection = { auth, session, api };
     return { auth, api, session, conn, google };
-  }, [config, google]);
+  }, [config, google, vault, recoverySetup]);
 
   const [account, setAccount] = useState<{ key: string; label: string } | null>(null);
   const [busy, setBusy] = useState<AccountBusy | null>(null);
@@ -220,6 +268,35 @@ export function AccountProvider({
   const turn = useRef(0);
   /** Whether this run already looked for its web Google callback (a page has one launch URL, taken once). */
   const resumed = useRef(false);
+  /** Whether this run already looked for a remembered email sign-in (once per run). */
+  const restored = useRef(false);
+  /** Whether this run did normal sign-in work (a sign-in, a sign-out or a remembered restore): only then does leaving end it. */
+  const normalWork = useRef(false);
+  /** The signed-in account as last rendered, for recovery's fence (read after render only). */
+  const accountRef = useRef(account);
+  useEffect(() => {
+    accountRef.current = account;
+  }, [account]);
+
+  // Password recovery, through its own controller only: off (touching nothing) unless recoverySetup gave a runtime.
+  const recoveryControl = usePasswordRecovery({
+    recovery: services?.auth.recovery,
+    runtime: recoverySetup?.runtime ?? null,
+    callbackUrl: recoverySetup?.config.callbackUrl ?? null,
+  });
+  /** Recovery began while signed out: a normal sign-in still on its way publishes nothing more. A verified account stays. */
+  const onRecoveryIntent = useCallback(() => {
+    if (accountRef.current !== null) return;
+    turn.current += 1;
+    setBusy(null);
+    setError(null);
+  }, []);
+  const { setIntentHandler, normalStarting: recoveryNormalStarting } = recoveryControl;
+  // Bound after render: the fence reads refs.
+  useEffect(() => {
+    setIntentHandler(onRecoveryIntent);
+    return () => setIntentHandler(undefined);
+  }, [setIntentHandler, onRecoveryIntent]);
 
   const setConnected = useCallback((next: ConnectedProfile | null) => {
     connectedRef.current = next;
@@ -264,10 +341,13 @@ export function AccountProvider({
       });
 
     /**
-     * Ends the sign-in at once: its work stops, no token is handed out again and learning returns to the guest's dataset.
-     * Then, unless another sign-in has started meanwhile, it says when the provider did not confirm the revocation.
+     * Ends the sign-in at once: its work stops, no token is handed out again, a remembered sign-in is forgotten and
+     * learning returns to the guest's dataset. Then, unless another sign-in has started meanwhile, it says when the
+     * provider did not confirm the revocation, or when the secure vault would not let go of a remembered sign-in.
      */
     async function signOut(message: string | null = null): Promise<void> {
+      normalWork.current = true;
+      recoveryNormalStarting();
       const t = ++turn.current;
       if (!services) return;
       const hadSession = services.auth.status().state !== 'signed-out';
@@ -278,8 +358,13 @@ export function AccountProvider({
       clear();
       setError(message);
       setBusy(null);
-      const { revoked } = await revocation;
-      if (hadSession && !revoked && message === null && live(t)) setError(notRevoked(service));
+      const { revoked, forgotten } = await revocation;
+      if (!live(t)) return;
+      if (forgotten === false) {
+        setError(`${message ?? (hadSession && !revoked ? notRevoked(service) : 'Sudah keluar di perangkat ini.')} ${NOT_FORGOTTEN}`);
+      } else if (hadSession && !revoked && message === null) {
+        setError(notRevoked(service));
+      }
     }
 
     /**
@@ -340,6 +425,8 @@ export function AccountProvider({
      * of the earlier account work stays shown. Null when another turn started meanwhile.
      */
     async function beginSignIn(): Promise<number | null> {
+      normalWork.current = true;
+      recoveryNormalStarting();
       const t = ++turn.current;
       await appRef.current.selectDataset(null);
       if (!live(t)) return null;
@@ -356,11 +443,24 @@ export function AccountProvider({
      * else of it. Linked before (or its first link on its way): learning continues in the account's dataset. Otherwise the
      * adult profile, its consent and any guest copy wait for the learner's explicit choices: no sign-in, a Google one
      * included, consents, creates a profile or copies guest data by itself. Rejects as the verification or opening does.
+     * With `save`, a ticked email sign-in is remembered once verified, before anything opens. If the vault refuses, the
+     * sign-in goes on unremembered, with a fixed message. With `restoredFor`, a restored sign-in must verify as exactly
+     * that account. If not, it is signed out (forgotten and revoked) before either account's dataset opens.
      */
-    async function afterSignIn(t: number, identity: AuthIdentity): Promise<void> {
+    async function afterSignIn(t: number, identity: AuthIdentity, { save = false, restoredFor = null }: { save?: boolean; restoredFor?: string | null } = {}): Promise<void> {
       if (!services) return;
       const verified = await services.session.verify();
       if (!live(t)) return;
+      if (restoredFor !== null && verified.accountId !== restoredFor) {
+        await signOut(REMEMBERED_MISMATCH);
+        return;
+      }
+      let notSaved = false;
+      if (save) {
+        const remembered = services.auth.remembered;
+        notSaved = !(remembered && (await remembered.save(verified.accountId)));
+        if (!live(t)) return;
+      }
       // The dataset is named by the verified account ID only.
       const o = await openDataset(verified.namespace);
       if (!live(t)) {
@@ -392,6 +492,7 @@ export function AccountProvider({
         setProfiles(verified.profiles.map((p) => ({ id: p.profileId, label: `${PROFILE_LABEL} · ${p.highSeq} jawaban tercatat di akun` })));
       }
       setBusy(null);
+      if (notSaved) setError(REMEMBER_NOT_SAVED);
     }
 
     /** The sign-in of turn `t` failed: a session it made is signed out, nothing of it stays, and a fixed message says why. */
@@ -404,14 +505,57 @@ export function AccountProvider({
       setBusy(null);
     }
 
-    /** A password sign-in to a prepared account: the provider has sign-up off, so every submit signs in. */
-    async function submit({ email, password }: { mode: AccountMode; email: string; password: string }): Promise<void> {
+    /**
+     * A password sign-in to a prepared account: the provider has sign-up off, so every submit signs in. It is remembered
+     * only when the learner ticked the choice.
+     */
+    async function submit({ email, password, remember = false }: { mode: AccountMode; email: string; password: string; remember?: boolean }): Promise<void> {
       if (!services) return;
       const t = await beginSignIn();
       if (t === null) return;
       try {
-        await afterSignIn(t, await services.auth.signIn(email, password));
+        await afterSignIn(t, await services.auth.signIn(email, password), { save: remember });
       } catch (e) {
+        signInFailed(t, e);
+      }
+    }
+
+    /**
+     * A new run, once: a remembered email sign-in is restored through one refresh grant. No turn starts until it is,
+     * so the learner may type meanwhile, and a sign-in they start wins. It then continues as after a password sign-in,
+     * provided the account API verifies the account it was remembered for.
+     * - Unreachable: the record stays for a later run.
+     * - Refused or no longer valid: the record is gone, and a fixed message says the session no longer counts.
+     */
+    async function restoreRemembered(): Promise<void> {
+      const remembered = services?.auth.remembered;
+      if (!remembered) return;
+      normalWork.current = true;
+      const started = turn.current;
+      let restoredSignIn: { identity: AuthIdentity; accountId: string } | null;
+      try {
+        restoredSignIn = await remembered.restore();
+      } catch (e) {
+        if (!live(started) || (e instanceof AuthError && (e.code === 'signed_out' || e.code === 'superseded'))) return;
+        setError(e instanceof AuthError && e.code === 'network' ? rememberedOffline(service) : REMEMBERED_ENDED);
+        return;
+      }
+      if (!restoredSignIn || !live(started)) return;
+      const t = await beginSignIn();
+      if (t === null) return;
+      try {
+        await afterSignIn(t, restoredSignIn.identity, { restoredFor: restoredSignIn.accountId });
+      } catch (e) {
+        if (live(t) && e instanceof ApiError && (e.code === 'network' || e.code === 'aborted')) {
+          // The account API is unreachable for now: the restored session is let go without a logout, its record kept.
+          await remembered.release();
+          if (!live(t)) return;
+          close();
+          clear();
+          setError(rememberedOffline(service));
+          setBusy(null);
+          return;
+        }
         signInFailed(t, e);
       }
     }
@@ -629,29 +773,43 @@ export function AccountProvider({
       }
     }
 
-    return { signOut, sync, submit, continueWithGoogle, resumeGoogle, copyGuest, skipGuest, createProfile, linkProfile, resolvePrefs };
-  }, [services, service, openDataset, setConnected]);
+    return { signOut, sync, submit, restoreRemembered, continueWithGoogle, resumeGoogle, copyGuest, skipGuest, createProfile, linkProfile, resolvePrefs };
+  }, [services, service, openDataset, setConnected, recoveryNormalStarting]);
 
-  // Leaving the app run (unmount) drops all account work and its session (which no later run could use), and lets go of
-  // the account dataset; nothing is deleted.
+  // Leaving the app run (unmount) drops all account work and lets go of the account dataset; nothing is deleted. Its
+  // session is signed out, since no later run could use it. A remembered email sign-in is the exception: it is let go
+  // without a logout, and its record is kept for the next run. With recovery on, a run that did no normal sign-in work
+  // leaves the Auth adapter alone, so a remembered sign-in or pending Google attempt it never touched stays as it was
+  // (recovery ends its own session itself).
   useEffect(
     () => () => {
       turn.current += 1;
-      void services?.auth.signOut();
+      const auth = services?.auth;
+      if (!recoverySetup || normalWork.current) void (auth?.remembered ? auth.remembered.release() : auth?.signOut());
       const o = opened.current;
       opened.current = null;
       journal.current = null;
       o?.release();
     },
-    [services]
+    [services, recoverySetup]
   );
+
+  // Both automatic startups below wait until recovery knows its launch link, and stay off once one came (or could not be read).
+  const { allowNormalStartup, canAutoStart } = recoveryControl;
 
   // A fresh web page resumes the Google callback it was loaded with, once, after the app has opened the guest's dataset.
   useEffect(() => {
-    if (!app.ready || resumed.current) return;
+    if (!app.ready || !allowNormalStartup || !canAutoStart() || resumed.current) return;
     resumed.current = true;
     void actions.resumeGoogle();
-  }, [app.ready, actions]);
+  }, [app.ready, allowNormalStartup, canAutoStart, actions]);
+
+  // A new run restores a remembered email sign-in, once, after the app has opened the guest's dataset.
+  useEffect(() => {
+    if (!app.ready || !allowNormalStartup || !canAutoStart() || restored.current) return;
+    restored.current = true;
+    void actions.restoreRemembered();
+  }, [app.ready, allowNormalStartup, canAutoStart, actions]);
 
   const value: AccountContextValue = services
     ? {
@@ -668,6 +826,10 @@ export function AccountProvider({
           prefsConflict,
           signUp: false,
           environment,
+          // Only in a remembering build with a secure vault: the choice to remember an email sign-in, never a Google one.
+          ...(services.auth.remembered ? { rememberChoice: true } : {}),
+          // Only in a build that turns recovery on, with a runtime for its links: its own flow, never a normal sign-in.
+          ...(recoveryControl.panel ? { recovery: recoveryControl.panel } : {}),
           onSubmit: (request) => void actions.submit(request),
           // Only where the build turns Google on, with the account service, and the platform can run its browser and store.
           onGoogle: services.google && services.auth.google ? () => void actions.continueWithGoogle() : undefined,
