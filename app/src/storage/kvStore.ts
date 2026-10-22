@@ -120,6 +120,8 @@ export class KvStore implements Store {
   private blob: Blob = EMPTY;
   /** Set when init refused the stored data: every later write is refused too (no overwrite). */
   private refused = false;
+  /** Set once an erase begins here: every later write is refused, so nothing erased is written back. */
+  private erased = false;
   private enqueue = createSerialQueue();
 
   /**
@@ -162,6 +164,7 @@ export class KvStore implements Store {
     return this.enqueue(async () => {
       if (this.refused) throw new Error('Storage refused: the stored data was not accepted, so nothing is written.');
       if (this.readOnly) throw new Error(`Storage is read-only: ${this.readOnly}`);
+      if (this.erased) throw new Error('Storage retired: an account-data erase began in this store instance, so it refuses every further write.');
       const next = update(this.blob);
       if (!next) return;
       const stamped = { ...next, schema: STORAGE_SCHEMA };
@@ -262,6 +265,26 @@ export class KvStore implements Store {
     return this.commit(() => ({ ...EMPTY, meta: {} }));
   }
 
+  /**
+   * Removes this dataset from storage (reset() only empties it), through the same queue and writer guard as every
+   * write: each side document in `docs`, then the main key, so the dataset stays findable until everything beside it
+   * is gone. Nothing of its learning state stays cached here, and this instance writes nothing more, so no later write
+   * brings any of it back (a retried erase still runs). Resolves only once every one of those keys is absent. Storage
+   * has no transaction across keys: a failure part-way rejects, leaving what was not yet removed and rolling nothing back.
+   */
+  erase(docs: readonly string[]): Promise<void> {
+    return this.enqueue(async () => {
+      if (this.refused) throw new Error('Storage refused: the stored data was not accepted, so nothing is written.');
+      if (this.readOnly) throw new Error(`Storage is read-only: ${this.readOnly}`);
+      this.erased = true;
+      this.blob = { ...EMPTY, meta: {} };
+      const keys = [...docs.map((name) => `${this.key}/${name}`), this.key];
+      for (const key of keys) this.kv.removeItem(key);
+      const left = keys.filter((key) => this.kv.getItem(key) !== null).length;
+      if (left) throw new Error(`Storage was not erased: ${left} of ${keys.length} stored values are still there.`);
+    });
+  }
+
   /** Every record exactly as stored (see readKvRaw), after the writes already queued here. */
   readRaw(): Promise<RawDataset | null> {
     return this.enqueue(async () => readKvRaw(this.kv, this.key));
@@ -277,6 +300,7 @@ export class KvStore implements Store {
     return this.enqueue(async () => {
       if (this.refused) throw new Error('Storage refused: the stored data was not accepted, so nothing is written.');
       if (this.readOnly) throw new Error(`Storage is read-only: ${this.readOnly}`);
+      if (this.erased) throw new Error('Storage retired: an account-data erase began in this store instance, so it refuses every further write.');
       this.kv.setItem(`${this.key}/${name}`, text);
     });
   }
