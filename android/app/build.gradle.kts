@@ -1,3 +1,7 @@
+import java.net.URI
+import java.security.MessageDigest
+import java.util.Locale
+
 // :app — DI wiring, navigation and feature screens (features split into modules when > ~40 files, CR-ARC-1).
 plugins {
     alias(libs.plugins.android.application)
@@ -7,6 +11,27 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.roborazzi)
+}
+
+// Public URLs are configuration, never credentials. Reject malformed input before generating Java.
+val syncLabPublicOrigin = providers.gradleProperty("umar.syncLab.publicOrigin").orElse("").get()
+if (syncLabPublicOrigin.isNotEmpty()) {
+    val uri = runCatching { URI(syncLabPublicOrigin) }.getOrNull()
+    require(
+        uri != null && uri.scheme == "https" && !uri.host.isNullOrEmpty() &&
+            uri.host == uri.host.lowercase(Locale.ROOT) && uri.rawUserInfo == null &&
+            uri.rawQuery == null && uri.rawFragment == null && uri.rawPath.isNullOrEmpty() &&
+            (uri.port == -1 || uri.port in 1..65535) &&
+            uri.rawAuthority == uri.host + if (uri.port == -1) "" else ":${uri.port}",
+    ) { "umar.syncLab.publicOrigin must be a canonical HTTPS origin without credentials, path, query or fragment" }
+}
+
+// A different remote origin must never receive another environment's tokens/outbox after an APK
+// update. A distinct Android application ID isolates Room, settings, files and Keystore together.
+val syncLabIdentitySuffix = if (syncLabPublicOrigin.isEmpty()) ".synclab" else {
+    val digest = MessageDigest.getInstance("SHA-256").digest(syncLabPublicOrigin.toByteArray(Charsets.US_ASCII))
+        .joinToString("") { (it.toInt() and 255).toString(16).padStart(2, '0') }
+    ".synclab.remote.r$digest"
 }
 
 android {
@@ -24,6 +49,7 @@ android {
         vectorDrawables { useSupportLibrary = true }
         // Optional static config override (CR-CFG-2). Empty = disabled. Never required.
         buildConfigField("String", "REMOTE_CONFIG_URL", "\"\"")
+        buildConfigField("boolean", "SYNC_LAB_ENABLED", "false")
         // Play licence key (Play Console > Monetisation setup) for the local purchase signature check (CR-BIL-4).
         // Set `ayailmu.playLicenseKey=...` in ~/.gradle/gradle.properties on the build machine; never commit it.
         // Empty (the default) skips the check, which is fine for demo builds and before the Play app exists.
@@ -39,6 +65,15 @@ android {
             applicationIdSuffix = ".demo"
             versionNameSuffix = "-demo"
             buildConfigField("boolean", "DEVELOPER_DEMO", "true")
+        }
+        create("syncLab") {
+            dimension = "mode"
+            applicationIdSuffix = syncLabIdentitySuffix
+            versionNameSuffix = "-synclab"
+            buildConfigField("boolean", "DEVELOPER_DEMO", "true")
+            buildConfigField("boolean", "SYNC_LAB_ENABLED", "true")
+            buildConfigField("String", "SYNC_LAB_PUBLIC_ORIGIN", "\"$syncLabPublicOrigin\"")
+            manifestPlaceholders["appAuthRedirectScheme"] = "id.petalytix.ayailmu$applicationIdSuffix"
         }
         create("prod") {
             dimension = "mode"
@@ -88,6 +123,8 @@ android {
 
     // App unit tests run the real session loop on the bundled packs (SessionViewModelTest, StepMapperTest).
     sourceSets {
+        getByName("demo").java.srcDir("src/nonLab/java")
+        getByName("prod").java.srcDir("src/nonLab/java")
         getByName("test") {
             resources.srcDir(rootProject.file("content/src/main/assets"))
         }
@@ -103,6 +140,10 @@ roborazzi {
 // The Compose test activity (ui-test-manifest) is debug-only, so screenshot tests run in debug variants only.
 tasks.withType<Test>().configureEach {
     if (name.contains("Release")) exclude("**/Screenshot*")
+    if (name.contains("SyncLab")) {
+        systemProperty("robolectric.dependency.repo.url", "https://repo.maven.apache.org/maven2")
+        testLogging { events("passed", "failed", "skipped"); showStandardStreams = true }
+    }
 }
 
 kotlin {
@@ -112,6 +153,11 @@ kotlin {
 }
 
 dependencies {
+    "syncLabImplementation"(project(":core:sync"))
+    "syncLabImplementation"(libs.appauth)
+    "syncLabImplementation"(libs.room.runtime)
+    "syncLabImplementation"(libs.room.ktx)
+    "syncLabImplementation"("com.google.crypto.tink:tink-android:1.24.0")
     implementation(project(":core:model"))
     implementation(project(":core:engine"))
     implementation(project(":core:content"))
@@ -137,6 +183,7 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
 
     testImplementation(libs.junit)
+    "testSyncLabImplementation"(libs.kotlin.test.junit)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
     testImplementation(libs.robolectric)

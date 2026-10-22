@@ -1,0 +1,53 @@
+# Synthetic local development only. API runs on host via scripts/run-local.sh.
+name: umar-native-backend
+services:
+  db:
+    image: postgres:17.11-alpine
+    environment:
+      POSTGRES_USER: umar
+      POSTGRES_DB: umar_native
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    secrets: [db_password]
+    ports: ["127.0.0.1:6585:5432"]
+    volumes: ["umar_data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U umar -d umar_native"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  auth-db:
+    image: postgres:17.11-alpine
+    environment:
+      POSTGRES_USER: umar_auth
+      POSTGRES_DB: umar_identity
+      POSTGRES_PASSWORD_FILE: /run/secrets/auth_db_password
+    secrets: [auth_db_password]
+    volumes: ["umar_identity_data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U umar_auth -d umar_identity"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  auth:
+    image: quay.io/keycloak/keycloak:26.8.1
+    mem_limit: 768m
+    command: ["start-dev", "--import-realm"]
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://auth-db:5432/umar_identity
+      KC_DB_USERNAME: umar_auth
+      KC_DB_PASSWORD: ${UMAR_AUTH_DB_PASSWORD:?Run scripts/init-local.sh and source .local/compose.env}
+      KC_BOOTSTRAP_ADMIN_USERNAME: umar_local_admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${UMAR_AUTH_ADMIN_PASSWORD:?Run scripts/init-local.sh and source .local/compose.env}
+      KC_HOSTNAME: http://127.0.0.1:8285
+      KC_HEALTH_ENABLED: "true"
+    ports: ["127.0.0.1:8285:8080"]
+    volumes: ["./deploy/umar-realm.json:/opt/keycloak/data/import/umar-realm.json:ro"]
+    depends_on:
+      auth-db: {condition: service_healthy}
+secrets:
+  db_password: {file: ./.local/db_password}
+  auth_db_password: {file: ./.local/auth_db_password}
+volumes:
+  umar_data:
+  umar_identity_data:

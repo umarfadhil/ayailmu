@@ -49,3 +49,9 @@ android/app/release/
 android/app/debug/
 *.keystore
 __pycache__/
+
+# Isolated integration build/runtime state
+integration-jvm/.gradle/
+integration-jvm/.kotlin/
+integration-jvm/build/
+integration/.local/
