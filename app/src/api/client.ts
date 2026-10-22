@@ -247,6 +247,75 @@ function isOwnExport(body: unknown, accountId: string): boolean {
   return isRecord(body.account) && body.account.account_id === accountId;
 }
 
+/**
+ * The server's proof of the signed-in account's deletion (GET and POST /v1/me/deletion), exactly as it was sent, with the
+ * API's own field names. The account's server data is erased at once; the deletion stays identity_deletion_pending until
+ * the identity provider has deleted the sign-in too, and only then is completed. not_deleted lists what the server keeps,
+ * and why.
+ */
+export type AccountDeletion = {
+  deletion_id: string;
+  account_id: string;
+  requested_at: string;
+  server_data: { status: 'erased'; erased_at: string; profiles: number; device_links: number; events: number; imports: number };
+  not_deleted: { what: string; why: string }[];
+} & (
+  | { status: 'identity_deletion_pending'; identity_provider: { status: 'pending'; attempts: number } }
+  | { status: 'completed'; completed_at: string; identity_provider: { status: 'deleted'; attempts: number; deleted_at: string } }
+);
+
+/** An RFC 3339 timestamp as the API writes them (2026-10-22T15:15:00Z): seconds, an optional fraction, Z or an offset (+07:00). */
+const TIMESTAMP = /^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:\.\d{1,9})?(?:Z|[+-](?:[01]\d|2[0-3]):[0-5]\d)$/;
+
+/** Whether `value` is such a timestamp on a real calendar day: no 31 April, no 29 February outside leap years. */
+function isTimestamp(value: unknown): value is string {
+  const match = typeof value === 'string' ? TIMESTAMP.exec(value) : null;
+  if (!match) return false;
+  const year = Number(match[1]);
+  const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const days = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][Number(match[2]) - 1];
+  return Number(match[3]) <= days;
+}
+
+/**
+ * Whether `body` proves the deletion of the account `accountId`: a canonical deletion ID, that same account, valid times,
+ * the erased server data's counts, the identity provider's attempts, what is kept and why, and one consistent state.
+ * Pending: the provider's deletion still pending, with no completed_at or deleted_at. Completed: completed_at, and the
+ * provider's deletion done at deleted_at. The order of the times is the server's; it is not checked here.
+ */
+function isOwnDeletion(body: unknown, accountId: string): body is AccountDeletion {
+  if (!isRecord(body) || !isCanonicalUuid(body.deletion_id) || body.account_id !== accountId || !isTimestamp(body.requested_at)) return false;
+  const { server_data: serverData, identity_provider: provider, not_deleted: notDeleted } = body;
+  if (!isRecord(serverData) || serverData.status !== 'erased' || !isTimestamp(serverData.erased_at)) return false;
+  if (!['profiles', 'device_links', 'events', 'imports'].every((count) => isCount(serverData[count], 0))) return false;
+  if (!isRecord(provider) || !isCount(provider.attempts, 0)) return false;
+  // Each kept kind is named and explained in more than whitespace; the two the server always keeps must be among them,
+  // beside any others, in any order.
+  const isKept = (entry: unknown): entry is { what: string; why: string } =>
+    isRecord(entry) && typeof entry.what === 'string' && entry.what.trim() !== '' && typeof entry.why === 'string' && entry.why.trim() !== '';
+  if (!Array.isArray(notDeleted) || !notDeleted.every(isKept)) return false;
+  if (!['deletion_record', 'device_data'].every((what) => notDeleted.some((entry) => entry.what === what))) return false;
+  if (body.status === 'identity_deletion_pending') {
+    return provider.status === 'pending' && body.completed_at === undefined && provider.deleted_at === undefined;
+  }
+  return body.status === 'completed' && isTimestamp(body.completed_at) && provider.status === 'deleted' && isTimestamp(provider.deleted_at);
+}
+
+/**
+ * The deletion proof in a success `reply`, parsed and returned unchanged, when it proves the deletion of the account
+ * `accountId`, in exactly the state `state` when one is given. Anything else, malformed JSON included, is bad_response.
+ */
+function provenDeletion(reply: ApiReply, accountId: string, state?: AccountDeletion['status']): AccountDeletion {
+  let body: unknown;
+  try {
+    body = JSON.parse(reply.text);
+  } catch {
+    throw new ApiError(reply.status, 'bad_response');
+  }
+  if (!isOwnDeletion(body, accountId) || (state !== undefined && body.status !== state)) throw new ApiError(reply.status, 'bad_response');
+  return body;
+}
+
 /** The signed-in account's own controls. Nothing here refreshes a session, retries, stores or logs anything. */
 export interface AccountControls {
   /**
@@ -254,6 +323,19 @@ export interface AccountControls {
    * same account. It is the server's copy only; guest data and unsent records stay on the device.
    */
   exportData(token: string, signal?: AbortSignal): Promise<{ accountId: string; json: string }>;
+  /**
+   * GET /v1/me/deletion, once: this account's deletion proof as the server sent it, pending or completed, or null when
+   * the API has no deletion to report (404 not_found). A reply that proves no deletion of this same account is
+   * bad_response; any other problem keeps its status and stable code only.
+   */
+  deletionStatus(token: string, signal?: AbortSignal): Promise<AccountDeletion | null>;
+  /**
+   * POST /v1/me/deletion, once, with exactly the confirmation of this same account. The deletion proof as the server
+   * sent it: 202 while the identity provider's deletion is pending, 200 once completed; a status and a proof that
+   * disagree are bad_response. Problems such as 401 reauthentication_required, 503 account_deletion_failed and 500
+   * internal_error keep their status and stable code only.
+   */
+  deleteAccount(token: string, signal?: AbortSignal): Promise<AccountDeletion>;
 }
 
 /** The controls of the verified account `accountId`, a canonical UUID as GET /v1/me returned it, over `api`. */
@@ -273,6 +355,25 @@ export function createAccountControls(api: ApiClient, accountId: string): Accoun
       if (!isOwnExport(body, accountId)) throw new ApiError(reply.status, 'bad_response');
       // The reply's own bytes, never re-serialized.
       return { accountId, json: reply.text };
+    },
+
+    async deletionStatus(token, signal) {
+      const reply = await api.request({ method: 'GET', path: '/v1/me/deletion', token, signal });
+      if (reply.status === 200) return provenDeletion(reply, accountId);
+      // Only the problem's stable code is kept: never its title, detail or any other reply text.
+      const code = problemCode(reply.text);
+      if (reply.status === 404 && code === 'not_found') return null;
+      throw new ApiError(reply.status, code ?? 'unexpected');
+    },
+
+    async deleteAccount(token, signal) {
+      const body = JSON.stringify({ confirm: 'delete-account', account_id: accountId });
+      const reply = await api.request({ method: 'POST', path: '/v1/me/deletion', token, signal, body, contentType: 'application/json' });
+      // Each success status carries the proof of its own state only.
+      if (reply.status === 202) return provenDeletion(reply, accountId, 'identity_deletion_pending');
+      if (reply.status === 200) return provenDeletion(reply, accountId, 'completed');
+      // Only the problem's stable code is kept: never its title, detail or any other reply text.
+      throw new ApiError(reply.status, problemCode(reply.text) ?? 'unexpected');
     },
   };
 }
