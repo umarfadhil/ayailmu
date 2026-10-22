@@ -1,4 +1,5 @@
 import java.net.URI
+import java.security.MessageDigest
 import java.util.Locale
 
 // :app — DI wiring, navigation and feature screens (features split into modules when > ~40 files, CR-ARC-1).
@@ -23,6 +24,14 @@ if (syncLabPublicOrigin.isNotEmpty()) {
             (uri.port == -1 || uri.port in 1..65535) &&
             uri.rawAuthority == uri.host + if (uri.port == -1) "" else ":${uri.port}",
     ) { "umar.syncLab.publicOrigin must be a canonical HTTPS origin without credentials, path, query or fragment" }
+}
+
+// A different remote origin must never receive another environment's tokens/outbox after an APK
+// update. A distinct Android application ID isolates Room, settings, files and Keystore together.
+val syncLabIdentitySuffix = if (syncLabPublicOrigin.isEmpty()) ".synclab" else {
+    val digest = MessageDigest.getInstance("SHA-256").digest(syncLabPublicOrigin.toByteArray(Charsets.US_ASCII))
+        .joinToString("") { (it.toInt() and 255).toString(16).padStart(2, '0') }
+    ".synclab.remote.r$digest"
 }
 
 android {
@@ -59,7 +68,7 @@ android {
         }
         create("syncLab") {
             dimension = "mode"
-            applicationIdSuffix = if (syncLabPublicOrigin.isEmpty()) ".synclab" else ".synclab.remote"
+            applicationIdSuffix = syncLabIdentitySuffix
             versionNameSuffix = "-synclab"
             buildConfigField("boolean", "DEVELOPER_DEMO", "true")
             buildConfigField("boolean", "SYNC_LAB_ENABLED", "true")

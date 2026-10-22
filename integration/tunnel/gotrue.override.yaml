@@ -5,6 +5,6 @@ services:
     environment:
       API_EXTERNAL_URL: ${UMAR_PUBLIC_ORIGIN:?Set the approved canonical HTTPS origin}
       GOTRUE_JWT_ISSUER: ${UMAR_PUBLIC_ORIGIN:?Set the approved canonical HTTPS origin}
-      GOTRUE_SITE_URL: id.petalytix.ayailmu.synclab.remote://auth-callback
-      GOTRUE_URI_ALLOW_LIST: id.petalytix.ayailmu.synclab.remote://auth-callback
+      GOTRUE_SITE_URL: ${UMAR_REMOTE_CALLBACK:?Use the exact origin-scoped callback from tunnel_plan.py}
+      GOTRUE_URI_ALLOW_LIST: ${UMAR_REMOTE_CALLBACK:?Use the exact origin-scoped callback from tunnel_plan.py}
       GOTRUE_DISABLE_SIGNUP: "true"

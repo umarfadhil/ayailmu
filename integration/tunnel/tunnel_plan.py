@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Print a secret-free exposure plan. This module never starts a tunnel or edits services."""
 import argparse
+import hashlib
 import ipaddress
 import json
 from pathlib import Path
@@ -31,6 +32,8 @@ def canonical_origin(origin):
 
 def build_plan(origin, allow_cidrs, seconds=1800):
     origin = canonical_origin(origin)
+    application_id = "id.petalytix.ayailmu.synclab.remote.r" + hashlib.sha256(origin.encode("ascii")).hexdigest()
+    callback = application_id + "://auth-callback"
     if type(seconds) is not int or not 1 <= seconds <= 1800:
         raise ValueError("Lifetime must be between one and 1800 seconds")
     if not allow_cidrs:
@@ -50,10 +53,13 @@ def build_plan(origin, allow_cidrs, seconds=1800):
     return {
         "requires_action_time_approval": True,
         "public_origin": origin,
+        "android_application_id": application_id,
+        "compose_env": {"UMAR_PUBLIC_ORIGIN": origin, "UMAR_REMOTE_CALLBACK": callback},
         "seconds": seconds,
         "api_env": {"UMAR_PUBLIC_ORIGIN": origin, "UMAR_OIDC_ISSUER": origin,
                     "UMAR_OIDC_JWKS_URL": "http://127.0.0.1:8287/.well-known/jwks.json"},
         "auth_env": {"API_EXTERNAL_URL": origin, "GOTRUE_JWT_ISSUER": origin,
+                     "GOTRUE_SITE_URL": callback, "GOTRUE_URI_ALLOW_LIST": callback,
                      "GOTRUE_DISABLE_SIGNUP": "true"},
         "android_property": "-Pumar.syncLab.publicOrigin=" + origin,
         "router": ["integration/.local/bin/umar-lab-router", "-listen=127.0.0.1:8188",

@@ -18,6 +18,18 @@ class TunnelPlanTest(unittest.TestCase):
         self.assertEqual(60, plan.get("seconds"))
         self.assertIn("-duration=60s", plan.get("router", []))
 
+    def test_remote_identity_is_stable_origin_scoped_and_matches_callback(self):
+        first = build_plan("https://umar-a.example.invalid", ["8.8.8.8/32"])
+        same = build_plan("https://umar-a.example.invalid", ["1.1.1.1/32"], 30)
+        other = build_plan("https://umar-b.example.invalid", ["8.8.8.8/32"])
+        self.assertEqual(first["android_application_id"], same["android_application_id"])
+        self.assertNotEqual(first["android_application_id"], other["android_application_id"])
+        self.assertRegex(first["android_application_id"], r"^id\.petalytix\.ayailmu\.synclab\.remote\.r[0-9a-f]{64}$")
+        callback = first["android_application_id"] + "://auth-callback"
+        self.assertEqual(callback, first["compose_env"]["UMAR_REMOTE_CALLBACK"])
+        self.assertEqual(callback, first["auth_env"]["GOTRUE_SITE_URL"])
+        self.assertEqual(callback, first["auth_env"]["GOTRUE_URI_ALLOW_LIST"])
+
     def test_requires_exact_tester_addresses_and_bounded_lifetime(self):
         for cidrs in [[], ["0.0.0.0/0"], ["::/0"], ["8.8.8.0/24"], ["not-an-ip"]]:
             with self.subTest(cidrs=cidrs), self.assertRaises(ValueError):

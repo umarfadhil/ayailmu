@@ -7,9 +7,11 @@ This prepares a test route; it does **not** deploy a real-user backend. No scrip
 - `backend-umar/cmd/lab-router`: loopback-only router, maximum lifetime 30 minutes, fixed loopback API/auth upstreams, bounded bodies/concurrency and timeouts. No request/body/token logging.
 - `tunnel_plan.py`: validates a canonical HTTPS origin, exact tester IPv4 `/32` or IPv6 `/128` addresses and a lifetime of 1–1800 seconds; prints the exact commands/configuration without executing them.
 - `bounded_agent.py`: bounds one foreground child process. Deadline or Ctrl+C terminates only its owned process group; it never targets existing agents by name.
-- `ngrok-agent.override.yaml`: merges after the existing ngrok configuration, retains existing credentials and uses private management port `127.0.0.1:4042`. Request inspection is disabled by the generated command.
+- `ngrok-agent.override.yaml`: merges after the existing ngrok configuration, retains existing credentials and uses private management port `127.0.0.1:4042`. Agent inspection is disabled by the generated command. Separately verify that the account's cloud Full Capture is off before exposure; the CLI flag does not establish the cloud setting.
 - `gotrue.override.yaml`: derives external URL and JWT issuer from the same public origin, disables signup and uses the remote lab callback scheme. It preserves keys, databases, volumes and loopback bindings.
-- `-Pumar.syncLab.publicOrigin=https://…`: configures both Android clients. The remote-config APK has ID `id.petalytix.ayailmu.synclab.remote`, preserving the existing local `.synclab` app/data. No option enables this integration in ordinary demo/prod builds. Google stays disabled.
+- `-Pumar.syncLab.publicOrigin=https://…`: configures both Android clients. Each exact remote origin has its own ID `id.petalytix.ayailmu.synclab.remote.r<SHA256-of-origin>`. Android therefore isolates the entire Room/settings/journal/Keystore sandbox when changing hosts. The same origin retains its identity on rebuild; the local `.synclab` ID is unchanged. No option enables this integration in ordinary demo/prod builds. Google stays disabled.
+
+The earlier shared `.synclab.remote` installation is deliberately not migrated or deleted. Rebuilds for another origin must not inherit its credentials or pending answers. Preserve that installation for any separately approved recovery. Changing an environment's data/keys while keeping the same origin is a separate lifecycle problem, not solved by package names.
 
 An empty Android property retains API `http://127.0.0.1:8187`, auth/issuer `http://127.0.0.1:8287` and the existing local application ID. Both build-time and runtime validation reject credentials, HTTP public origins, noncanonical host/port spelling, paths, query strings and fragments.
 
@@ -54,7 +56,7 @@ The uppercase placeholders deliberately fail validation. A plan does not reserve
 Approval must cover the provider/hostname, IP allowlist, 30-minute maximum, routes above, ngrok's TLS termination, existing credential reuse, and the brief isolated API/auth restart needed for the issuer. Bootstrap only fabricated adult test accounts locally beforehand; Mailpit remains private and public signup remains blocked. Never use real learner/account data.
 
 1. Record the current lab process/configuration and confirm no test runner is using it. Preserve all volumes, keys and old data. Do not use broad `pkill`, `docker compose down -v`, migrations to another app's DB or credential rotation.
-2. Export `UMAR_PUBLIC_ORIGIN` with the exact approved origin. Do **not** commit a live URL/account configuration. Validate the origin with the planner before applying it.
+2. Export the planner's exact `compose_env` values: `UMAR_PUBLIC_ORIGIN` and `UMAR_REMOTE_CALLBACK`. The callback is derived from the origin-specific application ID, not the older shared remote scheme. Do **not** commit a live URL/account configuration. Validate the origin with the planner before applying it.
 3. Apply only the isolated GoTrue service override:
 
    ```sh
@@ -83,6 +85,6 @@ Approval must cover the provider/hostname, IP allowlist, 30-minute maximum, rout
 
 Ctrl+C the bounded agent; its deadline also sends TERM and then KILL if needed to **its owned group only**. The router independently shuts down at its deadline (at most 30 minutes, plus a short shutdown grace). A timeout exit `124` is intentional. Verify the new endpoint is gone; leave existing Expo agents intact.
 
-Stop only the recorded temporary API/router processes. Unset `UMAR_PUBLIC_ORIGIN`/`UMAR_OIDC_ISSUER`, apply the original GoTrue Compose file to the `gotrue` service without the override, and restart the original local API launcher. This restores local issuer/site/signup configuration, retaining all volumes and keys. Recheck loopback health. A changed issuer is part of account identity: use new fabricated bindings, preserve previous profiles, and never silently migrate, delete or relabel old history. Remove any remote lab test installation separately only with the device owner's consent.
+Stop only the recorded temporary API/router processes. Unset `UMAR_PUBLIC_ORIGIN`/`UMAR_OIDC_ISSUER`/`UMAR_REMOTE_CALLBACK`, apply the original GoTrue Compose file to the `gotrue` service without the override, and restart the original local API launcher. This restores local issuer/site/signup configuration, retaining all volumes and keys. Recheck loopback health. A changed issuer is part of account identity: use new fabricated bindings, preserve previous profiles, and never silently migrate, delete or relabel old history. Remove any remote lab test installation separately only with the device owner's consent.
 
 The ordinary app/content graph, native mastery, synthetic-only API/schema restrictions and per-owner isolation are unchanged. This packet supplies no path to enable real-user collection.
