@@ -3,7 +3,7 @@
 // named by the verified account ID (see datasets.ts), never by an address or an earlier session.
 import { accountNamespace, type Namespace } from '@/account/datasets';
 import type { ApiClient, ProfileSummary } from '@/api/client';
-import { AuthError, type AuthStatus, type SessionAuth } from '@/auth/types';
+import { AuthError, type AccountAuth, type AuthStatus, type SessionAuth } from '@/auth/types';
 
 export interface VerifiedAccount {
   accountId: string;
@@ -65,4 +65,59 @@ export function createAccountSession({ auth, api }: { auth: SessionAuth; api: Ap
       return copyOf(verified.account);
     },
   };
+}
+
+/**
+ * The initial password step-up before an export or deletion of the signed-in account's data, as orchestration only:
+ * one password sign-in under the address of the sign-in it starts from, then one verification. It returns the
+ * verified account only while it is still the caller's turn (`isCurrent`, which the caller owns and ends when it
+ * abandons the request) and the fresh sign-in, the current session and the verified account are all exactly
+ * `expected`'s own; otherwise it refuses with an AuthError and sends nothing further. A refused sign-in rejects as the
+ * adapter rejected it. The server's recent-password check stays authoritative: this only obtains a fresh password
+ * sign-in and binds it to its owner and turn. That sign-in replaces the session, and whatever the adapter remembers of
+ * it changes with it; nothing earlier is restored. A pending or unknown deletion must not be reconciled through this:
+ * once the server has erased the account, /v1/me answers 410, so that needs its own proof from the own-deletion route.
+ * Wiring it into a controller or Settings is still to come.
+ */
+export async function reauthenticateOwnAccount({
+  auth,
+  session,
+  expected,
+  password,
+  isCurrent,
+}: {
+  auth: Pick<AccountAuth, 'status' | 'signIn'>;
+  session: Pick<AccountSession, 'verify'>;
+  expected: Pick<VerifiedAccount, 'accountId' | 'uid'>;
+  password: string;
+  isCurrent: () => boolean;
+}): Promise<VerifiedAccount> {
+  // Bound before anything is awaited: the caller changing `expected` afterwards redirects nothing.
+  const { accountId, uid } = expected;
+  const start = auth.status();
+  const refusal = (status: AuthStatus) => new AuthError(status.state === 'signed-out' ? 'signed_out' : 'superseded');
+  if (start.state === 'signed-out' || start.identity.uid !== uid || !isCurrent()) throw refusal(start);
+  const startedSession = start.state === 'signed-in' ? start.session : null;
+
+  const granted = await auth.signIn(start.identity.email, password);
+  // The caller's turn still, and a sign-in of the expected provider account, current in a new session.
+  const fresh = auth.status();
+  if (!isCurrent() || granted.uid !== uid || fresh.state !== 'signed-in' || fresh.identity.uid !== uid || fresh.session === startedSession) {
+    throw refusal(fresh);
+  }
+
+  const account = await session.verify();
+  // Still the caller's turn and that same fresh session, verified as the expected account's own.
+  const now = auth.status();
+  if (
+    !isCurrent() ||
+    now.state !== 'signed-in' ||
+    now.session !== fresh.session ||
+    now.identity.uid !== uid ||
+    account.uid !== uid ||
+    account.accountId !== accountId
+  ) {
+    throw refusal(now);
+  }
+  return account;
 }
