@@ -4,6 +4,7 @@
 // is built or anything is sent. Nothing here holds an email, a password or a session token.
 import type { GoTrueClient, GoTrueClientOptions } from '@supabase/auth-js';
 import { STAGING, stagingOrigin } from '@/account/staging';
+import type { SessionVaultParts, VaultStoreOptions } from '@/auth/sessionVault';
 import { AuthError } from '@/auth/types';
 
 /** The one native callback of a recovery link. */
@@ -34,7 +35,7 @@ export interface RecoveryAttemptRecord {
   createdAt: number;
   /** The configured Auth origin the attempt was made at. */
   auth: string;
-  profile: 'local' | 'staging';
+  profile: 'local' | 'staging' | 'production';
 }
 const RECORD_KEYS = ['v', 'flowId', 'verifier', 'callbackUrl', 'createdAt', 'auth', 'profile'];
 /** The most the whole serialized record may take, in UTF-8 bytes. */
@@ -131,18 +132,23 @@ const CODE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const LOCAL_WEB_CALLBACK = /^http:\/\/(127\.0\.0\.1|localhost):([1-9]\d{0,4})\/recover$/;
 const MAX_CALLBACK_LENGTH = 4096;
 
-/** Whether `config` is a recovery configuration this profile may use: exactly the native callback, or this profile's web /recover. */
-export function isSafeRecoveryConfig(config: unknown, environment: unknown): config is RecoveryConfig {
+/**
+ * Whether `config` is a recovery configuration this profile may use: exactly the native callback, or this profile's web
+ * /recover. The production profile allows either only with its explicit capability (`productionAccounts` exactly true),
+ * its web page then being a public root origin as in staging.
+ */
+export function isSafeRecoveryConfig(config: unknown, environment: unknown, productionAccounts?: unknown): config is RecoveryConfig {
   if (typeof config !== 'object' || config === null) return false;
   const c = config as Partial<RecoveryConfig>;
   if (c.enabled !== true || typeof c.callbackUrl !== 'string') return false;
+  if (environment === 'production' && productionAccounts !== true) return false;
   if (c.platform === 'native') return c.callbackUrl === NATIVE_RECOVERY_CALLBACK;
   if (c.platform !== 'web') return false;
   if (environment === undefined) {
     const match = LOCAL_WEB_CALLBACK.exec(c.callbackUrl);
     return match !== null && Number(match[2]) <= 65535;
   }
-  if (environment !== STAGING || !c.callbackUrl.endsWith('/recover')) return false;
+  if ((environment !== STAGING && environment !== 'production') || !c.callbackUrl.endsWith('/recover')) return false;
   const origin = c.callbackUrl.slice(0, -'/recover'.length);
   return stagingOrigin(origin) === origin;
 }
@@ -161,10 +167,172 @@ export function recoveryAttemptRecord(value: unknown): RecoveryAttemptRecord | n
   if (typeof callbackUrl !== 'string' || typeof auth !== 'string' || callbackUrl.length + auth.length > RECOVERY_RECORD_MAX_BYTES) return null;
   if (r.v !== 1 || typeof r.flowId !== 'string' || !FLOW_ID.test(r.flowId)) return null;
   if (typeof r.verifier !== 'string' || !VERIFIER.test(r.verifier)) return null;
-  if (r.profile !== 'local' && r.profile !== 'staging') return null;
+  if (r.profile !== 'local' && r.profile !== 'staging' && r.profile !== 'production') return null;
   if (typeof r.createdAt !== 'number' || !Number.isFinite(r.createdAt)) return null;
   if (!fitsUtf8(JSON.stringify(r), RECOVERY_RECORD_MAX_BYTES)) return null;
   return r as unknown as RecoveryAttemptRecord;
+}
+
+/** The secure store's key for a native production build's one pending recovery attempt: never the session vault's. */
+export const RECOVERY_VAULT_KEY = 'ayailmu.pending-recovery.v1';
+/** What a taken or cleared attempt is overwritten with: never an envelope, so it reads as nothing. */
+const RECOVERY_CLEARED = 'cleared';
+const ENVELOPE_KEYS = ['v', 'installation', 'api', 'record'];
+/** The longest installation marker taken: a non-secret ID of this installation, never a secret. */
+const MAX_MARKER_LENGTH = 128;
+const isMarker = (id: unknown): id is string => typeof id === 'string' && id !== '' && id.length <= MAX_MARKER_LENGTH;
+
+/**
+ * A native production build's pending-attempt store, over the session vault's kind of parts (a synchronous secure store
+ * and this installation's own marker) but under its own key, RECOVERY_VAULT_KEY. The attempt is kept in an envelope of
+ * exactly { v: 1, installation, api, record } of at most 2048 UTF-8 bytes, bound to this installation, the account API,
+ * the Auth root, the production profile and the native callback, and counts only within its lifetime by `now`. Every
+ * secure-store call is synchronous, readable only while unlocked, on this device only, without user authentication.
+ * - save clears the attempt before, then writes this one and confirms it; otherwise it throws unavailable.
+ * - take overwrites the attempt, and confirms that, before handing it back; anything else (nothing kept, unbound,
+ *   expired, malformed or oversized) is null.
+ * - clear overwrites and confirms; when the store refuses, it renews this installation's marker so the attempt left
+ *   behind never matches again (whether that held is not claimed), and throws unavailable.
+ * Nothing is ever deleted asynchronously. An unsafe binding, or any failure of the store or the marker, leaves this store
+ * refusing for good: save throws unavailable and take is null, even if the storage later recovers.
+ */
+export function createSecureRecoveryStore(
+  parts: SessionVaultParts,
+  binding: { api: string; auth: string; callbackUrl: string },
+  now: () => number
+): RecoveryAttemptStore {
+  const { secureStore, marker, newMarker } = parts;
+  const options: VaultStoreOptions = { keychainAccessible: parts.whenUnlockedThisDeviceOnly, requireAuthentication: false };
+  // The binding as given now, never read again from the caller's object.
+  const { api, auth, callbackUrl } = binding;
+  let refusing =
+    typeof options.keychainAccessible !== 'number' ||
+    stagingOrigin(api) !== api ||
+    stagingOrigin(auth) !== auth ||
+    api === auth ||
+    callbackUrl !== NATIVE_RECOVERY_CALLBACK;
+  let installation: string | null = null;
+
+  /**
+   * This installation's marker: the one kept (or made, written and read back), checked every time against the marker as
+   * the database holds it now, so that a marker another store renewed is never matched by a copy kept here. Throws when
+   * it cannot be read, made or confirmed, or has changed since.
+   */
+  const ownInstallation = (): string => {
+    if (installation !== null) {
+      if (marker.read() !== installation) throw new AuthError('unavailable');
+      return installation;
+    }
+    const kept = marker.read();
+    if (isMarker(kept)) return (installation = kept);
+    const fresh = newMarker();
+    if (!isMarker(fresh)) throw new AuthError('unavailable');
+    marker.write(fresh);
+    if (marker.read() !== fresh) throw new AuthError('unavailable');
+    return (installation = fresh);
+  };
+  /** Overwrites the attempt with a non-record and confirms it; false when the store refused either. */
+  const overwrite = (): boolean => {
+    try {
+      secureStore.setItem(RECOVERY_VAULT_KEY, RECOVERY_CLEARED, options);
+      return secureStore.getItem(RECOVERY_VAULT_KEY, options) === RECOVERY_CLEARED;
+    } catch {
+      return false;
+    }
+  };
+  /** Best effort: a new marker for this installation, so that an attempt left behind never matches again. */
+  const renewMarker = () => {
+    try {
+      const fresh = newMarker();
+      if (isMarker(fresh)) {
+        marker.write(fresh);
+        installation = fresh;
+      }
+    } catch {
+      // The refusal the caller throws says so.
+    }
+  };
+  /** Gives up for good: the attempt is overwritten, or else the marker renewed. */
+  const fail = () => {
+    refusing = true;
+    if (!overwrite()) renewMarker();
+  };
+  /** `value` as this store's own attempt, within its lifetime by `now`, with exactly its seven keys; otherwise null. */
+  const boundRecord = (value: unknown): RecoveryAttemptRecord | null => {
+    const r = recoveryAttemptRecord(value);
+    if (!r || r.profile !== 'production' || r.auth !== auth || r.callbackUrl !== callbackUrl) return null;
+    const at = now();
+    if (typeof at !== 'number' || !Number.isFinite(at)) return null;
+    const age = at - r.createdAt;
+    if (age < -RECOVERY_CLOCK_SKEW_MS || age > RECOVERY_ATTEMPT_TTL_MS) return null;
+    return { v: 1, flowId: r.flowId, verifier: r.verifier, callbackUrl: r.callbackUrl, createdAt: r.createdAt, auth: r.auth, profile: r.profile };
+  };
+  /** The attempt in a kept envelope, when it is whole, of this installation and API, and bound here; otherwise null. */
+  const opened = (text: string): RecoveryAttemptRecord | null => {
+    if (!fitsUtf8(text, RECOVERY_RECORD_MAX_BYTES)) return null;
+    let value: unknown;
+    try {
+      value = JSON.parse(text);
+    } catch {
+      return null;
+    }
+    if (typeof value !== 'object' || value === null || Array.isArray(value)) return null;
+    const e = value as Record<string, unknown>;
+    const keys = Object.keys(e);
+    if (keys.length !== ENVELOPE_KEYS.length || !ENVELOPE_KEYS.every((key) => keys.includes(key))) return null;
+    if (e.v !== 1 || e.api !== api || e.installation !== ownInstallation()) return null;
+    return boundRecord(e.record);
+  };
+
+  return {
+    save(record) {
+      if (refusing) throw new AuthError('unavailable');
+      // The attempt before goes first, whatever this one turns out to be.
+      if (!overwrite()) {
+        fail();
+        throw new AuthError('unavailable');
+      }
+      const attempt = boundRecord(record);
+      if (!attempt) throw new AuthError('unavailable');
+      try {
+        const text = JSON.stringify({ v: 1, installation: ownInstallation(), api, record: attempt });
+        if (!fitsUtf8(text, RECOVERY_RECORD_MAX_BYTES)) throw new AuthError('unavailable');
+        secureStore.setItem(RECOVERY_VAULT_KEY, text, options);
+        if (secureStore.getItem(RECOVERY_VAULT_KEY, options) !== text) throw new AuthError('unavailable');
+      } catch {
+        fail();
+        throw new AuthError('unavailable');
+      }
+    },
+    take() {
+      if (refusing) return null;
+      let text: string | null;
+      try {
+        text = secureStore.getItem(RECOVERY_VAULT_KEY, options);
+      } catch {
+        fail();
+        return null;
+      }
+      if (text === null || text === RECOVERY_CLEARED) return null;
+      // Used once: overwritten, and confirmed, before anything is handed back.
+      if (!overwrite()) {
+        fail();
+        return null;
+      }
+      try {
+        return opened(text);
+      } catch {
+        fail();
+        return null;
+      }
+    },
+    clear() {
+      if (overwrite()) return;
+      refusing = true;
+      renewMarker();
+      throw new AuthError('unavailable');
+    },
+  };
 }
 
 /**

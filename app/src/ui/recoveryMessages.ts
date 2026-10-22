@@ -15,6 +15,7 @@ const UPDATE_UNKNOWN =
   'Server tidak dapat dihubungi, jadi hasilnya belum diketahui: kata sandi mungkin sudah diganti. Coba lagi, atau coba masuk dengan kata sandi baru.';
 const UNREACHABLE = 'Server tidak dapat dihubungi. Periksa koneksi, lalu coba lagi.';
 const NOT_SYNTHETIC = 'Gunakan alamat email uji yang berakhiran .test.';
+const INVALID_EMAIL = 'Periksa alamat email.';
 const BAD_LINK = 'Tautan pemulihan tidak valid atau sudah kedaluwarsa. Mulai lagi untuk meminta tautan baru.';
 const UNAVAILABLE = 'Pemulihan kata sandi sedang tidak tersedia. Mulai lagi nanti.';
 
@@ -28,6 +29,7 @@ export function recoveryFailure(error: unknown, operation: RecoveryOperation): R
   if (operation === 'update' && code === 'network') return { stage: 'ready', message: UPDATE_UNKNOWN };
   if (code === 'network') return { stage: 'email', message: UNREACHABLE };
   if (code === 'not_synthetic') return { stage: 'email', message: NOT_SYNTHETIC };
+  if (code === 'invalid_email') return { stage: 'email', message: INVALID_EMAIL };
   if (code === 'bad_callback' || code === 'expired') return { stage: 'email', message: BAD_LINK };
   return { stage: 'email', message: UNAVAILABLE };
 }

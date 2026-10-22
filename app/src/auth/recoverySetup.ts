@@ -45,10 +45,10 @@ export function prepareRecovery(
     platform.kind === 'native'
       ? { enabled: true, platform: 'native', callbackUrl: NATIVE_RECOVERY_CALLBACK }
       : { enabled: true, platform: 'web', callbackUrl: `${platform.origin}/recover` };
-  if (!isSafeRecoveryConfig(recoveryConfig, config.environment)) return null;
+  if (!isSafeRecoveryConfig(recoveryConfig, config.environment, config.productionAccounts)) return null;
   let store: RecoveryAttemptStore | null;
   try {
-    store = storeOverride !== undefined ? storeOverride : deviceRecoveryStore();
+    store = storeOverride !== undefined ? storeOverride : deviceRecoveryStore(config);
   } catch {
     store = null;
   }

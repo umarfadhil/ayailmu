@@ -222,7 +222,7 @@ function RecoveryPasswordFields({ model }: { model: RecoveryPanelModel }) {
  * The password recovery card: an address to ask a link for, the wait for that link, then the password step. What is
  * typed stays in this form only; the recovery itself is the controller's, ended here only by an explicit cancel.
  */
-export function RecoveryForm({ model }: { model: RecoveryPanelModel }) {
+export function RecoveryForm({ model, production = false }: { model: RecoveryPanelModel; production?: boolean }) {
   const [email, setEmail] = useState('');
 
   if (model.stage === 'idle') return null;
@@ -248,7 +248,9 @@ export function RecoveryForm({ model }: { model: RecoveryPanelModel }) {
       {model.stage === 'email' || model.stage === 'sent' ? (
         <Text style={styles.hint}>
           {model.platform === 'native'
-            ? 'Buka tautan pemulihan di perangkat ini, dan biarkan aplikasi tetap terbuka sampai selesai.'
+            ? production
+              ? 'Buka tautan pemulihan di perangkat ini.'
+              : 'Buka tautan pemulihan di perangkat ini, dan biarkan aplikasi tetap terbuka sampai selesai.'
             : 'Buka tautan pemulihan di tab ini, pada peramban yang sama.'}
         </Text>
       ) : null}
@@ -267,7 +269,7 @@ export function RecoveryForm({ model }: { model: RecoveryPanelModel }) {
                 value={email}
                 onChangeText={setEmail}
                 keyboardType="email-address"
-                placeholder="nama@contoh.test"
+                placeholder={production ? 'nama@contoh.com' : 'nama@contoh.test'}
                 editable={!model.busy}
                 onSubmitEditing={request}
               />
@@ -324,7 +326,7 @@ export function AccountPanel(props: AccountPanelProps) {
       ) : null}
       {/* Keyed by the sign-in: another session never inherits a tick. Signed out, only the form is shown. */}
       {props.recovery && props.recovery.stage !== 'idle' ? (
-        <RecoveryForm model={props.recovery} />
+        <RecoveryForm model={props.recovery} production={words.production === true} />
       ) : account ? (
         <SignedIn key={account.key} {...props} busy={busy} words={words} />
       ) : (

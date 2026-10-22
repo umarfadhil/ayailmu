@@ -539,7 +539,7 @@ export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
     throw new Error('createSupabaseAuth needs a session vault to remember a sign-in; nothing was sent.');
   }
   const recoveryOptions = options.recovery;
-  if (recoveryOptions !== undefined && (!isSafeRecoveryConfig(recoveryOptions.config, config.environment) || !recoveryOptions.store)) {
+  if (recoveryOptions !== undefined && (!isSafeRecoveryConfig(recoveryOptions.config, config.environment, config.productionAccounts) || !recoveryOptions.store)) {
     throw new Error('createSupabaseAuth needs a safe password recovery configuration; nothing was sent.');
   }
   /** The profile a remembered record is bound to: the configuration's own, never a guess from an address. */
@@ -1009,7 +1009,10 @@ export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
 
     return {
       async request(email) {
-        if (!isSyntheticAddress(email)) throw new AuthError('not_synthetic');
+        // As for sign-in, the profile validated when this adapter was built chooses: a production build takes a
+        // conventional address (its format only); local and staging builds, synthetic .test ones only.
+        if (profile === 'production' && !isConventionalAddress(email)) throw new AuthError('invalid_email');
+        if (profile !== 'production' && !isSyntheticAddress(email)) throw new AuthError('not_synthetic');
         // Only with the runtime's own secure entropy and SHA-256: the SDK would otherwise use Math.random and a plain challenge.
         if (missingWebCrypto() !== null) throw new AuthError('unavailable');
         const at = now();

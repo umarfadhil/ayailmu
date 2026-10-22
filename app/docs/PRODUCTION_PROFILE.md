@@ -44,11 +44,15 @@ it validated when it was built.
 
 - Remembered password sessions: the native core is bound to the installation, Auth server, API and production profile,
   and rotates its refresh token on restore, but proof on a physical device is pending. Web has no token vault.
-- Production Google sign-in and password-recovery persistence are separate, unfinished slices: keep both off.
+- Production Google sign-in is unfinished: keep it off.
+- Password recovery has a guarded production code implementation. On native, the pending attempt (its PKCE verifier) is
+  kept in the OS secure store under its own item, bound to the installation, API, Auth root and callback, at most 2048
+  bytes and 60 minutes; on web it stays in same-tab sessionStorage. Proof with the real native crypto, OS, devices and
+  mail is still pending, so the example above and any release keep recovery off.
 - Settings export and deletion are separate, unfinished work; the Settings screen's inherited local wording is to be
   corrected in that slice.
-- The backend currently admits only its explicitly configured staging deployment. The client opt-in changes no backend
-  or live resource.
+- The backend currently admits only its explicitly configured staging deployment, so nothing serves this production
+  mode yet. The client opt-in changes no backend or live resource.
 
 ## Remaining release gates
 
