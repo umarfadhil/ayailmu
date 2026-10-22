@@ -240,3 +240,39 @@ export function problemCode(text: string): string | null {
     return null;
   }
 }
+
+/** Whether `body` is a server export of the account `accountId`: its format, that same account and a profiles array. */
+function isOwnExport(body: unknown, accountId: string): boolean {
+  if (!isRecord(body) || body.format !== 'ayailmu-server-export-1' || !Array.isArray(body.profiles)) return false;
+  return isRecord(body.account) && body.account.account_id === accountId;
+}
+
+/** The signed-in account's own controls. Nothing here refreshes a session, retries, stores or logs anything. */
+export interface AccountControls {
+  /**
+   * GET /v1/me/export, once: the account's server snapshot as the reply's exact text, only when it is an export of this
+   * same account. It is the server's copy only; guest data and unsent records stay on the device.
+   */
+  exportData(token: string, signal?: AbortSignal): Promise<{ accountId: string; json: string }>;
+}
+
+/** The controls of the verified account `accountId`, a canonical UUID as GET /v1/me returned it, over `api`. */
+export function createAccountControls(api: ApiClient, accountId: string): AccountControls {
+  if (!isCanonicalUuid(accountId)) throw new Error('createAccountControls needs the verified account ID; nothing was sent.');
+  return {
+    async exportData(token, signal) {
+      const reply = await api.request({ method: 'GET', path: '/v1/me/export', token, signal });
+      // Only the problem's stable code is kept: never its title, detail or any other reply text.
+      if (reply.status !== 200) throw new ApiError(reply.status, problemCode(reply.text) ?? 'unexpected');
+      let body: unknown;
+      try {
+        body = JSON.parse(reply.text);
+      } catch {
+        throw new ApiError(reply.status, 'bad_response');
+      }
+      if (!isOwnExport(body, accountId)) throw new ApiError(reply.status, 'bad_response');
+      // The reply's own bytes, never re-serialized.
+      return { accountId, json: reply.text };
+    },
+  };
+}
