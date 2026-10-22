@@ -111,11 +111,13 @@ export function createApiClient(options: {
   baseUrl: string;
   /** The account profile: absent for the local pilot API; exactly "staging" for the staging API's root origin. */
   environment?: string;
+  /** The explicit production capability: exactly true, beside exactly "production", for the production API's root origin. */
+  productionAccounts?: boolean;
   fetch?: typeof fetch;
 }): ApiClient {
   // Revalidated here too, with its profile: an address other than that profile's API (the local pilot API, or a staging
   // root origin under exactly the staging profile), or an unknown profile, never receives a token.
-  const base = accountApiOrigin(options?.baseUrl, options?.environment);
+  const base = accountApiOrigin(options?.baseUrl, options?.environment, options?.productionAccounts);
   if (!base) throw new Error("createApiClient needs its profile's account API address; nothing was sent.");
   const injected = options.fetch;
 

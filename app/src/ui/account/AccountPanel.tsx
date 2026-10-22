@@ -49,7 +49,7 @@ export interface AccountPanelProps {
   /** Whether creating a test account is offered (true unless set). False where the provider has sign-up off: sign-in only. */
   signUp?: boolean;
   /** The caller's validated account profile: 'staging' where the account service is the remote staging server; absent: the local one. */
-  environment?: 'staging';
+  environment?: 'staging' | 'production';
   /**
    * Offers an unchecked choice, beside the password, to remember this email sign-in on this device. Only a remembering
    * build with a secure session vault offers it, and never for Google. Each submit then says whether it was ticked.
@@ -79,6 +79,8 @@ interface ServiceWords {
   service: string;
   /** The adult profile's consent statement (the caller records its version). */
   consent: string;
+  /** Only in a production build: its own header note, never the local or staging introduction. */
+  production?: true;
 }
 
 const LOCAL_WORDS: ServiceWords = {
@@ -93,6 +95,14 @@ const STAGING_WORDS: ServiceWords = {
   account: 'akun staging',
   service: 'server akun staging jarak jauh',
   consent: 'Saya setuju jawaban dan pengaturan saya dikirim ke server akun staging jarak jauh dan disimpan di profil akun staging ini.',
+};
+
+const PRODUCTION_WORDS: ServiceWords = {
+  title: 'Akun',
+  account: 'akun',
+  service: 'layanan akun',
+  production: true,
+  consent: 'Saya setuju jawaban dan pengaturan saya dikirim ke server dan disimpan di akun ini.',
 };
 
 const BUSY: Record<Exclude<AccountBusy, 'auth'>, string> = {
@@ -278,7 +288,7 @@ export function RecoveryForm({ model }: { model: RecoveryPanelModel }) {
 
 export function AccountPanel(props: AccountPanelProps) {
   const { account, busy = null, error = null, signUp = true } = props;
-  const words = props.environment === 'staging' ? STAGING_WORDS : LOCAL_WORDS;
+  const words = props.environment === 'production' ? PRODUCTION_WORDS : props.environment === 'staging' ? STAGING_WORDS : LOCAL_WORDS;
   const errorRegion = useRef<View>(null);
   useEffect(() => {
     if (error) moveFocus(errorRegion);
@@ -290,7 +300,9 @@ export function AccountPanel(props: AccountPanelProps) {
         <Text accessibilityRole="header" testID="account-title" style={styles.title}>
           {words.title}
         </Text>
-        <Text style={styles.note}>{introNote(signUp, props.onGoogle !== undefined, words.service)}</Text>
+        <Text style={styles.note}>
+          {words.production ? 'Masuk dengan akun yang sudah terdaftar. Pendaftaran belum dibuka.' : introNote(signUp, props.onGoogle !== undefined, words.service)}
+        </Text>
         <Text style={styles.note}>
           {props.rememberChoice
             ? 'Belajar tetap bisa tanpa akun. Setelah aplikasi ditutup atau dimuat ulang, Anda perlu masuk lagi, kecuali Anda memilih mengingat sesi masuk dengan email di perangkat ini.'
@@ -367,12 +379,12 @@ function SignInForm({
     <View style={styles.card} testID="account-form">
       {signUp ? <Segmented testIDPrefix="account-mode-" accessibilityLabel="Akun uji coba" value={mode} onChange={setMode} options={MODES} /> : null}
       <LabeledInput
-        label="Email uji (.test)"
+        label={words.production ? 'Email' : 'Email uji (.test)'}
         testID="account-email"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
-        placeholder="nama@ayailmu.test"
+        placeholder={words.production ? 'nama@contoh.com' : 'nama@ayailmu.test'}
         editable={!working}
       />
       <LabeledInput
@@ -383,7 +395,7 @@ function SignInForm({
         secureTextEntry
         editable={!working}
         onSubmitEditing={submit}
-        hint={mode === 'create' ? `Minimal 6 karakter. ${OWN_PASSWORD}` : OWN_PASSWORD}
+        hint={words.production ? undefined : mode === 'create' ? `Minimal 6 karakter. ${OWN_PASSWORD}` : OWN_PASSWORD}
       />
       {rememberChoice ? (
         <Check
@@ -401,7 +413,9 @@ function SignInForm({
         disabled={!ready || working}
         onPress={submit}
       />
-      {ready || working ? null : <Text style={styles.hint}>Isi email .test dan kata sandi untuk melanjutkan.</Text>}
+      {ready || working ? null : (
+        <Text style={styles.hint}>{words.production ? 'Isi email dan kata sandi untuk melanjutkan.' : 'Isi email .test dan kata sandi untuk melanjutkan.'}</Text>
+      )}
       {onGoogle ? <Btn testID="account-google" kind="secondary" icon="logo-google" label="Lanjutkan dengan Google" disabled={working} onPress={google} /> : null}
     </View>
   );

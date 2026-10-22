@@ -1,7 +1,11 @@
-// Sign-in against the local Supabase Auth server (in a staging build, the standalone staging one, also at its root)
-// through its maintained SDK (@supabase/auth-js AuthClient): a password sign-in for the prepared synthetic .test
-// identities only (sign-up is off), and, where the build turns it on, Continue
-// with Google through the Auth server's authorization code + PKCE flow. Each sign-in gets its own SDK client, kept in
+// Sign-in against a standalone Supabase Auth server (GoTrue) at its root, never a hosted /auth/v1 prefix: the local one by
+// default, the staging one in a staging build and the production one in an explicit production build, always through its
+// maintained SDK (@supabase/auth-js AuthClient). A password sign-in takes the prepared synthetic .test identities only in a
+// local or staging build, and identities whose address has a conventional email format (by its format alone, never a
+// claim that it is deliverable) in an explicit production build; sign-up is off in every build. Where the build turns it
+// on, Continue with Google goes through the Auth server's authorization code + PKCE flow. The transport origins and the
+// profile that chooses the email policy are validated once, when the adapter is built, and kept: the caller's
+// configuration is never read again for them. Each sign-in gets its own SDK client, kept in
 // memory only (no persistence, no URL detection, no debug output, no background refresh, no API key), which reaches the
 // Auth root only through a bounded transport without cookies or redirects. The latest sign-in wins; a client that loses
 // or is replaced is retired through the SDK's own local sign-out and never used again (a Google session's refresh hands
@@ -139,6 +143,19 @@ const SYNTHETIC_ADDRESS = /^[a-z0-9._%+-]+@(?:[a-z0-9-]+\.)+test$/i;
 const isSyntheticAddress = (email: unknown): email is string =>
   typeof email === 'string' && email.length <= 254 && SYNTHETIC_ADDRESS.test(email);
 
+/**
+ * A conventional address, by its format only (never a claim that it is deliverable): ASCII, at most 254 characters, a
+ * local part of at most 64 letters, digits and . _ % + - (no leading, trailing or repeated dot), then one @ and a DNS
+ * name of at least two labels, each 1 to 63 letters, digits or inner hyphens, the last starting with a letter. Matched
+ * whole, so whitespace, a control character, another @, an empty or oversized label or an IP literal never matches.
+ */
+const CONVENTIONAL_ADDRESS = /^([a-z0-9_%+-]+(?:\.[a-z0-9_%+-]+)*)@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z](?:[a-z0-9-]{0,61}[a-z0-9])?$/i;
+const isConventionalAddress = (email: unknown): email is string => {
+  if (typeof email !== 'string' || email.length > 254) return false;
+  const match = CONVENTIONAL_ADDRESS.exec(email);
+  return match !== null && match[1].length <= 64;
+};
+
 /** How far a Google attempt's record may claim to start in the future (a clock that moved) and still count. */
 const RECORD_CLOCK_SKEW_MS = 60_000;
 
@@ -156,7 +173,7 @@ interface RememberedRecord {
   installation: string;
   auth: string;
   api: string;
-  profile: 'local' | 'staging';
+  profile: 'local' | 'staging' | 'production';
   uid: string;
   email: string;
   accountId: string;
@@ -202,7 +219,7 @@ function recordText(record: RememberedRecord): string {
  * - it is at most 2048 UTF-8 bytes, checked before it is parsed;
  * - it has exactly its keys, at this version and kind;
  * - it is bound to `binding`;
- * - its address is synthetic and its IDs are canonical;
+ * - its IDs are canonical, and its address is conventional under the production profile (by its format only), synthetic otherwise;
  * - it was saved at most 30 days before `at`, and no later than a moved clock allows.
  */
 function rememberedRecord(text: string, binding: RecordBinding, at: number): RememberedRecord | null {
@@ -220,7 +237,8 @@ function rememberedRecord(text: string, binding: RecordBinding, at: number): Rem
   if (r.v !== 1 || r.kind !== 'password') return null;
   if (typeof binding.installation !== 'string' || binding.installation === '' || r.installation !== binding.installation) return null;
   if (r.auth !== binding.auth || r.api !== binding.api || r.profile !== binding.profile) return null;
-  if (!isCanonicalUuid(r.uid) || !isSyntheticAddress(r.email) || !isCanonicalUuid(r.accountId)) return null;
+  if (!isCanonicalUuid(r.uid) || !isCanonicalUuid(r.accountId)) return null;
+  if (binding.profile === 'production' ? !isConventionalAddress(r.email) : !isSyntheticAddress(r.email)) return null;
   if (typeof r.refreshToken !== 'string' || r.refreshToken === '' || typeof r.savedAt !== 'string') return null;
   const savedAt = Date.parse(r.savedAt);
   if (!Number.isFinite(savedAt) || new Date(savedAt).toISOString() !== r.savedAt) return null;
@@ -496,13 +514,19 @@ function ramStorage(memory: Map<string, string>): SupportedStorage {
 }
 
 export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
-  // Revalidated here too, under the configuration's own profile: an unsafe or legacy configuration, an unknown profile,
-  // an API or Auth address that is not exactly that profile's (local, or under the staging profile a staging root origin,
-  // so Auth is always at its root), or a Google web callback of the other profile builds no client and sends nothing.
+  // Revalidated here too, once, under the configuration's own profile: an unsafe or legacy configuration, an unknown
+  // profile, the production profile without its exact capability, an API or Auth address that is not exactly that
+  // profile's (local; under the staging profile a staging root origin; under the production profile a public root origin,
+  // Auth's distinct from the API's; so Auth is always at its root), or a Google web callback of another profile builds no
+  // client and sends nothing. The origins and the profile validated here (which also chooses the email policy) are kept;
+  // the caller's configuration is never read again for them.
   const config = options.config;
-  const apiOrigin = config?.enabled === true && config.provider === LOCAL_SUPABASE ? accountApiOrigin(config.apiBaseUrl, config.environment) : null;
-  const authUrl = apiOrigin !== null ? accountAuthOrigin(config.authUrl, config.environment) : null;
-  if (!authUrl || !apiOrigin) throw new Error('createSupabaseAuth needs a local or staging Supabase Auth configuration; nothing was sent.');
+  const apiOrigin =
+    config?.enabled === true && config.provider === LOCAL_SUPABASE ? accountApiOrigin(config.apiBaseUrl, config.environment, config.productionAccounts) : null;
+  const authUrl = apiOrigin !== null ? accountAuthOrigin(config.authUrl, config.environment, config.productionAccounts) : null;
+  if (!authUrl || !apiOrigin || (config.environment === 'production' && authUrl === apiOrigin)) {
+    throw new Error('createSupabaseAuth needs a local or staging Supabase Auth configuration; nothing was sent.');
+  }
   const googleOptions = options.google;
   if (googleOptions !== undefined && (!isSafeGoogleConfig(googleOptions.config, config.environment) || !googleOptions.store)) {
     throw new Error('createSupabaseAuth needs a safe Google sign-in configuration; nothing was sent.');
@@ -519,7 +543,7 @@ export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
     throw new Error('createSupabaseAuth needs a safe password recovery configuration; nothing was sent.');
   }
   /** The profile a remembered record is bound to: the configuration's own, never a guess from an address. */
-  const profile: RememberedRecord['profile'] = config.environment === STAGING ? 'staging' : 'local';
+  const profile: RememberedRecord['profile'] = config.environment === 'production' ? 'production' : config.environment === STAGING ? 'staging' : 'local';
   const createClient = options.createClient ?? createAuthClient;
   const injected = options.fetch;
   const now = options.now ?? Date.now;
@@ -1158,7 +1182,10 @@ export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
      * (whose running calls are superseded and whose client is retired).
      */
     async signIn(email, password) {
-      if (!isSyntheticAddress(email)) throw new AuthError('not_synthetic');
+      // The profile validated when this adapter was built, never the caller's configuration as it is now, chooses: a
+      // production build takes a conventional address (its format only); local and staging builds, synthetic .test ones only.
+      if (profile === 'production' && !isConventionalAddress(email)) throw new AuthError('invalid_email');
+      if (profile !== 'production' && !isSyntheticAddress(email)) throw new AuthError('not_synthetic');
       // A newer sign-in: any remembered session goes first, at once. One whose record cannot be cleared refuses this
       // sign-in before anything is dropped, built or sent. This one is remembered only if the learner chooses so again.
       if (!forgetBeforeSignIn()) throw new AuthError('not_forgotten');

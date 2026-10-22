@@ -93,6 +93,12 @@ interface AccountService {
 }
 const LOCAL_SERVICE: AccountService = { name: 'layanan akun lokal', account: 'akun lokal', consentVersion: LOCAL_ACCOUNT_CONSENT_VERSION };
 const STAGING_SERVICE: AccountService = { name: 'server akun staging', account: 'akun staging', consentVersion: STAGING_ACCOUNT_CONSENT_VERSION };
+/**
+ * The production account service. Its consent version is a distinct, UNREVIEWED draft marker for keeping a learner's
+ * answers and settings on the server: it needs the owner's and a privacy review's approval before any release, and a
+ * production profile never records the local or staging consent instead.
+ */
+const PRODUCTION_SERVICE: AccountService = { name: 'layanan akun', account: 'akun', consentVersion: 'draft-production-account-sync-consent-0.1' };
 
 /** `text` starting a sentence. */
 const upperFirst = (text: string): string => text.charAt(0).toUpperCase() + text.slice(1);
@@ -117,6 +123,8 @@ function authMessage(e: unknown, s: AccountService): string {
     switch (e.code) {
       case 'not_synthetic':
         return 'Pakai alamat email uji yang berakhiran .test.';
+      case 'invalid_email':
+        return 'Periksa alamat email.';
       case 'invalid_credentials':
         return 'Email atau kata sandi tidak cocok.';
       case 'network':
@@ -216,9 +224,10 @@ export function AccountProvider({
   });
 
   const config = useMemo(() => loadSupabaseConfig(), []);
-  // The validated configuration's own profile (never a guess from an address): 'staging' in a staging build, else absent.
+  // The validated configuration's own profile (never a guess from an address): 'staging' in a staging build, 'production'
+  // in a production one, else absent.
   const environment = config.enabled ? config.environment : undefined;
-  const service = environment === STAGING ? STAGING_SERVICE : LOCAL_SERVICE;
+  const service = environment === 'production' ? PRODUCTION_SERVICE : environment === STAGING ? STAGING_SERVICE : LOCAL_SERVICE;
   // Continue with Google: only with the account service on, in a build that turns it on, where its platform can run it.
   const google = useMemo(() => {
     if (!config.enabled) return null;
@@ -248,7 +257,7 @@ export function AccountProvider({
       ...(recoverySetup?.store ? { recovery: { config: recoverySetup.config, store: recoverySetup.store } } : {}),
     });
     // The API client revalidates its address under the same profile the Auth adapter takes from `config`.
-    const api = createApiClient({ baseUrl: config.apiBaseUrl, environment: config.environment });
+    const api = createApiClient({ baseUrl: config.apiBaseUrl, environment: config.environment, productionAccounts: config.productionAccounts });
     const session = createAccountSession({ auth, api });
     const conn: SyncConnection = { auth, session, api };
     return { auth, api, session, conn, google };

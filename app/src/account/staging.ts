@@ -47,10 +47,12 @@ export function isUnknownAccountEnv(value: unknown): boolean {
 
 /**
  * The account API origin when `value` is exactly one for the profile `environment`: without one, the local pilot API
- * (normalized); with exactly "staging", a staging root origin. Any other profile allows nothing, so an address is only
- * ever taken together with its own profile.
+ * (normalized); with exactly "staging", a staging root origin; with exactly "production" and the explicit capability
+ * `productionAccounts` exactly true, a public root origin as in staging. Any other profile, or production without the
+ * capability, allows nothing, so an address is only ever taken together with its own profile.
  */
-export function accountApiOrigin(value: unknown, environment: unknown): string | null {
+export function accountApiOrigin(value: unknown, environment: unknown, productionAccounts?: unknown): string | null {
   if (environment === undefined) return localPilotOrigin(value, PILOT_API_PORT);
+  if (environment === 'production') return productionAccounts === true ? stagingOrigin(value) : null;
   return environment === STAGING ? stagingOrigin(value) : null;
 }
