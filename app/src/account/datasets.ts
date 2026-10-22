@@ -142,7 +142,7 @@ function journalStorage(namespace: Namespace, store: () => RawCapableStore): Jou
 
 /** A learning store as far as erasing its dataset is concerned. */
 interface ErasableStore {
-  /** Removes the side documents `docs` and then the dataset itself from storage. */
+  /** Removes the dataset from storage with its side documents: at least those named in `docs`. */
   erase(docs: readonly string[]): Promise<void>;
 }
 
@@ -208,6 +208,15 @@ export interface OpenedSqlDataset {
   raw: RawTarget;
   /** The sync journal's document, in the same database and queue as `store`. */
   journal: JournalStorage;
+  /**
+   * Erases the dataset of its own account `accountId` from this database, through `store` and its queue: in one
+   * transaction, its learning rows, all metadata but the schema version, and its side documents, the sync journal
+   * among them. Once the erase begins, `store` is retired: it refuses every write even if the erase then fails, while
+   * reads keep working and the erase may be retried. Refused for the guest dataset, an invalid ID or another account,
+   * before anything is touched. Resolves only once none of those rows is left; a failure rejects and is rolled back.
+   * Rows are deleted, not the database file.
+   */
+  eraseAccountData(accountId: string): Promise<void>;
 }
 
 /** An account dataset opened for this app run (web or native), with its writer state and its release. */
@@ -219,15 +228,22 @@ export interface OpenedAccountDataset {
   /** Why the dataset is read-only here (shown to the learner). */
   reason?: string;
   release(): void;
-  /** Erases this account's own dataset from this device, as OpenedKvDataset.eraseAccountData does; absent where unsupported. */
+  /** Erases this account's own dataset from this device (see OpenedKvDataset and OpenedSqlDataset); absent where unsupported. */
   eraseAccountData?(accountId: string): Promise<void>;
 }
 
 /** Opens a native dataset's SQLite database as a learning store with its raw surface (one store, one queue). */
 export async function openSqlDataset(db: SqlDb, namespace: Namespace): Promise<OpenedSqlDataset> {
+  // Copied before anything is awaited, as for a web dataset: a later change to the caller's namespace redirects nothing.
+  const ns: Namespace = Object.freeze({ ...namespace });
   const store = new SqlStore(db);
   await store.init();
-  return { store, raw: rawTarget(namespace, () => store), journal: journalStorage(namespace, () => store) };
+  return {
+    store,
+    raw: rawTarget(ns, () => store),
+    journal: journalStorage(ns, () => store),
+    eraseAccountData: accountErase(ns, () => store),
+  };
 }
 
 /**
