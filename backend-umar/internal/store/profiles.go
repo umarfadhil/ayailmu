@@ -42,9 +42,13 @@ func (s *Store) CreateProfile(ctx context.Context, owner string, in ProfileInput
 		return Profile{}, err
 	}
 	defer tx.Rollback(ctx)
-	// Account lock serializes same-client-ID creation/replay.
+	// A transaction-scoped account advisory lock serializes same-client-ID creation/replay
+	// without granting UPDATE on immutable account identity just to acquire a row lock.
+	if _, err = tx.Exec(ctx, `SELECT pg_advisory_xact_lock(hashtextextended($1,0))`, owner); err != nil {
+		return Profile{}, err
+	}
 	var account string
-	if err = tx.QueryRow(ctx, `SELECT id::text FROM accounts WHERE id=$1 FOR UPDATE`, owner).Scan(&account); err != nil {
+	if err = tx.QueryRow(ctx, `SELECT id::text FROM accounts WHERE id=$1`, owner).Scan(&account); err != nil {
 		return Profile{}, ErrAccount
 	}
 	existing, err := scanProfile(tx.QueryRow(ctx, `SELECT `+profileColumns+` FROM learners WHERE owner_id=$1 AND client_learner_id=$2`, owner, in.ClientLearnerID))

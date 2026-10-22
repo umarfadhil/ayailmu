@@ -41,6 +41,9 @@ func Open(ctx context.Context, url string, r *catalog.Registry) (*Store, error) 
 	}
 	cfg.MaxConns = 8
 	cfg.MaxConnLifetime = time.Hour
+	// Resolve application tables in the owned schema before temporary tables. Never inherit a
+	// connection URL's user-writable search path; migrations also create only in public.
+	cfg.ConnConfig.RuntimeParams["search_path"] = "public, pg_temp"
 	p, err := pgxpool.NewWithConfig(ctx, cfg)
 	if err != nil {
 		return nil, errors.New("database initialization failed")
@@ -110,9 +113,21 @@ func (s *Store) Migrate(ctx context.Context) error {
 	return tx.Commit(ctx)
 }
 func (s *Store) Activate(ctx context.Context, issuer, subject string) (string, error) {
+	// Do not grant the runtime identity UPDATE on accounts merely for idempotent activation.
+	// Read committed gives the second statement a fresh snapshot after a conflicting insert waits.
+	tx, err := s.pool.BeginTx(ctx, pgx.TxOptions{IsoLevel: pgx.ReadCommitted})
+	if err != nil {
+		return "", err
+	}
+	defer tx.Rollback(ctx)
+	if _, err = tx.Exec(ctx, `INSERT INTO accounts(issuer,subject,declaration_version,synthetic) VALUES($1,$2,'adult-owner-v1',true) ON CONFLICT(issuer,subject) DO NOTHING`, issuer, subject); err != nil {
+		return "", err
+	}
 	var id string
-	err := s.pool.QueryRow(ctx, `INSERT INTO accounts(issuer,subject,declaration_version,synthetic) VALUES($1,$2,'adult-owner-v1',true) ON CONFLICT(issuer,subject) DO UPDATE SET issuer=EXCLUDED.issuer RETURNING id::text`, issuer, subject).Scan(&id)
-	return id, err
+	if err = tx.QueryRow(ctx, `SELECT id::text FROM accounts WHERE issuer=$1 AND subject=$2`, issuer, subject).Scan(&id); err != nil {
+		return "", err
+	}
+	return id, tx.Commit(ctx)
 }
 func (s *Store) Account(ctx context.Context, issuer, subject string) (string, error) {
 	var id string

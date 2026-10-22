@@ -40,6 +40,10 @@ func run() error {
 		return errors.New("prototype must bind a loopback address")
 	}
 	provider := env("UMAR_AUTH_PROVIDER", "gotrue")
+	migrate, err := labconfig.MigrateOnStart(os.Getenv("UMAR_MIGRATE_ON_START"))
+	if err != nil {
+		return err
+	}
 	issuer, jwks, audience := "http://127.0.0.1:8287", "http://127.0.0.1:8287/.well-known/jwks.json", "authenticated"
 	if provider == "keycloak" {
 		issuer, jwks, audience = "http://127.0.0.1:8285/realms/umar", "http://127.0.0.1:8285/realms/umar/protocol/openid-connect/certs", "umar-api"
@@ -63,8 +67,8 @@ func run() error {
 	defer s.Close()
 	startup, cancel := context.WithTimeout(ctx, 30*time.Second)
 	defer cancel()
-	if err = s.Migrate(startup); err != nil {
-		return errors.New("database migration failed")
+	if err = s.Prepare(startup, migrate); err != nil {
+		return errors.New("database preparation failed; verify schema and role configuration")
 	}
 	server := &http.Server{Addr: addr, Handler: api.New(s, v, r), ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 15 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 32768}
 	done := make(chan error, 1)
