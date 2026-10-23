@@ -1,5 +1,5 @@
 import { router, useFocusEffect, type Href } from 'expo-router';
-import { Fragment, useCallback, type ReactNode } from 'react';
+import { useCallback, type ReactNode } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View, type ViewStyle } from 'react-native';
 
 import { useAccount } from '@/ui/AccountContext';
@@ -46,10 +46,7 @@ export default function Home() {
     return (
       <Page>
         <EmptyState icon="hourglass-outline" title="Belum ada materi yang disetujui untuk uji coba">
-          <P style={{ textAlign: 'center' }}>
-            Materi pelajaran masih ditinjau oleh peninjau bahasa Arab dan bahasa Indonesia. Aplikasi hanya menampilkan
-            materi yang sudah disetujui untuk uji coba. Silakan kembali lagi nanti.
-          </P>
+          <P style={{ textAlign: 'center' }}>Materi masih ditinjau. Silakan kembali lagi nanti.</P>
         </EmptyState>
         <ModeNote />
       </Page>
@@ -70,7 +67,7 @@ function Welcome() {
         <>
           <Btn testID="welcome-start" label="Mulai" icon="arrow-forward" onPress={() => router.push('/consent')} />
           {account.enabled ? (
-            <Btn testID="welcome-account" kind="quiet" label="Sudah punya akun lokal? Masuk di sini" onPress={() => router.push('/account' as Href)} />
+            <Btn testID="welcome-account" kind="quiet" label="Masuk ke akun" onPress={() => router.push('/account' as Href)} />
           ) : null}
           <Text style={styles.modeCaption}>{rules.mode === 'tester' ? 'Prototipe · mode penguji' : 'Prototipe pengembang'}</Text>
         </>
@@ -113,6 +110,13 @@ const DOT: Record<UnitState, ViewStyle> = {
   practising: { backgroundColor: colors.accent, borderColor: colors.accentSoft, borderWidth: 4 },
   available: { backgroundColor: colors.sheet, borderColor: colors.accent, borderWidth: 3 },
   closed: { backgroundColor: colors.sheet, borderColor: '#A89A84', borderWidth: 2 },
+};
+
+/** A unit's place on the home path, by its offset from the current unit: only its direct neighbours are shown. */
+const RELATION: Partial<Record<number, { id: 'previous' | 'current' | 'next'; label: string }>> = {
+  [-1]: { id: 'previous', label: 'Sebelumnya' },
+  0: { id: 'current', label: 'Saat ini' },
+  1: { id: 'next', label: 'Berikutnya' },
 };
 
 /**
@@ -178,6 +182,15 @@ function Today({ learning }: { learning: LearningState }) {
     );
 
   const states = data ? unitStates(data, content) : [];
+  const current = states.findIndex((s) => s.unit === unit);
+  // Read out the rows the card shows (the current unit and its direct neighbours), in the same order.
+  const pathLabel = states
+    .flatMap((s, n) => {
+      const rel = current < 0 ? undefined : RELATION[n - current];
+      if (current >= 0 && !rel) return [];
+      return [`Unit ${s.unit}${rel ? `, ${rel.label.toLowerCase()}` : ''}: ${UNIT_TITLE[s.unit]}, ${UNIT_STATE_LABEL[s.state].toLowerCase()}`];
+    })
+    .join('. ');
 
   return (
     <Page>
@@ -223,23 +236,34 @@ function Today({ learning }: { learning: LearningState }) {
           <Pressable
             testID="home-path"
             accessibilityRole="link"
-            accessibilityLabel={`Jalur belajar: ${states.map((s) => `Unit ${s.unit} ${UNIT_STATE_LABEL[s.state].toLowerCase()}`).join(', ')}. Buka Kemajuan.`}
+            accessibilityLabel={`Jalur belajar. ${pathLabel}. Lihat kemajuan.`}
             onPress={() => router.dismissTo('/progress' as Href)}
             style={({ pressed }) => [styles.path, pressed && styles.pathPressed]}
           >
             <View style={styles.pathUnits}>
-              {states.map((s, n) => (
-                <Fragment key={s.unit}>
-                  {n > 0 ? <View style={[styles.connector, s.state === 'closed' && styles.connectorOff]} /> : null}
-                  <View style={styles.pathUnit}>
+              {states.map((s, n) => {
+                const rel = current < 0 ? undefined : RELATION[n - current];
+                if (current >= 0 && !rel) return null;
+                const on = rel?.id === 'current';
+                return (
+                  <View key={s.unit} testID={rel && `home-path-${rel.id}`} style={[styles.pathUnit, on && styles.pathUnitOn]}>
                     <View style={[styles.dot, DOT[s.state]]} />
-                    <Text style={styles.pathUnitLabel}>{`Unit ${s.unit}`}</Text>
-                    <Text style={[styles.pathState, s.state === 'closed' && styles.pathStateOff]}>{UNIT_STATE_LABEL[s.state]}</Text>
+                    <View style={styles.pathUnitBody}>
+                      <View style={styles.pathRelationRow}>
+                        <Text style={[styles.pathRelation, on && styles.pathRelationOn]}>{`Unit ${s.unit}`}</Text>
+                        {rel ? <Text style={[styles.pathRelation, on && styles.pathRelationOn]}>{`· ${rel.label}`}</Text> : null}
+                      </View>
+                      <Text style={styles.pathUnitTitle}>{UNIT_TITLE[s.unit]}</Text>
+                      <Text style={[styles.pathState, s.state === 'closed' && styles.pathStateOff]}>{UNIT_STATE_LABEL[s.state]}</Text>
+                    </View>
                   </View>
-                </Fragment>
-              ))}
+                );
+              })}
             </View>
-            <Icon name="chevron-forward" color={colors.muted} />
+            <View style={styles.pathMore}>
+              <Text style={styles.pathMoreText}>Lihat kemajuan</Text>
+              <Icon name="chevron-forward" size={18} color={colors.accentInk} />
+            </View>
           </Pressable>
         </View>
       ) : null}
@@ -292,7 +316,7 @@ const styles = StyleSheet.create({
   },
   heroTop: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
   date: { ...typography.caption },
-  unitTitle: { ...typography.display },
+  unitTitle: { ...typography.screenTitle, fontSize: 24, lineHeight: 30 },
   status: { flexDirection: 'row', alignItems: 'flex-start', gap: 8 },
   statusText: { flex: 1, fontFamily: fonts.regular, fontSize: 15, lineHeight: 22, writingDirection: 'ltr', textAlign: 'left' },
   statusStrong: { fontFamily: fonts.semibold },
@@ -303,27 +327,30 @@ const styles = StyleSheet.create({
   pathSection: { gap: 10, marginTop: 4 },
   pathTitle: { fontFamily: fonts.bold, fontSize: 13, lineHeight: 18, letterSpacing: 0.5, color: colors.muted, marginHorizontal: 4 },
   path: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    minHeight: 72,
-    paddingVertical: 14,
-    paddingLeft: 16,
-    paddingRight: 10,
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    gap: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
     borderRadius: radius.card,
     backgroundColor: colors.sheet2,
     borderWidth: 1,
     borderColor: colors.line,
   },
   pathPressed: { backgroundColor: colors.chipBg },
-  pathUnits: { flex: 1, flexDirection: 'row', alignItems: 'flex-start', gap: 6 },
-  connector: { flex: 1, height: 2, marginTop: 7, borderRadius: 2, backgroundColor: colors.lineStrong },
-  connectorOff: { backgroundColor: colors.line },
-  pathUnit: { alignItems: 'flex-start', gap: 6, flexShrink: 1 },
-  dot: { width: 16, height: 16, borderRadius: radius.pill },
-  pathUnitLabel: { fontFamily: fonts.bold, fontSize: 13, lineHeight: 16, color: colors.ink },
-  pathState: { fontFamily: fonts.semibold, fontSize: 12, lineHeight: 16, color: colors.accentInk },
+  pathUnits: { flexDirection: 'column', gap: 10 },
+  pathUnit: { flexDirection: 'row', alignItems: 'flex-start', gap: 10, minWidth: 0, padding: 8, borderRadius: 10 },
+  pathUnitOn: { backgroundColor: colors.chipBg },
+  pathUnitBody: { flex: 1, minWidth: 0, gap: 2 },
+  dot: { width: 16, height: 16, borderRadius: radius.pill, marginTop: 1 },
+  pathRelation: { fontFamily: fonts.bold, fontSize: 13, lineHeight: 18, color: colors.muted },
+  pathRelationOn: { color: colors.accentInk },
+  pathRelationRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'baseline', columnGap: 4 },
+  pathUnitTitle: { fontFamily: fonts.semibold, fontSize: 15, lineHeight: 21, color: colors.ink },
+  pathState: { fontFamily: fonts.semibold, fontSize: 12, lineHeight: 18, color: colors.accentInk },
   pathStateOff: { fontFamily: fonts.regular, color: colors.muted },
+  pathMore: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 8 },
+  pathMoreText: { fontFamily: fonts.bold, fontSize: 14, lineHeight: 20, color: colors.accentInk },
 
   storage: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 8, marginHorizontal: 4 },
   storageText: { fontFamily: fonts.regular, fontSize: 13, lineHeight: 18, color: colors.muted },

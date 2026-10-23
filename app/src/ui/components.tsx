@@ -300,12 +300,13 @@ const NOTICE = {
 } as const;
 
 /** Notice row with an icon (info / warning / error / done). Storage errors alone use the danger tone. */
-export function Notice({ tone, icon, children, testID }: { tone: keyof typeof NOTICE; icon?: IconName; children: ReactNode; testID?: string }) {
+export function Notice({ tone, icon, children, testID, action }: { tone: keyof typeof NOTICE; icon?: IconName; children: ReactNode; testID?: string; action?: ReactNode }) {
   const t = NOTICE[tone];
+  const body = <Text style={[styles.noticeBody, { color: t.ink }, tone === 'danger' && styles.noticeStrong, action ? { flex: 0 } : null]}>{children}</Text>;
   return (
     <View testID={testID} style={[styles.notice, { backgroundColor: t.bg, borderColor: t.line }]}>
       <Icon name={icon ?? t.icon} color={t.ink} />
-      <Text style={[styles.noticeBody, { color: t.ink }, tone === 'danger' && styles.noticeStrong]}>{children}</Text>
+      {action ? <View style={{ flex: 1, minWidth: 0, gap: 4 }}>{body}{action}</View> : body}
     </View>
   );
 }
@@ -563,6 +564,7 @@ export function Btn({
   icon,
   testID,
   accessibilityLabel,
+  style,
 }: {
   label: string;
   onPress: () => void;
@@ -573,6 +575,7 @@ export function Btn({
   icon?: IconName;
   testID?: string;
   accessibilityLabel?: string;
+  style?: StyleProp<ViewStyle>;
 }) {
   const primary = kind === 'primary';
   const ink = disabled
@@ -603,6 +606,7 @@ export function Btn({
         selected && styles.btnSelected,
         disabled && (primary ? styles.btnDisabledPrimary : styles.btnDisabled),
         pressed && !disabled && (primary ? styles.btnPressedPrimary : styles.btnPressed),
+        style,
       ]}
     >
       <View style={styles.btnInner}>
@@ -779,7 +783,7 @@ export function EmptyState({ icon, title, children }: { icon: IconName; title: s
 
 const REPORT_REASONS = ['Teks Arab salah', 'Terjemahan tidak tepat', 'Jawaban saya seharusnya benar', 'Soal membingungkan', 'Lainnya'];
 
-/** «Laporkan soal»: short reason list and a free-text field (S14 modal anatomy, shown as a sheet). */
+/** «Laporkan soal»: short reason list and a free-text field (S14 modal anatomy, shown as a sheet). Saved on this device only. */
 export function ReportButton({ onSubmit }: { onSubmit: (reason: string, text: string) => Promise<void> }) {
   const [open, setOpen] = useState(false);
   const [reason, setReason] = useState<string | null>(null);
@@ -806,13 +810,13 @@ export function ReportButton({ onSubmit }: { onSubmit: (reason: string, text: st
       <Pressable
         onPress={() => setOpen(true)}
         accessibilityRole="button"
-        accessibilityLabel={sent ? 'Laporan terkirim. Laporkan soal lagi' : 'Laporkan soal'}
+        accessibilityLabel={sent ? 'Laporan tersimpan di perangkat ini. Laporkan soal lagi' : 'Laporkan soal'}
         accessibilityHint="Membuka formulir laporan"
         testID="report-open"
         style={({ pressed }) => [styles.quietAction, pressed && styles.iconBtnPressed]}
       >
         <Icon name={sent ? 'checkmark-circle-outline' : 'flag-outline'} size={16} color={colors.muted} />
-        <Text style={styles.reportLink}>{sent ? 'Laporan terkirim' : 'Laporkan soal'}</Text>
+        <Text style={styles.reportLink}>{sent ? 'Laporan tersimpan di perangkat ini' : 'Laporkan soal'}</Text>
       </Pressable>
       <Modal visible={open} transparent animationType="none" onRequestClose={close}>
         <View style={styles.sheetWrap}>
@@ -854,6 +858,7 @@ export function ReportButton({ onSubmit }: { onSubmit: (reason: string, text: st
                 ))}
               </View>
               <Field testID="report-text" value={text} onChangeText={setText} placeholder="Keterangan (boleh kosong)" />
+              <Text style={styles.small}>Laporan hanya disimpan di perangkat ini dan tidak dikirim ke mana pun.</Text>
               {error ? (
                 <View role="alert" accessibilityLiveRegion="assertive">
                   <Notice tone="danger" testID="report-error">
@@ -867,7 +872,7 @@ export function ReportButton({ onSubmit }: { onSubmit: (reason: string, text: st
                 </View>
                 <View style={{ flex: 1.3 }}>
                   <Btn
-                    label="Kirim laporan"
+                    label="Simpan laporan"
                     disabled={!reason || busy}
                     testID="report-send"
                     onPress={async () => {
@@ -1053,18 +1058,18 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
   btn_primary: { minHeight: 56, backgroundColor: colors.primary, borderColor: colors.primary, ...buttonShadow },
-  btn_secondary: { minHeight: 52, backgroundColor: colors.sheet, borderColor: colors.lineStrong },
+  btn_secondary: { minHeight: 56, backgroundColor: colors.sheet, borderColor: colors.lineStrong },
   btn_quiet: { minHeight: 44, backgroundColor: 'transparent', paddingHorizontal: 12 },
   btn_tile: { backgroundColor: colors.sheet, borderColor: colors.tileLine, minHeight: 88, paddingVertical: 16, borderRadius: radius.md },
-  btnInner: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10, flexWrap: 'wrap' },
+  btnInner: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10, flexWrap: 'nowrap', alignSelf: 'stretch', minWidth: 0 },
   btnSelected: { borderColor: colors.accent, backgroundColor: colors.accentSoft, borderWidth: 2 },
   btnDisabledPrimary: { backgroundColor: colors.disabledBg, borderColor: colors.disabledBg, shadowOpacity: 0, elevation: 0 },
   btnDisabled: { opacity: 0.55 },
   btnPressed: { backgroundColor: colors.chipBg },
   btnPressedPrimary: { backgroundColor: colors.primaryPressed, borderColor: colors.primaryPressed },
-  btnText: { fontFamily: fonts.bold, fontSize: 16, lineHeight: 22, textAlign: 'center' },
+  btnText: { fontFamily: fonts.bold, fontSize: 17, lineHeight: 24, textAlign: 'center', flexShrink: 1, minWidth: 0 },
   btnTextPrimary: { fontSize: 17, lineHeight: 24 },
-  btnTextQuiet: { fontSize: 15 },
+  btnTextQuiet: { fontSize: 15, lineHeight: 22 },
   btnArabic: { fontFamily: fonts.arabic, fontSize: 32, lineHeight: 58, writingDirection: 'rtl' },
 
   segmented: {

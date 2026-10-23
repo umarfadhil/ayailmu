@@ -8,27 +8,37 @@
 // returns learning to the guest's dataset at once; nothing stored is deleted. In a staging build (the validated
 // configuration's staging profile) the same layer reaches the staging Auth server and API, names the remote staging
 // server wherever it named the local service, and records the staging consent version for a new adult profile.
+// Where a native build turns it on (EXPO_PUBLIC_REMEMBER_DEVICE=on, with the device's secure session vault), the learner
+// may tick the choice to remember an email sign-in. It is saved only after the account API verified the account, and
+// let go without a logout when the app run ends. The next run restores it through one refresh grant and continues as
+// after a password sign-in, for the same verified account only. Signing out forgets it.
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
-import { copyGuestToAccount, GUEST_NAMESPACE, type Namespace, type OpenedAccountDataset, type RawSource } from '@/account/datasets';
+import { createAccountDeletionController, type AccountDeletionController, type AccountDeletionState } from '@/account/accountDeletion';
+import { accountNamespace, copyGuestToAccount, GUEST_NAMESPACE, type Namespace, type OpenedAccountDataset, type RawSource } from '@/account/datasets';
 import { loadGoogleConfig } from '@/account/googleConfig';
 import { isCanonicalUuid } from '@/account/ids';
 import { openAccountDataset } from '@/account/openAccountDataset';
-import { createAccountSession } from '@/account/session';
+import { rememberDeviceEnabled } from '@/account/rememberConfig';
+import { createAccountSession, exportOwnAccountData } from '@/account/session';
 import { STAGING } from '@/account/staging';
 import { loadSupabaseConfig } from '@/account/supabaseConfig';
-import { ApiError, createApiClient } from '@/api/client';
+import { ApiError, createAccountControls, createApiClient, discoverOwnAccountDeletion, type AccountDeletion } from '@/api/client';
 import type { PendingGoogleStore } from '@/auth/google';
 import type { GoogleBrowser, GoogleBrowserResult } from '@/auth/googleBrowser';
 import { deviceGoogleBrowser, deviceGoogleStore } from '@/auth/googleDevice';
+import { prepareRecovery, type RecoveryAttemptStore, type RecoveryRuntime } from '@/auth/recoverySetup';
+import { deviceSessionVault } from '@/auth/sessionVault';
 import { createSupabaseAuth } from '@/auth/supabaseAuth';
-import { AuthError, type AuthIdentity } from '@/auth/types';
+import { AuthError, type AuthIdentity, type SessionVault } from '@/auth/types';
 import { newId } from '@/engine/util';
+import { runCheckpoints } from '@/storage/checkpoints';
 import type { RawDataset } from '@/storage/rawRecords';
 import type { Store } from '@/storage/types';
 import { openJournal, SyncError, type JournalView, type LinkChoice, type SyncConnection, type SyncJournal } from '@/sync/journal';
 import type { AccountBusy, AccountMode, AccountPanelProps, AccountProfileChoice, ConnectedProfile } from '@/ui/account/AccountPanel';
 import { APP_VERSION, LOCAL_ACCOUNT_CONSENT_VERSION, STAGING_ACCOUNT_CONSENT_VERSION, useApp } from '@/ui/AppContext';
+import { usePasswordRecovery } from '@/ui/usePasswordRecovery';
 
 export interface AccountContextValue {
   /** The account service (the local one, or a staging build's staging server) is configured for this build. */
@@ -39,6 +49,29 @@ export interface AccountContextValue {
   connected: boolean;
   /** Everything the account panel shows and calls back. */
   panel: AccountPanelProps;
+  /** The signed-in, verified account's own server data; absent while signed out or before verification. */
+  dataControls?: AccountDataControls;
+  /** In-run deletion status survives navigation and sign-out; a new verified account gets its own status. */
+  deletion?: AccountDeletionModel;
+}
+
+export interface AccountDeletionModel {
+  key: string;
+  state: AccountDeletionState;
+  available: boolean;
+  remove(password: string, confirmed: boolean): Promise<void>;
+  check(): Promise<void>;
+  retryIdentity(password: string, confirmed: boolean): Promise<void>;
+  retryCleanup(): Promise<void>;
+}
+
+/** The signed-in account's server data as its server keeps it: never the guest's data or this device's unsent records. */
+export interface AccountDataControls {
+  /**
+   * After a fresh password sign-in with `password`, the verified account's server export (GET /v1/me/export) as the
+   * server's exact text. One account data operation at a time: another is refused before anything is sent.
+   */
+  exportData(password: string): Promise<{ accountId: string; json: string }>;
 }
 
 const noop = () => undefined;
@@ -85,11 +118,25 @@ interface AccountService {
 }
 const LOCAL_SERVICE: AccountService = { name: 'layanan akun lokal', account: 'akun lokal', consentVersion: LOCAL_ACCOUNT_CONSENT_VERSION };
 const STAGING_SERVICE: AccountService = { name: 'server akun staging', account: 'akun staging', consentVersion: STAGING_ACCOUNT_CONSENT_VERSION };
+/**
+ * The production account service. Its consent version is a distinct, UNREVIEWED draft marker for keeping a learner's
+ * answers and settings on the server: it needs the owner's and a privacy review's approval before any release, and a
+ * production profile never records the local or staging consent instead.
+ */
+const PRODUCTION_SERVICE: AccountService = { name: 'layanan akun', account: 'akun', consentVersion: 'draft-production-account-sync-consent-0.1' };
 
 /** `text` starting a sentence. */
 const upperFirst = (text: string): string => text.charAt(0).toUpperCase() + text.slice(1);
 const notRevoked = (s: AccountService) => `Sudah keluar di perangkat ini, tetapi ${s.name} belum memastikan sesinya dicabut. Data di perangkat ini tetap ada.`;
 const offline = (s: AccountService) => `Tidak ada koneksi ke ${s.name}. Jawaban tetap tersimpan di perangkat ini.`;
+
+// A remembered email sign-in, in fixed words that never claim more than the vault confirmed.
+const REMEMBER_NOT_SAVED = 'Masuk berhasil, tetapi sesi ini tidak bisa diingat di perangkat ini. Setelah aplikasi ditutup, masuk lagi dengan email dan kata sandi.';
+const REMEMBERED_MISMATCH = 'Sesi yang diingat tidak cocok dengan akun yang diverifikasi, jadi tidak dipakai. Masuk lagi dengan email dan kata sandi.';
+const REMEMBERED_ENDED = 'Sesi yang diingat sudah tidak berlaku. Masuk lagi dengan email dan kata sandi; data di perangkat ini tetap ada.';
+const NOT_FORGOTTEN = 'Sesi yang diingat belum bisa dihapus dari penyimpanan aman perangkat ini.';
+const rememberedOffline = (s: AccountService) =>
+  `${upperFirst(s.name)} tidak terjangkau. Sesi yang diingat tetap tersimpan di perangkat ini; buka aplikasi lagi nanti untuk mencobanya.`;
 
 /** The sign-in this work belonged to is gone (expired, or ended without this layer's sign-out): sign out visibly. */
 const sessionEnded = (e: unknown): boolean => e instanceof AuthError && (e.code === 'expired' || e.code === 'signed_out' || e.code === 'superseded');
@@ -101,6 +148,8 @@ function authMessage(e: unknown, s: AccountService): string {
     switch (e.code) {
       case 'not_synthetic':
         return 'Pakai alamat email uji yang berakhiran .test.';
+      case 'invalid_email':
+        return 'Periksa alamat email.';
       case 'invalid_credentials':
         return 'Email atau kata sandi tidak cocok.';
       case 'network':
@@ -117,6 +166,9 @@ function authMessage(e: unknown, s: AccountService): string {
         return `Google atau ${s.name} menolak permintaan masuk ini. Coba lagi nanti; belajar tetap bisa tanpa akun.`;
       case 'unavailable':
         return 'Masuk dengan Google belum bisa dipakai di perangkat ini. Belajar tetap bisa tanpa akun.';
+      case 'not_forgotten':
+        // Refused before anything was sent for it: never a claim that the earlier sign-in was forgotten.
+        return `${NOT_FORGOTTEN} Jadi masuk ini tidak dilanjutkan. Coba lagi nanti; data di perangkat ini tetap ada.`;
       default:
         return `Belum bisa masuk ke ${s.account}. Belajar tetap bisa tanpa akun.`;
     }
@@ -162,11 +214,25 @@ function conflictDetail(view: JournalView): string | undefined {
   return parts.length ? parts.join(' ') : undefined;
 }
 
+/** The verified account a published view belongs to: its own ID and provider user, never derived from an address. */
+interface Binding {
+  accountId: string;
+  uid: string;
+  /** The dataset handle the view was published with. */
+  opened: OpenedAccountDataset;
+  /** Set once the sign-in that published the view has finished its own work. */
+  ready: boolean;
+  deletionTurn?: number;
+}
+
 export function AccountProvider({
   children,
   openDataset = openAccountDataset,
   googleBrowser,
   googleStore,
+  sessionVault,
+  recoveryRuntime,
+  recoveryStore,
 }: {
   children: ReactNode;
   openDataset?: (namespace: Namespace) => Promise<OpenedAccountDataset>;
@@ -174,6 +240,18 @@ export function AccountProvider({
   googleBrowser?: GoogleBrowser;
   /** The short-lived store of a pending Google attempt; the platform's own by default. */
   googleStore?: PendingGoogleStore;
+  /**
+   * Where a remembering build remembers an email sign-in: the platform's own secure vault by default (the web has
+   * none). Null turns remembering off.
+   */
+  sessionVault?: SessionVault | null;
+  /** Password recovery's link boundary, in a build that turns recovery on: the platform's own by default. Null turns it off. */
+  recoveryRuntime?: RecoveryRuntime | null;
+  /**
+   * The short-lived store of a pending recovery attempt: the platform's own by default. Without one (null included),
+   * a recovery link is still recognized, but recovery cannot go on.
+   */
+  recoveryStore?: RecoveryAttemptStore | null;
 }) {
   const app = useApp();
   const appRef = useRef(app);
@@ -182,9 +260,10 @@ export function AccountProvider({
   });
 
   const config = useMemo(() => loadSupabaseConfig(), []);
-  // The validated configuration's own profile (never a guess from an address): 'staging' in a staging build, else absent.
+  // The validated configuration's own profile (never a guess from an address): 'staging' in a staging build, 'production'
+  // in a production one, else absent.
   const environment = config.enabled ? config.environment : undefined;
-  const service = environment === STAGING ? STAGING_SERVICE : LOCAL_SERVICE;
+  const service = environment === 'production' ? PRODUCTION_SERVICE : environment === STAGING ? STAGING_SERVICE : LOCAL_SERVICE;
   // Continue with Google: only with the account service on, in a build that turns it on, where its platform can run it.
   const google = useMemo(() => {
     if (!config.enabled) return null;
@@ -195,16 +274,30 @@ export function AccountProvider({
     const store = googleStore ?? deviceGoogleStore();
     return store ? { browser, settings, store } : null;
   }, [config, googleBrowser, googleStore]);
+  // Remembering an email sign-in: only with the account service on, in a build that turns it on, with a secure vault.
+  const vault = useMemo(() => {
+    if (!config.enabled || !rememberDeviceEnabled()) return null;
+    return sessionVault === undefined ? deviceSessionVault() : sessionVault;
+  }, [config, sessionVault]);
+  // Password recovery: only with the account service on, in a build that turns it on, with a callback this profile may use.
+  const recoverySetup = useMemo(() => prepareRecovery(config, recoveryRuntime, recoveryStore), [config, recoveryRuntime, recoveryStore]);
   const services = useMemo(() => {
     if (!config.enabled) return null;
     // The platform's fetch as this provider found it: a sign-out still on its way after leaving uses the same one.
-    const auth = createSupabaseAuth({ config, fetch: globalThis.fetch, google: google ? { config: google.settings, store: google.store } : undefined });
+    const auth = createSupabaseAuth({
+      config,
+      fetch: globalThis.fetch,
+      google: google ? { config: google.settings, store: google.store } : undefined,
+      ...(vault ? { remember: { vault } } : {}),
+      // Without a pending-attempt store the Auth adapter gets no recovery; recoverySetup still recognizes its links.
+      ...(recoverySetup?.store ? { recovery: { config: recoverySetup.config, store: recoverySetup.store } } : {}),
+    });
     // The API client revalidates its address under the same profile the Auth adapter takes from `config`.
-    const api = createApiClient({ baseUrl: config.apiBaseUrl, environment: config.environment });
+    const api = createApiClient({ baseUrl: config.apiBaseUrl, environment: config.environment, productionAccounts: config.productionAccounts });
     const session = createAccountSession({ auth, api });
     const conn: SyncConnection = { auth, session, api };
     return { auth, api, session, conn, google };
-  }, [config, google]);
+  }, [config, google, vault, recoverySetup]);
 
   const [account, setAccount] = useState<{ key: string; label: string } | null>(null);
   const [busy, setBusy] = useState<AccountBusy | null>(null);
@@ -218,8 +311,49 @@ export function AccountProvider({
   const journal = useRef<SyncJournal | null>(null);
   /** Each sign-in and sign-out starts a new turn; work of an earlier turn never publishes anything. */
   const turn = useRef(0);
+  /** The verified account of the published view, kept through an ordinary expiry; it goes with the view. */
+  const binding = useRef<Binding | null>(null);
+  /** The one account data operation under way, if any: another is refused before anything is sent. */
+  const dataOp = useRef<object | null>(null);
+  const deletionController = useRef<AccountDeletionController | null>(null);
+  const deletionQuiescing = useRef(false);
+  const ordinaryTasks = useRef(new Set<Promise<void>>());
+  const [deletionRecord, setDeletionRecord] = useState<{ key: string; state: AccountDeletionState } | null>(null);
+  const track = (task: Promise<void>) => {
+    ordinaryTasks.current.add(task);
+    void task.then(() => ordinaryTasks.current.delete(task), () => ordinaryTasks.current.delete(task));
+  };
   /** Whether this run already looked for its web Google callback (a page has one launch URL, taken once). */
   const resumed = useRef(false);
+  /** Whether this run already looked for a remembered email sign-in (once per run). */
+  const restored = useRef(false);
+  /** Whether this run did normal sign-in work (a sign-in, a sign-out or a remembered restore): only then does leaving end it. */
+  const normalWork = useRef(false);
+  /** The signed-in account as last rendered, for recovery's fence (read after render only). */
+  const accountRef = useRef(account);
+  useEffect(() => {
+    accountRef.current = account;
+  }, [account]);
+
+  // Password recovery, through its own controller only: off (touching nothing) unless recoverySetup gave a runtime.
+  const recoveryControl = usePasswordRecovery({
+    recovery: services?.auth.recovery,
+    runtime: recoverySetup?.runtime ?? null,
+    callbackUrl: recoverySetup?.config.callbackUrl ?? null,
+  });
+  /** Recovery began while signed out: a normal sign-in still on its way publishes nothing more. A verified account stays. */
+  const onRecoveryIntent = useCallback(() => {
+    if (accountRef.current !== null) return;
+    turn.current += 1;
+    setBusy(null);
+    setError(null);
+  }, []);
+  const { setIntentHandler, normalStarting: recoveryNormalStarting } = recoveryControl;
+  // Bound after render: the fence reads refs.
+  useEffect(() => {
+    setIntentHandler(onRecoveryIntent);
+    return () => setIntentHandler(undefined);
+  }, [setIntentHandler, onRecoveryIntent]);
 
   const setConnected = useCallback((next: ConnectedProfile | null) => {
     connectedRef.current = next;
@@ -228,6 +362,19 @@ export function AccountProvider({
 
   const actions = useMemo(() => {
     const live = (t: number) => t === turn.current;
+    const deletionBlocked = () => deletionQuiescing.current || ['unknown', 'pending', 'completed'].includes(deletionController.current?.state().phase ?? 'idle');
+    // A journal that started in an earlier turn may never borrow the later password grant for another request.
+    const connectionFor = (t: number): SyncConnection => {
+      if (!services) throw new AuthError('signed_out');
+      const guard = () => { if (!live(t) || dataOp.current || deletionBlocked()) throw new AuthError('superseded'); };
+      return { ...services.conn, auth: { ...services.auth,
+        status: () => { guard(); return services.auth.status(); },
+        authorized: async (call) => { guard(); const result = await services.auth.authorized((token, signal) => { guard(); return call(token, signal); }); guard(); return result; },
+      }, session: {
+        current: () => { guard(); return services.session.current(); },
+        verify: async () => { guard(); const result = await services.session.verify(); guard(); return result; },
+      } };
+    };
     const close = () => {
       const o = opened.current;
       opened.current = null;
@@ -235,6 +382,10 @@ export function AccountProvider({
       o?.release();
     };
     const clear = () => {
+      binding.current = null;
+      deletionController.current = null;
+      deletionQuiescing.current = false;
+      dataOp.current = null;
       setAccount(null);
       setGuestCopy(null);
       setProfiles([]);
@@ -249,8 +400,9 @@ export function AccountProvider({
         otherDeviceAnswers: journal.current?.view().remote.length ?? 0,
       });
     /** Learning uses the account's dataset from now on; preference changes go through its journal. */
-    const selectAccountDataset = (o: OpenedAccountDataset, j: SyncJournal | null) =>
-      appRef.current.selectDataset({
+    const selectAccountDataset = (o: OpenedAccountDataset, j: SyncJournal | null) => {
+      if (opened.current !== o || deletionBlocked() || dataOp.current) return Promise.resolve();
+      return appRef.current.selectDataset({
         store: o.store,
         readOnly: o.access === 'owner' ? null : (o.reason ?? 'Akun ini sedang dipakai di tab lain; tab ini hanya bisa membaca.'),
         savePreferences: j
@@ -262,12 +414,16 @@ export function AccountProvider({
             }
           : undefined,
       });
+    };
 
     /**
-     * Ends the sign-in at once: its work stops, no token is handed out again and learning returns to the guest's dataset.
-     * Then, unless another sign-in has started meanwhile, it says when the provider did not confirm the revocation.
+     * Ends the sign-in at once: its work stops, no token is handed out again, a remembered sign-in is forgotten and
+     * learning returns to the guest's dataset. Then, unless another sign-in has started meanwhile, it says when the
+     * provider did not confirm the revocation, or when the secure vault would not let go of a remembered sign-in.
      */
     async function signOut(message: string | null = null): Promise<void> {
+      normalWork.current = true;
+      recoveryNormalStarting();
       const t = ++turn.current;
       if (!services) return;
       const hadSession = services.auth.status().state !== 'signed-out';
@@ -278,8 +434,13 @@ export function AccountProvider({
       clear();
       setError(message);
       setBusy(null);
-      const { revoked } = await revocation;
-      if (hadSession && !revoked && message === null && live(t)) setError(notRevoked(service));
+      const { revoked, forgotten } = await revocation;
+      if (!live(t)) return;
+      if (forgotten === false) {
+        setError(`${message ?? (hadSession && !revoked ? notRevoked(service) : 'Sudah keluar di perangkat ini.')} ${NOT_FORGOTTEN}`);
+      } else if (hadSession && !revoked && message === null) {
+        setError(notRevoked(service));
+      }
     }
 
     /**
@@ -297,7 +458,8 @@ export function AccountProvider({
 
     async function sync(link: LinkChoice | null): Promise<void> {
       const j = journal.current;
-      if (!j || !services) return;
+      // Nothing ordinary starts while an account data operation is under way.
+      if (!j || !services || dataOp.current || deletionBlocked()) return;
       const t = turn.current;
       setBusy('sync');
       setError(null);
@@ -305,8 +467,8 @@ export function AccountProvider({
       let status: string;
       try {
         await ensureFresh();
-        const report = await j.sync(services.conn, link);
-        const prefs = await j.pushPreferences(services.conn);
+        const report = await j.sync(connectionFor(t), link);
+        const prefs = await j.pushPreferences(connectionFor(t));
         const differs = report.conflicts.length > 0 && report.conflicts.length === report.pending;
         status =
           report.pending > 0
@@ -323,7 +485,7 @@ export function AccountProvider({
       }
       let savedAnswers = connectedRef.current?.savedAnswers ?? 0;
       try {
-        savedAnswers = (await j.readProgress(services.conn)).events;
+        savedAnswers = (await j.readProgress(connectionFor(t))).events;
       } catch {
         // Not linked yet, or unreachable: the last known count stays.
       }
@@ -340,14 +502,70 @@ export function AccountProvider({
      * of the earlier account work stays shown. Null when another turn started meanwhile.
      */
     async function beginSignIn(): Promise<number | null> {
+      normalWork.current = true;
+      recoveryNormalStarting();
       const t = ++turn.current;
       await appRef.current.selectDataset(null);
       if (!live(t)) return null;
       close();
       clear();
+      setDeletionRecord(null);
       setError(null);
       setBusy('auth');
       return t;
+    }
+
+    function installDeletion(bound: Binding, t: number, initialProof?: AccountDeletion): boolean {
+      if (!services) return false;
+      const o = bound.opened;
+      if (o.access !== 'owner' || !o.eraseAccountData) return false;
+      const current = () => binding.current === bound && opened.current === o && bound.deletionTurn === turn.current;
+      deletionController.current = createAccountDeletionController({
+        initialProof, auth: services.auth, session: services.session, expected: { accountId: bound.accountId, uid: bound.uid },
+        controls: createAccountControls(services.api, bound.accountId), isCurrent: current,
+        onState: (state) => { if (current()) setDeletionRecord({ key: `signin-${t}`, state }); },
+        quiesce: async () => {
+          deletionQuiescing.current = true;
+          // Capture/start registered pauses before a dataset change can unmount and unregister the session route.
+          const learning = runCheckpoints();
+          await appRef.current.selectDataset(null);
+          if (!current()) throw new AuthError('superseded');
+          setConnected(null); setProfiles([]); setGuestCopy(null); setPrefsConflict(null);
+          await Promise.allSettled([...(learning ? [learning] : []), ...ordinaryTasks.current]);
+          if (!current()) throw new AuthError('superseded');
+        },
+        erase: () => o.eraseAccountData!(bound.accountId),
+      });
+      setDeletionRecord({ key: `signin-${t}`, state: deletionController.current.state() });
+      return true;
+    }
+
+    /** A fresh authenticated deletion-route proof replaces /me only for a deleted account, never for ordinary learning. */
+    async function resumeDeleted(t: number, identity: AuthIdentity, restoredFor: string | null): Promise<void> {
+      if (!services) return;
+      const started = services.auth.status();
+      if (!live(t) || started.state !== 'signed-in' || started.identity.uid !== identity.uid) throw new AuthError('superseded');
+      const proof = await services.auth.authorized((token, signal) => discoverOwnAccountDeletion(services.api, token, signal));
+      const now = services.auth.status();
+      if (!live(t) || now.state !== 'signed-in' || now.session !== started.session || now.identity.uid !== identity.uid) throw new AuthError('superseded');
+      if (!proof) {
+        setDeletionRecord({ key: `signin-${t}`, state: { phase: 'unknown', local: 'kept', busy: false, issue: 'unavailable' } });
+        throw new ApiError(410, 'account_deleted');
+      }
+      if (restoredFor !== null && restoredFor !== proof.account_id) throw new AuthError('superseded');
+      const o = await openDataset(accountNamespace(proof.account_id));
+      if (!live(t)) { o.release(); return; }
+      opened.current = o; journal.current = null;
+      const bound: Binding = { accountId: proof.account_id, uid: identity.uid, opened: o, ready: true };
+      binding.current = bound;
+      deletionQuiescing.current = true;
+      if (!installDeletion(bound, t, proof)) {
+        setDeletionRecord({ key: `signin-${t}`, state: { phase: proof.status === 'completed' ? 'completed' : 'pending', local: 'kept', busy: false, proof } });
+        setBusy(null); return;
+      }
+      setAccount({ key: `signin-${t}`, label: identity.email });
+      // Only the freshly authenticated own proof authorizes this captured local cleanup; no destructive POST is repeated.
+      await deletionAction('retryCleanup');
     }
 
     /**
@@ -356,11 +574,29 @@ export function AccountProvider({
      * else of it. Linked before (or its first link on its way): learning continues in the account's dataset. Otherwise the
      * adult profile, its consent and any guest copy wait for the learner's explicit choices: no sign-in, a Google one
      * included, consents, creates a profile or copies guest data by itself. Rejects as the verification or opening does.
+     * With `save`, a ticked email sign-in is remembered once verified, before anything opens. If the vault refuses, the
+     * sign-in goes on unremembered, with a fixed message. With `restoredFor`, a restored sign-in must verify as exactly
+     * that account. If not, it is signed out (forgotten and revoked) before either account's dataset opens.
      */
-    async function afterSignIn(t: number, identity: AuthIdentity): Promise<void> {
+    async function afterSignIn(t: number, identity: AuthIdentity, { save = false, restoredFor = null }: { save?: boolean; restoredFor?: string | null } = {}): Promise<void> {
       if (!services) return;
-      const verified = await services.session.verify();
+      let verified;
+      try { verified = await services.session.verify(); }
+      catch (error) {
+        if (error instanceof ApiError && error.status === 410 && error.code === 'account_deleted') { await resumeDeleted(t, identity, restoredFor); return; }
+        throw error;
+      }
       if (!live(t)) return;
+      if (restoredFor !== null && verified.accountId !== restoredFor) {
+        await signOut(REMEMBERED_MISMATCH);
+        return;
+      }
+      let notSaved = false;
+      if (save) {
+        const remembered = services.auth.remembered;
+        notSaved = !(remembered && (await remembered.save(verified.accountId)));
+        if (!live(t)) return;
+      }
       // The dataset is named by the verified account ID only.
       const o = await openDataset(verified.namespace);
       if (!live(t)) {
@@ -375,6 +611,9 @@ export function AccountProvider({
         if (!live(t)) return;
         journal.current = j;
       }
+      // The view is published for this verified account only: its own ID and provider user, and its own handle.
+      const bound: Binding = { accountId: verified.accountId, uid: verified.uid, opened: o, ready: false };
+      binding.current = bound;
       setAccount({ key: `signin-${t}`, label: identity.email });
       const view = j?.view();
       if (!j || !view || view.profileId !== null || view.sources.some((s) => s.frozen !== null)) {
@@ -391,7 +630,10 @@ export function AccountProvider({
         setGuestCopy(answers > 0 ? { answers } : null);
         setProfiles(verified.profiles.map((p) => ({ id: p.profileId, label: `${PROFILE_LABEL} · ${p.highSeq} jawaban tercatat di akun` })));
       }
+      bound.ready = true;
+      installDeletion(bound, t);
       setBusy(null);
+      if (notSaved) setError(REMEMBER_NOT_SAVED);
     }
 
     /** The sign-in of turn `t` failed: a session it made is signed out, nothing of it stays, and a fixed message says why. */
@@ -404,14 +646,57 @@ export function AccountProvider({
       setBusy(null);
     }
 
-    /** A password sign-in to a prepared account: the provider has sign-up off, so every submit signs in. */
-    async function submit({ email, password }: { mode: AccountMode; email: string; password: string }): Promise<void> {
+    /**
+     * A password sign-in to a prepared account: the provider has sign-up off, so every submit signs in. It is remembered
+     * only when the learner ticked the choice.
+     */
+    async function submit({ email, password, remember = false }: { mode: AccountMode; email: string; password: string; remember?: boolean }): Promise<void> {
       if (!services) return;
       const t = await beginSignIn();
       if (t === null) return;
       try {
-        await afterSignIn(t, await services.auth.signIn(email, password));
+        await afterSignIn(t, await services.auth.signIn(email, password), { save: remember });
       } catch (e) {
+        signInFailed(t, e);
+      }
+    }
+
+    /**
+     * A new run, once: a remembered email sign-in is restored through one refresh grant. No turn starts until it is,
+     * so the learner may type meanwhile, and a sign-in they start wins. It then continues as after a password sign-in,
+     * provided the account API verifies the account it was remembered for.
+     * - Unreachable: the record stays for a later run.
+     * - Refused or no longer valid: the record is gone, and a fixed message says the session no longer counts.
+     */
+    async function restoreRemembered(): Promise<void> {
+      const remembered = services?.auth.remembered;
+      if (!remembered) return;
+      normalWork.current = true;
+      const started = turn.current;
+      let restoredSignIn: { identity: AuthIdentity; accountId: string } | null;
+      try {
+        restoredSignIn = await remembered.restore();
+      } catch (e) {
+        if (!live(started) || (e instanceof AuthError && (e.code === 'signed_out' || e.code === 'superseded'))) return;
+        setError(e instanceof AuthError && e.code === 'network' ? rememberedOffline(service) : REMEMBERED_ENDED);
+        return;
+      }
+      if (!restoredSignIn || !live(started)) return;
+      const t = await beginSignIn();
+      if (t === null) return;
+      try {
+        await afterSignIn(t, restoredSignIn.identity, { restoredFor: restoredSignIn.accountId });
+      } catch (e) {
+        if (live(t) && e instanceof ApiError && (e.code === 'network' || e.code === 'aborted')) {
+          // The account API is unreachable for now: the restored session is let go without a logout, its record kept.
+          await remembered.release();
+          if (!live(t)) return;
+          close();
+          clear();
+          setError(rememberedOffline(service));
+          setBusy(null);
+          return;
+        }
         signInFailed(t, e);
       }
     }
@@ -485,7 +770,7 @@ export function AccountProvider({
       const o = opened.current;
       const j = journal.current;
       const guest = appRef.current.guestStore as (Store & { readRaw?: () => Promise<RawDataset | null> }) | null;
-      if (!o || !j || !guest) return;
+      if (!o || !j || !guest || dataOp.current || deletionBlocked()) return;
       const t = turn.current;
       setBusy('guest-copy');
       setError(null);
@@ -510,6 +795,7 @@ export function AccountProvider({
     }
 
     function skipGuest(): void {
+      if (dataOp.current || deletionBlocked()) return;
       setGuestCopy((c) => ({ answers: c?.answers ?? 0, result: 'Data tamu tidak disalin. Data tamu tetap tersimpan di perangkat ini.' }));
     }
 
@@ -532,7 +818,7 @@ export function AccountProvider({
     async function createProfile(): Promise<void> {
       const o = opened.current;
       const j = journal.current;
-      if (!o || !j || !services) return;
+      if (!o || !j || !services || dataOp.current || deletionBlocked()) return;
       const t = turn.current;
       setBusy('profile');
       setError(null);
@@ -556,7 +842,7 @@ export function AccountProvider({
     async function linkProfile(profileId: string): Promise<void> {
       const o = opened.current;
       const j = journal.current;
-      if (!o || !j || !services) return;
+      if (!o || !j || !services || dataOp.current || deletionBlocked()) return;
       const t = turn.current;
       setBusy('profile');
       setError(null);
@@ -565,6 +851,7 @@ export function AccountProvider({
           // A device joining one of the account's adult profiles records that profile's consent and settings locally.
           if (!isCanonicalUuid(profileId)) throw new Error('not a profile ID');
           await ensureFresh();
+          if (!live(t) || dataOp.current || deletionBlocked()) throw new AuthError('superseded');
           const reply = await services.auth.authorized(async (token, signal) => {
             const r = await services.api.request({ method: 'GET', path: `/v1/profiles/${profileId}`, token, signal });
             if (r.status === 401) throw new ApiError(401, 'unauthenticated'); // the auth layer reports it as expired
@@ -603,7 +890,7 @@ export function AccountProvider({
 
     async function resolvePrefs(choice: 'keep-local' | 'use-server'): Promise<void> {
       const j = journal.current;
-      if (!j) return;
+      if (!j || dataOp.current || deletionBlocked()) return;
       const t = turn.current;
       setBusy('prefs');
       setError(null);
@@ -629,35 +916,136 @@ export function AccountProvider({
       }
     }
 
-    return { signOut, sync, submit, continueWithGoogle, resumeGoogle, copyGuest, skipGuest, createProfile, linkProfile, resolvePrefs };
-  }, [services, service, openDataset, setConnected]);
+    /**
+     * The verified account's server export after a fresh password sign-in, as the server's exact text: one data operation
+     * at a time, for the account this view was published for only, and refused before anything is sent otherwise. It
+     * starts a turn of its own, so earlier sync or preference work publishes nothing more, and a newer sign-in or a
+     * sign-out drops it. A refused password or an unreachable service rejects as it did, and the view and its data stay.
+     * No additional explicit sign-out, remembering, erasure, copy or sync is requested; the server's recent-password check decides.
+     */
+    async function exportData(password: string): Promise<{ accountId: string; json: string }> {
+      const bound = binding.current;
+      if (!services || !bound || opened.current !== bound.opened) throw new AuthError('signed_out');
+      if (!bound.ready || dataOp.current || deletionBlocked()) throw new Error('Another account request is still on its way; nothing was sent.');
+      const op = {};
+      dataOp.current = op;
+      normalWork.current = true;
+      recoveryNormalStarting();
+      const t = ++turn.current;
+      /** This very view is still shown, in this operation's own turn. */
+      const ownView = () => live(t) && binding.current === bound && opened.current === bound.opened;
+      const isCurrent = () => ownView() && dataOp.current === op;
+      /** The sign-in in use belongs to another provider user, or verifies as another account. */
+      const ownerChanged = () => {
+        const now = services.auth.status();
+        const verifiedNow = services.session.current();
+        return (now.state !== 'signed-out' && now.identity.uid !== bound.uid) || (verifiedNow !== null && verifiedNow.accountId !== bound.accountId);
+      };
+      setBusy('data');
+      setError(null);
+      try {
+        const result = await exportOwnAccountData({
+          auth: services.auth,
+          session: services.session,
+          expected: { accountId: bound.accountId, uid: bound.uid },
+          controls: createAccountControls(services.api, bound.accountId),
+          password,
+          isCurrent,
+        });
+        if (!isCurrent()) throw new AuthError('superseded');
+        return result;
+      } catch (e) {
+        // This view still shown, but no longer its owner's sign-in: it fails closed. Learning returns to the guest's
+        // dataset and only this view's own handle is let go; the session is left as it is, and a newer sign-in's view,
+        // handle and session are never touched.
+        if (ownView() && ownerChanged()) {
+          await appRef.current.selectDataset(null);
+          if (ownView()) {
+            close();
+            clear();
+          }
+        }
+        throw e;
+      } finally {
+        // Only this operation's own turn ends what it started: a newer sign-in or a sign-out owns the panel from then on.
+        if (dataOp.current === op) dataOp.current = null;
+        if (live(t)) setBusy(null);
+      }
+    }
 
-  // Leaving the app run (unmount) drops all account work and its session (which no later run could use), and lets go of
-  // the account dataset; nothing is deleted.
+    async function deletionAction(method: 'remove' | 'check' | 'retryIdentity' | 'retryCleanup', password = '', confirmed = false): Promise<void> {
+      const bound = binding.current; const controller = deletionController.current;
+      if (!services || !bound?.ready || !controller || opened.current !== bound.opened) throw new AuthError('signed_out');
+      if (dataOp.current) throw new Error('Account operation already running');
+      const op = {}; dataOp.current = op; const t = ++turn.current; bound.deletionTurn = t;
+      normalWork.current = true; recoveryNormalStarting(); setBusy('data'); setError(null);
+      try {
+        if (method === 'remove') await controller.remove(password, confirmed);
+        else if (method === 'retryIdentity') await controller.retryIdentity(password, confirmed);
+        else await controller[method]();
+        const ownView = () => live(t) && binding.current === bound && opened.current === bound.opened;
+        const now = services.auth.status(); const verified = services.session.current();
+        if (ownView() && ((now.state !== 'signed-out' && now.identity.uid !== bound.uid) || (verified !== null && verified.accountId !== bound.accountId))) {
+          await appRef.current.selectDataset(null);
+          // Never close, clear or revoke a replacement account that took over during the await.
+          if (ownView()) { close(); clear(); }
+        }
+      } finally {
+        if (dataOp.current === op) dataOp.current = null;
+        if (live(t)) { if (controller.state().phase === 'failed') deletionQuiescing.current = false; setBusy(null); }
+      }
+    }
+    return { signOut, sync, submit, restoreRemembered, continueWithGoogle, resumeGoogle, copyGuest, skipGuest, createProfile, linkProfile, resolvePrefs, exportData, deletionAction };
+  }, [services, service, openDataset, setConnected, recoveryNormalStarting]);
+  const dataControls = useMemo<AccountDataControls>(() => ({ exportData: actions.exportData }), [actions]);
+
+  // Leaving the app run (unmount) drops all account work and lets go of the account dataset; nothing is deleted. Its
+  // session is signed out, since no later run could use it. A remembered email sign-in is the exception: it is let go
+  // without a logout, and its record is kept for the next run. With recovery on, a run that did no normal sign-in work
+  // leaves the Auth adapter alone, so a remembered sign-in or pending Google attempt it never touched stays as it was
+  // (recovery ends its own session itself).
   useEffect(
     () => () => {
       turn.current += 1;
-      void services?.auth.signOut();
+      binding.current = null;
+      deletionController.current = null;
+      deletionQuiescing.current = false;
+      dataOp.current = null;
+      const auth = services?.auth;
+      if (!recoverySetup || normalWork.current) void (auth?.remembered ? auth.remembered.release() : auth?.signOut());
       const o = opened.current;
       opened.current = null;
       journal.current = null;
       o?.release();
     },
-    [services]
+    [services, recoverySetup]
   );
+
+  // Both automatic startups below wait until recovery knows its launch link, and stay off once one came (or could not be read).
+  const { allowNormalStartup, canAutoStart } = recoveryControl;
 
   // A fresh web page resumes the Google callback it was loaded with, once, after the app has opened the guest's dataset.
   useEffect(() => {
-    if (!app.ready || resumed.current) return;
+    if (!app.ready || !allowNormalStartup || !canAutoStart() || resumed.current) return;
     resumed.current = true;
     void actions.resumeGoogle();
-  }, [app.ready, actions]);
+  }, [app.ready, allowNormalStartup, canAutoStart, actions]);
+
+  // A new run restores a remembered email sign-in, once, after the app has opened the guest's dataset.
+  useEffect(() => {
+    if (!app.ready || !allowNormalStartup || !canAutoStart() || restored.current) return;
+    restored.current = true;
+    void actions.restoreRemembered();
+  }, [app.ready, allowNormalStartup, canAutoStart, actions]);
 
   const value: AccountContextValue = services
     ? {
         enabled: true,
         signedIn: account !== null,
         connected: connected !== null,
+        // Only for a signed-in, verified account: its own server data, never the guest's.
+        ...(account !== null && !['unknown', 'pending', 'completed'].includes(deletionRecord?.state.phase ?? 'idle') ? { dataControls } : {}),
+        ...(deletionRecord ? { deletion: { ...deletionRecord, available: account !== null, remove: (password: string, confirmed: boolean) => actions.deletionAction('remove', password, confirmed), check: () => actions.deletionAction('check'), retryIdentity: (password: string, confirmed: boolean) => actions.deletionAction('retryIdentity', password, confirmed), retryCleanup: () => actions.deletionAction('retryCleanup') } } : {}),
         panel: {
           account,
           busy,
@@ -668,16 +1056,20 @@ export function AccountProvider({
           prefsConflict,
           signUp: false,
           environment,
+          // Only in a remembering build with a secure vault: the choice to remember an email sign-in, never a Google one.
+          ...(services.auth.remembered ? { rememberChoice: true } : {}),
+          // Only in a build that turns recovery on, with a runtime for its links: its own flow, never a normal sign-in.
+          ...(recoveryControl.panel ? { recovery: recoveryControl.panel } : {}),
           onSubmit: (request) => void actions.submit(request),
           // Only where the build turns Google on, with the account service, and the platform can run its browser and store.
           onGoogle: services.google && services.auth.google ? () => void actions.continueWithGoogle() : undefined,
-          onGuestCopy: () => void actions.copyGuest(),
+          onGuestCopy: () => track(actions.copyGuest()),
           onGuestSkip: actions.skipGuest,
-          onLinkProfile: (id) => void actions.linkProfile(id),
-          onCreateProfile: () => void actions.createProfile(),
-          onSyncNow: () => void actions.sync(null),
-          onKeepLocalPrefs: () => void actions.resolvePrefs('keep-local'),
-          onUseServerPrefs: () => void actions.resolvePrefs('use-server'),
+          onLinkProfile: (id) => track(actions.linkProfile(id)),
+          onCreateProfile: () => track(actions.createProfile()),
+          onSyncNow: () => track(actions.sync(null)),
+          onKeepLocalPrefs: () => track(actions.resolvePrefs('keep-local')),
+          onUseServerPrefs: () => track(actions.resolvePrefs('use-server')),
           onSignOut: () => void actions.signOut(),
         },
       }

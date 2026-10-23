@@ -26,9 +26,9 @@ export type DatasetErrorCode =
   | 'invalid_account'
   /** No explicit, affirmative consent to copy guest data. */
   | 'consent_required'
-  /** The guest dataset is never a copy target. */
+  /** The guest dataset is never a copy target, and never erased as an account's. */
   | 'guest_read_only'
-  /** Only guest data may be copied into an account: accounts are never merged. */
+  /** Only guest data may be copied into an account: accounts are never merged. An account erases only its own dataset. */
   | 'cross_account';
 
 export class DatasetError extends Error {
@@ -140,19 +140,59 @@ function journalStorage(namespace: Namespace, store: () => RawCapableStore): Jou
   };
 }
 
+/** A learning store as far as erasing its dataset is concerned. */
+interface ErasableStore {
+  /** Removes the dataset from storage with its side documents: at least those named in `docs`. */
+  erase(docs: readonly string[]): Promise<void>;
+}
+
+/**
+ * The erase of an opened dataset, through its current store. Refused before anything is touched for the guest
+ * dataset, for an ID that is not a canonical account UUID, and for every account but the one whose storage key,
+ * writer lock and SQLite file are exactly this dataset's.
+ */
+function accountErase(namespace: Namespace, store: () => ErasableStore): (accountId: string) => Promise<void> {
+  const ns: Namespace = Object.freeze({ ...namespace });
+  return async (accountId) => {
+    if (isGuest(ns)) throw new DatasetError('guest_read_only');
+    const requested = accountNamespace(accountId);
+    if (requested.kvKey !== ns.kvKey || requested.writerLock !== ns.writerLock || requested.sqliteFile !== ns.sqliteFile) {
+      throw new DatasetError('cross_account');
+    }
+    return store().erase([JOURNAL_DOC]);
+  };
+}
+
 export interface OpenedKvDataset extends OpenedWebStore {
   /** Writes through this tab's current learning store: a read-only or released store refuses here too. */
   raw: RawTarget;
   /** The sync journal's document, under the same writer as `raw`. */
   journal: JournalStorage;
+  /**
+   * Erases the dataset of its own account `accountId` from this browser: its main blob and sync journal are removed
+   * from storage through this tab's current writable store (the one opened as owner, or the one a takeover returned).
+   * Once the erase begins, that store's cached learning state is cleared and the store is retired: it writes nothing
+   * more, even if the erase then fails. No other copy in memory is cleared: neither `store` after a takeover nor any
+   * other tab's. Refused for the guest dataset, an invalid ID or another account, and (like `raw`) by a read-only or
+   * released store, all before anything is touched. Resolves only once both are gone; a storage failure part-way
+   * rejects, with nothing rolled back.
+   */
+  eraseAccountData(accountId: string): Promise<void>;
 }
 
 /** Opens a web dataset with its own writer lock, under the same single-writer rules as the guest store. */
 export async function openKvDataset({ kv, locks, namespace }: { kv: KvBackend; locks: LockManagerLike | undefined; namespace: Namespace }): Promise<OpenedKvDataset> {
-  const opened = await openWebStore({ kv, locks, key: namespace.kvKey, lock: namespace.writerLock });
+  // Copied before anything is awaited: a later change to the caller's namespace redirects none of this dataset's surfaces.
+  const ns: Namespace = Object.freeze({ ...namespace });
+  const opened = await openWebStore({ kv, locks, key: ns.kvKey, lock: ns.writerLock });
   // This tab's current store: the one opened now, or the one a takeover makes writable later.
   let current: KvStore = opened.store;
-  const dataset: OpenedKvDataset = { ...opened, raw: rawTarget(namespace, () => current), journal: journalStorage(namespace, () => current) };
+  const dataset: OpenedKvDataset = {
+    ...opened,
+    raw: rawTarget(ns, () => current),
+    journal: journalStorage(ns, () => current),
+    eraseAccountData: accountErase(ns, () => current),
+  };
   if (opened.whenWritable) {
     dataset.whenWritable = async () => {
       const store = await opened.whenWritable!();
@@ -168,6 +208,15 @@ export interface OpenedSqlDataset {
   raw: RawTarget;
   /** The sync journal's document, in the same database and queue as `store`. */
   journal: JournalStorage;
+  /**
+   * Erases the dataset of its own account `accountId` from this database, through `store` and its queue: in one
+   * transaction, its learning rows, all metadata but the schema version, and its side documents, the sync journal
+   * among them. Once the erase begins, `store` is retired: it refuses every write even if the erase then fails, while
+   * reads keep working and the erase may be retried. Refused for the guest dataset, an invalid ID or another account,
+   * before anything is touched. Resolves only once none of those rows is left; a failure rejects and is rolled back.
+   * Rows are deleted, not the database file.
+   */
+  eraseAccountData(accountId: string): Promise<void>;
 }
 
 /** An account dataset opened for this app run (web or native), with its writer state and its release. */
@@ -179,13 +228,22 @@ export interface OpenedAccountDataset {
   /** Why the dataset is read-only here (shown to the learner). */
   reason?: string;
   release(): void;
+  /** Erases this account's own dataset from this device (see OpenedKvDataset and OpenedSqlDataset); absent where unsupported. */
+  eraseAccountData?(accountId: string): Promise<void>;
 }
 
 /** Opens a native dataset's SQLite database as a learning store with its raw surface (one store, one queue). */
 export async function openSqlDataset(db: SqlDb, namespace: Namespace): Promise<OpenedSqlDataset> {
+  // Copied before anything is awaited, as for a web dataset: a later change to the caller's namespace redirects nothing.
+  const ns: Namespace = Object.freeze({ ...namespace });
   const store = new SqlStore(db);
   await store.init();
-  return { store, raw: rawTarget(namespace, () => store), journal: journalStorage(namespace, () => store) };
+  return {
+    store,
+    raw: rawTarget(ns, () => store),
+    journal: journalStorage(ns, () => store),
+    eraseAccountData: accountErase(ns, () => store),
+  };
 }
 
 /**

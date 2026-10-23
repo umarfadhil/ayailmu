@@ -55,13 +55,34 @@ export async function readSqlRaw(db: SqlDb): Promise<RawDataset | null> {
 
 const asText = (value: unknown): string => (typeof value === 'string' ? value : '');
 
+/** Why a retired store refuses a write: an erase began on it (see SqlStore.erase), whether or not it completed. */
+const RETIRED = 'Storage retired: an account-data erase began in this store instance, so it refuses every further write.';
+
 /** SQLite-backed store. Answers carry a `synced` flag for the future upload queue (no backend yet). */
 export class SqlStore implements Store {
   private enqueue = createSerialQueue();
+  /** Set once an erase begins here: every later write, and init(), is refused, even if that erase fails. */
+  private retired = false;
 
   constructor(private db: SqlDb) {}
 
-  async init(): Promise<void> {
+  /** Queues a write, refused when its turn comes if an erase has begun here by then (see erase). */
+  private write<T>(task: () => Promise<T>): Promise<T> {
+    return this.enqueue(async () => {
+      if (this.retired) throw new Error(RETIRED);
+      return task();
+    });
+  }
+
+  /**
+   * Checks the stored data and prepares the schema, as one operation in the same queue as every write: after the
+   * writes already queued here, and refused when its turn comes if an erase has begun here by then.
+   */
+  init(): Promise<void> {
+    return this.write(() => this.initialize());
+  }
+
+  private async initialize(): Promise<void> {
     // Refuse data from a newer app version before writing anything.
     const hasMeta = await this.db.all<{ name: string }>(`SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'meta'`);
     if (hasMeta.length) {
@@ -107,7 +128,7 @@ export class SqlStore implements Store {
   }
 
   saveLearner(learner: Learner): Promise<void> {
-    return this.enqueue(() =>
+    return this.write(() =>
       this.db.run('INSERT OR REPLACE INTO learner (id, json) VALUES (1, ?)', [JSON.stringify(learner)])
     );
   }
@@ -118,7 +139,7 @@ export class SqlStore implements Store {
   }
 
   recordAnswer(record: AnswerRecord, snapshot: Snapshot | null): Promise<void> {
-    return this.enqueue(() =>
+    return this.write(() =>
       this.db.transaction(async () => {
         const existing = await this.db.all<{ one: number }>('SELECT 1 AS one FROM answers WHERE answer_id = ?', [record.answer_id]);
         if (existing.length) return; // replayed duplicate: no new event, no snapshot rewind
@@ -146,7 +167,7 @@ export class SqlStore implements Store {
   }
 
   archiveSnapshot(reason: string, replacement: Snapshot | null, notice?: string): Promise<boolean> {
-    return this.enqueue(async () => {
+    return this.write(async () => {
       let archived = false;
       await this.db.transaction(async () => {
         const raw = await this.loadSnapshotRaw();
@@ -174,7 +195,7 @@ export class SqlStore implements Store {
   }
 
   setMeta(key: string, value: string | null): Promise<void> {
-    return this.enqueue(() =>
+    return this.write(() =>
       value === null
         ? this.db.run('DELETE FROM meta WHERE key = ?', [key])
         : this.db.run('INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)', [key, value])
@@ -182,7 +203,7 @@ export class SqlStore implements Store {
   }
 
   saveSnapshot(snapshot: Snapshot | null): Promise<void> {
-    return this.enqueue(() => this.writeSnapshot(snapshot));
+    return this.write(() => this.writeSnapshot(snapshot));
   }
 
   private writeSnapshot(snapshot: Snapshot | null): Promise<void> {
@@ -203,7 +224,7 @@ export class SqlStore implements Store {
   }
 
   addReport(report: ReportRecord): Promise<void> {
-    return this.enqueue(() =>
+    return this.write(() =>
       this.db.run('INSERT OR IGNORE INTO reports (report_id, json) VALUES (?, ?)', [report.report_id, JSON.stringify(report)])
     );
   }
@@ -214,7 +235,7 @@ export class SqlStore implements Store {
   }
 
   reset(): Promise<void> {
-    return this.enqueue(() =>
+    return this.write(() =>
       this.db.transaction(async () => {
         for (const table of ['learner', 'answers', 'snapshot', 'reports']) {
           await this.db.run(`DELETE FROM ${table}`);
@@ -222,6 +243,33 @@ export class SqlStore implements Store {
         await this.db.run(`DELETE FROM meta WHERE key != 'schema_version'`);
       })
     );
+  }
+
+  /**
+   * Erases this dataset from its database, through the same queue as every write and in one transaction: every
+   * learner, answer, snapshot and report row, all metadata but the schema version, and every side document, which
+   * reset() leaves alone. When its turn comes this instance is retired: every later write, and init(), is refused even
+   * if the erase then fails, while reads keep working and the erase itself may be retried. Resolves only once a check
+   * inside the transaction finds none of those rows left; a leftover or a failed statement rejects, and the transaction
+   * rolls back. Rows are deleted, not the database file, and nothing is stored to mark the database: a store opened on
+   * it later is not retired.
+   */
+  erase(): Promise<void> {
+    return this.enqueue(async () => {
+      this.retired = true;
+      await this.db.transaction(async () => {
+        const hasDocs = (await this.db.all<{ name: string }>(`SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'docs'`)).length > 0;
+        const tables = ['learner', 'answers', 'snapshot', 'reports', ...(hasDocs ? ['docs'] : [])];
+        for (const table of tables) await this.db.run(`DELETE FROM ${table}`);
+        await this.db.run(`DELETE FROM meta WHERE key != 'schema_version'`);
+        // Checked, not assumed, before the transaction commits: no row of this dataset is left.
+        let left = 0;
+        for (const from of [...tables, `meta WHERE key != 'schema_version'`]) {
+          left += Number((await this.db.all<{ n: number }>(`SELECT COUNT(*) AS n FROM ${from}`))[0]?.n ?? 0);
+        }
+        if (left) throw new Error(`Storage was not erased: ${left} stored rows remained after deletion.`);
+      });
+    });
   }
 
   /** Every record exactly as stored (see readSqlRaw), after the writes already queued here. */
@@ -241,7 +289,7 @@ export class SqlStore implements Store {
 
   /** Replaces a side document in one statement, through the same queue as every other write. */
   saveDoc(name: string, text: string): Promise<void> {
-    return this.enqueue(async () => {
+    return this.write(async () => {
       await this.db.exec('CREATE TABLE IF NOT EXISTS docs (name TEXT PRIMARY KEY NOT NULL, json TEXT NOT NULL);');
       await this.db.run('INSERT OR REPLACE INTO docs (name, json) VALUES (?, ?)', [name, text]);
     });
@@ -259,7 +307,7 @@ export class SqlStore implements Store {
     } catch (e) {
       return Promise.reject(e);
     }
-    return this.enqueue(async () => {
+    return this.write(async () => {
       const haveAnswers = new Set((await this.db.all<{ answer_id: string }>('SELECT answer_id FROM answers')).map((r) => r.answer_id));
       const haveReports = new Set((await this.db.all<{ report_id: string }>('SELECT report_id FROM reports')).map((r) => r.report_id));
       const haveMeta = new Set((await this.db.all<{ key: string }>('SELECT key FROM meta')).map((r) => r.key));
