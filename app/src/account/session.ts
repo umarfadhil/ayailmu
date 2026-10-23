@@ -2,7 +2,7 @@
 // learner ID is never replaced by, or derived from, an account or profile ID. Local account datasets are
 // named by the verified account ID (see datasets.ts), never by an address or an earlier session.
 import { accountNamespace, type Namespace } from '@/account/datasets';
-import type { ApiClient, ProfileSummary } from '@/api/client';
+import type { AccountControls, ApiClient, ProfileSummary } from '@/api/client';
 import { AuthError, type AccountAuth, type AuthStatus, type SessionAuth } from '@/auth/types';
 
 export interface VerifiedAccount {
@@ -120,4 +120,47 @@ export async function reauthenticateOwnAccount({
     throw refusal(now);
   }
   return account;
+}
+
+/**
+ * The initial export action for the signed-in account's server data, as orchestration only: reauthenticateOwnAccount's
+ * password step-up once, then GET /v1/me/export once through one authorized call. It returns the export, the server's
+ * exact text, only while it is still the caller's turn (`isCurrent`, owned by the caller), the session the export was
+ * asked in is still current and the reply is `expected`'s own; otherwise it refuses with an AuthError. A failed step-up
+ * or export rejects unchanged. The server's authorization and recent-password check stay authoritative, and the result
+ * is the server's copy only: guest data and unsent records stay on the device. No deletion is reconciled through this
+ * or /v1/me. Settings, delivering the file and a controller are still to come.
+ */
+export async function exportOwnAccountData({
+  auth,
+  session,
+  expected,
+  controls,
+  password,
+  isCurrent,
+}: {
+  auth: Pick<AccountAuth, 'status' | 'signIn' | 'authorized'>;
+  session: Pick<AccountSession, 'verify'>;
+  expected: Pick<VerifiedAccount, 'accountId' | 'uid'>;
+  controls: Pick<AccountControls, 'exportData'>;
+  password: string;
+  isCurrent: () => boolean;
+}): Promise<{ accountId: string; json: string }> {
+  // Bound before anything is awaited: the caller changing `expected` afterwards redirects nothing.
+  const { accountId, uid } = expected;
+  const refusal = (status: AuthStatus) => new AuthError(status.state === 'signed-out' ? 'signed_out' : 'superseded');
+  await reauthenticateOwnAccount({ auth, session, expected: { accountId, uid }, password, isCurrent });
+
+  // Still the caller's turn and the expected account's sign-in: the export belongs to this session only.
+  const started = auth.status();
+  if (!isCurrent() || started.state !== 'signed-in' || started.identity.uid !== uid) throw refusal(started);
+
+  const reply = await auth.authorized((token, signal) => controls.exportData(token, signal));
+  // Still the caller's turn in that same session, and the expected account's own export.
+  const now = auth.status();
+  if (!isCurrent() || now.state !== 'signed-in' || now.session !== started.session || now.identity.uid !== uid || reply.accountId !== accountId) {
+    throw refusal(now);
+  }
+  // The server's own text, never parsed or re-serialized.
+  return { accountId, json: reply.json };
 }
