@@ -13,7 +13,7 @@ import { colors, fonts, radius, typography } from '@/ui/theme';
 
 export type AccountMode = 'create' | 'signin';
 /** The account action in progress: its controls are disabled and the wait is announced. */
-export type AccountBusy = 'auth' | 'guest-copy' | 'profile' | 'sync' | 'prefs' | 'signout';
+export type AccountBusy = 'auth' | 'guest-copy' | 'profile' | 'sync' | 'prefs' | 'signout' | 'data';
 
 /** One of the account's own profiles: an opaque id (a view key only) and a caller-worded label with no personal details. */
 export interface AccountProfileChoice {
@@ -111,6 +111,7 @@ const BUSY: Record<Exclude<AccountBusy, 'auth'>, string> = {
   sync: 'Sedang menyinkronkan…',
   prefs: 'Sedang menerapkan pilihan pengaturan…',
   signout: 'Sedang keluar dari akun…',
+  data: 'Menyiapkan data akun…',
 };
 
 /** The wait announced for `busy`; signing in names the account. */

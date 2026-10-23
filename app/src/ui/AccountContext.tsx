@@ -19,10 +19,10 @@ import { loadGoogleConfig } from '@/account/googleConfig';
 import { isCanonicalUuid } from '@/account/ids';
 import { openAccountDataset } from '@/account/openAccountDataset';
 import { rememberDeviceEnabled } from '@/account/rememberConfig';
-import { createAccountSession } from '@/account/session';
+import { createAccountSession, exportOwnAccountData } from '@/account/session';
 import { STAGING } from '@/account/staging';
 import { loadSupabaseConfig } from '@/account/supabaseConfig';
-import { ApiError, createApiClient } from '@/api/client';
+import { ApiError, createAccountControls, createApiClient } from '@/api/client';
 import type { PendingGoogleStore } from '@/auth/google';
 import type { GoogleBrowser, GoogleBrowserResult } from '@/auth/googleBrowser';
 import { deviceGoogleBrowser, deviceGoogleStore } from '@/auth/googleDevice';
@@ -47,6 +47,17 @@ export interface AccountContextValue {
   connected: boolean;
   /** Everything the account panel shows and calls back. */
   panel: AccountPanelProps;
+  /** The signed-in, verified account's own server data; absent while signed out or before verification. */
+  dataControls?: AccountDataControls;
+}
+
+/** The signed-in account's server data as its server keeps it: never the guest's data or this device's unsent records. */
+export interface AccountDataControls {
+  /**
+   * After a fresh password sign-in with `password`, the verified account's server export (GET /v1/me/export) as the
+   * server's exact text. One account data operation at a time: another is refused before anything is sent.
+   */
+  exportData(password: string): Promise<{ accountId: string; json: string }>;
 }
 
 const noop = () => undefined;
@@ -189,6 +200,16 @@ function conflictDetail(view: JournalView): string | undefined {
   return parts.length ? parts.join(' ') : undefined;
 }
 
+/** The verified account a published view belongs to: its own ID and provider user, never derived from an address. */
+interface Binding {
+  accountId: string;
+  uid: string;
+  /** The dataset handle the view was published with. */
+  opened: OpenedAccountDataset;
+  /** Set once the sign-in that published the view has finished its own work. */
+  ready: boolean;
+}
+
 export function AccountProvider({
   children,
   openDataset = openAccountDataset,
@@ -275,6 +296,10 @@ export function AccountProvider({
   const journal = useRef<SyncJournal | null>(null);
   /** Each sign-in and sign-out starts a new turn; work of an earlier turn never publishes anything. */
   const turn = useRef(0);
+  /** The verified account of the published view, kept through an ordinary expiry; it goes with the view. */
+  const binding = useRef<Binding | null>(null);
+  /** The one account data operation under way, if any: another is refused before anything is sent. */
+  const dataOp = useRef<object | null>(null);
   /** Whether this run already looked for its web Google callback (a page has one launch URL, taken once). */
   const resumed = useRef(false);
   /** Whether this run already looked for a remembered email sign-in (once per run). */
@@ -321,6 +346,8 @@ export function AccountProvider({
       o?.release();
     };
     const clear = () => {
+      binding.current = null;
+      dataOp.current = null;
       setAccount(null);
       setGuestCopy(null);
       setProfiles([]);
@@ -391,7 +418,8 @@ export function AccountProvider({
 
     async function sync(link: LinkChoice | null): Promise<void> {
       const j = journal.current;
-      if (!j || !services) return;
+      // Nothing ordinary starts while an account data operation is under way.
+      if (!j || !services || dataOp.current) return;
       const t = turn.current;
       setBusy('sync');
       setError(null);
@@ -484,6 +512,9 @@ export function AccountProvider({
         if (!live(t)) return;
         journal.current = j;
       }
+      // The view is published for this verified account only: its own ID and provider user, and its own handle.
+      const bound: Binding = { accountId: verified.accountId, uid: verified.uid, opened: o, ready: false };
+      binding.current = bound;
       setAccount({ key: `signin-${t}`, label: identity.email });
       const view = j?.view();
       if (!j || !view || view.profileId !== null || view.sources.some((s) => s.frozen !== null)) {
@@ -500,6 +531,7 @@ export function AccountProvider({
         setGuestCopy(answers > 0 ? { answers } : null);
         setProfiles(verified.profiles.map((p) => ({ id: p.profileId, label: `${PROFILE_LABEL} · ${p.highSeq} jawaban tercatat di akun` })));
       }
+      bound.ready = true;
       setBusy(null);
       if (notSaved) setError(REMEMBER_NOT_SAVED);
     }
@@ -638,7 +670,7 @@ export function AccountProvider({
       const o = opened.current;
       const j = journal.current;
       const guest = appRef.current.guestStore as (Store & { readRaw?: () => Promise<RawDataset | null> }) | null;
-      if (!o || !j || !guest) return;
+      if (!o || !j || !guest || dataOp.current) return;
       const t = turn.current;
       setBusy('guest-copy');
       setError(null);
@@ -663,6 +695,7 @@ export function AccountProvider({
     }
 
     function skipGuest(): void {
+      if (dataOp.current) return;
       setGuestCopy((c) => ({ answers: c?.answers ?? 0, result: 'Data tamu tidak disalin. Data tamu tetap tersimpan di perangkat ini.' }));
     }
 
@@ -685,7 +718,7 @@ export function AccountProvider({
     async function createProfile(): Promise<void> {
       const o = opened.current;
       const j = journal.current;
-      if (!o || !j || !services) return;
+      if (!o || !j || !services || dataOp.current) return;
       const t = turn.current;
       setBusy('profile');
       setError(null);
@@ -709,7 +742,7 @@ export function AccountProvider({
     async function linkProfile(profileId: string): Promise<void> {
       const o = opened.current;
       const j = journal.current;
-      if (!o || !j || !services) return;
+      if (!o || !j || !services || dataOp.current) return;
       const t = turn.current;
       setBusy('profile');
       setError(null);
@@ -756,7 +789,7 @@ export function AccountProvider({
 
     async function resolvePrefs(choice: 'keep-local' | 'use-server'): Promise<void> {
       const j = journal.current;
-      if (!j) return;
+      if (!j || dataOp.current) return;
       const t = turn.current;
       setBusy('prefs');
       setError(null);
@@ -782,8 +815,66 @@ export function AccountProvider({
       }
     }
 
-    return { signOut, sync, submit, restoreRemembered, continueWithGoogle, resumeGoogle, copyGuest, skipGuest, createProfile, linkProfile, resolvePrefs };
+    /**
+     * The verified account's server export after a fresh password sign-in, as the server's exact text: one data operation
+     * at a time, for the account this view was published for only, and refused before anything is sent otherwise. It
+     * starts a turn of its own, so earlier sync or preference work publishes nothing more, and a newer sign-in or a
+     * sign-out drops it. A refused password or an unreachable service rejects as it did, and the view and its data stay.
+     * Nothing is signed out, remembered, erased, copied or synced; the server's recent-password check decides.
+     */
+    async function exportData(password: string): Promise<{ accountId: string; json: string }> {
+      const bound = binding.current;
+      if (!services || !bound || opened.current !== bound.opened) throw new AuthError('signed_out');
+      if (!bound.ready || dataOp.current) throw new Error('Another account request is still on its way; nothing was sent.');
+      const op = {};
+      dataOp.current = op;
+      normalWork.current = true;
+      recoveryNormalStarting();
+      const t = ++turn.current;
+      /** This very view is still shown, in this operation's own turn. */
+      const ownView = () => live(t) && binding.current === bound && opened.current === bound.opened;
+      const isCurrent = () => ownView() && dataOp.current === op;
+      /** The sign-in in use belongs to another provider user, or verifies as another account. */
+      const ownerChanged = () => {
+        const now = services.auth.status();
+        const verifiedNow = services.session.current();
+        return (now.state !== 'signed-out' && now.identity.uid !== bound.uid) || (verifiedNow !== null && verifiedNow.accountId !== bound.accountId);
+      };
+      setBusy('data');
+      setError(null);
+      try {
+        const result = await exportOwnAccountData({
+          auth: services.auth,
+          session: services.session,
+          expected: { accountId: bound.accountId, uid: bound.uid },
+          controls: createAccountControls(services.api, bound.accountId),
+          password,
+          isCurrent,
+        });
+        if (!isCurrent()) throw new AuthError('superseded');
+        return result;
+      } catch (e) {
+        // This view still shown, but no longer its owner's sign-in: it fails closed. Learning returns to the guest's
+        // dataset and only this view's own handle is let go; the session is left as it is, and a newer sign-in's view,
+        // handle and session are never touched.
+        if (ownView() && ownerChanged()) {
+          await appRef.current.selectDataset(null);
+          if (ownView()) {
+            close();
+            clear();
+          }
+        }
+        throw e;
+      } finally {
+        // Only this operation's own turn ends what it started: a newer sign-in or a sign-out owns the panel from then on.
+        if (dataOp.current === op) dataOp.current = null;
+        if (live(t)) setBusy(null);
+      }
+    }
+
+    return { signOut, sync, submit, restoreRemembered, continueWithGoogle, resumeGoogle, copyGuest, skipGuest, createProfile, linkProfile, resolvePrefs, exportData };
   }, [services, service, openDataset, setConnected, recoveryNormalStarting]);
+  const dataControls = useMemo<AccountDataControls>(() => ({ exportData: actions.exportData }), [actions]);
 
   // Leaving the app run (unmount) drops all account work and lets go of the account dataset; nothing is deleted. Its
   // session is signed out, since no later run could use it. A remembered email sign-in is the exception: it is let go
@@ -793,6 +884,8 @@ export function AccountProvider({
   useEffect(
     () => () => {
       turn.current += 1;
+      binding.current = null;
+      dataOp.current = null;
       const auth = services?.auth;
       if (!recoverySetup || normalWork.current) void (auth?.remembered ? auth.remembered.release() : auth?.signOut());
       const o = opened.current;
@@ -825,6 +918,8 @@ export function AccountProvider({
         enabled: true,
         signedIn: account !== null,
         connected: connected !== null,
+        // Only for a signed-in, verified account: its own server data, never the guest's.
+        ...(account !== null ? { dataControls } : {}),
         panel: {
           account,
           busy,
