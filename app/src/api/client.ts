@@ -377,3 +377,15 @@ export function createAccountControls(api: ApiClient, accountId: string): Accoun
     },
   };
 }
+
+/** Authenticated own-deletion discovery after /me410; no cached ID or local intent grants authority. */
+export async function discoverOwnAccountDeletion(api: ApiClient, token: string, signal?: AbortSignal): Promise<AccountDeletion | null> {
+  const reply = await api.request({ method: 'GET', path: '/v1/me/deletion', token, signal });
+  if (reply.status === 404 && problemCode(reply.text) === 'not_found') return null;
+  if (reply.status !== 200) throw new ApiError(reply.status, problemCode(reply.text) ?? 'unexpected');
+  let body: unknown;
+  try { body = JSON.parse(reply.text); } catch { throw new ApiError(reply.status, 'bad_response'); }
+  if (!isRecord(body) || !isCanonicalUuid(body.account_id)) throw new ApiError(reply.status, 'bad_response');
+  // This authenticated endpoint is scoped by the server to the bearer; its complete proof establishes the own ID.
+  return provenDeletion(reply, body.account_id);
+}

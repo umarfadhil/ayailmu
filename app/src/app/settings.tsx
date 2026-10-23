@@ -5,7 +5,7 @@ import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useAccount } from '@/ui/AccountContext';
 import { useApp } from '@/ui/AppContext';
 import { BackLink } from '@/ui/BackLink';
-import { ArabicText, Chip, Icon, ModeNote, Muted, Page, SectionLabel, Segmented } from '@/ui/components';
+import { ArabicText, Btn, Chip, Icon, ModeNote, Muted, Page, SectionLabel, Segmented } from '@/ui/components';
 import { ARABIC_SCALES, NEUTRAL_PREVIEW } from '@/ui/labels';
 import { colors, fonts, radius } from '@/ui/theme';
 import { HydrationGate } from '@/ui/Hydration';
@@ -70,6 +70,9 @@ function SettingsRoute() {
   const { learner, rules, content, updateLearner } = useApp();
   const account = useAccount();
   if (!learner) return <Redirect href="/" />;
+  const environment = account.panel.environment;
+  const remote = environment === 'production' || environment === 'staging';
+  const serviceName = environment === 'staging' ? 'server akun staging' : 'layanan akun';
   const accountLabel = account.signedIn ? 'Kelola akun' : 'Masuk ke akun';
 
   return (
@@ -114,7 +117,7 @@ function SettingsRoute() {
           <Text style={styles.localTitle}>Tersimpan di perangkat ini</Text>
           <Text style={styles.localText}>
             {account.connected
-              ? 'Akun lokal: jawaban dan pengaturan dikirim ke layanan akun lokal (uji coba) hanya saat Anda menekan «Sinkronkan sekarang».'
+              ? remote ? `Jawaban dan pengaturan dikirim ke ${serviceName} saat Anda menekan «Sinkronkan sekarang».` : 'Akun lokal: jawaban dan pengaturan dikirim ke layanan akun lokal (uji coba) hanya saat Anda menekan «Sinkronkan sekarang».'
               : 'Tanpa akun. Data tidak dikirim ke mana pun.'}
           </Text>
         </View>
@@ -127,16 +130,19 @@ function SettingsRoute() {
           </Text>
           <Muted>Sebutkan ID ini bila menghubungi tim kursus.</Muted>
         </Row>
-        <Row title="Unduh data saya" unavailable />
-        <Row title="Hapus data" unavailable>
-          <Muted>Belum bisa dari aplikasi. Alamat kontak untuk permintaan penghapusan belum ditetapkan.</Muted>
-        </Row>
+        {account.dataControls || account.deletion ? <Row title="Data akun">
+          <Btn testID="settings-account-data" label="Salinan dan penghapusan akun" kind="secondary" onPress={() => router.push('/account-data' as Href)} />
+          <Muted>Data tamu tetap terpisah dari akun.</Muted>
+        </Row> : <>
+          <Row title="Unduh data saya" unavailable />
+          <Row title="Hapus data" unavailable><Muted>Belum bisa dari aplikasi. Alamat kontak untuk permintaan penghapusan belum ditetapkan.</Muted></Row>
+        </>}
         <Row title="Persetujuan">
           <Muted>{`Versi ${learner.consent_version} · ${new Date(learner.consent_at).toLocaleDateString('id-ID')}`}</Muted>
         </Row>
       </View>
 
-      <SectionLabel>Akun lokal</SectionLabel>
+      <SectionLabel>{environment === 'production' ? 'Akun' : environment === 'staging' ? 'Akun staging' : 'Akun lokal'}</SectionLabel>
       <View style={styles.list}>
         {account.enabled ? (
           <Pressable
@@ -150,8 +156,8 @@ function SettingsRoute() {
               <Text style={styles.rowTitle}>{accountLabel}</Text>
               <Muted>
                 {account.connected
-                  ? 'Jawaban disimpan di perangkat ini dan dikirim ke layanan akun lokal saat Anda menekan «Sinkronkan sekarang».'
-                  : 'Akun uji coba lokal, khusus pengembangan. Tanpa akun, data tetap di perangkat ini.'}
+                  ? remote ? `Jawaban disimpan di perangkat ini dan dikirim ke ${serviceName} saat Anda menekan «Sinkronkan sekarang».` : 'Jawaban disimpan di perangkat ini dan dikirim ke layanan akun lokal saat Anda menekan «Sinkronkan sekarang».'
+                  : remote ? 'Masuk atau kelola akun. Tanpa sinkronisasi, data belajar tetap di perangkat ini.' : 'Akun uji coba lokal, khusus pengembangan. Tanpa akun, data tetap di perangkat ini.'}
               </Muted>
             </View>
             <Icon name="chevron-forward" size={18} color={colors.muted} />

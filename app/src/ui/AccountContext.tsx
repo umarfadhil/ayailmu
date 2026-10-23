@@ -14,7 +14,8 @@
 // after a password sign-in, for the same verified account only. Signing out forgets it.
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
-import { copyGuestToAccount, GUEST_NAMESPACE, type Namespace, type OpenedAccountDataset, type RawSource } from '@/account/datasets';
+import { createAccountDeletionController, type AccountDeletionController, type AccountDeletionState } from '@/account/accountDeletion';
+import { accountNamespace, copyGuestToAccount, GUEST_NAMESPACE, type Namespace, type OpenedAccountDataset, type RawSource } from '@/account/datasets';
 import { loadGoogleConfig } from '@/account/googleConfig';
 import { isCanonicalUuid } from '@/account/ids';
 import { openAccountDataset } from '@/account/openAccountDataset';
@@ -22,7 +23,7 @@ import { rememberDeviceEnabled } from '@/account/rememberConfig';
 import { createAccountSession, exportOwnAccountData } from '@/account/session';
 import { STAGING } from '@/account/staging';
 import { loadSupabaseConfig } from '@/account/supabaseConfig';
-import { ApiError, createAccountControls, createApiClient } from '@/api/client';
+import { ApiError, createAccountControls, createApiClient, discoverOwnAccountDeletion, type AccountDeletion } from '@/api/client';
 import type { PendingGoogleStore } from '@/auth/google';
 import type { GoogleBrowser, GoogleBrowserResult } from '@/auth/googleBrowser';
 import { deviceGoogleBrowser, deviceGoogleStore } from '@/auth/googleDevice';
@@ -31,6 +32,7 @@ import { deviceSessionVault } from '@/auth/sessionVault';
 import { createSupabaseAuth } from '@/auth/supabaseAuth';
 import { AuthError, type AuthIdentity, type SessionVault } from '@/auth/types';
 import { newId } from '@/engine/util';
+import { runCheckpoints } from '@/storage/checkpoints';
 import type { RawDataset } from '@/storage/rawRecords';
 import type { Store } from '@/storage/types';
 import { openJournal, SyncError, type JournalView, type LinkChoice, type SyncConnection, type SyncJournal } from '@/sync/journal';
@@ -49,6 +51,18 @@ export interface AccountContextValue {
   panel: AccountPanelProps;
   /** The signed-in, verified account's own server data; absent while signed out or before verification. */
   dataControls?: AccountDataControls;
+  /** In-run deletion status survives navigation and sign-out; a new verified account gets its own status. */
+  deletion?: AccountDeletionModel;
+}
+
+export interface AccountDeletionModel {
+  key: string;
+  state: AccountDeletionState;
+  available: boolean;
+  remove(password: string, confirmed: boolean): Promise<void>;
+  check(): Promise<void>;
+  retryIdentity(password: string, confirmed: boolean): Promise<void>;
+  retryCleanup(): Promise<void>;
 }
 
 /** The signed-in account's server data as its server keeps it: never the guest's data or this device's unsent records. */
@@ -208,6 +222,7 @@ interface Binding {
   opened: OpenedAccountDataset;
   /** Set once the sign-in that published the view has finished its own work. */
   ready: boolean;
+  deletionTurn?: number;
 }
 
 export function AccountProvider({
@@ -300,6 +315,14 @@ export function AccountProvider({
   const binding = useRef<Binding | null>(null);
   /** The one account data operation under way, if any: another is refused before anything is sent. */
   const dataOp = useRef<object | null>(null);
+  const deletionController = useRef<AccountDeletionController | null>(null);
+  const deletionQuiescing = useRef(false);
+  const ordinaryTasks = useRef(new Set<Promise<void>>());
+  const [deletionRecord, setDeletionRecord] = useState<{ key: string; state: AccountDeletionState } | null>(null);
+  const track = (task: Promise<void>) => {
+    ordinaryTasks.current.add(task);
+    void task.then(() => ordinaryTasks.current.delete(task), () => ordinaryTasks.current.delete(task));
+  };
   /** Whether this run already looked for its web Google callback (a page has one launch URL, taken once). */
   const resumed = useRef(false);
   /** Whether this run already looked for a remembered email sign-in (once per run). */
@@ -339,6 +362,19 @@ export function AccountProvider({
 
   const actions = useMemo(() => {
     const live = (t: number) => t === turn.current;
+    const deletionBlocked = () => deletionQuiescing.current || ['unknown', 'pending', 'completed'].includes(deletionController.current?.state().phase ?? 'idle');
+    // A journal that started in an earlier turn may never borrow the later password grant for another request.
+    const connectionFor = (t: number): SyncConnection => {
+      if (!services) throw new AuthError('signed_out');
+      const guard = () => { if (!live(t) || dataOp.current || deletionBlocked()) throw new AuthError('superseded'); };
+      return { ...services.conn, auth: { ...services.auth,
+        status: () => { guard(); return services.auth.status(); },
+        authorized: async (call) => { guard(); const result = await services.auth.authorized((token, signal) => { guard(); return call(token, signal); }); guard(); return result; },
+      }, session: {
+        current: () => { guard(); return services.session.current(); },
+        verify: async () => { guard(); const result = await services.session.verify(); guard(); return result; },
+      } };
+    };
     const close = () => {
       const o = opened.current;
       opened.current = null;
@@ -347,6 +383,8 @@ export function AccountProvider({
     };
     const clear = () => {
       binding.current = null;
+      deletionController.current = null;
+      deletionQuiescing.current = false;
       dataOp.current = null;
       setAccount(null);
       setGuestCopy(null);
@@ -362,8 +400,9 @@ export function AccountProvider({
         otherDeviceAnswers: journal.current?.view().remote.length ?? 0,
       });
     /** Learning uses the account's dataset from now on; preference changes go through its journal. */
-    const selectAccountDataset = (o: OpenedAccountDataset, j: SyncJournal | null) =>
-      appRef.current.selectDataset({
+    const selectAccountDataset = (o: OpenedAccountDataset, j: SyncJournal | null) => {
+      if (opened.current !== o || deletionBlocked() || dataOp.current) return Promise.resolve();
+      return appRef.current.selectDataset({
         store: o.store,
         readOnly: o.access === 'owner' ? null : (o.reason ?? 'Akun ini sedang dipakai di tab lain; tab ini hanya bisa membaca.'),
         savePreferences: j
@@ -375,6 +414,7 @@ export function AccountProvider({
             }
           : undefined,
       });
+    };
 
     /**
      * Ends the sign-in at once: its work stops, no token is handed out again, a remembered sign-in is forgotten and
@@ -419,7 +459,7 @@ export function AccountProvider({
     async function sync(link: LinkChoice | null): Promise<void> {
       const j = journal.current;
       // Nothing ordinary starts while an account data operation is under way.
-      if (!j || !services || dataOp.current) return;
+      if (!j || !services || dataOp.current || deletionBlocked()) return;
       const t = turn.current;
       setBusy('sync');
       setError(null);
@@ -427,8 +467,8 @@ export function AccountProvider({
       let status: string;
       try {
         await ensureFresh();
-        const report = await j.sync(services.conn, link);
-        const prefs = await j.pushPreferences(services.conn);
+        const report = await j.sync(connectionFor(t), link);
+        const prefs = await j.pushPreferences(connectionFor(t));
         const differs = report.conflicts.length > 0 && report.conflicts.length === report.pending;
         status =
           report.pending > 0
@@ -445,7 +485,7 @@ export function AccountProvider({
       }
       let savedAnswers = connectedRef.current?.savedAnswers ?? 0;
       try {
-        savedAnswers = (await j.readProgress(services.conn)).events;
+        savedAnswers = (await j.readProgress(connectionFor(t))).events;
       } catch {
         // Not linked yet, or unreachable: the last known count stays.
       }
@@ -469,9 +509,63 @@ export function AccountProvider({
       if (!live(t)) return null;
       close();
       clear();
+      setDeletionRecord(null);
       setError(null);
       setBusy('auth');
       return t;
+    }
+
+    function installDeletion(bound: Binding, t: number, initialProof?: AccountDeletion): boolean {
+      if (!services) return false;
+      const o = bound.opened;
+      if (o.access !== 'owner' || !o.eraseAccountData) return false;
+      const current = () => binding.current === bound && opened.current === o && bound.deletionTurn === turn.current;
+      deletionController.current = createAccountDeletionController({
+        initialProof, auth: services.auth, session: services.session, expected: { accountId: bound.accountId, uid: bound.uid },
+        controls: createAccountControls(services.api, bound.accountId), isCurrent: current,
+        onState: (state) => { if (current()) setDeletionRecord({ key: `signin-${t}`, state }); },
+        quiesce: async () => {
+          deletionQuiescing.current = true;
+          // Capture/start registered pauses before a dataset change can unmount and unregister the session route.
+          const learning = runCheckpoints();
+          await appRef.current.selectDataset(null);
+          if (!current()) throw new AuthError('superseded');
+          setConnected(null); setProfiles([]); setGuestCopy(null); setPrefsConflict(null);
+          await Promise.allSettled([...(learning ? [learning] : []), ...ordinaryTasks.current]);
+          if (!current()) throw new AuthError('superseded');
+        },
+        erase: () => o.eraseAccountData!(bound.accountId),
+      });
+      setDeletionRecord({ key: `signin-${t}`, state: deletionController.current.state() });
+      return true;
+    }
+
+    /** A fresh authenticated deletion-route proof replaces /me only for a deleted account, never for ordinary learning. */
+    async function resumeDeleted(t: number, identity: AuthIdentity, restoredFor: string | null): Promise<void> {
+      if (!services) return;
+      const started = services.auth.status();
+      if (!live(t) || started.state !== 'signed-in' || started.identity.uid !== identity.uid) throw new AuthError('superseded');
+      const proof = await services.auth.authorized((token, signal) => discoverOwnAccountDeletion(services.api, token, signal));
+      const now = services.auth.status();
+      if (!live(t) || now.state !== 'signed-in' || now.session !== started.session || now.identity.uid !== identity.uid) throw new AuthError('superseded');
+      if (!proof) {
+        setDeletionRecord({ key: `signin-${t}`, state: { phase: 'unknown', local: 'kept', busy: false, issue: 'unavailable' } });
+        throw new ApiError(410, 'account_deleted');
+      }
+      if (restoredFor !== null && restoredFor !== proof.account_id) throw new AuthError('superseded');
+      const o = await openDataset(accountNamespace(proof.account_id));
+      if (!live(t)) { o.release(); return; }
+      opened.current = o; journal.current = null;
+      const bound: Binding = { accountId: proof.account_id, uid: identity.uid, opened: o, ready: true };
+      binding.current = bound;
+      deletionQuiescing.current = true;
+      if (!installDeletion(bound, t, proof)) {
+        setDeletionRecord({ key: `signin-${t}`, state: { phase: proof.status === 'completed' ? 'completed' : 'pending', local: 'kept', busy: false, proof } });
+        setBusy(null); return;
+      }
+      setAccount({ key: `signin-${t}`, label: identity.email });
+      // Only the freshly authenticated own proof authorizes this captured local cleanup; no destructive POST is repeated.
+      await deletionAction('retryCleanup');
     }
 
     /**
@@ -486,7 +580,12 @@ export function AccountProvider({
      */
     async function afterSignIn(t: number, identity: AuthIdentity, { save = false, restoredFor = null }: { save?: boolean; restoredFor?: string | null } = {}): Promise<void> {
       if (!services) return;
-      const verified = await services.session.verify();
+      let verified;
+      try { verified = await services.session.verify(); }
+      catch (error) {
+        if (error instanceof ApiError && error.status === 410 && error.code === 'account_deleted') { await resumeDeleted(t, identity, restoredFor); return; }
+        throw error;
+      }
       if (!live(t)) return;
       if (restoredFor !== null && verified.accountId !== restoredFor) {
         await signOut(REMEMBERED_MISMATCH);
@@ -532,6 +631,7 @@ export function AccountProvider({
         setProfiles(verified.profiles.map((p) => ({ id: p.profileId, label: `${PROFILE_LABEL} · ${p.highSeq} jawaban tercatat di akun` })));
       }
       bound.ready = true;
+      installDeletion(bound, t);
       setBusy(null);
       if (notSaved) setError(REMEMBER_NOT_SAVED);
     }
@@ -670,7 +770,7 @@ export function AccountProvider({
       const o = opened.current;
       const j = journal.current;
       const guest = appRef.current.guestStore as (Store & { readRaw?: () => Promise<RawDataset | null> }) | null;
-      if (!o || !j || !guest || dataOp.current) return;
+      if (!o || !j || !guest || dataOp.current || deletionBlocked()) return;
       const t = turn.current;
       setBusy('guest-copy');
       setError(null);
@@ -695,7 +795,7 @@ export function AccountProvider({
     }
 
     function skipGuest(): void {
-      if (dataOp.current) return;
+      if (dataOp.current || deletionBlocked()) return;
       setGuestCopy((c) => ({ answers: c?.answers ?? 0, result: 'Data tamu tidak disalin. Data tamu tetap tersimpan di perangkat ini.' }));
     }
 
@@ -718,7 +818,7 @@ export function AccountProvider({
     async function createProfile(): Promise<void> {
       const o = opened.current;
       const j = journal.current;
-      if (!o || !j || !services || dataOp.current) return;
+      if (!o || !j || !services || dataOp.current || deletionBlocked()) return;
       const t = turn.current;
       setBusy('profile');
       setError(null);
@@ -742,7 +842,7 @@ export function AccountProvider({
     async function linkProfile(profileId: string): Promise<void> {
       const o = opened.current;
       const j = journal.current;
-      if (!o || !j || !services || dataOp.current) return;
+      if (!o || !j || !services || dataOp.current || deletionBlocked()) return;
       const t = turn.current;
       setBusy('profile');
       setError(null);
@@ -751,6 +851,7 @@ export function AccountProvider({
           // A device joining one of the account's adult profiles records that profile's consent and settings locally.
           if (!isCanonicalUuid(profileId)) throw new Error('not a profile ID');
           await ensureFresh();
+          if (!live(t) || dataOp.current || deletionBlocked()) throw new AuthError('superseded');
           const reply = await services.auth.authorized(async (token, signal) => {
             const r = await services.api.request({ method: 'GET', path: `/v1/profiles/${profileId}`, token, signal });
             if (r.status === 401) throw new ApiError(401, 'unauthenticated'); // the auth layer reports it as expired
@@ -789,7 +890,7 @@ export function AccountProvider({
 
     async function resolvePrefs(choice: 'keep-local' | 'use-server'): Promise<void> {
       const j = journal.current;
-      if (!j || dataOp.current) return;
+      if (!j || dataOp.current || deletionBlocked()) return;
       const t = turn.current;
       setBusy('prefs');
       setError(null);
@@ -820,12 +921,12 @@ export function AccountProvider({
      * at a time, for the account this view was published for only, and refused before anything is sent otherwise. It
      * starts a turn of its own, so earlier sync or preference work publishes nothing more, and a newer sign-in or a
      * sign-out drops it. A refused password or an unreachable service rejects as it did, and the view and its data stay.
-     * Nothing is signed out, remembered, erased, copied or synced; the server's recent-password check decides.
+     * No additional explicit sign-out, remembering, erasure, copy or sync is requested; the server's recent-password check decides.
      */
     async function exportData(password: string): Promise<{ accountId: string; json: string }> {
       const bound = binding.current;
       if (!services || !bound || opened.current !== bound.opened) throw new AuthError('signed_out');
-      if (!bound.ready || dataOp.current) throw new Error('Another account request is still on its way; nothing was sent.');
+      if (!bound.ready || dataOp.current || deletionBlocked()) throw new Error('Another account request is still on its way; nothing was sent.');
       const op = {};
       dataOp.current = op;
       normalWork.current = true;
@@ -872,7 +973,29 @@ export function AccountProvider({
       }
     }
 
-    return { signOut, sync, submit, restoreRemembered, continueWithGoogle, resumeGoogle, copyGuest, skipGuest, createProfile, linkProfile, resolvePrefs, exportData };
+    async function deletionAction(method: 'remove' | 'check' | 'retryIdentity' | 'retryCleanup', password = '', confirmed = false): Promise<void> {
+      const bound = binding.current; const controller = deletionController.current;
+      if (!services || !bound?.ready || !controller || opened.current !== bound.opened) throw new AuthError('signed_out');
+      if (dataOp.current) throw new Error('Account operation already running');
+      const op = {}; dataOp.current = op; const t = ++turn.current; bound.deletionTurn = t;
+      normalWork.current = true; recoveryNormalStarting(); setBusy('data'); setError(null);
+      try {
+        if (method === 'remove') await controller.remove(password, confirmed);
+        else if (method === 'retryIdentity') await controller.retryIdentity(password, confirmed);
+        else await controller[method]();
+        const ownView = () => live(t) && binding.current === bound && opened.current === bound.opened;
+        const now = services.auth.status(); const verified = services.session.current();
+        if (ownView() && ((now.state !== 'signed-out' && now.identity.uid !== bound.uid) || (verified !== null && verified.accountId !== bound.accountId))) {
+          await appRef.current.selectDataset(null);
+          // Never close, clear or revoke a replacement account that took over during the await.
+          if (ownView()) { close(); clear(); }
+        }
+      } finally {
+        if (dataOp.current === op) dataOp.current = null;
+        if (live(t)) { if (controller.state().phase === 'failed') deletionQuiescing.current = false; setBusy(null); }
+      }
+    }
+    return { signOut, sync, submit, restoreRemembered, continueWithGoogle, resumeGoogle, copyGuest, skipGuest, createProfile, linkProfile, resolvePrefs, exportData, deletionAction };
   }, [services, service, openDataset, setConnected, recoveryNormalStarting]);
   const dataControls = useMemo<AccountDataControls>(() => ({ exportData: actions.exportData }), [actions]);
 
@@ -885,6 +1008,8 @@ export function AccountProvider({
     () => () => {
       turn.current += 1;
       binding.current = null;
+      deletionController.current = null;
+      deletionQuiescing.current = false;
       dataOp.current = null;
       const auth = services?.auth;
       if (!recoverySetup || normalWork.current) void (auth?.remembered ? auth.remembered.release() : auth?.signOut());
@@ -919,7 +1044,8 @@ export function AccountProvider({
         signedIn: account !== null,
         connected: connected !== null,
         // Only for a signed-in, verified account: its own server data, never the guest's.
-        ...(account !== null ? { dataControls } : {}),
+        ...(account !== null && !['unknown', 'pending', 'completed'].includes(deletionRecord?.state.phase ?? 'idle') ? { dataControls } : {}),
+        ...(deletionRecord ? { deletion: { ...deletionRecord, available: account !== null, remove: (password: string, confirmed: boolean) => actions.deletionAction('remove', password, confirmed), check: () => actions.deletionAction('check'), retryIdentity: (password: string, confirmed: boolean) => actions.deletionAction('retryIdentity', password, confirmed), retryCleanup: () => actions.deletionAction('retryCleanup') } } : {}),
         panel: {
           account,
           busy,
@@ -937,13 +1063,13 @@ export function AccountProvider({
           onSubmit: (request) => void actions.submit(request),
           // Only where the build turns Google on, with the account service, and the platform can run its browser and store.
           onGoogle: services.google && services.auth.google ? () => void actions.continueWithGoogle() : undefined,
-          onGuestCopy: () => void actions.copyGuest(),
+          onGuestCopy: () => track(actions.copyGuest()),
           onGuestSkip: actions.skipGuest,
-          onLinkProfile: (id) => void actions.linkProfile(id),
-          onCreateProfile: () => void actions.createProfile(),
-          onSyncNow: () => void actions.sync(null),
-          onKeepLocalPrefs: () => void actions.resolvePrefs('keep-local'),
-          onUseServerPrefs: () => void actions.resolvePrefs('use-server'),
+          onLinkProfile: (id) => track(actions.linkProfile(id)),
+          onCreateProfile: () => track(actions.createProfile()),
+          onSyncNow: () => track(actions.sync(null)),
+          onKeepLocalPrefs: () => track(actions.resolvePrefs('keep-local')),
+          onUseServerPrefs: () => track(actions.resolvePrefs('use-server')),
           onSignOut: () => void actions.signOut(),
         },
       }
