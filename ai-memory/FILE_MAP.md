@@ -8,7 +8,7 @@ Budget: ≤ 25 KB. This is the only place that says *where* things are. Update i
 - `android/gradle/libs.versions.toml` pins (conservative, chosen without the SDK manager — bump on first sync and update here): AGP 8.12.2 · Kotlin 2.2.20 · KSP 2.2.20-2.0.3 · Compose BOM 2025.08.01 · Hilt 2.57.1 · Room 2.7.2 · Navigation 2.9.3 · Lifecycle 2.9.3 · DataStore 1.1.7 · Serialization 1.9.0 · Coroutines 1.10.2 · Play Billing 8.0.0 · ktlint plugin 12.1.1 · Roborazzi 1.47.0 (P3b). Gradle wrapper 8.14.3. Room schema: v1 generated on Windows 2026-10-16 at `android/core/data/schemas/id.petalytix.ayailmu.core.data.db.AyaDatabase/1.json` (commit it).
 - Gate (CR-REL-2): `./gradlew :core:model:test :core:engine:test :core:content:test :core:content:validatePacks :app:testDemoDebugUnitTest :app:lintDemoDebug :app:assembleDemoDebug ktlintCheck`.
 
-## Repository root — `C:\Users\Umar Fadhil Ramadhan\Documents\ayailmu\` (moved out of OneDrive 2026-10-17) (git: github.com/umarfadhil/ayailmu)
+## Repository root — `C:\Users\Umar Fadhil Ramadhan\OneDrive\Documents\ayailmu\` (checked 2026-10-22: the repo is in OneDrive; the 2026-10-17 "moved out of OneDrive" note no longer holds) (git: github.com/umarfadhil/ayailmu)
 
 | Path | What | Stamp |
 |---|---|---|
@@ -18,7 +18,7 @@ Budget: ≤ 25 KB. This is the only place that says *where* things are. Update i
 | `docs/Arabic_Course_Current_Plan.md` | Curriculum decisions for the Arabic track (first track). Status words inside: DECIDED/DEFAULT/OPEN. | existing, draft |
 | `docs/Lessons_Unit_A_B_Draft.md` | Entry check + Unit A + Unit B item content, pools, feedback IDs. Source of truth for Arabic item IDs. Not approved for learners yet. | existing, draft |
 | `docs/Trial_App_Spec.md` | Arabic-track behaviour spec: question types, planner, learning rules §7, content format §9, data §10, privacy §11, acceptance §14. Trimmed 2026-10-16: §3, §12, §13, §15, §16 now point to ai-memory. | existing, trimmed |
-| `docs/BUILD_PLAN.md` | Phases P0–P9 with deliverables and gates, where work happens (cloud writes, Windows compiles), parallel tracks (illustrator, reviewers, audio, store prep), gate ritual. | PLANNED 2026-10-16 |
+| `docs/BUILD_PLAN.md` | Phases P0–P9 with deliverables and gates, where work happens (cloud writes, Windows compiles), parallel tracks (illustrator, reviewers, audio, store prep), gate ritual. Since 2026-10-22 also §1b: backend track B0–B5 and iOS track I0–I5. | PLANNED 2026-10-16 (B/I 2026-10-22) |
 | `docs/syllabus/00_FRAMEWORK.md` | Levels (kids 7–12 / adults × Pemula–Master), essentials checklist §1a, hidden-gem mechanic §1b, 19-type activity catalog with engine mapping and v1/v2 flags, mode rules, session composition, bilingual content model, item-ID scheme. | DRAFT v2 2026-10-16 |
 | `docs/syllabus/01_BAHASA.md` | Arabic (reviewed course mapped + proposed additions + planned kids track), English kids/adults, Bahasa Indonesia Literasi kids/adults, Indonesian for English speakers, JP/KR/ZH placeholder; gems per level. | DRAFT v2 2026-10-16 |
 | `docs/syllabus/02_MATEMATIKA.md` | Math kids (SD phases, 10–13 units/level) and adults (numeracy → decisions → quantitative thinking → beauty); gems per level. | DRAFT v2 2026-10-16 |
@@ -36,12 +36,13 @@ Budget: ≤ 25 KB. This is the only place that says *where* things are. Update i
 | `docs/ART_CATALOG.md` | Every art key packs may use, viewports, tap-region tables for the three scenes. | IN SOURCE 2026-10-17 |
 | `docs/content/AUTHORING.md` | How to write a pack: tracks/prefixes, item fields, all 19 types, examples, quality bar, validating without Gradle. | IN SOURCE 2026-10-17 |
 | `docs/store/` | DRAFTS for Umar and a legal check: `privacy_policy.md`, `data_safety.md`, `families_self_review.md`, `closed_test_runbook.md` ([UMAR] marks open decisions). | DRAFT 2026-10-17 |
+| `docs/backend/FAMILY_SYNC_DESIGN.md` | Backend family sync design: Adult + Anak sync, guardian-managed profiles, per-profile consent, withdrawal = erasure, API/schema changes for `backend/`, registry drift, PR #3 rework mapping, proposed CR-ARC-7/CR-DAT-4/CR-BE-1. | PROPOSAL 2026-10-22 |
 | `docs/content/INTERACTIONS_AUDIO.md` | Follow-up 11 contract: picture-first rule, gestures, sound keys, voice clips, trace keys, `pic_*` list, language tracks. Syllabi: `docs/syllabus/bahasa/{en,ko,ja,zh}_pemula.md`. `docs/SOUND_BRIEF.md`: brief for a sound designer. | DRAFT 2026-10-18 |
 | `art/sound/`, `art/strokes/` | `make_sfx.py` (draft effects source); `hangul.py` (hand-drawn jamo strokes), contact sheet, README. Illustrator brief for the vocabulary set: `art/briefs/vocabulary-set.md`. | IN SOURCE 2026-10-18 |
 | `docs/content/MODULES_LEVELS_STORIES.md` | Follow-up 12 contract: modules/languages/levels, track ids, `story` type + motion limits, Nilai guide, Sejarah figures and depiction rules, new art keys. Syllabi: `docs/syllabus/bahasa/*_levels.md`. | DRAFT 2026-10-18 |
 | `art/tools/art_*.py` | Drawing modules loaded by `draw.py` (covers, values, school, history, vocab2); briefs `art/briefs/follow-up-12-*.md`. | IN SOURCE 2026-10-18 |
 | `README.md` | Repo README: what AyaIlmu is, layout, "start at ai-memory/README.md". | existing, rewritten 2026-10-16 |
-| `.gitignore` | Node/Expo output, secrets, archives, Expo native folders, **Android/Gradle section added 2026-10-16**. | existing |
+| `.gitignore` | Node/Expo output, secrets, archives, Expo native folders, **Android/Gradle section added 2026-10-16**; `Claude outputs/` ignored 2026-10-22. | existing |
 | `.gitattributes` | `* text=auto eol=lf`, CRLF for `.bat/.cmd/.ps1`, binary list (png/webp/ttf/riv/ogg/jar/keystore). Run `git add --renormalize .` once. | IN SOURCE 2026-10-16 |
 | `.github/workflows/android.yml`, `.github/pull_request_template.md` | CI gate (CR-REL-2 on push/PR touching `android/`) and PR template with stamp + checklists. Moved into the repo from `Claude outputs/` on 2026-10-17 (the empty `Claude outputs/` folder can be deleted). | IN SOURCE (not yet run in CI) |
 
@@ -72,31 +73,7 @@ Budget: ≤ 25 KB. This is the only place that says *where* things are. Update i
 | `android/content/` (follow-up 12) | 58 packs: `packs/<subject>/<base>-<k|a>-<m|h|x>/`, `packs/nilai/nil-*`, `packs/sejarah/sej-*` (+ rules, 73 tracks in `catalog.json`); narration scripts `voice/{id,en}.{sejarah,nilai}-{k,a}.json`, `voice/<lang>.levels.json`. Generators in the session scratchpad only (regenerate before hand-editing). | IN SOURCE 2026-10-18, unreviewed |
 | `android/.editorconfig` | ktlint style (intellij_idea, 140 cols, several wrapping rules off). ktlint is report-only until the P3 gate (root `build.gradle.kts`). | IN SOURCE (P1) |
 
-## Planned Android layout (PLANNED 2026-10-16 — becomes real at M0; update stamps then)
-
-```
-android/
-  settings.gradle.kts, build.gradle.kts, gradle/libs.versions.toml
-  app/                       # DI wiring, navigation graph, feature screens (split out when > ~40 files)
-    src/main/java/id/petalytix/ayailmu/
-      AyaIlmuApp.kt, MainActivity.kt
-      navigation/            # type-safe routes
-      feature/onboarding/    # welcome, neutral age screen, profile create, consent (adult)
-      feature/home/          # "Sesi hari ini", subject shelf, streak (calm)
-      feature/session/       # item renderers registry, feedback, interim summary
-      feature/progress/      # three honest lines (evidence) / mastery bar (casual), word list
-      feature/store/         # packs, all-access, adult gate, restore
-      feature/settings/      # text size, session length, reminder, export, delete-all, learner_id
-      feature/dev/           # developer-demo only: pack inspector, rule switcher
-  core/model/                # data classes shared by all modules (pure Kotlin)
-  core/engine/               # planner, scoring, freshness, skill projection (pure Kotlin) + PARITY.md
-  core/content/              # pack schema (kotlinx.serialization), validator, loader
-  core/data/                 # Room (AnswerEvent, SkillState, Profile, SessionLog, Report), DataStore protos, repositories, schemas/
-  core/billing/              # BillingClient wrapper, EntitlementRepository, signature check
-  core/design/               # AyaTheme, tokens, typography (incl. Noto Naskh Arabic), illustration & motion components, res/raw/*.riv
-  content/                   # assets: packs/<subject>/<track>/v<N>.json, config/*.json, audio/<track>/*.ogg, stickers/
-art/                         # source files for hand-made assets (not shipped): style-bible/, procreate/, rive/, svg/, briefs/
-```
+*(The 2026-10-16 "Planned Android layout" tree was removed 2026-10-22 to stay within budget: M0 made it real and the `android/` table above is the map; the old tree is in git history.)*
 
 ## Cross-references
 

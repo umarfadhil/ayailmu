@@ -5,7 +5,7 @@ Status stamps used everywhere: **PLANNED · IN SOURCE (not compiled) · COMPILED
 
 ## What AyaIlmu is (DECIDED 2026-10-16)
 
-Android-native learning app by PT Petalytix Teknologi Indonesia for people who want to spend free time learning and keeping skills sharp. Six modules: **Bahasa (one module, languages Arab/Inggris/Korea/Jepang/Mandarin), Matematika, Sains, Sosial & Seni, Nilai (universal values, free) and Sejarah (noble people of history, animated stories)** — each with Pemula/Menengah/Mahir/Master per audience (DECIDED 2026-10-18). Feel: fun, light, worth coming back to every day — through delight and visible progress, never through guilt, timers or fake scarcity (see CODE_RULES §Healthy habit loop).
+Native learning app — **Kotlin Android + Swift iOS at launch** (DECIDED 2026-10-22; was Android-only) — by PT Petalytix Teknologi Indonesia for people who want to spend free time learning and keeping skills sharp. Six modules: **Bahasa (one module, languages Arab/Inggris/Korea/Jepang/Mandarin), Matematika, Sains, Sosial & Seni, Nilai (universal values, free) and Sejarah (noble people of history, animated stories)** — each with Pemula/Menengah/Mahir/Master per audience (DECIDED 2026-10-18). Feel: fun, light, worth coming back to every day — through delight and visible progress, never through guilt, timers or fake scarcity (see CODE_RULES §Healthy habit loop).
 
 Audience: **kids and adults together at launch** (DECIDED 2026-10-16). Two profile kinds on one device: Adult and Anak (child, created by a guardian). Kids track targets **readers, about 7–12 (SD)**; pre-readers are out of scope for v1 (DECIDED 2026-10-16).
 
@@ -17,14 +17,14 @@ Mascot: **Aya** — the same character family as the "Aya" coach bubble in AyaKa
 
 ## Hard constraints (DECIDED 2026-10-16)
 
-1. **No backend of our own.** No online database, hosting, auth service, analytics SDK or push service. Everything a learner does lives on the device (Room + DataStore). The only online services are Google Play (distribution, Play Billing, Android Vitals) and an *optional* static config file on a free static host (OPEN; see CODE_RULES §Config).
+1. **Own backend, offline-first (DECIDED 2026-10-22, replaces "no backend of our own" of 2026-10-16).** Product backend = `backend/` (Go API + PostgreSQL + self-hosted GoTrue, Amar's PR #2). Hosting plan: Cloud Run for API + GoTrue, Supabase for PostgreSQL only (PR #4). Learning keeps working fully on-device without an account (Room + DataStore); account and sync are opt-in. Still no analytics SDK or push service. Until the go-live gates below are met the backend stays local/synthetic: nothing deployed, no real learner data, shipped clients unchanged.
 2. **Monetization still reliable:** freemium with one-time lifetime unlocks via Play Billing, entitlement verified and restored by Play on-device. No ads. Details: MONETIZATION_SCHEME.md.
 3. **Nothing visual may look machine-made.** Every illustration, animation and video follows ART_DIRECTION.md. AI image generators never produce shipped assets. Voice: pronunciation clips may come from ElevenLabs (DECIDED 2026-10-18, CR-SND-2); no other AI voice or video.
 4. **Umar decides, Claude proposes.** No architecture, pricing or content-policy change is implemented before Umar approves it in the session.
 
 ## Stack (DECIDED 2026-10-16)
 
-Kotlin + Jetpack Compose (Material 3 as the base, heavily themed), Room, Proto DataStore, Hilt, Coroutines/Flow, kotlinx.serialization, Play Billing Library 8+, Rive runtime for character/mascot animation, Lottie only for simple decorative loops. Same family as AyaKasir, so rules and habits transfer. Exact versions are pinned in `android/gradle/libs.versions.toml` and mirrored in FILE_MAP.md once the project exists. iOS: not planned; the engine is a pure Kotlin module so KMP stays possible later.
+Kotlin + Jetpack Compose (Material 3 as the base, heavily themed), Room, Proto DataStore, Hilt, Coroutines/Flow, kotlinx.serialization, Play Billing Library 8+, Rive runtime for character/mascot animation, Lottie only for simple decorative loops. Same family as AyaKasir, so rules and habits transfer. Exact versions are pinned in `android/gradle/libs.versions.toml` and mirrored in FILE_MAP.md once the project exists. iOS: native Swift app at launch (DECIDED 2026-10-22) — SwiftUI on the shared Kotlin core (`:core:model/engine/content` via Kotlin Multiplatform), built on Amar's Mac (DECIDED 2026-10-22); not started, plan in `docs/BUILD_PLAN.md` track I; App Store counterparts of the Play-specific decisions OPEN.
 
 ## Relationship to the Arabic trial (DECIDED 2026-10-16)
 
@@ -32,16 +32,24 @@ The Arabic course in `docs/` (Arabic_Course_Current_Plan.md, Lessons_Unit_A_B_Dr
 
 `prototype-expo/` (moved from `app/` on 2026-10-16) is the **Expo/React Native prototype** (TypeScript, 93 Jest tests, SQLite). It is reference material for the Kotlin port, not the product. Its scoring/freshness/session tests are the parity baseline for `:core:engine`; delete it only after the Kotlin engine passes the ported test suite.
 
-Spec deviations forced by "no backend" (DECIDED 2026-10-16, replaces Trial_App_Spec §12–13 upload/sync):
+Spec deviations forced by "no backend" (DECIDED 2026-10-16, replaces Trial_App_Spec §12–13 upload/sync; still the current client behaviour, revisit when sync ships):
 - Answers are never uploaded. Testers export a JSON/CSV bundle from Settings via the Android share sheet (email/WhatsApp to the team). Human-check of typed answers happens in a spreadsheet; recompute tool runs on the exported files.
 - Rule config ships bundled and versioned; an optional static-file override may be fetched when online (OPEN). Never required for the app to work.
 - Content review gating stays: only `review_status = approved` items are visible outside developer mode.
 
 ## Play policy posture (DECIDED 2026-10-16)
 
-Target audience declared as mixed (children + adults) → Google Play Families policy applies in full: neutral age screen at onboarding, no ads at all (so no ad-SDK certification needed), no third-party SDK that collects data from children (hence no Firebase/Sentry/analytics in the kids path — crash data comes from Android Vitals only), no AAID/IMEI/MAC access, no location, Play Billing only, purchase flow behind an adult gate on Anak profiles, no manipulative purchase prompts, real money always labelled as real money (no virtual currency). Privacy policy and Data Safety form must say "data stays on device". Teacher Approved opt-in: OPEN, after launch.
+Target audience declared as mixed (children + adults) → Google Play Families policy applies in full: neutral age screen at onboarding, no ads at all (so no ad-SDK certification needed), no third-party SDK that collects data from children (hence no Firebase/Sentry/analytics in the kids path — crash data comes from Android Vitals only), no AAID/IMEI/MAC access, no location, Play Billing only, purchase flow behind an adult gate on Anak profiles, no manipulative purchase prompts, real money always labelled as real money (no virtual currency). Privacy policy and Data Safety form must say "data stays on device" — until sync ships; then both change (go-live gates). Teacher Approved opt-in: OPEN, after launch.
 
 Store accounts already exist (AyaKasir publishes on Play). Closed testing with ≥ 12 testers for the Arabic track is still the plan before production.
+
+## Backend go-live gates (OPEN, 2026-10-22) — PR merge order: SESSION_LEARNINGS 2026-10-22
+
+- First sync release covers Adult **and** Anak profiles; withdrawing consent deletes the server copy (both DECIDED 2026-10-22). `backend/` is adult-only today: guardian ownership, per-profile consent and erasure come first — `docs/backend/FAMILY_SYNC_DESIGN.md` (PROPOSAL), BUILD_PLAN track B.
+- A Kotlin sync client for `backend/`'s v1 contract (PR #3's `:core:sync` targets `backend-umar/`, which is not the product backend).
+- Backend CI: `backend-gate` (prepared 2026-10-22, never run), the real GoTrue fixture launcher committed, and a generated curriculum registry (two pins have drifted).
+- Real-user export, deletion and retention; UU PDP review; privacy policy + Data Safety update; Cloud Run/Supabase billing owner and backups.
+- Every deployment, public endpoint or tunnel needs Umar's explicit approval at the time.
 
 ## Milestones (PLANNED 2026-10-16) — detailed phases P0–P9, environments and gates: `docs/BUILD_PLAN.md`
 

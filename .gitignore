@@ -49,3 +49,6 @@ android/app/release/
 android/app/debug/
 *.keystore
 __pycache__/
+
+# Claude handoff files (patches, bundles) — never committed
+Claude outputs/
