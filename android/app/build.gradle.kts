@@ -1,5 +1,9 @@
 import java.net.URI
+import java.security.GeneralSecurityException
+import java.security.KeyFactory
 import java.security.MessageDigest
+import java.security.spec.X509EncodedKeySpec
+import java.util.Base64
 import java.util.Locale
 
 // :app — DI wiring, navigation and feature screens (features split into modules when > ~40 files, CR-ARC-1).
@@ -34,6 +38,33 @@ val syncLabIdentitySuffix = if (syncLabPublicOrigin.isEmpty()) ".synclab" else {
     ".synclab.remote.r$digest"
 }
 
+val playLicenseKey = providers.gradleProperty("ayailmu.playLicenseKey").getOrElse("")
+
+fun validatePlayLicenseKey(required: Boolean): String {
+    val key = playLicenseKey.trim()
+    if (key.isEmpty()) {
+        require(!required) {
+            "checkPlayLicenseKey requires a nonempty Base64-encoded RSA X.509 public key in ayailmu.playLicenseKey"
+        }
+        return key
+    }
+    try {
+        val encoded = Base64.getDecoder().decode(key)
+        KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(encoded))
+    } catch (_: IllegalArgumentException) {
+        throw IllegalArgumentException("ayailmu.playLicenseKey must be a Base64-encoded RSA X.509 public key")
+    } catch (_: GeneralSecurityException) {
+        throw IllegalArgumentException("ayailmu.playLicenseKey must be a Base64-encoded RSA X.509 public key")
+    }
+    return key
+}
+
+tasks.register("checkPlayLicenseKey") {
+    group = "verification"
+    description = "Requires a syntactically usable Play licensing RSA public key; does not verify account ownership."
+    doLast { validatePlayLicenseKey(required = true) }
+}
+
 android {
     namespace = "id.petalytix.ayailmu"
     compileSdk = libs.versions.compileSdk.get().toInt()
@@ -53,8 +84,7 @@ android {
         // Play licence key (Play Console > Monetisation setup) for the local purchase signature check (CR-BIL-4).
         // Set `ayailmu.playLicenseKey=...` in ~/.gradle/gradle.properties on the build machine; never commit it.
         // Empty (the default) skips the check, which is fine for demo builds and before the Play app exists.
-        val playLicenseKey = providers.gradleProperty("ayailmu.playLicenseKey").getOrElse("")
-        buildConfigField("String", "PLAY_LICENSE_KEY", "\"$playLicenseKey\"")
+        buildConfigField("String", "PLAY_LICENSE_KEY", "\"${validatePlayLicenseKey(required = false)}\"")
     }
 
     // Two flavors (CR-ENG-2): demo shows unapproved content behind a draft banner; prod shows only approved items.
