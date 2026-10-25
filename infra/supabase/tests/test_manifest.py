@@ -1,6 +1,9 @@
 """Manifest/DSN validator tests. Offline: no database, no network, no real project. Run via run-tests.sh."""
 from __future__ import annotations
 
+import argparse
+import copy
+import importlib.util
 import json
 import os
 import re
@@ -13,8 +16,10 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # -I drops the script directory
-from common import (AYA_AUTH_REF, AYA_REF, DELETE, HERE, REPO, UMAR_AUTH_REF, UMAR_REF, hosted_identity, mutate, private_file,
-                    run_tool, supabase_manifest, write_json)
+from common import (AYA_AUTH_REF, AYA_REF, DELETE, HERE, REPO, UMAR_AUTH_REF, UMAR_REF, hosted_identity, local_manifest, mutate,
+                    private_file, run_tool, supabase_manifest, write_json)
+
+CANARY = "CANARY-9f3a1c77-do-not-echo"
 
 APP = "umar" if (REPO / "backend-umar").is_dir() else "ayangaji"
 EXAMPLE = HERE.parent / "target.example.json"
@@ -309,6 +314,144 @@ class PeerIsolation(Base):
         self.assertIn("REFUSED peer-same-app", r.stderr)
 
 
+class ExecutionPeerPolicy(Base):
+    """--execute on a Supabase-kind target needs a valid peer of the other app: the two-app isolation checks cannot be skipped
+    by leaving --peer out or by passing something that is not a manifest. Dry runs and offline inspection keep it optional."""
+
+    def setUp(self):
+        super().setUp()
+        self.other = "ayangaji" if APP == "umar" else "umar"
+        self.ref = self.doc["project"]["ref"]
+        self.approved = mutate(mutate(self.doc, "status", "owner-approved"), "approvals.migration", f"approved:{self.ref}:migration:2026-10-26")
+        self.approved = mutate(self.approved, "approvals.verify", f"approved:{self.ref}:verify:2026-10-26")
+        self.password = secrets.token_hex(16)
+        self.write_dsn(self.approved, "migration")
+        self.write_dsn(self.approved, "runtime")
+        # Everything an execution would start records itself: migrate binary and psql.
+        self.sentinel = self.tmp / "ran"
+        self.fake = self.tmp / "fake-migrate"
+        self.fake.write_text(f"#!/bin/sh\ntouch {self.sentinel}\n")
+        os.chmod(self.fake, 0o755)
+        self.bin = self.tmp / "bin"
+        self.bin.mkdir()
+        (self.bin / "psql").write_text(f"#!/bin/sh\ntouch {self.sentinel}\nexit 0\n")
+        os.chmod(self.bin / "psql", 0o755)
+
+    def write_dsn(self, doc, kind):
+        user = doc["roles"][kind]
+        if doc["database"]["connection_mode"] == "session-pooler":
+            user += "." + doc["project"]["ref"]
+        private_file(Path(doc["secrets"][f"{kind}_dsn_file"]),
+                     f"postgres://{user}:{self.password}@{doc['database']['host']}:5432/postgres?sslmode=verify-full&sslrootcert={self.ca}")
+
+    def peer_file(self, doc=None, name="peer.json"):
+        return str(write_json(self.tmp / name, doc if doc is not None else self.docs[self.other]))
+
+    def execute(self, command, doc=None, *extra):
+        self.sentinel.unlink(missing_ok=True)  # each run answers for itself
+        m = self.manifest(doc or self.approved)
+        if command == "migrate":
+            return run_tool("migrate", m, "--migrate-bin", str(self.fake), "--execute", "--confirm-project", self.ref, *extra)
+        return run_tool("verify", m, "--role", "runtime", "--psql-path", str(self.bin), "--execute", "--confirm-project", self.ref, *extra)
+
+    def test_execute_without_a_peer_is_refused_before_any_dsn_or_process_is_touched(self):
+        for kind in ("migration", "runtime"):  # the DSN files are gone: reading one would show up as a different refusal
+            Path(self.approved["secrets"][f"{kind}_dsn_file"]).unlink()
+        for command in ("migrate", "verify"):
+            r = self.execute(command)
+            self.assertEqual(r.returncode, 2, r.stdout + r.stderr)
+            self.assertIn("REFUSED peer-required ", r.stderr)
+            for other in ("secret-file", "dsn-", "gate-"):
+                self.assertNotIn(other, r.stderr, "refusal must come before the DSN and the gate")
+            self.assertFalse(self.sentinel.exists(), command)
+
+    def test_garbage_peers_cannot_stand_in_for_the_other_app(self):
+        broken = copy.deepcopy(self.docs[self.other])
+        broken["roles"] = CANARY
+        broken["runtime"] = [CANARY]
+        cases = {
+            "an empty object": {}, "an unknown app": {"app": "someone-else"}, "the same app": self.docs[APP],
+            "wrong types": broken, "an example": mutate(self.docs[self.other], "status", "example"),
+            "a local-test manifest": dict(self.docs[self.other], kind="local-test", status="local-test"),
+            "an incomplete one": mutate(self.docs[self.other], "project.ref", DELETE),
+        }
+        for name, peer in cases.items():
+            for command in ("migrate", "verify"):
+                with self.subTest(peer=name, command=command):
+                    r = self.execute(command, None, "--peer", self.peer_file(peer))
+                    self.assertEqual(r.returncode, 2, r.stdout + r.stderr)
+                    self.assertIn("REFUSED peer", r.stderr)
+                    self.assertNotIn("Traceback", r.stderr)
+                    self.assertNotIn(CANARY, r.stdout + r.stderr)
+                    self.assertFalse(self.sentinel.exists())
+        for name, text in {"not JSON": "{", "a list": "[]", "a string": '"x"'}.items():
+            (self.tmp / "raw.json").write_text(text)
+            for command in ("migrate", "verify"):
+                with self.subTest(peer=name, command=command):
+                    r = self.execute(command, None, "--peer", str(self.tmp / "raw.json"))
+                    self.assertNotEqual(r.returncode, 0)
+                    self.assertNotIn("Traceback", r.stderr)
+                    self.assertFalse(self.sentinel.exists())
+        r = self.execute("migrate", None, "--peer", str(self.tmp / "no-such-file.json"))
+        self.assertNotEqual(r.returncode, 0)
+        self.assertFalse(self.sentinel.exists())
+
+    def test_a_peer_that_shares_an_identity_is_still_refused_on_execution(self):
+        theirs = mutate(self.docs[self.other], "roles.runtime", self.doc["roles"]["runtime"])
+        r = self.execute("migrate", None, "--peer", self.peer_file(theirs))
+        self.assertEqual(r.returncode, 2)
+        self.assertIn("REFUSED peer-role ", r.stderr)
+        self.assertFalse(self.sentinel.exists())
+
+    def test_a_valid_distinct_app_peer_lets_the_gated_execution_run(self):
+        r = self.execute("migrate", None, "--peer", self.peer_file())
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertTrue(self.sentinel.exists())
+        self.sentinel.unlink()
+        r = self.execute("verify", None, "--peer", self.peer_file())
+        self.assertNotIn("REFUSED peer", r.stderr)
+        self.assertTrue(self.sentinel.exists(), "the gated verify reached psql")
+
+    def test_a_shared_session_pooler_endpoint_is_still_valid_for_execution(self):
+        pooled = {}
+        for app, doc in ((APP, self.approved), (self.other, self.docs[self.other])):
+            pooled[app] = mutate(mutate(doc, "database.connection_mode", "session-pooler"),
+                                 "database.host", "aws-0-ap-southeast-1.pooler.supabase.com")
+        self.assertEqual(pooled[APP]["database"]["host"], pooled[self.other]["database"]["host"])
+        self.write_dsn(pooled[APP], "migration")
+        r = self.execute("migrate", pooled[APP], "--peer", self.peer_file(pooled[self.other]))
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertTrue(self.sentinel.exists())
+
+    def test_dry_runs_and_offline_inspection_keep_the_peer_optional(self):
+        m = self.manifest(self.approved)
+        for args in (("validate", m), ("inventory", m), ("render-env", m, "--role", "runtime"), ("dsn-check", m, "--role", "runtime"),
+                     ("migrate", m, "--migrate-bin", str(self.fake)), ("verify", m, "--role", "runtime")):
+            with self.subTest(command=args[0]):
+                r = run_tool(*args)
+                self.assertNotIn("peer-required", r.stderr)
+                self.assertNotIn("Traceback", r.stderr)
+                if args[0] != "inventory":
+                    self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertFalse(self.sentinel.exists(), "dry runs execute nothing")
+
+    def test_an_invalid_peer_is_refused_for_offline_inspection_too(self):
+        r = run_tool("validate", self.manifest(self.approved), "--peer", self.peer_file({"app": self.other}))
+        self.assertEqual(r.returncode, 2)
+        self.assertIn("REFUSED peer", r.stderr)
+
+    def test_local_test_execution_stays_isolated_and_needs_no_peer(self):
+        tool = importlib.util.spec_from_file_location("target_peer_policy", HERE.parent / "supabase_target.py")
+        module = importlib.util.module_from_spec(tool)
+        tool.loader.exec_module(module)
+        local = local_manifest(APP, self.tmp, self.ca, 5999, "db", "ayailmu" if APP == "ayangaji" else "public",
+                               f"{'umar' if APP == 'umar' else 'aya'}_migrator", f"{'umar' if APP == 'umar' else 'aya'}_runtime")
+        args = argparse.Namespace(execute=True, peer=None, allow_local_test=True)
+        self.assertFalse([i for i in module.full_validate(args, local).items if i["code"] == "peer-required"])
+        remote = argparse.Namespace(execute=True, peer=None, allow_local_test=True)
+        self.assertEqual([i["code"] for i in module.full_validate(remote, self.approved).items], ["peer-required"])
+
+
 class DsnFiles(Base):
     def setUp(self):
         super().setUp()
@@ -406,8 +549,15 @@ class RenderAndGates(Base):
                              f"cat \"$AYA_DATABASE_URL_FILE\" 2>/dev/null; env | grep -c '^PG' >&2; exit 0\n")
         os.chmod(self.fake, 0o755)
 
+    def peer_args(self, *extra) -> tuple:
+        """An execution on a Supabase target must name the other app's valid manifest (see ExecutionPeerPolicy)."""
+        if "--execute" not in extra:
+            return ()
+        other = "ayangaji" if APP == "umar" else "umar"
+        return ("--peer", str(write_json(self.tmp / "peer.json", self.docs[other])))
+
     def migrate(self, doc=None, *extra):
-        return run_tool("migrate", self.manifest(doc), "--migrate-bin", str(self.fake), *extra)
+        return run_tool("migrate", self.manifest(doc), "--migrate-bin", str(self.fake), *extra, *self.peer_args(*extra))
 
     def test_render_env_is_secret_free(self):
         r = run_tool("render-env", self.manifest(), "--role", "runtime")
@@ -466,7 +616,7 @@ class RenderAndGates(Base):
         approved = mutate(mutate(self.doc, "status", "owner-approved"), "approvals.migration", f"approved:{ref}:migration:2026-10-26")
         self.fake.write_text(f"#!/bin/sh\ntouch {self.sentinel}\nenv | grep -c '^PG' || true\n")
         r = run_tool("migrate", self.manifest(approved), "--migrate-bin", str(self.fake), "--execute", "--confirm-project", ref,
-                     env_extra={"PGHOST": "evil.invalid", "PGSERVICE": "x", "AYA_MODE": "emulator", "UMAR_LISTEN": "0.0.0.0:1"})
+                     *self.peer_args("--execute"), env_extra={"PGHOST": "evil.invalid", "PGSERVICE": "x", "AYA_MODE": "emulator", "UMAR_LISTEN": "0.0.0.0:1"})
         self.assertEqual(r.returncode, 0, r.stderr)
         self.assertIn("\n0\n", "\n" + r.stdout, r.stdout)
 

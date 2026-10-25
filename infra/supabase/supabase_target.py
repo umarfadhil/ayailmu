@@ -194,6 +194,11 @@ def is_https_origin(s: str, port_ok: set[str] | None = None) -> bool:
     return is_public_dns_name(host)
 
 
+def unique_strings(v) -> bool:
+    """A non-empty list of distinct strings (checked before hashing, so a nested list or object is a finding, not a crash)."""
+    return isinstance(v, list) and bool(v) and all(isinstance(x, str) for x in v) and len(set(v)) == len(v)
+
+
 def canonical_ip(s: str) -> bool:
     try:
         return str(ipaddress.ip_address(s)) == s
@@ -269,7 +274,7 @@ def validate(doc: dict, *, allow_local_test: bool = False) -> Findings:
     if doc.get("schema_version") != SCHEMA_VERSION:
         f.add("schema-version", "schema_version", f"schema_version must be {SCHEMA_VERSION}")
     app = doc.get("app")
-    if app not in APPS:
+    if not isinstance(app, str) or app not in APPS:
         f.add("app", "app", "app must be 'umar' or 'ayangaji'")
         return f
     spec = APPS[app]
@@ -357,7 +362,11 @@ def validate(doc: dict, *, allow_local_test: bool = False) -> Findings:
         f.add("tls-root-ca-sha", "database.tls.root_ca_sha256", "root CA digest must be lowercase hex SHA-256", "D11")
 
     # 4. Roles.
-    roles = dig(doc, "roles") or {}
+    roles = dig(doc, "roles")
+    if roles is not None and not isinstance(roles, dict):
+        f.add("type", "roles", "roles must be an object with a migration and a runtime role", "D06")
+        roles = {}
+    roles = roles or {}
     mig, run = roles.get("migration"), roles.get("runtime")
     for key, val in (("migration", mig), ("runtime", run)):
         if not isinstance(val, str) or val.startswith("UNDECIDED"):
@@ -516,7 +525,11 @@ def _validate_hosted_identity_legacy(doc: dict, ref, place, ns, f: Findings) -> 
 
 
 def _validate_runtime(doc: dict, app: str, f: Findings) -> None:
-    rt = dig(doc, "runtime") or {}
+    rt = dig(doc, "runtime")
+    if rt is not None and not isinstance(rt, dict):
+        f.add("type", "runtime", "runtime must be an object", "D14")
+        rt = {}
+    rt = rt or {}
     if not str(rt.get("host_platform", "UNDECIDED")) or str(rt.get("host_platform", "UNDECIDED")).startswith("UNDECIDED"):
         f.add("runtime-host", "runtime.host_platform", "runtime host/platform open", "D14")
     listen = rt.get("listen")
@@ -531,17 +544,14 @@ def _validate_runtime(doc: dict, app: str, f: Findings) -> None:
         if not (isinstance(listen, str) and deploy_listen_ok(listen)):
             f.add("listen", "runtime.listen", "ayangaji deploy listen must be 0.0.0.0:<port> or 127.0.0.1:<port>")
         hosts = rt.get("allowed_hosts")
-        if not (isinstance(hosts, list) and hosts and len(set(hosts)) == len(hosts)
-                and all(isinstance(h, str) and is_public_dns_name(h.partition(":")[0]) for h in hosts)):
+        if not (unique_strings(hosts) and all(is_public_dns_name(h.partition(":")[0]) for h in hosts)):
             f.add("allowed-hosts", "runtime.allowed_hosts", "need at least one unique public DNS Host value", "D09")
         origins = rt.get("cors_origins")
-        if not (isinstance(origins, list) and origins and len(set(origins)) == len(origins)
-                and all(is_https_origin(o) for o in origins)):
+        if not (unique_strings(origins) and all(is_https_origin(o) for o in origins)):
             f.add("cors-origins", "runtime.cors_origins",
                   "production staging refuses native-only: at least one exact public https web origin is required", "D16")
         proxies = rt.get("trusted_proxies")
-        if not (isinstance(proxies, list) and proxies and len(set(proxies)) == len(proxies)
-                and all(is_unicast_ip_literal(p) for p in proxies)):
+        if not (unique_strings(proxies) and all(is_unicast_ip_literal(p) for p in proxies)):
             f.add("trusted-proxies", "runtime.trusted_proxies", "need unique canonical unicast IP literals", "D16")
         url = dig(doc, "auth.supabase_url")
         if not (isinstance(url, str) and is_https_origin(url, port_ok={"9443"})):
@@ -779,10 +789,23 @@ def print_findings(f: Findings, out=sys.stderr) -> None:
 
 
 def full_validate(args, doc: dict) -> Findings:
-    f = validate(doc, allow_local_test=getattr(args, "allow_local_test", False))
-    peer = getattr(args, "peer", None)
-    if peer:
-        f.items += peer_findings(doc, load_manifest(peer)).items
+    """The manifest's own findings plus its isolation from the other app's manifest.
+
+    The peer is optional for offline inspection and dry runs. It is required for --execute on a Supabase-kind target, because
+    this tool is what keeps the two apps' projects, roles, secrets and identity stores apart. Whenever a peer is given it must
+    itself validate under the same rules before it is compared, so a stub, a stale or a malformed file cannot stand in for it.
+    Everything here happens before any DSN file is read or any process is started."""
+    allow = getattr(args, "allow_local_test", False)
+    f = validate(doc, allow_local_test=allow)
+    peer_path = getattr(args, "peer", None)
+    if getattr(args, "execute", False) and doc.get("kind") != "local-test" and not peer_path:
+        f.add("peer-required", "--peer",
+              "--execute on a Supabase target needs --peer, the other app's valid manifest, to prove the two apps share no identity")
+    if peer_path:
+        peer = load_manifest(peer_path)
+        f.items += [dict(i, code="peer-invalid", path="peer:" + i["path"], message=f"peer manifest: {i['message']} ({i['code']})")
+                    for i in validate(peer, allow_local_test=allow).items]
+        f.items += peer_findings(doc, peer).items
     return f
 
 

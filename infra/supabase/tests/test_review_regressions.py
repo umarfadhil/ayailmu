@@ -2,7 +2,10 @@
 
 Offline only. Fabricated project identifiers are never resolved or contacted.
 """
+import argparse
+import copy
 import importlib.util
+import json
 import sys
 import tempfile
 import unittest
@@ -10,7 +13,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from common import DELETE, TOOL, mutate, supabase_manifest
+from common import DELETE, TOOL, local_manifest, mutate, run_tool, supabase_manifest, write_json
 
 spec = importlib.util.spec_from_file_location("target_review", TOOL)
 target = importlib.util.module_from_spec(spec)
@@ -93,6 +96,125 @@ class ReviewRegressions(unittest.TestCase):
         shared = mutate(shared, "auth.database.name", docs[0]["auth"]["database"]["name"])
         self.assertTrue(target.peer_findings(docs[0], shared).items,
                         "the two apps may not share the same identity database")
+
+
+# A value that must never be echoed back by a finding, however wrongly typed the field that carried it.
+CANARY = "CANARY-9f3a1c77-do-not-echo"
+WRONG_VALUES = (None, "", CANARY, 0, 7, True, 1.5, [], {}, [CANARY], [{}], [[]], [[CANARY]], [{"k": CANARY}], [None], [1], ["a", "a"],
+                {"k": CANARY}, {"k": {"k": [CANARY]}}, [CANARY, CANARY])
+
+
+def node_paths(doc, prefix=()):
+    """Every dotted location of a manifest, nodes and leaves alike."""
+    if isinstance(doc, dict):
+        for key, value in doc.items():
+            yield prefix + (key,)
+            yield from node_paths(value, prefix + (key,))
+
+
+class MalformedManifestTypes(unittest.TestCase):
+    """A wrongly typed field is a structured, sanitized finding: no traceback, no echoed value, nothing executed."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory(prefix="infra-types-")
+        self.addCleanup(self.tmp.cleanup)
+        self.base = Path(self.tmp.name)
+        self.ca = self.base / "root.pem"
+        self.ca.write_text("public fabricated CA bytes")
+
+    def with_value(self, doc, path, value):
+        out = copy.deepcopy(doc)
+        cur = out
+        for part in path[:-1]:
+            cur = cur[part]
+        cur[path[-1]] = copy.deepcopy(value)
+        return out
+
+    def assertSanitized(self, findings, context):
+        self.assertIsInstance(findings.items, list, context)
+        text = json.dumps(findings.items)
+        self.assertNotIn(CANARY, text, f"a finding echoed a manifest value: {context}")
+
+    def test_no_wrongly_typed_field_raises_or_echoes_its_value(self):
+        for app in ("umar", "ayangaji"):
+            base = supabase_manifest(app, self.base, self.ca)
+            self.assertFalse(target.validate(base).items)
+            paths = [()] + list(node_paths(base))
+            for path in paths:
+                for value in WRONG_VALUES:
+                    doc = value if not path else self.with_value(base, path, value)
+                    if not isinstance(doc, dict):
+                        continue  # a non-object document is refused by load_manifest before validation
+                    context = f"{app} {'.'.join(path) or '<root>'}={type(value).__name__}"
+                    try:
+                        findings = target.validate(doc)
+                    except Exception as err:  # noqa: BLE001
+                        self.fail(f"{context} raised {type(err).__name__}")
+                    self.assertSanitized(findings, context)
+
+    def test_named_review_cases_are_refused_with_a_structured_finding(self):
+        cases = {
+            "roles": ("roles", "not-an-object"), "runtime": ("runtime", CANARY),
+        }
+        for app in ("umar", "ayangaji"):
+            doc = supabase_manifest(app, self.base, self.ca)
+            for name, (key, value) in cases.items():
+                with self.subTest(app=app, case=name):
+                    findings = target.validate(mutate(doc, key, value))
+                    self.assertTrue(any(i["code"] == "type" and i["path"] == key for i in findings.items), findings.items)
+                    self.assertSanitized(findings, name)
+            if app != "ayangaji":
+                continue
+            for key, code in (("allowed_hosts", "allowed-hosts"), ("cors_origins", "cors-origins"), ("trusted_proxies", "trusted-proxies")):
+                for value in ([{}], [[]], [{"k": CANARY}], [[CANARY], [CANARY]], [CANARY, {}]):
+                    with self.subTest(app=app, key=key, value=str(value)):
+                        findings = target.validate(mutate(doc, "runtime." + key, value))
+                        self.assertTrue(any(i["code"] == code for i in findings.items), findings.items)
+                        self.assertSanitized(findings, key)
+
+    def test_the_command_line_refuses_without_a_traceback_and_executes_nothing(self):
+        sentinel = self.base / "ran"
+        fake = self.base / "fake-migrate"
+        fake.write_text(f"#!/bin/sh\ntouch {sentinel}\n")
+        fake.chmod(0o755)
+        for app in ("umar", "ayangaji"):
+            doc = supabase_manifest(app, self.base, self.ca)
+            doc["status"] = "owner-approved"
+            ref = doc["project"]["ref"]
+            doc["approvals"]["migration"] = f"approved:{ref}:migration:2026-10-26"
+            for key, value in (("roles", CANARY), ("runtime", [CANARY]), ("roles", [{}]), ("auth", [CANARY]), ("database", CANARY)):
+                bad = write_json(self.base / "bad.json", mutate(doc, key, value))
+                for command in (("validate", str(bad)), ("inventory", str(bad)), ("render-env", str(bad), "--role", "runtime"),
+                                ("dsn-check", str(bad), "--role", "runtime"),
+                                ("migrate", str(bad), "--migrate-bin", str(fake), "--execute", "--confirm-project", ref),
+                                ("verify", str(bad), "--role", "runtime", "--execute", "--confirm-project", ref)):
+                    with self.subTest(app=app, key=key, command=command[0]):
+                        r = run_tool(*command)
+                        text = r.stdout + r.stderr
+                        self.assertNotIn("Traceback", text)
+                        self.assertNotIn(CANARY, text)
+                        if command[0] not in ("inventory",):
+                            self.assertEqual(r.returncode, 2, text)
+                        self.assertFalse(sentinel.exists(), "a refused manifest must not run anything")
+
+    def test_a_peer_of_the_wrong_types_is_refused_not_a_crash(self):
+        for app, other in (("umar", "ayangaji"), ("ayangaji", "umar")):
+            mine = supabase_manifest(app, self.base, self.ca)
+            theirs = supabase_manifest(other, self.base, self.ca)
+            self.assertFalse(target.peer_findings(mine, theirs).items)
+            for path in [()] + list(node_paths(theirs)):
+                for value in WRONG_VALUES:
+                    doc = value if not path else self.with_value(theirs, path, value)
+                    if not isinstance(doc, dict):
+                        continue
+                    context = f"peer {'.'.join(path) or '<root>'}={type(value).__name__}"
+                    try:
+                        findings = target.peer_findings(mine, doc)
+                        validated = target.validate(doc)
+                    except Exception as err:  # noqa: BLE001
+                        self.fail(f"{context} raised {type(err).__name__}")
+                    self.assertSanitized(findings, context)
+                    self.assertSanitized(validated, context)
 
 
 if __name__ == "__main__":

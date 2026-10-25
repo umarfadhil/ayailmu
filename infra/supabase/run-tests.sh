@@ -5,16 +5,27 @@
 set -eu
 here=$(cd "$(dirname "$0")" && pwd)
 repo=$(cd "$here/../.." && pwd)
-PY=${PYTHON:-python3}
+PY="${PYTHON:-python3} -B"  # -B: importing the tools must not write bytecode into the tree
 cd "$here"
 echo "== 1. offline manifest / DSN / wrapper tests"
 $PY -I tests/test_manifest.py
 $PY -I tests/test_review_regressions.py
+$PY -I tests/test_run_tests_script.py
 if [ -d "$repo/backend-umar" ]; then
   echo "== 2. Umar lifecycle on disposable PostgreSQL (TLS, real binaries)"
   $PY -I -W error::ResourceWarning tests/test_umar_local.py
   echo "== 3. Umar application suite (existing scripts/integration.sh, race detector, fresh cluster)"
-  (cd "$repo/backend-umar" && GO=${GO:-go} sh scripts/integration.sh >/tmp/infra-umar-suite.$$.log 2>&1; rc=$?; grep -E '^(ok|FAIL|---)' /tmp/infra-umar-suite.$$.log | grep -v '^--- PASS' || true; rm -f /tmp/infra-umar-suite.$$.log; exit $rc)
+  # begin: umar-suite (tests/test_run_tests_script.py runs exactly this block against a fake integration script)
+  (
+    cd "$repo/backend-umar"
+    log=$(mktemp "${TMPDIR:-/tmp}/infra-umar-suite.XXXXXX")
+    rc=0
+    GO=${GO:-go} sh scripts/integration.sh >"$log" 2>&1 || rc=$?
+    grep -E '^(ok|FAIL|---)' "$log" | grep -v '^--- PASS' || true
+    rm -f "$log"
+    exit $rc
+  )
+  # end: umar-suite
 else
   echo "== 2. Ayangaji lifecycle on disposable PostgreSQL (TLS, real binaries, real config loader)"
   $PY -I -W error::ResourceWarning tests/test_ayangaji_local.py
