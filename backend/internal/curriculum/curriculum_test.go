@@ -34,7 +34,13 @@ var packCases = []packCase{
 func (c packCase) file(t *testing.T) string {
 	t.Helper()
 	if !c.expo {
-		return filepath.Join("..", "..", "..", filepath.FromSlash(c.path))
+		// Default: this repository. A frontend-only checkout has no android/ tree; AYA_TEST_ANDROID_PACKS_ROOT then names a
+		// directory holding the same paths (infra/catalog/pinned-android-packs). The pins and byte checks are unchanged.
+		root := os.Getenv("AYA_TEST_ANDROID_PACKS_ROOT")
+		if root == "" {
+			root = filepath.Join("..", "..", "..")
+		}
+		return filepath.Join(root, filepath.FromSlash(c.path))
 	}
 	dir := os.Getenv("AYA_TEST_EXPO_FIXTURES_DIR")
 	if dir == "" {
