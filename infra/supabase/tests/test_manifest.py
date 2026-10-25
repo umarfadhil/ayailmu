@@ -13,8 +13,8 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # -I drops the script directory
-from common import (AYA_AUTH_REF, AYA_REF, DELETE, HERE, REPO, UMAR_AUTH_REF, UMAR_REF, mutate, private_file, run_tool,
-                    supabase_manifest, write_json)
+from common import (AYA_AUTH_REF, AYA_REF, DELETE, HERE, REPO, UMAR_AUTH_REF, UMAR_REF, hosted_identity, mutate, private_file,
+                    run_tool, supabase_manifest, write_json)
 
 APP = "umar" if (REPO / "backend-umar").is_dir() else "ayangaji"
 EXAMPLE = HERE.parent / "target.example.json"
@@ -133,15 +133,24 @@ class Refusals(Base):
             self.assertRefused(mutate(d, "auth.supabase_url", "https://other.ayangaji-fixture.net:9443"), "auth-url-host")
         else:
             self.assertRefused(with_path, "auth-origin")
-        for ns in ("auth", "public", "storage", "pg_catalog"):
-            self.assertRefused(mutate(d, "auth.database.namespace", ns), "auth-namespace")
+        # The supported identity store is a separate self-hosted PostgreSQL that keeps the vendor `auth` namespace.
+        self.assertEqual(self.validate(d).returncode, 0)
+        for ns in ("gotrue_x", "public", "storage", "pg_catalog", "Auth", "", None, 7, ["auth"]):
+            self.assertRefused(mutate(d, "auth.database.namespace", ns), "auth-namespace" if isinstance(ns, str) and ns else "missing")
         self.assertRefused(mutate(d, "auth.database.namespace", d["database"]["schema"]), "auth-namespace")
         self.assertRefused(mutate(d, "auth.database.role", "supabase_auth_admin"), "auth-role")
-        self.assertRefused(mutate(d, "auth.database.project_ref", d["project"]["ref"]), "auth-project")
-        shared = mutate(mutate(d, "auth.database.placement", "same-project-dedicated-schema"), "auth.database.project_ref", d["project"]["ref"])
-        self.assertRefused(shared, "auth-shared-domain")
-        accepted = mutate(shared, "auth.database.accepts_shared_failure_domain", True)
-        self.assertEqual(self.validate(accepted).returncode, 0)
+        self.assertRefused(mutate(d, "auth.database.role", d["roles"]["runtime"]), "auth-role")
+        # The earlier hosted placements are not proven with the pinned GoTrue and are refused, with their old findings kept.
+        for placement in ("dedicated-project", "same-project-dedicated-schema"):
+            hosted = hosted_identity(d, placement)
+            self.assertRefused(hosted, "auth-placement-unsupported")
+            for ns in ("auth", "public", "storage", "pg_catalog"):
+                self.assertRefused(mutate(hosted, "auth.database.namespace", ns), "auth-namespace")
+        dedicated = hosted_identity(d)
+        self.assertRefused(mutate(dedicated, "auth.database.project_ref", d["project"]["ref"]), "auth-project")
+        self.assertRefused(mutate(hosted_identity(d, "same-project-dedicated-schema"), "auth.database.accepts_shared_failure_domain", False),
+                           "auth-shared-domain")
+        self.assertRefused(mutate(d, "auth.database.placement", "somewhere-else"), "auth-placement")
         self.assertRefused(mutate(d, "auth.smtp.provider", "UNDECIDED:D10"), "smtp")
 
     def test_umar_rules(self):
@@ -164,6 +173,83 @@ class Refusals(Base):
         self.assertRefused(mutate(d, "secrets.admin_key_file", d["secrets"]["runtime_dsn_file"]), "secret-reuse")
 
 
+class SelfHostedIdentity(Base):
+    """Required-field, type and mixed-topology rules of the self-hosted identity placement (offline, fabricated values)."""
+
+    def test_each_identity_field_is_required_and_typed(self):
+        for field in ("placement", "instance_id", "name", "namespace", "role"):
+            for bad in (DELETE, None, "", 5, True, ["x"], {"a": 1}):
+                with self.subTest(field=field, bad=repr(bad)):
+                    self.assertEqual(self.validate(mutate(self.doc, f"auth.database.{field}", bad)).returncode, 2)
+        self.assertEqual(self.validate(mutate(self.doc, "auth.database", DELETE)).returncode, 2)
+        for bad in (None, [], "auth", 5):
+            self.assertEqual(self.validate(mutate(self.doc, "auth.database", bad)).returncode, 2)
+        for bad in ("Upper", "-lead", "with space", "x", "a" * 64, "under_score", "dot.ted"):
+            self.assertRefused(mutate(self.doc, "auth.database.instance_id", bad), "auth-instance")
+        for bad in ("Upper", "1lead", "with-dash", "a" * 64, "postgres", "template0", "template1", "pg_identity"):
+            self.assertRefused(mutate(self.doc, "auth.database.name", bad), "auth-database-name")
+        self.assertRefused(mutate(self.doc, "auth.database.instance_id", self.doc["project"]["ref"]), "auth-instance")
+        self.assertRefused(mutate(self.doc, "auth.database.instance_id", "UNDECIDED:D08"), "undecided")
+
+    def test_hosted_and_credential_fields_make_a_mixed_topology(self):
+        for key, value in (("project_ref", AYA_AUTH_REF), ("accepts_shared_failure_domain", True)):
+            self.assertRefused(mutate(self.doc, f"auth.database.{key}", value), "auth-mixed-topology")
+        for key in ("dsn", "password", "host", "port", "url", "token", "connection_string", "dsn_file"):
+            r = self.assertRefused(mutate(self.doc, f"auth.database.{key}", "never-echoed-value-123456"), "auth-identity-field")
+            self.assertNotIn("never-echoed-value-123456", r.stdout + r.stderr)
+
+    def test_a_connection_string_is_refused_wherever_it_appears(self):
+        secret = "s3cretpassw0rdvalue99"
+        for dotted in ("auth.database.name", "auth.database.role", "auth.smtp.provider", "backup.strategy", "organization.slug"):
+            bad = mutate(self.doc, dotted, f"postgres://identity:{secret}@10.0.0.9:5432/x")
+            r = self.assertRefused(bad, "manifest-credential")
+            self.assertNotIn(secret, r.stdout + r.stderr)
+        r = self.assertRefused(mutate(self.doc, "auth.database.extra", f"postgresql://u:{secret}@h/d"), "manifest-credential")
+        self.assertNotIn(secret, r.stdout + r.stderr)
+
+    def test_placement_and_namespace_do_not_cross(self):
+        # Vendor namespace `auth` is allowed only with the self-hosted placement; never with a hosted one.
+        for placement in ("dedicated-project", "same-project-dedicated-schema"):
+            r = self.assertRefused(mutate(hosted_identity(self.doc, placement), "auth.database.namespace", "auth"), "auth-namespace")
+            self.assertIn("auth-placement-unsupported", r.stderr)
+        mixed = mutate(self.doc, "auth.database.placement", "dedicated-project")
+        self.assertRefused(mixed, "auth-placement-unsupported")
+        self.assertRefused(mixed, "auth-namespace")
+        self.assertRefused(mutate(self.doc, "auth.database.placement", "UNDECIDED:D08"), "undecided")
+
+    def test_hosted_confusion_is_still_refused_with_the_new_default(self):
+        d = self.doc
+        hosted = "https://" + d["project"]["ref"] + ".supabase.co"
+        self.assertRefused(mutate(mutate(d, "auth.public_origin", hosted), "auth.issuer", hosted), "auth-hosted")
+        self.assertRefused(mutate(d, "auth.provider", "supabase-hosted"), "auth-provider")
+
+    def test_wrapper_surfaces_only_the_application_database(self):
+        d = self.doc
+        ident = d["auth"]["database"]
+        path = self.manifest()
+        for args in (("render-env", path, "--role", "migration"), ("render-env", path, "--role", "runtime"),
+                     ("migrate", path, "--migrate-bin", "/usr/bin/true"), ("verify", path, "--role", "migration")):
+            r = run_tool(*args)
+            for value in (ident["instance_id"], ident["name"], ident["role"]):
+                self.assertNotIn(value, r.stdout + r.stderr, args[0])
+        # An identity-database connection string is not accepted as an application target.
+        pw = secrets.token_hex(16)
+        dsn = f"postgres://{d['roles']['migration']}:{pw}@{ident['instance_id']}.fixture.net:5432/{ident['name']}?sslmode=verify-full&sslrootcert={self.ca}"
+        private_file(Path(d["secrets"]["migration_dsn_file"]), dsn)
+        r = run_tool("dsn-check", path, "--role", "migration")
+        self.assertEqual(r.returncode, 2)
+        self.assertIn("REFUSED dsn-target ", r.stderr)
+        self.assertNotIn(pw, r.stdout + r.stderr)
+
+    def test_example_template_declares_the_self_hosted_topology(self):
+        ident = json.loads(EXAMPLE.read_text())["auth"]["database"]
+        self.assertEqual(ident["placement"], "self-hosted-postgres")
+        self.assertEqual(ident["namespace"], "auth")
+        self.assertNotIn("project_ref", ident)
+        self.assertEqual(set(ident), {"placement", "instance_id", "name", "namespace", "role"})
+        self.assertTrue(ident["instance_id"].startswith("UNDECIDED:D08") and ident["name"].startswith("UNDECIDED:D08"))
+
+
 class PeerIsolation(Base):
     def peer(self, a, b, *extra):
         pa = self.manifest(a, "a.json")
@@ -181,7 +267,8 @@ class PeerIsolation(Base):
             "peer-project": mutate(theirs, "project.ref", mine["project"]["ref"]),
             "peer-host": mutate(theirs, "database.host", mine["database"]["host"]),
             "peer-issuer": mutate(mutate(theirs, "auth.public_origin", mine["auth"]["public_origin"]), "auth.issuer", mine["auth"]["issuer"]),
-            "peer-auth-project": mutate(theirs, "auth.database.project_ref", mine["auth"]["database"]["project_ref"]),
+            "peer-auth-database": mutate(mutate(theirs, "auth.database.instance_id", mine["auth"]["database"]["instance_id"]),
+                                         "auth.database.name", mine["auth"]["database"]["name"]),
             "peer-secret": mutate(theirs, "secrets.runtime_dsn_file", mine["secrets"]["runtime_dsn_file"]),
             "peer-role": mutate(theirs, "roles.runtime", mine["roles"]["runtime"]),
             "peer-listen": mutate(theirs, "runtime.listen", mine["runtime"]["listen"]),
@@ -189,6 +276,32 @@ class PeerIsolation(Base):
         for code, bad in cases.items():
             r = self.peer(mine, bad)
             self.assertEqual(r.returncode, 2, code)
+            self.assertIn(f"REFUSED {code} ", r.stderr)
+
+    def test_identity_stores_are_kept_apart(self):
+        other = "ayangaji" if APP == "umar" else "umar"
+        mine, theirs = self.docs[APP], self.docs[other]
+        # The same vendor namespace name in two different identity databases is not shared storage.
+        self.assertEqual(mine["auth"]["database"]["namespace"], theirs["auth"]["database"]["namespace"])
+        self.assertEqual(self.peer(mine, theirs).returncode, 0)
+        same_instance = mutate(theirs, "auth.database.instance_id", mine["auth"]["database"]["instance_id"])
+        self.assertEqual(self.peer(mine, same_instance).returncode, 0, "one instance with two databases is a separate store")
+        same_name = mutate(theirs, "auth.database.name", mine["auth"]["database"]["name"])
+        self.assertEqual(self.peer(mine, same_name).returncode, 0, "the same database name on two instances is a separate store")
+        # An identity instance may not be either application's project.
+        r = self.peer(mine, mutate(theirs, "auth.database.instance_id", mine["project"]["ref"]))
+        self.assertEqual(r.returncode, 2)
+        self.assertIn("REFUSED peer-auth-project ", r.stderr)
+        r = self.peer(mutate(mine, "auth.database.instance_id", theirs["project"]["ref"]), theirs)
+        self.assertEqual(r.returncode, 2)
+        self.assertIn("REFUSED peer-auth-project ", r.stderr)
+        # Hosted topologies still collide when they name the same identity project and namespace.
+        a, b = hosted_identity(mine), hosted_identity(theirs)
+        b = mutate(mutate(b, "auth.database.project_ref", a["auth"]["database"]["project_ref"]),
+                   "auth.database.namespace", a["auth"]["database"]["namespace"])
+        r = self.peer(a, b)
+        self.assertEqual(r.returncode, 2)
+        for code in ("peer-auth-project", "peer-auth-database", "peer-auth-namespace"):
             self.assertIn(f"REFUSED {code} ", r.stderr)
 
     def test_same_app_twice_is_refused(self):

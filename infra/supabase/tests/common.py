@@ -64,8 +64,9 @@ def supabase_manifest(app: str, base: Path, ca: Path) -> dict:
         "auth": {
             "provider": "standalone-gotrue", "audience": "authenticated",
             "public_origin": f"https://auth.{app}-fixture.net", "issuer": f"https://auth.{app}-fixture.net",
-            "database": {"placement": "dedicated-project", "project_ref": UMAR_AUTH_REF if umar else AYA_AUTH_REF,
-                         "namespace": "gotrue_umar" if umar else "gotrue_aya", "role": pre + "gotrue"},
+            # The supported topology: a separate, self-hosted identity PostgreSQL that keeps the vendor's `auth` namespace.
+            "database": {"placement": "self-hosted-postgres", "instance_id": f"{app}-identity-db", "name": f"{app}_identity",
+                         "namespace": "auth", "role": pre + "gotrue"},
             "smtp": {"provider": "fixture-smtp"},
         },
         "runtime": {"host_platform": "fixture-vm"},
@@ -82,6 +83,22 @@ def supabase_manifest(app: str, base: Path, ca: Path) -> dict:
         doc["auth"]["supabase_url"] = "https://auth.ayangaji-fixture.net:9443"
         doc["secrets"]["admin_key_file"] = str(base / "aya-admin.key")
     return doc
+
+
+def hosted_identity(doc: dict, placement: str = "dedicated-project") -> dict:
+    """The earlier hosted topologies (a Supabase identity project, or a schema inside the application project). The pinned
+    GoTrue v2.197.0 cannot run in a custom namespace on them (real probe: 42501), so the validator refuses them."""
+    out = copy.deepcopy(doc)
+    umar = out["app"] == "umar"
+    ident = out["auth"]["database"]
+    for key in ("instance_id", "name"):
+        ident.pop(key, None)
+    ident["placement"] = placement
+    ident["namespace"] = "gotrue_umar" if umar else "gotrue_aya"
+    ident["project_ref"] = (UMAR_AUTH_REF if umar else AYA_AUTH_REF) if placement == "dedicated-project" else out["project"]["ref"]
+    if placement == "same-project-dedicated-schema":
+        ident["accepts_shared_failure_domain"] = True
+    return out
 
 
 def local_manifest(app: str, base: Path, ca: Path, port: int, db: str, schema: str, migration: str, runtime: str) -> dict:

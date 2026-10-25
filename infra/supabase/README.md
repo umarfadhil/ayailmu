@@ -31,7 +31,7 @@ Supabase Auth, no PostgREST/Data API, and no sharing of data models with the adu
   and `--confirm-project <ref>`. Local throwaway targets (`kind: local-test`) additionally need `--allow-local-test`.
 * The validator refuses: example/placeholder/`UNDECIDED` values, transaction pooling (port 6543), non-`verify-full` TLS,
   host/ref/region mismatches, reserved roles (`postgres`, `anon`, `service_role`, `supabase_*`), role-prefix mixes, shared
-  migration/runtime roles or secret files, secret paths inside git, a hosted `auth` namespace for GoTrue, an issuer that is
+  migration/runtime roles or secret files, secret paths inside git, a hosted identity placement or any non-`auth` namespace for GoTrue (the supported identity store is a separate self-hosted database), an issuer that is
   not an exact public https origin, and — with `--peer` — any identity shared with the other app's manifest.
 * Root CA integrity: the manifest pins the SHA-256 of the Supabase root certificate file; `dsn-check` re-hashes it.
 
@@ -76,7 +76,14 @@ the project's PostgreSQL major version, IPv6 reachability).
 * **U3 Synthetic-only by schema.** Real learner data is impossible by design; a Supabase target would be synthetic staging.
 * **U4 No `UMAR_DATABASE_URL_FILE`.** The runtime password must be in the process environment (use the host's credential
   mechanism with a 0600 environment file). Changing this is an application change, not made here.
-* **U5 GoTrue on Supabase PostgreSQL is untested.** The pinned GoTrue vendor migrations assume a `postgres` role and an `auth`
-  schema; a hosted project already owns `auth`. A non-`auth` `GOTRUE_DB_NAMESPACE` on Supabase must be proven with the pinned
-  image before it is relied upon (Docker was out of scope here). Never point the lab init SQL at a hosted `auth` schema.
+* **U5 Identity database topology (resolved, with a real vendor proof).** The pinned GoTrue v2.197.0 migration
+  `00_init_auth_schema.up.sql` hard-codes `auth.users`; with `GOTRUE_DB_NAMESPACE=gotrue_probe` against a protected reserved `auth`
+  schema it failed with `42501`. A custom namespace on Supabase (a dedicated identity project or a schema in the application
+  project) is therefore not a working placement and the validator refuses `dedicated-project` and
+  `same-project-dedicated-schema` (`auth-placement-unsupported`). The supported topology is `placement: self-hosted-postgres`:
+  a separate self-hosted identity database (`instance_id` + `name`), namespace exactly `auth`, dedicated non-admin `role`.
+  Both apps may use `auth` in different identity databases; the same instance and database is refused (`--peer`). Manifests
+  carry identifiers only (never an identity DSN) and the wrapper touches only the application database. This was proven against
+  the pinned image in the Ayangaji clone; this clone only changed the shared validator and tests. Never point the lab init SQL at a
+  hosted `auth` schema.
 * **U6** PostgreSQL major: Umar's lab uses 17, local tests here ran 16.3; Supabase's version is D15.
