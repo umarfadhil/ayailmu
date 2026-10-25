@@ -1,0 +1,147 @@
+name: Ayangaji infra readiness
+
+# Infra readiness for the adult (Ayangaji) backend and its Supabase/real-auth tooling, on a standard free hosted Ubuntu runner.
+# This workflow only tests: no secrets, no deployment, no publish, no store upload, no paid runner or service. Read-only token.
+# It checks out THIS branch (source/) and the companion AyaIlmu/Umar integration branch of the same repository (peer/) side by
+# side. The two integration refs are an intentional pair and are published together; the branch name below is a deliberate
+# companion mapping, not a claim about an immutable pair of commit hashes (see infra/ci/README.md).
+
+on:
+  pull_request:
+    paths:
+      - "infra/**"
+      - "backend/**"
+      - "deploy/**"
+      - "app/src/content/fixtures/**"
+      - ".github/workflows/ayangaji-infra-readiness.yml"
+  push:
+    branches:
+      - main
+      - integration/ayangaji-infra-ci-20261025
+    paths:
+      - "infra/**"
+      - "backend/**"
+      - "deploy/**"
+      - "app/src/content/fixtures/**"
+      - ".github/workflows/ayangaji-infra-readiness.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ayangaji-infra-readiness-${{ github.repository }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+env:
+  PEER_REF: integration/ayailmu-infra-ci-20261025
+  PG_BIN: /usr/lib/postgresql/16/bin
+  PYTHONDONTWRITEBYTECODE: "1"
+
+jobs:
+  readiness:
+    name: "readiness: sh infra/supabase/run-tests.sh (source + companion)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      INFRA_PEER_CLONE: ${{ github.workspace }}/peer
+      AYA_CURRENT_EXPO_FIXTURES_DIR: ${{ github.workspace }}/source/app/src/content/fixtures
+    steps:
+      - name: Set the runner-owned task root (Go caches, logs, real-auth runtime)
+        run: echo "AYA_CI_ROOT=$RUNNER_TEMP/aya-ci" >> "$GITHUB_ENV"
+
+      # The default pull_request ref is a merge commit; check out the real head instead.
+      - name: Check out the source (this branch)
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          path: source
+          persist-credentials: false
+
+      - name: Check out the companion AyaIlmu/Umar integration branch (same repository)
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ env.PEER_REF }}
+          path: peer
+          persist-credentials: false
+
+      - name: Log and verify the resolved source and peer SHAs
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          source_sha="$(git -C source rev-parse HEAD)"
+          peer_sha="$(git -C peer rev-parse HEAD)"
+          [ "$source_sha" = "$EXPECTED_SHA" ] || { echo "source is $source_sha, expected $EXPECTED_SHA" >&2; exit 1; }
+          [ -f peer/backend-umar/go.mod ] || { echo "peer $PEER_REF has no backend-umar/go.mod" >&2; exit 1; }
+          echo "source: $source_sha (this branch)"
+          echo "peer:   $peer_sha ($PEER_REF)"
+          echo "INFRA_PEER_CLONE=$INFRA_PEER_CLONE AYA_CURRENT_EXPO_FIXTURES_DIR=$AYA_CURRENT_EXPO_FIXTURES_DIR"
+          {
+            echo "### Resolved checkouts"
+            echo "- source: \`$source_sha\`"
+            echo "- peer (\`$PEER_REF\`): \`$peer_sha\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Set up Go 1.27.2
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version: "1.27.2"
+          cache: false
+
+      - name: Install PostgreSQL 16 binaries
+        run: sh source/infra/ci/install-postgres16-ubuntu.sh
+
+      - name: Resolve localhost to IPv4 only (the transport tests use an IPv4-only loopback stub)
+        run: sh source/infra/ci/ipv4-localhost.sh
+
+      - name: Check tools
+        run: sh source/infra/ci/check-tools.sh
+
+      - name: Warm both Go module graphs (the only networked Go step)
+        run: sh source/infra/ci/warm-go.sh "$GITHUB_WORKSPACE/source" "$INFRA_PEER_CLONE"
+
+      - name: Full infra/supabase/run-tests.sh (Go offline, zero skips)
+        run: sh source/infra/ci/run-readiness.sh --peer "$INFRA_PEER_CLONE" --fixtures "$AYA_CURRENT_EXPO_FIXTURES_DIR"
+
+  real-auth:
+    name: "real-auth: --full --race with real GoTrue (zero skips)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      DOCKER_HOST: unix:///var/run/docker.sock
+    steps:
+      - name: Set the runner-owned task root (Go caches, logs, real-auth runtime)
+        run: echo "AYA_CI_ROOT=$RUNNER_TEMP/aya-ci" >> "$GITHUB_ENV"
+
+      - name: Check out the source (this branch)
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          path: source
+          persist-credentials: false
+
+      - name: Log the resolved source SHA
+        run: |
+          echo "source: $(git -C source rev-parse HEAD) (this branch; the companion checkout is not needed here)"
+
+      - name: Set up Go 1.27.2
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version: "1.27.2"
+          cache: false
+
+      - name: Install PostgreSQL 16 binaries
+        run: sh source/infra/ci/install-postgres16-ubuntu.sh
+
+      - name: Resolve localhost to IPv4 only (the transport tests use an IPv4-only loopback stub)
+        run: sh source/infra/ci/ipv4-localhost.sh
+
+      - name: Check tools (including the Docker daemon)
+        run: sh source/infra/ci/check-tools.sh --real-auth
+
+      - name: Warm the Go module graph (the only networked Go step)
+        run: sh source/infra/ci/warm-go.sh "$GITHUB_WORKSPACE/source"
+
+      - name: Pre-cache the pinned public images, then run the full race suite
+        run: sh source/infra/ci/run-real-auth.sh
