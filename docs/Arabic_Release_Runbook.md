@@ -1,11 +1,13 @@
-# Ayangaji release runbook
+# AyaFasih release runbook
 
-Status: read-only preparation for a controlled release only. Nothing here has been built, signed, uploaded, submitted
-or deployed, and nothing here is legal, privacy, content or store approval. Actual CI has NOT been run and no native
-binary has been built. The last local result was quality 1134/118 with typecheck and lint passing, taken before the
-queued content-review repairs. The workflow and `app/eas.json` stay unrun configuration until a first real GitHub run.
+Status (checkpoint 2026-10-26): GitHub CI passed for the published registration commit `754129f`
+(https://github.com/umarfadhil/ayailmu/actions/runs/40214005686). The SDK 58 base `951bb16` plus the local AyaFasih
+rename passes 1305/144 tests, typecheck and lint locally only; publishing the SDK 58 source and branding is pending, and
+no remote CI result exists for it. The `754129f` run is historical and does not prove CI for the new unpublished head.
+No native binary, signing, store upload, production deployment or content approval exists, and nothing here is legal,
+privacy, content or store approval.
 
-Ayangaji is distinct from Umar AyaIlmu. No Umar credential or identity is claimed reusable (pending non-secret
+AyaFasih is distinct from Umar AyaIlmu. No Umar credential or identity is claimed reusable (pending non-secret
 coordination); no ID, package or account is invented here. File paths keep the `arabic-app` names to avoid overlaps.
 
 ## 1. Kinds of evidence (do not conflate)
@@ -42,7 +44,8 @@ on or change an export. `dist/` is ignored by Jest; do not commit it.
 - Triggers: `pull_request` (draft PRs included), `push` to `main` and `feature/rn-correctness-20261020`,
   `workflow_dispatch`. Pull-request and push runs are limited to `app/**`, the workflow file,
   this runbook and `docs/Unit_A_Pilot_Content_Review.md`.
-- Check name: **`Ayangaji: checks and JS exports`** (workflow `Ayangaji CI`, job `checks`). Branch protection is
+- Check name: **`Ayangaji: checks and JS exports`** (workflow `Ayangaji CI`, job `checks`); these legacy labels are
+  kept until the workflow itself is renamed. Branch protection is
   NOT configured, so nothing requires it yet. If it is required later, note that a path-filtered workflow that
   does not run leaves a required check pending on PRs that touch no listed path.
 - Untrusted PR security: `pull_request` only (never `pull_request_target`), `permissions: contents: read`, no secrets,

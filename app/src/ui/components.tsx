@@ -203,7 +203,7 @@ export function H2({ children, testID }: { children: ReactNode; testID?: string 
 
 /** The learner wordmark. */
 export function Wordmark() {
-  return <Text style={styles.wordmark}>Ayangaji</Text>;
+  return <Text style={styles.wordmark}>AyaFasih</Text>;
 }
 
 /** Group title in a settings-style list («BELAJAR», «DATA DAN PRIVASI»). */

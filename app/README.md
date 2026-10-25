@@ -1,8 +1,8 @@
-# Ayangaji — Arabic learning prototype
+# AyaFasih — Arabic learning prototype
 
-**Identity:** the current display brand is Ayangaji. The legacy technical slug `arabic-trial-app`, the scheme `arabictrial` and the storage and protocol names are retained for compatibility. A final distinct iOS bundle identifier, Android package and EAS project need owner coordination with Umar and are not configured.
+**Identity:** the current display brand is AyaFasih. The legacy technical slug `arabic-trial-app`, the scheme `arabictrial` and the storage and protocol names are retained for compatibility. A final distinct iOS bundle identifier, Android package and EAS project need owner coordination with Umar and are not configured.
 
-Expo SDK 57, React Native 0.86, TypeScript and Expo Router. Learner-facing text is Indonesian. Arabic keeps its vowel marks and uses bundled Noto Naskh Arabic.
+Expo SDK 58, React Native 0.88, TypeScript and Expo Router. Learner-facing text is Indonesian. Arabic keeps its vowel marks and uses bundled Noto Naskh Arabic.
 
 ## Status and behaviour
 
