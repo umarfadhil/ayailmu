@@ -2,8 +2,9 @@
 
 Mirrors the Umar lifecycle test for the adult store: separate schema owned by the migration role, DML-only runtime role,
 simulated Supabase Data-API roles, wrapper dry-run/execute, repeatability, the real deploy-smoke API binary, and a cross-check
-of the rendered production-staging environment against the application's real config loader. Known gaps in the adult
-store (no TLS enforcement, no runtime-privilege self-check) are asserted as *current behavior* and named test_known_gap_*.
+of the rendered production-staging environment against the application's real config loader. The adult store enforces verified
+TLS for every non-loopback target and the API refuses a database role that is an owner, an administrator or otherwise
+more privileged than a runtime role: both are asserted here against the real, unmodified binaries (the former A1/A2 gaps).
 """
 from __future__ import annotations
 
@@ -201,11 +202,42 @@ class AyangajiLocal(unittest.TestCase):
         r = self.tool("migrate", str(self.manifest), "--migrate-bin", str(self.migrate_bin), "--execute")
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
-    def test_known_gap_api_accepts_owner_privileged_database_user(self):
-        # KNOWN GAP (reported, not fixed here): unlike Umar, the adult API verifies only the schema version at startup and
-        # never checks its own effective privileges, so only the wrapper's DSN user check and `verify` guard least privilege.
+    def test_api_refuses_an_owner_privileged_database_role(self):
+        # The API checks its own effective rights at startup (store.VerifyRuntimePrivileges): the migration role owns the
+        # schema, so the unmodified binary must refuse to serve with it, with a generic message and no credential in its log.
         body, log = self.serve(self.root / "secrets" / "ayangaji-migration.dsn")
+        self.assertIsNone(body, log)
+        self.assertIn("more privileged than the service's runtime role may be", log)
+        self.assertNoSecret(log)
+
+    def test_api_refuses_a_runtime_role_that_can_write_the_migration_history(self):
+        c = self.c
+        c.psql(f"GRANT UPDATE ON {SCHEMA}.schema_migrations TO {RUN}", db=DB)
+        try:
+            body, log = self.serve(self.root / "secrets" / "ayangaji-runtime.dsn")
+            self.assertIsNone(body, log)
+            self.assertIn("can write the migration history", log)
+            self.assertNoSecret(log)
+            v = self.verify("runtime")  # the read-only catalog check agrees with the application's own startup check
+            self.assertEqual(v.returncode, 1, v.stdout)
+            self.assertIn("FAIL must.runtime_cannot_write_migration_history", v.stdout)
+        finally:
+            c.psql(f"REVOKE UPDATE ON {SCHEMA}.schema_migrations FROM {RUN}", db=DB)
+        body, log = self.serve(self.root / "secrets" / "ayangaji-runtime.dsn")
         self.assertEqual(json.loads(body), {"status": "ready"}, log)
+
+    def test_api_refuses_a_runtime_role_missing_a_right_the_service_uses(self):
+        c = self.c
+        c.psql(f"REVOKE DELETE ON {SCHEMA}.profiles FROM {RUN}", db=DB)
+        try:
+            body, log = self.serve(self.root / "secrets" / "ayangaji-runtime.dsn")
+            self.assertIsNone(body, log)
+            self.assertIn("lacks a right the service needs", log)
+            v = self.verify("runtime")  # ANY-semantics would have missed this: every required right is checked alone
+            self.assertEqual(v.returncode, 1, v.stdout)
+            self.assertIn("FAIL must.runtime_has_dml_but_no_ddl", v.stdout)
+        finally:
+            c.psql(f"GRANT DELETE ON {SCHEMA}.profiles TO {RUN}", db=DB)
 
     def test_09_weak_tls_is_refused_by_the_wrapper(self):
         weak = (self.root / "secrets" / "ayangaji-migration.dsn").read_text().replace("verify-full", "require").strip()
@@ -215,20 +247,62 @@ class AyangajiLocal(unittest.TestCase):
         self.assertIn("REFUSED dsn-sslmode", r.stderr)
         self.assertNoSecret(r.stdout, r.stderr)
 
-    def test_known_gap_adult_store_accepts_plaintext_to_a_named_host(self):
-        # KNOWN GAP (reported, not fixed here): Umar rejects a non-loopback host without sslmode=verify-full before dialing
-        # (internal/store/transport.go). The adult OpenAllowing path only checks the host allow-list, so this unmodified
-        # migration binary completes over plaintext to the allow-listed *name* localhost. A Supabase target therefore relies
-        # on this wrapper (dsn-check) and cannot be called deployable until the store enforces TLS itself.
-        plain = (self.root / "secrets" / "ayangaji-migration.dsn").read_text().strip().split("?")[0] + "?sslmode=disable"
-        f = private_file(self.root / "secrets" / "ayangaji-plain.dsn", plain)
+    def test_adult_store_refuses_plaintext_to_a_named_host(self):
+        # The store itself enforces verified TLS for every target but a literal loopback IP or a Unix socket
+        # (internal/store/transport.go), whatever the wrapper did. The unmodified migration binary must therefore refuse
+        # sslmode=disable (and every mode with a plaintext fallback or without verification) to the allow-listed *name*
+        # localhost before it sends a byte, and say nothing that identifies the host or a credential.
+        base = (self.root / "secrets" / "ayangaji-migration.dsn").read_text().strip().split("?")[0]
+        for mode in ("disable", "allow", "prefer", "require", "verify-ca"):
+            f = private_file(self.root / "secrets" / f"ayangaji-{mode}.dsn", f"{base}?sslmode={mode}")
+            env = {"PATH": "/usr/bin", "AYA_DATABASE_URL_FILE": str(f), "AYA_DB_HOSTS": "localhost", "AYA_DB_SCHEMA": SCHEMA}
+            before = self.c.connection_count(MIG)
+            out = subprocess.run([str(self.migrate_bin)], env=env, capture_output=True, text=True)
+            self.assertNotEqual(out.returncode, 0, mode)
+            self.assertEqual(out.stdout.strip(), "", mode)
+            self.assertIn("verified TLS", out.stderr, mode)
+            self.assertNoSecret(out.stdout, out.stderr)
+            self.assertNotIn("localhost", out.stderr)
+            self.assertEqual(self.c.connection_count(MIG), before, f"{mode}: a connection was opened")
+        # A DSN without any sslmode (pgx's default, prefer) is refused the same way.
+        f = private_file(self.root / "secrets" / "ayangaji-nomode.dsn", base)
         env = {"PATH": "/usr/bin", "AYA_DATABASE_URL_FILE": str(f), "AYA_DB_HOSTS": "localhost", "AYA_DB_SCHEMA": SCHEMA}
         out = subprocess.run([str(self.migrate_bin)], env=env, capture_output=True, text=True)
-        self.assertEqual(out.returncode, 0, out.stderr)
-        self.assertEqual(out.stdout.strip(), "3")
+        self.assertNotEqual(out.returncode, 0)
         self.assertNoSecret(out.stdout, out.stderr)
-        r = self.tool("dsn-check", str(self.manifest), "--role", "migration", "--dsn-file", str(f))
+        # The wrapper's own dsn-check still refuses the weak mode independently.
+        r = self.tool("dsn-check", str(self.manifest), "--role", "migration", "--dsn-file",
+                      str(self.root / "secrets" / "ayangaji-disable.dsn"))
         self.assertIn("REFUSED dsn-sslmode", r.stderr)
+
+    def test_adult_store_refuses_plaintext_even_through_the_pg_environment(self):
+        # pgx applies PGSSLMODE at parse time: the rule is checked on what pgx parsed, not on the URL text.
+        base = (self.root / "secrets" / "ayangaji-migration.dsn").read_text().strip().split("?")[0]
+        f = private_file(self.root / "secrets" / "ayangaji-envmode.dsn", base)
+        env = {"PATH": "/usr/bin", "AYA_DATABASE_URL_FILE": str(f), "AYA_DB_HOSTS": "localhost", "AYA_DB_SCHEMA": SCHEMA,
+               "PGSSLMODE": "disable"}
+        out = subprocess.run([str(self.migrate_bin)], env=env, capture_output=True, text=True)
+        self.assertNotEqual(out.returncode, 0)
+        self.assertNoSecret(out.stdout, out.stderr)
+
+    def test_adult_store_private_network_exception_is_explicit_and_never_for_production(self):
+        # The only plaintext path is the explicit AYA_DB_TRANSPORT=private-network (the local Compose stack's own network),
+        # for a single-label name or a private address; the loopback modes and production refuse the setting.
+        base = (self.root / "secrets" / "ayangaji-migration.dsn").read_text().strip().split("?")[0]
+        f = private_file(self.root / "secrets" / "ayangaji-private.dsn", f"{base}?sslmode=disable")
+        env = {"PATH": "/usr/bin", "AYA_DATABASE_URL_FILE": str(f), "AYA_DB_HOSTS": "localhost", "AYA_DB_SCHEMA": SCHEMA,
+               "AYA_DB_TRANSPORT": "private-network"}
+        out = subprocess.run([str(self.migrate_bin)], env=env, capture_output=True, text=True)
+        self.assertEqual(out.returncode, 0, out.stderr)  # localhost is a single-label name: the declared exception applies
+        self.assertEqual(out.stdout.strip(), "3")
+        # A dotted (public-style) name never qualifies, even with the declaration.
+        f2 = private_file(self.root / "secrets" / "ayangaji-public.dsn",
+                          base.replace("@localhost:", "@db.example.net:") + "?sslmode=disable")
+        env2 = dict(env, AYA_DATABASE_URL_FILE=str(f2), AYA_DB_HOSTS="db.example.net")
+        out = subprocess.run([str(self.migrate_bin)], env=env2, capture_output=True, text=True)
+        self.assertNotEqual(out.returncode, 0)
+        self.assertIn("plaintext database transport is allowed only", out.stderr)
+        self.assertNoSecret(out.stdout, out.stderr)
 
     # 10 ------------------------------------------------------------------------------------------------------------------
     def test_10_database_and_role_isolation(self):
@@ -300,15 +374,19 @@ class AyangajiLocal(unittest.TestCase):
         r = subprocess.run(["go", "test", "-count=1", "-v", "-tags", "infra_staging", "./infra/stagingenv/"], cwd=REPO / "backend", env=env_go, capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stdout[-3000:] + r.stderr[-1500:])
         self.assertEqual(r.stdout.count("--- PASS: TestRenderedStagingEnvironmentAgainstTheRealLoader/"), len(cases), r.stdout)
-        # Known gap, checked here as current behavior: the real loader accepts a DSN with sslmode=disable for a named host.
+        # The loader validates the DSN's hosts only; the transport rule is the store's, applied when it opens the database
+        # (proved against the real binaries by test_adult_store_refuses_plaintext_to_a_named_host). The wrapper still refuses
+        # the weak DSN, and the production-staging environment must never carry the private-network declaration.
         weak = Path(doc["secrets"]["runtime_dsn_file"]).read_text().replace("verify-full", "disable")
         wf = private_file(base / "weak.dsn", weak.strip())
         self.assertEqual(tool.dsn_check(doc, "runtime", str(wf))[0].items[0]["code"], "dsn-sslmode")
-        weak_case = [{"name": "dsn_plaintext_accepted_by_loader", "env": dict(env, AYA_DATABASE_URL_FILE=str(wf)), "expect": "ok"}]
-        cases_path.write_text(json.dumps(weak_case))
-        r = subprocess.run(["go", "test", "-count=1", "-tags", "infra_staging", "./infra/stagingenv/"], cwd=REPO / "backend", env=dict(env_go, INFRA_STAGING_CASES=str(cases_path)),
-                           capture_output=True, text=True)
-        self.assertEqual(r.returncode, 0, r.stdout[-2000:])
+        extra = [{"name": "private_network_transport_refused_in_production", "env": dict(env, AYA_DB_TRANSPORT="private-network"), "expect": "refuse"},
+                 {"name": "invalid_transport_value_refused", "env": dict(env, AYA_DB_TRANSPORT="plaintext"), "expect": "refuse"}]
+        cases_path.write_text(json.dumps(extra))
+        r = subprocess.run(["go", "test", "-count=1", "-v", "-tags", "infra_staging", "./infra/stagingenv/"], cwd=REPO / "backend",
+                           env=dict(env_go, INFRA_STAGING_CASES=str(cases_path)), capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout[-2000:] + r.stderr[-1000:])
+        self.assertEqual(r.stdout.count("--- PASS: TestRenderedStagingEnvironmentAgainstTheRealLoader/"), len(extra), r.stdout)
 
 
 if __name__ == "__main__":

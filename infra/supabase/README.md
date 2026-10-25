@@ -44,20 +44,28 @@ python3 -I infra/supabase/supabase_target.py migrate   /private/ayangaji-target.
   `AYA_CORS_ORIGINS`, exact unicast `AYA_TRUSTED_PROXIES`, and Auth at `https://<public name>[:9443]`. `render-env` emits exactly
   that set and the `infra_staging` Go test proves the real loader accepts it and refuses 13 mutations the validator also refuses.
 * The migration job (`ayailmu-migrate`) and the API use `store.OpenAllowing` for those modes. Production staging is therefore
-  *configurable* for a remote PostgreSQL; it is **not safe to call deployable** — see blockers A1/A2.
+  verify TLS for every non-loopback target (A1) and the API refuses an over-privileged database role (A2): both are enforced in
+  the application itself, not by this wrapper. Production staging stays blocked by the open owner decisions below (A3–A7).
 
 ## Ayangaji-specific blockers
 
-* **A1 (core change needed) no TLS enforcement for remote database hosts.** `store.OpenAllowing` checks only the host allow-list.
-  With a URL lacking `sslmode`, pgx's default `prefer` can fall back to plaintext; `test_known_gap_adult_store_accepts_plaintext_to_a_named_host`
-  shows the unmodified migration binary completing over `sslmode=disable` to an allow-listed *name*. Umar rejects this case
-  (`internal/store/transport.go`). Recommended change (not made here): reuse Umar's `validateDatabaseTransport` rule (non-loopback,
-  non-socket target ⇒ `sslmode=verify-full`, `ServerName == host`, no `InsecureSkipVerify`, fallbacks included) inside
-  `parseConfig` for the deploy path only. Until then this wrapper's `dsn-check` is the only guard, and it does not protect a
-  hand-started API.
-* **A2 (core change suggested) the API never checks its own effective privileges.** Unlike Umar, it verifies only the schema
-  version, so it starts as an owner-privileged user (`test_known_gap_api_accepts_owner_privileged_database_user`). The wrapper's
-  DSN-user check and `verify --role runtime` are the compensating controls.
+* **A1 (resolved in the core) remote database transport.** `store.OpenAllowing`/`ParseConfigAllowing` now apply the rule to what pgx
+  actually parsed (URL, `PG*` environment and service file; primary and every fallback): a literal loopback IP or Unix socket is
+  local, every other target needs `sslmode=verify-full` (server name = dialed host, no skip-verify, no plaintext fallback).
+  `disable`, `allow`, `prefer`, `require` and `verify-ca` are refused with a generic message before any byte is sent. One explicit
+  exception exists, `AYA_DB_TRANSPORT=private-network` (used only by the local Compose stack): `sslmode=disable` to a single-label
+  name or an RFC 1918/ULA address; production refuses the setting and no public DNS name or address ever qualifies.
+  Regression tests: `test_adult_store_refuses_plaintext_*` and `test_adult_store_private_network_exception_*` here, plus
+  `internal/store/transport_test.go`, `internal/config/dbtransport_test.go` and the migrate binary's `transport_test.go`.
+* **A2 (resolved in the core) runtime privilege self-check.** In every deploy mode and production the API calls
+  `store.VerifyRuntimePrivileges` after `VerifySchema` and refuses to serve (generic errors) as a superuser or schema/table owner,
+  a role with CREATEROLE/CREATEDB/REPLICATION/BYPASSRLS, one that belongs to or acts as another role, one that can CREATE in the
+  schema, `public` or the database, one holding TRUNCATE/TRIGGER/REFERENCES or any grant option on an app table, one with any write
+  right on `schema_migrations`, or one missing a right the service uses. The adult runtime legitimately needs UPDATE/DELETE
+  (account erasure, ledger replay): the exact matrix is `store.runtimeRights`, proven by running every store operation as a role
+  holding exactly it. `Migrate` also strips write rights on `schema_migrations` from non-owners, and `runtime-grants.sql.template`
+  and `verify-readiness.sql` now match this (the latter tests each required right alone, because a comma list means ANY).
+  Tests: `test_api_refuses_*` here (against the real binaries) and `internal/store/runtime_test.go`.
 * **A3 Migration role needs `CREATE` on the database** (`CREATE SCHEMA IF NOT EXISTS` checks it before the existence test; verified
   by `test_12`). On Supabase that is a grant on database `postgres`: residual privilege for the migration role only.
 * **A4 Staging prerequisites are all open decisions:** public API/Auth DNS names, TLS termination and the private `:9443` Auth
@@ -71,6 +79,6 @@ python3 -I infra/supabase/supabase_target.py migrate   /private/ayangaji-target.
 
 `./run-tests.sh` (≈2 minutes): offline validator tests; lifecycle on a fresh disposable PostgreSQL 16 cluster with TLS (real
 `ayailmu-migrate` and `ayailmu-api` in `deploy-smoke` mode); the config-loader cross-check; the adult Go suites that need only
-PostgreSQL (`tests/run_adult_go_suites.py`); and cross-app isolation. **Not run:** the 6 tests that need the pinned real GoTrue
-fixture (Docker) and the curriculum registry-pin test (the available reference app fixture has a different `demo-v0.3.json`
-hash) — both are excluded by name and printed, not silently skipped.
+PostgreSQL (`tests/run_adult_go_suites.py`); and cross-app isolation. **Not run here:** the 6 tests that need the pinned real GoTrue
+fixture (Docker; see `infra/real-auth/`) and the curriculum registry-pin test, which needs the archived pinned fixtures
+(see `infra/catalog/`) — all excluded by name and printed, not silently skipped.

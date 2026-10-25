@@ -15,13 +15,32 @@ SELECT 'must.schema_migrations_present', to_regclass(format('%I.schema_migration
 SELECT 'must.app_relations_owned_by_migration_role', NOT EXISTS (
   SELECT 1 FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
    WHERE n.nspname = :'schema' AND c.relkind IN ('r','p','S','v','m') AND pg_get_userbyid(c.relowner) <> :'migration_role');
--- The adult API legitimately deletes (account erasure) but never truncates, alters, triggers or owns.
+-- The adult API legitimately updates and deletes (account erasure, ledger replay) but never truncates, alters, triggers,
+-- references or owns. has_table_privilege with a comma list answers "ANY of them", so every required right is tested alone
+-- against the exact matrix the service's source uses (store.runtimeRights, proven by the application's own test).
 SELECT 'must.runtime_has_dml_but_no_ddl', NOT EXISTS (
+  SELECT 1 FROM (VALUES ('accounts','SELECT'),('accounts','INSERT'),('accounts','UPDATE'),
+                        ('account_deletions','SELECT'),('account_deletions','INSERT'),('account_deletions','UPDATE'),
+                        ('profiles','SELECT'),('profiles','INSERT'),('profiles','UPDATE'),('profiles','DELETE'),
+                        ('profile_sources','SELECT'),('profile_sources','INSERT'),('profile_sources','DELETE'),
+                        ('events','SELECT'),('events','INSERT'),('events','DELETE'),
+                        ('imports','SELECT'),('imports','INSERT'),('imports','DELETE'),
+                        ('schema_migrations','SELECT')) need(rel, priv)
+   WHERE NOT COALESCE(has_table_privilege(:'runtime_role', to_regclass(format('%I.%I', :'schema', need.rel)), need.priv), false))
+  AND NOT EXISTS (
   SELECT 1 FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
    WHERE n.nspname = :'schema' AND c.relkind IN ('r','p')
      AND (pg_has_role(:'runtime_role', c.relowner, 'USAGE')
           OR has_table_privilege(:'runtime_role', c.oid, 'TRUNCATE,TRIGGER,REFERENCES')
-          OR NOT has_table_privilege(:'runtime_role', c.oid, 'SELECT,INSERT,UPDATE,DELETE')));
+          OR has_any_column_privilege(:'runtime_role', c.oid, 'REFERENCES')
+          OR has_table_privilege(:'runtime_role', c.oid, 'SELECT WITH GRANT OPTION,INSERT WITH GRANT OPTION,UPDATE WITH GRANT OPTION,DELETE WITH GRANT OPTION')));
+SELECT 'must.runtime_cannot_write_migration_history', NOT EXISTS (
+  SELECT 1 FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
+   WHERE n.nspname = :'schema' AND c.relname = 'schema_migrations' AND c.relkind IN ('r','p')
+     AND (has_table_privilege(:'runtime_role', c.oid, 'INSERT,UPDATE,DELETE,TRUNCATE')
+          OR has_any_column_privilege(:'runtime_role', c.oid, 'INSERT,UPDATE')));
+SELECT 'must.runtime_not_member_of_any_role', NOT EXISTS (
+  SELECT 1 FROM pg_auth_members m WHERE m.member = (SELECT oid FROM pg_roles WHERE rolname = :'runtime_role'));
 SELECT 'must.runtime_cannot_create_in_public', NOT has_schema_privilege(:'runtime_role', 'public', 'CREATE');
 SELECT 'must.schema_exists_and_owned_by_migration_role', COALESCE((SELECT pg_get_userbyid(nspowner) = :'migration_role'
   FROM pg_namespace WHERE nspname = :'schema'), false);
