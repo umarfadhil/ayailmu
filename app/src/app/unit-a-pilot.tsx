@@ -32,6 +32,7 @@ function UnitAPilot() {
     }, [])
   );
   const today = useCallback(() => localDate(Date.now()), []);
+  const openNextLesson = useCallback(() => router.push('/next-lesson'), []);
 
   // No learner yet: Home runs the profile and consent flow.
   if (!learner || !store) return <Redirect href="/" />;
@@ -50,6 +51,7 @@ function UnitAPilot() {
           readOnly={readOnly}
           arabicScale={learner.arabic_scale}
           today={today}
+          onNextLesson={openNextLesson}
         />
       ) : null}
     </View>

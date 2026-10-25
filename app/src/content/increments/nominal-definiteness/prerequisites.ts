@@ -1,7 +1,8 @@
 // Additive prerequisite manifest for the U-C nominal-definiteness increment. It names existing
 // Unit A pilot concepts, their existing lessons and the practice/transfer item IDs the existing
 // gate (canAdvanceUnitA) reads for them. It records no learner events or outcomes, claims no
-// progress, unlocks nothing and is not wired into any app flow.
+// progress and unlocks nothing. The developer-demo next lesson does not read it: its controller
+// checks qualification through the canonical Unit A status (unitAStatus) on every operation.
 
 import { PILOT_CONTENT } from '../../../pilot/unitA/content';
 import type { PrerequisiteManifest } from './schema';

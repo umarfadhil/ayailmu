@@ -8,6 +8,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNo
 import { ActivityIndicator, AppState, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { loadScreenViews } from '@/engine/exposure';
+import { nextLessonAssistedOn } from '@/pilot/nextLesson/assistance';
 import type { Store } from '@/storage/types';
 import { moveFocus } from '@/ui/a11y';
 import { ArabicText, Btn, Caption, Card, Eyebrow, MixedText, Notice, Page, type PageHandle } from '@/ui/components';
@@ -34,6 +35,8 @@ export interface UnitAPilotScreenProps {
   arabicScale: number;
   /** Local calendar day, YYYY-MM-DD. */
   today: () => string;
+  /** Opens the next lesson; offered only while this owner's Unit A qualifies. */
+  onNextLesson?: () => void;
 }
 
 type PilotController = ReturnType<typeof createPilotController>;
@@ -43,9 +46,10 @@ const DAY = /^\d{4}-\d{2}-\d{2}$/;
 
 /**
  * Whether the learner saw teaching or answered legacy practice on `day` in the selected store. Conservative:
- * any same-day screen view or answer counts as assistance. Unreadable data rejects, never reads as "unexposed".
+ * any same-day screen view or answer, or a next lesson help day of `owner`, counts as assistance. Unreadable data
+ * rejects, never reads as "unexposed".
  */
-export async function pilotAssistedOn(store: Store, day: string): Promise<boolean> {
+export async function pilotAssistedOn(store: Store, day: string, owner?: string): Promise<boolean> {
   if (!DAY.test(day)) throw new Error('Pilot assistance check needs a local day (YYYY-MM-DD).');
   const views = await loadScreenViews(store);
   const answers: unknown = await store.listAnswers();
@@ -56,7 +60,8 @@ export async function pilotAssistedOn(store: Store, day: string): Promise<boolea
     if (typeof date !== 'string' || !DAY.test(date)) throw new Error('A stored answer has no readable local date.');
     if (date === day) assisted = true;
   }
-  return assisted;
+  const nextLesson = await nextLessonAssistedOn(store, owner, day);
+  return assisted || nextLesson;
 }
 
 const storeIds = new WeakMap<object, number>();
@@ -165,7 +170,7 @@ function viewKey(view: PilotView | null): string {
   }
 }
 
-function PilotPanel({ store, owner, mode, readOnly, arabicScale, today }: UnitAPilotScreenProps) {
+function PilotPanel({ store, owner, mode, readOnly, arabicScale, today, onNextLesson }: UnitAPilotScreenProps) {
   const [view, setView] = useState<PilotView | null>(null);
   const [choice, setChoice] = useState<{ presentationId: string; optionId: string } | null>(null);
   const [busy, setBusy] = useState(false);
@@ -217,7 +222,7 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today }: UnitAP
       today: () => todayRef.current(),
       readOnly: () => readOnly !== null,
       active: () => live,
-      assistedToday: (day?: string) => pilotAssistedOn(store, day ?? todayRef.current()),
+      assistedToday: (day?: string) => pilotAssistedOn(store, day ?? todayRef.current(), owner),
       random: Math.random,
     });
     ctrl.current = c;
@@ -446,8 +451,8 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today }: UnitAP
     const anchor = view.provisional ? view.anchorDay : null;
     const { nextDue, upcoming, delayed } = view;
     const counted = delayed.d7 !== null || delayed.d30 !== null;
-    // Original anchored schedule first, then today's availability only where it differs; no button is offered
-    // here because nothing is open today.
+    // Original anchored schedule first, then today's availability only where it differs; no check button is
+    // offered here because no check is open today.
     const lines: string[] = [];
     if (anchor !== null) {
       lines.push(`Cek awal selesai pada ${dayLabel(anchor)}.`);
@@ -502,6 +507,23 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today }: UnitAP
         </Notice>
       </View>
     );
+    // The next lesson is offered from this durable qualified progress alone; pressing only opens it, and the next
+    // lesson's own controller checks qualification again on every operation.
+    if (view.provisional === true && mode === 'developer-demo' && onNextLesson) {
+      footer = (
+        <Btn
+          key={shown}
+          testID="pilot-next-lesson"
+          label="Pelajaran berikutnya"
+          icon="arrow-forward"
+          disabled={busy}
+          onPress={() => {
+            if (ctrl.current !== null) onNextLesson();
+          }}
+          style={styles.fullBtn}
+        />
+      );
+    }
   } else if (view.kind === 'awaiting-transfer' || view.kind === 'insufficient') {
     const awaiting = view.kind === 'awaiting-transfer';
     body = (

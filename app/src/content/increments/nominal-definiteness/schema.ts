@@ -1,8 +1,9 @@
 // Own schema for the U-C nominal-definiteness increment. The shipped ContentPack, Item and
 // LessonScreen types fix `unit` to 'A' | 'B', so this draft gets a small typed boundary in
 // its own namespace instead of being labelled as Unit A/B content. It reuses the shipped
-// HelpLine, ChoiceOption and LessonScreen shapes where they fit. Nothing here is shipped,
-// routed or wired into learner progress.
+// HelpLine, ChoiceOption and LessonScreen shapes where they fit. Nothing here is shipped or
+// unlocks anything; outside this folder only the developer-demo next lesson (src/pilot/nextLesson)
+// and its tests import it.
 
 import type { ChoiceOption, HelpLine, LessonScreen } from '../../schema';
 import type { PilotConstruct, PilotContent } from '../../../pilot/unitA/content';

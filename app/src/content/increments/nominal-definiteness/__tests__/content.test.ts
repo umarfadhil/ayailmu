@@ -489,11 +489,33 @@ describe('U-C nominal definiteness increment (constructed draft, isolated)', () 
     const files = sourceFiles(appRoot);
     expect(files).toContain(path.join(appRoot, 'src', 'pilot', 'unitA', 'content.ts'));
 
-    // Import specifiers only (from, require, dynamic import, side-effect import), not every string in the file.
-    const importSpecifiers = (source: string): string[] =>
-      [...source.matchAll(/(?:\bfrom\s+|\brequire\(\s*|\bimport\(\s*|\bimport\s+)['"]([^'"]+)['"]/g)].map(
-        (match) => match[1] ?? '',
-      );
+    // Import specifiers only, read from the parsed syntax tree (static, side-effect, export-from, import-equals,
+    // require and dynamic import calls, type-level import()), so spacing and comments do not matter and strings
+    // or comments that merely mention a path are not imports.
+    const ts = jest.requireActual<typeof import('typescript')>('typescript');
+    type SyntaxNode = import('typescript').Node;
+    const importSpecifiers = (file: string, source: string): string[] => {
+      const found: string[] = [];
+      const literal = (node: SyntaxNode | undefined): void => {
+        if (node !== undefined && ts.isStringLiteralLike(node)) found.push(node.text);
+      };
+      const visit = (node: SyntaxNode): void => {
+        if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) literal(node.moduleSpecifier);
+        else if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference)) {
+          literal(node.moduleReference.expression);
+        } else if (
+          ts.isCallExpression(node) &&
+          (node.expression.kind === ts.SyntaxKind.ImportKeyword ||
+            (ts.isIdentifier(node.expression) && node.expression.text === 'require'))
+        ) {
+          literal(node.arguments[0]);
+        } else if (ts.isImportTypeNode(node) && ts.isLiteralTypeNode(node.argument)) literal(node.argument.literal);
+        ts.forEachChild(node, visit);
+      };
+      // The file name picks the script kind (.ts, .tsx, .js, .jsx).
+      visit(ts.createSourceFile(file, source, ts.ScriptTarget.Latest, false));
+      return found;
+    };
     const intoIncrement = (file: string, specifier: string): boolean => {
       const target = specifier.startsWith('@/')
         ? path.join(appRoot, 'src', specifier.slice(2))
@@ -520,7 +542,7 @@ describe('U-C nominal definiteness increment (constructed draft, isolated)', () 
     const violations = (file: string, source: string): string[] =>
       approvedImporters.has(relative(file))
         ? []
-        : importSpecifiers(source)
+        : importSpecifiers(file, source)
             .filter((specifier) => intoIncrement(file, specifier))
             .map((specifier) => `${relative(file)}: ${specifier}`);
 
@@ -537,6 +559,9 @@ describe('U-C nominal definiteness increment (constructed draft, isolated)', () 
       [`${nextLesson}/__tests__/controller.extra.test.ts`, "import type { IncrementItem } from '../../../content/increments/nominal-definiteness/schema';"],
       [`${nextLesson}/__fixtures__/other.ts`, "import { NOMINAL_DEFINITENESS } from '@/content/increments/nominal-definiteness/content';"],
       [`${nextLesson}/controller.tsx`, "import { NOMINAL_DEFINITENESS } from '@/content/increments/nominal-definiteness';"],
+      ['src/app/index.tsx', "const c = require ('@/content/increments/nominal-definiteness/content');"],
+      ['src/app/index.tsx', "const load = () => import ('@/content/increments/nominal-definiteness/content');"],
+      ['src/app/index.tsx', "import { NOMINAL_DEFINITENESS } from /* comment */ '@/content/increments/nominal-definiteness/content';"],
     ];
     expect(rejected.filter(([rel, source]) => probe(rel, source).length === 0).map(([rel]) => rel)).toEqual([]);
 
@@ -559,9 +584,8 @@ describe('U-C nominal definiteness increment (constructed draft, isolated)', () 
     const ownSources = fs.readdirSync(incrementDir).filter((name) => /\.tsx?$/.test(name));
     expect(ownSources).toEqual(expect.arrayContaining(['content.ts', 'prerequisites.ts', 'schema.ts']));
     const specifiers = ownSources.flatMap((name) => {
-      const source = fs.readFileSync(path.join(incrementDir, name), 'utf8');
-      const pattern = /(?:from\s+|require\(\s*|import\(\s*)['"]([^'"]+)['"]/g;
-      return [...source.matchAll(pattern)].map((match) => `${name}: ${match[1] ?? ''}`);
+      const file = path.join(incrementDir, name);
+      return importSpecifiers(file, fs.readFileSync(file, 'utf8')).map((specifier) => `${name}: ${specifier}`);
     });
     expect(specifiers.filter((entry) => !allowed.has(entry.split(': ')[1] ?? ''))).toEqual([]);
   });
