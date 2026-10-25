@@ -1,9 +1,10 @@
 """Runs the adult backend's own Go suites that need only a disposable PostgreSQL (AYA_TEST_DATABASE_URL), on a fresh
 loopback cluster that is removed afterwards. Tests that need the pinned real GoTrue fixture (Docker; AYA_REAL_AUTH_FIXTURE)
 cannot run here and are excluded by name; the exclusion is printed, never silent (infra/real-auth/ runs them against a real fixture).
-TestRegistryPinsExactPackBytesAndHonestStatus runs, unchanged, against the archived exact bytes the registry pins
-(infra/catalog/pinned-expo-fixtures, revision ef28606). Whether the frontend's *current* fixtures still equal those bytes is a
-separate, deliberately failing-while-different gate: infra/catalog/check_current_compat.py."""
+TestRegistryPinsExactPackBytesAndHonestStatus runs, unchanged, against the archived exact bytes the ACTIVE registry pins
+(infra/catalog/authoritative-expo-fixtures, frontend revision 8b29a91; the historical ef28606 bytes stay in pinned-expo-fixtures).
+Whether the frontend's *current* fixtures still equal those pins is a separate, strictly failing gate:
+infra/catalog/check_current_compat.py."""
 from __future__ import annotations
 
 import os
@@ -16,7 +17,7 @@ from common import REPO  # noqa: E402
 from pgtest import Cluster  # noqa: E402
 
 EXCLUDED = "RealGoTrue|AtTheRealAuth"
-PINNED_FIXTURES = REPO / "infra" / "catalog" / "pinned-expo-fixtures"
+PINNED_FIXTURES = REPO / "infra" / "catalog" / "authoritative-expo-fixtures"
 
 
 def main() -> int:

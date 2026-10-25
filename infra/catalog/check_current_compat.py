@@ -1,27 +1,44 @@
-"""Compatibility gate: do the frontend's CURRENT Expo fixtures still equal the bytes the adult registry pins?
+"""Compatibility gate: do the frontend's CURRENT Expo fixtures equal the bytes the ACTIVE adult registry pins?
 
-The pinned bytes are the archive in pinned-expo-fixtures/ (verified against SHA256SUMS, and against the registry itself by
-run_pin_test.sh). This script compares a directory of current fixtures with that archive and exits 1 with the evidence when
-any file differs: it never edits a pin, a hash or a fixture, and it does not skip. Usage:
+The pins are read from backend/internal/curriculum/packs.go (the Expo packs under app/src/content/fixtures/), so the gate
+follows the registry itself rather than any archive. It compares a directory of current fixtures byte for byte and exits 1
+with the evidence when any file differs. It has no ignore list and no tolerance: a goal or body string changed anywhere fails
+exactly like an item change. The one reviewed historical difference (ef28606 -> 8b29a91) is a separate, bounded proof in
+verify_alignment_proof.py and is not a policy of this gate. It never edits a pin, a hash or a fixture, and it does not skip.
 
-    python3 -I check_current_compat.py <dir with demo-unit-a.json, demo-v0.2.json, demo-v0.3.json>
+    python3 -I check_current_compat.py <dir with demo-unit-a.json, demo-v0.2.json, demo-v0.3.json> [--registry packs.go]
 
-Exit 0: identical. Exit 1: mismatch (printed). Exit 2: usage or an unreadable/corrupt input.
+Exit 0: identical to the active pins. Exit 1: mismatch (printed). Exit 2: usage, or an unreadable/unparseable input.
 """
 from __future__ import annotations
 
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-ARCHIVE = HERE / "pinned-expo-fixtures"
+REGISTRY = HERE.parents[1] / "backend" / "internal" / "curriculum" / "packs.go"
+REFERENCE = HERE / "authoritative-expo-fixtures"  # used only to explain a mismatch
 FILES = ("demo-unit-a.json", "demo-v0.2.json", "demo-v0.3.json")
+PIN_RE = re.compile(r'Path:\s*"app/src/content/fixtures/([A-Za-z0-9._-]+\.json)",\s*SHA256:\s*"([0-9a-f]{64})"')
 
 
 def sha(b: bytes) -> str:
     return hashlib.sha256(b).hexdigest()
+
+
+def registry_pins(path: Path) -> dict[str, str]:
+    """{file name: sha256} of the Expo packs in packs.go; anything other than exactly the three known files is an error."""
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError as e:
+        raise ValueError(f"cannot read the registry {path.name}: {e.strerror}")
+    pins = dict(PIN_RE.findall(text))
+    if len(PIN_RE.findall(text)) != len(pins) or sorted(pins) != sorted(FILES):
+        raise ValueError(f"the registry does not pin exactly {', '.join(FILES)} (found {sorted(pins)})")
+    return pins
 
 
 def pointers(a, b, path=""):
@@ -47,38 +64,48 @@ def pointers(a, b, path=""):
 
 
 def main(argv: list[str]) -> int:
-    if len(argv) != 2:
+    args = argv[1:]
+    registry = REGISTRY
+    if "--registry" in args:
+        i = args.index("--registry")
+        if i + 1 >= len(args):
+            print(__doc__, file=sys.stderr)
+            return 2
+        registry = Path(args[i + 1])
+        del args[i:i + 2]
+    if len(args) != 1:
         print(__doc__, file=sys.stderr)
         return 2
-    current = Path(argv[1])
-    sums = dict(line.split()[::-1] for line in (ARCHIVE / "SHA256SUMS").read_text().splitlines() if line.strip())
+    current = Path(args[0])
+    try:
+        pins = registry_pins(registry)
+    except ValueError as e:
+        print(f"REGISTRY UNUSABLE: {e}", file=sys.stderr)
+        return 2
     bad = 0
     for name in FILES:
-        pinned = (ARCHIVE / name).read_bytes()
-        if sha(pinned) != sums[name]:
-            print(f"ARCHIVE CORRUPT {name}", file=sys.stderr)
-            return 2
         try:
             now = (current / name).read_bytes()
         except OSError as e:
             print(f"cannot read current {name}: {e.strerror}", file=sys.stderr)
             return 2
-        if now == pinned:
-            print(f"ok       {name} {sha(now)}")
+        if sha(now) == pins[name]:
+            print(f"ok       {name} {pins[name]}")
             continue
         bad += 1
-        print(f"MISMATCH {name}\n  pinned  {sha(pinned)}\n  current {sha(now)}")
+        print(f"MISMATCH {name}\n  pinned  {pins[name]}\n  current {sha(now)}")
         try:
-            a, b = json.loads(pinned), json.loads(now)
-            print(f"  items identical: {a.get('items') == b.get('items')}; content_version: {a.get('content_version')} -> {b.get('content_version')}")
-            print(f"  differing JSON pointers: {pointers(a, b)}")
-        except ValueError:
-            print("  current file is not valid JSON")
+            ref = json.loads((REFERENCE / name).read_bytes())
+            cur = json.loads(now)
+            print(f"  items identical: {ref.get('items') == cur.get('items')}; content_version: {ref.get('content_version')} -> {cur.get('content_version')}")
+            print(f"  differing JSON pointers (against the committed authoritative snapshot): {pointers(ref, cur)}")
+        except (OSError, ValueError):
+            print("  current file could not be compared with the committed snapshot")
     if bad:
-        print(f"FAIL: {bad} current fixture(s) differ from the bytes the registry pins; the curriculum owner must re-pin, re-version or "
-              "restore them. Nothing here changes a pin.", file=sys.stderr)
+        print(f"FAIL: {bad} current fixture(s) differ from the bytes the active registry pins; a curriculum owner must review the change and "
+              "re-pin it deliberately. Nothing here changes a pin.", file=sys.stderr)
         return 1
-    print("current fixtures equal the pinned bytes")
+    print("current fixtures equal the active registry pins")
     return 0
 
 

@@ -88,6 +88,17 @@ python3 -I infra/supabase/supabase_target.py migrate   /private/ayangaji-target.
 
 `./run-tests.sh` (≈2 minutes): offline validator tests; lifecycle on a fresh disposable PostgreSQL 16 cluster with TLS (real
 `ayailmu-migrate` and `ayailmu-api` in `deploy-smoke` mode); the config-loader cross-check; the adult Go suites that need only
-PostgreSQL (`tests/run_adult_go_suites.py`); and cross-app isolation. **Not run here:** the 6 tests that need the pinned real GoTrue
-fixture (Docker; see `infra/real-auth/`) and the curriculum registry-pin test, which needs the archived pinned fixtures
-(see `infra/catalog/`) — all excluded by name and printed, not silently skipped.
+PostgreSQL (`tests/run_adult_go_suites.py`, including the unchanged `TestRegistryPinsExactPackBytesAndHonestStatus` against the
+exact 8b29a91 bytes the active registry pins); the catalog gate tests; and cross-app isolation. Step 3c prints `CHECKED` for the
+current-fixture gate: against the live frontend checkout when `AYA_CURRENT_EXPO_FIXTURES_DIR` is set, otherwise against the committed
+exact 8b29a91 snapshot, and says which. **Not run by `run-tests.sh`:** the 6 tests that need the pinned real GoTrue fixture
+(Docker; run by `infra/real-auth/run_real_auth_tests.py`), excluded by name and printed, not silently skipped.
+
+## Catalog alignment (demo-synthetic-0.3)
+
+The registry's `demo-synthetic-0.3` source SHA-256 was re-pinned from the frontend's ef28606 bytes (`af0c4bdd…`) to its authoritative
+8b29a91 bytes (`80eb638a…`) after showing that the only difference is three lesson-screen copy strings and that no event identity,
+registry key, stored column or client reads the catalog hash. The historical bytes remain archived and hash-verified in
+`infra/catalog/pinned-expo-fixtures`; `infra/catalog/verify_alignment_proof.py` is a bounded proof (two known hashes, three known JSON
+pointers) and `infra/catalog/check_current_compat.py` still fails on any other byte change against the active pins. See
+`infra/catalog/authoritative-expo-fixtures/PROVENANCE.md`.

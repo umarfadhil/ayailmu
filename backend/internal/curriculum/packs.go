@@ -5,6 +5,14 @@ package curriculum
 // copied verbatim from the pack file; curriculum_test.go recomputes each one from the files. Expo packs
 // live in ayailmu-publish, Android packs in this repository. ReviewedProductionContent is derived by
 // newRegistry, never written here.
+//
+// demo-synthetic-0.3 is pinned to the frontend's authoritative bytes at 8b29a91a2ae4a83d89cbfbfe58c8fdfa67670923
+// (SHA-256 80eb638a...). It was first pinned to the bytes at ef28606 (af0c4bdd...). The only difference is three
+// lesson-screen copy strings (frontend 7f5d9a7); the 45 items, ids, choices, keys, content_version and the 53 draft
+// statuses are identical. The source SHA-256 is metadata served by GET /v1/curricula; the registry key, the envelope's
+// semantic hash and every stored column are independent of it, so events recorded against either bytes stay valid and
+// registered. infra/catalog/verify_alignment_proof.py proves the bounded difference and source_alignment_test.go pins the
+// unchanged event identity; the historical ef28606 bytes stay archived in infra/catalog/pinned-expo-fixtures.
 
 var registeredFamilies = []Family{
 	{Name: "android-catalog", App: "android", Schema: "kotlin.answer_event", SchemaVersions: []int{1}, ApprovedReviewStatus: "approved"},
@@ -42,7 +50,7 @@ var registeredPacks = []Pack{
 		Source: PackSource{
 			Repo:         "ayailmu-publish",
 			Path:         "app/src/content/fixtures/demo-v0.3.json",
-			SHA256:       "af0c4bdd7b1db1cc188259dc7ebf484207773cd0657e66b5ec379c6f4fa71cf5",
+			SHA256:       "80eb638ace35e1ad39bd15b2f48d3d31ace78a776a344e1b948789c9ad161fee",
 			Format:       "expo-content-pack",
 			AnswerFormat: "mcq4",
 		},

@@ -21,14 +21,17 @@ else
   echo "== 3. Ayangaji application suites that need only PostgreSQL (real-GoTrue tests excluded by name, see script)"
   $PY -I tests/run_adult_go_suites.py
 fi
-echo "== 3b. catalog pins: unchanged registry pin test on the archived pinned bytes, and the gate's own tests"
+echo "== 3b. catalog: unchanged registry pin test on the authoritative 8b29a91 bytes (active pins), historical ef28606 archive + bounded proof, gate self-tests"
 sh "$repo/infra/catalog/run_pin_test.sh"
+$PY -I "$repo/infra/catalog/test_alignment_proof.py"
 $PY -I "$repo/infra/catalog/test_compat_gate.py"
 if [ -n "${AYA_CURRENT_EXPO_FIXTURES_DIR:-}" ]; then
-  echo "== 3c. current frontend fixtures vs the pinned bytes (fails visibly while they differ)"
+  echo "== 3c. CHECKED: live frontend fixtures at $AYA_CURRENT_EXPO_FIXTURES_DIR vs the active registry pins (any byte difference fails)"
   $PY -I "$repo/infra/catalog/check_current_compat.py" "$AYA_CURRENT_EXPO_FIXTURES_DIR"
+  AYA_TEST_EXPO_FIXTURES_DIR="$AYA_CURRENT_EXPO_FIXTURES_DIR" sh -c 'cd "$1/backend" && go test -count=1 -run "^TestRegistryPinsExactPackBytesAndHonestStatus$" ./internal/curriculum/' _ "$repo"
 else
-  echo "== 3c. NOT CHECKED: set AYA_CURRENT_EXPO_FIXTURES_DIR to the frontend's app/src/content/fixtures to gate current compatibility"
+  echo "== 3c. CHECKED against the committed exact 8b29a91 snapshot only (not a live checkout; set AYA_CURRENT_EXPO_FIXTURES_DIR to the frontend's app/src/content/fixtures to check it)"
+  $PY -I "$repo/infra/catalog/check_current_compat.py" "$repo/infra/catalog/authoritative-expo-fixtures"
 fi
 echo "== 4. cross-app isolation (both clones, one cluster, two databases)"
 $PY -I -W error::ResourceWarning tests/test_cross_app.py

@@ -1,4 +1,8 @@
-# Pinned Expo fixtures (exact bytes the registry pins)
+# Historical Expo fixtures (exact bytes the registry pinned at frontend ef28606)
+
+> **Status:** historical archive, kept unchanged and independently verifiable (`SHA256SUMS`). Since the reviewed alignment, the *active*
+> registry pin for `demo-v0.3.json` is the 8b29a91 hash in `../authoritative-expo-fixtures`; `demo-unit-a.json` and `demo-v0.2.json` are
+> byte-identical in both archives. The sections below describe the state before that alignment.
 
 These three files are byte-for-byte copies of `app/src/content/fixtures/{demo-unit-a,demo-v0.2,demo-v0.3}.json` at
 `ayailmu-publish` / `ayailmu-rn-ux` revision `ef28606ce68bae962695a9d7fb23d0c52b36b392` (2026-10-16, "Fix Arabic draft content and
