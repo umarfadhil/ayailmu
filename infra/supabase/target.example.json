@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "app": "umar",
+  "status": "example",
+  "kind": "supabase",
+  "organization": {"slug": "UNDECIDED:D01", "plan": "UNDECIDED:D04"},
+  "project": {"ref": "UNDECIDED:D02", "region": "UNDECIDED:D03", "postgres_major": "UNDECIDED:D15"},
+  "database": {
+    "connection_mode": "UNDECIDED:D05",
+    "host": "UNDECIDED:D05",
+    "port": 5432,
+    "name": "postgres",
+    "schema": "public",
+    "tls": {"sslmode": "verify-full", "root_ca_file": "UNDECIDED:D11", "root_ca_sha256": "UNDECIDED:D11"}
+  },
+  "roles": {"migration": "UNDECIDED:D06", "runtime": "UNDECIDED:D06"},
+  "secrets": {"migration_dsn_file": "UNDECIDED:D07", "runtime_dsn_file": "UNDECIDED:D07"},
+  "data_api": {"disabled_confirmed_by_owner": false},
+  "auth": {
+    "provider": "standalone-gotrue",
+    "public_origin": "UNDECIDED:D09",
+    "issuer": "UNDECIDED:D09",
+    "audience": "authenticated",
+    "jwks_url": "http://127.0.0.1:8287/.well-known/jwks.json",
+    "database": {
+      "placement": "self-hosted-postgres",
+      "instance_id": "UNDECIDED:D08",
+      "name": "UNDECIDED:D08",
+      "namespace": "auth",
+      "role": "UNDECIDED:D08"
+    },
+    "smtp": {"provider": "UNDECIDED:D10"}
+  },
+  "runtime": {"host_platform": "UNDECIDED:D14", "listen": "127.0.0.1:8187"},
+  "backup": {"strategy": "UNDECIDED:D12"},
+  "approvals": {
+    "project_creation": "pending",
+    "credential_provisioning": "pending",
+    "dashboard_changes": "pending",
+    "migration": "pending",
+    "verify": "pending",
+    "runtime_start": "pending"
+  }
+}
