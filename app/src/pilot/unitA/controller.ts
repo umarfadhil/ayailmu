@@ -3,8 +3,11 @@
 // here is correctness practice, not retention. Once both constructs reach the practice family threshold, and
 // only on a later day than any teaching or practice that the injected assistance check reports unassisted, each
 // held-out transfer item is offered once, with grading deferred until the block closes. A closed block reports
-// progress: a provisional anchor only when canAdvanceUnitA accepts its independent first choices. Delayed d7/d30
-// checks are a future schedule only and are not offered by this slice; nothing here claims mastery or unlocks.
+// progress: a provisional anchor only when canAdvanceUnitA accepts its practice and independent transfer first
+// choices (delayed answers never move it). An anchored block then offers each reserved d7 item once from
+// anchor + 7 and each d30 item once from anchor + 30, d7 first, never on a day with the learner's teaching,
+// practice or an earlier phase's check, nor on a day the assistance check reports assisted. A closed delayed
+// block reports descriptive counts only; nothing here claims mastery, a pass or an unlock.
 // State is one versioned document under PILOT_META_KEY, read, transitioned and written as one
 // store.updateMeta operation on that store's write queue (the same queue as reset); a store without
 // updateMeta is refused. Assistance is read inside that same operation, so a reset is ordered around it.
@@ -35,8 +38,6 @@ export const PILOT_META_KEY = 'pilot_unit_a';
 const SCHEMA = 1;
 const CONSTRUCTS: readonly PilotConstruct[] = ['reference', 'agreement'];
 const MIN_PRACTICE_FAMILIES = 2;
-/** The first delayed check is due this many days after the anchor; scheduled only, not offered yet. */
-const D7_AFTER_DAYS = 7;
 const DAY_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
 /**
  * Evidence day for a held-out first choice that was not independent. The evaluator treats a non-calendar day as
@@ -45,6 +46,20 @@ const DAY_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
 const NOT_INDEPENDENT = 'not-independent';
 
 export type PilotMode = 'developer-demo' | 'tester';
+/** Held-out phases: each one block of reserved items, offered once each, in this order after practice. */
+export type PilotHeldPhase = Exclude<PilotPhase, 'practice'>;
+export type PilotDelayedPhase = Extract<PilotPhase, 'd7' | 'd30'>;
+
+/**
+ * Descriptive counts over a closed delayed block: raw first choices, those matching the key, and those whose
+ * recorded context was independent (shown and answered the same day, no assistance read either time) whatever
+ * the choice. Not a pass, mastery or unlock.
+ */
+export interface PilotDelayedCounts {
+  answered: number;
+  correct: number;
+  valid: number;
+}
 
 export interface PilotControllerOptions {
   store: Pick<Store, 'getMeta' | 'setMeta' | 'updateMeta'>;
@@ -116,7 +131,7 @@ export type PilotView =
   | {
       kind: 'assessment-feedback';
       presentationId: string;
-      phase: 'transfer';
+      phase: PilotHeldPhase;
       deferred: true;
       answered: number;
       total: number;
@@ -124,13 +139,17 @@ export type PilotView =
   /** Practice is done; held-out items open on a later, unassisted day (`until` is the earliest). */
   | { kind: 'awaiting-transfer'; constructs: PilotConstructSummary[]; until: string }
   | { kind: 'insufficient'; constructs: PilotConstructSummary[] }
-  /** The held-out block is closed. `nextDue` is a schedule only: delayed checks are not offered yet. */
+  /** The transfer block is closed and nothing is open today. Delayed counts stay null until that block closes. */
   | {
       kind: 'progress';
       provisional: boolean;
+      /** The day the qualifying transfer block closed; never moved by delayed answers. */
       anchorDay: string | null;
+      /** Original due day of the next delayed block (anchor + 7 or + 30); null when none is left. */
       nextDue: string | null;
-      delayed: { d7: null; d30: null };
+      delayed: { d7: PilotDelayedCounts | null; d30: PilotDelayedCounts | null };
+      /** The delayed block still to finish: answers saved so far and the earliest day it may continue. */
+      upcoming: { phase: PilotDelayedPhase; answered: number; total: number; availableOn: string } | null;
     };
 
 interface Attempt {
@@ -194,12 +213,27 @@ interface Step {
   items: readonly PilotItem[];
 }
 
+interface Block {
+  phase: PilotHeldPhase;
+  /** Index in `sequence`, and so in stored presentations, of the block's first item. */
+  from: number;
+  items: readonly PilotItem[];
+  /** Days after the anchor the block falls due; null for transfer, which follows practice instead. */
+  dueAfter: number | null;
+}
+
+const HELD: readonly { phase: PilotHeldPhase; dueAfter: number | null }[] = [
+  { phase: 'transfer', dueAfter: null },
+  { phase: 'd7', dueAfter: 7 },
+  { phase: 'd30', dueAfter: 30 },
+];
+
 interface Plan {
   steps: readonly Step[];
   /** Practice items in the order they are offered. */
   order: readonly PilotItem[];
-  /** Held-out transfer items in the order they are offered, after all practice. */
-  transfer: readonly PilotItem[];
+  /** Held-out blocks (transfer, d7, d30) in the order they are offered, after all practice. */
+  blocks: readonly Block[];
   /** Every item a presentation may hold, index-aligned with stored presentations. */
   sequence: readonly PilotItem[];
   byId: ReadonlyMap<string, PilotItem>;
@@ -226,39 +260,52 @@ const wellFormed = (item: PilotItem, lessonId: string): boolean =>
   item.options.filter((o) => o.correct).length === 1 &&
   new Set(item.options.map((o) => o.id)).size === item.options.length;
 
+/** Alternates the constructs' lists, round by round. */
+function interleave(lists: readonly (readonly PilotItem[])[]): PilotItem[] {
+  const out: PilotItem[] = [];
+  const rounds = Math.max(0, ...lists.map((l) => l.length));
+  for (let n = 0; n < rounds; n += 1) {
+    for (const items of lists) {
+      const item = items[n];
+      if (item !== undefined) out.push(item);
+    }
+  }
+  return out;
+}
+
 function buildPlan(): Plan | null {
   if (!contentAccepted()) return null;
   const steps: Step[] = [];
-  const held: PilotItem[][] = [];
+  // Per construct, its reserved items for each held-out phase, in HELD order.
+  const held: PilotItem[][][] = [];
   for (const construct of CONSTRUCTS) {
     const lesson = PILOT_CONTENT.lessons.find((l) => l.construct === construct);
     if (lesson === undefined) return null;
     const ofPhase = (phase: PilotPhase) =>
       PILOT_CONTENT.items.filter((i) => i.construct === construct && i.phase === phase);
     const items = ofPhase('practice');
-    const transfer = ofPhase('transfer');
+    const reserved = HELD.map((h) => ofPhase(h.phase));
     const practiced = new Set(items.map((i) => i.family));
     const usable =
       items.length > 0 &&
-      transfer.length > 0 &&
-      [...items, ...transfer].every((i) => wellFormed(i, lesson.id)) &&
-      transfer.every((i) => !practiced.has(i.family));
+      reserved.every((r) => r.length > 0) &&
+      [...items, ...reserved.flatMap((r) => r)].every((i) => wellFormed(i, lesson.id)) &&
+      (reserved[0] ?? []).every((i) => !practiced.has(i.family));
     if (!usable) return null;
     steps.push({ lesson, items });
-    held.push(transfer);
+    held.push(reserved);
   }
-  // Held-out items alternate constructs, each family once.
-  const transfer: PilotItem[] = [];
-  const rounds = Math.max(...held.map((h) => h.length));
-  for (let n = 0; n < rounds; n += 1) {
-    for (const items of held) {
-      const item = items[n];
-      if (item !== undefined) transfer.push(item);
-    }
-  }
-  if (new Set(transfer.map((i) => i.family)).size !== transfer.length) return null;
   const order = steps.flatMap((s) => s.items);
-  const sequence = [...order, ...transfer];
+  // Each held-out block alternates constructs, each family once within the block.
+  let from = order.length;
+  const blocks = HELD.map(({ phase, dueAfter }, k): Block => {
+    const items = interleave(held.map((r) => r[k] ?? []));
+    const block = { phase, from, items, dueAfter };
+    from += items.length;
+    return block;
+  });
+  if (blocks.some((b) => new Set(b.items.map((i) => i.family)).size !== b.items.length)) return null;
+  const sequence = [...order, ...blocks.flatMap((b) => b.items)];
   if (new Set(sequence.map((i) => i.id)).size !== sequence.length) return null;
   const stepOf = new Map<string, number>();
   const opensAfter: number[] = [];
@@ -268,7 +315,7 @@ function buildPlan(): Plan | null {
     before += step.items.length;
     step.items.forEach((i) => stepOf.set(i.id, index));
   });
-  return { steps, order, transfer, sequence, byId: new Map(sequence.map((i) => [i.id, i])), stepOf, opensAfter };
+  return { steps, order, blocks, sequence, byId: new Map(sequence.map((i) => [i.id, i])), stepOf, opensAfter };
 }
 
 const PLAN = buildPlan();
@@ -373,8 +420,61 @@ function teachingDays(doc: PilotDoc, plan: Plan): string[] {
 }
 
 const heldOut = (doc: PilotDoc, plan: Plan): Presentation[] => doc.presentations.slice(plan.order.length);
-const answeredHeldOut = (doc: PilotDoc, plan: Plan): Presentation[] =>
-  heldOut(doc, plan).filter((p) => p.answered !== null);
+
+const blockAt = (plan: Plan, index: number): Block | undefined =>
+  plan.blocks.find((b) => index >= b.from && index < b.from + b.items.length);
+const shownIn = (doc: PilotDoc, block: Block): Presentation[] =>
+  doc.presentations.slice(block.from, block.from + block.items.length);
+const answeredIn = (doc: PilotDoc, block: Block): number =>
+  shownIn(doc, block).filter((p) => p.answered !== null).length;
+const isClosed = (doc: PilotDoc, block: Block): boolean => answeredIn(doc, block) === block.items.length;
+/** Whether `count` presentations end a held-out block exactly. */
+const endsBlock = (plan: Plan, count: number): boolean => plan.blocks.some((b) => b.from + b.items.length === count);
+const isDelayedPhase = (phase: PilotHeldPhase): phase is PilotDelayedPhase => phase === 'd7' || phase === 'd30';
+
+/** Shown and answered the same day, with no assistance read either time. Derived context, never stored. */
+const independent = (p: Presentation, a: Assessment | undefined): boolean =>
+  a !== undefined && a.assistedWhenShown === false && a.assistedWhenAnswered === false && p.answered === p.shown;
+
+const contextOf = (doc: PilotDoc): Map<string, Assessment> =>
+  new Map((doc.assessments ?? []).map((a) => [a.presentationId, a]));
+
+/** The latest teaching, practice or held-out day before presentation `index`. */
+function lastDayBefore(doc: PilotDoc, plan: Plan, index: number): string | undefined {
+  const days = [
+    ...teachingDays(doc, plan),
+    ...doc.presentations.slice(plan.order.length, index).flatMap((p) => (p.answered === null ? [p.shown] : [p.shown, p.answered])),
+  ];
+  return days.reduce<string | undefined>((latest, day) => (latest === undefined || day > latest ? day : latest), undefined);
+}
+
+/** The day the transfer block closed, when the shared evaluator accepts practice and transfer evidence alone. */
+function anchorOf(doc: PilotDoc, plan: Plan): string | null {
+  const transfer = plan.blocks[0];
+  if (transfer === undefined || !isClosed(doc, transfer)) return null;
+  const closedOn = shownIn(doc, transfer)[transfer.items.length - 1]?.answered ?? null;
+  return closedOn !== null && canAdvanceUnitA(evidenceOf(doc, plan)) ? closedOn : null;
+}
+
+interface Opening {
+  block: Block;
+  phase: PilotDelayedPhase;
+  /** anchor + the block's offset, whenever earlier blocks actually ran. */
+  due: string;
+  /** The due day, or the day after the latest earlier-phase activity if later: two blocks never share a day. */
+  earliest: string;
+}
+
+/** The delayed block still to finish after an anchored transfer block, or null when none is left. */
+function openingOf(doc: PilotDoc, plan: Plan, anchor: string): Opening | null {
+  const answered = doc.presentations.filter((p) => p.answered !== null).length;
+  const block = blockAt(plan, answered);
+  if (block === undefined || block.dueAfter === null || !isDelayedPhase(block.phase)) return null;
+  const due = addDays(anchor, block.dueAfter);
+  const prior = lastDayBefore(doc, plan, block.from);
+  const after = prior === undefined ? due : addDays(prior, 1);
+  return { block, phase: block.phase, due, earliest: after > due ? after : due };
+}
 
 function isPermutation(order: readonly string[], options: readonly PilotOption[]): boolean {
   return (
@@ -481,11 +581,25 @@ function coherent(doc: PilotDoc, plan: Plan): boolean {
         current.itemId === last.itemId &&
         current.day === last.shown &&
         (lastHeldOut
-          ? // The final held-out answer closes the block and clears current.
-            !(presentations.length === plan.sequence.length && last.answered !== null)
+          ? // The last answer of a held-out block closes that block and clears current.
+            !(endsBlock(plan, presentations.length) && last.answered !== null)
           : plan.stepOf.get(last.itemId) === lessons.length - 1);
 
-  return lessonsOk && presentationsOk && chronological && blockOk && assessmentsOk && attemptsOk && currentOk;
+  // A delayed block opens only after an anchored transfer block, on or after its due day and strictly after
+  // every earlier phase's day. Index alignment already orders the phases and closes each earlier block.
+  const delayedOk = () => {
+    const anchor = anchorOf(doc, plan);
+    return plan.blocks.every((b) => {
+      const first = shownIn(doc, b)[0];
+      if (first === undefined || b.dueAfter === null) return true;
+      const prior = lastDayBefore(doc, plan, b.from);
+      return anchor !== null && prior !== undefined && first.shown >= addDays(anchor, b.dueAfter) && first.shown > prior;
+    });
+  };
+
+  return (
+    lessonsOk && presentationsOk && chronological && blockOk && assessmentsOk && attemptsOk && currentOk && holds(delayedOk)
+  );
 }
 
 function emptyDoc(owner: string): PilotDoc {
@@ -536,6 +650,7 @@ type Position =
   | { kind: 'lesson'; index: number; step: Step }
   | { kind: 'practice'; item: PilotItem }
   | { kind: 'transfer'; item: PilotItem }
+  | { kind: 'delayed'; item: PilotItem; anchor: string }
   | { kind: 'question'; presentation: Presentation; item: PilotItem }
   | { kind: 'feedback'; item: PilotItem; attempt: Attempt }
   | { kind: 'insufficient' }
@@ -562,8 +677,14 @@ function locate(doc: PilotDoc, plan: Plan): Position {
   }
   if (!practiceMet(practiceSummary(doc, plan))) return { kind: 'insufficient' };
   // Presentations are index-aligned with the plan, so the next held-out item follows those already shown.
-  const item = plan.transfer[heldOut(doc, plan).length];
-  return item === undefined ? { kind: 'closed' } : { kind: 'transfer', item };
+  const next = doc.presentations.length;
+  const item = plan.sequence[next];
+  const block = blockAt(plan, next);
+  if (item === undefined || block === undefined) return { kind: 'closed' };
+  if (block.dueAfter === null) return { kind: 'transfer', item };
+  // Delayed checks follow only a closed transfer block that the evaluator accepted.
+  const anchor = anchorOf(doc, plan);
+  return anchor === null ? { kind: 'closed' } : { kind: 'delayed', item, anchor };
 }
 
 function withLessonShown(doc: PilotDoc, index: number, lessonId: string, today: string): PilotDoc {
@@ -627,63 +748,94 @@ function feedbackView(item: PilotItem, attempt: Attempt): PilotView {
   };
 }
 
-/** A saved held-out answer: progress through the block only, nothing about correctness. */
-const deferredView = (doc: PilotDoc, plan: Plan, presentationId: string): PilotView => ({
-  kind: 'assessment-feedback',
-  presentationId,
-  phase: 'transfer',
-  deferred: true,
-  answered: answeredHeldOut(doc, plan).length,
-  total: plan.transfer.length,
-});
+/** A saved held-out answer: progress through its block only, nothing about correctness. */
+function deferredView(doc: PilotDoc, plan: Plan, presentationId: string): PilotView {
+  const block = blockAt(plan, doc.presentations.findIndex((p) => p.presentationId === presentationId));
+  if (block === undefined) throw new Error('Pilot held-out answer lost its block.');
+  return {
+    kind: 'assessment-feedback',
+    presentationId,
+    phase: block.phase,
+    deferred: true,
+    answered: answeredIn(doc, block),
+    total: block.items.length,
+  };
+}
 
 const answeredView = (doc: PilotDoc, plan: Plan, item: PilotItem, attempt: Attempt): PilotView =>
-  item.phase === 'transfer' ? deferredView(doc, plan, attempt.presentationId) : feedbackView(item, attempt);
+  item.phase === 'practice' ? feedbackView(item, attempt) : deferredView(doc, plan, attempt.presentationId);
 
 /**
- * Every raw first choice in attempt order, joined to the trusted catalogue and its presentation context. A
- * held-out choice counts on its day only if it was shown and answered the same day, unassisted both times;
- * otherwise it keeps its family with a non-calendar day, so nothing later can count in its place.
+ * Every practice and transfer first choice in attempt order, joined to the trusted catalogue and its
+ * presentation context; delayed answers are never evidence for the anchor. A transfer choice counts on its day
+ * only if it was shown and answered the same day, unassisted both times; otherwise it keeps its family with a
+ * non-calendar day, so nothing later can count in its place.
  */
 function evidenceOf(doc: PilotDoc, plan: Plan): PilotEvidence[] {
   const presentations = new Map(doc.presentations.map((p) => [p.presentationId, p]));
-  const context = new Map((doc.assessments ?? []).map((a) => [a.presentationId, a]));
-  return doc.attempts.map((attempt): PilotEvidence => {
+  const context = contextOf(doc);
+  return doc.attempts.flatMap((attempt): PilotEvidence[] => {
     const item = plan.byId.get(attempt.itemId);
     const p = presentations.get(attempt.presentationId);
     if (item === undefined || p === undefined || p.answered === null) throw new Error('Pilot attempt lost its presentation.');
+    if (item.phase !== 'practice' && item.phase !== 'transfer') return [];
     const chosen = item.options.find((o) => o.id === attempt.optionId);
     let outcome: PilotEvidence['outcome'] = 'dont-know';
     if (chosen !== undefined) outcome = chosen.correct ? 'correct' : 'wrong';
     let day = p.answered;
-    if (item.phase === 'transfer') {
-      const a = context.get(attempt.presentationId);
-      const independent =
-        a !== undefined && a.assistedWhenShown === false && a.assistedWhenAnswered === false && p.answered === p.shown;
-      if (!independent) day = NOT_INDEPENDENT;
-    }
-    return {
-      id: attempt.presentationId,
-      construct: item.construct,
-      family: item.family,
-      kind: item.phase === 'practice' ? 'practice' : 'transfer',
-      outcome,
-      day,
-    };
+    if (item.phase === 'transfer' && !independent(p, context.get(attempt.presentationId))) day = NOT_INDEPENDENT;
+    return [
+      {
+        id: attempt.presentationId,
+        construct: item.construct,
+        family: item.family,
+        kind: item.phase === 'practice' ? 'practice' : 'transfer',
+        outcome,
+        day,
+      },
+    ];
   });
 }
 
-/** A closed block, anchored on the day it closed only when the shared evaluator accepts it. */
-function progressView(doc: PilotDoc, plan: Plan): PilotView {
-  const block = heldOut(doc, plan);
-  const closedOn = block[block.length - 1]?.answered ?? null;
-  const anchorDay = closedOn !== null && canAdvanceUnitA(evidenceOf(doc, plan)) ? closedOn : null;
+/** Descriptive counts over a closed delayed block; null until its last answer is saved. */
+function countsOf(doc: PilotDoc, plan: Plan, phase: PilotDelayedPhase): PilotDelayedCounts | null {
+  const block = plan.blocks.find((b) => b.phase === phase);
+  if (block === undefined || !isClosed(doc, block)) return null;
+  const context = contextOf(doc);
+  const counts: PilotDelayedCounts = { answered: 0, correct: 0, valid: 0 };
+  for (const p of shownIn(doc, block)) {
+    const item = plan.byId.get(p.itemId);
+    const attempt = doc.attempts.find((a) => a.presentationId === p.presentationId);
+    if (item === undefined || attempt === undefined) throw new Error('Pilot delayed answer lost its attempt.');
+    counts.answered += 1;
+    if (attempt.optionId !== null && keyOf(item)?.id === attempt.optionId) counts.correct += 1;
+    if (independent(p, context.get(p.presentationId))) counts.valid += 1;
+  }
+  return counts;
+}
+
+/**
+ * A closed transfer block, anchored on the day it closed only when the shared evaluator accepts it, with any
+ * closed delayed counts. `notBefore` is set when today's assistance read held the next delayed item back.
+ */
+function progressView(doc: PilotDoc, plan: Plan, notBefore?: string): PilotView {
+  const anchorDay = anchorOf(doc, plan);
+  const open = anchorDay === null ? null : openingOf(doc, plan, anchorDay);
   return {
     kind: 'progress',
     provisional: anchorDay !== null,
     anchorDay,
-    nextDue: anchorDay === null ? null : addDays(anchorDay, D7_AFTER_DAYS),
-    delayed: { d7: null, d30: null },
+    nextDue: open?.due ?? null,
+    delayed: anchorDay === null ? { d7: null, d30: null } : { d7: countsOf(doc, plan, 'd7'), d30: countsOf(doc, plan, 'd30') },
+    upcoming:
+      open === null
+        ? null
+        : {
+            phase: open.phase,
+            answered: answeredIn(doc, open.block),
+            total: open.block.items.length,
+            availableOn: notBefore !== undefined && notBefore > open.earliest ? notBefore : open.earliest,
+          },
   };
 }
 
@@ -712,6 +864,13 @@ function present(doc: PilotDoc, item: PilotItem, today: string, random: () => nu
   };
 }
 
+/** A new held-out presentation with the unassisted read that allowed it recorded beside it. */
+function presentHeld(doc: PilotDoc, item: PilotItem, today: string, random: () => number): Change {
+  const shown = present(doc, item, today, random);
+  const context: Assessment = { presentationId: shown.presentationId, assistedWhenShown: false, assistedWhenAnswered: null };
+  return { doc: { ...shown.doc, assessments: [...(doc.assessments ?? []), context] }, view: shown.view };
+}
+
 /** Makes the next displayable thing durable-ready: records lesson exposure or a new presentation. */
 async function settle(doc: PilotDoc, today: string, random: () => number, plan: Plan, assisted: Assisted): Promise<Change> {
   const at = locate(doc, plan);
@@ -737,9 +896,16 @@ async function settle(doc: PilotDoc, today: string, random: () => number, plan: 
       const earliest = addDays(lastTaught, 1);
       if (today < earliest) return awaiting(earliest);
       if (await assisted(today)) return awaiting(addDays(today, 1));
-      const shown = present(doc, at.item, today, random);
-      const context: Assessment = { presentationId: shown.presentationId, assistedWhenShown: false, assistedWhenAnswered: null };
-      return { doc: { ...shown.doc, assessments: [...(doc.assessments ?? []), context] }, view: shown.view };
+      return presentHeld(doc, at.item, today, random);
+    }
+    case 'delayed': {
+      const open = openingOf(doc, plan, at.anchor);
+      if (open === null) throw new Error('Pilot delayed check reached without its block.');
+      // Nothing delayed is read, shown or consumed before its due day, on a day an earlier phase used, or on an
+      // assisted day; its own block's earlier answers today do not hold it back.
+      if (today < open.earliest) return { doc, view: progressView(doc, plan) };
+      if (await assisted(today)) return { doc, view: progressView(doc, plan, addDays(today, 1)) };
+      return presentHeld(doc, at.item, today, random);
     }
     case 'question':
       return { doc, view: questionView(at.presentation, at.item) };
@@ -905,7 +1071,8 @@ export function createPilotController(options: PilotControllerOptions) {
             p.presentationId === presentationId ? { ...p, answered: today } : p,
           ),
         };
-        if (at.item.phase !== 'transfer') return { doc: answered, view: feedbackView(at.item, attempt) };
+        if (at.item.phase === 'practice') return { doc: answered, view: feedbackView(at.item, attempt) };
+        // A later day or assistance after display keeps the raw choice; independence is derived from this context.
         const help = await assisted(today);
         const marked: PilotDoc = {
           ...answered,
@@ -913,8 +1080,8 @@ export function createPilotController(options: PilotControllerOptions) {
             a.presentationId === presentationId ? { ...a, assistedWhenAnswered: help } : a,
           ),
         };
-        // The last held-out answer closes the block directly: there is no deferred screen left to leave.
-        if (marked.presentations.length === plan.sequence.length) {
+        // The last answer of a held-out block closes it directly: there is no deferred screen left to leave.
+        if (endsBlock(plan, marked.presentations.length)) {
           const closed: PilotDoc = { ...marked, current: null };
           return { doc: closed, view: progressView(closed, plan) };
         }

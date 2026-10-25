@@ -12,10 +12,13 @@ import type { Store } from '@/storage/types';
 import { moveFocus } from '@/ui/a11y';
 import { ArabicText, Btn, Caption, Card, Eyebrow, MixedText, Notice, Page, type PageHandle } from '@/ui/components';
 import { colors, radius, typography } from '@/ui/theme';
+import type { PilotPhase } from './content';
 import {
   createPilotController,
   type PilotBlockReason,
   type PilotConstructSummary,
+  type PilotDelayedCounts,
+  type PilotDelayedPhase,
   type PilotExplainedChoice,
   type PilotMode,
   type PilotView,
@@ -126,7 +129,21 @@ function dayLabel(day: string): string {
   return match && month ? `${Number(match[3])} ${month} ${match[1]}` : day;
 }
 
-const DELAYED_NOT_ACTIVE = 'Cek hari ke-7 dan ke-30 belum aktif di versi ini.';
+const PHASE_LABEL: Record<PilotPhase, string> = {
+  practice: 'Latihan',
+  transfer: 'Cek pemahaman',
+  d7: 'Cek 7 hari',
+  d30: 'Cek 30 hari',
+};
+
+const PROVISIONAL_NOTE = 'Hasil sementara dari pilihan ganda.';
+
+/** Descriptive counts for a closed delayed check; independence is mentioned only when some answers lacked it. */
+function countsLine(phase: PilotDelayedPhase, c: PilotDelayedCounts): string {
+  const base = `${PHASE_LABEL[phase]}: ${c.correct} dari ${c.answered} jawaban pertama benar`;
+  const outside = c.answered - c.valid;
+  return outside > 0 ? `${base}; ${outside} dijawab pada hari lain atau dengan bantuan tercatat.` : `${base}.`;
+}
 
 function viewKey(view: PilotView | null): string {
   if (view === null) return '';
@@ -141,6 +158,8 @@ function viewKey(view: PilotView | null): string {
       return `blocked:${view.reason}`;
     case 'awaiting-transfer':
       return `${view.kind}:${view.until}`;
+    case 'progress':
+      return `${view.kind}:${view.nextDue ?? ''}:${view.upcoming?.answered ?? ''}:${view.upcoming?.availableOn ?? ''}`;
     default:
       return view.kind;
   }
@@ -321,11 +340,11 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today }: UnitAP
     // never reach the next view's action through a reused host instance.
     footer = <Btn key={shown} testID="pilot-next" label="Mulai latihan" icon="arrow-forward" disabled={busy} onPress={next} style={styles.fullBtn} />;
   } else if (view.kind === 'question') {
-    const held = view.phase === 'transfer';
+    const held = view.phase !== 'practice';
     const submit = held ? 'Simpan jawaban' : 'Periksa';
     body = (
       <View testID="pilot-question" style={styles.section}>
-        <Eyebrow>{held ? 'Cek pemahaman' : 'Latihan'}</Eyebrow>
+        <Eyebrow>{PHASE_LABEL[view.phase]}</Eyebrow>
         <View ref={heading} tabIndex={-1}>
           <MixedText header scale={arabicScale} style={typography.heading}>
             {view.prompt}
@@ -374,7 +393,7 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today }: UnitAP
         <Btn kind="quiet" label="Belum tahu" testID="pilot-dont-know" disabled={busy} onPress={() => answer(null)} style={styles.fullBtn} />
         <Caption>
           {held
-            ? 'Pilihan bisa diganti sampai Anda menekan Simpan jawaban. Jawaban yang disimpan tidak diubah; hasilnya ditampilkan setelah semua soal cek dijawab.'
+            ? 'Pilihan bisa diganti sampai Anda menekan Simpan jawaban. Hasilnya ditampilkan setelah semua soal cek ini dijawab.'
             : 'Pilihan bisa diganti sampai Anda menekan Periksa. Jawaban yang diperiksa disimpan dan tidak diubah.'}
         </Caption>
       </View>
@@ -418,40 +437,68 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today }: UnitAP
             Jawaban tersimpan
           </Text>
         </View>
-        <Text style={typography.body}>{`${view.answered} dari ${view.total} soal cek sudah dijawab.`}</Text>
-        <Caption>Hasilnya ditampilkan setelah semua soal cek dijawab.</Caption>
+        <Text style={typography.body}>{`${PHASE_LABEL[view.phase]}: ${view.answered} dari ${view.total} soal sudah dijawab.`}</Text>
+        <Caption>Hasilnya ditampilkan setelah semua soal cek ini dijawab.</Caption>
       </View>
     );
     footer = <Btn key={shown} testID="pilot-next" label="Lanjut" icon="arrow-forward" disabled={busy} onPress={next} style={styles.fullBtn} />;
   } else if (view.kind === 'progress') {
+    const anchor = view.provisional ? view.anchorDay : null;
+    const { nextDue, upcoming, delayed } = view;
+    const counted = delayed.d7 !== null || delayed.d30 !== null;
+    // Original anchored schedule first, then today's availability only where it differs; no button is offered
+    // here because nothing is open today.
+    const lines: string[] = [];
+    if (anchor !== null) {
+      lines.push(`Cek awal selesai pada ${dayLabel(anchor)}.`);
+      (['d7', 'd30'] as const).forEach((phase) => {
+        const counts = delayed[phase];
+        if (counts !== null) lines.push(countsLine(phase, counts));
+      });
+      if (upcoming !== null && nextDue !== null) {
+        const label = PHASE_LABEL[upcoming.phase];
+        const started = upcoming.answered > 0;
+        lines.push(
+          started
+            ? `${label} (jadwal ${dayLabel(nextDue)}): ${upcoming.answered} dari ${upcoming.total} jawaban tersimpan; hasilnya ditampilkan setelah semua dijawab.`
+            : `${label} dijadwalkan ${dayLabel(nextDue)}.`
+        );
+        if (upcoming.availableOn > nextDue) {
+          lines.push(
+            `Bisa ${started ? 'dilanjutkan' : 'dibuka'} paling cepat ${dayLabel(upcoming.availableOn)}, pada hari tanpa pelajaran, latihan, atau cek lain yang tercatat di aplikasi ini.`
+          );
+        }
+      } else if (nextDue === null && delayed.d30 !== null) {
+        lines.push('Semua cek sudah tercatat.');
+      }
+    }
     body = (
       <View testID="pilot-progress" style={styles.section}>
         <View ref={heading} tabIndex={-1}>
           <Text accessibilityRole="header" style={typography.title}>
-            Cek pemahaman selesai
+            {anchor !== null ? 'Progres cek Unit A' : 'Cek pemahaman selesai'}
           </Text>
         </View>
-        {view.provisional && view.anchorDay !== null ? (
+        {anchor !== null ? (
           <>
-            <Text style={typography.body}>
-              Hasil sementara: jawaban pertama Anda pada soal cek yang baru memenuhi syarat sementara untuk kedua bagian Unit A.
-            </Text>
-            {view.nextDue !== null ? (
-              <Card style={styles.card}>
-                <Text style={typography.body}>{`Cek selesai pada ${dayLabel(view.anchorDay)}.`}</Text>
-                <Text style={typography.body}>{`Cek berikutnya dijadwalkan ${dayLabel(view.nextDue)}.`}</Text>
-              </Card>
-            ) : null}
+            <Text style={typography.body}>Jawaban Anda memenuhi target cek awal.</Text>
+            <Card style={styles.card}>
+              {lines.map((line, n) => (
+                <Text key={n} style={typography.body}>
+                  {line}
+                </Text>
+              ))}
+            </Card>
           </>
         ) : (
           <Text style={typography.body}>
-            Jawaban pertama pada soal cek belum memenuhi syarat sementara. Ini bisa karena ada jawaban yang belum tepat atau
-            «Belum tahu», soal dijawab pada hari lain dari saat ditampilkan, atau ada pelajaran atau latihan lain pada hari
-            yang sama. Soal cek ini tidak diulang di versi ini.
+            Jawaban pertama pada soal cek belum memenuhi target, misalnya karena belum tepat, «Belum tahu», dijawab pada
+            hari lain dari saat soal tampil, atau ada pelajaran atau latihan pada hari yang sama. Soal cek ini tidak diulang
+            di versi ini.
           </Text>
         )}
         <Notice tone="info">
-          {`${DELAYED_NOT_ACTIVE} Hasil ini hanya dari soal pilihan ganda dan merupakan bukti sementara, bukan penilaian akhir.`}
+          {anchor !== null && counted ? `${PROVISIONAL_NOTE} Angka cek hanya catatan, bukan penilaian akhir.` : PROVISIONAL_NOTE}
         </Notice>
       </View>
     );
@@ -467,7 +514,7 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today }: UnitAP
         <Text style={typography.body}>
           {awaiting
             ? 'Anda sudah menjawab semua soal latihan Unit A versi ini.'
-            : 'Beberapa bagian belum cukup jawaban benar. Latihan ulang belum tersedia di versi ini.'}
+            : 'Target latihan belum tercapai di setiap bagian, jadi soal cek tidak dibuka.'}
         </Text>
         {view.kind === 'awaiting-transfer' ? (
           <Text style={typography.body} testID="pilot-awaiting-transfer">
@@ -481,11 +528,7 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today }: UnitAP
             </Text>
           ))}
         </Card>
-        <Notice tone="info">
-          {awaiting
-            ? `${DELAYED_NOT_ACTIVE} Ini ringkasan latihan sementara, bukan penilaian akhir.`
-            : 'Soal penerapan baru serta cek hari ke-7 dan ke-30 belum tersedia. Ini ringkasan latihan sementara, bukan penilaian akhir.'}
-        </Notice>
+        <Notice tone="info">Ini ringkasan latihan sementara, bukan penilaian akhir.</Notice>
       </View>
     );
   }

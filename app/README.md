@@ -12,6 +12,8 @@ This is a developer prototype.
 - **Draft notice:** visible throughout developer mode.
 - **Content review:** see [`../docs/Four_Choice_Content_Review.md`](../docs/Four_Choice_Content_Review.md) for every key and distractor with its rationale, what is taught before use, the 44 original IDs and what happened to them, retired reservations and open review questions. No qualified Arabic or Indonesian reviewer has approved any item.
 
+**Unit A pilot:** a separate developer-beta loop (worked lessons, practice, held-out transfer, delayed checks) is reachable at `/unit-a-pilot` and is not the legacy four-choice engine described below. See [`../docs/Unit_A_Pilot_Runtime.md`](../docs/Unit_A_Pilot_Runtime.md). Its content is draft and unreviewed.
+
 ### Four-choice learning loop
 
 **Every question has four choices.** This covers lesson practice, focused follow-ups, remediation, reviews and timed checks.
@@ -70,7 +72,7 @@ Moving past a lesson screen merges the new seen screen into the learner as curre
   - A saved option order that no longer matches the question is set aside, not re-graded.
   - With nothing due, the last real summary is kept.
 
-**What doesn't exist:** a backend, authentication, uploads or remote configuration. Audio is disabled. The icons are unchanged Expo template placeholders.
+**Services and assets:** production services are not configured. Optional GoTrue/API account and sync plumbing exists (it can post answers to a local API), is off by default and is not proof of a production service. Remote configuration is not implemented. Audio is disabled. The icons are unchanged Expo template placeholders.
 
 ## Commands
 
@@ -99,7 +101,7 @@ A successful export alone does not prove content gating. A clean tester build mu
 
 ## Verification
 
-22 Jest suites with 366 tests pass, as do TypeScript and Expo lint. They cover:
+Run the current tests, type check and lint (see Commands) and check CI; this README records no pass counts. The legacy-engine tests cover:
 - **Content:** pack validity and hand-checked keys, distractor rules, reserved-form exposure.
 - **Answer handling:** shuffle and order persistence, four-choice scoring.
 - **Saved data:** v1 → v2 migration, malformed snapshot recovery and future-schema refusal in both stores; malformed web-store refusal; atomic rollback; duplicate replay.
