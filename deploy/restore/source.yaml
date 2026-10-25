@@ -1,0 +1,86 @@
+# Restore drill, source side: an overlay of deploy/compose.yaml for the drill's private source fixture only
+# (deploy/tools/aya_restore_drill.py passes it after compose.yaml; aya_stack.py never does). It adds the deletion-ledger
+# export and nothing else to the stack: no port, no secret in this file, an environment variable, an argument or an
+# image layer. Paths are relative to deploy/, the project directory.
+#
+#   aya-drill-init     one-shot, like aya-secrets-init: copies <drill>/source/drill-files/ledger-export into its own
+#                      volume (owner 65532, mode 0400) and prepares the export's output volume; no network.
+#   aya-ledger-export  (profile drill) ayailmu-ledger export, from the stack's own API image, as the READ-ONLY backup
+#                      role aya_backup: its database URL from its private file, only the database host aya-db, the
+#                      stack's issuer and nothing of Auth. It writes one new ledger file into ledger-out and prints only
+#                      the count of deletions and the file's SHA-256.
+#   aya-ledger-read    (profile drill) prints that ledger file to stdout, from the output volume mounted read-only, so
+#                      the helper writes it into the drill's private ledgers/ directory and checks its SHA-256; no
+#                      network.
+
+x-drill-hardened: &drill-hardened
+  pull_policy: never
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+  restart: "no"
+  labels:
+    aya.stack: ${AYA_STACK_LABEL:?}
+  logging:
+    driver: json-file
+    options:
+      max-size: "1m"
+      max-file: "3"
+
+services:
+  aya-drill-init:
+    <<: *drill-hardened
+    image: docker.io/library/postgres:16.15-bookworm@sha256:0ea6700a3b4f0ae6ce746519073558aed4d88a79d8d07622a9a644946c7319c4
+    user: "0:0"
+    cap_add: [CHOWN, DAC_OVERRIDE, FOWNER]
+    network_mode: none
+    entrypoint: ["/bin/sh", "/aya/drill-init.sh"]
+    volumes:
+      - type: bind
+        source: ${AYA_DRILL_FILES_DIR:?}
+        target: /in
+        read_only: true
+      - ./restore/drill-init.sh:/aya/drill-init.sh:ro
+      - ledger-export-secrets:/out/ledger-export
+      - ledger-out:/out/ledger-out
+    mem_limit: 64m
+    pids_limit: 32
+
+  aya-ledger-export:
+    <<: *drill-hardened
+    profiles: ["drill"]
+    image: aya-amar-api:${AYA_STACK_LABEL:?}
+    user: "65532:65532"
+    entrypoint: ["/ayailmu-ledger", "export"]
+    environment:
+      AYA_DATABASE_URL_FILE: /run/aya/ledger-export/database-url
+      AYA_DB_HOSTS: aya-db
+      AYA_DB_TRANSPORT: private-network
+      AYA_DB_SCHEMA: ayailmu
+      AYA_SUPABASE_ISSUER: ${AYA_STACK_ISSUER:?}
+    volumes:
+      - ledger-export-secrets:/run/aya/ledger-export:ro
+      - ledger-out:/ledger/out
+    networks: [data-net]
+    mem_limit: 128m
+    pids_limit: 64
+
+  aya-ledger-read:
+    <<: *drill-hardened
+    profiles: ["drill"]
+    image: docker.io/library/postgres:16.15-bookworm@sha256:0ea6700a3b4f0ae6ce746519073558aed4d88a79d8d07622a9a644946c7319c4
+    user: "65532:65532"
+    network_mode: none
+    entrypoint: ["/bin/cat", "--"]
+    volumes:
+      - ledger-out:/ledger/out:ro
+    mem_limit: 64m
+    pids_limit: 16
+
+volumes:
+  ledger-export-secrets:
+    labels:
+      aya.stack: ${AYA_STACK_LABEL:?}
+  ledger-out:
+    labels:
+      aya.stack: ${AYA_STACK_LABEL:?}

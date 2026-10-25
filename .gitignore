@@ -12,6 +12,10 @@
 **/.agents/
 **/.design-reference/
 
+# Python bytecode written by the infra tools' imports (the tools and their tests also set dont_write_bytecode)
+infra/**/__pycache__/
+infra/**/*.py[cod]
+
 # Local secrets, credentials and logs
 **/.env*
 **/.aws/

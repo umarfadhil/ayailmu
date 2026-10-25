@@ -1,0 +1,125 @@
+# Restore drill, target side: an overlay of deploy/compose.yaml that makes a stack the isolated restore target of
+# deploy/tools/aya_restore_drill.py (aya_stack.py never passes it). Paths are relative to deploy/, the project
+# directory. No secret is in this file, an environment variable, an argument or an image layer.
+#
+# The target stays closed by construction, not by care:
+#   - aya-proxy can never start (a profile no command enables) and publishes nothing even if it did (ports reset);
+#   - every network, edge included, is internal: no route out, nothing reachable from the host;
+#   - aya-auth, aya-migrate and aya-api belong to the profile "restored", so no bare `up` starts them: Auth starts only
+#     after both old dumps were restored, and the API only after the ledger replay exited 0;
+#   - aya-api and aya-migrate never build: they run the source's API image (AYA_DRILL_IMAGE_LABEL), the binary the
+#     source fixture ran, so the target owns no image.
+#
+#   aya-drill-init     one-shot: copies <drill>/target/drill-files into the drill volumes (owner 65532, mode 0400): the
+#                      replay's operator database URL and admin credential, the newest ledger, and the probe's old
+#                      credentials of the drill's users; no network.
+#   aya-ledger-replay  (profile drill) ayailmu-ledger replay of that ledger, as the schema owner aya_owner (only the
+#                      database host aya-db), deleting each entry's exact identity at the target's own Auth (only
+#                      aya-auth:9999) with the stack's admin credential, both from their private files.
+#   aya-probe          (profile drill) probe.sh: old and new credentials against the target's Auth and API, from the
+#                      internal networks.
+
+x-drill-hardened: &drill-hardened
+  pull_policy: never
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+  restart: "no"
+  labels:
+    aya.stack: ${AYA_STACK_LABEL:?}
+  logging:
+    driver: json-file
+    options:
+      max-size: "1m"
+      max-file: "3"
+
+services:
+  aya-proxy:
+    profiles: ["never-in-a-restore-target"]
+    ports: !reset []
+
+  aya-auth:
+    profiles: ["restored"]
+
+  aya-migrate:
+    image: aya-amar-api:${AYA_DRILL_IMAGE_LABEL:?}
+    profiles: ["restored"]
+
+  aya-api:
+    image: aya-amar-api:${AYA_DRILL_IMAGE_LABEL:?}
+    build: !reset null
+    profiles: ["restored"]
+
+  aya-drill-init:
+    <<: *drill-hardened
+    image: docker.io/library/postgres:16.15-bookworm@sha256:0ea6700a3b4f0ae6ce746519073558aed4d88a79d8d07622a9a644946c7319c4
+    user: "0:0"
+    cap_add: [CHOWN, DAC_OVERRIDE, FOWNER]
+    network_mode: none
+    entrypoint: ["/bin/sh", "/aya/drill-init.sh"]
+    volumes:
+      - type: bind
+        source: ${AYA_DRILL_FILES_DIR:?}
+        target: /in
+        read_only: true
+      - ./restore/drill-init.sh:/aya/drill-init.sh:ro
+      - ledger-replay-secrets:/out/ledger-replay
+      - ledger-in:/out/ledger-in
+      - probe-secrets:/out/probe
+    mem_limit: 64m
+    pids_limit: 32
+
+  aya-ledger-replay:
+    <<: *drill-hardened
+    profiles: ["drill"]
+    image: aya-amar-api:${AYA_DRILL_IMAGE_LABEL:?}
+    user: "65532:65532"
+    entrypoint: ["/ayailmu-ledger", "replay"]
+    environment:
+      AYA_DATABASE_URL_FILE: /run/aya/ledger-replay/database-url
+      AYA_DB_HOSTS: aya-db
+      AYA_DB_TRANSPORT: private-network
+      AYA_DB_SCHEMA: ayailmu
+      AYA_SUPABASE_URL: http://aya-auth:9999
+      AYA_AUTH_HOSTS: aya-auth:9999
+      AYA_SUPABASE_ISSUER: ${AYA_STACK_ISSUER:?}
+      AYA_SUPABASE_AUDIENCE: authenticated
+      AYA_SUPABASE_ADMIN_KEY_FILE: /run/aya/ledger-replay/admin-key
+    volumes:
+      - ledger-replay-secrets:/run/aya/ledger-replay:ro
+      - ledger-in:/ledger/in:ro
+    networks: [data-net, auth-net]
+    mem_limit: 128m
+    pids_limit: 64
+
+  aya-probe:
+    <<: *drill-hardened
+    profiles: ["drill"]
+    image: docker.io/library/golang:1.27.2-bookworm@sha256:5cf287a799e6b94384bad13d16b14904c531f51ba65792237e122ce42b392f61
+    user: "65532:65532"
+    entrypoint: ["/bin/sh", "/aya/probe.sh"]
+    environment:
+      AYA_PROBE_API_HOST: ${AYA_STACK_API_HOST:?}:${AYA_STACK_PORT:?}
+    volumes:
+      - probe-secrets:/run/aya/probe:ro
+      - ./restore/probe.sh:/aya/probe.sh:ro
+    tmpfs:
+      - /tmp:uid=65532,gid=65532,mode=0700,size=8m
+    networks: [auth-net, api-net]
+    mem_limit: 128m
+    pids_limit: 32
+
+networks:
+  edge:
+    internal: true
+
+volumes:
+  ledger-replay-secrets:
+    labels:
+      aya.stack: ${AYA_STACK_LABEL:?}
+  ledger-in:
+    labels:
+      aya.stack: ${AYA_STACK_LABEL:?}
+  probe-secrets:
+    labels:
+      aya.stack: ${AYA_STACK_LABEL:?}

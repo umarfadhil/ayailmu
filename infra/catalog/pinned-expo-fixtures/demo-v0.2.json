@@ -1,0 +1,3272 @@
+{
+ "content_version": "demo-synthetic-0.2",
+ "answer_format": "mcq4",
+ "synthetic": true,
+ "note": "SYNTHETIC DEVELOPER FIXTURE (four-choice). Unreviewed constructed material modelled on Lessons_Unit_A_B_Draft.md. Not approved for trial. See docs/Four_Choice_Content_Review.md.",
+ "prompts": {
+  "P-WORD": "Apa arti kata ini?",
+  "P-SENT": "Apa arti kalimat ini?",
+  "P-FORM": "Pilih kalimat Arab yang tepat untuk arti ini:",
+  "P-VERB": "Apa yang terjadi, dan siapa yang melakukannya?",
+  "P-VN": "Mana yang perbuatan (kata kerja)?",
+  "P-FQ-REF": "Perhatikan kata pertama: هُوَ atau هِيَ. Apa arti kalimat ini?",
+  "P-FQ-POS": "Kalimat ini menjelaskan orangnya. Apa artinya?",
+  "P-FQ-ACT": "Kalimat ini tidak memuat kata kerja. Apa artinya?",
+  "P-FQ-BREF": "Lihat akhir kata kerjanya: dengan atau tanpa ـَتْ. Apa artinya?"
+ },
+ "feedback": {
+  "FA-OK": "Benar. {kalimat} = {model}.",
+  "FA-OK-WORD": "Benar. {kata} artinya \"{makna}\".",
+  "FA-REF-HIYA": "Lihat kata pertama: هِيَ menunjuk perempuan.",
+  "FA-REF-HUWA": "Lihat kata pertama: هُوَ menunjuk laki-laki.",
+  "FA-POS": "Kalimat ini tidak menyatakan milik (\"…-nya\"). Kalimat ini menjelaskan orangnya: \"{model}\".",
+  "FA-ACT": "Kalimat ini tidak menyebut perbuatan seperti \"berkata\". Kalimat ini hanya menjelaskan sifat orangnya.",
+  "FA-LEX": "{kata} artinya \"{makna}\". Kita akan mengulanginya nanti.",
+  "FA-ALIM": "Dalam bahasa Indonesia, \"alim\" sering berarti taat beragama. Di sini عَالِمٌ berarti orang yang berilmu atau mengetahui.",
+  "FA-FORM": "Untuk perempuan, pakai bentuk dengan ـَةٌ. Untuk laki-laki, tanpa ـَةٌ.",
+  "FA-PEND": "Jawaban Anda kami simpan untuk diperiksa. Contoh jawaban yang tepat: \"{model}\".",
+  "FA-DONTKNOW": "Tidak apa-apa. Contoh jawaban yang tepat: \"{model}\".",
+  "FA-FOCUS-OK": "Benar.",
+  "FA-FOCUS-NO": "Perhatikan lagi. Jawaban yang tepat: {benar}.",
+  "FA-OK-OPT": "Benar. {kalimat} = {benar}.",
+  "FA-LEX-OPT": "{kata} artinya \"{benar}\". Kita akan mengulanginya nanti.",
+  "FA-LOOK": "Kata ini mirip kata dalam bahasa Indonesia, tetapi artinya berbeda. {kata} artinya \"{benar}\".",
+  "FA-POS-OPT": "Kalimat ini tidak menyatakan milik (\"…-nya\"). Kalimat ini menjelaskan orangnya: \"{benar}\".",
+  "FA-FORM-OPT": "Untuk perempuan, pakai bentuk dengan ـَةٌ. Untuk laki-laki, tanpa ـَةٌ. Jawaban yang tepat: {benar}",
+  "FA-REF-FORM": "Arti yang diminta adalah tentang {target_gender}. Pilih kata pertama yang cocok (هُوَ untuk laki-laki, هِيَ untuk perempuan).",
+  "FB-OK": "Benar. {kalimat} = {benar}.",
+  "FA-OK-WORD2": "Benar. {kata} artinya \"{benar}\".",
+  "FA-OK-FORM": "Benar. {benar} = «{target}».",
+  "FB-REF": "Lihat akhir kata kerjanya. Tanpa ـَتْ: laki-laki. Dengan ـَتْ: perempuan.",
+  "FB-LEX-OPT": "{kalimat} memakai kata kerja yang berbeda. Jawaban yang tepat: \"{benar}\".",
+  "FB-VN-OK": "Benar. {benar} adalah perbuatan (kata kerja). ـتْ di akhirnya menunjukkan pelakunya perempuan.",
+  "FB-VN-NO": "{pilihan} menjelaskan orang (ta marbuthah ـة), bukan perbuatan. Perbuatannya: {benar}."
+ },
+ "lesson_screens": [
+  {
+   "screen_id": "DEMO-S1",
+   "unit": "A",
+   "title": "Tujuan",
+   "body": [
+    "Di unit ini Anda belajar memahami kalimat pendek seperti «Dia orang yang sabar».",
+    "Semua kalimat Arab di aplikasi ini adalah kalimat latihan buatan, bukan ayat Al-Qur'an."
+   ],
+   "review_status": "draft"
+  },
+  {
+   "screen_id": "DEMO-S2",
+   "unit": "A",
+   "title": "هُوَ dan هِيَ",
+   "body": [
+    "هُوَ artinya dia (laki-laki).",
+    "هِيَ artinya dia (perempuan).",
+    "Dalam bahasa Indonesia keduanya cukup diterjemahkan «dia». Karena itu kami akan sering bertanya terpisah: laki-laki atau perempuan?"
+   ],
+   "examples": [
+    {
+     "arabic": "هُوَ",
+     "gloss": "dia (laki-laki)"
+    },
+    {
+     "arabic": "هِيَ",
+     "gloss": "dia (perempuan)"
+    }
+   ],
+   "review_status": "draft"
+  },
+  {
+   "screen_id": "DEMO-S3",
+   "unit": "A",
+   "title": "Kalimat dan bentuk yang cocok",
+   "body": [
+    "Kata pertama menunjukkan orangnya. Kata kedua menjelaskan orang itu. Tidak perlu kata «adalah».",
+    "هُوَ dipasangkan dengan bentuk tanpa ـَةٌ. هِيَ dipasangkan dengan bentuk dengan ـَةٌ.",
+    "Kalimat ini menjelaskan orangnya. Artinya bukan «kejujurannya», dan bukan «dia berkata jujur»."
+   ],
+   "examples": [
+    {
+     "arabic": "هُوَ صَادِقٌ",
+     "gloss": "Dia (laki-laki) orang yang jujur"
+    },
+    {
+     "arabic": "هِيَ صَادِقَةٌ",
+     "gloss": "Dia (perempuan) orang yang jujur"
+    }
+   ],
+   "clue_paragraph": 2,
+   "review_status": "draft"
+  },
+  {
+   "screen_id": "DEMO-BS1",
+   "unit": "B",
+   "title": "Tujuan",
+   "body": [
+    "Di unit ini Anda belajar memahami siapa yang melakukan sesuatu, dan siapa yang berkata. Semua kalimat adalah kalimat latihan buatan, bukan ayat Al-Qur'an."
+   ],
+   "review_status": "draft"
+  },
+  {
+   "screen_id": "DEMO-BS2",
+   "unit": "B",
+   "title": "Kata kerja sudah memuat pelakunya",
+   "body": [
+    "ذَهَبَ = dia (laki-laki) pergi.",
+    "Tambahkan ـَتْ di akhir: ذَهَبَتْ = dia (perempuan) pergi.",
+    "Bahasa Indonesia tidak mengubah kata untuk waktu, jadi «dia pergi» dan «dia sudah pergi» sama-sama benar."
+   ],
+   "examples": [
+    {
+     "arabic": "ذَهَبَ",
+     "gloss": "dia (laki-laki) pergi"
+    },
+    {
+     "arabic": "ذَهَبَتْ",
+     "gloss": "dia (perempuan) pergi"
+    }
+   ],
+   "clue_paragraph": 2,
+   "review_status": "draft"
+  },
+  {
+   "screen_id": "DEMO-BS3",
+   "unit": "B",
+   "title": "Hati-hati: ـتْ bukan ـة",
+   "body": [
+    "ـتْ pada kata kerja (huruf ت biasa dengan sukun) berbeda dengan ta marbuthah ـة pada kata seperti صَابِرَةٌ."
+   ],
+   "examples": [
+    {
+     "arabic": "صَبَرَتْ",
+     "gloss": "dia (perempuan) bersabar — perbuatan"
+    },
+    {
+     "arabic": "صَابِرَةٌ",
+     "gloss": "orang yang sabar (perempuan) — sifat"
+    }
+   ],
+   "review_status": "draft"
+  }
+ ],
+ "items": [
+  {
+   "item_id": "A2-M01",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "word-meaning",
+   "skills": [
+    "LEX-A:W-A3"
+   ],
+   "pool": "PRACT",
+   "arabic": "صَادِقٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-WORD",
+   "lineage": "A:word-form:صَادِقٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-WORD2"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "word:W-A3",
+   "legacy_item_ids": [
+    "DEMO-M01"
+   ],
+   "order": 1,
+   "word_id": "W-A3",
+   "word_meaning": "orang yang jujur",
+   "options": [
+    {
+     "id": "k",
+     "text": "orang yang jujur",
+     "correct": true
+    },
+    {
+     "id": "d1",
+     "text": "orang yang bersedekah",
+     "misconceptions": [
+      "look-alike"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LOOK"
+     ],
+     "rationale": "E-L2: Indonesian 'sedekah' look-alike"
+    },
+    {
+     "id": "d2",
+     "text": "sahabat",
+     "misconceptions": [
+      "look-alike"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LOOK"
+     ],
+     "rationale": "E-L2: Indonesian 'sahabat' look-alike"
+    },
+    {
+     "id": "d3",
+     "text": "orang yang sakit",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L2 distractor"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-F01",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "form-grid",
+   "skills": [
+    "NOM-02"
+   ],
+   "pool": "PRACT",
+   "arabic": "",
+   "constructed": true,
+   "help_lines": [
+    {
+     "word": "نَادِمٌ",
+     "meaning": "orang yang menyesal"
+    }
+   ],
+   "prompt_id": "P-FORM",
+   "lineage": "A:form:perempuan:نَادِمٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-FORM"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:هِيَ نَادِمَةٌ",
+   "legacy_item_ids": [
+    "DEMO-F01"
+   ],
+   "order": 2,
+   "target": "Dia (perempuan) orang yang menyesal",
+   "referent": "perempuan",
+   "options": [
+    {
+     "id": "k",
+     "text": "هِيَ نَادِمَةٌ",
+     "arabic": true,
+     "correct": true
+    },
+    {
+     "id": "e",
+     "text": "هِيَ نَادِمٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-form"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-FORM-OPT"
+     ],
+     "rationale": "ending does not agree with the pronoun"
+    },
+    {
+     "id": "x",
+     "text": "هُوَ نَادِمٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-FORM"
+     ],
+     "rationale": "agreeing sentence about the other person"
+    },
+    {
+     "id": "c",
+     "text": "هُوَ نَادِمَةٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-referent",
+      "wrong-form"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-FORM",
+      "FA-FORM-OPT"
+     ],
+     "rationale": "compound: wrong pronoun AND ending not agreeing"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-P01",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "interpretation",
+   "skills": [
+    "NOM-01",
+    "LEX-P3"
+   ],
+   "pool": "PRACT",
+   "arabic": "هِيَ مُؤْمِنَةٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-SENT",
+   "lineage": "A:sentence:هِيَ مُؤْمِنَةٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-OPT"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:هِيَ مُؤْمِنَةٌ",
+   "legacy_item_ids": [
+    "DEMO-P01"
+   ],
+   "order": 3,
+   "referent": "perempuan",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (perempuan) orang yang beriman",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (laki-laki) orang yang beriman",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-HIYA"
+     ],
+     "rationale": "he/she swap (lessons §2.8)"
+    },
+    {
+     "id": "p",
+     "text": "Keimanannya (sesuatu yang ia miliki)",
+     "misconceptions": [
+      "possession"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-POS-OPT"
+     ],
+     "rationale": "possession reading '-nya' (lessons §2.6 step 3)"
+    },
+    {
+     "id": "a",
+     "text": "Dia berkata bahwa dirinya beriman",
+     "misconceptions": [
+      "invented-action"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-ACT"
+     ],
+     "rationale": "invented action 'berkata' (lessons §2.5 A-S5)"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-M02",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "word-meaning",
+   "skills": [
+    "LEX-A:W-A5"
+   ],
+   "pool": "PRACT",
+   "arabic": "عَالِمٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-WORD",
+   "lineage": "A:word-form:عَالِمٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-WORD2"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "word:W-A5",
+   "legacy_item_ids": [
+    "DEMO-M02"
+   ],
+   "order": 4,
+   "word_id": "W-A5",
+   "word_meaning": "orang yang berilmu / mengetahui",
+   "options": [
+    {
+     "id": "k",
+     "text": "orang yang berilmu / mengetahui",
+     "correct": true
+    },
+    {
+     "id": "d1",
+     "text": "orang yang taat beribadah",
+     "misconceptions": [
+      "look-alike"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-ALIM"
+     ],
+     "rationale": "E-L3: Indonesian 'alim' sense"
+    },
+    {
+     "id": "d2",
+     "text": "alam semesta",
+     "misconceptions": [
+      "look-alike"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LOOK"
+     ],
+     "rationale": "E-L3: 'alam' look-alike"
+    },
+    {
+     "id": "d3",
+     "text": "orang yang lalai",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L3 distractor"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-F02",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "form-grid",
+   "skills": [
+    "NOM-02"
+   ],
+   "pool": "PRACT",
+   "arabic": "",
+   "constructed": true,
+   "help_lines": [
+    {
+     "word": "فَرِحٌ",
+     "meaning": "orang yang gembira"
+    }
+   ],
+   "prompt_id": "P-FORM",
+   "lineage": "A:form:laki-laki:فَرِحٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-FORM"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:هُوَ فَرِحٌ",
+   "legacy_item_ids": [
+    "DEMO-F02"
+   ],
+   "order": 5,
+   "target": "Dia (laki-laki) orang yang gembira",
+   "referent": "laki-laki",
+   "options": [
+    {
+     "id": "k",
+     "text": "هُوَ فَرِحٌ",
+     "arabic": true,
+     "correct": true
+    },
+    {
+     "id": "e",
+     "text": "هُوَ فَرِحَةٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-form"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-FORM-OPT"
+     ],
+     "rationale": "ending does not agree with the pronoun"
+    },
+    {
+     "id": "x",
+     "text": "هِيَ فَرِحَةٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-FORM"
+     ],
+     "rationale": "agreeing sentence about the other person"
+    },
+    {
+     "id": "c",
+     "text": "هِيَ فَرِحٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-referent",
+      "wrong-form"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-FORM",
+      "FA-FORM-OPT"
+     ],
+     "rationale": "compound: wrong pronoun AND ending not agreeing"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-P02",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "interpretation",
+   "skills": [
+    "NOM-01",
+    "LEX-P3"
+   ],
+   "pool": "PRACT",
+   "arabic": "هُوَ صَالِحٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-SENT",
+   "lineage": "A:sentence:هُوَ صَالِحٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-OPT"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:هُوَ صَالِحٌ",
+   "legacy_item_ids": [
+    "DEMO-P02"
+   ],
+   "order": 6,
+   "referent": "laki-laki",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (laki-laki) orang yang saleh",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (perempuan) orang yang saleh",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-HUWA"
+     ],
+     "rationale": "he/she swap (lessons §2.8)"
+    },
+    {
+     "id": "p",
+     "text": "Kesalehannya (sesuatu yang ia miliki)",
+     "misconceptions": [
+      "possession"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-POS-OPT"
+     ],
+     "rationale": "possession reading '-nya' (lessons §2.6 step 3)"
+    },
+    {
+     "id": "a",
+     "text": "Dia berkata bahwa dirinya saleh",
+     "misconceptions": [
+      "invented-action"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-ACT"
+     ],
+     "rationale": "invented action 'berkata' (lessons §2.5 A-S5)"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-P03",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "interpretation",
+   "skills": [
+    "NOM-01",
+    "LEX-P3"
+   ],
+   "pool": "PRACT",
+   "arabic": "هِيَ شَاكِرَةٌ",
+   "constructed": true,
+   "help_lines": [
+    {
+     "word": "شَاكِرٌ",
+     "meaning": "orang yang bersyukur"
+    }
+   ],
+   "prompt_id": "P-SENT",
+   "lineage": "A:sentence:هِيَ شَاكِرَةٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-OPT"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:هِيَ شَاكِرَةٌ",
+   "legacy_item_ids": [
+    "DEMO-P03"
+   ],
+   "order": 7,
+   "referent": "perempuan",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (perempuan) orang yang bersyukur",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (laki-laki) orang yang bersyukur",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-HIYA"
+     ],
+     "rationale": "he/she swap (lessons §2.8)"
+    },
+    {
+     "id": "p",
+     "text": "Rasa syukurnya (sesuatu yang ia miliki)",
+     "misconceptions": [
+      "possession"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-POS-OPT"
+     ],
+     "rationale": "possession reading '-nya' (lessons §2.6 step 3)"
+    },
+    {
+     "id": "a",
+     "text": "Dia berkata bahwa dirinya bersyukur",
+     "misconceptions": [
+      "invented-action"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-ACT"
+     ],
+     "rationale": "invented action 'berkata' (lessons §2.5 A-S5)"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-R01",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "interpretation",
+   "skills": [
+    "NOM-01",
+    "LEX-P3"
+   ],
+   "pool": "REMED",
+   "arabic": "هِيَ عَابِدَةٌ",
+   "constructed": true,
+   "help_lines": [
+    {
+     "word": "عَابِدٌ",
+     "meaning": "orang yang beribadah"
+    }
+   ],
+   "prompt_id": "P-SENT",
+   "lineage": "A:sentence:هِيَ عَابِدَةٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-OPT"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:هِيَ عَابِدَةٌ",
+   "legacy_item_ids": [
+    "DEMO-R01"
+   ],
+   "referent": "perempuan",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (perempuan) orang yang beribadah",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (laki-laki) orang yang beribadah",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-HIYA"
+     ],
+     "rationale": "he/she swap (lessons §2.8)"
+    },
+    {
+     "id": "p",
+     "text": "Ibadahnya (sesuatu yang ia miliki)",
+     "misconceptions": [
+      "possession"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-POS-OPT"
+     ],
+     "rationale": "possession reading '-nya' (lessons §2.6 step 3)"
+    },
+    {
+     "id": "a",
+     "text": "Dia berkata bahwa dirinya beribadah",
+     "misconceptions": [
+      "invented-action"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-ACT"
+     ],
+     "rationale": "invented action 'berkata' (lessons §2.5 A-S5)"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-R02",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "interpretation",
+   "skills": [
+    "NOM-01",
+    "LEX-P3"
+   ],
+   "pool": "REMED",
+   "arabic": "هُوَ كَاذِبٌ",
+   "constructed": true,
+   "help_lines": [
+    {
+     "word": "كَاذِبٌ",
+     "meaning": "orang yang berbohong"
+    }
+   ],
+   "prompt_id": "P-SENT",
+   "lineage": "A:sentence:هُوَ كَاذِبٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-OPT"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:هُوَ كَاذِبٌ",
+   "legacy_item_ids": [
+    "DEMO-R02"
+   ],
+   "referent": "laki-laki",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (laki-laki) orang yang berbohong",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (perempuan) orang yang berbohong",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-HUWA"
+     ],
+     "rationale": "he/she swap (lessons §2.8)"
+    },
+    {
+     "id": "p",
+     "text": "Kebohongannya (sesuatu yang ia miliki)",
+     "misconceptions": [
+      "possession"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-POS-OPT"
+     ],
+     "rationale": "possession reading '-nya' (lessons §2.6 step 3)"
+    },
+    {
+     "id": "a",
+     "text": "Dia berkata bahwa dirinya berbohong",
+     "misconceptions": [
+      "invented-action"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-ACT"
+     ],
+     "rationale": "invented action 'berkata' (lessons §2.5 A-S5)"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-F03",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "form-grid",
+   "skills": [
+    "NOM-02"
+   ],
+   "pool": "REMED",
+   "arabic": "",
+   "constructed": true,
+   "help_lines": [
+    {
+     "word": "خَائِفٌ",
+     "meaning": "orang yang takut"
+    }
+   ],
+   "prompt_id": "P-FORM",
+   "lineage": "A:form:perempuan:خَائِفٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-FORM"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:هِيَ خَائِفَةٌ",
+   "legacy_item_ids": [
+    "DEMO-F03"
+   ],
+   "target": "Dia (perempuan) orang yang takut",
+   "referent": "perempuan",
+   "options": [
+    {
+     "id": "k",
+     "text": "هِيَ خَائِفَةٌ",
+     "arabic": true,
+     "correct": true
+    },
+    {
+     "id": "e",
+     "text": "هِيَ خَائِفٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-form"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-FORM-OPT"
+     ],
+     "rationale": "ending does not agree with the pronoun"
+    },
+    {
+     "id": "x",
+     "text": "هُوَ خَائِفٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-FORM"
+     ],
+     "rationale": "agreeing sentence about the other person"
+    },
+    {
+     "id": "c",
+     "text": "هُوَ خَائِفَةٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-referent",
+      "wrong-form"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-FORM",
+      "FA-FORM-OPT"
+     ],
+     "rationale": "compound: wrong pronoun AND ending not agreeing"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-Y01",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "interpretation",
+   "skills": [
+    "NOM-01",
+    "LEX-P3"
+   ],
+   "pool": "READY",
+   "arabic": "هِيَ صَالِحَةٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-SENT",
+   "lineage": "A:sentence:هِيَ صَالِحَةٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-OPT"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:هِيَ صَالِحَةٌ",
+   "legacy_item_ids": [
+    "DEMO-Y01"
+   ],
+   "referent": "perempuan",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (perempuan) orang yang saleh",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (laki-laki) orang yang saleh",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-HIYA"
+     ],
+     "rationale": "he/she swap (lessons §2.8)"
+    },
+    {
+     "id": "p",
+     "text": "Kesalehannya (sesuatu yang ia miliki)",
+     "misconceptions": [
+      "possession"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-POS-OPT"
+     ],
+     "rationale": "possession reading '-nya' (lessons §2.6 step 3)"
+    },
+    {
+     "id": "a",
+     "text": "Dia berkata bahwa dirinya saleh",
+     "misconceptions": [
+      "invented-action"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-ACT"
+     ],
+     "rationale": "invented action 'berkata' (lessons §2.5 A-S5)"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-D7S1",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "interpretation",
+   "skills": [
+    "NOM-01",
+    "LEX-P3"
+   ],
+   "pool": "D7",
+   "arabic": "هُوَ صَابِرٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-SENT",
+   "lineage": "A:sentence:هُوَ صَابِرٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-OPT"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:هُوَ صَابِرٌ",
+   "legacy_item_ids": [
+    "DEMO-D701"
+   ],
+   "referent": "laki-laki",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (laki-laki) orang yang sabar",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (perempuan) orang yang sabar",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-HUWA"
+     ],
+     "rationale": "he/she swap (lessons §2.8)"
+    },
+    {
+     "id": "p",
+     "text": "Kesabarannya (sesuatu yang ia miliki)",
+     "misconceptions": [
+      "possession"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-POS-OPT"
+     ],
+     "rationale": "possession reading '-nya' (lessons §2.6 step 3)"
+    },
+    {
+     "id": "a",
+     "text": "Dia berkata bahwa dirinya sabar",
+     "misconceptions": [
+      "invented-action"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-ACT"
+     ],
+     "rationale": "invented action 'berkata' (lessons §2.5 A-S5)"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-D7S2",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "interpretation",
+   "skills": [
+    "NOM-01",
+    "LEX-P3"
+   ],
+   "pool": "D7",
+   "arabic": "هِيَ عَالِمَةٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-SENT",
+   "lineage": "A:sentence:هِيَ عَالِمَةٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-OPT"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:هِيَ عَالِمَةٌ",
+   "referent": "perempuan",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (perempuan) orang yang berilmu",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (laki-laki) orang yang berilmu",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-HIYA"
+     ],
+     "rationale": "he/she swap (lessons §2.8)"
+    },
+    {
+     "id": "p",
+     "text": "Ilmunya (sesuatu yang ia miliki)",
+     "misconceptions": [
+      "possession"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-POS-OPT"
+     ],
+     "rationale": "possession reading '-nya' (lessons §2.6 step 3)"
+    },
+    {
+     "id": "a",
+     "text": "Dia berkata bahwa dirinya berilmu",
+     "misconceptions": [
+      "invented-action"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-ACT"
+     ],
+     "rationale": "invented action 'berkata' (lessons §2.5 A-S5)"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-D7S3",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "interpretation",
+   "skills": [
+    "NOM-01",
+    "LEX-P3"
+   ],
+   "pool": "D7",
+   "arabic": "هِيَ غَافِلَةٌ",
+   "constructed": true,
+   "help_lines": [
+    {
+     "word": "غَافِلٌ",
+     "meaning": "orang yang lalai"
+    }
+   ],
+   "prompt_id": "P-SENT",
+   "lineage": "A:sentence:هِيَ غَافِلَةٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-OPT"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:هِيَ غَافِلَةٌ",
+   "referent": "perempuan",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (perempuan) orang yang lalai",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (laki-laki) orang yang lalai",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-HIYA"
+     ],
+     "rationale": "he/she swap (lessons §2.8)"
+    },
+    {
+     "id": "p",
+     "text": "Kelalaiannya (sesuatu yang ia miliki)",
+     "misconceptions": [
+      "possession"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-POS-OPT"
+     ],
+     "rationale": "possession reading '-nya' (lessons §2.6 step 3)"
+    },
+    {
+     "id": "a",
+     "text": "Dia berkata bahwa dirinya lalai",
+     "misconceptions": [
+      "invented-action"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-ACT"
+     ],
+     "rationale": "invented action 'berkata' (lessons §2.5 A-S5)"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-D7F1",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "form-grid",
+   "skills": [
+    "NOM-02"
+   ],
+   "pool": "D7",
+   "arabic": "",
+   "constructed": true,
+   "help_lines": [
+    {
+     "word": "نَائِمٌ",
+     "meaning": "orang yang sedang tidur"
+    }
+   ],
+   "prompt_id": "P-FORM",
+   "lineage": "A:form:perempuan:نَائِمٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-FORM"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:هِيَ نَائِمَةٌ",
+   "target": "Dia (perempuan) orang yang sedang tidur",
+   "referent": "perempuan",
+   "options": [
+    {
+     "id": "k",
+     "text": "هِيَ نَائِمَةٌ",
+     "arabic": true,
+     "correct": true
+    },
+    {
+     "id": "e",
+     "text": "هِيَ نَائِمٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-form"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-FORM-OPT"
+     ],
+     "rationale": "ending does not agree with the pronoun"
+    },
+    {
+     "id": "x",
+     "text": "هُوَ نَائِمٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-FORM"
+     ],
+     "rationale": "agreeing sentence about the other person"
+    },
+    {
+     "id": "c",
+     "text": "هُوَ نَائِمَةٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-referent",
+      "wrong-form"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-FORM",
+      "FA-FORM-OPT"
+     ],
+     "rationale": "compound: wrong pronoun AND ending not agreeing"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-D7F2",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "form-grid",
+   "skills": [
+    "NOM-02"
+   ],
+   "pool": "D7",
+   "arabic": "",
+   "constructed": true,
+   "help_lines": [
+    {
+     "word": "سَالِمٌ",
+     "meaning": "orang yang selamat"
+    }
+   ],
+   "prompt_id": "P-FORM",
+   "lineage": "A:form:laki-laki:سَالِمٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-FORM"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:هُوَ سَالِمٌ",
+   "target": "Dia (laki-laki) orang yang selamat",
+   "referent": "laki-laki",
+   "options": [
+    {
+     "id": "k",
+     "text": "هُوَ سَالِمٌ",
+     "arabic": true,
+     "correct": true
+    },
+    {
+     "id": "e",
+     "text": "هُوَ سَالِمَةٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-form"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-FORM-OPT"
+     ],
+     "rationale": "ending does not agree with the pronoun"
+    },
+    {
+     "id": "x",
+     "text": "هِيَ سَالِمَةٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-FORM"
+     ],
+     "rationale": "agreeing sentence about the other person"
+    },
+    {
+     "id": "c",
+     "text": "هِيَ سَالِمٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-referent",
+      "wrong-form"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-FORM",
+      "FA-FORM-OPT"
+     ],
+     "rationale": "compound: wrong pronoun AND ending not agreeing"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-D7W1",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "word-meaning",
+   "skills": [
+    "LEX-A:W-A1"
+   ],
+   "pool": "D7",
+   "arabic": "مُؤْمِنٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-WORD",
+   "lineage": "A:word-form:مُؤْمِنٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-WORD2"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "word:W-A1",
+   "word_id": "W-A1",
+   "word_meaning": "orang yang beriman",
+   "options": [
+    {
+     "id": "k",
+     "text": "orang yang beriman",
+     "correct": true
+    },
+    {
+     "id": "d1",
+     "text": "orang yang merasa aman",
+     "misconceptions": [
+      "look-alike"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LOOK"
+     ],
+     "rationale": "E-L4: same root as 'aman'"
+    },
+    {
+     "id": "d2",
+     "text": "orang yang meminta",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L4 distractor"
+    },
+    {
+     "id": "d3",
+     "text": "orang yang tidur",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L4 distractor"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-D7W3",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "word-meaning",
+   "skills": [
+    "LEX-A:W-A3"
+   ],
+   "pool": "D7",
+   "arabic": "صَادِقَةٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-WORD",
+   "lineage": "A:word-form:صَادِقَةٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-WORD2"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "word:W-A3",
+   "word_id": "W-A3",
+   "word_meaning": "orang yang jujur",
+   "options": [
+    {
+     "id": "k",
+     "text": "orang yang jujur",
+     "correct": true
+    },
+    {
+     "id": "d1",
+     "text": "orang yang bersedekah",
+     "misconceptions": [
+      "look-alike"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LOOK"
+     ],
+     "rationale": "E-L2: Indonesian 'sedekah' look-alike"
+    },
+    {
+     "id": "d2",
+     "text": "sahabat",
+     "misconceptions": [
+      "look-alike"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LOOK"
+     ],
+     "rationale": "E-L2: Indonesian 'sahabat' look-alike"
+    },
+    {
+     "id": "d3",
+     "text": "orang yang sakit",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L2 distractor"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-D7W5",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "word-meaning",
+   "skills": [
+    "LEX-A:W-A5"
+   ],
+   "pool": "D7",
+   "arabic": "عَالِمَةٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-WORD",
+   "lineage": "A:word-form:عَالِمَةٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-WORD2"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "word:W-A5",
+   "word_id": "W-A5",
+   "word_meaning": "orang yang berilmu / mengetahui",
+   "options": [
+    {
+     "id": "k",
+     "text": "orang yang berilmu / mengetahui",
+     "correct": true
+    },
+    {
+     "id": "d1",
+     "text": "orang yang taat beribadah",
+     "misconceptions": [
+      "look-alike"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-ALIM"
+     ],
+     "rationale": "E-L3: Indonesian 'alim' sense"
+    },
+    {
+     "id": "d2",
+     "text": "alam semesta",
+     "misconceptions": [
+      "look-alike"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LOOK"
+     ],
+     "rationale": "E-L3: 'alam' look-alike"
+    },
+    {
+     "id": "d3",
+     "text": "orang yang lalai",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L3 distractor"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-D30S1",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "interpretation",
+   "skills": [
+    "NOM-01",
+    "LEX-P3"
+   ],
+   "pool": "D30",
+   "arabic": "هُوَ عَالِمٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-SENT",
+   "lineage": "A:sentence:هُوَ عَالِمٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-OPT"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:هُوَ عَالِمٌ",
+   "referent": "laki-laki",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (laki-laki) orang yang berilmu",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (perempuan) orang yang berilmu",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-HUWA"
+     ],
+     "rationale": "he/she swap (lessons §2.8)"
+    },
+    {
+     "id": "p",
+     "text": "Ilmunya (sesuatu yang ia miliki)",
+     "misconceptions": [
+      "possession"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-POS-OPT"
+     ],
+     "rationale": "possession reading '-nya' (lessons §2.6 step 3)"
+    },
+    {
+     "id": "a",
+     "text": "Dia berkata bahwa dirinya berilmu",
+     "misconceptions": [
+      "invented-action"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-ACT"
+     ],
+     "rationale": "invented action 'berkata' (lessons §2.5 A-S5)"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-D30S2",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "interpretation",
+   "skills": [
+    "NOM-01",
+    "LEX-P3"
+   ],
+   "pool": "D30",
+   "arabic": "هِيَ كَرِيمَةٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-SENT",
+   "lineage": "A:sentence:هِيَ كَرِيمَةٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-OPT"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:هِيَ كَرِيمَةٌ",
+   "legacy_item_ids": [
+    "DEMO-D3001"
+   ],
+   "referent": "perempuan",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (perempuan) orang yang mulia",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (laki-laki) orang yang mulia",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-HIYA"
+     ],
+     "rationale": "he/she swap (lessons §2.8)"
+    },
+    {
+     "id": "p",
+     "text": "Kemuliaannya (sesuatu yang ia miliki)",
+     "misconceptions": [
+      "possession"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-POS-OPT"
+     ],
+     "rationale": "possession reading '-nya' (lessons §2.6 step 3)"
+    },
+    {
+     "id": "a",
+     "text": "Dia berkata bahwa dirinya mulia",
+     "misconceptions": [
+      "invented-action"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-ACT"
+     ],
+     "rationale": "invented action 'berkata' (lessons §2.5 A-S5)"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-D30F1",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "form-grid",
+   "skills": [
+    "NOM-02"
+   ],
+   "pool": "D30",
+   "arabic": "",
+   "constructed": true,
+   "help_lines": [
+    {
+     "word": "حَزِينٌ",
+     "meaning": "orang yang sedih"
+    }
+   ],
+   "prompt_id": "P-FORM",
+   "lineage": "A:form:laki-laki:حَزِينٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-FORM"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:هُوَ حَزِينٌ",
+   "target": "Dia (laki-laki) orang yang sedih",
+   "referent": "laki-laki",
+   "options": [
+    {
+     "id": "k",
+     "text": "هُوَ حَزِينٌ",
+     "arabic": true,
+     "correct": true
+    },
+    {
+     "id": "e",
+     "text": "هُوَ حَزِينَةٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-form"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-FORM-OPT"
+     ],
+     "rationale": "ending does not agree with the pronoun"
+    },
+    {
+     "id": "x",
+     "text": "هِيَ حَزِينَةٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-FORM"
+     ],
+     "rationale": "agreeing sentence about the other person"
+    },
+    {
+     "id": "c",
+     "text": "هِيَ حَزِينٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-referent",
+      "wrong-form"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-FORM",
+      "FA-FORM-OPT"
+     ],
+     "rationale": "compound: wrong pronoun AND ending not agreeing"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-D30F2",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "form-grid",
+   "skills": [
+    "NOM-02"
+   ],
+   "pool": "D30",
+   "arabic": "",
+   "constructed": true,
+   "help_lines": [
+    {
+     "word": "جَالِسٌ",
+     "meaning": "orang yang sedang duduk"
+    }
+   ],
+   "prompt_id": "P-FORM",
+   "lineage": "A:form:perempuan:جَالِسٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-FORM"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:هِيَ جَالِسَةٌ",
+   "target": "Dia (perempuan) orang yang sedang duduk",
+   "referent": "perempuan",
+   "options": [
+    {
+     "id": "k",
+     "text": "هِيَ جَالِسَةٌ",
+     "arabic": true,
+     "correct": true
+    },
+    {
+     "id": "e",
+     "text": "هِيَ جَالِسٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-form"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-FORM-OPT"
+     ],
+     "rationale": "ending does not agree with the pronoun"
+    },
+    {
+     "id": "x",
+     "text": "هُوَ جَالِسٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-FORM"
+     ],
+     "rationale": "agreeing sentence about the other person"
+    },
+    {
+     "id": "c",
+     "text": "هُوَ جَالِسَةٌ",
+     "arabic": true,
+     "misconceptions": [
+      "wrong-referent",
+      "wrong-form"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-FORM",
+      "FA-FORM-OPT"
+     ],
+     "rationale": "compound: wrong pronoun AND ending not agreeing"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-D30W2",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "word-meaning",
+   "skills": [
+    "LEX-A:W-A2"
+   ],
+   "pool": "D30",
+   "arabic": "صَالِحَةٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-WORD",
+   "lineage": "A:word-form:صَالِحَةٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-WORD2"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "word:W-A2",
+   "word_id": "W-A2",
+   "word_meaning": "orang yang saleh / baik",
+   "options": [
+    {
+     "id": "k",
+     "text": "orang yang saleh / baik",
+     "correct": true
+    },
+    {
+     "id": "d1",
+     "text": "orang yang sedang salat",
+     "misconceptions": [
+      "look-alike"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LOOK"
+     ],
+     "rationale": "E-L6: 'salat' look-alike"
+    },
+    {
+     "id": "d2",
+     "text": "orang yang mencari",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L6 distractor"
+    },
+    {
+     "id": "d3",
+     "text": "orang yang malas",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L6 distractor"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-D30W4",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "word-meaning",
+   "skills": [
+    "LEX-A:W-A4"
+   ],
+   "pool": "D30",
+   "arabic": "صَابِرَةٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-WORD",
+   "lineage": "A:word-form:صَابِرَةٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-WORD2"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "word:W-A4",
+   "word_id": "W-A4",
+   "word_meaning": "orang yang sabar",
+   "options": [
+    {
+     "id": "k",
+     "text": "orang yang sabar",
+     "correct": true
+    },
+    {
+     "id": "d1",
+     "text": "orang yang marah",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L1 distractor"
+    },
+    {
+     "id": "d2",
+     "text": "orang yang berpuasa",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L1 distractor"
+    },
+    {
+     "id": "d3",
+     "text": "orang yang pergi",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L1 distractor"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-D30W6",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "word-meaning",
+   "skills": [
+    "LEX-A:W-A6"
+   ],
+   "pool": "D30",
+   "arabic": "كَرِيمَةٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-WORD",
+   "lineage": "A:word-form:كَرِيمَةٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-WORD2"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "word:W-A6",
+   "word_id": "W-A6",
+   "word_meaning": "orang yang mulia",
+   "options": [
+    {
+     "id": "k",
+     "text": "orang yang mulia",
+     "correct": true
+    },
+    {
+     "id": "d1",
+     "text": "orang yang kaya",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L5 distractor; [CHECK] كَرِيمٌ sense pending"
+    },
+    {
+     "id": "d2",
+     "text": "orang yang kuat",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L5 distractor"
+    },
+    {
+     "id": "d3",
+     "text": "orang yang lemah",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L5 distractor"
+    }
+   ]
+  },
+  {
+   "item_id": "A2-FQ-REF-F",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "interpretation",
+   "skills": [],
+   "pool": "FOCUS",
+   "arabic": "هِيَ صَادِقَةٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-FQ-REF",
+   "lineage": "A:sentence:هِيَ صَادِقَةٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-OPT"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "legacy_item_ids": [
+    "DEMO-FQ-REF-F"
+   ],
+   "referent": "perempuan",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (perempuan) orang yang jujur",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (laki-laki) orang yang jujur",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-HIYA"
+     ],
+     "rationale": "he/she swap (lessons §2.8)"
+    },
+    {
+     "id": "p",
+     "text": "Kejujurannya (sesuatu yang ia miliki)",
+     "misconceptions": [
+      "possession"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-POS-OPT"
+     ],
+     "rationale": "possession reading '-nya' (lessons §2.6 step 3)"
+    },
+    {
+     "id": "a",
+     "text": "Dia berkata bahwa dirinya jujur",
+     "misconceptions": [
+      "invented-action"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-ACT"
+     ],
+     "rationale": "invented action 'berkata' (lessons §2.5 A-S5)"
+    }
+   ],
+   "focus_for": {
+    "tag": "wrong-referent",
+    "referent": "perempuan"
+   }
+  },
+  {
+   "item_id": "A2-FQ-REF-M",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "interpretation",
+   "skills": [],
+   "pool": "FOCUS",
+   "arabic": "هُوَ صَادِقٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-FQ-REF",
+   "lineage": "A:sentence:هُوَ صَادِقٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-OPT"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "legacy_item_ids": [
+    "DEMO-FQ-REF-M"
+   ],
+   "referent": "laki-laki",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (laki-laki) orang yang jujur",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (perempuan) orang yang jujur",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-HUWA"
+     ],
+     "rationale": "he/she swap (lessons §2.8)"
+    },
+    {
+     "id": "p",
+     "text": "Kejujurannya (sesuatu yang ia miliki)",
+     "misconceptions": [
+      "possession"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-POS-OPT"
+     ],
+     "rationale": "possession reading '-nya' (lessons §2.6 step 3)"
+    },
+    {
+     "id": "a",
+     "text": "Dia berkata bahwa dirinya jujur",
+     "misconceptions": [
+      "invented-action"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-ACT"
+     ],
+     "rationale": "invented action 'berkata' (lessons §2.5 A-S5)"
+    }
+   ],
+   "focus_for": {
+    "tag": "wrong-referent",
+    "referent": "laki-laki"
+   }
+  },
+  {
+   "item_id": "A2-FQ-POS",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "interpretation",
+   "skills": [],
+   "pool": "FOCUS",
+   "arabic": "هُوَ صَادِقٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-FQ-POS",
+   "lineage": "A:sentence:هُوَ صَادِقٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-OPT"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "legacy_item_ids": [
+    "DEMO-FQ-POS"
+   ],
+   "referent": "laki-laki",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (laki-laki) orang yang jujur",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (perempuan) orang yang jujur",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-HUWA"
+     ],
+     "rationale": "he/she swap (lessons §2.8)"
+    },
+    {
+     "id": "p",
+     "text": "Kejujurannya (sesuatu yang ia miliki)",
+     "misconceptions": [
+      "possession"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-POS-OPT"
+     ],
+     "rationale": "possession reading '-nya' (lessons §2.6 step 3)"
+    },
+    {
+     "id": "a",
+     "text": "Dia berkata bahwa dirinya jujur",
+     "misconceptions": [
+      "invented-action"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-ACT"
+     ],
+     "rationale": "invented action 'berkata' (lessons §2.5 A-S5)"
+    }
+   ],
+   "focus_for": {
+    "tag": "possession"
+   }
+  },
+  {
+   "item_id": "A2-FQ-ACT",
+   "unit": "A",
+   "type": "mcq4",
+   "format": "interpretation",
+   "skills": [],
+   "pool": "FOCUS",
+   "arabic": "هِيَ صَابِرَةٌ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-FQ-ACT",
+   "lineage": "A:sentence:هِيَ صَابِرَةٌ",
+   "feedback_ids": {
+    "correct": "FA-OK-OPT"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "legacy_item_ids": [
+    "DEMO-FQ-ACT"
+   ],
+   "referent": "perempuan",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (perempuan) orang yang sabar",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (laki-laki) orang yang sabar",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-REF-HIYA"
+     ],
+     "rationale": "he/she swap (lessons §2.8)"
+    },
+    {
+     "id": "p",
+     "text": "Kesabarannya (sesuatu yang ia miliki)",
+     "misconceptions": [
+      "possession"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-POS-OPT"
+     ],
+     "rationale": "possession reading '-nya' (lessons §2.6 step 3)"
+    },
+    {
+     "id": "a",
+     "text": "Dia berkata bahwa dirinya sabar",
+     "misconceptions": [
+      "invented-action"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FA-ACT"
+     ],
+     "rationale": "invented action 'berkata' (lessons §2.5 A-S5)"
+    }
+   ],
+   "focus_for": {
+    "tag": "invented-action"
+   }
+  },
+  {
+   "item_id": "B2-W1",
+   "unit": "B",
+   "type": "mcq4",
+   "format": "word-meaning",
+   "skills": [
+    "LEX-B:V-B1"
+   ],
+   "pool": "PRACT",
+   "arabic": "ذَهَبَ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-WORD",
+   "lineage": "B:word-form:ذَهَبَ",
+   "feedback_ids": {
+    "correct": "FA-OK-WORD2"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "word:V-B1",
+   "order": 101,
+   "word_id": "V-B1",
+   "word_meaning": "dia pergi",
+   "options": [
+    {
+     "id": "k",
+     "text": "dia pergi",
+     "correct": true
+    },
+    {
+     "id": "d1",
+     "text": "dia datang",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L8 distractor"
+    },
+    {
+     "id": "d2",
+     "text": "dia minum",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L8 distractor"
+    },
+    {
+     "id": "d3",
+     "text": "dia berdiri",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L8 distractor"
+    }
+   ],
+   "forms": [
+    "ذَهَبَ"
+   ]
+  },
+  {
+   "item_id": "B2-W2",
+   "unit": "B",
+   "type": "mcq4",
+   "format": "word-meaning",
+   "skills": [
+    "LEX-B:V-B2"
+   ],
+   "pool": "PRACT",
+   "arabic": "خَرَجَ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-WORD",
+   "lineage": "B:word-form:خَرَجَ",
+   "feedback_ids": {
+    "correct": "FA-OK-WORD2"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "word:V-B2",
+   "order": 102,
+   "word_id": "V-B2",
+   "word_meaning": "dia keluar",
+   "options": [
+    {
+     "id": "k",
+     "text": "dia keluar",
+     "correct": true
+    },
+    {
+     "id": "d1",
+     "text": "dia masuk",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L7: meaning of taught دخل"
+    },
+    {
+     "id": "d2",
+     "text": "dia menulis",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L7 distractor"
+    },
+    {
+     "id": "d3",
+     "text": "dia duduk",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L7 distractor"
+    }
+   ],
+   "forms": [
+    "خَرَجَ"
+   ]
+  },
+  {
+   "item_id": "B2-W3",
+   "unit": "B",
+   "type": "mcq4",
+   "format": "word-meaning",
+   "skills": [
+    "LEX-B:V-B3"
+   ],
+   "pool": "PRACT",
+   "arabic": "دَخَلَتْ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-WORD",
+   "lineage": "B:word-form:دَخَلَتْ",
+   "feedback_ids": {
+    "correct": "FA-OK-WORD2"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "word:V-B3",
+   "order": 103,
+   "word_id": "V-B3",
+   "word_meaning": "dia masuk",
+   "options": [
+    {
+     "id": "k",
+     "text": "dia masuk",
+     "correct": true
+    },
+    {
+     "id": "d1",
+     "text": "dia keluar",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "meaning of taught خرج"
+    },
+    {
+     "id": "d2",
+     "text": "dia menulis",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L7 distractor set"
+    },
+    {
+     "id": "d3",
+     "text": "dia duduk",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "E-L7 distractor set"
+    }
+   ],
+   "forms": [
+    "دَخَلَتْ"
+   ]
+  },
+  {
+   "item_id": "B2-VN1",
+   "unit": "B",
+   "type": "mcq4",
+   "format": "verb-identify",
+   "skills": [],
+   "pool": "PRACT",
+   "arabic": "",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-VN",
+   "lineage": "B:vn:صَبَرَتْ",
+   "feedback_ids": {
+    "correct": "FB-VN-OK"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "order": 104,
+   "practice_only": true,
+   "options": [
+    {
+     "id": "k",
+     "text": "صَبَرَتْ",
+     "arabic": true,
+     "correct": true
+    },
+    {
+     "id": "d1",
+     "text": "صَابِرَةٌ",
+     "arabic": true,
+     "misconceptions": [
+      "ta-confusion"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FB-VN-NO"
+     ],
+     "rationale": "ta marbuthah description vs verb ـتْ (lessons §3.3 B-S3, §3.5 Q-VN)"
+    },
+    {
+     "id": "d2",
+     "text": "صَادِقَةٌ",
+     "arabic": true,
+     "misconceptions": [
+      "ta-confusion"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FB-VN-NO"
+     ],
+     "rationale": "ta marbuthah description vs verb ـتْ (lessons §3.3 B-S3, §3.5 Q-VN)"
+    },
+    {
+     "id": "d3",
+     "text": "مُؤْمِنَةٌ",
+     "arabic": true,
+     "misconceptions": [
+      "ta-confusion"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FB-VN-NO"
+     ],
+     "rationale": "ta marbuthah description vs verb ـتْ (lessons §3.3 B-S3, §3.5 Q-VN)"
+    }
+   ]
+  },
+  {
+   "item_id": "B2-VN2",
+   "unit": "B",
+   "type": "mcq4",
+   "format": "verb-identify",
+   "skills": [],
+   "pool": "PRACT",
+   "arabic": "",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-VN",
+   "lineage": "B:vn:دَخَلَتْ",
+   "feedback_ids": {
+    "correct": "FB-VN-OK"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "order": 105,
+   "practice_only": true,
+   "options": [
+    {
+     "id": "k",
+     "text": "دَخَلَتْ",
+     "arabic": true,
+     "correct": true
+    },
+    {
+     "id": "d1",
+     "text": "صَابِرَةٌ",
+     "arabic": true,
+     "misconceptions": [
+      "ta-confusion"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FB-VN-NO"
+     ],
+     "rationale": "ta marbuthah description vs verb ـتْ (lessons §3.3 B-S3, §3.5 Q-VN)"
+    },
+    {
+     "id": "d2",
+     "text": "صَادِقَةٌ",
+     "arabic": true,
+     "misconceptions": [
+      "ta-confusion"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FB-VN-NO"
+     ],
+     "rationale": "ta marbuthah description vs verb ـتْ (lessons §3.3 B-S3, §3.5 Q-VN)"
+    },
+    {
+     "id": "d3",
+     "text": "مُؤْمِنَةٌ",
+     "arabic": true,
+     "misconceptions": [
+      "ta-confusion"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FB-VN-NO"
+     ],
+     "rationale": "ta marbuthah description vs verb ـتْ (lessons §3.3 B-S3, §3.5 Q-VN)"
+    }
+   ]
+  },
+  {
+   "item_id": "B2-V1",
+   "unit": "B",
+   "type": "mcq4",
+   "format": "verb-interpretation",
+   "skills": [
+    "VRB-01",
+    "LEX-B"
+   ],
+   "pool": "PRACT",
+   "arabic": "خَرَجَتْ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-VERB",
+   "lineage": "B:verb-form:خَرَجَتْ",
+   "feedback_ids": {
+    "correct": "FB-OK"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:خَرَجَتْ",
+   "order": 106,
+   "referent": "perempuan",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (perempuan) keluar",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (laki-laki) keluar",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FB-REF"
+     ],
+     "rationale": "doer gender from the ending (lessons §3.6 FB-REF)"
+    },
+    {
+     "id": "l",
+     "text": "Dia (perempuan) masuk",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FB-LEX-OPT"
+     ],
+     "rationale": "the other taught action"
+    },
+    {
+     "id": "c",
+     "text": "Dia (laki-laki) masuk",
+     "misconceptions": [
+      "wrong-referent",
+      "lexical"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FB-REF",
+      "FB-LEX-OPT"
+     ],
+     "rationale": "compound: wrong doer AND other taught action"
+    }
+   ],
+   "forms": [
+    "خَرَجَتْ"
+   ]
+  },
+  {
+   "item_id": "B2-V2",
+   "unit": "B",
+   "type": "mcq4",
+   "format": "verb-interpretation",
+   "skills": [
+    "VRB-01",
+    "LEX-B"
+   ],
+   "pool": "PRACT",
+   "arabic": "دَخَلَ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-VERB",
+   "lineage": "B:verb-form:دَخَلَ",
+   "feedback_ids": {
+    "correct": "FB-OK"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:دَخَلَ",
+   "order": 107,
+   "referent": "laki-laki",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (laki-laki) masuk",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (perempuan) masuk",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FB-REF"
+     ],
+     "rationale": "doer gender from the ending (lessons §3.6 FB-REF)"
+    },
+    {
+     "id": "l",
+     "text": "Dia (laki-laki) keluar",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FB-LEX-OPT"
+     ],
+     "rationale": "the other taught action"
+    },
+    {
+     "id": "c",
+     "text": "Dia (perempuan) keluar",
+     "misconceptions": [
+      "wrong-referent",
+      "lexical"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FB-REF",
+      "FB-LEX-OPT"
+     ],
+     "rationale": "compound: wrong doer AND other taught action"
+    }
+   ],
+   "forms": [
+    "دَخَلَ"
+   ]
+  },
+  {
+   "item_id": "B2-V3",
+   "unit": "B",
+   "type": "mcq4",
+   "format": "verb-interpretation",
+   "skills": [
+    "VRB-01",
+    "LEX-B"
+   ],
+   "pool": "PRACT",
+   "arabic": "رَجَعَتْ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-VERB",
+   "lineage": "B:verb-form:رَجَعَتْ",
+   "feedback_ids": {
+    "correct": "FB-OK"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:رَجَعَتْ",
+   "order": 108,
+   "referent": "perempuan",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (perempuan) kembali",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (laki-laki) kembali",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FB-REF"
+     ],
+     "rationale": "doer gender from the ending (lessons §3.6 FB-REF)"
+    },
+    {
+     "id": "l",
+     "text": "Dia (perempuan) pergi",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FB-LEX-OPT"
+     ],
+     "rationale": "the other taught action"
+    },
+    {
+     "id": "c",
+     "text": "Dia (laki-laki) pergi",
+     "misconceptions": [
+      "wrong-referent",
+      "lexical"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FB-REF",
+      "FB-LEX-OPT"
+     ],
+     "rationale": "compound: wrong doer AND other taught action"
+    }
+   ],
+   "forms": [
+    "رَجَعَتْ"
+   ]
+  },
+  {
+   "item_id": "B2-W4",
+   "unit": "B",
+   "type": "mcq4",
+   "format": "word-meaning",
+   "skills": [
+    "LEX-B:V-B4"
+   ],
+   "pool": "PRACT",
+   "arabic": "رَجَعَتْ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-WORD",
+   "lineage": "B:word-form:رَجَعَتْ",
+   "feedback_ids": {
+    "correct": "FA-OK-WORD2"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "word:V-B4",
+   "order": 109,
+   "word_id": "V-B4",
+   "word_meaning": "dia kembali",
+   "options": [
+    {
+     "id": "k",
+     "text": "dia kembali",
+     "correct": true
+    },
+    {
+     "id": "d1",
+     "text": "dia keluar",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "meaning of taught خرج"
+    },
+    {
+     "id": "d2",
+     "text": "dia masuk",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "meaning of taught دخل"
+    },
+    {
+     "id": "d3",
+     "text": "dia pergi",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FA-LEX-OPT"
+     ],
+     "rationale": "meaning of taught ذهب"
+    }
+   ],
+   "forms": [
+    "رَجَعَتْ"
+   ]
+  },
+  {
+   "item_id": "B2-Y1",
+   "unit": "B",
+   "type": "mcq4",
+   "format": "verb-interpretation",
+   "skills": [
+    "VRB-01",
+    "LEX-B"
+   ],
+   "pool": "READY",
+   "arabic": "سَمِعَ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-VERB",
+   "lineage": "B:verb-form:سَمِعَ",
+   "feedback_ids": {
+    "correct": "FB-OK"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:سَمِعَ",
+   "referent": "laki-laki",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (laki-laki) mendengar",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (perempuan) mendengar",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FB-REF"
+     ],
+     "rationale": "doer gender from the ending (lessons §3.6 FB-REF)"
+    },
+    {
+     "id": "l",
+     "text": "Dia (laki-laki) masuk",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FB-LEX-OPT"
+     ],
+     "rationale": "the other taught action"
+    },
+    {
+     "id": "c",
+     "text": "Dia (perempuan) masuk",
+     "misconceptions": [
+      "wrong-referent",
+      "lexical"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FB-REF",
+      "FB-LEX-OPT"
+     ],
+     "rationale": "compound: wrong doer AND other taught action"
+    }
+   ],
+   "forms": [
+    "سَمِعَ"
+   ]
+  },
+  {
+   "item_id": "B2-D7V1",
+   "unit": "B",
+   "type": "mcq4",
+   "format": "verb-interpretation",
+   "skills": [
+    "VRB-01",
+    "LEX-B"
+   ],
+   "pool": "D7",
+   "arabic": "رَجَعَ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-VERB",
+   "lineage": "B:verb-form:رَجَعَ",
+   "feedback_ids": {
+    "correct": "FB-OK"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:رَجَعَ",
+   "referent": "laki-laki",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (laki-laki) kembali",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (perempuan) kembali",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FB-REF"
+     ],
+     "rationale": "doer gender from the ending (lessons §3.6 FB-REF)"
+    },
+    {
+     "id": "l",
+     "text": "Dia (laki-laki) pergi",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FB-LEX-OPT"
+     ],
+     "rationale": "the other taught action"
+    },
+    {
+     "id": "c",
+     "text": "Dia (perempuan) pergi",
+     "misconceptions": [
+      "wrong-referent",
+      "lexical"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FB-REF",
+      "FB-LEX-OPT"
+     ],
+     "rationale": "compound: wrong doer AND other taught action"
+    }
+   ],
+   "forms": [
+    "رَجَعَ"
+   ],
+   "reserve_forms": true
+  },
+  {
+   "item_id": "B2-D30V1",
+   "unit": "B",
+   "type": "mcq4",
+   "format": "verb-interpretation",
+   "skills": [
+    "VRB-01",
+    "LEX-B"
+   ],
+   "pool": "D30",
+   "arabic": "سَمِعَتْ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-VERB",
+   "lineage": "B:verb-form:سَمِعَتْ",
+   "feedback_ids": {
+    "correct": "FB-OK"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "review_key": "sentence:سَمِعَتْ",
+   "referent": "perempuan",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (perempuan) mendengar",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (laki-laki) mendengar",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FB-REF"
+     ],
+     "rationale": "doer gender from the ending (lessons §3.6 FB-REF)"
+    },
+    {
+     "id": "l",
+     "text": "Dia (perempuan) masuk",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FB-LEX-OPT"
+     ],
+     "rationale": "the other taught action"
+    },
+    {
+     "id": "c",
+     "text": "Dia (laki-laki) masuk",
+     "misconceptions": [
+      "wrong-referent",
+      "lexical"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FB-REF",
+      "FB-LEX-OPT"
+     ],
+     "rationale": "compound: wrong doer AND other taught action"
+    }
+   ],
+   "forms": [
+    "سَمِعَتْ"
+   ],
+   "reserve_forms": true
+  },
+  {
+   "item_id": "B2-FQ-REF-F",
+   "unit": "B",
+   "type": "mcq4",
+   "format": "verb-interpretation",
+   "skills": [],
+   "pool": "FOCUS",
+   "arabic": "ذَهَبَتْ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-FQ-BREF",
+   "lineage": "B:verb-form:ذَهَبَتْ",
+   "feedback_ids": {
+    "correct": "FB-OK"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "referent": "perempuan",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (perempuan) pergi",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (laki-laki) pergi",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FB-REF"
+     ],
+     "rationale": "doer gender from the ending (lessons §3.6 FB-REF)"
+    },
+    {
+     "id": "l",
+     "text": "Dia (perempuan) keluar",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FB-LEX-OPT"
+     ],
+     "rationale": "the other taught action"
+    },
+    {
+     "id": "c",
+     "text": "Dia (laki-laki) keluar",
+     "misconceptions": [
+      "wrong-referent",
+      "lexical"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FB-REF",
+      "FB-LEX-OPT"
+     ],
+     "rationale": "compound: wrong doer AND other taught action"
+    }
+   ],
+   "forms": [
+    "ذَهَبَتْ"
+   ],
+   "focus_for": {
+    "tag": "wrong-referent",
+    "referent": "perempuan"
+   }
+  },
+  {
+   "item_id": "B2-FQ-REF-M",
+   "unit": "B",
+   "type": "mcq4",
+   "format": "verb-interpretation",
+   "skills": [],
+   "pool": "FOCUS",
+   "arabic": "ذَهَبَ",
+   "constructed": true,
+   "help_lines": [],
+   "prompt_id": "P-FQ-BREF",
+   "lineage": "B:verb-form:ذَهَبَ",
+   "feedback_ids": {
+    "correct": "FB-OK"
+   },
+   "review_status": "draft",
+   "content_version": "demo-synthetic-0.2",
+   "referent": "laki-laki",
+   "options": [
+    {
+     "id": "k",
+     "text": "Dia (laki-laki) pergi",
+     "correct": true
+    },
+    {
+     "id": "r",
+     "text": "Dia (perempuan) pergi",
+     "misconceptions": [
+      "wrong-referent"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FB-REF"
+     ],
+     "rationale": "doer gender from the ending (lessons §3.6 FB-REF)"
+    },
+    {
+     "id": "l",
+     "text": "Dia (laki-laki) keluar",
+     "misconceptions": [
+      "lexical"
+     ],
+     "serious": false,
+     "feedback_ids": [
+      "FB-LEX-OPT"
+     ],
+     "rationale": "the other taught action"
+    },
+    {
+     "id": "c",
+     "text": "Dia (perempuan) keluar",
+     "misconceptions": [
+      "wrong-referent",
+      "lexical"
+     ],
+     "serious": true,
+     "feedback_ids": [
+      "FB-REF",
+      "FB-LEX-OPT"
+     ],
+     "rationale": "compound: wrong doer AND other taught action"
+    }
+   ],
+   "forms": [
+    "ذَهَبَ"
+   ],
+   "focus_for": {
+    "tag": "wrong-referent",
+    "referent": "laki-laki"
+   }
+  }
+ ]
+}

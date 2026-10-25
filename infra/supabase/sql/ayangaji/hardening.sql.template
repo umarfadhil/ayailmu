@@ -1,0 +1,24 @@
+-- OWNER ACTION TEMPLATE (unapplied). Postgres-only posture: Data API roles and PUBLIC get nothing on the adult schema.
+-- Safe where the Supabase roles do not exist. Run as the migration role (schema owner) with -v schema=<approved schema>.
+-- It does not change the dashboard: disabling the Data API there is a separate owner action recorded under D13.
+\set ON_ERROR_STOP on
+REVOKE ALL ON SCHEMA :"schema" FROM PUBLIC;
+REVOKE ALL ON ALL TABLES IN SCHEMA :"schema" FROM PUBLIC;
+REVOKE ALL ON ALL SEQUENCES IN SCHEMA :"schema" FROM PUBLIC;
+REVOKE ALL ON ALL FUNCTIONS IN SCHEMA :"schema" FROM PUBLIC;
+SELECT set_config('infra.schema', :'schema', false) \gset
+DO $$
+DECLARE r text; s text := current_setting('infra.schema');
+BEGIN
+  FOREACH r IN ARRAY ARRAY['anon','authenticated','service_role'] LOOP
+    IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = r) THEN
+      EXECUTE format('REVOKE ALL ON SCHEMA %I FROM %I', s, r);
+      EXECUTE format('REVOKE ALL ON ALL TABLES IN SCHEMA %I FROM %I', s, r);
+      EXECUTE format('REVOKE ALL ON ALL SEQUENCES IN SCHEMA %I FROM %I', s, r);
+      EXECUTE format('REVOKE ALL ON ALL FUNCTIONS IN SCHEMA %I FROM %I', s, r);
+      EXECUTE format('ALTER DEFAULT PRIVILEGES IN SCHEMA %I REVOKE ALL ON TABLES FROM %I', s, r);
+      EXECUTE format('ALTER DEFAULT PRIVILEGES IN SCHEMA %I REVOKE ALL ON SEQUENCES FROM %I', s, r);
+      EXECUTE format('ALTER DEFAULT PRIVILEGES IN SCHEMA %I REVOKE ALL ON FUNCTIONS FROM %I', s, r);
+    END IF;
+  END LOOP;
+END $$;

@@ -1,0 +1,48 @@
+-- OWNER ACTION TEMPLATE. No tool in infra/ ever runs this against a real server; apply it only after the exact
+-- approval for role/credential provisioning is recorded, by the Supabase project owner (a role that may create roles
+-- and grant on the database). psql variables:
+--   -v database=postgres -v schema=<approved schema> -v migration_role=aya_migrator -v runtime_role=aya_runtime
+--   -v migration_password_file=/private/m -v runtime_password_file=/private/r
+--   -v provisioning_session_protected=on     (an attestation, see below)
+-- psql reads each password from its private file (backquoted cat): never an argument, never in this file.
+-- Mirrors deploy/postgres/initdb/10-aya-roles.sql (local Compose): owner = migration role, runtime = DML only.
+--
+-- LIMITATION: CREATE ROLE ... PASSWORD :'...' sends the password (or a SCRAM verifier) as a literal inside the SQL text. Anything
+-- that records statements can therefore record it: server statement logging (log_statement = ddl, mod or all), error logging
+-- that quotes the failing statement (log_min_error_statement at its default of error), slow-statement or audit logging,
+-- the platform's own log pipeline, and psql itself when it echoes (-a, -e, -b, ECHO). This template cannot see or change
+-- those settings, and it does not try to: changing a real logging or account setting is not its job. Run it only inside the
+-- owner-approved credential provisioning procedure, with session protections that keep these statements out of every log
+-- and echo, and only then pass provisioning_session_protected=on. Without that attestation it refuses, before it reads
+-- either password file, creates or alters anything, and ends with a non-zero psql exit status. The attestation is the
+-- owner's statement that the procedure's protections are in force; it verifies nothing by itself.
+\set ON_ERROR_STOP on
+\if :{?provisioning_session_protected}
+\else
+  \set provisioning_session_protected off
+\endif
+\if :provisioning_session_protected
+\else
+  DO $refused$ BEGIN RAISE EXCEPTION 'owner-bootstrap refused: run it only in the owner-approved credential provisioning session, then pass -v provisioning_session_protected=on'; END $refused$;
+\endif
+\set migration_password `cat :migration_password_file`
+\set runtime_password `cat :runtime_password_file`
+
+CREATE ROLE :"migration_role" LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS NOINHERIT
+    CONNECTION LIMIT 5 PASSWORD :'migration_password';
+CREATE ROLE :"runtime_role" LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS NOINHERIT
+    CONNECTION LIMIT 20 PASSWORD :'runtime_password';
+\unset migration_password
+\unset runtime_password
+
+-- store.Migrate runs `CREATE SCHEMA IF NOT EXISTS`, and PostgreSQL checks database CREATE before the IF NOT EXISTS test,
+-- so the migration role needs CREATE on the database even when the schema pre-exists (verified by a local test).
+-- This is the residual privilege of the migration role; the runtime role gets CONNECT only.
+GRANT CONNECT, CREATE ON DATABASE :"database" TO :"migration_role";
+GRANT CONNECT ON DATABASE :"database" TO :"runtime_role";
+
+CREATE SCHEMA :"schema" AUTHORIZATION :"migration_role";
+GRANT USAGE ON SCHEMA :"schema" TO :"runtime_role";
+-- Everything the migration role creates in the schema: DML for the runtime role (no TRUNCATE, no DDL).
+ALTER DEFAULT PRIVILEGES FOR ROLE :"migration_role" IN SCHEMA :"schema" GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO :"runtime_role";
+ALTER DEFAULT PRIVILEGES FOR ROLE :"migration_role" IN SCHEMA :"schema" GRANT USAGE, SELECT ON SEQUENCES TO :"runtime_role";

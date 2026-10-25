@@ -1,0 +1,228 @@
+# Local synthetic Compose stack (Amar's adult Arabic app)
+
+The API (`AYA_MODE=local-compose`), its PostgreSQL 16 and its own standalone Supabase Auth (GoTrue v2.197.0), behind a
+Caddy front. Caddy serves TLS from its own local CA on one literal-loopback port.
+
+- **Use:** local synthetic fixtures only.
+- **Not:** production, a deployment, a public bind, ACME, a host trust-store change or a DNS change.
+- **Status:** authored 2026-10-19 and never executed by its author. Root's first full start stopped at `20-aya-hba.sh` (PostgreSQL exit 126, see Database roles); the correction is authored and not yet run. Root runs every command below.
+- **Restore:** not part of this slice (see Limits).
+
+## What runs
+
+| Service | Image (pinned, cached, never pulled) | User | Capabilities kept | Networks | Mounts |
+|---|---|---|---|---|---|
+| `aya-secrets-init` (one-shot) | postgres 16.15 | 0 | CHOWN, DAC_OVERRIDE, FOWNER | none | the runtime `secrets/` read-only; every secret volume |
+| `aya-db` | postgres 16.15 | 999 | none | data-net | `db-data`, `db-secrets` (ro), `postgres/initdb` (ro) |
+| `aya-migrate` (one-shot) | `aya-amar-api:<label>` | 65532 | none | data-net | `migrate-secrets` (ro) |
+| `aya-auth` | supabase/gotrue v2.197.0 | 1000 | none | auth-net, data-net | `auth-secrets` (ro), `auth/auth-entrypoint.sh` (ro) |
+| `aya-api` | `aya-amar-api:<label>` (scratch, built here) | 65532 | none | api-net, auth-net, data-net | `api-secrets` (ro) |
+| `aya-proxy` | caddy 2.11.7-alpine | 65532 | NET_BIND_SERVICE | edge, api-net, auth-net | `proxy-data`, `proxy/Caddyfile` (ro) |
+| `aya-users` (ops) | golang 1.27.2 (used only for its curl) | 65532 | none | auth-net | `ops-secrets` (ro) |
+| `aya-inspect` (ops) | postgres 16.15 | 0 | DAC_READ_SEARCH | none | every secret volume (ro) |
+| `aya-backup` (backup) | postgres 16.15 | 999 | none | data-net | `backup-secrets` (ro) |
+
+Every container has:
+- a read-only root, `cap_drop: ALL` and `no-new-privileges`;
+- no automatic restart and bounded logs;
+- memory, CPU and PID limits;
+- the label `aya.stack=<label>`, beside Compose's own project label.
+
+`aya-proxy` keeps NET_BIND_SERVICE even though its port is high. The official Caddy binary carries the file capability `cap_net_bind_service=ep`, so exec fails with EPERM unless the bounding set keeps it (`input/caddy-image-constraint.md`).
+
+**Ports and networks**
+- Only `aya-proxy` publishes a port: `127.0.0.1:<port>` on the host, where `<port>` is the same port inside the container.
+- `edge` is the ordinary bridge that this publish needs, so the proxy alone could reach out. It makes no outbound request: there is no ACME, OCSP, admin endpoint or access log.
+- `api-net`, `auth-net` and `data-net` are internal, with no route out.
+- No database, API or Auth port is published.
+- PostgreSQL traffic stays unencrypted on the internal `data-net` (`sslmode=disable`). The backend refuses that unless it is declared: every service that reaches the database sets `AYA_DB_TRANSPORT=private-network`, which the store accepts only for `sslmode=disable` to a single-label service name (here `aya-db`; never a bare number, which the C resolver reads as an address) or a private-range address. Without it, or for any public DNS name, a remote database must use `sslmode=verify-full`; production refuses the setting.
+
+## The front, TLS and names
+
+| Name | Serves |
+|---|---|
+| `https://api.ayailmu-local.test:<port>` | the API, as is |
+| `https://auth.ayailmu-local.test:<port>` | only `POST /token`, `POST /logout` and `GET /user`; every other Auth route answers 404 there, the admin API, sign-up, settings and key set included |
+
+These `.test` names resolve nowhere. A client connects to `127.0.0.1:<port>` itself and sends the name as SNI and Host. It trusts the root of Caddy's local CA explicitly, in its own process only. `up` exports that root to `<runtime>/proxy-root.crt`.
+
+For example, as Root:
+
+```sh
+RT=/Users/amarmaruf/Documents/Codex/2026-10-13/task-2/.vps-runtime-20261018/<label>   # the runtime directory prepare printed
+PORT=<port>
+curl --resolve "api.ayailmu-local.test:$PORT:127.0.0.1" --cacert "$RT/proxy-root.crt" \
+     "https://api.ayailmu-local.test:$PORT/v1/readyz"     # {"status":"ready"}
+```
+
+The API answers exactly the Host `api.ayailmu-local.test:<port>`, plus its container's own probe Host, `127.0.0.1:8080`. It sends `Strict-Transport-Security: max-age=86400` and grants no web origin: `AYA_CORS_ORIGINS` is unset, so only native clients and SDKs are served.
+
+## Secrets
+
+`prepare` generates every secret as a new random synthetic value. Each goes into `<runtime>/secrets/<volume>/<file>`, with directories 0700 and files 0600, owned by the host user. The secrets are:
+- one password per database role: the bootstrap `postgres`, `aya_owner`, `aya_runtime`, `aya_backup` and `aya_auth_owner`;
+- each client's own database URL;
+- the backup role's `pgpass`;
+- GoTrue's ES256 signing key (generated by the pinned go-jose `jose-util`) and its JWT secret;
+- a `service_role` admin JWT that `jose-util` signs with that key, valid 7 days;
+- the admin header for the ops job;
+- two `@example.test` users.
+
+No secret is ever:
+- printed, logged or traced;
+- in an argument, a container's configured environment or `docker inspect`;
+- in `docker compose config`, a build context, an image layer, `EXPO_PUBLIC_*` or git.
+
+How the secrets reach the services:
+- **Copying:** bind-mounted files keep the host user's UID whatever Compose says, and the API's private-file guard requires the file to be owned by its own UID. So the one-shot `aya-secrets-init` copies each service's own directory into that service's own volume. Each file becomes owned by that service's user, mode 0400, and each volume root 0700.
+- **Mounting:** each service mounts only its own volume, read-only. The migration and bootstrap credentials never reach the API.
+- **API:** reads its database URL and admin credential through the unchanged private-file guard.
+- **GoTrue:** `auth/auth-entrypoint.sh` exports its three secret settings from its files in its own process, then `exec`s the vendor binary.
+- **PostgreSQL:** `postgres/initdb/10-aya-roles.sql` has psql read each role's password from its file. That session never logs a failed statement's text.
+- **ops job:** curl reads the admin header and every request body from files.
+
+## Database roles
+
+`10-aya-roles.sql` and `20-aya-hba.sh` run once, when the cluster is first initialised.
+
+**The HBA initializer must really be executable.** The official entrypoint executes an init script that `test -x` reports executable, and sources any other. Docker Desktop's bind mounts report even a 0644 file as executable, yet the kernel refuses to execute it: PostgreSQL exited 126 on Root's first start. So `20-aya-hba.sh` has a `#!/bin/sh` shebang, runs its commands in a subshell, and is mode 0755:
+- `prepare` and `up` set and check exactly 0755 on that one file, a regular file of the host user; `initdb-modes` does only that.
+- It holds no secret. No other file's mode changes: the secret files stay 0600 on the host and 0400 in the volumes.
+
+| Role | Can | Cannot |
+|---|---|---|
+| `postgres` (bootstrap superuser) | connect only over the database container's own socket, as its own OS user (peer) | connect over the network; no service uses it |
+| `aya_owner` (migration only) | own the schema `ayailmu` in database `aya_app`; CONNECT and CREATE on `aya_app` | |
+| `aya_runtime` (API) | CONNECT `aya_app`; USAGE on `ayailmu`; SELECT, INSERT, UPDATE and DELETE on its tables (default privileges) | DDL, TRUNCATE, TEMP; `public`; Auth's database |
+| `aya_backup` | CONNECT both databases; SELECT on every table there | write anything. It has BYPASSRLS, so pg_dump reads whole tables should a vendor table enable row-level security |
+| `aya_auth_owner` (GoTrue) | own database `aya_auth` and its `auth` schema; `search_path=auth` there only | reach the app database |
+
+None of the service roles is a superuser, and none may create databases or roles, replicate or inherit.
+
+`pg_hba.conf` allows exactly:
+- `local all postgres peer`;
+- one `host <database> <role> samenet scram-sha-256` line per service role, each to its own database.
+
+Everything else is refused.
+
+Before it reports the stack up, `up` checks that the server enforces exactly these rules: `pg_hba.conf` holds them, with no error, and has not changed since the server last loaded its configuration. A cluster initialised without `20-aya-hba.sh` keeps the generated rules, which accept any role, the bootstrap superuser included, from any address with its password; `up` refuses it.
+
+**Migration flow:** `aya-migrate` runs `ayailmu-migrate` as `aya_owner`, which prints only the schema version (`3`). The API starts only after that job succeeded. The API only verifies the schema (`store.VerifySchema`, which reads only), and reports readiness from that same check.
+
+## Commands
+
+Run them from the worktree with the system Python. They use the stdlib only, and Root's anonymous Docker CLI configuration (`.vps-runtime-20261018/docker-cli`).
+
+```sh
+cd /Users/amarmaruf/Documents/Codex/2026-10-13/task-2/ayailmu-backend-20261017
+python3 -I deploy/tools/aya_stack.py initdb-modes            # only 0755 on postgres/initdb/20-aya-hba.sh; prepare and up do it too
+python3 -I deploy/tools/aya_stack.py prepare [--port PORT]   # prints the label, the runtime directory and the port
+RT=/Users/amarmaruf/Documents/Codex/2026-10-13/task-2/.vps-runtime-20261018/<label>
+python3 -I deploy/tools/aya_stack.py up "$RT"                # build, start, wait, check client authentication, the migration and readiness, export the root
+python3 -I deploy/tools/aya_stack.py status "$RT"
+python3 -I deploy/tools/aya_stack.py verify "$RT"            # the full verification below
+python3 -I deploy/tools/aya_stack.py backup "$RT"            # pg_dump of both databases, private
+python3 -I deploy/tools/aya_stack.py stop "$RT"              # stop, keep the data; `up` starts it again
+python3 -I deploy/tools/aya_stack.py down "$RT"              # remove everything of this stack; backups kept
+python3 -I deploy/tools/aya_stack.py down "$RT" --purge-backups
+```
+
+**Startup** is `prepare` once, then `up`. **Stop** is `stop`; `up` then starts the same data again. **Removal** is `down`.
+
+Behaviour on failure:
+- A failed first `up` saves redacted logs under `<runtime>/logs/`. It then removes what it created, unless `--keep-on-failure` is given; the secrets stay, so `up` can be retried.
+- A failed `up` of a stopped stack never removes its data.
+- The removal includes the database volume. On an existing cluster the official entrypoint skips every init script, so a cluster whose first initialisation stopped part-way must never start again. `up` refuses a stack kept with `--keep-on-failure`: `down` it and `prepare` a new one.
+
+**Ports:** `prepare` picks a free port from 49152 to 65535 on 127.0.0.1, or checks the one given. It never takes 6543, 9099, 8087, 8088, 8091, 8092, 58582, 59838 or 63290. `up` checks again that the port is still free.
+
+**Reports:** each command prints a JSON summary and writes `.vps-prep-evidence-20261018/phase8-local-stack-<label>-<action>.json`. These hold names, states, statuses, counts and hashes, never a secret or an address; every summary is scanned for the stack's secrets before it is written.
+
+**Runtime directory** `<runtime>` (0700):
+
+| Path | Holds |
+|---|---|
+| `manifest.json` | the receipt: label, port, images, source hashes, API image ID, history, created user IDs |
+| `stack.env` | the Compose interpolation values: names, the port, the secrets path |
+| `secrets/` | the generated secrets |
+| `keys/` | jose-util's key files |
+| `proxy-root.crt` | the exported root of Caddy's local CA |
+| `logs/` | redacted logs |
+| `verify-*/` | reports |
+| `backups/` | backups |
+
+## What `verify` checks
+
+**Containers** (`docker inspect`):
+- exact user, read-only root, `cap_drop ALL` plus only the listed capabilities, `no-new-privileges`, not privileged;
+- exact networks;
+- each service's own volumes only, and the secret source bind-mounted only by `aya-secrets-init`, read-only;
+- only `127.0.0.1:<port>` published, and only by `aya-proxy`;
+- the pinned image IDs Root recorded and the API image this stack built;
+- the stack label;
+- no secret value in any container's inspect output.
+
+**Networks, volumes and images:**
+- the three internal networks and the edge bridge;
+- exactly the stack's volumes;
+- no secret in `docker compose config`, or in the API image's layers and configuration.
+
+**Secret files:**
+- on the host, every runtime and secret file is private to the host user;
+- in the volumes (`aya-inspect`), every file is owned by its service's user with mode 0400, and each volume root is 0700.
+
+**Database** (`tools/db-checks.sql`, as the bootstrap superuser over the socket):
+- the role attributes and SCRAM passwords;
+- database and schema grants, and per-table privilege counts;
+- the exact `pg_hba` rules, and connections only from service roles to their own databases;
+- schema, table and migration ownership; migrations exactly 1 to 3;
+- `search_path=auth` for Auth's owner.
+
+Each probe runs under `SET LOCAL ROLE`, in a transaction that always rolls back:
+- the runtime role cannot CREATE TABLE in `ayailmu` or `public`, CREATE SCHEMA, CREATE TEMP TABLE, ALTER, CREATE INDEX, DROP or TRUNCATE (42501), but can SELECT and INSERT;
+- the backup role can only SELECT, in both databases;
+- Auth's owner reaches no app table.
+
+**Migration job:** run again, it exits 0, prints only `3`, and leaves the migration record unchanged.
+
+**Auth's settings**, from the internal network: sign-up is disabled, email and password are the only enabled provider (phone, anonymous and every social provider are off), and mail is not auto-confirmed.
+
+**SDK and API** (`tools/verify-stack.cjs`): `verify` first creates the two prepared users through Auth's internal admin API, then runs the installed `@supabase/auth-js` 2.118.0 and the API through the front:
+- **Front:**
+  - health, readiness, HSTS and no-store, and the uniform 401;
+  - no web origin granted;
+  - Auth's non-SDK routes answer 404;
+  - no certificate for another name, and nothing trusted without the exported root.
+- **User A:**
+  - **Sign-in:** an SDK password sign-in, whose token has the stack's issuer, audience and role, ES256 and a password AMR. `GET /v1/me` then creates the account.
+  - **Data:** a guest import of an adult profile with consent and one event, and its replay. Then the profile and its consent, a settings patch with `If-Match`, an event upload, a pull and progress.
+  - **Refresh:** an SDK refresh, with the same account and the same password sign-in time.
+  - **Export:** `auth_mode` is `local-supabase` under the stack's issuer.
+- **User B:** its own account, and every route on A's profile is the same 404.
+- **Logout:** A signs out locally, and the provider answers 204. Both old access tokens then get API 401, and both refresh tokens are refused.
+- **Deletion:** each user signs in again to the same account, then deletes it through the API. The server data is erased and the provider identity deleted with the API's own admin credential. The token then gets 401, and the password no longer signs in.
+
+**Cleanup:** any prepared user still present is deleted by its exact ID. A 404 means it was already gone.
+
+## Backups
+
+`backup` runs `pg_dump --format=custom` of `aya_app` and `aya_auth` as `aya_backup`, through the `aya-backup` one-shot. The dump comes over stdout into new files that the helper creates:
+- under `<runtime>/backups/<stamp>/` (0700, files 0600);
+- outside git and every build context.
+
+The summary records sizes, SHA-256 and how many tables `pg_restore --list` lists with data.
+
+Restoring is not part of this slice and has not been verified. These backups are private synthetic artifacts, not a verified recovery path.
+
+## Limits
+
+- **Not production:** nothing here is production. `production` mode stays refused, and neither this stack nor its admin credential is meant for real users.
+- **Restore is the next slice.** The deletion-safe restore drill restores into uniquely named throwaway resources. It replays the newest independent deletion ledger before the restored API reports ready, which means:
+  - re-erasing resurrected app data, keeping the account, advisory-lock and profile lock order;
+  - reconciling the exact provider UUIDs under the configured issuer with admin authority;
+  - keeping bystanders and idempotence;
+  - proving that old access, refresh and password are denied.
+
+  None of that exists yet. `store.EraseAccount` returns early when a deletion is already recorded, so replay needs its own re-erasure.
+- **Admin credential:** it expires after 7 days. Prepare a new stack after that.
+- **Proxy egress:** the proxy's edge bridge is an ordinary bridge (see Ports and networks). No egress isolation is claimed for it.
