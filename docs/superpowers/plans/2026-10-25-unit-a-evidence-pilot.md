@@ -41,3 +41,7 @@ For this engineering pilot, require correct first attempts on at least two disti
 ## Core checkpoint status
 
 Task1 pure evaluator is implemented with frozen regression coverage; final checkpoint verification is recorded externally. Its public interface is `canAdvanceUnitA(events: readonly PilotEvidence[]): boolean`; events carry id, construct, family, kind, outcome and local day. Storage/catalogue ownership/version/future-date validation remains upstream and is not yet implemented. Content, planner, controller and UI remain future tasks in this plan. No full learner-facing milestone or mastery claim is made by the core checkpoint.
+
+## October 25 continuation
+
+The user changed the Arabic app display name to Ayangaji and explicitly approved Opus 5.5 High thinking for product/content work, with Sonnet 5.5 High for infrastructure. This supersedes historical Max-thinking wording above. Paid overages remain off. CI and mobile build-profile preparation are now authorized; signing, credentials, store upload, merge and deployment still need specific approval. The legacy slug, callback scheme and storage/protocol identifiers are preserved pending coordinated app identity decisions.

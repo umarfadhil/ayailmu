@@ -26,3 +26,7 @@ Save progress before showing success; cover duplicate taps, interrupted writes, 
 Review every Arabic stem, vowels, gloss, key and distractor, Indonesian wording, construct/family independence and reserved-set boundaries. Record pending sign-off honestly. After approval, an adult feasibility pilot should inspect first-attempt, unfamiliar-combination and delayed outcomes; that still would not prove comparative efficacy.
 
 XP stays secondary and absent. A later explicit decision may use transparent workload/effort points, with no role in evidence-based unlocks and no mastery claim. No leaderboards, currencies or streak penalties are introduced here.
+
+## October 25 continuation
+
+The user changed the Arabic app display name to Ayangaji and explicitly approved Opus 5.5 High thinking for product/content work, with Sonnet 5.5 High for infrastructure. This supersedes historical Max-thinking wording above. Paid overages remain off. CI and mobile build-profile preparation are now authorized; signing, credentials, store upload, merge and deployment still need specific approval. The legacy slug, callback scheme and storage/protocol identifiers are preserved pending coordinated app identity decisions.

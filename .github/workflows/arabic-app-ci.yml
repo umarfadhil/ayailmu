@@ -1,0 +1,117 @@
+name: Ayangaji CI
+
+# Quality checks and JS-only exports for the Ayangaji Expo app (file path kept as arabic-app-ci.yml).
+# No secrets, no deploy, no store upload, no live-service calls, no paid or EAS execution.
+# Untrusted pull_request code runs with a read-only token.
+
+on:
+  pull_request:
+    paths:
+      - "app/**"
+      - ".github/workflows/arabic-app-ci.yml"
+      - "docs/Arabic_Release_Runbook.md"
+      - "docs/Unit_A_Pilot_Content_Review.md"
+  push:
+    branches:
+      - main
+      - feature/rn-correctness-20261020
+    paths:
+      - "app/**"
+      - ".github/workflows/arabic-app-ci.yml"
+      - "docs/Arabic_Release_Runbook.md"
+      - "docs/Unit_A_Pilot_Content_Review.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One group per repo + head branch, so a PR run and a push run of the same branch share it and a stale run is
+# cancelled instead of repeating the exports. Runs on main (or a PR whose head branch is named main) get a
+# run-unique group and are never cancelled.
+concurrency:
+  group: ayangaji-ci-${{ github.repository }}-${{ (github.ref == 'refs/heads/main' || github.head_ref == 'main') && github.run_id || github.head_ref || github.ref_name }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' && github.head_ref != 'main' }}
+
+jobs:
+  checks:
+    name: "Ayangaji: checks and JS exports"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: app
+    env:
+      EXPO_PUBLIC_AUTH_PROVIDER: "off"
+      EXPO_PUBLIC_PRODUCTION_ACCOUNTS: "off"
+      EXPO_NO_DOTENV: "1"
+      EXPO_OFFLINE: "1"
+      EXPO_NO_TELEMETRY: "1"
+    steps:
+      # The default pull_request ref is a merge commit; check out the real head instead.
+      - name: Check out the PR head (or pushed) commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+
+      - name: Verify and stamp the build SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          actual="$(git rev-parse HEAD)"
+          if [ "$actual" != "$EXPECTED_SHA" ]; then
+            echo "Checked out $actual, expected $EXPECTED_SHA" >&2
+            exit 1
+          fi
+          echo "BUILD_SHA=$actual" >> "$GITHUB_ENV"
+          echo "EXPO_PUBLIC_BUILD_SHA=$actual" >> "$GITHUB_ENV"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22.16.0
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test -- --runInBand --ci
+
+      - name: Export JS bundles, developer-demo mode (web, iOS, Android)
+        run: npm run export:dev
+
+      - name: Export JS bundles, tester mode (web, iOS, Android)
+        run: npm run export:tester
+
+      - name: Label exports as JS-only
+        run: |
+          for mode in developer-demo tester; do
+            printf '%s\n' \
+              "JS export only (web, iOS and Android bundles). Not a native binary, not signed, not device-tested." \
+              "mode: $mode" \
+              "commit: $BUILD_SHA" > "dist/$mode/JS_EXPORT_ONLY.txt"
+          done
+
+      - name: Upload developer-demo JS export
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: arabic-app-js-export-developer-demo-${{ env.BUILD_SHA }}
+          path: app/dist/developer-demo
+          retention-days: 7
+          if-no-files-found: error
+
+      - name: Upload tester JS export
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: arabic-app-js-export-tester-${{ env.BUILD_SHA }}
+          path: app/dist/tester
+          retention-days: 7
+          if-no-files-found: error
