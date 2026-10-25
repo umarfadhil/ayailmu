@@ -51,8 +51,8 @@ function doc(kv: Kv): Doc {
   return JSON.parse(raw) as Doc;
 }
 
-function setAppState(state: AppStateStatus | null) {
-  (AppState as unknown as { currentState: AppStateStatus | null }).currentState = state;
+function setAppState(state: typeof AppState.currentState) {
+  (AppState as unknown as { currentState: typeof AppState.currentState }).currentState = state;
 }
 
 const optionIds = () =>
@@ -110,7 +110,7 @@ describe('NextLessonScreen background mount', () => {
       const spies = STORE_METHODS.map((m) => jest.spyOn(target, m));
       const called = () => STORE_METHODS.filter((_, n) => at(spies, n).mock.calls.length > 0);
       const helper = jest.spyOn(unitA, 'pilotAssistedOn');
-      const saved: AppStateStatus | null = AppState.currentState;
+      const saved = AppState.currentState;
       const listeners: ((state: AppStateStatus) => void)[] = [];
       const listen = jest.spyOn(AppState, 'addEventListener').mockImplementation((type, listener) => {
         if (type === 'change') listeners.push(listener);

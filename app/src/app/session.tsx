@@ -1,6 +1,6 @@
 import { Redirect, router, useFocusEffect, type Href } from 'expo-router';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { ActivityIndicator, AppState, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, AppState, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions, type ViewInstance } from 'react-native';
 
 import type { ChoiceOption, Item } from '@/content/schema';
 import { prepareSession, SessionController } from '@/engine/controller';
@@ -100,8 +100,8 @@ function SessionScreenRoute() {
   const [busy, setBusy] = useState(false);
   const shownAt = useRef(0); // set when each step is shown (effect below)
   // UI-01 focus targets: the heading of each newly shown question/lesson screen, and a save error.
-  const stepHeading = useRef<View>(null);
-  const errorRegion = useRef<View>(null);
+  const stepHeading = useRef<ViewInstance>(null);
+  const errorRegion = useRef<ViewInstance>(null);
   // Each new step starts at the top of its page.
   const page = useRef<PageHandle>(null);
 
@@ -360,7 +360,7 @@ function SessionScreenRoute() {
 
 /** Feedback after a saved answer. Focus moves to its heading (UI-01). Scheduled checks stay neutral (F03). */
 function ResultCard({ feedback, tone, scale }: { feedback: FeedbackView; tone: Tone; scale: number }) {
-  const heading = useRef<View>(null);
+  const heading = useRef<ViewInstance>(null);
   useEffect(() => {
     moveFocus(heading);
   }, []);

@@ -5,7 +5,7 @@
 // stored, and every tick starts over with each sign-in. Where the caller offers Continue with Google, it sits in the
 // same form, beside the password sign-in: it hands nothing typed over, and leaves no typed password behind.
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View, type TextInputProps } from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View, type TextInputProps, type ViewInstance } from 'react-native';
 
 import { moveFocus } from '@/ui/a11y';
 import { RegistrationPanel, registrationIntro, type RegistrationPanelModel } from '@/ui/account/RegistrationPanel';
@@ -301,7 +301,7 @@ export function AccountPanel(props: AccountPanelProps) {
   const registration = words.production ? undefined : props.registration;
   const registering = registration !== undefined && registration.stage !== 'idle';
   const recovering = props.recovery !== undefined && props.recovery.stage !== 'idle';
-  const errorRegion = useRef<View>(null);
+  const errorRegion = useRef<ViewInstance>(null);
   useEffect(() => {
     if (error) moveFocus(errorRegion);
   }, [error]);

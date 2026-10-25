@@ -8,7 +8,7 @@
 // Back only pauses (records today for teaching or practice still on display) and leaves; it never loads, advances
 // or answers, so leaving on a newly eligible day never presents a reserved task.
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from 'react';
-import { ActivityIndicator, AppState, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, AppState, Pressable, StyleSheet, Text, View, type ViewInstance } from 'react-native';
 
 import { pilotAssistedOn } from '@/pilot/unitA/UnitAPilotScreen';
 import type { Store } from '@/storage/types';
@@ -193,8 +193,8 @@ function LessonPanel({ store, owner, mode, readOnly, arabicScale, binding }: Nex
   const viewRef = useRef<NextLessonView | null>(null);
   const dayRef = useRef<string | null>(null); // the day the view on display was made durable
   const page = useRef<PageHandle>(null);
-  const heading = useRef<View>(null);
-  const errorRegion = useRef<View>(null);
+  const heading = useRef<ViewInstance>(null);
+  const errorRegion = useRef<ViewInstance>(null);
 
   useEffect(() => {
     viewRef.current = view;

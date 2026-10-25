@@ -9,8 +9,10 @@ import {
   TextInput,
   View,
   useWindowDimensions,
+  type ScrollViewInstance,
   type StyleProp,
   type TextStyle,
+  type ViewInstance,
   type ViewStyle,
 } from 'react-native';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
@@ -51,7 +53,7 @@ export interface PageHandle {
    * taller than the view is aligned at its top instead, so its heading stays readable. Asked before
    * the page is laid out, or while its route is hidden, it waits until the page can be measured.
    */
-  reveal: (target: View | null) => void;
+  reveal: (target: ViewInstance | null) => void;
   /** Back to the top of the page: a new question or lesson screen starts at its heading. Drops a waiting reveal. */
   toTop: () => void;
 }
@@ -90,11 +92,11 @@ export function Page({
   const insets = useInsets();
   const gutter = windowWidth <= NARROW_MAX_WIDTH ? 16 : 20;
   const maxWidth = width === 'exercise' ? 620 : width === 'wide' ? 980 : 760;
-  const scroll = useRef<ScrollView>(null);
-  const column = useRef<View>(null);
+  const scroll = useRef<ScrollViewInstance>(null);
+  const column = useRef<ViewInstance>(null);
   const viewport = useRef(0); // visible height of the scroll view; 0 until laid out and while the route is hidden
   const columnTop = useRef<number | null>(null); // offset of the column in the scrolled content (page padding); null until shown
-  const pending = useRef<View | null>(null); // a reveal waiting until the page can be measured
+  const pending = useRef<ViewInstance | null>(null); // a reveal waiting until the page can be measured
   const request = useRef(0); // a newer reveal, toTop or unmount supersedes a measurement still in flight
 
   // Runs the waiting reveal once the page is laid out and shown. A session reopened on its feedback
@@ -122,7 +124,7 @@ export function Page({
   useImperativeHandle(
     ref,
     () => ({
-      reveal: (target: View | null) => {
+      reveal: (target: ViewInstance | null) => {
         pending.current = target;
         flush();
       },
@@ -344,7 +346,7 @@ export function IconButton({
   testID?: string;
   size?: number;
   color?: string;
-  ref?: Ref<View>;
+  ref?: Ref<ViewInstance>;
 }) {
   return (
     <Pressable
@@ -380,11 +382,11 @@ export function Sheet({
   children: ReactNode;
   testID?: string;
   closeLabel?: string;
-  returnFocus?: RefObject<View | null>;
+  returnFocus?: RefObject<ViewInstance | null>;
 }) {
   const insets = useInsets();
   const { height } = useWindowDimensions();
-  const titleRef = useRef<View>(null);
+  const titleRef = useRef<ViewInstance>(null);
   useEffect(() => {
     if (!visible) return;
     const t = setTimeout(() => moveFocus(titleRef), 0); // after the modal content mounts
@@ -431,7 +433,7 @@ export function Sheet({
 export function DraftChip() {
   const { content, rules } = useApp();
   const [open, setOpen] = useState(false);
-  const chip = useRef<View>(null);
+  const chip = useRef<ViewInstance>(null);
   if (!content.unreviewed || content.empty) return null;
   return (
     <>
@@ -535,7 +537,7 @@ export function MixedText({
   header?: boolean;
   numberOfLines?: number;
 }) {
-  const base = StyleSheet.flatten([styles.p, style]);
+  const base: TextStyle = StyleSheet.flatten([styles.p, style]) ?? {};
   const size = Math.round((base.fontSize ?? 17) * 1.35 * scale);
   const runs = arabicRuns(children);
   const leading = runs.some((r) => r.arabic) ? { lineHeight: Math.max(base.lineHeight ?? 0, Math.round(size * 1.3)) } : null;
@@ -793,7 +795,7 @@ export function ReportButton({ onSubmit }: { onSubmit: (reason: string, text: st
   const [error, setError] = useState<string | null>(null);
   const insets = useInsets();
 
-  const dialogHeading = useRef<View>(null);
+  const dialogHeading = useRef<ViewInstance>(null);
   useEffect(() => {
     if (open) setTimeout(() => moveFocus(dialogHeading), 0); // after the modal mounts
   }, [open]);

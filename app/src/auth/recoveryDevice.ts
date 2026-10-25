@@ -43,7 +43,7 @@ export function deviceRecoveryRuntime(): RecoveryRuntime | null {
     };
   }
   // Read now, before anything waits on it, and settled either way so a failed read is never an unhandled rejection.
-  const initial = new Promise<string | null>((resolve) => resolve(Linking.getInitialURL())).then(
+  const initial = new Promise<string | null | undefined>((resolve) => resolve(Linking.getInitialURL())).then(
     (url): LaunchRead => ({ read: true, url: typeof url === 'string' ? url : null }),
     (): LaunchRead => ({ read: false }),
   );

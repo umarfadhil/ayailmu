@@ -5,7 +5,7 @@
 // panel in the same commit, so its question never flashes, and its controller is disposed with it.
 // Needs no router or app context; the route owns Back, focus and the learner binding.
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
-import { ActivityIndicator, AppState, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, AppState, Pressable, StyleSheet, Text, View, type ViewInstance } from 'react-native';
 
 import { loadScreenViews } from '@/engine/exposure';
 import { nextLessonAssistedOn } from '@/pilot/nextLesson/assistance';
@@ -180,8 +180,8 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today, onNextLe
   const busyRef = useRef(false); // synchronous duplicate-press guard; the controller's own guard stays authoritative
   const todayRef = useRef(today);
   const page = useRef<PageHandle>(null);
-  const heading = useRef<View>(null);
-  const errorRegion = useRef<View>(null);
+  const heading = useRef<ViewInstance>(null);
+  const errorRegion = useRef<ViewInstance>(null);
 
   useEffect(() => {
     todayRef.current = today;

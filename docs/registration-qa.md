@@ -19,7 +19,7 @@ does not claim phone, device, store or production readiness.
 
 ## Runtime
 
-- Expo SDK 57: use a matching Expo Go or a native build. A tunnel does not fix an SDK mismatch.
+- Expo SDK 58: use a matching Expo Go 58 or a native build. A tunnel does not fix an SDK mismatch.
 - Browser: the gateway answers the CORS preflight with 404. Do not disable browser security or modify the gateway to
   work around it. Native fetch behaves differently, but a physical-device test is still pending.
 - The gateway excludes export/deletion on purpose; that is not a missing feature.
@@ -44,12 +44,22 @@ Also check:
 
 ## Evidence so far
 
+Historical, SDK 57 at `754129f`:
+
 - Adapter against real GoTrue with a private Mailpit: 16 checks PASS.
 - Real SDK over in-memory fetch: 11 checks PASS.
 - Fresh root run: 1305 tests in 144 suites PASS; typecheck PASS; lint 0 errors, 2 pre-existing warnings.
 - Independent review: CLEAR (17 lifecycle/route/Context tests plus actual React callback probes).
+
+SDK 58 checks:
+
+- Typecheck PASS; lint 0 errors, 2 pre-existing warnings; Expo dependency check PASS; Expo Doctor 20/20 PASS.
+- Live local QA: 23 checks PASS, including in-memory session restore.
+- Full Jest suite is rerun by the root with the SDK 58 Jest asset-registry setup.
+
 - UI: unit tests only. Not verified in a backend-connected browser or on a physical device.
-- Still pending: native JS exports and a local shared-code browser smoke/build.
+- Native JS exports and a local shared-code browser smoke/build are prerequisite checks only; they never prove
+  physical-device or store readiness.
 
 No real SMTP or inbox delivery has been tested. No device or store build has been verified.
 

@@ -1,6 +1,6 @@
 import { Redirect, router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, AppState, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, AppState, Pressable, StyleSheet, Text, View, type ViewInstance } from 'react-native';
 
 import { recordScreenView } from '@/engine/exposure';
 import { localDate } from '@/engine/util';
@@ -37,11 +37,11 @@ function GuideRoute() {
   const [attempt, setAttempt] = useState(0);
   const page = useRef<PageHandle>(null);
   // UI-01 focus targets: the title of the lesson shown, or the error shown instead of it.
-  const heading = useRef<View>(null);
-  const errorRegion = useRef<View>(null);
+  const heading = useRef<ViewInstance>(null);
+  const errorRegion = useRef<ViewInstance>(null);
   // Openers of the two sheets: focus returns there when a sheet is dismissed.
-  const topicsButton = useRef<View>(null);
-  const aboutButton = useRef<View>(null);
+  const topicsButton = useRef<ViewInstance>(null);
+  const aboutButton = useRef<ViewInstance>(null);
   const params = useLocalSearchParams<{ screen?: string }>();
   const learning = useLearning();
   const [chosen, setIndex] = useState<number | null>(null);
