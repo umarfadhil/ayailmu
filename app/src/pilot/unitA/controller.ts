@@ -1,15 +1,20 @@
-// Unit A pilot controller, initial slice: reference lesson -> each fresh reference practice item once
-// -> agreement lesson -> each fresh agreement practice item once, with immediate feedback after the
-// first choice is durable. Practice here is correctness practice, not retention. Transfer and delayed
-// checks belong to a later slice, so the end state is at most "awaiting-transfer", never a pass.
+// Unit A pilot controller: reference lesson -> each fresh reference practice item once -> agreement lesson ->
+// each fresh agreement practice item once, with immediate feedback after the first choice is durable. Practice
+// here is correctness practice, not retention. Once both constructs reach the practice family threshold, and
+// only on a later day than any teaching or practice that the injected assistance check reports unassisted, each
+// held-out transfer item is offered once, with grading deferred until the block closes. A closed block reports
+// progress: a provisional anchor only when canAdvanceUnitA accepts its independent first choices. Delayed d7/d30
+// checks are a future schedule only and are not offered by this slice; nothing here claims mastery or unlocks.
 // State is one versioned document under PILOT_META_KEY, read, transitioned and written as one
 // store.updateMeta operation on that store's write queue (the same queue as reset); a store without
-// updateMeta is refused. Once a controller has seen its own document, that document going missing
-// (a reset) blocks it rather than starting over. Attempts stay the exact
-// { presentationId, itemId, optionId } first choices; presentation context (day, option order,
-// answered day) and dated lesson exposure live beside them in the same document and join by
-// presentationId in attempt order. Anything unknown, newer, foreign or inconsistent blocks without
-// being rewritten; IO and write errors reject and leave the last durable state answerable.
+// updateMeta is refused. Assistance is read inside that same operation, so a reset is ordered around it.
+// Once a controller has seen its own document, that document going missing (a reset) blocks it rather than
+// starting over. Attempts stay the exact { presentationId, itemId, optionId } first choices; presentation
+// context (day, option order, answered day), dated lesson exposure and, for held-out items, the assistance
+// read when shown and when answered live beside them in the same document and join by presentationId in
+// attempt order. Independence is derived from that context, never stored as a verdict. Anything unknown,
+// newer, foreign or inconsistent blocks without being rewritten; IO, assistance and write errors reject and
+// leave the last durable state answerable.
 import { newId } from '@/engine/util';
 import { createSerialQueue } from '@/storage/serial';
 import type { Store } from '@/storage/types';
@@ -23,13 +28,21 @@ import {
   type PilotOption,
   type PilotPhase,
 } from './content';
+import { canAdvanceUnitA, type PilotEvidence } from './evidence';
 
 export const PILOT_META_KEY = 'pilot_unit_a';
 
 const SCHEMA = 1;
 const CONSTRUCTS: readonly PilotConstruct[] = ['reference', 'agreement'];
 const MIN_PRACTICE_FAMILIES = 2;
+/** The first delayed check is due this many days after the anchor; scheduled only, not offered yet. */
+const D7_AFTER_DAYS = 7;
 const DAY_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
+/**
+ * Evidence day for a held-out first choice that was not independent. The evaluator treats a non-calendar day as
+ * an invalid first attempt: it still consumes its family, so no later event can count in its place.
+ */
+const NOT_INDEPENDENT = 'not-independent';
 
 export type PilotMode = 'developer-demo' | 'tester';
 
@@ -41,8 +54,11 @@ export interface PilotControllerOptions {
   today: () => string;
   readOnly: () => boolean;
   active: () => boolean;
-  /** Consulted before assessment items once that slice exists; correctness practice never needs it. */
-  assistedToday: () => Promise<boolean>;
+  /**
+   * Whether the learner had teaching or other help on `day`. Read before a held-out item is shown and again
+   * when it is answered; correctness practice never needs it. A rejection or non-boolean refuses that step.
+   */
+  assistedToday: (day: string) => Promise<boolean>;
   /** Used only to shuffle the option order of a new presentation. */
   random: () => number;
 }
@@ -96,8 +112,26 @@ export type PilotView =
       selected: PilotExplainedChoice | null;
       keyed: PilotExplainedChoice;
     }
-  | { kind: 'awaiting-transfer'; constructs: PilotConstructSummary[] }
-  | { kind: 'insufficient'; constructs: PilotConstructSummary[] };
+  /** A held-out answer is saved; nothing about its correctness is shown until the block closes. */
+  | {
+      kind: 'assessment-feedback';
+      presentationId: string;
+      phase: 'transfer';
+      deferred: true;
+      answered: number;
+      total: number;
+    }
+  /** Practice is done; held-out items open on a later, unassisted day (`until` is the earliest). */
+  | { kind: 'awaiting-transfer'; constructs: PilotConstructSummary[]; until: string }
+  | { kind: 'insufficient'; constructs: PilotConstructSummary[] }
+  /** The held-out block is closed. `nextDue` is a schedule only: delayed checks are not offered yet. */
+  | {
+      kind: 'progress';
+      provisional: boolean;
+      anchorDay: string | null;
+      nextDue: string | null;
+      delayed: { d7: null; d30: null };
+    };
 
 interface Attempt {
   presentationId: string;
@@ -126,6 +160,15 @@ interface LessonExposure {
   completed: string | null;
 }
 
+/** Context of one held-out presentation, in presentation order. Observations only, not a verdict. */
+interface Assessment {
+  presentationId: string;
+  /** Assistance read just before display; a held-out item is shown only when this was false. */
+  assistedWhenShown: false;
+  /** Assistance read when the first choice was saved; null until then. */
+  assistedWhenAnswered: boolean | null;
+}
+
 interface PilotDoc {
   owner: string;
   schema: typeof SCHEMA;
@@ -135,11 +178,14 @@ interface PilotDoc {
   current: Current | null;
   presentations: Presentation[];
   lessons: LessonExposure[];
+  /** Absent until the first held-out item is shown, so practice-only documents keep their exact bytes. */
+  assessments?: Assessment[];
 }
 
 const DOC_KEYS = [
   'owner', 'schema', 'contentVersion', 'policyVersion', 'attempts', 'current', 'presentations', 'lessons',
 ] as const;
+const ASSESSED_DOC_KEYS = [...DOC_KEYS, 'assessments'] as const;
 
 // ---- Plan over the catalogue ----
 
@@ -152,6 +198,10 @@ interface Plan {
   steps: readonly Step[];
   /** Practice items in the order they are offered. */
   order: readonly PilotItem[];
+  /** Held-out transfer items in the order they are offered, after all practice. */
+  transfer: readonly PilotItem[];
+  /** Every item a presentation may hold, index-aligned with stored presentations. */
+  sequence: readonly PilotItem[];
   byId: ReadonlyMap<string, PilotItem>;
   stepOf: ReadonlyMap<string, number>;
   /** Answered presentations needed before lesson k may open. */
@@ -170,27 +220,46 @@ function contentAccepted(): boolean {
 
 const keyOf = (item: PilotItem): PilotOption | undefined => item.options.find((o) => o.correct);
 
+const wellFormed = (item: PilotItem, lessonId: string): boolean =>
+  item.lessonId === lessonId &&
+  item.options.length === 4 &&
+  item.options.filter((o) => o.correct).length === 1 &&
+  new Set(item.options.map((o) => o.id)).size === item.options.length;
+
 function buildPlan(): Plan | null {
   if (!contentAccepted()) return null;
   const steps: Step[] = [];
+  const held: PilotItem[][] = [];
   for (const construct of CONSTRUCTS) {
     const lesson = PILOT_CONTENT.lessons.find((l) => l.construct === construct);
-    const items = PILOT_CONTENT.items.filter((i) => i.construct === construct && i.phase === 'practice');
+    if (lesson === undefined) return null;
+    const ofPhase = (phase: PilotPhase) =>
+      PILOT_CONTENT.items.filter((i) => i.construct === construct && i.phase === phase);
+    const items = ofPhase('practice');
+    const transfer = ofPhase('transfer');
+    const practiced = new Set(items.map((i) => i.family));
     const usable =
-      lesson !== undefined &&
       items.length > 0 &&
-      items.every(
-        (i) =>
-          i.lessonId === lesson.id &&
-          i.options.length === 4 &&
-          i.options.filter((o) => o.correct).length === 1 &&
-          new Set(i.options.map((o) => o.id)).size === i.options.length,
-      );
+      transfer.length > 0 &&
+      [...items, ...transfer].every((i) => wellFormed(i, lesson.id)) &&
+      transfer.every((i) => !practiced.has(i.family));
     if (!usable) return null;
     steps.push({ lesson, items });
+    held.push(transfer);
   }
+  // Held-out items alternate constructs, each family once.
+  const transfer: PilotItem[] = [];
+  const rounds = Math.max(...held.map((h) => h.length));
+  for (let n = 0; n < rounds; n += 1) {
+    for (const items of held) {
+      const item = items[n];
+      if (item !== undefined) transfer.push(item);
+    }
+  }
+  if (new Set(transfer.map((i) => i.family)).size !== transfer.length) return null;
   const order = steps.flatMap((s) => s.items);
-  if (new Set(order.map((i) => i.id)).size !== order.length) return null;
+  const sequence = [...order, ...transfer];
+  if (new Set(sequence.map((i) => i.id)).size !== sequence.length) return null;
   const stepOf = new Map<string, number>();
   const opensAfter: number[] = [];
   let before = 0;
@@ -199,7 +268,7 @@ function buildPlan(): Plan | null {
     before += step.items.length;
     step.items.forEach((i) => stepOf.set(i.id, index));
   });
-  return { steps, order, byId: new Map(order.map((i) => [i.id, i])), stepOf, opensAfter };
+  return { steps, order, transfer, sequence, byId: new Map(sequence.map((i) => [i.id, i])), stepOf, opensAfter };
 }
 
 const PLAN = buildPlan();
@@ -235,6 +304,14 @@ function isCalendarDay(value: unknown): value is string {
   return date >= 1 && date <= (monthLengths[month - 1] ?? 0);
 }
 
+/** The calendar day `days` after a valid `day`. */
+function addDays(day: string, days: number): string {
+  const match = DAY_PATTERN.exec(day);
+  if (match === null) throw new Error('Pilot day is not YYYY-MM-DD.');
+  const date = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]) + days));
+  return date.toISOString().slice(0, 10);
+}
+
 const isAttempt = (v: unknown): v is Attempt =>
   exactly(v, ['presentationId', 'itemId', 'optionId']) &&
   isText(v.presentationId) &&
@@ -261,6 +338,12 @@ const isLessonExposure = (v: unknown): v is LessonExposure =>
   v.shown.every(isCalendarDay) &&
   (v.completed === null || isCalendarDay(v.completed));
 
+const isAssessment = (v: unknown): v is Assessment =>
+  exactly(v, ['presentationId', 'assistedWhenShown', 'assistedWhenAnswered']) &&
+  isText(v.presentationId) &&
+  v.assistedWhenShown === false &&
+  (v.assistedWhenAnswered === null || typeof v.assistedWhenAnswered === 'boolean');
+
 const isListOf = <T>(value: unknown, guard: (v: unknown) => v is T): value is T[] =>
   Array.isArray(value) && value.every(guard);
 
@@ -272,6 +355,27 @@ function daysOf(doc: PilotDoc): string[] {
   ];
 }
 
+/** Lesson and practice days in the only order the controller produces them. */
+function teachingDays(doc: PilotDoc, plan: Plan): string[] {
+  const days: string[] = [];
+  let from = 0;
+  doc.lessons.forEach((exposure, index) => {
+    days.push(...exposure.shown);
+    if (exposure.completed !== null) days.push(exposure.completed);
+    const count = plan.steps[index]?.items.length ?? 0;
+    for (const p of doc.presentations.slice(from, from + count)) {
+      days.push(p.shown);
+      if (p.answered !== null) days.push(p.answered);
+    }
+    from += count;
+  });
+  return days;
+}
+
+const heldOut = (doc: PilotDoc, plan: Plan): Presentation[] => doc.presentations.slice(plan.order.length);
+const answeredHeldOut = (doc: PilotDoc, plan: Plan): Presentation[] =>
+  heldOut(doc, plan).filter((p) => p.answered !== null);
+
 function isPermutation(order: readonly string[], options: readonly PilotOption[]): boolean {
   return (
     order.length === options.length &&
@@ -280,39 +384,78 @@ function isPermutation(order: readonly string[], options: readonly PilotOption[]
   );
 }
 
+function practiceSummary(doc: PilotDoc, plan: Plan): PilotConstructSummary[] {
+  return plan.steps.map(({ lesson, items }) => {
+    const families = new Set<string>();
+    for (const attempt of doc.attempts) {
+      const item = items.find((i) => i.id === attempt.itemId);
+      if (item !== undefined && attempt.optionId !== null && keyOf(item)?.id === attempt.optionId) families.add(item.family);
+    }
+    return { construct: lesson.construct, correctFamilies: families.size, required: MIN_PRACTICE_FAMILIES };
+  });
+}
+
+const practiceMet = (constructs: readonly PilotConstructSummary[]): boolean =>
+  constructs.every((c) => c.correctFamilies >= c.required);
+
 /** The document must be a state this controller could have written, step by step, over the plan. */
 function coherent(doc: PilotDoc, plan: Plan): boolean {
-  const { presentations, attempts, lessons, current } = doc;
-  if (lessons.length > plan.steps.length || presentations.length > plan.order.length) return false;
+  const { presentations, attempts, lessons, current, assessments } = doc;
+  if (lessons.length > plan.steps.length || presentations.length > plan.sequence.length) return false;
   const answered = presentations.filter((p) => p.answered !== null);
+  const block = heldOut(doc, plan);
 
   const lessonsOk = lessons.every((exposure, index) => {
     const step = plan.steps[index];
-    const first = exposure.shown[0];
+    const last = exposure.shown[exposure.shown.length - 1];
     return (
       step !== undefined &&
-      first !== undefined &&
+      last !== undefined &&
       exposure.lessonId === step.lesson.id &&
       exposure.shown.every((day, i) => i === 0 || (exposure.shown[i - 1] ?? '') < day) &&
-      (exposure.completed === null ? index === lessons.length - 1 : exposure.completed >= first) &&
+      // Completing a lesson displays it that day, so completion is always its last shown day.
+      (exposure.completed === null ? index === lessons.length - 1 : exposure.completed === last) &&
       answered.length >= (plan.opensAfter[index] ?? Infinity)
     );
   });
+  const allTaught = lessons.length === plan.steps.length && lessons.every((l) => l.completed !== null);
 
   const seen = new Set<string>();
   const presentationsOk = presentations.every((p, index) => {
-    const item = plan.order[index];
+    const item = plan.sequence[index];
     if (item === undefined || p.itemId !== item.id || seen.has(p.presentationId)) return false;
     seen.add(p.presentationId);
-    const lesson = lessons[plan.stepOf.get(item.id) ?? -1];
+    const step = plan.stepOf.get(item.id);
+    const opened = step === undefined ? allTaught : (lessons[step]?.completed ?? null) !== null;
     return (
-      lesson !== undefined &&
-      lesson.completed !== null &&
-      lesson.completed <= p.shown &&
+      opened &&
       isPermutation(p.optionOrder, item.options) &&
       (p.answered === null ? index === presentations.length - 1 : p.answered >= p.shown)
     );
   });
+
+  // One timeline: lessons and practice in plan order, then held-out items, never going back a day.
+  const taught = teachingDays(doc, plan);
+  const timeline = [...taught, ...block.flatMap((p) => (p.answered === null ? [p.shown] : [p.shown, p.answered]))];
+  const chronological = timeline.every((day, i) => i === 0 || (timeline[i - 1] ?? '') <= day);
+  const lastTaught = taught[taught.length - 1];
+  const blockOk =
+    block.length === 0 ||
+    (practiceMet(practiceSummary(doc, plan)) && lastTaught !== undefined && block.every((p) => p.shown > lastTaught));
+
+  const assessmentsOk =
+    assessments === undefined
+      ? block.length === 0
+      : block.length > 0 &&
+        assessments.length === block.length &&
+        assessments.every((a, index) => {
+          const p = block[index];
+          return (
+            p !== undefined &&
+            a.presentationId === p.presentationId &&
+            (a.assistedWhenAnswered === null) === (p.answered === null)
+          );
+        });
 
   const attemptsOk =
     attempts.length === answered.length &&
@@ -329,6 +472,7 @@ function coherent(doc: PilotDoc, plan: Plan): boolean {
     });
 
   const last = presentations[presentations.length - 1];
+  const lastHeldOut = presentations.length > plan.order.length;
   const currentOk =
     current === null
       ? last === undefined || last.answered !== null
@@ -336,9 +480,12 @@ function coherent(doc: PilotDoc, plan: Plan): boolean {
         current.presentationId === last.presentationId &&
         current.itemId === last.itemId &&
         current.day === last.shown &&
-        plan.stepOf.get(last.itemId) === lessons.length - 1;
+        (lastHeldOut
+          ? // The final held-out answer closes the block and clears current.
+            !(presentations.length === plan.sequence.length && last.answered !== null)
+          : plan.stepOf.get(last.itemId) === lessons.length - 1);
 
-  return lessonsOk && presentationsOk && attemptsOk && currentOk;
+  return lessonsOk && presentationsOk && chronological && blockOk && assessmentsOk && attemptsOk && currentOk;
 }
 
 function emptyDoc(owner: string): PilotDoc {
@@ -369,11 +516,12 @@ function parseDoc(raw: string | null, owner: string, today: string, plan: Plan):
     return 'version';
   }
   if (
-    !exactly(value, DOC_KEYS) ||
+    !(exactly(value, DOC_KEYS) || exactly(value, ASSESSED_DOC_KEYS)) ||
     !isListOf(value.attempts, isAttempt) ||
     !isListOf(value.presentations, isPresentation) ||
     !isListOf(value.lessons, isLessonExposure) ||
-    !(value.current === null || isCurrent(value.current))
+    !(value.current === null || isCurrent(value.current)) ||
+    !(value.assessments === undefined || isListOf(value.assessments, isAssessment))
   ) {
     return 'corrupt';
   }
@@ -387,9 +535,14 @@ function parseDoc(raw: string | null, owner: string, today: string, plan: Plan):
 type Position =
   | { kind: 'lesson'; index: number; step: Step }
   | { kind: 'practice'; item: PilotItem }
+  | { kind: 'transfer'; item: PilotItem }
   | { kind: 'question'; presentation: Presentation; item: PilotItem }
   | { kind: 'feedback'; item: PilotItem; attempt: Attempt }
-  | { kind: 'end' };
+  | { kind: 'insufficient' }
+  | { kind: 'closed' };
+
+/** Reads whether the learner was assisted on a day; rejects on anything but a boolean. */
+type Assisted = (day: string) => Promise<boolean>;
 
 function locate(doc: PilotDoc, plan: Plan): Position {
   const { current } = doc;
@@ -407,7 +560,10 @@ function locate(doc: PilotDoc, plan: Plan): Position {
     const item = step.items.find((i) => !presented.has(i.id));
     if (item !== undefined) return { kind: 'practice', item };
   }
-  return { kind: 'end' };
+  if (!practiceMet(practiceSummary(doc, plan))) return { kind: 'insufficient' };
+  // Presentations are index-aligned with the plan, so the next held-out item follows those already shown.
+  const item = plan.transfer[heldOut(doc, plan).length];
+  return item === undefined ? { kind: 'closed' } : { kind: 'transfer', item };
 }
 
 function withLessonShown(doc: PilotDoc, index: number, lessonId: string, today: string): PilotDoc {
@@ -471,18 +627,64 @@ function feedbackView(item: PilotItem, attempt: Attempt): PilotView {
   };
 }
 
-function summaryView(doc: PilotDoc, plan: Plan): PilotView {
-  const constructs = plan.steps.map(({ lesson, items }) => {
-    const families = new Set<string>();
-    for (const attempt of doc.attempts) {
-      const item = items.find((i) => i.id === attempt.itemId);
-      if (item !== undefined && attempt.optionId !== null && keyOf(item)?.id === attempt.optionId) families.add(item.family);
+/** A saved held-out answer: progress through the block only, nothing about correctness. */
+const deferredView = (doc: PilotDoc, plan: Plan, presentationId: string): PilotView => ({
+  kind: 'assessment-feedback',
+  presentationId,
+  phase: 'transfer',
+  deferred: true,
+  answered: answeredHeldOut(doc, plan).length,
+  total: plan.transfer.length,
+});
+
+const answeredView = (doc: PilotDoc, plan: Plan, item: PilotItem, attempt: Attempt): PilotView =>
+  item.phase === 'transfer' ? deferredView(doc, plan, attempt.presentationId) : feedbackView(item, attempt);
+
+/**
+ * Every raw first choice in attempt order, joined to the trusted catalogue and its presentation context. A
+ * held-out choice counts on its day only if it was shown and answered the same day, unassisted both times;
+ * otherwise it keeps its family with a non-calendar day, so nothing later can count in its place.
+ */
+function evidenceOf(doc: PilotDoc, plan: Plan): PilotEvidence[] {
+  const presentations = new Map(doc.presentations.map((p) => [p.presentationId, p]));
+  const context = new Map((doc.assessments ?? []).map((a) => [a.presentationId, a]));
+  return doc.attempts.map((attempt): PilotEvidence => {
+    const item = plan.byId.get(attempt.itemId);
+    const p = presentations.get(attempt.presentationId);
+    if (item === undefined || p === undefined || p.answered === null) throw new Error('Pilot attempt lost its presentation.');
+    const chosen = item.options.find((o) => o.id === attempt.optionId);
+    let outcome: PilotEvidence['outcome'] = 'dont-know';
+    if (chosen !== undefined) outcome = chosen.correct ? 'correct' : 'wrong';
+    let day = p.answered;
+    if (item.phase === 'transfer') {
+      const a = context.get(attempt.presentationId);
+      const independent =
+        a !== undefined && a.assistedWhenShown === false && a.assistedWhenAnswered === false && p.answered === p.shown;
+      if (!independent) day = NOT_INDEPENDENT;
     }
-    return { construct: lesson.construct, correctFamilies: families.size, required: MIN_PRACTICE_FAMILIES };
+    return {
+      id: attempt.presentationId,
+      construct: item.construct,
+      family: item.family,
+      kind: item.phase === 'practice' ? 'practice' : 'transfer',
+      outcome,
+      day,
+    };
   });
-  return constructs.every((c) => c.correctFamilies >= c.required)
-    ? { kind: 'awaiting-transfer', constructs }
-    : { kind: 'insufficient', constructs };
+}
+
+/** A closed block, anchored on the day it closed only when the shared evaluator accepts it. */
+function progressView(doc: PilotDoc, plan: Plan): PilotView {
+  const block = heldOut(doc, plan);
+  const closedOn = block[block.length - 1]?.answered ?? null;
+  const anchorDay = closedOn !== null && canAdvanceUnitA(evidenceOf(doc, plan)) ? closedOn : null;
+  return {
+    kind: 'progress',
+    provisional: anchorDay !== null,
+    anchorDay,
+    nextDue: anchorDay === null ? null : addDays(anchorDay, D7_AFTER_DAYS),
+    delayed: { d7: null, d30: null },
+  };
 }
 
 interface Change {
@@ -490,8 +692,28 @@ interface Change {
   view: PilotView;
 }
 
+function present(doc: PilotDoc, item: PilotItem, today: string, random: () => number): Change & { presentationId: string } {
+  const presentation: Presentation = {
+    // A fresh nonce, persisted once with the presentation: unique across owners and stores.
+    presentationId: newId('ua-pres'),
+    itemId: item.id,
+    shown: today,
+    optionOrder: shuffled(item.options.map((o) => o.id), random),
+    answered: null,
+  };
+  return {
+    doc: {
+      ...doc,
+      presentations: [...doc.presentations, presentation],
+      current: { presentationId: presentation.presentationId, itemId: item.id, day: today },
+    },
+    view: questionView(presentation, item),
+    presentationId: presentation.presentationId,
+  };
+}
+
 /** Makes the next displayable thing durable-ready: records lesson exposure or a new presentation. */
-function settle(doc: PilotDoc, today: string, random: () => number, plan: Plan): Change {
+async function settle(doc: PilotDoc, today: string, random: () => number, plan: Plan, assisted: Assisted): Promise<Change> {
   const at = locate(doc, plan);
   switch (at.kind) {
     case 'lesson':
@@ -500,29 +722,33 @@ function settle(doc: PilotDoc, today: string, random: () => number, plan: Plan):
         view: { kind: 'lesson', lesson: at.step.lesson },
       };
     case 'practice': {
-      const presentation: Presentation = {
-        // A fresh nonce, persisted once with the presentation: unique across owners and stores.
-        presentationId: newId('ua-pres'),
-        itemId: at.item.id,
-        shown: today,
-        optionOrder: shuffled(at.item.options.map((o) => o.id), random),
-        answered: null,
-      };
-      return {
-        doc: {
-          ...doc,
-          presentations: [...doc.presentations, presentation],
-          current: { presentationId: presentation.presentationId, itemId: at.item.id, day: today },
-        },
-        view: questionView(presentation, at.item),
-      };
+      const shown = present(doc, at.item, today, random);
+      return { doc: shown.doc, view: shown.view };
+    }
+    case 'transfer': {
+      const taught = teachingDays(doc, plan);
+      const lastTaught = taught[taught.length - 1];
+      if (lastTaught === undefined) throw new Error('Pilot transfer reached without teaching.');
+      const awaiting = (until: string): Change => ({
+        doc,
+        view: { kind: 'awaiting-transfer', constructs: practiceSummary(doc, plan), until },
+      });
+      // Nothing held-out is read, shown or consumed on a day with the learner's own teaching or practice.
+      const earliest = addDays(lastTaught, 1);
+      if (today < earliest) return awaiting(earliest);
+      if (await assisted(today)) return awaiting(addDays(today, 1));
+      const shown = present(doc, at.item, today, random);
+      const context: Assessment = { presentationId: shown.presentationId, assistedWhenShown: false, assistedWhenAnswered: null };
+      return { doc: { ...shown.doc, assessments: [...(doc.assessments ?? []), context] }, view: shown.view };
     }
     case 'question':
       return { doc, view: questionView(at.presentation, at.item) };
     case 'feedback':
-      return { doc, view: feedbackView(at.item, at.attempt) };
-    case 'end':
-      return { doc, view: summaryView(doc, plan) };
+      return { doc, view: answeredView(doc, plan, at.item, at.attempt) };
+    case 'insufficient':
+      return { doc, view: { kind: 'insufficient', constructs: practiceSummary(doc, plan) } };
+    case 'closed':
+      return { doc, view: progressView(doc, plan) };
   }
 }
 
@@ -566,7 +792,16 @@ export function createPilotController(options: PilotControllerOptions) {
     return null;
   }
 
-  function run(step: (doc: PilotDoc, today: string, plan: Plan) => Change): Promise<PilotView> {
+  // Reads only: it runs inside the queued update, so it must never call a queued store writer.
+  const assisted: Assisted = async (day) => {
+    const value: unknown = await options.assistedToday(day);
+    if (typeof value !== 'boolean') throw new Error('Pilot assistance check did not answer true or false.');
+    return value;
+  };
+
+  function run(
+    step: (doc: PilotDoc, today: string, plan: Plan) => Change | Promise<Change>,
+  ): Promise<PilotView> {
     return enqueue(async () => {
       const early = gate();
       if (early !== null || PLAN === null) return blocked(early ?? 'content');
@@ -599,16 +834,17 @@ export function createPilotController(options: PilotControllerOptions) {
           outcome.view = blocked(parsed);
           return raw;
         }
-        const change = step(parsed, day, plan);
+        const change = await step(parsed, day, plan);
+        // A step may have awaited the assistance read: check again before using or writing its result.
+        const afterStep = gate();
+        if (afterStep !== null) {
+          outcome.view = blocked(afterStep);
+          return raw;
+        }
         const next = JSON.stringify(change.doc);
         if (next === JSON.stringify(parsed)) {
           outcome.own = raw !== null;
           outcome.view = change.view;
-          return raw;
-        }
-        const beforeWrite = gate();
-        if (beforeWrite !== null) {
-          outcome.view = blocked(beforeWrite);
           return raw;
         }
         outcome.own = true;
@@ -627,7 +863,7 @@ export function createPilotController(options: PilotControllerOptions) {
   return {
     /** Shows where the learner is; records lesson exposure or a new presentation before displaying it. */
     load(): Promise<PilotView> {
-      return run((doc, today, plan) => settle(doc, today, random, plan));
+      return run((doc, today, plan) => settle(doc, today, random, plan, assisted));
     },
 
     /** Leaves a lesson or feedback for what follows. An unanswered question cannot be skipped. */
@@ -637,19 +873,22 @@ export function createPilotController(options: PilotControllerOptions) {
         let moved = doc;
         if (at.kind === 'lesson') moved = withLessonCompleted(doc, at.index, at.step.lesson.id, today);
         else if (at.kind === 'feedback') moved = { ...doc, current: null };
-        return settle(moved, today, random, plan);
+        return settle(moved, today, random, plan, assisted);
       });
     },
 
-    /** Records the first choice (null = "I don't know") for the current presentation, then feedback. */
+    /**
+     * Records the first choice (null = "I don't know") for the current presentation. Practice gets feedback; a
+     * held-out answer saves the assistance read with it and stays ungraded until the last one closes the block.
+     */
     answer(presentationId: string, optionId: string | null): Promise<PilotView> {
       if (!isText(presentationId) || !(optionId === null || isText(optionId))) {
         return Promise.reject(new Error('Invalid pilot answer.'));
       }
-      return run((doc, today, plan) => {
+      return run(async (doc, today, plan) => {
         const at = locate(doc, plan);
         if (at.kind === 'feedback' && at.attempt.presentationId === presentationId) {
-          if (at.attempt.optionId === optionId) return { doc, view: feedbackView(at.item, at.attempt) };
+          if (at.attempt.optionId === optionId) return { doc, view: answeredView(doc, plan, at.item, at.attempt) };
           throw new Error('This presentation already has its first answer.');
         }
         if (at.kind !== 'question' || at.presentation.presentationId !== presentationId) {
@@ -659,16 +898,27 @@ export function createPilotController(options: PilotControllerOptions) {
           throw new Error('Unknown option for this presentation.');
         }
         const attempt: Attempt = { presentationId, itemId: at.item.id, optionId };
-        return {
-          doc: {
-            ...doc,
-            attempts: [...doc.attempts, attempt],
-            presentations: doc.presentations.map((p) =>
-              p.presentationId === presentationId ? { ...p, answered: today } : p,
-            ),
-          },
-          view: feedbackView(at.item, attempt),
+        const answered: PilotDoc = {
+          ...doc,
+          attempts: [...doc.attempts, attempt],
+          presentations: doc.presentations.map((p) =>
+            p.presentationId === presentationId ? { ...p, answered: today } : p,
+          ),
         };
+        if (at.item.phase !== 'transfer') return { doc: answered, view: feedbackView(at.item, attempt) };
+        const help = await assisted(today);
+        const marked: PilotDoc = {
+          ...answered,
+          assessments: (doc.assessments ?? []).map((a) =>
+            a.presentationId === presentationId ? { ...a, assistedWhenAnswered: help } : a,
+          ),
+        };
+        // The last held-out answer closes the block directly: there is no deferred screen left to leave.
+        if (marked.presentations.length === plan.sequence.length) {
+          const closed: PilotDoc = { ...marked, current: null };
+          return { doc: closed, view: progressView(closed, plan) };
+        }
+        return { doc: marked, view: deferredView(marked, plan, presentationId) };
       });
     },
 

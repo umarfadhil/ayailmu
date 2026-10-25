@@ -1,5 +1,6 @@
-// Unit A pilot screen (initial slice) over the real pilot controller and the selected store. Everything shown
-// comes from a view the controller made durable first; before a check nothing keyed or explanatory is rendered.
+// Unit A pilot screen over the real pilot controller and the selected store. Everything shown comes from a view
+// the controller made durable first; before a check nothing keyed or explanatory is rendered, and held-out
+// answers show only that they were saved until the block closes.
 // One inner panel per binding (store identity, owner, mode, read-only): a changed binding unmounts the old
 // panel in the same commit, so its question never flashes, and its controller is disposed with it.
 // Needs no router or app context; the route owns Back, focus and the learner binding.
@@ -114,6 +115,19 @@ const CONSTRUCT_LABEL: Record<PilotConstructSummary['construct'], string> = {
   agreement: 'Kesesuaian kata',
 };
 
+const MONTHS = [
+  'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
+];
+
+/** A stored YYYY-MM-DD day as "9 Januari 2026"; anything else is shown as stored. */
+function dayLabel(day: string): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(day);
+  const month = match ? MONTHS[Number(match[2]) - 1] : undefined;
+  return match && month ? `${Number(match[3])} ${month} ${match[1]}` : day;
+}
+
+const DELAYED_NOT_ACTIVE = 'Cek hari ke-7 dan ke-30 belum aktif di versi ini.';
+
 function viewKey(view: PilotView | null): string {
   if (view === null) return '';
   switch (view.kind) {
@@ -121,9 +135,12 @@ function viewKey(view: PilotView | null): string {
       return `lesson:${view.lesson.id}`;
     case 'question':
     case 'feedback':
+    case 'assessment-feedback':
       return `${view.kind}:${view.presentationId}`;
     case 'blocked':
       return `blocked:${view.reason}`;
+    case 'awaiting-transfer':
+      return `${view.kind}:${view.until}`;
     default:
       return view.kind;
   }
@@ -304,9 +321,11 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today }: UnitAP
     // never reach the next view's action through a reused host instance.
     footer = <Btn key={shown} testID="pilot-next" label="Mulai latihan" icon="arrow-forward" disabled={busy} onPress={next} style={styles.fullBtn} />;
   } else if (view.kind === 'question') {
+    const held = view.phase === 'transfer';
+    const submit = held ? 'Simpan jawaban' : 'Periksa';
     body = (
       <View testID="pilot-question" style={styles.section}>
-        <Eyebrow>Latihan</Eyebrow>
+        <Eyebrow>{held ? 'Cek pemahaman' : 'Latihan'}</Eyebrow>
         <View ref={heading} tabIndex={-1}>
           <MixedText header scale={arabicScale} style={typography.heading}>
             {view.prompt}
@@ -353,14 +372,18 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today }: UnitAP
           })}
         </View>
         <Btn kind="quiet" label="Belum tahu" testID="pilot-dont-know" disabled={busy} onPress={() => answer(null)} style={styles.fullBtn} />
-        <Caption>Pilihan bisa diganti sampai Anda menekan Periksa. Jawaban yang diperiksa disimpan dan tidak diubah.</Caption>
+        <Caption>
+          {held
+            ? 'Pilihan bisa diganti sampai Anda menekan Simpan jawaban. Jawaban yang disimpan tidak diubah; hasilnya ditampilkan setelah semua soal cek dijawab.'
+            : 'Pilihan bisa diganti sampai Anda menekan Periksa. Jawaban yang diperiksa disimpan dan tidak diubah.'}
+        </Caption>
       </View>
     );
     footer = (
       <Btn
         key={shown}
         testID="pilot-check"
-        label="Periksa"
+        label={submit}
         disabled={busy || selected === null}
         onPress={() => {
           if (selected !== null) answer(selected);
@@ -387,7 +410,52 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today }: UnitAP
       </View>
     );
     footer = <Btn key={shown} testID="pilot-next" label="Lanjut" icon="arrow-forward" disabled={busy} onPress={next} style={styles.fullBtn} />;
-  } else {
+  } else if (view.kind === 'assessment-feedback') {
+    body = (
+      <View testID="pilot-assessment-feedback" role="status" accessibilityLiveRegion="polite" style={styles.section}>
+        <View ref={heading} tabIndex={-1}>
+          <Text accessibilityRole="header" style={typography.heading}>
+            Jawaban tersimpan
+          </Text>
+        </View>
+        <Text style={typography.body}>{`${view.answered} dari ${view.total} soal cek sudah dijawab.`}</Text>
+        <Caption>Hasilnya ditampilkan setelah semua soal cek dijawab.</Caption>
+      </View>
+    );
+    footer = <Btn key={shown} testID="pilot-next" label="Lanjut" icon="arrow-forward" disabled={busy} onPress={next} style={styles.fullBtn} />;
+  } else if (view.kind === 'progress') {
+    body = (
+      <View testID="pilot-progress" style={styles.section}>
+        <View ref={heading} tabIndex={-1}>
+          <Text accessibilityRole="header" style={typography.title}>
+            Cek pemahaman selesai
+          </Text>
+        </View>
+        {view.provisional && view.anchorDay !== null ? (
+          <>
+            <Text style={typography.body}>
+              Hasil sementara: jawaban pertama Anda pada soal cek yang baru memenuhi syarat sementara untuk kedua bagian Unit A.
+            </Text>
+            {view.nextDue !== null ? (
+              <Card style={styles.card}>
+                <Text style={typography.body}>{`Cek selesai pada ${dayLabel(view.anchorDay)}.`}</Text>
+                <Text style={typography.body}>{`Cek berikutnya dijadwalkan ${dayLabel(view.nextDue)}.`}</Text>
+              </Card>
+            ) : null}
+          </>
+        ) : (
+          <Text style={typography.body}>
+            Jawaban pertama pada soal cek belum memenuhi syarat sementara. Ini bisa karena ada jawaban yang belum tepat atau
+            «Belum tahu», soal dijawab pada hari lain dari saat ditampilkan, atau ada pelajaran atau latihan lain pada hari
+            yang sama. Soal cek ini tidak diulang di versi ini.
+          </Text>
+        )}
+        <Notice tone="info">
+          {`${DELAYED_NOT_ACTIVE} Hasil ini hanya dari soal pilihan ganda dan merupakan bukti sementara, bukan penilaian akhir.`}
+        </Notice>
+      </View>
+    );
+  } else if (view.kind === 'awaiting-transfer' || view.kind === 'insufficient') {
     const awaiting = view.kind === 'awaiting-transfer';
     body = (
       <View testID="pilot-summary" style={styles.section}>
@@ -401,6 +469,11 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today }: UnitAP
             ? 'Anda sudah menjawab semua soal latihan Unit A versi ini.'
             : 'Beberapa bagian belum cukup jawaban benar. Latihan ulang belum tersedia di versi ini.'}
         </Text>
+        {view.kind === 'awaiting-transfer' ? (
+          <Text style={typography.body} testID="pilot-awaiting-transfer">
+            {`Soal cek pemahaman yang baru dibuka pada hari lain yang tanpa pelajaran atau latihan. Silakan kembali paling cepat ${dayLabel(view.until)}.`}
+          </Text>
+        ) : null}
         <Card style={styles.card}>
           {view.constructs.map((c) => (
             <Text key={c.construct} style={typography.body}>
@@ -408,7 +481,11 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today }: UnitAP
             </Text>
           ))}
         </Card>
-        <Notice tone="info">Soal penerapan baru serta cek hari ke-7 dan ke-30 belum tersedia. Ini ringkasan latihan sementara, bukan penilaian akhir.</Notice>
+        <Notice tone="info">
+          {awaiting
+            ? `${DELAYED_NOT_ACTIVE} Ini ringkasan latihan sementara, bukan penilaian akhir.`
+            : 'Soal penerapan baru serta cek hari ke-7 dan ke-30 belum tersedia. Ini ringkasan latihan sementara, bukan penilaian akhir.'}
+        </Notice>
       </View>
     );
   }
