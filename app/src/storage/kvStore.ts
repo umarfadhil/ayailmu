@@ -162,15 +162,24 @@ export class KvStore implements Store {
    */
   private commit(update: (current: Blob) => Blob | null): Promise<void> {
     return this.enqueue(async () => {
-      if (this.refused) throw new Error('Storage refused: the stored data was not accepted, so nothing is written.');
-      if (this.readOnly) throw new Error(`Storage is read-only: ${this.readOnly}`);
-      if (this.erased) throw new Error('Storage retired: an account-data erase began in this store instance, so it refuses every further write.');
+      this.checkWritable();
       const next = update(this.blob);
       if (!next) return;
-      const stamped = { ...next, schema: STORAGE_SCHEMA };
-      this.kv.setItem(this.key, JSON.stringify(stamped));
-      this.blob = stamped;
+      this.persist(next);
     });
+  }
+
+  private checkWritable(): void {
+    if (this.refused) throw new Error('Storage refused: the stored data was not accepted, so nothing is written.');
+    if (this.readOnly) throw new Error(`Storage is read-only: ${this.readOnly}`);
+    if (this.erased) throw new Error('Storage retired: an account-data erase began in this store instance, so it refuses every further write.');
+  }
+
+  /** One setItem; the in-memory blob changes only after it succeeds. */
+  private persist(next: Blob): void {
+    const stamped = { ...next, schema: STORAGE_SCHEMA };
+    this.kv.setItem(this.key, JSON.stringify(stamped));
+    this.blob = stamped;
   }
 
   /**
@@ -234,6 +243,26 @@ export class KvStore implements Store {
       if (value === null) delete meta[key];
       else meta[key] = value;
       return { ...b, meta };
+    });
+  }
+
+  /**
+   * See Store.updateMeta. Holds the queue across the async transform, which sees this blob's freshest value; the
+   * guard is checked before it runs and again before the single setItem, and the blob is replaced only after that.
+   */
+  updateMeta(key: string, transform: (raw: string | null) => Promise<string | null>): Promise<void> {
+    return this.enqueue(async () => {
+      this.checkWritable();
+      const raw = this.blob.meta?.[key] ?? null;
+      const out: unknown = await transform(raw);
+      if (out !== null && typeof out !== 'string') throw new Error('Metadata update must produce text or null; nothing was written.');
+      const next = out as string | null;
+      if (next === raw) return;
+      this.checkWritable();
+      const meta = { ...(this.blob.meta ?? {}) };
+      if (next === null) delete meta[key];
+      else meta[key] = next;
+      this.persist({ ...this.blob, meta });
     });
   }
 

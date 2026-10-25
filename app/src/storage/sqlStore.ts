@@ -202,6 +202,24 @@ export class SqlStore implements Store {
     );
   }
 
+  /**
+   * See Store.updateMeta. Holds the write queue across the async transform, which sees the freshest stored value;
+   * then one INSERT or DELETE, only when the value changed, so a failed transform or statement writes nothing.
+   */
+  updateMeta(key: string, transform: (raw: string | null) => Promise<string | null>): Promise<void> {
+    return this.write(async () => {
+      const raw = await this.getMeta(key);
+      const out: unknown = await transform(raw);
+      if (out !== null && typeof out !== 'string') throw new Error('Metadata update must produce text or null; nothing was written.');
+      const next = out as string | null;
+      if (next === raw) return;
+      if (this.retired) throw new Error(RETIRED);
+      await (next === null
+        ? this.db.run('DELETE FROM meta WHERE key = ?', [key])
+        : this.db.run('INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)', [key, next]));
+    });
+  }
+
   saveSnapshot(snapshot: Snapshot | null): Promise<void> {
     return this.write(() => this.writeSnapshot(snapshot));
   }

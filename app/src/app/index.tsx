@@ -125,7 +125,7 @@ const RELATION: Partial<Record<number, { id: 'previous' | 'current' | 'next'; la
  * here (they live in Panduan, where each view is dated).
  */
 function Today({ learning }: { learning: LearningState }) {
-  const { readOnly, content, learner, flash, setFlash, dataset } = useApp();
+  const { readOnly, content, learner, flash, setFlash, dataset, rules } = useApp();
   // The note left by closing a session is for this visit to Home only.
   useFocusEffect(useCallback(() => () => setFlash(null), [setFlash]));
   if (!learner) return null;
@@ -228,6 +228,25 @@ function Today({ learning }: { learning: LearningState }) {
         <View style={styles.action}>{action}</View>
       </View>
 
+      {/* Unit A pilot: developer prototype only, never offered in tester mode. */}
+      {rules.mode === 'developer-demo' ? (
+        <View style={styles.pilot} testID="unit-a-pilot-card">
+          <Text accessibilityRole="header" style={styles.pilotTitle}>
+            Belajar dengan contoh
+          </Text>
+          <Text style={styles.pilotText}>Contoh yang dijelaskan, lalu latihan empat pilihan.</Text>
+          <Text style={styles.pilotNote}>Uji coba · konten draf, belum ditinjau · tersimpan di perangkat ini</Text>
+          <Btn
+            testID="unit-a-pilot-entry"
+            label="Buka latihan baru"
+            kind="secondary"
+            icon="arrow-forward"
+            disabled={!!readOnly}
+            onPress={() => router.push('/unit-a-pilot' as Href)}
+          />
+        </View>
+      ) : null}
+
       {states.length ? (
         <View style={styles.pathSection}>
           <Text accessibilityRole="header" style={styles.pathTitle}>
@@ -280,6 +299,11 @@ function Today({ learning }: { learning: LearningState }) {
 
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: 'center' },
+
+  pilot: { marginTop: 16, gap: 8, padding: 18, borderRadius: radius.card, borderWidth: 1, borderColor: colors.line, backgroundColor: colors.sheet, ...shadow },
+  pilotTitle: { ...typography.heading },
+  pilotText: { ...typography.body },
+  pilotNote: { ...typography.caption, color: colors.draftInk, marginBottom: 4 },
 
   welcomeTop: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 8, minHeight: 44 },
   figure: {

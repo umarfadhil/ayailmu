@@ -116,6 +116,15 @@ export interface Store {
   archiveSnapshot(reason: string, replacement: Snapshot | null, notice?: string): Promise<boolean>;
   getMeta(key: string): Promise<string | null>;
   setMeta(key: string, value: string | null): Promise<void>;
+  /**
+   * One read/modify/write of a single metadata key on this store's write queue: `transform` gets the freshest value
+   * (null when absent) and returns the new one (null removes it). Writes at most once, after the transform succeeds,
+   * and only when the value changed; a throwing transform or failed write leaves everything as it was. The transform
+   * may call this store's unqueued reads, never its writers (they queue behind it). A result that is neither a string
+   * nor null rejects. Optional only so older typed fixtures still compile; callers needing atomicity must refuse
+   * without it.
+   */
+  updateMeta?(key: string, transform: (raw: string | null) => Promise<string | null>): Promise<void>;
   addReport(report: ReportRecord): Promise<void>;
   listReports(): Promise<ReportRecord[]>;
   reset(): Promise<void>;
