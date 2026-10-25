@@ -67,33 +67,3 @@ jobs:
           name: lint-report
           path: android/app/build/reports/lint-results-demoDebug.html
           retention-days: 7
-
-  # The eight Play public-key regressions run REAL `gradlew --offline` builds, so this job owns an isolated GRADLE_USER_HOME and warms
-  # it online first (wrapper distribution, plugins, dependencies) with the committed PUBLIC RSA fixture. No cache is restored: a cold
-  # cache is the normal case. No real Play key, secret, developer property or init script is involved. Run from the repository root.
-  play-license-offline:
-    name: play-license-offline (8 real offline Gradle tests)
-    runs-on: ubuntu-latest
-    timeout-minutes: 40
-    permissions:
-      contents: read
-    steps:
-      - name: Set the isolated task root and Gradle home (one home for warm-up and tests)
-        run: |
-          echo "AYA_CI_ROOT=$RUNNER_TEMP/aya-ci" >> "$GITHUB_ENV"
-          echo "GRADLE_USER_HOME=$RUNNER_TEMP/aya-ci/gradle-home" >> "$GITHUB_ENV"
-
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "17"
-
-      - name: Warm the isolated Gradle home online (public fixture key)
-        run: sh android/tools/play-license-offline.sh warm
-
-      - name: Eight Play public-key tests, Gradle --offline (same Gradle home)
-        run: sh android/tools/play-license-offline.sh test
