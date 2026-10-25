@@ -36,6 +36,7 @@ import (
 	"net"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"sync"
 	"testing"
 	"time"
@@ -179,8 +180,9 @@ func stagingAuthClient(ca stagingCA, srv *httptest.Server) *http.Client {
 	}}
 }
 
-// stagingServiceEnv is a complete, explicitly opted-in staging configuration on schema, with dbURL and adminKey in
-// private files and the database's own host as the one allowed database host.
+// stagingServiceEnv is a complete, explicitly opted-in staging configuration on schema, with a throwaway runtime role's
+// URL on dbURL's database (runtimeRoleURL) and adminKey in private files and the database's own host as the one allowed
+// database host.
 func stagingServiceEnv(t *testing.T, dbURL, schema, adminKey string) map[string]string {
 	t.Helper()
 	return map[string]string{
@@ -192,7 +194,7 @@ func stagingServiceEnv(t *testing.T, dbURL, schema, adminKey string) map[string]
 		config.EnvCORSOrigins:          stagingAppOrigin,
 		stagingEnvTrustedProxies:       stagingProxyIP,
 		config.EnvDBHosts:              databaseHostOf(t, dbURL),
-		config.EnvDatabaseURLFile:      privateFile(t, dbURL),
+		config.EnvDatabaseURLFile:      privateFile(t, runtimeRoleURL(t, dbURL, schema)),
 		config.EnvSchema:               schema,
 		config.EnvSupabaseURL:          "https://" + stagingAuthHost + ":" + stagingAuthPort,
 		config.EnvSupabaseIssuer:       stagingIssuer,
@@ -259,7 +261,7 @@ func stagingRequest(svc *server.Service, method, path, peer, host, token string,
 }
 
 // A staging service verifies its schema and never migrates it: an absent schema refuses startup and stays absent. On the
-// current schema, over a session that cannot write, it starts once it has fetched Auth's key set over TLS whose
+// current schema, as a plain runtime role, it starts once it has fetched Auth's key set over TLS whose
 // certificate verifies for Auth's own name, and its loopback probe reports the production mode and readiness. A
 // certificate of a CA the service does not trust, or one for another name, refuses startup (no usable key set), and an
 // Auth client that skips certificate verification is refused outright.
@@ -286,13 +288,13 @@ func TestProductionStagingServiceVerifiesAuthOverTLSAndOnlyVerifiesTheSchema(t *
 		}
 	})
 
-	t.Run("on the current schema, over a session that cannot write, it starts with Auth's key set fetched over verified TLS", func(t *testing.T) {
+	t.Run("on the current schema, as a plain runtime role, it starts with Auth's key set fetched over verified TLS", func(t *testing.T) {
 		schema, _ := migratedSchema(t, dbURL)
 		before, _, _ := a.served(t)
-		svc, err := server.New(context.Background(), lookupIn(stagingServiceEnv(t, readOnlySessionURL(t, dbURL), schema, a.admin)),
+		svc, err := server.New(context.Background(), lookupIn(stagingServiceEnv(t, dbURL, schema, a.admin)),
 			server.Options{AuthHTTPClient: client})
 		if err != nil {
-			t.Fatalf("server.New = %s; want a staging service started on a read-only session", quiet(err, dbURL, a.admin))
+			t.Fatalf("server.New = %s; want a staging service started as a plain runtime role", quiet(err, dbURL, a.admin))
 		}
 		defer svc.Close()
 		if keys, users, _ := a.served(t); keys <= before || users != 0 {
@@ -340,6 +342,62 @@ func TestProductionStagingServiceVerifiesAuthOverTLSAndOnlyVerifiesTheSchema(t *
 		}
 		if !errors.Is(err, authn.ErrUnsafeConfig) {
 			t.Fatalf("server.New = %s; want authn.ErrUnsafeConfig: no TLS bypass", quiet(err, dbURL, a.admin))
+		}
+	})
+}
+
+// Production staging fails closed on its database: a role that owns the schema or administers the cluster (the test
+// cluster's superuser here) refuses startup before the service binds anything, and so does plaintext to a named database
+// host, which production, unlike the local Compose stack, can never allow (AYA_DB_TRANSPORT=private-network is refused by the
+// loader). Each refusal is a fixed error that quotes neither the URL nor the password.
+func TestProductionStagingRefusesAnOwnerRoleAndPlaintextDatabaseTransport(t *testing.T) {
+	dbURL := testDatabase(t)
+	ca := newStagingCA(t)
+	a := newLocalAuth(t)
+	auth := newStagingAuth(t, a, ca.leaf(t, stagingAuthHost))
+	client := stagingAuthClient(ca, auth.srv)
+	start := func(env map[string]string) (*server.Service, error) {
+		return server.New(context.Background(), lookupIn(env), server.Options{AuthHTTPClient: client})
+	}
+
+	t.Run("the owner role is refused", func(t *testing.T) {
+		schema, _ := migratedSchema(t, dbURL)
+		env := stagingServiceEnv(t, dbURL, schema, a.admin)
+		env[config.EnvDatabaseURLFile] = privateFile(t, dbURL) // the superuser, as an operator could hand it in
+		svc, err := start(env)
+		if svc != nil {
+			svc.Close()
+		}
+		if !errors.Is(err, store.ErrRuntimeRoleElevated) {
+			t.Fatalf("server.New = %s; want store.ErrRuntimeRoleElevated", quiet(err, dbURL, a.admin))
+		}
+	})
+	t.Run("plaintext to a named host is refused", func(t *testing.T) {
+		schema, _ := migratedSchema(t, dbURL)
+		u, err := url.Parse(runtimeRoleURL(t, dbURL, schema))
+		if err != nil || u.Port() == "" {
+			t.Fatal("AYA_TEST_DATABASE_URL must be a postgres:// URL with a host and a port")
+		}
+		u.Host = "localhost:" + u.Port()
+		q := u.Query()
+		q.Set("sslmode", "disable")
+		u.RawQuery = q.Encode()
+		env := stagingServiceEnv(t, dbURL, schema, a.admin)
+		env[config.EnvDBHosts] = "localhost"
+		env[config.EnvDatabaseURLFile] = privateFile(t, u.String())
+		svc, err := start(env)
+		if svc != nil {
+			svc.Close()
+		}
+		if !errors.Is(err, store.ErrDatabaseTransportInsecure) {
+			t.Fatalf("server.New = %s; want store.ErrDatabaseTransportInsecure", quiet(err, dbURL, a.admin, u.String()))
+		}
+		env[config.EnvDBTransport] = "private-network"
+		if svc, err := start(env); svc != nil || !errors.Is(err, config.ErrInvalidDBTransport) {
+			if svc != nil {
+				svc.Close()
+			}
+			t.Fatalf("production with private-network = %v; want config.ErrInvalidDBTransport", err)
 		}
 	})
 }

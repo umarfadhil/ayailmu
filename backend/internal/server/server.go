@@ -54,7 +54,8 @@ type Service struct {
 // New loads the configuration through lookup and applies, in order, the configuration guards, the
 // verifier guards and the store guards, then migrates the schema in a loopback mode, or only verifies it
 // in a deploy mode or production (store.ErrSchemaNotCurrent unless it is exactly this binary's: the
-// migration job changes it, never the service). In ModeLocalSupabase, ModeLocalCompose and
+// migration job changes it, never the service), and there also checks that the database role is a plain
+// runtime role (store.ErrRuntimeRoleElevated, ErrMigrationMetadataWritable, ErrRuntimeRightsMissing). In ModeLocalSupabase, ModeLocalCompose and
 // ModeProduction the verifier guards include fetching Auth's key set: without a usable one the service
 // refuses to start. Nothing is opened before the configuration and verifier guards pass, and no socket
 // is bound.
@@ -144,8 +145,12 @@ func supabaseVerifier(ctx context.Context, c authn.SupabaseConfig) (accountVerif
 }
 
 // openStore opens the configured database. A loopback mode opens it on loopback or a Unix socket and
-// migrates the schema. A deploy mode or production opens only AYA_DB_HOSTS, as pgx parsed them, and
-// verifies the schema with reads only, so its runtime role needs no DDL right.
+// migrates the schema. A deploy mode or production opens only AYA_DB_HOSTS, as pgx parsed them, over
+// verified TLS (or, only when explicitly configured outside production, plaintext on a private network:
+// store.OpenAllowing), verifies the schema with reads only, and refuses to serve as any role but a plain
+// runtime role (store.VerifyRuntimePrivileges): neither an owner nor an administrator, one that cannot
+// write the migration history, and one that holds every right the service uses. Its runtime role needs
+// no DDL right.
 func openStore(ctx context.Context, cfg config.Config) (*store.Store, error) {
 	if !config.IsDeployMode(cfg.Mode) {
 		st, err := store.Open(ctx, cfg.DatabaseURL.Reveal(), cfg.Schema)
@@ -163,6 +168,10 @@ func openStore(ctx context.Context, cfg config.Config) (*store.Store, error) {
 		return nil, err
 	}
 	if err := st.VerifySchema(ctx); err != nil {
+		st.Close()
+		return nil, err
+	}
+	if err := st.VerifyRuntimePrivileges(ctx); err != nil {
 		st.Close()
 		return nil, err
 	}

@@ -122,6 +122,9 @@ func (s *Store) Migrate(ctx context.Context) error {
 			return fmt.Errorf("store: prepare schema: %w", err)
 		}
 	}
+	if err := protectMigrationHistory(ctx, tx, s.schema); err != nil {
+		return err
+	}
 	for _, e := range entries {
 		version, ok := migrationVersion(e.Name())
 		if !ok {
@@ -147,6 +150,46 @@ func (s *Store) Migrate(ctx context.Context) error {
 	}
 	if err := tx.Commit(ctx); err != nil {
 		return fmt.Errorf("store: commit migration: %w", err)
+	}
+	return nil
+}
+
+// protectMigrationHistory takes every write right on the schema's migration history from everyone but its owner. A bootstrap's
+// default privileges, or a later grant on all tables, give the service's runtime role DML on every table the migration role
+// creates, schema_migrations included; only this job records migrations, and the API refuses to start while its role can write
+// them (VerifyRuntimePrivileges). SELECT, and every right on every other table, stay as granted. Running it again changes
+// nothing once the rights are gone. A superuser's grant counts as the owner's, so the owner can revoke it too.
+func protectMigrationHistory(ctx context.Context, tx pgx.Tx, schema string) error {
+	rows, err := tx.Query(ctx, `SELECT DISTINCT a.grantee = 0, COALESCE(r.rolname, '')
+		FROM pg_catalog.pg_class c
+		JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+		CROSS JOIN LATERAL pg_catalog.aclexplode(c.relacl) a
+		LEFT JOIN pg_catalog.pg_roles r ON r.oid = a.grantee
+		WHERE n.nspname = $1 AND c.relname = 'schema_migrations' AND c.relkind = 'r' AND a.grantee <> c.relowner
+		  AND a.privilege_type IN ('INSERT', 'UPDATE', 'DELETE', 'TRUNCATE', 'REFERENCES', 'TRIGGER')`, schema)
+	if err != nil {
+		return fmt.Errorf("store: read the migration history's grants: %w", err)
+	}
+	type grantee struct {
+		public bool
+		name   string
+	}
+	grantees, err := pgx.CollectRows(rows, func(row pgx.CollectableRow) (grantee, error) {
+		var g grantee
+		return g, row.Scan(&g.public, &g.name)
+	})
+	if err != nil {
+		return fmt.Errorf("store: read the migration history's grants: %w", err)
+	}
+	table := pgx.Identifier{schema, "schema_migrations"}.Sanitize()
+	for _, g := range grantees {
+		who := "PUBLIC"
+		if !g.public {
+			who = pgx.Identifier{g.name}.Sanitize()
+		}
+		if _, err := tx.Exec(ctx, "REVOKE INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER ON "+table+" FROM "+who); err != nil {
+			return fmt.Errorf("store: protect the migration history: %w", err)
+		}
 	}
 	return nil
 }

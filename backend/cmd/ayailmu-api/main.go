@@ -42,6 +42,7 @@ var guardErrors = []error{
 	config.ErrNotPublicAuth, authn.ErrUnsafeConfig, authn.ErrKeySetUnavailable, authn.ErrEmulatorDisabled,
 	config.ErrInvalidDBTransport, store.ErrDatabaseNotLocal, store.ErrInvalidDatabaseURL, store.ErrInvalidSchema,
 	store.ErrDatabaseHostNotAllowed, store.ErrDatabaseTransportInsecure, store.ErrDatabasePlaintextNotPrivate, store.ErrSchemaNotCurrent,
+	store.ErrRuntimeRoleElevated, store.ErrMigrationMetadataWritable, store.ErrRuntimeRightsMissing,
 }
 
 func main() {

@@ -29,10 +29,10 @@ import (
 
 // composeEnvFor is a complete local-compose configuration on schema, listening on listen, whose Auth is reached by its
 // internal name authHost, signing as issuer for audience, with its admin credential in adminKeyFile. The database URL is
-// the ordinary test connection, DML-capable as the runtime's is: GET /v1/me creates the account.
+// a throwaway runtime role (runtimeRoleURL), DML-capable as the runtime's is: GET /v1/me creates the account.
 func composeEnvFor(t *testing.T, dbURL, schema, listen, authHost, issuer, audience, adminKeyFile string) map[string]string {
 	t.Helper()
-	env := deployEnvFor(config.ModeLocalCompose, schema, listen, privateFile(t, dbURL), databaseHostOf(t, dbURL))
+	env := deployEnvFor(config.ModeLocalCompose, schema, listen, privateFile(t, runtimeRoleURL(t, dbURL, schema)), databaseHostOf(t, dbURL))
 	env[config.EnvSupabaseURL] = "http://" + authHost
 	env[config.EnvAuthHosts] = authHost
 	env[config.EnvSupabaseIssuer] = issuer

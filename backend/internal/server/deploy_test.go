@@ -38,20 +38,6 @@ const (
 	localWebPreview = "http://localhost:8087"
 )
 
-// readOnlySessionURL is dbURL for sessions whose every transaction is read-only, as the runtime role's would be without
-// any DDL or write right: anything such a service tried to create or change would fail.
-func readOnlySessionURL(t *testing.T, dbURL string) string {
-	t.Helper()
-	u, err := url.Parse(dbURL)
-	if err != nil || (u.Scheme != "postgres" && u.Scheme != "postgresql") {
-		t.Fatal("AYA_TEST_DATABASE_URL must be a postgres:// URL for a read-only session setting to be added to it")
-	}
-	q := u.Query()
-	q.Set("default_transaction_read_only", "on")
-	u.RawQuery = q.Encode()
-	return u.String()
-}
-
 // databaseHostOf is the host of dbURL, as AYA_DB_HOSTS must list it.
 func databaseHostOf(t *testing.T, dbURL string) string {
 	t.Helper()
@@ -127,7 +113,7 @@ func wantReadiness(t *testing.T, s *stack, status int, body string) {
 	}
 }
 
-// On the current schema, on a session that cannot write, a deploy-smoke service reports its mode and readiness, and
+// On the current schema, as a plain runtime role (no DDL, no ownership, runtimeRoleURL), a deploy-smoke service reports its mode and readiness, and
 // answers every route with the uniform 401 whether a request carries no token, a well-formed token signed by a key this
 // deployment never trusts, or an opaque one; no account is created. Readiness turns not_ready while the record holds a
 // newer release's migration and back to ready once it is gone, and not_ready once the service's database is closed;
@@ -136,11 +122,11 @@ func TestDeploySmokeServiceDeniesEveryTokenAndReportsReadiness(t *testing.T) {
 	dbURL := testDatabase(t)
 	schema, db := migratedSchema(t, dbURL)
 	ln := loopbackListener(t)
-	env := deployEnvFor(config.ModeDeploySmoke, schema, ln.Addr().String(), privateFile(t, readOnlySessionURL(t, dbURL)), databaseHostOf(t, dbURL))
+	env := deployEnvFor(config.ModeDeploySmoke, schema, ln.Addr().String(), privateFile(t, runtimeRoleURL(t, dbURL, schema)), databaseHostOf(t, dbURL))
 	svc, err := server.New(context.Background(), lookupIn(env), server.Options{})
 	if err != nil {
 		ln.Close()
-		t.Fatalf("server.New(deploy-smoke on the current schema, on a session that cannot write): %s", quiet(err, dbURL))
+		t.Fatalf("server.New(deploy-smoke on the current schema, as a plain runtime role): %s", quiet(err, dbURL))
 	}
 	s := serveOn(t, ln, svc, db)
 
@@ -204,7 +190,7 @@ func TestDeploySmokeServiceDeniesEveryTokenAndReportsReadiness(t *testing.T) {
 
 // Startup verifies the schema and never migrates it: an absent schema refuses startup with ErrSchemaNotCurrent and stays
 // absent even on a session that could create it, and an older one refuses startup with its record left as it was. The
-// current schema starts on a session that cannot write. A database host outside AYA_DB_HOSTS, and a database URL in the
+// current schema starts as a plain runtime role. A database host outside AYA_DB_HOSTS, and a database URL in the
 // environment, refuse startup before anything is opened. No refusal quotes the database URL or its password.
 func TestDeploySmokeStartsOnlyOnTheCurrentSchemaAndRunsNoDDL(t *testing.T) {
 	dbURL := testDatabase(t)
@@ -253,12 +239,12 @@ func TestDeploySmokeStartsOnlyOnTheCurrentSchemaAndRunsNoDDL(t *testing.T) {
 		}
 	})
 
-	t.Run("the current schema starts on a session that cannot write", func(t *testing.T) {
+	t.Run("the current schema starts as a plain runtime role", func(t *testing.T) {
 		schema, _ := migratedSchema(t, dbURL)
-		env := deployEnvFor(config.ModeDeploySmoke, schema, "127.0.0.1:8091", privateFile(t, readOnlySessionURL(t, dbURL)), host)
+		env := deployEnvFor(config.ModeDeploySmoke, schema, "127.0.0.1:8091", privateFile(t, runtimeRoleURL(t, dbURL, schema)), host)
 		svc, err := server.New(context.Background(), lookupIn(env), server.Options{})
 		if err != nil {
-			t.Fatalf("server.New(deploy-smoke on the current schema, on a session that cannot write): %s", quiet(err, dbURL))
+			t.Fatalf("server.New(deploy-smoke on the current schema, as a plain runtime role): %s", quiet(err, dbURL))
 		}
 		svc.Close()
 	})
@@ -300,7 +286,7 @@ func TestDeployModesAnswerOnlyTheirExactHostsAndOrigins(t *testing.T) {
 	open := func(t *testing.T, edit func(map[string]string)) (*stack, string) {
 		t.Helper()
 		ln := loopbackListener(t)
-		env := deployEnvFor(config.ModeDeploySmoke, schema, ln.Addr().String(), privateFile(t, readOnlySessionURL(t, dbURL)), databaseHostOf(t, dbURL))
+		env := deployEnvFor(config.ModeDeploySmoke, schema, ln.Addr().String(), privateFile(t, runtimeRoleURL(t, dbURL, schema)), databaseHostOf(t, dbURL))
 		if edit != nil {
 			edit(env)
 		}
