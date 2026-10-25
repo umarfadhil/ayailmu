@@ -70,5 +70,30 @@ class ReviewRegressions(unittest.TestCase):
                                 "hosted project origin cannot stand in for the standalone GoTrue origin")
 
 
+    def test_self_hosted_identity_database_keeps_the_vendor_auth_namespace(self):
+        # The pinned GoTrue v2.197.0 migration 00_init_auth_schema.up.sql names auth.users explicitly.
+        # A real disposable probe with GOTRUE_DB_NAMESPACE=gotrue_probe and a protected auth schema failed
+        # with 42501, while preserving the app schema. Keeping each GoTrue's separate self-hosted database
+        # is an existing supported architecture, not a request to commandeer hosted Supabase Auth.
+        docs = []
+        for app in ("umar", "ayangaji"):
+            doc = supabase_manifest(app, self.base, self.ca)
+            identity = doc["auth"]["database"]
+            identity.update(placement="self-hosted-postgres", instance_id=app+"-identity-db",
+                            name=app+"_identity", namespace="auth")
+            identity.pop("project_ref", None)
+            with self.subTest(app=app):
+                findings = target.validate(doc)
+                self.assertFalse(findings.items,
+                                 "isolated self-hosted identity PG must be supported without a Supabase identity project")
+            docs.append(doc)
+        self.assertFalse(target.peer_findings(*docs).items,
+                         "the same auth schema name in different identity databases is not shared identity storage")
+        shared = mutate(docs[1], "auth.database.instance_id", docs[0]["auth"]["database"]["instance_id"])
+        shared = mutate(shared, "auth.database.name", docs[0]["auth"]["database"]["name"])
+        self.assertTrue(target.peer_findings(docs[0], shared).items,
+                        "the two apps may not share the same identity database")
+
+
 if __name__ == "__main__":
     unittest.main()

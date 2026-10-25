@@ -24,8 +24,8 @@ no hosted Supabase Auth, no PostgREST/Data API, and no merging of the AyaIlmu gu
 Identical to the Umar clone (including the transient 0600 `pgpass` that `verify` uses instead of argv/env, removed on exit): DSN only in a private file (never printed/argv/logged; output scanned), scrubbed child
 environment, **dry run by default**, `--execute` needs `owner-approved` + exact recorded approval + `--confirm-project`,
 `verify-full` TLS with a pinned root CA digest, reserved roles/schemas refused (`public`, `auth`, `storage`, `supabase_*`,
-`postgres`, `anon`, …), role/secret/issuer/project sharing between apps refused with `--peer`, hosted-`auth` namespace refused
-for the identity database. The adult binary reads the DSN through the existing `AYA_DATABASE_URL_FILE` (private-file guard).
+`postgres`, `anon`, …), role/secret/issuer/project sharing between apps refused with `--peer`, hosted identity placements and any non-`auth` namespace refused
+for the identity database (see *Identity database* below), connection strings refused anywhere in a manifest. The adult binary reads the DSN through the existing `AYA_DATABASE_URL_FILE` (private-file guard).
 
 ## Commands (all offline unless `--execute`)
 
@@ -73,7 +73,16 @@ python3 -I infra/supabase/supabase_target.py migrate   /private/ayangaji-target.
 * **A5 The existing `deploy/` stack is local synthetic Docker Compose and was not changed.** There is no staging runtime
   packaging, no restore path for Supabase backups, and the restore drill (`deploy/restore`) targets the local Compose stack.
 * **A6 Schema name:** the code default is `ayailmu` (legacy brand of the repo). Renaming after data exists is a data migration (D17).
-* **A7 GoTrue on Supabase PostgreSQL is untested** (same as Umar U5): needs a non-`auth` namespace proof with the pinned image.
+* **A7 Identity database topology (resolved, with a real vendor proof).** The pinned GoTrue v2.197.0 migration
+  `00_init_auth_schema.up.sql` hard-codes `auth.users`. With `GOTRUE_DB_NAMESPACE=gotrue_probe` against a protected reserved `auth`
+  schema it failed with `42501` (application sentinels preserved), so a custom namespace on a hosted Supabase project, or in the
+  application project, is **not** a working placement and the validator refuses `dedicated-project` and
+  `same-project-dedicated-schema` (`auth-placement-unsupported`). The supported topology is `placement: self-hosted-postgres`: a
+  separate self-hosted identity database (`instance_id` + `name`), namespace exactly `auth`, and a dedicated non-admin `role`
+  (a control run with that shape produced a real password session, 27 tables, and no access to application tables). Two apps may
+  both use `auth` in different identity databases; the same instance **and** database is refused (`--peer`). Manifests carry
+  identifiers only; the identity DSN lives with the identity service, never in a manifest, and `migrate`/`verify` touch only the
+  application database. Forking vendor migrations or taking over managed Supabase Auth is not part of this design.
 
 ## Tests
 

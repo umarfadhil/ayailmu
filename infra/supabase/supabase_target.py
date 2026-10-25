@@ -57,6 +57,19 @@ SUPABASE_RESERVED_ROLES = {
     "supabase_replication_admin", "supabase_etl_admin", "pgsodium_keyholder", "pgsodium_keyiduser",
     "pgsodium_keymaker", "supabase_realtime_admin", "supabase_functions_admin", "pg_monitor", "public",
 }
+# Identity database placement. The pinned GoTrue v2.197.0 migration 00_init_auth_schema.up.sql hard-codes `auth.users`, so it
+# cannot run in a custom GOTRUE_DB_NAMESPACE against a protected `auth` schema (a real probe failed with 42501 and left the
+# application sentinels intact; a control with a separate identity database, namespace `auth` and a dedicated non-admin role
+# succeeded). The only supported topology is therefore a separate self-hosted PostgreSQL database that keeps `auth`.
+SELF_HOSTED_PLACEMENT = "self-hosted-postgres"
+HOSTED_IDENTITY_PLACEMENTS = ("dedicated-project", "same-project-dedicated-schema")  # recognised only to be refused
+VENDOR_NAMESPACE = "auth"
+SELF_HOSTED_IDENTITY_KEYS = {"placement", "instance_id", "name", "namespace", "role"}
+HOSTED_ONLY_IDENTITY_KEYS = {"project_ref", "accepts_shared_failure_domain"}
+INSTANCE_ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]{1,62}$")
+IDENTITY_DB_NAME_RE = re.compile(r"^[a-z][a-z0-9_]{0,62}$")
+RESERVED_DATABASE_NAMES = {"postgres", "template0", "template1"}
+CONNECTION_URL_RE = re.compile(r"(?i)\bpostgres(?:ql)?://")
 API_ROLES = ("anon", "authenticated", "service_role")  # Supabase Data API roles; the Postgres-only design grants them nothing.
 
 REF_RE = re.compile(r"^[a-z0-9]{20}$")
@@ -83,7 +96,8 @@ DECISIONS = {
     "D05": "Connection path: direct (IPv6 or IPv4 add-on) vs shared session pooler (IPv4); never transaction mode",
     "D06": "Approved migration and runtime role names (created by the owner, never by default tooling)",
     "D07": "Where private DSN files live, who provisions and rotates them",
-    "D08": "Placement of the standalone GoTrue identity database (dedicated project vs dedicated schema in the app project)",
+    "D08": "Self-hosted PostgreSQL for the standalone GoTrue identity database (instance id, database name, role); "
+           "the vendor `auth` namespace is kept and hosted Supabase placements are unsupported",
     "D09": "Public domain, TLS termination and issuer URL of the standalone GoTrue",
     "D10": "SMTP provider, sender domain (SPF/DKIM/DMARC) and templates for GoTrue mail",
     "D11": "Supabase server root CA file (downloaded from Database settings) and its pinned SHA-256",
@@ -104,7 +118,7 @@ REQUIRED_STRINGS = {
     "database.tls.root_ca_file": "D11", "database.tls.root_ca_sha256": "D11", "roles.migration": "D06",
     "roles.runtime": "D06", "secrets.migration_dsn_file": "D07", "secrets.runtime_dsn_file": "D07",
     "auth.public_origin": "D09", "auth.issuer": "D09", "auth.database.placement": "D08", "auth.database.namespace": "D08",
-    "auth.database.role": "D08", "auth.database.project_ref": "D08", "auth.smtp.provider": "D10",
+    "auth.database.role": "D08", "auth.smtp.provider": "D10",
     "runtime.host_platform": "D14", "runtime.listen": "D14", "backup.strategy": "D12",
 }
 
@@ -249,6 +263,8 @@ def validate(doc: dict, *, allow_local_test: bool = False) -> Findings:
                 f.add("undecided", path, "owner decision still open", d if d in DECISIONS else None)
             elif PLACEHOLDER_RE.search(value) and not path.startswith("approvals."):
                 f.add("placeholder", path, "value looks like a placeholder")
+            if CONNECTION_URL_RE.search(value):
+                f.add("manifest-credential", path, "a connection string must live only in a private file, never in a manifest")
 
     if doc.get("schema_version") != SCHEMA_VERSION:
         f.add("schema-version", "schema_version", f"schema_version must be {SCHEMA_VERSION}")
@@ -431,17 +447,60 @@ def _validate_auth(doc: dict, app: str, ref, f: Findings) -> None:
     place = dig(doc, "auth.database.placement")
     ns = dig(doc, "auth.database.namespace")
     arole = dig(doc, "auth.database.role")
-    if place not in ("dedicated-project", "same-project-dedicated-schema") and not str(place).startswith("UNDECIDED"):
-        f.add("auth-placement", "auth.database.placement", "placement must be dedicated-project or same-project-dedicated-schema", "D08")
+    if place == SELF_HOSTED_PLACEMENT:
+        _validate_self_hosted_identity(doc, ref, ns, f)
+    else:
+        if place in HOSTED_IDENTITY_PLACEMENTS:
+            f.add("auth-placement-unsupported", "auth.database.placement",
+                  "hosted identity placements are unsupported: the pinned GoTrue hard-codes auth.users and fails in a custom "
+                  f"namespace; use {SELF_HOSTED_PLACEMENT} (a separate self-hosted database that keeps the auth namespace)", "D08")
+        elif not str(place).startswith("UNDECIDED"):
+            f.add("auth-placement", "auth.database.placement", f"placement must be {SELF_HOSTED_PLACEMENT}", "D08")
+        _validate_hosted_identity_legacy(doc, ref, place, ns, f)
+    if isinstance(ns, str) and ns == dig(doc, "database.schema"):
+        f.add("auth-namespace", "auth.database.namespace", "identity and application data must not share a schema", "D08")
+    if isinstance(arole, str) and not arole.startswith("UNDECIDED") and (
+            not ROLE_RE.match(arole) or arole in SUPABASE_RESERVED_ROLES or arole in (dig(doc, "roles.migration"), dig(doc, "roles.runtime"))):
+        f.add("auth-role", "auth.database.role", "GoTrue database role must be dedicated and distinct from app roles", "D08")
+    if str(dig(doc, "auth.smtp.provider")).startswith("UNDECIDED") or not dig(doc, "auth.smtp.provider"):
+        f.add("smtp", "auth.smtp.provider", "SMTP provider open (GoTrue confirmation/recovery mail cannot work without it)", "D10")
+
+
+def _validate_self_hosted_identity(doc: dict, ref, ns, f: Findings) -> None:
+    """A separate self-hosted identity database. Only identifiers live in a manifest: never a host, DSN or credential."""
+    ident = dig(doc, "auth.database")
+    for key in sorted(k for k in ident if k not in SELF_HOSTED_IDENTITY_KEYS):
+        if key in HOSTED_ONLY_IDENTITY_KEYS:
+            f.add("auth-mixed-topology", f"auth.database.{key}",
+                  f"a hosted-placement field cannot be combined with {SELF_HOSTED_PLACEMENT}", "D08")
+        else:
+            f.add("auth-identity-field", f"auth.database.{key}",
+                  "not part of the self-hosted identity topology (identifiers only; connection details never go in a manifest)", "D08")
+    inst, name = ident.get("instance_id"), ident.get("name")
+    for key, val in (("instance_id", inst), ("name", name)):
+        if not isinstance(val, str) or not val:
+            f.add("missing", f"auth.database.{key}", "required field is absent or not a string", "D08")
+    if isinstance(inst, str) and inst and not inst.startswith("UNDECIDED"):
+        if not INSTANCE_ID_RE.match(inst):
+            f.add("auth-instance", "auth.database.instance_id", "instance id must be 2-63 lowercase letters, digits or hyphens", "D08")
+        elif inst == ref:
+            f.add("auth-instance", "auth.database.instance_id",
+                  "the identity database must run on its own instance, not the application's Supabase project", "D08")
+    if isinstance(name, str) and name and not name.startswith("UNDECIDED") and (
+            not IDENTITY_DB_NAME_RE.match(name) or name in RESERVED_DATABASE_NAMES or name.startswith("pg_")):
+        f.add("auth-database-name", "auth.database.name",
+              "identity database name must be lowercase and not postgres/template*/pg_*", "D08")
+    if isinstance(ns, str) and not ns.startswith("UNDECIDED") and ns != VENDOR_NAMESPACE:
+        f.add("auth-namespace", "auth.database.namespace",
+              f"the pinned GoTrue only runs with its vendor namespace; use exactly {VENDOR_NAMESPACE} in the separate identity database", "D08")
+
+
+def _validate_hosted_identity_legacy(doc: dict, ref, place, ns, f: Findings) -> None:
+    """Findings kept for the refused hosted placements, so confusion with Supabase's own schemas stays visible."""
     if isinstance(ns, str) and not ns.startswith("UNDECIDED"):
         if not SCHEMA_RE.match(ns) or ns in SUPABASE_RESERVED_SCHEMAS or ns.startswith("pg_"):
             f.add("auth-namespace", "auth.database.namespace",
                   "GoTrue namespace must not be auth/public/another Supabase-owned schema (hosted auth schema is off limits)", "D08")
-        if ns == dig(doc, "database.schema"):
-            f.add("auth-namespace", "auth.database.namespace", "identity and application data must not share a schema", "D08")
-    if isinstance(arole, str) and not arole.startswith("UNDECIDED") and (
-            not ROLE_RE.match(arole) or arole in SUPABASE_RESERVED_ROLES or arole in (dig(doc, "roles.migration"), dig(doc, "roles.runtime"))):
-        f.add("auth-role", "auth.database.role", "GoTrue database role must be dedicated and distinct from app roles", "D08")
     prj = dig(doc, "auth.database.project_ref")
     if place == "dedicated-project":
         if not isinstance(prj, str) or prj.startswith("UNDECIDED") or not REF_RE.match(prj):
@@ -454,8 +513,6 @@ def _validate_auth(doc: dict, app: str, ref, f: Findings) -> None:
         if dig(doc, "auth.database.accepts_shared_failure_domain") is not True:
             f.add("auth-shared-domain", "auth.database.accepts_shared_failure_domain",
                   "owner must explicitly accept one failure/credential domain for app and identity data", "D08")
-    if str(dig(doc, "auth.smtp.provider")).startswith("UNDECIDED") or not dig(doc, "auth.smtp.provider"):
-        f.add("smtp", "auth.smtp.provider", "SMTP provider open (GoTrue confirmation/recovery mail cannot work without it)", "D10")
 
 
 def _validate_runtime(doc: dict, app: str, f: Findings) -> None:
@@ -496,6 +553,19 @@ def _validate_runtime(doc: dict, app: str, f: Findings) -> None:
             f.add("secret-reuse", "secrets.admin_key_file", "admin credential must have its own file", "D18")
 
 
+def _identity_store(doc: dict):
+    """What identifies the identity storage of a manifest, or None while it is incomplete or still undecided."""
+    def ident(key):
+        v = dig(doc, f"auth.database.{key}")
+        return v if isinstance(v, str) and v and not v.startswith("UNDECIDED") else None
+    place = dig(doc, "auth.database.placement")
+    if place == SELF_HOSTED_PLACEMENT and ident("instance_id") and ident("name"):
+        return ("self-hosted", ident("instance_id"), ident("name"))
+    if place in HOSTED_IDENTITY_PLACEMENTS and ident("project_ref"):
+        return ("project", ident("project_ref"))
+    return None
+
+
 def peer_findings(doc: dict, peer: dict) -> Findings:
     """Refuse two manifests that share any identity: the two apps must stay in separate projects, hosts, roles, issuers."""
     f = Findings()
@@ -527,9 +597,17 @@ def peer_findings(doc: dict, peer: dict) -> Findings:
             a, b = dig(doc, f"roles.{key}"), dig(peer, f"roles.{key2}")
             if a is not None and a == b and key != key2:
                 f.add("peer-role", f"roles.{key}", "a role of one app is a role of the other")
-    if dig(doc, "auth.database.namespace") and dig(doc, "auth.database.namespace") == dig(peer, "auth.database.namespace") \
-            and dig(doc, "auth.database.project_ref") == dig(peer, "auth.database.project_ref"):
-        f.add("peer-auth-namespace", "auth.database.namespace", "both apps share an identity namespace in one project")
+    # Identity stores: the same namespace name (`auth`) in two different databases is not shared storage; the same store is.
+    mine, theirs = _identity_store(doc), _identity_store(peer)
+    if mine is not None and mine == theirs:
+        f.add("peer-auth-database", "auth.database", "both apps share one identity database")
+        ns = dig(doc, "auth.database.namespace")
+        if isinstance(ns, str) and ns == dig(peer, "auth.database.namespace"):
+            f.add("peer-auth-namespace", "auth.database.namespace", "both apps share an identity namespace in one identity database")
+    for one, other in ((doc, peer), (peer, doc)):
+        inst = dig(one, "auth.database.instance_id")
+        if isinstance(inst, str) and not inst.startswith("UNDECIDED") and inst in (dig(one, "project.ref"), dig(other, "project.ref")):
+            f.add("peer-auth-project", "auth.database.instance_id", "an identity instance is an application project")
     return f
 
 

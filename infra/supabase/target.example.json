@@ -26,7 +26,13 @@
     "issuer": "UNDECIDED:D09",
     "supabase_url": "UNDECIDED:D09",
     "audience": "authenticated",
-    "database": {"placement": "UNDECIDED:D08", "project_ref": "UNDECIDED:D08", "namespace": "UNDECIDED:D08", "role": "UNDECIDED:D08"},
+    "database": {
+      "placement": "self-hosted-postgres",
+      "instance_id": "UNDECIDED:D08",
+      "name": "UNDECIDED:D08",
+      "namespace": "auth",
+      "role": "UNDECIDED:D08"
+    },
     "smtp": {"provider": "UNDECIDED:D10"}
   },
   "runtime": {
