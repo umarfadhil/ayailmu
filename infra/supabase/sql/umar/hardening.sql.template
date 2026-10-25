@@ -1,0 +1,36 @@
+-- OWNER ACTION TEMPLATE (unapplied). Postgres-only posture: Data API roles get nothing on Umar's objects.
+-- Safe to run where the Supabase roles do not exist (a plain Postgres): it only acts on roles that are present.
+-- Run after migrations, as the migration role (owner of the tables):  psql ... -f hardening.sql.template
+-- It does not change the dashboard: disabling the Data API there is a separate owner action recorded under D13.
+\set ON_ERROR_STOP on
+DO $$
+DECLARE r text;
+BEGIN
+  FOREACH r IN ARRAY ARRAY['anon','authenticated','service_role'] LOOP
+    IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = r) THEN
+      EXECUTE format('REVOKE ALL ON ALL TABLES IN SCHEMA public FROM %I', r);
+      EXECUTE format('REVOKE ALL ON ALL SEQUENCES IN SCHEMA public FROM %I', r);
+      EXECUTE format('REVOKE ALL ON ALL FUNCTIONS IN SCHEMA public FROM %I', r);
+      -- Future objects created by this (migration) role must not be exposed either.
+      EXECUTE format('ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE ALL ON TABLES FROM %I', r);
+      EXECUTE format('ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE ALL ON SEQUENCES FROM %I', r);
+      EXECUTE format('ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE ALL ON FUNCTIONS FROM %I', r);
+    END IF;
+  END LOOP;
+END $$;
+-- Functions in public default to EXECUTE for PUBLIC; Umar's trigger functions need no direct callers.
+REVOKE ALL ON ALL FUNCTIONS IN SCHEMA public FROM PUBLIC;
+-- Also withdraw schema USAGE from the API roles so Data API clients cannot even resolve the schema.
+DO $$
+DECLARE r text;
+BEGIN
+  FOREACH r IN ARRAY ARRAY['anon','authenticated','service_role'] LOOP
+    IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = r) THEN
+      BEGIN
+        EXECUTE format('REVOKE USAGE ON SCHEMA public FROM %I', r);
+      EXCEPTION WHEN insufficient_privilege THEN
+        RAISE NOTICE 'schema USAGE for % must be revoked by the schema owner', r;
+      END;
+    END IF;
+  END LOOP;
+END $$;

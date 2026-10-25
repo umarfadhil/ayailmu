@@ -1,0 +1,23 @@
+-- OWNER ACTION TEMPLATE. No tool in infra/ ever runs this against a real server; apply it only after the exact
+-- approval for role/credential provisioning is recorded, by the Supabase project owner, with psql variables:
+--   psql ... -v migration_role=umar_migrator -v runtime_role=umar_runtime \
+--            -v migration_password_file=/private/path -v runtime_password_file=/private/path -f owner-bootstrap.sql.template
+-- Passwords are read by psql from private files (backquoted cat): never an argument, never in this file.
+-- Umar's store is hard-wired to schema `public`, so the migration role gets CREATE there and nothing else is shared.
+-- The runtime role gets NO membership in the migration role and NO schema/database CREATE; runtime-grants.sql
+-- (../../../backend-umar/deploy/runtime-grants.sql) then grants the exact table rights after migrating.
+\set ON_ERROR_STOP on
+\set migration_password `cat :migration_password_file`
+\set runtime_password `cat :runtime_password_file`
+
+CREATE ROLE :"migration_role" LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS NOINHERIT
+    CONNECTION LIMIT 5 PASSWORD :'migration_password';
+CREATE ROLE :"runtime_role" LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS NOINHERIT
+    CONNECTION LIMIT 20 PASSWORD :'runtime_password';
+\unset migration_password
+\unset runtime_password
+
+-- Migrations run `CREATE TABLE` in public as the migration role (so it owns every table and trigger function).
+GRANT CREATE, USAGE ON SCHEMA public TO :"migration_role";
+-- The runtime role may connect and see the schema; runtime-grants.sql adds only the table-level rights.
+-- (CONNECT is granted to PUBLIC by default on a Supabase database; revoking it is a separate owner decision.)
