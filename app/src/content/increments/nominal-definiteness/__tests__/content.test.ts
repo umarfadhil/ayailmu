@@ -474,7 +474,7 @@ describe('U-C nominal definiteness increment (constructed draft, isolated)', () 
     expect(texts.filter((text) => jargon.test(text) || attribution.test(text))).toEqual([]);
   });
 
-  it('is not imported by existing app code and itself imports only content/pilot definitions', () => {
+  it('is imported only by the next-lesson controller and its listed tests, and itself imports only content/pilot definitions', () => {
     const appRoot = path.resolve(__dirname, '../../../../..');
     const incrementDir = path.resolve(__dirname, '..');
     const appPackage: unknown = JSON.parse(fs.readFileSync(path.join(appRoot, 'package.json'), 'utf8'));
@@ -484,12 +484,64 @@ describe('U-C nominal definiteness increment (constructed draft, isolated)', () 
       fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
         const full = path.join(dir, entry.name);
         if (entry.isDirectory()) return skip.has(entry.name) || full === incrementDir ? [] : sourceFiles(full);
-        return /\.(tsx?|jsx?|json)$/.test(entry.name) && !/lock\.json$/.test(entry.name) ? [full] : [];
+        return /\.(tsx?|jsx?)$/.test(entry.name) ? [full] : [];
       });
     const files = sourceFiles(appRoot);
     expect(files).toContain(path.join(appRoot, 'src', 'pilot', 'unitA', 'content.ts'));
-    const importers = files.filter((file) => fs.readFileSync(file, 'utf8').includes('nominal-definiteness'));
-    expect(importers.map((file) => path.relative(appRoot, file))).toEqual([]);
+
+    // Import specifiers only (from, require, dynamic import, side-effect import), not every string in the file.
+    const importSpecifiers = (source: string): string[] =>
+      [...source.matchAll(/(?:\bfrom\s+|\brequire\(\s*|\bimport\(\s*|\bimport\s+)['"]([^'"]+)['"]/g)].map(
+        (match) => match[1] ?? '',
+      );
+    const intoIncrement = (file: string, specifier: string): boolean => {
+      const target = specifier.startsWith('@/')
+        ? path.join(appRoot, 'src', specifier.slice(2))
+        : specifier.startsWith('.')
+          ? path.resolve(path.dirname(file), specifier)
+          : '';
+      return (
+        specifier.includes('nominal-definiteness') ||
+        target === incrementDir ||
+        target.startsWith(incrementDir + path.sep)
+      );
+    };
+    const nextLesson = 'src/pilot/nextLesson';
+    const approvedImporters = new Set([
+      `${nextLesson}/controller.ts`,
+      `${nextLesson}/__fixtures__/helpers.ts`,
+      `${nextLesson}/__tests__/controller.core.test.ts`,
+      `${nextLesson}/__tests__/controller.practice.test.ts`,
+      `${nextLesson}/__tests__/controller.transfer.test.ts`,
+      `${nextLesson}/__tests__/assistance.test.ts`,
+      `${nextLesson}/__tests__/NextLessonScreen.test.tsx`,
+    ]);
+    const relative = (file: string): string => path.relative(appRoot, file).split(path.sep).join('/');
+    const violations = (file: string, source: string): string[] =>
+      approvedImporters.has(relative(file))
+        ? []
+        : importSpecifiers(source)
+            .filter((specifier) => intoIncrement(file, specifier))
+            .map((specifier) => `${relative(file)}: ${specifier}`);
+
+    // Negative proof: every other production or test importer is rejected, in any import form.
+    const probe = (rel: string, source: string): string[] => violations(path.join(appRoot, rel), source);
+    expect(probe(`${nextLesson}/controller.ts`, "import type { IncrementItem } from '@/content/increments/nominal-definiteness/schema';")).toEqual([]);
+    expect(probe('src/pilot/unitA/content.ts', "// nominal-definiteness\nconst id = 'nominal-definiteness';")).toEqual([]);
+    const rejected: [string, string][] = [
+      [`${nextLesson}/NextLessonScreen.tsx`, "import { NOMINAL_DEFINITENESS } from '@/content/increments/nominal-definiteness/content';"],
+      ['src/pilot/unitA/controller.ts', "const c = require('../../content/increments/nominal-definiteness/content');"],
+      ['src/app/index.tsx', "const load = () => import('../content/increments/nominal-definiteness/schema');"],
+      ['src/content/load.ts', "export { NOMINAL_DEFINITENESS } from './increments/nominal-definiteness/content';"],
+      ['src/pilot/unitA/__tests__/unitAStatus.test.ts', "import '@/content/increments/nominal-definiteness/content';"],
+      [`${nextLesson}/__tests__/controller.extra.test.ts`, "import type { IncrementItem } from '../../../content/increments/nominal-definiteness/schema';"],
+      [`${nextLesson}/__fixtures__/other.ts`, "import { NOMINAL_DEFINITENESS } from '@/content/increments/nominal-definiteness/content';"],
+      [`${nextLesson}/controller.tsx`, "import { NOMINAL_DEFINITENESS } from '@/content/increments/nominal-definiteness';"],
+    ];
+    expect(rejected.filter(([rel, source]) => probe(rel, source).length === 0).map(([rel]) => rel)).toEqual([]);
+
+    const importers = files.flatMap((file) => violations(file, fs.readFileSync(file, 'utf8')));
+    expect(importers).toEqual([]);
 
     const allowed = new Set([
       './schema',

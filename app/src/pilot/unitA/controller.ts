@@ -931,6 +931,26 @@ function queueFor(store: object): ReturnType<typeof createSerialQueue> {
   return queue;
 }
 
+/** The serial write queue a store's pilot controllers share, for sequencing other controllers on that store. */
+export const pilotQueueFor = queueFor;
+
+/**
+ * Whether `raw` is this owner's own Unit A document with an anchored transfer block, through the same strict
+ * reading and shared evaluator as the controller, plus its distinct activity days. Pure: no store, assistance,
+ * randomness or write, so it never opens a delayed check. Null for anything the controller would block on.
+ */
+export function unitAStatus(raw: string | null, owner: string, today: string): { qualified: boolean; days: string[] } | null {
+  if (!isText(owner) || !isCalendarDay(today) || PLAN === null) return null;
+  const plan = PLAN;
+  try {
+    const doc = parseDoc(raw, owner, today, plan);
+    if (typeof doc === 'string') return null;
+    return { qualified: anchorOf(doc, plan) !== null, days: [...new Set(daysOf(doc))].sort() };
+  } catch {
+    return null;
+  }
+}
+
 const blocked = (reason: PilotBlockReason): PilotView => ({ kind: 'blocked', reason });
 
 function holds(check: () => boolean): boolean {
