@@ -58,3 +58,7 @@
 Task1: complete, Kimi K3.1 Pro HIGH; focused RED→GREEN, full disposablePG race122 pass0fail0skip, vet/build0.
 
 Task2 Ruling: after a tools-disabled Sonnet HIGH request returned no patch within240seconds, reduce infrastructure output to the candidate workflow/runbook using standard Go build-info and checksum commands instead of a custom packaging framework. Same candidate guarantees, less new code; actual artifacts and CI validate it. No fallback model, credentials or trust grants. One bounded smaller recovery, not repeated full requests.
+
+Task2 Ruling: include Darwin arm64 API/migrator artifacts for the user-selected Mac staging host as well as Linux targets. Sonnet HIGH authored the narrow delta and all platforms retain clean-source/build-info/checksum validation. Add an exact existing feature-branch push trigger with unchanged read-only/no-secret permissions, so branch-head CI can be inspected independently of PR event availability; no merge, history rewrite, permission expansion or production activation. GitHub mergeability metadata is inconsistent with its own ancestry comparison and the clean local merge preview; do not assume a cause or merge to work around it.
+
+Review: independent read-only review found no material issues in the original checkpoint or the Mac/trigger delta. Final clean-commit artifact builds and exact-head hosted CI remain execution checks.

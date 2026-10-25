@@ -4,7 +4,7 @@ on:
   pull_request:
     paths: ['backend-umar/**', 'android/**', 'integration/tunnel/**', 'integration/verify-endpoint-isolation.py', '.github/workflows/umar-release-candidate.yml']
   push:
-    branches: [main]
+    branches: [main, feature/umar-native-integration-20261019]
     paths: ['backend-umar/**', 'android/**', 'integration/tunnel/**', 'integration/verify-endpoint-isolation.py', '.github/workflows/umar-release-candidate.yml']
   workflow_dispatch:
 
@@ -87,7 +87,7 @@ jobs:
           [ "$head" = "$GITHUB_SHA" ] || { echo "HEAD $head != GITHUB_SHA $GITHUB_SHA" >&2; exit 1; }
           dirty="$(git status --porcelain)"
           [ -z "$dirty" ] || { echo "dirty tree:" >&2; echo "$dirty" >&2; exit 1; }
-      - name: Collect unsigned AAB and cross-build linux server and migrator
+      - name: Collect unsigned AAB and cross-build linux and darwin server and migrator
         working-directory: backend-umar
         run: |
           set -eu
@@ -97,9 +97,11 @@ jobs:
           rm -rf "$out"
           mkdir -p "$out"
           cp "$src" "$out/app-prod-release.aab"
-          for arch in amd64 arm64; do
-            CGO_ENABLED=0 GOOS=linux GOARCH="$arch" go build -trimpath -buildvcs=true -o "$out/umar-api-linux-$arch" "$API_PKG"
-            CGO_ENABLED=0 GOOS=linux GOARCH="$arch" go build -trimpath -buildvcs=true -o "$out/umar-migrate-linux-$arch" "$MIGRATE_PKG"
+          for target in linux/amd64 linux/arm64 darwin/arm64; do
+            os="${target%/*}"
+            arch="${target#*/}"
+            CGO_ENABLED=0 GOOS="$os" GOARCH="$arch" go build -trimpath -buildvcs=true -o "$out/umar-api-${os}-${arch}" "$API_PKG"
+            CGO_ENABLED=0 GOOS="$os" GOARCH="$arch" go build -trimpath -buildvcs=true -o "$out/umar-migrate-${os}-${arch}" "$MIGRATE_PKG"
           done
       - name: Verify candidate files and write manifest.json and SHA256SUMS
         run: |
@@ -113,17 +115,20 @@ jobs:
               'umar-migrate-linux-amd64': 'linux/amd64',
               'umar-api-linux-arm64': 'linux/arm64',
               'umar-migrate-linux-arm64': 'linux/arm64',
+              'umar-api-darwin-arm64': 'darwin/arm64',
+              'umar-migrate-darwin-arm64': 'darwin/arm64',
           }
           assert sorted(os.listdir(out)) == sorted(allow), os.listdir(out)
           P = lambda n: os.path.join(out, n)
           for n, plat in allow.items():
               st = os.lstat(P(n))
               assert stat.S_ISREG(st.st_mode) and st.st_size > 0, n
-              if not plat.startswith('linux/'):
+              if plat == 'android-aab':
                   continue
               txt = subprocess.run(['go', 'version', '-m', P(n)], check=True, capture_output=True, text=True).stdout
               bi = dict(re.findall(r'^\s+build\s+(\S+?)=(\S*)', txt, re.M))
-              want = {'vcs.revision': rev, 'vcs.modified': 'false', 'CGO_ENABLED': '0', 'GOOS': 'linux', 'GOARCH': plat[6:]}
+              goos, goarch = plat.split('/')
+              want = {'vcs.revision': rev, 'vcs.modified': 'false', 'CGO_ENABLED': '0', 'GOOS': goos, 'GOARCH': goarch}
               assert all(bi.get(k) == v for k, v in want.items()), (n, bi)
           with zipfile.ZipFile(P('app-prod-release.aab')) as z:
               assert z.testzip() is None
@@ -142,7 +147,7 @@ jobs:
           set -eu
           cd "$RUNNER_TEMP/umar-candidate"
           sha256sum -c SHA256SUMS
-          test "$(ls -A | wc -l)" -eq 7
+          test "$(ls -A | wc -l)" -eq 9
       - name: Upload unsigned candidate (explicit files only)
         uses: actions/upload-artifact@v4
         with:
@@ -153,6 +158,8 @@ jobs:
             ${{ runner.temp }}/umar-candidate/umar-migrate-linux-amd64
             ${{ runner.temp }}/umar-candidate/umar-api-linux-arm64
             ${{ runner.temp }}/umar-candidate/umar-migrate-linux-arm64
+            ${{ runner.temp }}/umar-candidate/umar-api-darwin-arm64
+            ${{ runner.temp }}/umar-candidate/umar-migrate-darwin-arm64
             ${{ runner.temp }}/umar-candidate/manifest.json
             ${{ runner.temp }}/umar-candidate/SHA256SUMS
           retention-days: 7
