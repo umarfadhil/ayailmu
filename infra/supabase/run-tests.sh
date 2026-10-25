@@ -21,6 +21,15 @@ else
   echo "== 3. Ayangaji application suites that need only PostgreSQL (real-GoTrue tests excluded by name, see script)"
   $PY -I tests/run_adult_go_suites.py
 fi
+echo "== 3b. catalog pins: unchanged registry pin test on the archived pinned bytes, and the gate's own tests"
+sh "$repo/infra/catalog/run_pin_test.sh"
+$PY -I "$repo/infra/catalog/test_compat_gate.py"
+if [ -n "${AYA_CURRENT_EXPO_FIXTURES_DIR:-}" ]; then
+  echo "== 3c. current frontend fixtures vs the pinned bytes (fails visibly while they differ)"
+  $PY -I "$repo/infra/catalog/check_current_compat.py" "$AYA_CURRENT_EXPO_FIXTURES_DIR"
+else
+  echo "== 3c. NOT CHECKED: set AYA_CURRENT_EXPO_FIXTURES_DIR to the frontend's app/src/content/fixtures to gate current compatibility"
+fi
 echo "== 4. cross-app isolation (both clones, one cluster, two databases)"
 $PY -I -W error::ResourceWarning tests/test_cross_app.py
 echo "ALL INFRA CHECKS PASSED"
