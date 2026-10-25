@@ -8,6 +8,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View, type TextInputProps } from 'react-native';
 
 import { moveFocus } from '@/ui/a11y';
+import { RegistrationPanel, registrationIntro, type RegistrationPanelModel } from '@/ui/account/RegistrationPanel';
 import { Btn, Chip, Icon, Notice, Segmented } from '@/ui/components';
 import { colors, fonts, radius, typography } from '@/ui/theme';
 
@@ -37,6 +38,11 @@ export interface AccountPanelProps {
   account: { key: string; label: string } | null;
   /** Password recovery, when offered: its own flow, apart from the normal sign-in, which it never signs into. */
   recovery?: RecoveryPanelModel;
+  /**
+   * Test-account registration, when offered (never in production): its own flow beside the normal sign-in, which then
+   * only signs in. It never signs in itself, and is never shown to a signed-in account.
+   */
+  registration?: RegistrationPanelModel;
   busy?: AccountBusy | null;
   /** A safe, already-worded message about the last action, shown as an alert. */
   error?: string | null;
@@ -292,6 +298,9 @@ export function RecoveryForm({ model, production = false }: { model: RecoveryPan
 export function AccountPanel(props: AccountPanelProps) {
   const { account, busy = null, error = null, signUp = true } = props;
   const words = props.environment === 'production' ? PRODUCTION_WORDS : props.environment === 'staging' ? STAGING_WORDS : LOCAL_WORDS;
+  const registration = words.production ? undefined : props.registration;
+  const registering = registration !== undefined && registration.stage !== 'idle';
+  const recovering = props.recovery !== undefined && props.recovery.stage !== 'idle';
   const errorRegion = useRef<View>(null);
   useEffect(() => {
     if (error) moveFocus(errorRegion);
@@ -304,7 +313,11 @@ export function AccountPanel(props: AccountPanelProps) {
           {words.title}
         </Text>
         <Text style={styles.note}>
-          {words.production ? 'Masuk dengan akun yang sudah terdaftar. Pendaftaran belum dibuka.' : introNote(signUp, props.onGoogle !== undefined, words.service)}
+          {words.production
+            ? 'Masuk dengan akun yang sudah terdaftar. Pendaftaran belum dibuka.'
+            : registration
+              ? registrationIntro(props.onGoogle !== undefined, words.service)
+              : introNote(signUp, props.onGoogle !== undefined, words.service)}
         </Text>
         <Text style={styles.note}>
           {props.rememberChoice
@@ -325,15 +338,25 @@ export function AccountPanel(props: AccountPanelProps) {
           <Notice tone="danger">{error}</Notice>
         </View>
       ) : null}
-      {/* Keyed by the sign-in: another session never inherits a tick. Signed out, only the form is shown. */}
+      {/* Keyed by the sign-in: another session never inherits a tick. Signed out, only the form (or registration) is shown. */}
       {props.recovery && props.recovery.stage !== 'idle' ? (
         <RecoveryForm model={props.recovery} production={words.production === true} />
       ) : account ? (
         <SignedIn key={account.key} {...props} busy={busy} words={words} />
+      ) : registration && registering ? (
+        <RegistrationPanel model={registration} working={busy !== null} />
       ) : (
-        <SignInForm busy={busy} signUp={signUp} words={words} rememberChoice={props.rememberChoice === true} onSubmit={props.onSubmit} onGoogle={props.onGoogle} />
+        <SignInForm
+          busy={busy}
+          signUp={signUp && !registration}
+          words={words}
+          rememberChoice={props.rememberChoice === true}
+          onSubmit={props.onSubmit}
+          onGoogle={props.onGoogle}
+        />
       )}
-      {!account && props.recovery?.stage === 'idle' ? (
+      {!account && !recovering && registration && !registering ? <RegistrationPanel model={registration} working={busy !== null} /> : null}
+      {!account && !registering && props.recovery?.stage === 'idle' ? (
         <Btn testID="account-recovery-start" label="Lupa kata sandi?" onPress={() => props.recovery?.onStart()} disabled={busy !== null} kind="secondary" />
       ) : null}
     </View>

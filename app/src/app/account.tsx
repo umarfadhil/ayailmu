@@ -1,5 +1,5 @@
-import { router, useLocalSearchParams, type Href } from 'expo-router';
-import { useEffect } from 'react';
+import { router, useFocusEffect, useLocalSearchParams, type Href } from 'expo-router';
+import { useCallback, useEffect, type EffectCallback } from 'react';
 
 import { useAccount } from '@/ui/AccountContext';
 import { AccountPanel } from '@/ui/account/AccountPanel';
@@ -7,9 +7,21 @@ import { BackLink } from '@/ui/BackLink';
 import { Btn, Notice, Page } from '@/ui/components';
 import { HydrationGate } from '@/ui/Hydration';
 
+/** For a mocked or embedded host without a focus API: the route's own lifetime stands in for its focus. */
+function useMountEffect(effect: EffectCallback) {
+  useEffect(effect, [effect]);
+}
+// Chosen once per module, never per render or per registration: Expo Router's own focus effect wherever it has one.
+const useRouteFocusEffect: (effect: EffectCallback) => void = typeof useFocusEffect === 'function' ? useFocusEffect : useMountEffect;
+
 /** «Akun lokal»: sign-in, the adult profile, the explicit guest copy and manual sync of the local developer pilot. */
 function AccountRoute() {
   const account = useAccount();
+  // Leaving the route (blur or unmount) ends the registration it shows, through that registration's own cancel; an
+  // ordinary stage or busy rerender keeps the same onCancel, so it neither cancels nor resubscribes.
+  const cancel = account.panel.registration?.onCancel;
+  const endRegistration = useCallback(() => () => cancel?.(), [cancel]);
+  useRouteFocusEffect(endRegistration);
   const deleting = account.signedIn && account.deletion && ['unknown', 'pending', 'completed'].includes(account.deletion.state.phase);
   return (
     <Page>

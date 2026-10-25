@@ -12,6 +12,8 @@
 // may tick the choice to remember an email sign-in. It is saved only after the account API verified the account, and
 // let go without a logout when the app run ends. The next run restores it through one refresh grant and continues as
 // after a password sign-in, for the same verified account only. Signing out forgets it.
+// Where a local or staging build turns it on, a signed-out learner may register and confirm a test account; that never
+// signs in. A normal sign-in, sign-out, remembered restore or recovery ends any registration under way.
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
 import { createAccountDeletionController, type AccountDeletionController, type AccountDeletionState } from '@/account/accountDeletion';
@@ -38,6 +40,7 @@ import type { Store } from '@/storage/types';
 import { openJournal, SyncError, type JournalView, type LinkChoice, type SyncConnection, type SyncJournal } from '@/sync/journal';
 import type { AccountBusy, AccountMode, AccountPanelProps, AccountProfileChoice, ConnectedProfile } from '@/ui/account/AccountPanel';
 import { APP_VERSION, LOCAL_ACCOUNT_CONSENT_VERSION, STAGING_ACCOUNT_CONSENT_VERSION, useApp } from '@/ui/AppContext';
+import { useAccountRegistration } from '@/ui/useAccountRegistration';
 import { usePasswordRecovery } from '@/ui/usePasswordRecovery';
 
 export interface AccountContextValue {
@@ -341,14 +344,35 @@ export function AccountProvider({
     runtime: recoverySetup?.runtime ?? null,
     callbackUrl: recoverySetup?.config.callbackUrl ?? null,
   });
-  /** Recovery began while signed out: a normal sign-in still on its way publishes nothing more. A verified account stays. */
-  const onRecoveryIntent = useCallback(() => {
+  const { setIntentHandler, normalStarting: recoveryNormalStarting } = recoveryControl;
+
+  // Test-account registration, through its own controller only: off (building nothing) unless registrationAllowed says so.
+  /** A registration action while signed out: a normal sign-in still on its way publishes nothing more, and recovery ends. */
+  const onRegistrationIntent = useCallback(() => {
     if (accountRef.current !== null) return;
     turn.current += 1;
     setBusy(null);
     setError(null);
-  }, []);
-  const { setIntentHandler, normalStarting: recoveryNormalStarting } = recoveryControl;
+    recoveryNormalStarting();
+  }, [recoveryNormalStarting]);
+  // Recovery shown (any stage but idle, or busy) keeps precedence: registration waits.
+  const recoveryActive = recoveryControl.panel !== undefined && (recoveryControl.panel.stage !== 'idle' || recoveryControl.panel.busy);
+  const registrationControl = useAccountRegistration({
+    config,
+    owner: services,
+    available: account === null && busy === null && !recoveryActive,
+    onIntent: onRegistrationIntent,
+  });
+  const { cancel: registrationNormalStarting } = registrationControl;
+
+  /** Recovery began while signed out: a normal sign-in or registration still on its way publishes nothing more. A verified account stays. */
+  const onRecoveryIntent = useCallback(() => {
+    if (accountRef.current !== null) return;
+    registrationNormalStarting();
+    turn.current += 1;
+    setBusy(null);
+    setError(null);
+  }, [registrationNormalStarting]);
   // Bound after render: the fence reads refs.
   useEffect(() => {
     setIntentHandler(onRecoveryIntent);
@@ -423,6 +447,7 @@ export function AccountProvider({
      */
     async function signOut(message: string | null = null): Promise<void> {
       normalWork.current = true;
+      registrationNormalStarting();
       recoveryNormalStarting();
       const t = ++turn.current;
       if (!services) return;
@@ -503,6 +528,7 @@ export function AccountProvider({
      */
     async function beginSignIn(): Promise<number | null> {
       normalWork.current = true;
+      registrationNormalStarting();
       recoveryNormalStarting();
       const t = ++turn.current;
       await appRef.current.selectDataset(null);
@@ -672,6 +698,7 @@ export function AccountProvider({
       const remembered = services?.auth.remembered;
       if (!remembered) return;
       normalWork.current = true;
+      registrationNormalStarting();
       const started = turn.current;
       let restoredSignIn: { identity: AuthIdentity; accountId: string } | null;
       try {
@@ -996,7 +1023,7 @@ export function AccountProvider({
       }
     }
     return { signOut, sync, submit, restoreRemembered, continueWithGoogle, resumeGoogle, copyGuest, skipGuest, createProfile, linkProfile, resolvePrefs, exportData, deletionAction };
-  }, [services, service, openDataset, setConnected, recoveryNormalStarting]);
+  }, [services, service, openDataset, setConnected, recoveryNormalStarting, registrationNormalStarting]);
   const dataControls = useMemo<AccountDataControls>(() => ({ exportData: actions.exportData }), [actions]);
 
   // Leaving the app run (unmount) drops all account work and lets go of the account dataset; nothing is deleted. Its
@@ -1060,6 +1087,8 @@ export function AccountProvider({
           ...(services.auth.remembered ? { rememberChoice: true } : {}),
           // Only in a build that turns recovery on, with a runtime for its links: its own flow, never a normal sign-in.
           ...(recoveryControl.panel ? { recovery: recoveryControl.panel } : {}),
+          // Only where registrationAllowed says so (local or staging, never production): its own flow, never a sign-in.
+          ...(registrationControl.panel ? { registration: registrationControl.panel } : {}),
           onSubmit: (request) => void actions.submit(request),
           // Only where the build turns Google on, with the account service, and the platform can run its browser and store.
           onGoogle: services.google && services.auth.google ? () => void actions.continueWithGoogle() : undefined,
