@@ -796,7 +796,7 @@ def cmd_migrate(args) -> int:
     plan = [
         f"app={app} target={doc['kind']} project={ref} mode={dig(doc, 'database.connection_mode') or 'local'}",
         f"schema={dig(doc, 'database.schema')} migration_role={dig(doc, 'roles.migration')} tls=verify-full",
-        "steps: connect once as the migration role -> apply embedded migrations (checksummed, idempotent) -> verify -> exit",
+        "steps: connect once as the migration role -> apply embedded migrations (idempotent; backend-specific verification) -> verify -> exit",
         "runtime role is NOT touched; run the owner-reviewed grants template separately",
     ]
     if not args.execute:
