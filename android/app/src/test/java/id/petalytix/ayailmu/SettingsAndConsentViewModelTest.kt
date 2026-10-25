@@ -18,11 +18,17 @@ import id.petalytix.ayailmu.feature.settings.SettingsDataSource
 import id.petalytix.ayailmu.feature.settings.SettingsEvent
 import id.petalytix.ayailmu.feature.settings.SettingsNotice
 import id.petalytix.ayailmu.feature.settings.SettingsViewModel
+import app.cash.turbine.test
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -32,8 +38,13 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
 @OptIn(ExperimentalCoroutinesApi::class)
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [34])
 class SettingsAndConsentViewModelTest {
     private class FakeSettings : SettingsDataSource {
         val data =
@@ -49,8 +60,12 @@ class SettingsAndConsentViewModelTest {
         val reminders = mutableListOf<ReminderSetting>()
         val calls = mutableListOf<String>()
         var failExport = false
+        var exportResult = listOf(Uri.parse("content://synthetic/export.json"))
+        var exportGate: CompletableDeferred<Unit>? = null
+        var exportCalls = 0
+        var observation: Flow<SettingsData?>? = null
 
-        override fun observe(): Flow<SettingsData?> = data
+        override fun observe(): Flow<SettingsData?> = observation ?: data
 
         override suspend fun setLanguage(lang: Lang) {
             calls += "lang:${lang.tag}"
@@ -78,7 +93,16 @@ class SettingsAndConsentViewModelTest {
             calls += "withdraw"
         }
 
-        override suspend fun export(): List<Uri> = if (failExport) error("disk full") else emptyList()
+        override suspend fun export(): List<Uri> {
+            exportCalls++
+            if (failExport) error("disk full")
+            exportGate?.await()
+            return exportResult
+        }
+
+        fun switchProfile(id: String) {
+            data.value = data.value?.copy(profile = TestPacks.profile(id = id, kind = ProfileKind.ADULT))
+        }
 
         override suspend fun deleteProfile() {
             calls += "deleteProfile"
@@ -229,6 +253,138 @@ class SettingsAndConsentViewModelTest {
         assertEquals(SettingsNotice.EXPORT_FAILED, vm.state.value.notice)
         vm.onEvent(SettingsEvent.NoticeShown)
         assertNull(vm.state.value.notice)
+    }
+
+    @Test
+    fun `a completed export has a valid handoff and launch failure shows the export notice`() = runTest {
+        val data = FakeSettings()
+        val vm = SettingsViewModel(data)
+        vm.shareRequests.test {
+            vm.onEvent(SettingsEvent.Export)
+            val request = awaitItem()
+            assertEquals(data.exportResult, vm.validShareUris(request))
+        }
+        vm.onShareFailed()
+        assertEquals(SettingsNotice.EXPORT_FAILED, vm.state.value.notice)
+    }
+
+    @Test
+    fun `changing profile while export is running drops its share request`() = runTest {
+        val data = FakeSettings().apply { exportGate = CompletableDeferred() }
+        val vm = SettingsViewModel(data)
+        vm.shareRequests.test {
+            vm.onEvent(SettingsEvent.Export)
+            data.switchProfile("lrn-other-adult")
+            runCurrent()
+            data.exportGate!!.complete(Unit)
+            runCurrent()
+            expectNoEvents()
+            assertFalse(vm.state.value.busy)
+        }
+    }
+
+    @Test
+    fun `buffered export is stale after profile change including adult A B A`() = runTest {
+        val data = FakeSettings()
+        val vm = SettingsViewModel(data)
+        vm.onEvent(SettingsEvent.Export)
+        val request = vm.shareRequests.first()
+
+        data.switchProfile("lrn-other-adult")
+        runCurrent()
+        data.switchProfile("lrn-adult")
+        runCurrent()
+
+        assertNull(vm.validShareUris(request))
+        assertNull(vm.state.value.notice)
+    }
+
+    @Test
+    fun `observation failure drops a blocked in flight export and refuses new export`() = runTest {
+        val failure = CompletableDeferred<Unit>()
+        val data =
+            FakeSettings().apply {
+                exportGate = CompletableDeferred()
+                observation = flow {
+                    emit(this@apply.data.value)
+                    failure.await()
+                    error("synthetic observation failure")
+                }
+            }
+        val vm = SettingsViewModel(data)
+        vm.shareRequests.test {
+            vm.onEvent(SettingsEvent.Export)
+            runCurrent()
+            assertEquals(1, data.exportCalls)
+
+            failure.complete(Unit)
+            runCurrent()
+            assertNull(vm.state.value.data)
+            data.exportGate!!.complete(Unit)
+            runCurrent()
+
+            expectNoEvents()
+            vm.onEvent(SettingsEvent.Export)
+            runCurrent()
+            assertEquals(1, data.exportCalls)
+        }
+    }
+
+    @Test
+    fun `observation failure invalidates an already buffered export`() = runTest {
+        val failure = CompletableDeferred<Unit>()
+        val data =
+            FakeSettings().apply {
+                observation = flow {
+                    emit(this@apply.data.value)
+                    failure.await()
+                    error("synthetic observation failure")
+                }
+            }
+        val vm = SettingsViewModel(data)
+        vm.onEvent(SettingsEvent.Export)
+        val request = vm.shareRequests.first()
+
+        failure.complete(Unit)
+        runCurrent()
+
+        assertNull(vm.state.value.data)
+        assertNull(vm.validShareUris(request))
+        vm.onEvent(SettingsEvent.Export)
+        runCurrent()
+        assertEquals(1, data.exportCalls)
+    }
+
+    @Test
+    fun `null observed state invalidates an already buffered export`() = runTest {
+        val data = FakeSettings()
+        val vm = SettingsViewModel(data)
+        vm.onEvent(SettingsEvent.Export)
+        val request = vm.shareRequests.first()
+
+        data.data.value = null
+        runCurrent()
+
+        assertNull(vm.validShareUris(request))
+        vm.onEvent(SettingsEvent.Export)
+        runCurrent()
+        assertEquals(1, data.exportCalls)
+    }
+
+    @Test
+    fun `same id loss of adult kind invalidates buffered export and blocks another`() = runTest {
+        val data = FakeSettings()
+        val vm = SettingsViewModel(data)
+        vm.onEvent(SettingsEvent.Export)
+        val request = vm.shareRequests.first()
+
+        data.data.value = data.data.value?.copy(profile = TestPacks.profile(id = "lrn-adult", kind = ProfileKind.ANAK))
+        runCurrent()
+
+        assertNull(vm.validShareUris(request))
+        vm.onEvent(SettingsEvent.Export)
+        runCurrent()
+        assertEquals(1, data.exportCalls)
     }
 
     private class FakeConsent(

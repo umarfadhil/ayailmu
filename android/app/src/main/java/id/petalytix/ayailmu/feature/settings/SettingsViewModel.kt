@@ -282,6 +282,13 @@ data class SettingsUiState(
 
 enum class SettingsNotice { EXPORT_FAILED, ACTION_FAILED, NOTIFICATIONS_BLOCKED, LAST_ADULT, TESTER_ON, TESTER_WRONG, TESTER_OFF }
 
+class ShareRequest
+    internal constructor(
+        val uris: List<Uri>,
+        internal val profileId: String,
+        internal val generation: Long,
+    )
+
 sealed interface SettingsEvent {
     data class Language(
         val lang: Lang,
@@ -347,17 +354,32 @@ class SettingsViewModel
         private val _state = MutableStateFlow(SettingsUiState())
         val state: StateFlow<SettingsUiState> = _state.asStateFlow()
 
-        private val shares = Channel<List<Uri>>(Channel.BUFFERED)
+        private val shares = Channel<ShareRequest>(Channel.BUFFERED)
+        private var ownerGeneration = 0L
+        private var exportOwner: ExportOwner? = null
+
+        private data class ExportOwner(val profileId: String, val generation: Long)
 
         /** One-shot share requests for the export files. */
-        val shareRequests: Flow<List<Uri>> = shares.receiveAsFlow()
+        val shareRequests: Flow<ShareRequest> = shares.receiveAsFlow()
 
         init {
             viewModelScope.launch {
                 data
                     .observe()
-                    .catch { _state.update { s -> s.copy(loading = false, data = null) } }
-                    .collect { d -> _state.update { it.copy(loading = false, data = d) } }
+                    .catch {
+                        ownerGeneration++
+                        exportOwner = null
+                        _state.update { s -> s.copy(loading = false, data = null) }
+                    }
+                    .collect { d ->
+                        val profileId = d?.takeIf { it.isAdult }?.profile?.id
+                        if (profileId != exportOwner?.profileId) {
+                            ownerGeneration++
+                            exportOwner = profileId?.let { ExportOwner(it, ownerGeneration) }
+                        }
+                        _state.update { it.copy(loading = false, data = d) }
+                    }
             }
         }
 
@@ -376,7 +398,14 @@ class SettingsViewModel
                 is SettingsEvent.ReminderTime -> launchAction { data.setReminder(reminder.copy(hour = event.hour, minute = event.minute)) }
                 is SettingsEvent.SoundEffects -> launchAction { data.setSoundEffects(event.on) }
                 SettingsEvent.WithdrawConsent -> launchAction { data.withdrawConsent() }
-                SettingsEvent.Export -> launchAction(onError = SettingsNotice.EXPORT_FAILED) { shares.send(data.export()) }
+                SettingsEvent.Export -> {
+                    val owner = exportOwner
+                    launchAction(onError = SettingsNotice.EXPORT_FAILED) {
+                        checkNotNull(owner) { "no active profile" }
+                        val uris = data.export()
+                        if (owner == exportOwner) shares.send(ShareRequest(uris, owner.profileId, owner.generation))
+                    }
+                }
                 SettingsEvent.DeleteProfile -> launchAction { data.deleteProfile() }
                 SettingsEvent.DeleteAll -> launchAction { data.deleteAll() }
                 is SettingsEvent.DeleteChild -> launchAction { data.deleteChild(event.id) }
@@ -393,6 +422,14 @@ class SettingsViewModel
                     }
                 SettingsEvent.NoticeShown -> _state.update { it.copy(notice = null) }
             }
+        }
+
+        /** Re-check at consumption: a request may have waited in the channel across profile switches. */
+        fun validShareUris(request: ShareRequest): List<Uri>? =
+            request.uris.takeIf { request.profileId == exportOwner?.profileId && request.generation == exportOwner?.generation }
+
+        fun onShareFailed() {
+            _state.update { it.copy(notice = SettingsNotice.EXPORT_FAILED) }
         }
 
         private fun launchAction(

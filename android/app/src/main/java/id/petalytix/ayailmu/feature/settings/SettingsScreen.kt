@@ -70,7 +70,7 @@ import id.petalytix.ayailmu.core.design.theme.AyaTheme
 import id.petalytix.ayailmu.core.design.theme.AyaThemeTokens
 import id.petalytix.ayailmu.core.model.Audience
 import id.petalytix.ayailmu.core.model.Lang
-import id.petalytix.ayailmu.feature.common.shareIntent
+import id.petalytix.ayailmu.feature.common.startShare
 import id.petalytix.ayailmu.feature.home.AvatarPicker
 import id.petalytix.ayailmu.feature.home.ProfileAvatar
 import id.petalytix.ayailmu.feature.home.SurveyCard
@@ -88,7 +88,10 @@ fun SettingsRoute(
     val context = LocalContext.current
     val chooserTitle = stringResource(R.string.export_chooser_title)
     LaunchedEffect(viewModel) {
-        viewModel.shareRequests.collect { uris -> if (uris.isNotEmpty()) context.startActivity(shareIntent(uris, chooserTitle)) }
+        viewModel.shareRequests.collect { request ->
+            val uris = viewModel.validShareUris(request)
+            if (!uris.isNullOrEmpty() && !startShare(context, uris, chooserTitle)) viewModel.onShareFailed()
+        }
     }
     // Android 13+: the notification permission is asked only at the moment the adult turns the reminder on.
     val permission =
