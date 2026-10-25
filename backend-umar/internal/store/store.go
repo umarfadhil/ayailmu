@@ -39,6 +39,9 @@ func Open(ctx context.Context, url string, r *catalog.Registry) (*Store, error) 
 	if err != nil {
 		return nil, errors.New("invalid database configuration")
 	}
+	if err := validateDatabaseTransport(&cfg.ConnConfig.Config); err != nil {
+		return nil, err
+	}
 	cfg.MaxConns = 8
 	cfg.MaxConnLifetime = time.Hour
 	// Resolve application tables in the owned schema before temporary tables. Never inherit a

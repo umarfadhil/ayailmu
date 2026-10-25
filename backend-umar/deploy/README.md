@@ -28,6 +28,26 @@ short-lived migration identity from an existing restricted runtime identity:
    DELETE/TRUNCATE/TRIGGER, disallowed INSERT or column UPDATE all fail closed. Errors logged
    by the executables are generic; connection strings and provider material are not logged.
 
+## Remote PostgreSQL transport
+
+`store.Open` validates the parsed pgx main target and every fallback before creating a pool. Every
+remote target must use `sslmode=verify-full`; the default, `disable`, `prefer`, `allow`, `require`
+and `verify-ca` are rejected because they permit plaintext or omit hostname verification. A remote
+fallback cannot downgrade an otherwise verified main target. Only literal loopback IP addresses
+and local Unix socket destinations retain the non-TLS synthetic-test defaults. DNS names are not
+classified as loopback.
+
+For a remote deployment, configure a trusted root as well as `sslmode=verify-full`: use
+`sslrootcert=system` for an approved publicly trusted chain, or an approved private root
+certificate file. The server certificate chain must validate to that root and its SAN must match
+the exact configured host. Keep the root file private to the deployment, protect its integrity,
+and do not substitute `require` or `verify-ca` when certificate validation fails.
+
+Actual Supabase PostgreSQL use still requires owner approval of the direct or pooler choice, every
+main/fallback host and port, DNS and certificate SAN match, trusted root chain, network route, and
+the separately approved migration/runtime identities. This source validation does not approve or
+configure those inputs; no Supabase project was contacted.
+
 An invalid migration setting fails startup; there is no permissive typo fallback. The connection
 search path is fixed to `public, pg_temp` so caller-configured writable schemas or temporary
 tables cannot shadow application tables. Idempotent account activation uses INSERT plus a
