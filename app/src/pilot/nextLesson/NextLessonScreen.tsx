@@ -545,8 +545,8 @@ function LessonPanel({ store, owner, mode, readOnly, arabicScale, binding }: Nex
         <Btn kind="quiet" label="Belum tahu" testID="next-lesson-dont-know" disabled={busy} onPress={() => answer(null)} style={styles.fullBtn} />
         <Caption>
           {held
-            ? 'Pilihan bisa diganti sampai Anda menekan Simpan jawaban. Hasilnya ditampilkan setelah keempat soal cek ini dijawab.'
-            : 'Pilihan bisa diganti sampai Anda menekan Periksa. Jawaban yang diperiksa disimpan dan tidak diubah.'}
+            ? 'Jawaban dikunci saat disimpan. Hasil muncul setelah 4 soal.'
+            : 'Jawaban dikunci setelah diperiksa.'}
         </Caption>
       </View>
     );
@@ -617,12 +617,12 @@ function LessonPanel({ store, owner, mode, readOnly, arabicScale, binding }: Nex
           </Text>
         </View>
         <Card style={styles.card}>
-          <Text style={typography.body}>{`${answered} jawaban pertama tersimpan; ${correct} di antaranya sesuai kunci draf.`}</Text>
+          <Text style={typography.body}>{`${correct} dari ${answered} jawaban sesuai kunci draf.`}</Text>
           <Text style={typography.body}>
-            {`${valid} dari ${answered} soal tampil dan dijawab pada hari yang sama, tanpa pelajaran, latihan, atau bantuan lain yang tercatat pada hari itu.`}
+            {`${valid} dari ${answered} dijawab pada hari soal ditampilkan, tanpa bantuan tercatat.`}
           </Text>
         </Card>
-        <Notice tone="info">Angka ini hanya catatan dari draf yang belum ditinjau, bukan penilaian akhir. Soal cek ini tidak diulang di versi ini.</Notice>
+        <Notice tone="info">Hasil sementara. Soal cek belum bisa diulang.</Notice>
       </View>
     );
   }
