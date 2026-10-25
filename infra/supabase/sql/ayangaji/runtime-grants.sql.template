@@ -1,0 +1,7 @@
+-- OWNER ACTION TEMPLATE (idempotent re-assertion). Run as the migration role after a migration, with
+-- -v schema=<approved schema> -v runtime_role=<approved existing role>. Creates no role, login, password or membership.
+-- Default privileges (owner-bootstrap) already cover new tables; this covers anything created before them.
+\set ON_ERROR_STOP on
+GRANT USAGE ON SCHEMA :"schema" TO :"runtime_role";
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA :"schema" TO :"runtime_role";
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA :"schema" TO :"runtime_role";

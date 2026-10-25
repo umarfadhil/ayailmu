@@ -1,0 +1,29 @@
+-- OWNER ACTION TEMPLATE. No tool in infra/ ever runs this against a real server; apply it only after the exact
+-- approval for role/credential provisioning is recorded, by the Supabase project owner (a role that may create roles
+-- and grant on the database). psql variables:
+--   -v database=postgres -v schema=<approved schema> -v migration_role=aya_migrator -v runtime_role=aya_runtime
+--   -v migration_password_file=/private/m -v runtime_password_file=/private/r
+-- psql reads each password from its private file (backquoted cat): never an argument, never in this file.
+-- Mirrors deploy/postgres/initdb/10-aya-roles.sql (local Compose): owner = migration role, runtime = DML only.
+\set ON_ERROR_STOP on
+\set migration_password `cat :migration_password_file`
+\set runtime_password `cat :runtime_password_file`
+
+CREATE ROLE :"migration_role" LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS NOINHERIT
+    CONNECTION LIMIT 5 PASSWORD :'migration_password';
+CREATE ROLE :"runtime_role" LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS NOINHERIT
+    CONNECTION LIMIT 20 PASSWORD :'runtime_password';
+\unset migration_password
+\unset runtime_password
+
+-- store.Migrate runs `CREATE SCHEMA IF NOT EXISTS`, and PostgreSQL checks database CREATE before the IF NOT EXISTS test,
+-- so the migration role needs CREATE on the database even when the schema pre-exists (verified by a local test).
+-- This is the residual privilege of the migration role; the runtime role gets CONNECT only.
+GRANT CONNECT, CREATE ON DATABASE :"database" TO :"migration_role";
+GRANT CONNECT ON DATABASE :"database" TO :"runtime_role";
+
+CREATE SCHEMA :"schema" AUTHORIZATION :"migration_role";
+GRANT USAGE ON SCHEMA :"schema" TO :"runtime_role";
+-- Everything the migration role creates in the schema: DML for the runtime role (no TRUNCATE, no DDL).
+ALTER DEFAULT PRIVILEGES FOR ROLE :"migration_role" IN SCHEMA :"schema" GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO :"runtime_role";
+ALTER DEFAULT PRIVILEGES FOR ROLE :"migration_role" IN SCHEMA :"schema" GRANT USAGE, SELECT ON SEQUENCES TO :"runtime_role";
