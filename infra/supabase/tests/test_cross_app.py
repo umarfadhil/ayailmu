@@ -40,6 +40,7 @@ class CrossApp(unittest.TestCase):
             "migration_password_file": str(files["umar_migrator"]), "runtime_password_file": str(files["umar_runtime"])})
         c.psql(file=str(AYA_ROOT / "infra/supabase/sql/ayangaji/owner-bootstrap.sql.template"), db="aya_t", variables={
             "database": "aya_t", "schema": "ayailmu", "migration_role": "aya_migrator", "runtime_role": "aya_runtime",
+            "provisioning_session_protected": "on",
             "migration_password_file": str(files["aya_migrator"]), "runtime_password_file": str(files["aya_runtime"])})
         c.psql("GRANT CONNECT ON DATABASE umar_t TO umar_migrator, umar_runtime", db="umar_t")
         sec = c.root / "secrets"

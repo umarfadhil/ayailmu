@@ -1,7 +1,10 @@
 # Supabase PostgreSQL readiness — Ayangaji (adult Arabic app backend)
 
-Preparation only. **Nothing here creates a Supabase project, role, credential, DNS/TLS record or deployment, and no tool
-here contacts Supabase.** Owner-requested design: Supabase **PostgreSQL only**; standalone self-hosted GoTrue and Go API;
+Preparation only. **Nothing here created a Supabase project, role, credential, DNS/TLS record or deployment, and none of
+these tools contacted Supabase or any hosted target while this was built or tested** (the tests use fabricated identifiers
+and disposable loopback servers). `migrate --execute` and `verify --execute` are, by design, able to contact the target a manifest
+names: they connect to it only after an owner has recorded the exact approval and the call repeats the project ref (see the
+safety model), so running either against a real, approved manifest does reach that hosted target. Owner-requested design: Supabase **PostgreSQL only**; standalone self-hosted GoTrue and Go API;
 no hosted Supabase Auth, no PostgREST/Data API, and no merging of the AyaIlmu guardian/child models into this backend.
 `production` mode remains refused unless the exact staging opt-in is given; this change does not alter any guard.
 
@@ -11,7 +14,7 @@ no hosted Supabase Auth, no PostgREST/Data API, and no merging of the AyaIlmu gu
 |---|---|
 | `target.example.json` | Secret-free manifest template. Every open owner decision is a `UNDECIDED:Dnn` sentinel; it can never validate. |
 | `supabase_target.py` | Stdlib validator + one-shot wrapper (`validate`, `inventory`, `dsn-check`, `render-env`, `migrate`, `verify`). Byte-identical in the Umar clone (a test enforces this). |
-| `sql/ayangaji/owner-bootstrap.sql.template` | **Owner action, unapplied.** Roles (passwords from private files), database CONNECT/CREATE, schema owned by the migration role, default privileges for the runtime role. |
+| `sql/ayangaji/owner-bootstrap.sql.template` | **Owner action, unapplied.** Roles (passwords from private files), database CONNECT/CREATE, schema owned by the migration role, default privileges for the runtime role. Password literals travel in SQL text: see *Owner bootstrap: password exposure*. Refuses unless `-v provisioning_session_protected=on`. |
 | `sql/ayangaji/runtime-grants.sql.template` | Idempotent re-assertion of the runtime grants after a migration. |
 | `sql/ayangaji/hardening.sql.template` | **Owner action, unapplied.** Removes Data-API-role/PUBLIC exposure from the adult schema; no-op where those roles are absent. |
 | `sql/ayangaji/verify-readiness.sql` | Read-only catalog checks used by `verify`. |
@@ -27,6 +30,16 @@ environment, **dry run by default**, `--execute` needs `owner-approved` + exact 
 `postgres`, `anon`, …), role/secret/issuer/project sharing between apps refused with `--peer`, hosted identity placements and any non-`auth` namespace refused
 for the identity database (see *Identity database* below), connection strings refused anywhere in a manifest. The adult binary reads the DSN through the existing `AYA_DATABASE_URL_FILE` (private-file guard).
 
+* **`--peer` is required for `--execute`** on a Supabase-kind target (`peer-required`): this tool is what keeps the two apps' projects,
+  roles, secret files, issuers and identity stores apart, so an execution cannot skip that check. Whenever a peer is given it is
+  validated by the same rules before it is compared (`peer-invalid`), so an empty, stale, example, same-app, local-test or malformed
+  file cannot stand in for the other app. All of this is decided before any DSN file is read or any process is started. Dry runs
+  and offline inspection (`validate`, `inventory`, `render-env`, `dsn-check`, dry-run `migrate`/`verify`) keep `--peer` optional;
+  local-test targets (disposable loopback servers, `--allow-local-test`) are unchanged.
+* **A wrongly typed manifest is a finding, not a crash:** `roles` or `runtime` that is not an object, or list entries that are
+  objects, lists or other non-strings, produce sanitized `REFUSED` findings (fixed text, no manifest value echoed, no traceback)
+  and execute nothing.
+
 ## Commands (all offline unless `--execute`)
 
 ```sh
@@ -34,6 +47,8 @@ python3 -I infra/supabase/supabase_target.py inventory infra/supabase/target.exa
 python3 -I infra/supabase/supabase_target.py validate  /private/ayangaji-target.json [--peer /private/umar-target.json]
 python3 -I infra/supabase/supabase_target.py render-env /private/ayangaji-target.json --role runtime   # AYA_MODE=production + staging opt-in env
 python3 -I infra/supabase/supabase_target.py migrate   /private/ayangaji-target.json --migrate-bin /private/ayailmu-migrate  # dry run
+# An execution (--execute --confirm-project <ref>) also needs the other app's valid manifest:
+#   ... migrate /private/ayangaji-target.json --migrate-bin ... --execute --confirm-project <ref> --peer /private/umar-target.json
 ```
 
 ## Actual remote-PostgreSQL support in this source (what is and is not supported)
@@ -43,9 +58,9 @@ python3 -I infra/supabase/supabase_target.py migrate   /private/ayangaji-target.
   must be listed in `AYA_DB_HOSTS`, listen `0.0.0.0:<port>` or IPv4 loopback, public-DNS `AYA_ALLOWED_HOSTS`, at least one https
   `AYA_CORS_ORIGINS`, exact unicast `AYA_TRUSTED_PROXIES`, and Auth at `https://<public name>[:9443]`. `render-env` emits exactly
   that set and the `infra_staging` Go test proves the real loader accepts it and refuses 13 mutations the validator also refuses.
-* The migration job (`ayailmu-migrate`) and the API use `store.OpenAllowing` for those modes. Production staging is therefore
-  verify TLS for every non-loopback target (A1) and the API refuses an over-privileged database role (A2): both are enforced in
-  the application itself, not by this wrapper. Production staging stays blocked by the open owner decisions below (A3–A7).
+* The migration job (`ayailmu-migrate`) and the API use `store.OpenAllowing` for those modes. Production staging therefore
+  requires verified TLS for every non-loopback target (A1), and the API refuses an over-privileged database role (A2): both are
+  enforced in the application itself, not by this wrapper. Production staging stays blocked by the open owner decisions below (A3–A7).
 
 ## Ayangaji-specific blockers
 
@@ -54,7 +69,10 @@ python3 -I infra/supabase/supabase_target.py migrate   /private/ayangaji-target.
   local, every other target needs `sslmode=verify-full` (server name = dialed host, no skip-verify, no plaintext fallback).
   `disable`, `allow`, `prefer`, `require` and `verify-ca` are refused with a generic message before any byte is sent. One explicit
   exception exists, `AYA_DB_TRANSPORT=private-network` (used only by the local Compose stack): `sslmode=disable` to a single-label
-  name or an RFC 1918/ULA address; production refuses the setting and no public DNS name or address ever qualifies.
+  service name or an RFC 1918/ULA address; production refuses the setting and no public DNS name or address ever qualifies. A
+  "single-label name" is one DNS-style label of letters, digits, `-` and `_` that is not a number: the C resolver reads a lone
+  number (`134744072`, octal `01001004010`, `0x08080808`) as the IPv4 address 8.8.8.8, so such spellings are refused before any dial
+  (`TestPrivateNetworkRefusesNumericAddressSpellingsOfASingleLabel`, and an on-wire test that a listener behind `2130706433` is never reached).
   Regression tests: `test_adult_store_refuses_plaintext_*` and `test_adult_store_private_network_exception_*` here, plus
   `internal/store/transport_test.go`, `internal/config/dbtransport_test.go` and the migrate binary's `transport_test.go`.
 * **A2 (resolved in the core) runtime privilege self-check.** In every deploy mode and production the API calls
@@ -70,7 +88,9 @@ python3 -I infra/supabase/supabase_target.py migrate   /private/ayangaji-target.
   by `test_12`). On Supabase that is a grant on database `postgres`: residual privilege for the migration role only.
 * **A4 Staging prerequisites are all open decisions:** public API/Auth DNS names, TLS termination and the private `:9443` Auth
   listener, trusted proxy addresses, at least one web CORS origin (production refuses native-only), the GoTrue admin credential.
-* **A5 The existing `deploy/` stack is local synthetic Docker Compose and was not changed.** There is no staging runtime
+* **A5 The existing `deploy/` stack is local synthetic Docker Compose. It was modified only to declare the explicit private-network
+  database transport** (`AYA_DB_TRANSPORT=private-network` in `compose.yaml`, `restore/source.yaml` and `restore/target.yaml`, and the
+  sentence explaining it in `deploy/README.md`); nothing else in it changed. There is no staging runtime
   packaging, no restore path for Supabase backups, and the restore drill (`deploy/restore`) targets the local Compose stack.
 * **A6 Schema name:** the code default is `ayailmu` (legacy brand of the repo). Renaming after data exists is a data migration (D17).
 * **A7 Identity database topology (resolved, with a real vendor proof).** The pinned GoTrue v2.197.0 migration
@@ -84,12 +104,30 @@ python3 -I infra/supabase/supabase_target.py migrate   /private/ayangaji-target.
   identifiers only; the identity DSN lives with the identity service, never in a manifest, and `migrate`/`verify` touch only the
   application database. Forking vendor migrations or taking over managed Supabase Auth is not part of this design.
 
+## Owner bootstrap: password exposure
+
+`sql/ayangaji/owner-bootstrap.sql.template` creates the two roles with `PASSWORD :'...'`, so psql puts each password (or a SCRAM
+verifier, if the owner supplies one) into the text of a SQL statement. Anything that records statements can record it: server
+statement logging (`log_statement` = `ddl`, `mod` or `all`), error logging that quotes the failing statement
+(`log_min_error_statement`, `error` by default), slow-statement or audit logging, the platform's own log pipeline, and psql
+echoing (`-a`, `-e`, `-b`, `ECHO`). The local Compose script avoids this for its disposable server with
+`SET log_min_error_statement = panic`; nothing equivalent is known to hold on any real server, and this work changes no logging
+or account setting anywhere and generates no real credential.
+
+Therefore: run the template only inside the owner-approved credential provisioning procedure, with session protections that keep
+these statements out of every log and echo, and treat any password or verifier that was exposed as compromised. The template is
+fail-closed on the owner's say-so: it refuses (a `RAISE EXCEPTION`, non-zero psql exit, before it reads either password file or
+changes anything) unless called with `-v provisioning_session_protected=on`. That variable is an **attestation, not a check**:
+the template cannot observe the server's or the platform's logging. This remains a limitation for real owner provisioning that
+only the owner's procedure can close (`test_00_owner_bootstrap_refuses_without_the_session_protection_attestation`).
+
 ## Tests
 
 `./run-tests.sh` (≈2 minutes): offline validator tests; lifecycle on a fresh disposable PostgreSQL 16 cluster with TLS (real
 `ayailmu-migrate` and `ayailmu-api` in `deploy-smoke` mode); the config-loader cross-check; the adult Go suites that need only
 PostgreSQL (`tests/run_adult_go_suites.py`, including the unchanged `TestRegistryPinsExactPackBytesAndHonestStatus` against the
-exact 8b29a91 bytes the active registry pins); the catalog gate tests; and cross-app isolation. Step 3c prints `CHECKED` for the
+exact 8b29a91 bytes the active registry pins); the catalog gate tests; the real-auth runner/fixture cleanup regressions (fake helper
+and cluster, mocked Docker); the Umar-suite step's diagnostics; and cross-app isolation. Step 3c prints `CHECKED` for the
 current-fixture gate: against the live frontend checkout when `AYA_CURRENT_EXPO_FIXTURES_DIR` is set, otherwise against the committed
 exact 8b29a91 snapshot, and says which. **Not run by `run-tests.sh`:** the 6 tests that need the pinned real GoTrue fixture
 (Docker; run by `infra/real-auth/run_real_auth_tests.py`), excluded by name and printed, not silently skipped.

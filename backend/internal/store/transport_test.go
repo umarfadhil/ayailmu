@@ -172,6 +172,80 @@ func TestPrivateNetworkPlaintextIsExplicitAndConstrained(t *testing.T) {
 	})
 }
 
+// A single-label name is accepted as a container network's service name only if nothing but DNS can resolve it. The C
+// resolver's inet_aton also reads one number as a whole IPv4 address (decimal, octal with a leading 0, or hexadecimal with 0x),
+// so "134744072", "01001004010" and "0x08080808" all dial 8.8.8.8 although they contain no dot. They must be refused before
+// any dial, whatever the platform's resolver would have made of them; ordinary service names stay accepted.
+func TestPrivateNetworkRefusesNumericAddressSpellingsOfASingleLabel(t *testing.T) {
+	long63, long64 := strings.Repeat("a", 63), strings.Repeat("a", 64)
+	numeric := []string{
+		"134744072", "01001004010", "0x08080808", "0X08080808", "0x8080808", "0x7f000001", "2130706433", "017700000001",
+		"0", "00", "010", "4294967295", "0x", "0xdb", "0XDB",
+	}
+	malformed := []string{long64, "-db", "db-", "db\u00e9", "db name", "db\x00", "db/x", "db:1", "db%eth0", "[db]", "db@x", "_"}
+	accepted := []string{"aya-db", "postgres", "db1", "pg_primary", "2fa-db", "a", long63, "0xg", "1e3", "08x", "AYA-DB"}
+	allowed := append(append(append([]string{}, numeric...), malformed...), accepted...)
+	private := store.PrivateNetwork(true)
+	for _, h := range numeric {
+		t.Run("numeric "+h, func(t *testing.T) {
+			_, err := store.ParseConfigAllowing(transportDSN(h+":5432", "sslmode=disable"), "ayailmu", allowed, private)
+			if !errors.Is(err, store.ErrDatabasePlaintextNotPrivate) {
+				t.Fatalf("error = %s, want ErrDatabasePlaintextNotPrivate", withheld(err))
+			}
+			assertGenericTransportError(t, err)
+		})
+	}
+	for _, h := range malformed {
+		t.Run("malformed "+h, func(t *testing.T) {
+			// pgx may already reject the spelling while parsing; either way the private-network exception must not apply.
+			if _, err := store.ParseConfigAllowing(transportDSN(h+":5432", "sslmode=disable"), "ayailmu", allowed, private); err == nil {
+				t.Fatalf("accepted %q for plaintext", h)
+			}
+		})
+	}
+	for _, h := range accepted {
+		t.Run("accepted "+h, func(t *testing.T) {
+			if _, err := store.ParseConfigAllowing(transportDSN(h+":5432", "sslmode=disable"), "ayailmu", allowed, private); err != nil {
+				t.Fatalf("refused the service name %q: %s", h, withheld(err))
+			}
+		})
+	}
+	t.Run("a numeric label is also refused as a plaintext fallback", func(t *testing.T) {
+		_, err := store.ParseConfigAllowing(transportDSN("aya-db:5432,134744072:5432", "sslmode=disable"), "ayailmu", allowed, private)
+		if !errors.Is(err, store.ErrDatabasePlaintextNotPrivate) {
+			t.Fatalf("error = %s, want ErrDatabasePlaintextNotPrivate", withheld(err))
+		}
+	})
+	t.Run("no TLS means no exception: a numeric label never reaches the plaintext path either way", func(t *testing.T) {
+		if _, err := store.ParseConfigAllowing(transportDSN("0x08080808:5432", "sslmode=disable"), "ayailmu", allowed); !errors.Is(err, store.ErrDatabaseTransportInsecure) {
+			t.Fatalf("error = %s, want ErrDatabaseTransportInsecure", withheld(err))
+		}
+	})
+}
+
+// On the wire: the number 2130706433 is 127.0.0.1 to the C resolver, so a listener on loopback is exactly what an unguarded
+// plaintext dial to that spelling would reach. With the private-network exception on, nothing may be dialed at all.
+func TestOpenAllowingDialsNothingForANumericSpellingOfAnAddress(t *testing.T) {
+	srv := startStub(t, stubOptions{})
+	for _, h := range []string{"2130706433", "0x7f000001", "017700000001"} {
+		t.Run(h, func(t *testing.T) {
+			ctx, cancel := context.WithTimeout(context.Background(), 8*time.Second)
+			defer cancel()
+			st, err := store.OpenAllowing(ctx, transportDSN(h+":"+srv.port, "sslmode=disable&connect_timeout=3"), "ayailmu", []string{h}, store.PrivateNetwork(true))
+			if st != nil {
+				st.Close()
+			}
+			if !errors.Is(err, store.ErrDatabasePlaintextNotPrivate) {
+				t.Fatalf("error = %s, want ErrDatabasePlaintextNotPrivate", withheld(err))
+			}
+			assertGenericTransportError(t, err)
+		})
+	}
+	if n, p := srv.accepted.Load(), srv.plaintextStartups.Load(); n != 0 || p != 0 {
+		t.Fatalf("the listener accepted %d connections and %d plaintext startup packets although every spelling was refused", n, p)
+	}
+}
+
 // The transport rule is applied after the host allow-list, so a host outside it is still reported as such.
 func TestTransportRuleDoesNotMaskTheHostAllowList(t *testing.T) {
 	if _, err := store.ParseConfigAllowing(transportDSN("elsewhere.example.test:5432", "sslmode=disable"), "ayailmu", []string{"db.example.test"}); !errors.Is(err, store.ErrDatabaseHostNotAllowed) {

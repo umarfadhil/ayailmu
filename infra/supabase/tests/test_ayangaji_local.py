@@ -73,10 +73,31 @@ class AyangajiLocal(unittest.TestCase):
     def snapshot(self) -> str:
         return self.c.scalar(f"SELECT md5(string_agg(t::text||xmin::text, ',' ORDER BY version)) FROM {SCHEMA}.schema_migrations t", DB)
 
+    # 00 ------------------------------------------------------------------------------------------------------------------
+    def test_00_owner_bootstrap_refuses_without_the_session_protection_attestation(self):
+        """The template writes password literals into SQL text that logs and echoes can record: it is fail-closed unless the
+        owner attests that the approved provisioning session protects them. A refusal reads no password file, creates nothing."""
+        variables = {"database": DB, "schema": SCHEMA, "migration_role": MIG, "runtime_role": RUN,
+                     "migration_password_file": str(self.mig_pwfile), "runtime_password_file": str(self.run_pwfile)}
+        before = self.c.scalar(f"SELECT count(*) FROM pg_roles WHERE rolname IN ('{MIG}','{RUN}')")
+        for name, extra in (("absent", {}), ("off", {"provisioning_session_protected": "off"}),
+                            ("false", {"provisioning_session_protected": "false"}), ("empty", {"provisioning_session_protected": ""}),
+                            ("not a boolean", {"provisioning_session_protected": "maybe"})):
+            with self.subTest(attestation=name):
+                # Unreadable password files: a refusal must come first, so no file is ever opened (a read would be a `cat` error).
+                r = self.c.psql(file=str(SQL / "owner-bootstrap.sql.template"), db=DB, check=False,
+                                variables=variables | extra | {"migration_password_file": "/nonexistent/m", "runtime_password_file": "/nonexistent/r"})
+                self.assertNotEqual(r.returncode, 0, "a refusal must be a non-zero psql exit status")
+                self.assertIn("owner-bootstrap refused", r.stderr)
+                self.assertNotIn("nonexistent", r.stderr + r.stdout)
+                self.assertNoSecret(r.stdout, r.stderr)
+                self.assertEqual(self.c.scalar(f"SELECT count(*) FROM pg_roles WHERE rolname IN ('{MIG}','{RUN}')"), before)
+                self.assertEqual(self.c.scalar(f"SELECT count(*) FROM pg_namespace WHERE nspname='{SCHEMA}'", DB), "0")
+
     # 01 ------------------------------------------------------------------------------------------------------------------
     def test_01_owner_bootstrap_template(self):
         r = self.c.psql(file=str(SQL / "owner-bootstrap.sql.template"), db=DB, variables={
-            "database": DB, "schema": SCHEMA, "migration_role": MIG, "runtime_role": RUN,
+            "database": DB, "schema": SCHEMA, "migration_role": MIG, "runtime_role": RUN, "provisioning_session_protected": "on",
             "migration_password_file": str(self.mig_pwfile), "runtime_password_file": str(self.run_pwfile)})
         self.assertNoSecret(r.stdout, r.stderr)
         got = self.c.scalar(f"SELECT string_agg(rolname||':'||(NOT (rolsuper OR rolcreatedb OR rolcreaterole OR rolreplication OR rolbypassrls) AND rolcanlogin AND NOT rolinherit)::text, ',' ORDER BY rolname) "

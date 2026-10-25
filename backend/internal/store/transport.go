@@ -4,7 +4,6 @@ import (
 	"crypto/tls"
 	"errors"
 	"net/netip"
-	"strings"
 
 	"github.com/jackc/pgx/v5/pgconn"
 )
@@ -19,8 +18,9 @@ import (
 //   - that excludes disable, allow, prefer, require and verify-ca, and with them every plaintext fallback pgx would try,
 //     because those modes either send plaintext or encrypt without authenticating the server;
 //   - one explicit exception, PrivateNetwork(true), lets sslmode=disable reach a private target: a single-label host name
-//     (a container network's service name) or a private-range IP address. The exception never covers a public DNS name or
-//     address, and never an opportunistic or unverified TLS mode, whose silent plaintext fallback is what the rule forbids.
+//     (a container network's service name, never a number that the C resolver reads as an address) or a private-range IP
+//     address. The exception never covers a public DNS name or address, and never an opportunistic or unverified TLS mode,
+//     whose silent plaintext fallback is what the rule forbids.
 var (
 	// ErrDatabaseTransportInsecure reports a target that is not reached over verified TLS, or a mode (prefer, allow, require,
 	// verify-ca) that could fall back to plaintext or skip verification. Its text names neither a host nor a setting value.
@@ -77,11 +77,48 @@ func verifiedTLS(host string, cfg *tls.Config) bool {
 		(cfg.MinVersion == 0 || cfg.MinVersion >= tls.VersionTLS12)
 }
 
-// privateHost accepts a single-label host name (no dot, so it cannot be a public DNS name) or an IP literal in a private
-// range (RFC 1918, or the IPv6 unique local range), written without zone or IPv4 mapping. Loopback is local already.
+// privateHost accepts a service name (see serviceName) or an IP literal in a private range (RFC 1918, or the IPv6 unique local
+// range), written without zone or IPv4 mapping. Loopback is local already.
 func privateHost(h string) bool {
 	if a, err := netip.ParseAddr(h); err == nil {
 		return a.Zone() == "" && !a.Is4In6() && a.IsPrivate()
 	}
-	return h != "" && !strings.Contains(h, ".") && !strings.HasPrefix(h, "/")
+	return serviceName(h)
+}
+
+// serviceName accepts the name of a container network's service: one DNS-style label of 1 to 63 ASCII letters, digits,
+// hyphens and underscores that starts and ends with a letter or digit, and that is not a number. The label has no dot, so
+// it cannot be a public DNS name. A number is refused because the C resolver's inet_aton reads a lone number as a whole IPv4
+// address (decimal, octal with a leading 0, hexadecimal with 0x), so "134744072" and "0x08080808" are 8.8.8.8 whatever the
+// absence of a dot suggests; the rule does not depend on which resolver the platform's Go runtime would have used.
+func serviceName(h string) bool {
+	if h == "" || len(h) > 63 || !alphanumeric(h[0]) || !alphanumeric(h[len(h)-1]) {
+		return false
+	}
+	for i := 0; i < len(h); i++ {
+		if c := h[i]; !alphanumeric(c) && c != '-' && c != '_' {
+			return false
+		}
+	}
+	return !numericLabel(h)
+}
+
+// numericLabel reports a label inet_aton would read as a number: only decimal digits (which also covers octal), or 0x or 0X
+// followed by any number, even none, of hexadecimal digits.
+func numericLabel(h string) bool {
+	digits, hex := h, false
+	if len(h) >= 2 && h[0] == '0' && (h[1] == 'x' || h[1] == 'X') {
+		digits, hex = h[2:], true
+	}
+	for i := 0; i < len(digits); i++ {
+		c := digits[i]
+		if (c < '0' || c > '9') && !(hex && (c >= 'a' && c <= 'f' || c >= 'A' && c <= 'F')) {
+			return false
+		}
+	}
+	return true
+}
+
+func alphanumeric(c byte) bool {
+	return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9'
 }

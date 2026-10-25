@@ -5,22 +5,36 @@
 set -eu
 here=$(cd "$(dirname "$0")" && pwd)
 repo=$(cd "$here/../.." && pwd)
-PY=${PYTHON:-python3}
+PY="${PYTHON:-python3} -B"  # -B: importing the tools must not write bytecode into the tree
 cd "$here"
 echo "== 1. offline manifest / DSN / wrapper tests"
 $PY -I tests/test_manifest.py
 $PY -I tests/test_review_regressions.py
+$PY -I tests/test_run_tests_script.py
 if [ -d "$repo/backend-umar" ]; then
   echo "== 2. Umar lifecycle on disposable PostgreSQL (TLS, real binaries)"
   $PY -I -W error::ResourceWarning tests/test_umar_local.py
   echo "== 3. Umar application suite (existing scripts/integration.sh, race detector, fresh cluster)"
-  (cd "$repo/backend-umar" && GO=${GO:-go} sh scripts/integration.sh >/tmp/infra-umar-suite.$$.log 2>&1; rc=$?; grep -E '^(ok|FAIL|---)' /tmp/infra-umar-suite.$$.log | grep -v '^--- PASS' || true; rm -f /tmp/infra-umar-suite.$$.log; exit $rc)
+  # begin: umar-suite (tests/test_run_tests_script.py runs exactly this block against a fake integration script)
+  (
+    cd "$repo/backend-umar"
+    log=$(mktemp "${TMPDIR:-/tmp}/infra-umar-suite.XXXXXX")
+    rc=0
+    GO=${GO:-go} sh scripts/integration.sh >"$log" 2>&1 || rc=$?
+    grep -E '^(ok|FAIL|---)' "$log" | grep -v '^--- PASS' || true
+    rm -f "$log"
+    exit $rc
+  )
+  # end: umar-suite
 else
   echo "== 2. Ayangaji lifecycle on disposable PostgreSQL (TLS, real binaries, real config loader)"
   $PY -I -W error::ResourceWarning tests/test_ayangaji_local.py
   echo "== 3. Ayangaji application suites that need only PostgreSQL (real-GoTrue tests excluded by name, see script)"
   $PY -I tests/run_adult_go_suites.py
 fi
+echo "== 3a. real-auth runner and fixture cleanup regressions (fake helper and cluster, mocked Docker: nothing real is started)"
+$PY -I "$repo/infra/real-auth/test_run_real_auth_tests.py"
+$PY -I "$repo/infra/real-auth/test_real_auth_fixture_down.py"
 echo "== 3b. catalog: unchanged registry pin test on the authoritative 8b29a91 bytes (active pins), historical ef28606 archive + bounded proof, gate self-tests"
 sh "$repo/infra/catalog/run_pin_test.sh"
 $PY -I "$repo/infra/catalog/test_alignment_proof.py"

@@ -7,7 +7,8 @@ embedded, and jose-util built from the already-cached go-jose v4.1.6 instead of 
     python3 -I real_auth_fixture.py build-jose-util                 build the pinned jose-util into the runtime root (offline)
     python3 -I real_auth_fixture.py up [--jose-util PATH] [--jwt-exp SECONDS]   start one fixture; print only non-secret facts
     python3 -I real_auth_fixture.py status RUNTIME_DIR      report one fixture's containers and Auth health
-    python3 -I real_auth_fixture.py down RUNTIME_DIR        remove exactly what one fixture's manifest records
+    python3 -I real_auth_fixture.py down RUNTIME_DIR        remove exactly what one fixture's manifest records; if any removal
+                                                            fails, the manifest stays so that down can be run again
 
 `up` creates, each labelled aya.fixture=<label>: an internal network holding the pinned PostgreSQL (no host port); a
 bridge network on which the pinned GoTrue publishes its API on 127.0.0.1:<free port> only; a dedicated non-superuser
@@ -202,12 +203,15 @@ def remove(kind, entry, label):
     """Removes one recorded container or network after checking it carries this fixture's label; nothing else."""
     ref = entry.get('id') or entry['name']
     template = '{{index .Config.Labels "aya.fixture"}}' if kind == 'container' else '{{index .Labels "aya.fixture"}}'
-    inspected = docker(kind, 'inspect', '--format', template, ref)
-    if inspected.returncode:
-        return 'absent'
-    if inspected.stdout.strip() != label:
-        return 'kept: not labelled for this fixture'
-    removal = docker('container', 'rm', '-f', ref) if kind == 'container' else docker('network', 'rm', ref)
+    try:
+        inspected = docker(kind, 'inspect', '--format', template, ref)
+        if inspected.returncode:
+            return 'absent'
+        if inspected.stdout.strip() != label:
+            return 'kept: not labelled for this fixture'
+        removal = docker('container', 'rm', '-f', ref) if kind == 'container' else docker('network', 'rm', ref)
+    except (subprocess.SubprocessError, OSError):
+        return 'removal failed'  # Docker could not be asked: incomplete, so the manifest stays for a retry
     return 'removed' if removal.returncode == 0 else 'removal failed'
 
 
@@ -531,18 +535,27 @@ def status(args):
 
 
 def down(args):
+    """Removes what the manifest records. If any removal is incomplete, the manifest (identifiers only, never a secret) and its
+    directory stay so that running `down` again can finish; the secret files are removed either way."""
     fixture = Fixture.load(args.runtime_directory)
     report = fixture.cleanup(keep_logs=False)
     ok = all(item['result'] in ('removed', 'absent') for group in report.values() for item in group)
-    fixture.manifest.update(state='removed' if ok else 'removal incomplete', removed_at=now_iso())
+    if ok:
+        fixture.manifest.update(state='removed', removed_at=now_iso())
+    else:
+        fixture.manifest.update(state='removal incomplete', removal_attempted_at=now_iso())
+        fixture.record()
     write_evidence(fixture, '-cleanup', cleanup=report)
-    for name in ('manifest.json', 'manifest.json.tmp'):
-        (fixture.private / name).unlink(missing_ok=True)
+    if ok:
+        for name in ('manifest.json', 'manifest.json.tmp'):
+            (fixture.private / name).unlink(missing_ok=True)
     leftovers = sorted(path.name for path in fixture.private.iterdir())
     if not leftovers:
         fixture.private.rmdir()
-    print(json.dumps({'label': fixture.label, 'cleanup': report, 'runtime_directory_removed': not leftovers,
-                      'leftover_files': leftovers}, indent=2))
+    summary = {'label': fixture.label, 'cleanup': report, 'runtime_directory_removed': not leftovers, 'leftover_files': leftovers}
+    if not ok:
+        summary['retry'] = 'run down again with the same runtime directory once the failed removals can succeed'
+    print(json.dumps(summary, indent=2))
     return 0 if ok and not leftovers else 1
 
 
