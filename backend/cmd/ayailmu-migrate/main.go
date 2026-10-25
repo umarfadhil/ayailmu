@@ -1,7 +1,9 @@
 // Command ayailmu-migrate is the migration job of the deploy modes: it applies the embedded migrations as the schema's
 // owner, prints only the resulting schema version, and exits. The API itself only verifies the schema in those modes, so
 // its runtime role needs no DDL right. Settings come from the environment: the owner's database URL from its private file
-// (AYA_DATABASE_URL_FILE), the exact database hosts (AYA_DB_HOSTS) and the schema (AYA_DB_SCHEMA).
+// (AYA_DATABASE_URL_FILE), the exact database hosts (AYA_DB_HOSTS) and the schema (AYA_DB_SCHEMA). Every database host
+// other than a literal loopback IP or a Unix socket must be reached over verified TLS (sslmode=verify-full); only an
+// explicit AYA_DB_TRANSPORT=private-network allows sslmode=disable, and only to a private target (internal/store/transport.go).
 package main
 
 import (
@@ -26,7 +28,8 @@ const migrateTimeout = 5 * time.Minute
 var guardErrors = []error{
 	config.ErrMissing, config.ErrInvalidSchema, config.ErrRealCredentials, config.ErrUnsafeSecretFile,
 	config.ErrInvalidHostList, config.ErrDatabaseHostNotAllowed, config.ErrEmulatorEnvironment, config.ErrSecretInEnvironment,
-	store.ErrInvalidDatabaseURL, store.ErrInvalidSchema, store.ErrDatabaseHostNotAllowed, store.ErrSchemaNotCurrent,
+	config.ErrInvalidDBTransport, store.ErrInvalidDatabaseURL, store.ErrInvalidSchema, store.ErrDatabaseHostNotAllowed,
+	store.ErrDatabaseTransportInsecure, store.ErrDatabasePlaintextNotPrivate, store.ErrSchemaNotCurrent,
 }
 
 func main() {
@@ -48,7 +51,7 @@ func run(ctx context.Context, lookup func(string) (string, bool), stdout, stderr
 	}
 	ctx, cancel := context.WithTimeout(ctx, migrateTimeout)
 	defer cancel()
-	st, err := store.OpenAllowing(ctx, m.DatabaseURL.Reveal(), m.Schema, m.DBHosts)
+	st, err := store.OpenAllowing(ctx, m.DatabaseURL.Reveal(), m.Schema, m.DBHosts, store.PrivateNetwork(m.DBPrivateNetwork))
 	if err != nil {
 		fmt.Fprintln(stderr, "ayailmu-migrate: cannot open the database:", reason(err))
 		return 1

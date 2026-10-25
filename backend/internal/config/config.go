@@ -159,6 +159,10 @@ type Config struct {
 	// DBHosts are, in the deploy modes and production, the exact database hosts pgx may dial (AYA_DB_HOSTS). Nil in the
 	// loopback modes, whose database must be on literal loopback or a Unix socket.
 	DBHosts []string
+	// DBPrivateNetwork is true only in a deploy mode, never in production, when AYA_DB_TRANSPORT=private-network explicitly
+	// allows plaintext (sslmode=disable) to a private database target. False is the strict default: every remote target over
+	// verified TLS. It only states the request; the store applies it to what pgx parsed.
+	DBPrivateNetwork bool
 	// Schema is the PostgreSQL schema that holds every table (default "ayailmu").
 	Schema    string
 	ProjectID string
@@ -217,8 +221,8 @@ func Load(lookup func(string) (string, bool)) (Config, error) {
 	if _, set := lookup(EnvGoogleCreds); set {
 		return Config{}, ErrRealCredentials
 	}
-	// Production's own settings are refused, even empty, rather than ignored.
-	if err := refuseSettings(lookup, stagingSettings...); err != nil {
+	// Production's own settings, and the deploy modes' database transport, are refused, even empty, rather than ignored.
+	if err := refuseSettings(lookup, append([]string{EnvDBTransport}, stagingSettings...)...); err != nil {
 		return Config{}, err
 	}
 

@@ -41,6 +41,17 @@ const (
 	// EnvAuthHosts lists, in ModeLocalCompose, the exact host:port values the Supabase Auth URL may name on the stack's
 	// internal network.
 	EnvAuthHosts = "AYA_AUTH_HOSTS"
+	// EnvDBTransport states how the database is reached: "verified-tls", the default when unset, or "private-network", which
+	// explicitly allows plaintext (sslmode=disable) to a private target, the local Compose stack's own data network. Production
+	// refuses private-network. The store decides from what pgx parsed whether a target qualifies (internal/store/transport.go):
+	// a public DNS name or address never does.
+	EnvDBTransport = "AYA_DB_TRANSPORT"
+)
+
+// The values of AYA_DB_TRANSPORT.
+const (
+	dbTransportVerifiedTLS    = "verified-tls"
+	dbTransportPrivateNetwork = "private-network"
 )
 
 // maxSocketDirBytes bounds a socket directory of AYA_DB_HOSTS.
@@ -67,6 +78,9 @@ var (
 	// ErrSettingNotUsed reports a setting of another mode, which a deploy mode or production refuses rather than ignores;
 	// every other mode refuses production's own settings likewise.
 	ErrSettingNotUsed = errors.New("config: a setting of another mode is set; it is refused rather than ignored")
+	// ErrInvalidDBTransport reports an AYA_DB_TRANSPORT that is not exactly verified-tls or private-network, or private-network
+	// in production, which only reaches its database over verified TLS.
+	ErrInvalidDBTransport = errors.New("config: the database transport must be exactly verified-tls (the default) or, outside production, private-network")
 )
 
 // Migration is the configuration of the migration job (cmd/ayailmu-migrate), which applies the embedded migrations as
@@ -76,6 +90,8 @@ type Migration struct {
 	DatabaseURL Secret
 	Schema      string
 	DBHosts     []string
+	// DBPrivateNetwork is true only when AYA_DB_TRANSPORT=private-network explicitly allows plaintext to a private target.
+	DBPrivateNetwork bool
 }
 
 // IsDeployMode reports whether mode is one of the deploy modes or production, whose service verifies its schema instead
@@ -95,11 +111,15 @@ func LoadMigration(lookup func(string) (string, bool)) (Migration, error) {
 	if err != nil {
 		return Migration{}, err
 	}
+	private, err := loadDBTransport(lookup, false)
+	if err != nil {
+		return Migration{}, err
+	}
 	schema, err := loadSchema(getter(lookup))
 	if err != nil {
 		return Migration{}, err
 	}
-	return Migration{DatabaseURL: dsn, Schema: schema, DBHosts: hosts}, nil
+	return Migration{DatabaseURL: dsn, Schema: schema, DBHosts: hosts, DBPrivateNetwork: private}, nil
 }
 
 // loadDeploy reads the settings of a deploy mode, or of production once Load has seen its exact opt-in. They are all
@@ -126,6 +146,10 @@ func loadDeploy(mode string, lookup func(string) (string, bool)) (Config, error)
 		return Config{}, err
 	}
 	dsn, dbHosts, err := loadDeployDatabase(lookup)
+	if err != nil {
+		return Config{}, err
+	}
+	privateDB, err := loadDBTransport(lookup, mode == ModeProduction)
 	if err != nil {
 		return Config{}, err
 	}
@@ -196,6 +220,8 @@ func loadDeploy(mode string, lookup func(string) (string, bool)) (Config, error)
 		Schema:         schema,
 		ExportMaxBytes: exportMax,
 		Supabase:       supabase,
+
+		DBPrivateNetwork: privateDB,
 	}, nil
 }
 
@@ -247,6 +273,21 @@ func loadDeployDatabase(lookup func(string) (string, bool)) (Secret, []string, e
 		}
 	}
 	return Secret(dsn), hosts, nil
+}
+
+// loadDBTransport reads AYA_DB_TRANSPORT: unset or exactly "verified-tls" is the strict default (false); exactly
+// "private-network" is the explicit private-network exception (true), which production refuses. Anything else, an empty value
+// included, is refused naming the variable only.
+func loadDBTransport(lookup func(string) (string, bool), production bool) (bool, error) {
+	v, set := lookup(EnvDBTransport)
+	switch {
+	case !set, v == dbTransportVerifiedTLS:
+		return false, nil
+	case v == dbTransportPrivateNetwork && !production:
+		return true, nil
+	default:
+		return false, refuse(ErrInvalidDBTransport, EnvDBTransport)
+	}
 }
 
 // refuseLocalVariables refuses the variables only the loopback emulator mode may see: the emulator host, which the

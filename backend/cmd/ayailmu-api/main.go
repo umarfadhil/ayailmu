@@ -40,8 +40,8 @@ var guardErrors = []error{
 	config.ErrInvalidHostList, config.ErrInvalidOrigins, config.ErrDatabaseHostNotAllowed, config.ErrAuthHostNotAllowed,
 	config.ErrEmulatorEnvironment, config.ErrSecretInEnvironment, config.ErrNotDeployListen, config.ErrSettingNotUsed,
 	config.ErrNotPublicAuth, authn.ErrUnsafeConfig, authn.ErrKeySetUnavailable, authn.ErrEmulatorDisabled,
-	store.ErrDatabaseNotLocal, store.ErrInvalidDatabaseURL, store.ErrInvalidSchema, store.ErrDatabaseHostNotAllowed,
-	store.ErrSchemaNotCurrent,
+	config.ErrInvalidDBTransport, store.ErrDatabaseNotLocal, store.ErrInvalidDatabaseURL, store.ErrInvalidSchema,
+	store.ErrDatabaseHostNotAllowed, store.ErrDatabaseTransportInsecure, store.ErrDatabasePlaintextNotPrivate, store.ErrSchemaNotCurrent,
 }
 
 func main() {

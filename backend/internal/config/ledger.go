@@ -19,6 +19,8 @@ type LedgerOperator struct {
 	// AYA_AUTH_HOSTS, the issuer (Issuer), the audience and the admin credential from its private file. Zero for an
 	// export.
 	Supabase Supabase
+	// DBPrivateNetwork is true only when AYA_DB_TRANSPORT=private-network explicitly allows plaintext to a private target.
+	DBPrivateNetwork bool
 }
 
 // LoadLedgerExport reads an export's settings through lookup, under the migration job's guards (LoadMigration): no
@@ -76,5 +78,9 @@ func loadLedgerOperator(lookup func(string) (string, bool)) (LedgerOperator, err
 	case !isVisibleASCII(issuer, maxAuthSettingBytes):
 		return LedgerOperator{}, refuse(ErrInvalidAuthSetting, EnvSupabaseIssuer)
 	}
-	return LedgerOperator{DatabaseURL: dsn, Schema: schema, DBHosts: hosts, Issuer: issuer}, nil
+	private, err := loadDBTransport(lookup, false)
+	if err != nil {
+		return LedgerOperator{}, err
+	}
+	return LedgerOperator{DatabaseURL: dsn, Schema: schema, DBHosts: hosts, Issuer: issuer, DBPrivateNetwork: private}, nil
 }

@@ -94,7 +94,8 @@ var guardErrors = []error{
 	config.ErrMissing, config.ErrInvalidSchema, config.ErrRealCredentials, config.ErrUnsafeSecretFile,
 	config.ErrInvalidHostList, config.ErrDatabaseHostNotAllowed, config.ErrEmulatorEnvironment, config.ErrSecretInEnvironment,
 	config.ErrSettingNotUsed, config.ErrInvalidAuthSetting, config.ErrAuthHostNotAllowed, authn.ErrUnsafeConfig,
-	store.ErrInvalidDatabaseURL, store.ErrInvalidSchema, store.ErrDatabaseHostNotAllowed, store.ErrSchemaNotCurrent,
+	config.ErrInvalidDBTransport, store.ErrInvalidDatabaseURL, store.ErrInvalidSchema, store.ErrDatabaseHostNotAllowed,
+	store.ErrDatabaseTransportInsecure, store.ErrDatabasePlaintextNotPrivate, store.ErrSchemaNotCurrent,
 	store.ErrLedgerInvalid, store.ErrLedgerTooLarge, store.ErrLedgerForeignAccount, store.ErrLedgerConflict,
 }
 
@@ -260,7 +261,7 @@ func deleteIdentity(ctx context.Context, auth authn.IdentityDeleter, st *store.S
 // openStore opens the configured database, dialing only AYA_DB_HOSTS as pgx parsed them, and checks with reads only
 // that its schema is this binary's. A failure is reported on stderr, and nil returned.
 func openStore(ctx context.Context, op config.LedgerOperator, stderr io.Writer) *store.Store {
-	st, err := store.OpenAllowing(ctx, op.DatabaseURL.Reveal(), op.Schema, op.DBHosts)
+	st, err := store.OpenAllowing(ctx, op.DatabaseURL.Reveal(), op.Schema, op.DBHosts, store.PrivateNetwork(op.DBPrivateNetwork))
 	if err != nil {
 		fmt.Fprintln(stderr, "ayailmu-ledger: cannot open the database:", reason(err))
 		return nil

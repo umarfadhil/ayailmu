@@ -158,7 +158,7 @@ func openStore(ctx context.Context, cfg config.Config) (*store.Store, error) {
 		}
 		return st, nil
 	}
-	st, err := store.OpenAllowing(ctx, cfg.DatabaseURL.Reveal(), cfg.Schema, cfg.DBHosts)
+	st, err := store.OpenAllowing(ctx, cfg.DatabaseURL.Reveal(), cfg.Schema, cfg.DBHosts, store.PrivateNetwork(cfg.DBPrivateNetwork))
 	if err != nil {
 		return nil, err
 	}

@@ -21,16 +21,30 @@ var (
 )
 
 // ParseConfigAllowing parses dsn with pgx as ParseConfig does, but refuses it unless every host pgx would dial, the
-// primary and each fallback, is exactly one of allowed: neither loopback nor a Unix socket directory is implied. It
-// opens nothing.
-func ParseConfigAllowing(dsn, schema string, allowed []string) (*pgxpool.Config, error) {
-	return parseConfig(dsn, schema, func(host string) bool { return slices.Contains(allowed, host) }, ErrDatabaseHostNotAllowed)
+// primary and each fallback, is exactly one of allowed: neither loopback nor a Unix socket directory is implied. It then
+// applies the transport rule (transport.go) to the same targets: other than loopback and sockets, each must be reached
+// over verified TLS, unless PrivateNetwork(true) explicitly allows plaintext to a private target. It opens nothing.
+func ParseConfigAllowing(dsn, schema string, allowed []string, opts ...Option) (*pgxpool.Config, error) {
+	var o options
+	for _, opt := range opts {
+		opt(&o)
+	}
+	cfg, err := parseConfig(dsn, schema, func(host string) bool { return slices.Contains(allowed, host) }, ErrDatabaseHostNotAllowed)
+	if err != nil {
+		return nil, err
+	}
+	// The host allow-list answers first; the transport rule then applies to the same targets (transport.go).
+	if err := checkTransport(&cfg.ConnConfig.Config, o); err != nil {
+		return nil, err
+	}
+	return cfg, nil
 }
 
-// OpenAllowing guards dsn with ParseConfigAllowing and only then creates the pool and checks it with one ping. It
-// neither creates nor migrates the schema: the deploy modes verify it (VerifySchema).
-func OpenAllowing(ctx context.Context, dsn, schema string, allowed []string) (*Store, error) {
-	cfg, err := ParseConfigAllowing(dsn, schema, allowed)
+// OpenAllowing guards dsn with ParseConfigAllowing, host allow-list and transport rule, and only then creates the pool and
+// checks it with one ping: nothing is dialed for a refused configuration. It neither creates nor migrates the schema: the
+// deploy modes verify it (VerifySchema).
+func OpenAllowing(ctx context.Context, dsn, schema string, allowed []string, opts ...Option) (*Store, error) {
+	cfg, err := ParseConfigAllowing(dsn, schema, allowed, opts...)
 	if err != nil {
 		return nil, err
 	}

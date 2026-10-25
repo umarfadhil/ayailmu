@@ -72,7 +72,9 @@ func TestParseConfigAllowingChecksEveryHostPgxWouldDial(t *testing.T) {
 			for k, v := range c.env {
 				t.Setenv(k, v)
 			}
-			cfg, err := store.ParseConfigAllowing(c.dsn, "ayailmu", allowed)
+			// This test is about the host allow-list: its accepted cases use sslmode=disable to single-label service names, which
+			// only the explicit private-network exception allows (the transport rule itself is tested in transport_test.go).
+			cfg, err := store.ParseConfigAllowing(c.dsn, "ayailmu", allowed, store.PrivateNetwork(true))
 			if c.want == nil {
 				switch {
 				case err != nil:
