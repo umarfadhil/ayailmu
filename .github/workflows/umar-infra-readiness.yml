@@ -1,0 +1,91 @@
+name: umar-infra-readiness
+
+# Infra readiness for the AyaIlmu/Umar backend and its Supabase tooling, on a standard free hosted Ubuntu runner.
+# This workflow only tests: no secrets, no deployment, no publish, no paid runner or service. Read-only token.
+# It checks out THIS branch (source/) and the companion Ayangaji integration branch of the same repository (peer/) side by side
+# for the cross-app isolation test. The two integration refs are an intentional pair and are published together; the branch name
+# below is a deliberate companion mapping, not a claim about an immutable pair of commit hashes (see infra/ci/README.md).
+on:
+  push:
+    branches: [main, integration/ayailmu-infra-ci-20261025]
+    paths: ["infra/**", "backend-umar/**", ".github/workflows/umar-infra-readiness.yml"]
+  pull_request:
+    paths: ["infra/**", "backend-umar/**", ".github/workflows/umar-infra-readiness.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: umar-infra-readiness-${{ github.repository }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+env:
+  PEER_REF: integration/ayangaji-infra-ci-20261025
+  PG_BIN: /usr/lib/postgresql/16/bin
+  PYTHONDONTWRITEBYTECODE: "1"
+
+jobs:
+  readiness:
+    name: "readiness: sh infra/supabase/run-tests.sh (source + companion)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      INFRA_PEER_CLONE: ${{ github.workspace }}/peer
+    steps:
+      - name: Set the runner-owned task root (Go caches, logs)
+        run: echo "AYA_CI_ROOT=$RUNNER_TEMP/aya-ci" >> "$GITHUB_ENV"
+
+      # The default pull_request ref is a merge commit; check out the real head instead.
+      - name: Check out the source (this branch)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          path: source
+          persist-credentials: false
+
+      - name: Check out the companion Ayangaji integration branch (same repository)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ env.PEER_REF }}
+          path: peer
+          persist-credentials: false
+
+      - name: Log and verify the resolved source and peer SHAs
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          source_sha="$(git -C source rev-parse HEAD)"
+          peer_sha="$(git -C peer rev-parse HEAD)"
+          [ "$source_sha" = "$EXPECTED_SHA" ] || { echo "source is $source_sha, expected $EXPECTED_SHA" >&2; exit 1; }
+          [ -f peer/backend/go.mod ] || { echo "peer $PEER_REF has no backend/go.mod" >&2; exit 1; }
+          echo "source: $source_sha (this branch)"
+          echo "peer:   $peer_sha ($PEER_REF)"
+          echo "INFRA_PEER_CLONE=$INFRA_PEER_CLONE"
+          {
+            echo "### Resolved checkouts"
+            echo "- source: \`$source_sha\`"
+            echo "- peer (\`$PEER_REF\`): \`$peer_sha\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Set up Go 1.27.2
+        uses: actions/setup-go@v6
+        with:
+          go-version: "1.27.2"
+          cache: false
+
+      - name: Install PostgreSQL 16 binaries
+        run: sh source/infra/ci/install-postgres16-ubuntu.sh
+
+      - name: Resolve localhost to IPv4 only (the transport tests use an IPv4-only loopback stub)
+        run: sh source/infra/ci/ipv4-localhost.sh
+
+      - name: Check tools
+        run: sh source/infra/ci/check-tools.sh
+
+      - name: Warm both Go module graphs (the only networked Go step)
+        run: sh source/infra/ci/warm-go.sh "$GITHUB_WORKSPACE/source" "$INFRA_PEER_CLONE"
+
+      - name: Full infra/supabase/run-tests.sh (Go offline, zero skips)
+        run: sh source/infra/ci/run-readiness.sh --peer "$INFRA_PEER_CLONE"
