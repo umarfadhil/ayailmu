@@ -107,6 +107,7 @@ services:
     environment:
       AYA_DATABASE_URL_FILE: /run/aya/migrate/database-url
       AYA_DB_HOSTS: aya-db
+      AYA_DB_TRANSPORT: private-network
       AYA_DB_SCHEMA: ayailmu
     volumes:
       - migrate-secrets:/run/aya/migrate:ro
@@ -182,6 +183,7 @@ services:
       AYA_LISTEN: 0.0.0.0:8080
       AYA_ALLOWED_HOSTS: ${AYA_STACK_API_HOST:?}:${AYA_STACK_PORT:?}
       AYA_DB_HOSTS: aya-db
+      AYA_DB_TRANSPORT: private-network
       AYA_DATABASE_URL_FILE: /run/aya/api/database-url
       AYA_DB_SCHEMA: ayailmu
       AYA_SUPABASE_URL: http://aya-auth:9999

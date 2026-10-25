@@ -78,6 +78,7 @@ services:
     environment:
       AYA_DATABASE_URL_FILE: /run/aya/ledger-replay/database-url
       AYA_DB_HOSTS: aya-db
+      AYA_DB_TRANSPORT: private-network
       AYA_DB_SCHEMA: ayailmu
       AYA_SUPABASE_URL: http://aya-auth:9999
       AYA_AUTH_HOSTS: aya-auth:9999

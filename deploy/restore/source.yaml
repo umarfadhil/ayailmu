@@ -55,6 +55,7 @@ services:
     environment:
       AYA_DATABASE_URL_FILE: /run/aya/ledger-export/database-url
       AYA_DB_HOSTS: aya-db
+      AYA_DB_TRANSPORT: private-network
       AYA_DB_SCHEMA: ayailmu
       AYA_SUPABASE_ISSUER: ${AYA_STACK_ISSUER:?}
     volumes:

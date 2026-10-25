@@ -35,7 +35,7 @@ Every container has:
 - `edge` is the ordinary bridge that this publish needs, so the proxy alone could reach out. It makes no outbound request: there is no ACME, OCSP, admin endpoint or access log.
 - `api-net`, `auth-net` and `data-net` are internal, with no route out.
 - No database, API or Auth port is published.
-- PostgreSQL traffic stays unencrypted on the internal `data-net` (`sslmode=disable`).
+- PostgreSQL traffic stays unencrypted on the internal `data-net` (`sslmode=disable`). The backend refuses that unless it is declared: every service that reaches the database sets `AYA_DB_TRANSPORT=private-network`, which the store accepts only for `sslmode=disable` to a single-label host name (here `aya-db`) or a private-range address. Without it, or for any public DNS name, a remote database must use `sslmode=verify-full`; production refuses the setting.
 
 ## The front, TLS and names
 
