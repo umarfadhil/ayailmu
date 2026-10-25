@@ -1,7 +1,10 @@
 # Supabase PostgreSQL readiness — Umar (AyaIlmu guardian/child backend)
 
-Preparation only. **Nothing here creates a Supabase project, role, credential, DNS/TLS record or deployment, and no tool
-here contacts Supabase.** Umar stays synthetic-only (`synthetic boolean CHECK(synthetic)` in the schema; loopback-only
+Preparation only. **Nothing here created a Supabase project, role, credential, DNS/TLS record or deployment, and none of
+these tools contacted Supabase or any hosted target while this was built or tested.** `migrate --execute` and `verify --execute`
+are, by design, able to contact the target a manifest names: they connect only after an owner has recorded the exact approval
+and the call repeats the project ref, and they also need `--peer` (the other app's valid manifest) on a Supabase target, so running
+either against a real, approved manifest does reach that hosted target. Umar stays synthetic-only (`synthetic boolean CHECK(synthetic)` in the schema; loopback-only
 API bind). Design requested by the owner: Supabase **PostgreSQL only**; standalone self-hosted GoTrue and Go API; no hosted
 Supabase Auth, no PostgREST/Data API, and no sharing of data models with the adult (Ayangaji) backend.
 
