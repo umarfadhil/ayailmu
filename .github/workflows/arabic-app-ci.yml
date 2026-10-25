@@ -64,7 +64,8 @@ jobs:
             exit 1
           fi
           echo "BUILD_SHA=$actual" >> "$GITHUB_ENV"
-          echo "EXPO_PUBLIC_BUILD_SHA=$actual" >> "$GITHUB_ENV"
+          echo "EXPO_PUBLIC_BUILD_REVISION=$actual" >> "$GITHUB_ENV"
+          echo "EXPO_PUBLIC_BUILD_DIRTY=false" >> "$GITHUB_ENV"
 
       - name: Set up Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
