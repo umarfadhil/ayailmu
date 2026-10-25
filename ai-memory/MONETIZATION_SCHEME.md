@@ -2,13 +2,14 @@
 
 Budget: ≤ 20 KB. Prices **DECIDED 2026-10-17** (Umar: use the defaults below; no upgrade product). Status stamps as elsewhere. Nothing here is marketed until the matching feature is RELEASED.
 
-## Model (DECIDED 2026-10-16): freemium + one-time lifetime unlocks, no ads, no server
+## Model (DECIDED 2026-10-16): freemium + one-time lifetime unlocks, no ads, no purchase server
 
 Why this model fits the constraints:
-- **No backend.** Play Billing stores the purchase, verifies the account, restores on reinstall and across the user's devices. The app only asks Play "what does this account own?" (CR-BIL-2) and caches the answer for offline (CR-BIL-3).
+- **No purchase server.** The product backend (DECIDED 2026-10-22, PROJECT_OVERVIEW constraint 1) is for account/sync only and holds no entitlement (server-side receipt validation: OPEN). Play Billing stores the purchase, verifies the account, restores on reinstall and across the user's devices. The app only asks Play "what does this account own?" (CR-BIL-2) and caches the answer for offline (CR-BIL-3).
 - **Kids + adults.** No ads means no Families ad-SDK certification, no age-based ad personalisation logic, no interstitial rules to police. One-time purchases are the least manipulative monetisation Play allows for children; the store sits behind an adult gate on Anak profiles (CR-BIL-5).
 - **Indonesian market.** "Bayar sekali, milik selamanya, bisa offline" is a strong, honest pitch where subscriptions churn and data plans are metered. Pending payments (Indomaret/Alfamart, bank transfer) are supported by Play and handled by CR-BIL-1.
 - **Solo founder.** No entitlement server, no receipt-validation endpoint, no webhook, no subscription-state machine to maintain.
+- **iOS at launch (DECIDED 2026-10-22):** App Store in-app purchase counterparts of every product, restore, and whether a purchase on one store unlocks the other — all OPEN.
 
 ## Products (DECIDED 2026-10-17; IN SOURCE in `:core:billing`) — all `INAPP` non-consumable
 

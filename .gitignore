@@ -55,3 +55,6 @@ integration-jvm/.gradle/
 integration-jvm/.kotlin/
 integration-jvm/build/
 integration/.local/
+
+# Claude handoff files (patches, bundles) — never committed
+Claude outputs/

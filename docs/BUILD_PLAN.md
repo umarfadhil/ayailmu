@@ -1,6 +1,6 @@
 # AyaIlmu Build Plan
 
-**Status:** PLANNED 2026-10-16. Phases map to the milestones in `ai-memory/PROJECT_OVERVIEW.md` (M0–M7) but are cut small enough that one phase = one well-produced piece of work with its own gate. Rules referenced as `CR-xxx-n` live in `ai-memory/CODE_RULES.md`. Umar approves the scope of each phase before it starts and signs its gate before the next one (CR-SES-2).
+**Status:** PLANNED 2026-10-16; backend (B) and iOS (I) tracks added 2026-10-22 (§1b). Phases map to the milestones in `ai-memory/PROJECT_OVERVIEW.md` (M0–M7) but are cut small enough that one phase = one well-produced piece of work with its own gate. Rules referenced as `CR-xxx-n` live in `ai-memory/CODE_RULES.md`. Umar approves the scope of each phase before it starts and signs its gate before the next one (CR-SES-2).
 
 ## 0. Where work happens (checked 2026-10-16)
 
@@ -9,6 +9,10 @@
 | **Cowork cloud session** (this) | Write and edit every file in the repo via the device bridge; design, port, write tests, docs, content packs, briefs; run pure-JVM Kotlin only if Google's Maven were reachable — it is not (403), so in practice: no Gradle here | Compile Android, run Room/Compose tests, run an emulator |
 | **Linux VM on Umar's PC** (`device_bash`) | grep/sed/python over the repo, git status/diff, content validation scripts in Python | Same network block (403 to dl.google.com); no Android SDK |
 | **Claude Code on Windows** (Android Studio machine) | Everything: `./gradlew` builds, unit + screenshot tests, emulator/device runs, signing, `gh` for PRs; Kotlin LSP plugin for live diagnostics | — |
+| **Amar's Mac** (from track I) | Xcode, iOS simulator and device runs, the Kotlin/Native iOS targets, TestFlight uploads | — |
+| **GitHub Actions** | `android-gate` (CR-REL-2) and `backend-gate` (Go + PostgreSQL 16, from B0) | Anything needing the real GoTrue fixture until B1 |
+
+Checked 2026-10-22: the cloud session cannot reach `proxy.golang.org` (Go modules) either, so Go code is also stamped IN SOURCE until backend-gate or Amar's machine runs it.
 
 Working model: cloud sessions produce source stamped **IN SOURCE (not compiled)** plus a "verify" checklist at the end of the SESSION_LEARNINGS entry; a Claude Code Desktop session (or Umar in Android Studio) runs the gate commands (CR-REL-2) and upgrades the stamp. No phase closes from the cloud alone.
 
@@ -74,6 +78,28 @@ Effort is in sessions (≈ 2–4 focused hours each). Stamps are the CODE_RULES 
 **Status (2026-10-18): started** — Inggris, Korea, Jepang, Mandarin Pemula units 01–05 (kids + adults) as drafts, with drag & drop, connect-lines, listening, tracing and sound (follow-up 11). Open: native reviewers, ElevenLabs clips, Menengah. Follow-up 12: four levels per audience (2 starter units each) in every module and language, plus Nilai and Sejarah modules with animated stories — IN SOURCE.
 
 Inggris Pemula–Menengah (kids + adults), Bahasa Indonesia Literasi Pemula, more math/science/social levels, Play Pass application, cross-promo in AyaKasir, optional static config override (OPEN), kids Arabic track once its curriculum is reviewed.
+
+## 1b. Backend and iOS tracks (PLANNED 2026-10-22)
+
+Decisions: `ai-memory/PROJECT_OVERVIEW.md` (constraint 1, stack, go-live gates). Backend design: `docs/backend/FAMILY_SYNC_DESIGN.md` (PROPOSAL). Amar builds; Umar approves each phase's scope and signs its gate. The tracks run beside P7–P9; B5 and I5 depend on the Android store work in P7/P8.
+
+### Track B — backend (`backend/`, Go)
+
+- **B0 — Land the PRs.** `Claude outputs/pr-alignment-2026-10-22/merge.sh` (SESSION_LEARNINGS 2026-10-22 follow-up 2): CI fix, docs, RN reference, the backend PR replacing #2 with backend-gate, #6, #4. **Gate:** backend-gate green; its curriculum step is non-blocking until B1.
+- **B1 — Registry and fixture.** Generated curriculum registry for all 73 Android tracks + Expo fixtures (design §7); commit the real GoTrue fixture launcher so `internal/server` and `cmd/ayailmu-ledger` run in backend-gate. **Gate:** backend-gate fully green with the curriculum step blocking again (`continue-on-error` removed), regeneration is a no-op.
+- **B2 — Family model.** Anak and guardian-managed profiles, adult declaration, per-profile sync consent, withdrawal = erasure, source `ios` (design §3–6). Contract text and failing tests first, then code. **Gate:** backend-gate green; `Backend_Local_Contract.md` updated; Umar signs the design's open points.
+- **B3 — Android sync client.** Rework of PR #3's `:core:sync` onto `backend/` (design §8), Settings → Sinkronkan, guardian flows behind the adult gate; CR-ARC-7 / CR-DAT-4 / CR-BE-1 approved into CODE_RULES. **Gate:** CR-REL-2 + `:core:sync` tests on Windows; device test against the local Compose stack.
+- **B4 — Staging on Cloud Run + Supabase PostgreSQL.** PR #4 preflight packet first; every cloud step approved by Umar at the time; synthetic users only; backups and the restore drill on staging; billing owner named. **Gate:** export, deletion and withdrawal proven on staging; restore drill passes.
+- **B5 — Go-live.** Privacy policy, Data safety and Families self-review rewritten for sync (`docs/store/`); consent texts ID + EN; UU PDP review; real-data switch. **Gate:** Umar's sign-off; Play listing updated.
+
+### Track I — iOS (SwiftUI + shared Kotlin core, DECIDED 2026-10-22; builds on Amar's Mac)
+
+- **I0 — Kotlin Multiplatform core.** Make `:core:model`, `:core:engine`, `:core:content` multiplatform (`commonMain` + JVM + iOS targets); replace JVM-only calls (hashing, `java.time`, file IO) with `expect`/`actual`; keep CR-ARC-3 determinism and CR-KT-9 regex rules on both targets; choose the iOS store (Room KMP vs SQLDelight) and record it. **Gate:** CR-REL-2 green on Windows (Android unchanged) and the engine/content tests green on the iOS simulator target on the Mac.
+- **I1 — iOS shell.** `ios/` Xcode project, SwiftUI theme from the AyaTheme tokens, bundled packs, ID + EN strings, one full session for the Arabic demo and Matematika. **Gate:** both sessions on a simulator and one iPhone.
+- **I2 — Data and parity.** On-device store, Adult/Anak profiles with the same neutral age screen, export via the share sheet; same `AnswerEvent` payloads as Android for the parity fixtures. **Gate:** parity test green; export opens in a spreadsheet.
+- **I3 — StoreKit 2.** Products mirroring MONETIZATION_SCHEME, restore, adult gate; cross-store entitlement and Apple Kids Category decided first (OPEN). **Gate:** sandbox purchases incl. offline launch.
+- **I4 — Sync.** Same `backend/` API with source `ios` (after B3). **Gate:** the B3 checks on an iPhone.
+- **I5 — Release.** TestFlight, App Store privacy labels, review. **Gate:** Umar's sign-off.
 
 ## 2. Parallel tracks that don't block code
 

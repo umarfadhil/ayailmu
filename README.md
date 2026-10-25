@@ -18,7 +18,7 @@ Android-native learning app by PT Petalytix Teknologi Indonesia: languages, math
 
 ```bash
 cd android
-./gradlew :core:model:test :core:engine:test :core:content:test :app:testDemoDebugUnitTest :app:lintDemoDebug :app:assembleDemoDebug ktlintCheck
+./gradlew :core:model:test :core:engine:test :core:content:test :core:content:validatePacks :core:data:testDebugUnitTest :app:testDemoDebugUnitTest :app:lintDemoDebug :app:assembleDemoDebug ktlintCheck
 ```
 
-Flavors: `demo` (shows unreviewed content behind a banner) and `prod` (approved content only). Status: P0 foundations in source, first gate pending; content in `docs/` is draft until reviewers approve it.
+That is the CR-REL-2 gate (`ai-memory/CODE_RULES.md`). Flavors: `demo` (shows unreviewed content behind a banner) and `prod` (approved content only). Status per phase: `ai-memory/PROJECT_OVERVIEW.md` §Milestones and `docs/BUILD_PLAN.md`; content in `docs/` is draft until reviewers approve it.
