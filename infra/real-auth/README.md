@@ -6,7 +6,12 @@ Closes the six adult-backend tests that refuse to skip without a real Auth (`AYA
 `TestRealGoTrueDeletionErasesFirstThenDeletesTheUserWithTheServerCredential` and
 `TestLedgerToolReplayDeletesAResurrectedIdentityAtTheRealAuth`.
 
-    python3 -I infra/real-auth/run_real_auth_tests.py
+    python3 -I infra/real-auth/run_real_auth_tests.py            # the six tests only
+    python3 -I infra/real-auth/run_real_auth_tests.py --full     # the whole backend suite, no -run filter and no -skip
+    python3 -I infra/real-auth/run_real_auth_tests.py --full --race
+
+`--full` runs every backend test with both the real fixture and the private application database set, requires zero skipped tests
+and the six real-GoTrue tests among the passes, and prints the pass/subtest counts.
 
 `real_auth_fixture.py` is adapted from the read-only reference helper `phase4_real_auth_fixture.py` (same fixture; every
 writable path now lives under one runtime root, `AYA_REAL_AUTH_RUNTIME`, default `<tmp>/aya-real-auth-<uid>`, mode 0700).
