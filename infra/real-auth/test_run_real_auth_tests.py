@@ -283,6 +283,55 @@ HARNESS = textwrap.dedent('''
 ''')
 
 
+class LeftoverList(unittest.TestCase):
+    """leftovers() against a mocked `docker`: an empty list is only ever the daemon's own successful answer."""
+
+    def leftovers(self, answers):
+        calls = []
+
+        def docker(*args, **_):
+            calls.append(args)
+            return answers(args)
+
+        with mock.patch.object(rat.fx, "docker", docker):
+            return rat.leftovers("aya-core-ra-synthetic"), calls
+
+    def test_a_successful_empty_answer_is_the_only_way_to_report_nothing_left(self):
+        left, calls = self.leftovers(lambda args: done(""))
+        self.assertEqual((left, [c[:2] for c in calls]), ([], [("ps", "-a"), ("network", "ls")]))
+
+    def test_listed_names_are_reported_by_kind(self):
+        left, _ = self.leftovers(lambda args: done("one\ntwo\n" if args[0] == "ps" else "net\n"))
+        self.assertEqual(left, ["ps:one", "ps:two", "network:net"])
+
+    def test_an_ordinary_nonzero_answer_is_an_error_not_an_empty_list(self):
+        for failing in ("ps", "network"):
+            for message in ("Cannot connect to the Docker daemon DAEMON-STDERR", "permission denied DAEMON-STDERR", ""):
+                with self.subTest(failing=failing, stderr=message[:20]):
+                    with self.assertRaises(RuntimeError) as caught:
+                        self.leftovers(lambda args: done("", 1, message) if args[0] == failing else done(""))
+                    self.assertNotIn("DAEMON-STDERR", str(caught.exception))
+
+    def test_a_nonzero_leftover_check_fails_the_run_and_keeps_the_recovery_command_visible(self):
+        helper = FakeHelper()
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.ExitStack() as stack:
+            stack.enter_context(mock.patch.object(rat.fx, "docker", lambda *a, **k: done("", 1, "DAEMON-STDERR")))
+            stack.enter_context(mock.patch.object(rat, "helper", helper))
+            stack.enter_context(mock.patch.object(rat, "Cluster", FakeCluster))
+            stack.enter_context(mock.patch.object(rat.subprocess, "run", lambda *a, **k: done(GO_PASS)))
+            stack.enter_context(mock.patch.object(rat.fx, "JOSE_UTIL", HERE / "real_auth_fixture.py"))
+            stack.enter_context(contextlib.redirect_stdout(out))
+            stack.enter_context(contextlib.redirect_stderr(err))
+            FakeCluster.instances, FakeCluster.start_error = [], None
+            code = rat.main([])
+        text = out.getvalue() + err.getvalue()
+        self.assertEqual(code, 1, text)
+        self.assertIn("real_auth_fixture.py down /synthetic/runtime", text)
+        self.assertNotIn("DAEMON-STDERR", text)
+        self.assertNotIn('"docker_leftovers": []', text)
+
+
 class RunnerSignals(unittest.TestCase):
     def run_child(self, where, *extra):
         tmp = tempfile.TemporaryDirectory(prefix="infra-rat-")

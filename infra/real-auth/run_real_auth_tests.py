@@ -46,6 +46,8 @@ def leftovers(label: str) -> list[str]:
     out = []
     for kind in ("ps -a", "network ls"):
         r = fx.docker(*kind.split(), "--filter", f"label={fx.LABEL}={label}", "--format", "{{.Names}}")
+        if r.returncode:  # a Docker error is not an empty list; the caller treats the raise as an incomplete cleanup
+            raise RuntimeError(f"docker {kind.split()[0]} listing failed")
         out += [f"{kind.split()[0]}:{n}" for n in r.stdout.split()]
     return out
 

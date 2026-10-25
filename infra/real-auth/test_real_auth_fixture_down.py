@@ -26,17 +26,21 @@ ADMIN_SECRET = "synthetic-admin-credential-0001"
 OWNER_SECRET = "synthetic-owner-password-0002"
 
 
-def done(stdout="", returncode=0):
-    return subprocess.CompletedProcess([], returncode, stdout, "")
+def done(stdout="", returncode=0, stderr=""):
+    return subprocess.CompletedProcess([], returncode, stdout, stderr)
 
 
 class FakeDocker:
-    """Containers and networks by reference -> label. `refuse` lists references whose removal fails (until cleared)."""
+    """Containers and networks by reference -> label. `refuse` lists references whose removal fails (until cleared).
+    `errors` makes the named verbs ("inspect", "ls", "rm", or "*" for all) return a non-zero status with `stderr`, the way a
+    daemon, socket, permission or API error does; `stderr` never reaches the output under test."""
 
     def __init__(self):
         self.resources: dict[tuple[str, str], str] = {}
         self.refuse: set[str] = set()
         self.raises: Exception | None = None
+        self.errors: set[str] = set()
+        self.stderr = ""
         self.calls: list[tuple[str, ...]] = []
 
     def __call__(self, *args, input=None, timeout=60):
@@ -45,9 +49,13 @@ class FakeDocker:
             raise self.raises
         kind, verb = args[0], args[1]
         ref = args[-1]
+        if self.errors & {verb, "*"}:
+            return done("", 1, self.stderr)
+        if verb == "ls":  # the whole list, as `docker container ls -a --no-trunc --format '{{.ID}}\t{{.Names}}'` prints it
+            return done("".join(f"{r}\t{r.removeprefix('id-')}\n" for (k, r) in self.resources if k == kind))
         if verb == "inspect":
             label = self.resources.get((kind, ref))
-            return done(label + "\n") if label is not None else done("", 1)
+            return done(label + "\n") if label is not None else done("", 1, "Error: No such object: " + ref)
         if verb == "rm":
             if ref in self.refuse:
                 return done("", 1)
@@ -147,6 +155,64 @@ class DownRetry(unittest.TestCase):
         self.assertTrue((self.private / "manifest.json").is_file(), "the manifest must survive for the retry")
         self.assertEqual(json.loads(out)["cleanup"]["containers"][0]["result"], "removal failed")
         self.docker.raises = None
+        code, out = self.down()
+        self.assertEqual((code, self.remaining(), self.private.exists()), (0, [], False), out)
+
+    # -- a Docker that answers with a non-zero status (daemon down, socket, permission, API error) proves nothing is absent ----
+    def assertKeptForRetry(self, code, out):
+        self.assertEqual(code, 1, out)
+        self.assertTrue((self.private / "manifest.json").is_file(), "the manifest must survive for the retry")
+        report = json.loads(out)
+        self.assertFalse(report["runtime_directory_removed"])
+        for group in ("containers", "networks"):
+            self.assertEqual({item["result"] for item in report["cleanup"][group]}, {"removal failed"})
+        manifest = json.loads((self.private / "manifest.json").read_text())
+        self.assertEqual(manifest["state"], "removal incomplete")
+        self.assertEqual((len(manifest["containers"]), len(manifest["networks"])), (2, 2))
+        self.assertNotIn("DAEMON-STDERR", out)
+
+    def test_every_ordinary_nonzero_docker_error_is_a_failed_removal_that_keeps_the_manifest(self):
+        for message in ("Cannot connect to the Docker daemon at unix:///var/run/docker.sock. DAEMON-STDERR",
+                        "permission denied while trying to connect to the docker API DAEMON-STDERR",
+                        "Error response from daemon: 500 internal server error DAEMON-STDERR",
+                        "Error: No such container: x (the daemon could not resolve it) DAEMON-STDERR", ""):
+            with self.subTest(stderr=message[:40]):
+                self.docker.errors, self.docker.stderr = {"*"}, message
+                self.assertKeptForRetry(*self.down())
+                self.assertEqual(len(self.docker.resources), 4, "nothing was removed")
+                self.assertNotIn(("container", "rm", "-f", "id-" + self.label + "-db"), self.docker.calls)
+        self.docker.errors = set()
+        code, out = self.down()
+        self.assertEqual((code, self.remaining(), self.private.exists()), (0, [], False), out)
+
+    def test_an_inspect_that_fails_is_not_absence_when_the_exact_lookup_also_fails(self):
+        self.docker.errors, self.docker.stderr = {"inspect", "ls"}, "Error: No such object: DAEMON-STDERR"
+        self.assertKeptForRetry(*self.down())
+        self.docker.errors = set()
+        self.assertEqual(self.down()[0], 0)
+
+    def test_an_inspect_error_for_a_resource_that_the_exact_lookup_still_lists_is_a_failed_removal(self):
+        self.docker.errors = {"inspect"}
+        self.assertKeptForRetry(*self.down())
+        self.assertEqual(len(self.docker.resources), 4)
+
+    def test_a_resource_is_absent_only_when_a_successful_exact_lookup_does_not_list_it(self):
+        # a successful list that holds only look-alikes (other ids, a name that merely contains the recorded one) is true absence
+        self.docker.resources = {("container", "id-other"): "x", ("network", "id-" + self.label + "-int-2"): "x"}
+        code, out = self.down()
+        self.assertEqual(code, 0, out)
+        self.assertEqual({item["result"] for g in ("containers", "networks") for item in json.loads(out)["cleanup"][g]}, {"absent"})
+        self.assertFalse(self.private.exists())
+
+    def test_genuine_partial_deletion_then_a_daemon_error_then_recovery_still_finishes(self):
+        self.docker.refuse = {"id-" + self.label + "-auth"}
+        self.assertEqual(self.down()[0], 1)
+        # the daemon is now unreachable: the half-removed fixture must not be declared gone
+        self.docker.errors = {"*"}
+        code, out = self.down()
+        self.assertEqual(code, 1, out)
+        self.assertTrue((self.private / "manifest.json").is_file())
+        self.docker.errors, self.docker.refuse = set(), set()
         code, out = self.down()
         self.assertEqual((code, self.remaining(), self.private.exists()), (0, [], False), out)
 

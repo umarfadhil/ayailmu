@@ -35,6 +35,8 @@ A non-zero `down` status, labelled leftovers, or a failing cleanup step makes th
 that case with `python3 -I infra/real-auth/real_auth_fixture.py down <runtime directory>`. If `down` cannot remove everything
 (Docker unreachable or a removal failing) it exits non-zero and **keeps the manifest** (identifiers only) so that running it again
 finishes the job; the secret files are removed either way and never printed.
+A resource counts as absent only when `docker inspect` fails **and** a successful, complete `container ls`/`network ls` listing does not show its recorded id or name; any other
+non-zero Docker answer (daemon, socket, permission, API) is a failed removal and keeps the manifest, and a non-zero leftover listing fails the run. Docker's error text is never read or printed.
 
 Regressions (fake helper and cluster, mocked Docker; nothing real is started):
 `python3 -I -B infra/real-auth/test_run_real_auth_tests.py` and `python3 -I -B infra/real-auth/test_real_auth_fixture_down.py`

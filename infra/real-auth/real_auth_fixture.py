@@ -199,18 +199,36 @@ def free_port():
     raise RuntimeError('no free loopback port')
 
 
+def listed(kind, ref):
+    """True/False only from a successful, complete listing of this kind of resource, compared with the recorded reference
+    exactly (full id, or name); a non-zero status is not an answer, so it raises rather than let a Docker error read as absence."""
+    if kind == 'container':
+        result = docker('container', 'ls', '-a', '--no-trunc', '--format', '{{.ID}}\t{{.Names}}')
+    else:
+        result = docker('network', 'ls', '--no-trunc', '--format', '{{.ID}}\t{{.Name}}')
+    if result.returncode:
+        raise RuntimeError('Docker could not list the ' + kind + 's')
+    for line in result.stdout.splitlines():
+        identifier, _, names = line.partition('\t')
+        if ref == identifier or ref in names.split(','):
+            return True
+    return False
+
+
 def remove(kind, entry, label):
-    """Removes one recorded container or network after checking it carries this fixture's label; nothing else."""
+    """Removes one recorded container or network after checking it carries this fixture's label; nothing else. A failed
+    inspect means absent only if a successful exact listing then does not show the resource; any other Docker failure is an
+    incomplete removal (the manifest stays), and Docker's own error text is never read or kept."""
     ref = entry.get('id') or entry['name']
     template = '{{index .Config.Labels "aya.fixture"}}' if kind == 'container' else '{{index .Labels "aya.fixture"}}'
     try:
         inspected = docker(kind, 'inspect', '--format', template, ref)
         if inspected.returncode:
-            return 'absent'
+            return 'removal failed' if listed(kind, ref) else 'absent'
         if inspected.stdout.strip() != label:
             return 'kept: not labelled for this fixture'
         removal = docker('container', 'rm', '-f', ref) if kind == 'container' else docker('network', 'rm', ref)
-    except (subprocess.SubprocessError, OSError):
+    except (subprocess.SubprocessError, OSError, RuntimeError):
         return 'removal failed'  # Docker could not be asked: incomplete, so the manifest stays for a retry
     return 'removed' if removal.returncode == 0 else 'removal failed'
 
