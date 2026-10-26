@@ -105,7 +105,7 @@ class NormalSyncRepositoryTest {
             repository = NormalSyncRepository(context, db, active, assets, content, FixedClock(Instant.parse("2026-10-26T00:00:00Z")), api, testConfig, visibility)
             profiles = ProfileRepository(db, active, FixedClock(Instant.parse("2026-10-26T00:00:00Z")), UuidIdGenerator, visibility)
         }
-        fun stop() = repository.stop()
+        suspend fun stop() = repository.stop()
     }
     private suspend fun Harness.prepare(apiCatalog: suspend (FakeBackend) -> Unit) { apiCatalog(api) }
     private suspend fun catalog(content: ContentRepository, assetSource: AssetSource): Catalog {
@@ -133,6 +133,52 @@ class NormalSyncRepositoryTest {
         return Harness(dir, api, db, active).also { it.visibility.refresh() }
     }
     private lateinit var catalogCache: Catalog
+
+    @Test fun stopWaitsForStartupCancellationBeforeRoomCanBeClosed() = runTest {
+        val dir = File.createTempFile("normal-stop", "").apply { delete() }
+        val base = ApplicationProvider.getApplicationContext<Context>()
+        val context = object : ContextWrapper(base) { override fun getNoBackupFilesDir() = dir.apply { mkdirs() } }
+        val db = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
+        val entered = kotlinx.coroutines.CompletableDeferred<Unit>()
+        val cancelling = kotlinx.coroutines.CompletableDeferred<Unit>()
+        val release = kotlinx.coroutines.CompletableDeferred<Unit>()
+        var cleanupFinished = false
+        val active = object : id.petalytix.ayailmu.core.data.settings.ActiveProfileStore {
+            override val activeId = kotlinx.coroutines.flow.flow<String?> {
+                entered.complete(Unit)
+                try { kotlinx.coroutines.awaitCancellation() } finally {
+                    kotlinx.coroutines.withContext(kotlinx.coroutines.NonCancellable) {
+                        cancelling.complete(Unit)
+                        release.await()
+                        // An in-flight dependency operation must finish before Room closes.
+                        db.profiles().all()
+                        cleanupFinished = true
+                    }
+                }
+            }
+            override suspend fun setActive(id: String?) = Unit
+        }
+        val visibility = NormalProfileVisibility(context, config, db)
+        val assets = testAssets()
+        val repository = NormalSyncRepository(context, db, active, assets, ContentRepository(assets, AppBuildInfo(true, "test")),
+            FixedClock(Instant.EPOCH), FakeBackend(), config, visibility)
+        try {
+            entered.await()
+            val stopping = async { repository.stop() }
+            runCurrent()
+            cancelling.await()
+            assertFalse("Stop must await in-flight startup cleanup", stopping.isCompleted)
+            release.complete(Unit)
+            stopping.await()
+            assertTrue(cleanupFinished)
+            repository.stop()
+        } finally {
+            release.complete(Unit)
+            repository.stop()
+            db.close()
+            dir.deleteRecursively()
+        }
+    }
 
     @Test fun ownerChangeAndFreshProcessHideBoundNativeProfilesButKeepUnboundHistory() = runTest {
         val dir = File.createTempFile("normal-room", "").apply { delete() }

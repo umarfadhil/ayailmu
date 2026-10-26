@@ -5,7 +5,7 @@ import java.util.Locale
 import java.security.MessageDigest
 
 /** Release opt-in is compiled only from explicit build properties. Nothing here contains an endpoint or credential. */
-internal data class NormalAccountConfig(val enabled: Boolean, val publicOrigin: String, val syncPolicyVersion: String, val ownerDeclarationVersion: String = "adult-owner-v1", val registrySourceCommit: String = "0".repeat(40)) {
+internal data class NormalAccountConfig(val enabled: Boolean, val publicOrigin: String, val syncPolicyVersion: String, val ownerDeclarationVersion: String = "adult-owner-v1", val registrySourceCommit: String = "0".repeat(40), val requiredOrigin: String = "") {
     val authOrigin: String get() = publicOrigin
     val apiOrigin: String get() = publicOrigin
     val environmentHash: String by lazy {
@@ -14,7 +14,7 @@ internal data class NormalAccountConfig(val enabled: Boolean, val publicOrigin: 
     }
 
     companion object {
-        fun forValues(approved: Boolean, publicOrigin: String, syncPolicyVersion: String, ownerDeclarationVersion: String = "adult-owner-v1", registrySourceCommit: String = "0".repeat(40)): NormalAccountConfig {
+        fun forValues(approved: Boolean, publicOrigin: String, syncPolicyVersion: String, ownerDeclarationVersion: String = "adult-owner-v1", registrySourceCommit: String = "0".repeat(40), requiredOrigin: String = ""): NormalAccountConfig {
             val origin = publicOrigin.trim()
             val uri = runCatching { URI(origin) }.getOrNull()
             val canonical = uri != null && uri.scheme == "https" && !uri.host.isNullOrEmpty() &&
@@ -24,11 +24,12 @@ internal data class NormalAccountConfig(val enabled: Boolean, val publicOrigin: 
                 uri.rawAuthority == uri.host + if (uri.port == -1) "" else ":${uri.port}"
             val policy = syncPolicyVersion.trim()
             return NormalAccountConfig(
-                enabled = approved && canonical && policy.matches(Regex("[a-z0-9][a-z0-9-]{2,79}")) && ownerDeclarationVersion.matches(Regex("[a-z0-9][a-z0-9-]{2,79}")) && registrySourceCommit.matches(Regex("[0-9a-f]{40}")),
+                enabled = approved && canonical && (requiredOrigin.isEmpty() || publicOrigin == requiredOrigin) && policy.matches(Regex("[a-z0-9][a-z0-9-]{2,79}")) && ownerDeclarationVersion.matches(Regex("[a-z0-9][a-z0-9-]{2,79}")) && registrySourceCommit.matches(Regex("[0-9a-f]{40}")),
                 publicOrigin = if (canonical) origin else "",
                 syncPolicyVersion = policy,
                 ownerDeclarationVersion = ownerDeclarationVersion,
                 registrySourceCommit = registrySourceCommit,
+                requiredOrigin = requiredOrigin,
             )
         }
     }

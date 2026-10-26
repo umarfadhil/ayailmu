@@ -25,7 +25,10 @@ import org.robolectric.annotation.Config
 @Config(sdk = [28])
 class NormalProfileVisibilityTest {
     private val visibilities = mutableListOf<NormalProfileVisibility>()
-    @org.junit.After fun closeVisibilities() { visibilities.forEach { it.close() } }
+    private suspend fun closeVisibilities() {
+        visibilities.forEach { it.close() }
+        visibilities.clear()
+    }
     private val originA = NormalAccountConfig.forValues(true, "https://accounts-a.petalytix.id", "owner-policy-1")
     private val originB = NormalAccountConfig.forValues(true, "https://accounts-b.petalytix.id", "owner-policy-1")
     private fun writeBinding(dir: File, config: NormalAccountConfig) {
@@ -61,7 +64,7 @@ class NormalProfileVisibilityTest {
             assertNotNull(db.profiles().get("cloud-a"))
             a.refresh()
             assertEquals(setOf("cloud-a", "offline"), profiles(db, a).all().map { it.id }.toSet())
-        } finally { db.close(); dir.deleteRecursively() }
+        } finally { closeVisibilities(); db.close(); dir.deleteRecursively() }
     }
 
     @Test fun hiddenCloudParentAlsoHidesLocalChildAcrossRollbackAndOriginChange() = runTest {
@@ -82,7 +85,7 @@ class NormalProfileVisibilityTest {
             assertFalse(b.allows("child-a"))
             assertTrue(b.allows("offline-child"))
             assertNotNull(db.profiles().get("child-a"))
-        } finally { db.close(); dir.deleteRecursively() }
+        } finally { closeVisibilities(); db.close(); dir.deleteRecursively() }
     }
 
 
@@ -101,7 +104,7 @@ class NormalProfileVisibilityTest {
             assertTrue(restored.allows("offline"))
             assertEquals(setOf("offline"), profiles(db, restored).all().map { it.id }.toSet())
             assertEquals("owner-A", db.ownerBindings().all().single().ownerId)
-        } finally { db.close(); restoredDir.deleteRecursively() }
+        } finally { closeVisibilities(); db.close(); restoredDir.deleteRecursively() }
     }
 
 
@@ -124,7 +127,7 @@ class NormalProfileVisibilityTest {
             assertFalse(restored.allows(child.id))
             assertEquals("owner-A", db.ownerBindings().all().single { it.profileId == child.id }.ownerId)
             assertNotNull(db.profiles().get(child.id))
-        } finally { db.close(); dir.deleteRecursively() }
+        } finally { closeVisibilities(); db.close(); dir.deleteRecursively() }
     }
 
     @Test fun cachedIndexAvoidsPerPredicateDiskAndCorruptionFailsClosedOnRefresh() = runTest {
@@ -138,6 +141,6 @@ class NormalProfileVisibilityTest {
             a.refresh()
             assertFalse(a.allows("cloud-a"))
             assertFalse(a.allows("offline"))
-        } finally { dir.deleteRecursively() }
+        } finally { closeVisibilities(); dir.deleteRecursively() }
     }
 }

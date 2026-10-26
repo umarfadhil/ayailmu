@@ -21,7 +21,7 @@ internal object NormalAccountModule {
     @Provides @Singleton internal fun config(): NormalAccountConfig = NormalAccountConfig.forValues(
         BuildConfig.NORMAL_AUTH_APPROVED, BuildConfig.NORMAL_AUTH_PUBLIC_ORIGIN,
         BuildConfig.NORMAL_SYNC_POLICY_VERSION, BuildConfig.NORMAL_OWNER_DECLARATION_VERSION,
-        BuildConfig.NORMAL_REGISTRY_SOURCE_COMMIT,
+        BuildConfig.NORMAL_REGISTRY_SOURCE_COMMIT, BuildConfig.NORMAL_AUTH_REQUIRED_ORIGIN,
     )
     @Provides @Singleton internal fun backend(config: NormalAccountConfig): Backend =
         if (config.enabled) HttpBackend(config.apiOrigin, synthetic = false, config.syncPolicyVersion, config.ownerDeclarationVersion)

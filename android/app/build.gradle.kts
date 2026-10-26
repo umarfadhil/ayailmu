@@ -1,5 +1,9 @@
 import java.net.URI
 import java.security.GeneralSecurityException
+import java.security.cert.CertificateFactory
+import java.security.cert.X509Certificate
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.security.KeyFactory
 import java.security.MessageDigest
 import java.security.spec.X509EncodedKeySpec
@@ -60,6 +64,24 @@ if (normalAuthApproved) require(normalAuthOrigin.isNotEmpty() && normalSyncPolic
     "Approved normal auth requires origin, owner declaration, sync policy and registry source"
 }
 
+// Private normal QA inputs are separate from production approval and are required only by QA tasks.
+val normalQaBuildEnabled = providers.gradleProperty("umar.normalQa.buildEnabled").orElse("false").get() == "true"
+val normalQaApproved = providers.gradleProperty("umar.normalQa.approved").orElse("false").get() == "true"
+val normalQaOrigin = providers.gradleProperty("umar.normalQa.publicOrigin").orElse("").get()
+val normalQaSyncPolicy = providers.gradleProperty("umar.normalQa.syncPolicyVersion").orElse("").get()
+val normalQaOwnerDeclaration = providers.gradleProperty("umar.normalQa.ownerDeclarationVersion").orElse("").get()
+val normalQaRegistrySource = providers.gradleProperty("umar.normalQa.registrySourceCommit").orElse("").get()
+val normalQaCaFile = providers.gradleProperty("umar.normalQa.publicCaFile").orElse("").get()
+val normalQaCaSha256 = providers.gradleProperty("umar.normalQa.publicCaSha256").orElse("").get()
+val NORMAL_QA_ORIGIN = "https://localhost:58443"
+require(normalQaOrigin.isEmpty() || normalQaOrigin == NORMAL_QA_ORIGIN) { "umar.normalQa.publicOrigin must be exactly $NORMAL_QA_ORIGIN" }
+if (normalQaSyncPolicy.isNotEmpty()) require(normalQaSyncPolicy.matches(Regex("[a-z0-9][a-z0-9-]{2,79}")))
+if (normalQaOwnerDeclaration.isNotEmpty()) require(normalQaOwnerDeclaration.matches(Regex("[a-z0-9][a-z0-9-]{2,79}")))
+if (normalQaRegistrySource.isNotEmpty()) require(normalQaRegistrySource.matches(Regex("[0-9a-f]{40}")))
+if (normalQaApproved) require(normalQaOrigin == NORMAL_QA_ORIGIN && normalQaSyncPolicy.isNotEmpty() && normalQaOwnerDeclaration.isNotEmpty() && normalQaRegistrySource.isNotEmpty()) {
+    "Approved normal QA requires exact origin, owner declaration, sync policy and registry source"
+}
+
 val playLicenseKey = providers.gradleProperty("ayailmu.playLicenseKey").getOrElse("")
 
 fun validatePlayLicenseKey(required: Boolean): String {
@@ -112,6 +134,7 @@ android {
         // Play licence key (Play Console > Monetisation setup) for the local purchase signature check (CR-BIL-4).
         // Set `ayailmu.playLicenseKey=...` in ~/.gradle/gradle.properties on the build machine; never commit it.
         // Empty (the default) skips the check, which is fine for demo builds and before the Play app exists.
+        buildConfigField("String", "NORMAL_AUTH_REQUIRED_ORIGIN", "\"\"")
         buildConfigField("String", "PLAY_LICENSE_KEY", "\"${validatePlayLicenseKey(required = false)}\"")
     }
 
@@ -146,6 +169,20 @@ android {
             buildConfigField("String", "NORMAL_SYNC_POLICY_VERSION", "\"$normalSyncPolicy\"")
             buildConfigField("String", "NORMAL_OWNER_DECLARATION_VERSION", "\"$normalOwnerDeclaration\"")
             buildConfigField("String", "NORMAL_REGISTRY_SOURCE_COMMIT", "\"$normalRegistrySource\"")
+        }
+        create("normalQa") {
+            dimension = "mode"
+            applicationIdSuffix = ".normalqa"
+            versionNameSuffix = "-normalqa"
+            buildConfigField("boolean", "DEVELOPER_DEMO", "false")
+            buildConfigField("boolean", "SYNC_LAB_ENABLED", "false")
+            buildConfigField("boolean", "BILLING_ENABLED", "false")
+            buildConfigField("boolean", "NORMAL_AUTH_APPROVED", "$normalQaApproved")
+            buildConfigField("String", "NORMAL_AUTH_PUBLIC_ORIGIN", "\"$normalQaOrigin\"")
+            buildConfigField("String", "NORMAL_AUTH_REQUIRED_ORIGIN", "\"$NORMAL_QA_ORIGIN\"")
+            buildConfigField("String", "NORMAL_SYNC_POLICY_VERSION", "\"$normalQaSyncPolicy\"")
+            buildConfigField("String", "NORMAL_OWNER_DECLARATION_VERSION", "\"$normalQaOwnerDeclaration\"")
+            buildConfigField("String", "NORMAL_REGISTRY_SOURCE_COMMIT", "\"$normalQaRegistrySource\"")
         }
     }
 
@@ -195,6 +232,12 @@ android {
         getByName("demo").manifest.srcFile("src/nonLab/AndroidManifest.xml")
         getByName("prod").java.srcDir("src/nonLab/java")
         getByName("prod").manifest.srcFile("src/nonLab/AndroidManifest.xml")
+        getByName("normalQa").apply {
+            java.srcDir("src/nonLab/java")
+            manifest.srcFile("src/normalQa/AndroidManifest.xml")
+            res.srcDir(layout.buildDirectory.dir("generated/res/normalQaTrust"))
+            assets.srcDir("src/normalQa/assets")
+        }
         getByName("test") {
             resources.srcDir(rootProject.file("content/src/main/assets"))
         }
@@ -268,4 +311,44 @@ dependencies {
     androidTestImplementation(composeBom)
     androidTestImplementation(libs.compose.ui.test.junit4)
     debugImplementation(libs.compose.ui.test.manifest)
+}
+
+
+// QA-only trust preparation. Production/demo/syncLab never evaluate or bundle this input.
+tasks.register("prepareNormalQaTrust") {
+    group = "build"
+    description = "Validate the designated public CA and copy only its public certificate into normalQa resources"
+    val output = layout.buildDirectory.file("generated/res/normalQaTrust/raw/qa_public_ca")
+    inputs.property("caFile", normalQaCaFile)
+    inputs.property("caSha256", normalQaCaSha256)
+    outputs.file(output)
+    outputs.upToDateWhen { false }
+    if (normalQaCaFile.isNotEmpty()) inputs.file(normalQaCaFile).withPropertyName("publicCaFile")
+    doLast {
+        require(normalQaCaFile.isNotEmpty()) { "normalQa requires umar.normalQa.publicCaFile from the verified handoff" }
+        require(normalQaCaSha256.matches(Regex("[0-9a-f]{64}"))) { "umar.normalQa.publicCaSha256 must be a lowercase SHA-256 fingerprint" }
+        val path = Paths.get(normalQaCaFile)
+        require(Files.isRegularFile(path)) { "normalQa public CA file is absent" }
+        val bytes = Files.readAllBytes(path)
+        require(bytes.size in 1..65_536) { "normalQa public CA is empty or too large" }
+        require(!bytes.toString(Charsets.ISO_8859_1).contains("PRIVATE KEY")) { "normalQa input must contain only a public certificate, never key material" }
+        val certificates = Files.newInputStream(path).use { CertificateFactory.getInstance("X.509").generateCertificates(it) }
+        require(certificates.size == 1) { "normalQa requires exactly one designated public CA certificate" }
+        val certificate = certificates.single() as X509Certificate
+        certificate.checkValidity()
+        require(certificate.basicConstraints >= 0) { "normalQa certificate is not a CA" }
+        require(certificate.keyUsage == null || certificate.keyUsage[5]) { "normalQa CA cannot sign certificates" }
+        val actual = MessageDigest.getInstance("SHA-256").digest(certificate.encoded).joinToString("") { (it.toInt() and 255).toString(16).padStart(2, '0') }
+        require(actual == normalQaCaSha256) { "normalQa public CA fingerprint mismatch" }
+        val destination = output.get().asFile
+        destination.parentFile.mkdirs()
+        destination.writeBytes(certificate.encoded)
+    }
+}
+tasks.configureEach { if (normalQaBuildEnabled && name == "preNormalQaDebugBuild") dependsOn("prepareNormalQaTrust") }
+// Variant-level isolation: no QA release variant exists. QA debug is a separate build opt-in,
+// not an auth approval and never a default prod/demo/CI dependency.
+androidComponents {
+    beforeVariants(selector().withName("normalQaRelease")) { variant -> variant.enable = false }
+    beforeVariants(selector().withName("normalQaDebug")) { variant -> variant.enable = normalQaBuildEnabled }
 }

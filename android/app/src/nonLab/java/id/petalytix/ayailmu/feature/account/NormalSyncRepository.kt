@@ -309,7 +309,14 @@ internal class NormalSyncRepository @Inject constructor(
             loaded.track to PackProof.fromBytes(assets.read(entry.pack).encodeToByteArray(), assets.read(entry.rules).encodeToByteArray(), config.registrySourceCommit)
         }.also { require(it.isNotEmpty()) { "No approved native tracks configured" } }
     }
-    fun stop() { observed?.cancel(); scope.cancel(); engine.expireSession(); visibility.close() }
+    /** Await owned background work before the caller releases Room or journal storage. */
+    suspend fun stop() {
+        cancelActions()
+        scope.coroutineContext.job.cancelAndJoin()
+        observed = null
+        engine.expireSession()
+        visibility.close()
+    }
     private fun SyncResult.notice() = when (this) {
         SyncResult.SYNCED -> NormalSyncNotice.SYNCED
         SyncResult.OFFLINE -> NormalSyncNotice.OFFLINE

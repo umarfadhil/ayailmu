@@ -18,7 +18,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.cancel
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.job
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -97,5 +98,6 @@ internal class NormalProfileVisibility @Inject constructor(
         revision.value++
         }
     }
-    fun close() { scope.cancel() }
+    /** Drain the initial refresh and Room collectors before their database is closed. */
+    suspend fun close() { scope.coroutineContext.job.cancelAndJoin() }
 }
