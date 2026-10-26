@@ -19,15 +19,19 @@ class AnswerRepository(
     private val db: AyaDatabase,
     private val clock: Clock,
     private val ids: IdGenerator,
+    private val visibility: ProfileVisibility = AllowAllProfiles,
 ) {
-    fun storeFor(profileId: String): SessionStore = RoomSessionStore(db, profileId, clock)
+    fun storeFor(profileId: String): SessionStore {
+        require(visibility.allows(profileId)) { "Profile is not available in this owner context" }
+        return RoomSessionStore(db, profileId, clock) { visibility.allows(profileId) }
+    }
 
     suspend fun history(
         profileId: String,
         track: String,
-    ): List<AnswerEvent> = db.answers().history(profileId, track).map(Mappers::event)
+    ): List<AnswerEvent> = if (visibility.allows(profileId)) db.answers().history(profileId, track).map(Mappers::event) else emptyList()
 
-    suspend fun allEvents(): List<AnswerEvent> = db.answers().all().map(Mappers::event)
+    suspend fun allEvents(): List<AnswerEvent> = db.answers().all().filter { visibility.allows(it.profileId) }.map(Mappers::event)
 
     fun observeCount(): Flow<Int> = db.answers().observeCount()
 
@@ -35,12 +39,15 @@ class AnswerRepository(
     suspend fun resumable(
         profileId: String,
         content: GatedContent,
-    ): SessionState? = Session.restore(db.snapshots().get(profileId, content.track)?.payload, content)
+    ): SessionState? = if (!visibility.allows(profileId)) null else Session.restore(db.snapshots().get(profileId, content.track)?.payload, content)
 
     suspend fun clearSnapshot(
         profileId: String,
         track: String,
-    ) = db.snapshots().delete(profileId, track)
+    ) {
+        require(visibility.allows(profileId)) { "Profile is not available in this owner context" }
+        db.snapshots().delete(profileId, track)
+    }
 
     suspend fun addReport(
         profileId: String,
@@ -49,6 +56,7 @@ class AnswerRepository(
         reason: String,
         text: String,
     ): ItemReport {
+        require(visibility.allows(profileId)) { "Profile is not available in this owner context" }
         val entity =
             ItemReportEntity(
                 reportId = ids.newId("rep"),
@@ -63,7 +71,7 @@ class AnswerRepository(
         return entity.toModel()
     }
 
-    suspend fun allReports(): List<ItemReport> = db.reports().all().map { it.toModel() }
+    suspend fun allReports(): List<ItemReport> = db.reports().all().filter { visibility.allows(it.profileId) }.map { it.toModel() }
 }
 
 fun ItemReportEntity.toModel() = ItemReport(reportId, profileId, itemId, contentVersion, timestamp, reason, text)

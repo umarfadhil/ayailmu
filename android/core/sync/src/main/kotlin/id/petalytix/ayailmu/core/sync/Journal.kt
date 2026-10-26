@@ -13,6 +13,8 @@ data class Captured(val payload: String, val acknowledgedSequence: Long? = null)
 data class Binding(
     val learner: Learner,
     val proof: PackProof,
+    /** All approved native tracks enrolled for this binding; [proof] remains the lab-compatible primary proof. */
+    val proofs: Map<String, PackProof> = emptyMap(),
     val enabled: Boolean = false,
     val withdrawalPending: Boolean = false,
     val consentRevision: Long = 0,

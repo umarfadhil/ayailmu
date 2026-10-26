@@ -71,6 +71,7 @@ data class SettingsData(
     val soundEffects: Boolean = true,
     /** Follow-up 12: this profile's picture (a `pic_*` animal); any profile may change its own. */
     val avatar: String = Avatars.defaultFor(profile.id),
+    val developerDemo: Boolean = false,
 ) {
     /** Reminder, export and deleting are adult-only: a child profile can see them but not change them (CR-HAB-5). */
     val isAdult: Boolean get() = profile.kind == ProfileKind.ADULT
@@ -131,6 +132,7 @@ class DefaultSettingsDataSource
         private val trialStore: TrialStore,
         private val sound: SoundSettingsStore,
         private val choices: ProfileChoiceStore,
+        private val normalCleaner: NormalLocalCleaner = NoNormalLocalCleaner,
     ) : SettingsDataSource {
         // The profile's saved surveys are observed too, so the survey entry goes away once it is filled in.
         @OptIn(ExperimentalCoroutinesApi::class)
@@ -157,6 +159,7 @@ class DefaultSettingsDataSource
                     children = everyone.filter { it.kind == ProfileKind.ANAK },
                     soundEffects = device.soundEffects,
                     avatar = Avatars.of(profile.id, device.avatars[profile.id]),
+                    developerDemo = build.developerDemo,
                 )
             }
 
@@ -222,6 +225,7 @@ class DefaultSettingsDataSource
             val me = requireAdult()
             val all = profiles.all()
             if (all.none { it.kind == ProfileKind.ADULT && it.id != me.id } && all.any { it.kind == ProfileKind.ANAK }) throw LastAdultException()
+            normalCleaner.deleteProfile(me.id)
             profiles.delete(me.id)
             puzzles.forget(me.id)
             trialStore.forget(me.id)
@@ -234,6 +238,7 @@ class DefaultSettingsDataSource
 
         override suspend fun deleteAll() {
             requireAdult()
+            normalCleaner.deleteDevice()
             resetter.deleteAll()
         }
 
@@ -259,6 +264,7 @@ class DefaultSettingsDataSource
             requireAdult()
             val child = profiles.all().firstOrNull { it.id == id }
             require(child != null && child.kind == ProfileKind.ANAK) { "only a child profile can be deleted here" }
+            normalCleaner.deleteProfile(id)
             profiles.delete(id)
             puzzles.forget(id)
             trialStore.forget(id)

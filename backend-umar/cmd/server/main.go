@@ -56,6 +56,17 @@ func run() error {
 	if err != nil {
 		return err
 	}
+	dataMode, err := api.ParseDeploymentDataMode(env("UMAR_DATA_MODE", "SYNTHETIC_LAB"))
+	if err != nil {
+		return err
+	}
+	release, err := api.ParseReleasePolicy(os.Getenv("UMAR_NORMAL_RELEASE_READY"), os.Getenv("UMAR_NORMAL_DECLARATION_VERSION"), os.Getenv("UMAR_NORMAL_SYNC_POLICY_VERSION"))
+	if err != nil {
+		return err
+	}
+	if release.Enabled && dataMode != api.DeploymentNormalOnly {
+		return errors.New("normal readiness requires UMAR_DATA_MODE=NORMAL_ONLY")
+	}
 	r, err := catalog.Load()
 	if err != nil {
 		return errors.New("catalog initialization failed")
@@ -70,10 +81,10 @@ func run() error {
 	if err = s.Prepare(startup, migrate); err != nil {
 		return errors.New("database preparation failed; verify schema and role configuration")
 	}
-	server := &http.Server{Addr: addr, Handler: api.New(s, v, r), ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 15 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 32768}
+	server := &http.Server{Addr: addr, Handler: api.NewWithRelease(s, v, r, release, dataMode), ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 15 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 32768}
 	done := make(chan error, 1)
 	go func() {
-		log.Printf("Umar synthetic-only API listening at http://%s", addr)
+		log.Printf("Umar API listening at http://%s (normal release enabled=%t, data mode=%s)", addr, release.Enabled, dataMode)
 		done <- server.ListenAndServe()
 	}()
 	select {

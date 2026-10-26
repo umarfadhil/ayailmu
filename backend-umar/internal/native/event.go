@@ -65,8 +65,11 @@ func score(s string) bool { return one(s, "correct", "wrong", "pending", "dont_k
 func tag(s string) bool {
 	return one(s, "wrong-referent", "possession", "invented-action", "wrong-form", "lexical", "look-alike", "decoding", "ta-confusion", "wrong-speaker", "calculation", "misconception", "sequence")
 }
-func audio(p *string) bool { return p == nil || one(*p, "played", "failed", "unavailable") }
-func Parse(b []byte, child bool) (Event, error) {
+func audio(p *string) bool                      { return p == nil || one(*p, "played", "failed", "unavailable") }
+func Parse(b []byte, child bool) (Event, error) { return ParseForMode(b, child, true) }
+
+// ParseForMode preserves the native response contract while enforcing the account data lane.
+func ParseForMode(b []byte, child bool, synthetic bool) (Event, error) {
 	var e Event
 	fail := func() (Event, error) { return e, fmt.Errorf("invalid native answer event") }
 	if len(b) > 16384 || Decode(b, &e) != nil {
@@ -77,13 +80,16 @@ func Parse(b []byte, child bool) (Event, error) {
 			return fail()
 		}
 	}
-	if !e.Synthetic || e.FirstAttempt == nil || e.FreshEvidence == nil || e.Skills == nil || e.AutoScore == nil {
+	if e.Synthetic != synthetic || e.FirstAttempt == nil || e.FreshEvidence == nil || e.Skills == nil || e.AutoScore == nil {
 		return fail()
 	}
 	if _, err := time.Parse(time.RFC3339Nano, e.Timestamp); err != nil {
 		return fail()
 	}
 	if _, err := time.Parse(time.DateOnly, e.LocalDate); err != nil {
+		return fail()
+	}
+	if !synthetic && e.ReviewStatus != "approved" {
 		return fail()
 	}
 	if !one(e.Lang, "id", "en") || !one(e.Pool, "INSTR", "PRACT", "READY", "D7", "D30", "REMED", "TRANS", "SPARE", "MT", "ENTRY", "REPROBE", "FOCUS", "GEM") || !score(e.Outcome) || !one(e.ReviewStatus, "draft", "reviewed_subject", "reviewed_language", "approved") || !audio(e.AudioStatus) || e.TimeOnItemMS < 0 {

@@ -15,15 +15,72 @@ import (
 	"github.com/umarfadhil/ayailmu/backend-umar/internal/store"
 )
 
+type DeploymentDataMode string
+
+const (
+	DeploymentNormalOnly   DeploymentDataMode = "NORMAL_ONLY"
+	DeploymentSyntheticLab DeploymentDataMode = "SYNTHETIC_LAB"
+)
+
+func ParseDeploymentDataMode(value string) (DeploymentDataMode, error) {
+	switch DeploymentDataMode(value) {
+	case DeploymentNormalOnly, DeploymentSyntheticLab:
+		return DeploymentDataMode(value), nil
+	default:
+		return "", errors.New("UMAR_DATA_MODE must be NORMAL_ONLY or SYNTHETIC_LAB")
+	}
+}
+
+type ReleasePolicy struct {
+	Enabled            bool
+	DeclarationVersion string
+	ConsentVersion     string
+}
+
+func ParseReleasePolicy(enabled, declarationVersion, consentVersion string) (ReleasePolicy, error) {
+	p := ReleasePolicy{Enabled: enabled == "true", DeclarationVersion: declarationVersion, ConsentVersion: consentVersion}
+	if !p.Enabled {
+		return ReleasePolicy{}, nil
+	}
+	valid := func(v string) bool {
+		if len(v) < 3 || len(v) > 80 {
+			return false
+		}
+		for i, r := range v {
+			if r >= 'a' && r <= 'z' || r >= '0' && r <= '9' || i > 0 && r == '-' {
+				continue
+			}
+			return false
+		}
+		return true
+	}
+	if !valid(declarationVersion) || !valid(consentVersion) || declarationVersion == "synthetic-sync-v1" || consentVersion == "synthetic-sync-v1" {
+		return ReleasePolicy{}, errors.New("normal release requires exact approved declaration and sync policy versions")
+	}
+	return p, nil
+}
+
 type server struct {
-	s *store.Store
-	v *auth.Verifier
-	r *catalog.Registry
+	s      *store.Store
+	v      *auth.Verifier
+	r      *catalog.Registry
+	normal ReleasePolicy
+	mode   DeploymentDataMode
 }
 type action func(http.ResponseWriter, *http.Request, auth.Principal)
 
 func New(s *store.Store, v *auth.Verifier, r *catalog.Registry) http.Handler {
-	a := &server{s, v, r}
+	return NewWithRelease(s, v, r, ReleasePolicy{}, DeploymentSyntheticLab)
+}
+func NewWithRelease(s *store.Store, v *auth.Verifier, r *catalog.Registry, normal ReleasePolicy, modes ...DeploymentDataMode) http.Handler {
+	mode := DeploymentNormalOnly
+	if len(modes) == 1 {
+		mode = modes[0]
+	}
+	if normal.Enabled && mode != DeploymentNormalOnly {
+		panic("normal readiness requires NORMAL_ONLY deployment mode")
+	}
+	a := &server{s: s, v: v, r: r, normal: normal, mode: mode}
 	m := http.NewServeMux()
 	m.HandleFunc("GET /healthz", func(w http.ResponseWriter, r *http.Request) { write(w, 200, map[string]string{"status": "ok"}) })
 	m.HandleFunc("GET /readyz", func(w http.ResponseWriter, r *http.Request) {
@@ -37,8 +94,8 @@ func New(s *store.Store, v *auth.Verifier, r *catalog.Registry) http.Handler {
 	})
 	m.HandleFunc("POST /v1/account", a.secure(a.account))
 	m.HandleFunc("GET /v1/account", a.secure(func(w http.ResponseWriter, r *http.Request, p auth.Principal) {
-		if id, ok := a.owner(w, r, p); ok {
-			write(w, 200, map[string]string{"account_id": id})
+		if identity, ok := a.ownerInfo(w, r, p); ok && a.modeAllowed(w, identity.Synthetic) {
+			write(w, 200, map[string]string{"account_id": identity.ID})
 		}
 	}))
 	m.HandleFunc("POST /v1/learners", a.secure(a.createProfile))
@@ -46,7 +103,7 @@ func New(s *store.Store, v *auth.Verifier, r *catalog.Registry) http.Handler {
 	m.HandleFunc("POST /v1/learners/{id}/consent", a.secure(a.consent))
 	m.HandleFunc("POST /v1/learners/{id}/events", a.secure(a.append))
 	m.HandleFunc("GET /v1/learners/{id}/events", a.secure(a.pull))
-	m.HandleFunc("GET /v1/packs", a.secure(func(w http.ResponseWriter, r *http.Request, p auth.Principal) { write(w, 200, a.r) }))
+	m.HandleFunc("GET /v1/packs", a.secure(func(w http.ResponseWriter, r *http.Request, p auth.Principal) { write(w, 200, a.catalogResponse()) }))
 	slots := make(chan struct{}, 64)
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Cache-Control", "no-store")
@@ -62,6 +119,31 @@ func New(s *store.Store, v *auth.Verifier, r *catalog.Registry) http.Handler {
 		defer cancel()
 		m.ServeHTTP(w, r.WithContext(ctx))
 	})
+}
+func (a *server) catalogResponse() *catalog.Registry {
+	if a.mode == DeploymentNormalOnly && !a.normal.Enabled {
+		return &catalog.Registry{SourceCommit: a.r.SourceCommit, Packs: []catalog.Pack{}}
+	}
+	if !a.normal.Enabled {
+		return a.r
+	}
+	out := &catalog.Registry{SourceCommit: a.r.SourceCommit, Packs: []catalog.Pack{}}
+	for _, pack := range a.r.Packs {
+		if pack.Synthetic {
+			continue
+		}
+		items := map[string]catalog.Item{}
+		for id, item := range pack.Items {
+			if item.ReviewStatus == "approved" {
+				items[id] = item
+			}
+		}
+		if len(items) > 0 {
+			pack.Items = items
+			out.Packs = append(out.Packs, pack)
+		}
+	}
+	return out
 }
 func (a *server) secure(next action) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -98,6 +180,8 @@ func problem(w http.ResponseWriter, e error) {
 		failure(w, 409, "idempotency_conflict")
 	case errors.Is(e, store.ErrConsent):
 		failure(w, 403, "sync_consent_required")
+	case errors.Is(e, store.ErrConsentVersion):
+		failure(w, 403, "sync_consent_update_required")
 	case errors.Is(e, store.ErrAccount):
 		failure(w, 403, "adult_owner_required")
 	default:
@@ -132,6 +216,25 @@ func fresh(w http.ResponseWriter, p auth.Principal) bool {
 	}
 	return true
 }
+func (a *server) ownerInfo(w http.ResponseWriter, r *http.Request, p auth.Principal) (store.AccountIdentity, bool) {
+	identity, err := a.s.AccountInfo(r.Context(), p.Issuer, p.Subject)
+	if err != nil {
+		problem(w, err)
+		return store.AccountIdentity{}, false
+	}
+	return identity, true
+}
+func (a *server) modeAllowed(w http.ResponseWriter, synthetic bool) bool {
+	if a.mode == DeploymentNormalOnly && synthetic || a.mode == DeploymentSyntheticLab && !synthetic {
+		failure(w, 403, "deployment_data_mode_mismatch")
+		return false
+	}
+	if !synthetic && !a.normal.Enabled {
+		failure(w, 403, "normal_release_required")
+		return false
+	}
+	return true
+}
 func (a *server) owner(w http.ResponseWriter, r *http.Request, p auth.Principal) (string, bool) {
 	id, err := a.s.Account(r.Context(), p.Issuer, p.Subject)
 	if err != nil {
@@ -149,11 +252,16 @@ func (a *server) account(w http.ResponseWriter, r *http.Request, p auth.Principa
 	if !decode(w, r, &in) || !fresh(w, p) {
 		return
 	}
-	if !in.Synthetic || !in.AdultConfirmed || in.DeclarationVersion != "adult-owner-v1" {
+	if a.mode == DeploymentNormalOnly && in.Synthetic || a.mode == DeploymentSyntheticLab && !in.Synthetic {
 		problem(w, store.ErrInvalid)
 		return
 	}
-	id, err := a.s.Activate(r.Context(), p.Issuer, p.Subject)
+	if !in.AdultConfirmed || in.Synthetic && in.DeclarationVersion != "adult-owner-v1" ||
+		!in.Synthetic && (!a.normal.Enabled || in.DeclarationVersion != a.normal.DeclarationVersion) {
+		problem(w, store.ErrInvalid)
+		return
+	}
+	id, err := a.s.ActivateWithDeclaration(r.Context(), p.Issuer, p.Subject, in.DeclarationVersion, in.Synthetic)
 	if err != nil {
 		problem(w, err)
 		return
@@ -165,11 +273,21 @@ func (a *server) createProfile(w http.ResponseWriter, r *http.Request, p auth.Pr
 	if !decode(w, r, &in) || !fresh(w, p) {
 		return
 	}
-	owner, ok := a.owner(w, r, p)
-	if !ok {
+	if !in.Synthetic && !a.normal.Enabled {
+		problem(w, store.ErrInvalid)
 		return
 	}
-	profile, err := a.s.CreateProfile(r.Context(), owner, in)
+	identity, ok := a.ownerInfo(w, r, p)
+	if !ok || identity.Synthetic != in.Synthetic {
+		if ok {
+			problem(w, store.ErrInvalid)
+		}
+		return
+	}
+	if !a.modeAllowed(w, identity.Synthetic) {
+		return
+	}
+	profile, err := a.s.CreateProfile(r.Context(), identity.ID, in)
 	if err != nil {
 		problem(w, err)
 		return
@@ -177,11 +295,11 @@ func (a *server) createProfile(w http.ResponseWriter, r *http.Request, p auth.Pr
 	write(w, 200, profile)
 }
 func (a *server) profiles(w http.ResponseWriter, r *http.Request, p auth.Principal) {
-	owner, ok := a.owner(w, r, p)
-	if !ok {
+	identity, ok := a.ownerInfo(w, r, p)
+	if !ok || !a.modeAllowed(w, identity.Synthetic) {
 		return
 	}
-	profiles, err := a.s.Profiles(r.Context(), owner)
+	profiles, err := a.s.Profiles(r.Context(), identity.ID)
 	if err != nil {
 		problem(w, err)
 		return
@@ -197,15 +315,22 @@ func (a *server) consent(w http.ResponseWriter, r *http.Request, p auth.Principa
 	if !decode(w, r, &in) || !fresh(w, p) {
 		return
 	}
-	if !in.Synthetic || in.Granted == nil {
+	if in.Granted == nil || in.Synthetic && in.Version != "synthetic-sync-v1" ||
+		!in.Synthetic && (!a.normal.Enabled || in.Version != a.normal.ConsentVersion) {
 		problem(w, store.ErrInvalid)
 		return
 	}
-	owner, ok := a.owner(w, r, p)
-	if !ok {
+	identity, ok := a.ownerInfo(w, r, p)
+	if !ok || identity.Synthetic != in.Synthetic {
+		if ok {
+			problem(w, store.ErrInvalid)
+		}
 		return
 	}
-	if err := a.s.Consent(r.Context(), owner, r.PathValue("id"), *in.Granted, in.Version); err != nil {
+	if !a.modeAllowed(w, identity.Synthetic) {
+		return
+	}
+	if err := a.s.Consent(r.Context(), identity.ID, r.PathValue("id"), *in.Granted, in.Version); err != nil {
 		problem(w, err)
 		return
 	}
@@ -220,15 +345,21 @@ func (a *server) append(w http.ResponseWriter, r *http.Request, p auth.Principal
 	if !decode(w, r, &in) {
 		return
 	}
-	if in.SchemaVersion != 1 || !in.Synthetic {
+	if in.SchemaVersion != 1 || !in.Synthetic && !a.normal.Enabled {
 		problem(w, store.ErrInvalid)
 		return
 	}
-	owner, ok := a.owner(w, r, p)
-	if !ok {
+	identity, ok := a.ownerInfo(w, r, p)
+	if !ok || identity.Synthetic != in.Synthetic {
+		if ok {
+			problem(w, store.ErrInvalid)
+		}
 		return
 	}
-	receipts, err := a.s.Append(r.Context(), owner, r.PathValue("id"), in.Events)
+	if !a.modeAllowed(w, identity.Synthetic) {
+		return
+	}
+	receipts, err := a.s.Append(r.Context(), identity.ID, r.PathValue("id"), in.Events, a.normal.ConsentVersion)
 	if err != nil {
 		problem(w, err)
 		return
@@ -242,11 +373,11 @@ func (a *server) pull(w http.ResponseWriter, r *http.Request, p auth.Principal) 
 		problem(w, store.ErrInvalid)
 		return
 	}
-	owner, ok := a.owner(w, r, p)
-	if !ok {
+	identity, ok := a.ownerInfo(w, r, p)
+	if !ok || !a.modeAllowed(w, identity.Synthetic) {
 		return
 	}
-	page, e := a.s.Pull(r.Context(), owner, r.PathValue("id"), values.after, values.limit)
+	page, e := a.s.Pull(r.Context(), identity.ID, r.PathValue("id"), values.after, values.limit, a.normal.ConsentVersion)
 	if e != nil {
 		problem(w, e)
 		return

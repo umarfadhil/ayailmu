@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import id.petalytix.ayailmu.AppLocale
+import id.petalytix.ayailmu.BuildConfig
 import id.petalytix.ayailmu.R
 import id.petalytix.ayailmu.core.design.art.ArtImage
 import id.petalytix.ayailmu.core.design.art.AyaFigure
@@ -143,7 +144,7 @@ private fun LanguageStep(
             modifier = Modifier.headingSemantics(),
         )
         if (state.firstRun) {
-            Text(stringResource(R.string.onb_welcome_body), style = MaterialTheme.typography.bodyLarge, color = colors.inkSoft)
+            Text(stringResource(if (BuildConfig.NORMAL_AUTH_APPROVED) R.string.onb_welcome_body_cloud else R.string.onb_welcome_body), style = MaterialTheme.typography.bodyLarge, color = colors.inkSoft)
         }
         Text(stringResource(R.string.onb_lang_question), style = MaterialTheme.typography.bodyLarge, color = colors.ink)
         listOf(Lang.ID to R.string.lang_name_id, Lang.EN to R.string.lang_name_en).forEach { (lang, name) ->

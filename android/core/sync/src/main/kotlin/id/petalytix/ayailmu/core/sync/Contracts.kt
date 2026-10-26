@@ -41,10 +41,17 @@ interface Backend {
     suspend fun currentAccount(token: String): String
     suspend fun learners(token: String): List<Learner>
     suspend fun createLearner(token: String, clientId: String): Learner
+    /** Normal owner/guardian profile contract. Synthetic implementations may keep only the lab method. */
+    suspend fun createProfileLearner(token: String, clientId: String, kind: String, lang: String): Learner =
+        throw UnsupportedOperationException("Normal learner creation is not configured")
+    /** Normal mode must receive the actual owner declaration; there is deliberately no synthetic fallback. */
+    suspend fun activateOwner(token: String, declarationVersion: String, adultConfirmed: Boolean): String =
+        throw UnsupportedOperationException("Normal owner activation is not configured")
     suspend fun catalog(token: String): Catalog
     suspend fun consent(token: String, learnerId: String, granted: Boolean)
     suspend fun append(token: String, learnerId: String, payloads: List<String>): List<Receipt>
     suspend fun pull(token: String, learnerId: String, after: Long): Page
 }
 class ApiFailure(val status: Int, val code: String) : RuntimeException("Backend HTTP $status: $code")
-enum class SyncResult { SYNCED, OFFLINE, CONSENT_OFF, LOGIN_REQUIRED, BLOCKED, SESSION_CHANGED }
+data class NormalOwnerDeclaration(val version: String, val adultConfirmed: Boolean)
+enum class SyncResult { SYNCED, OFFLINE, CONSENT_OFF, CONSENT_UPDATE_REQUIRED, FRESH_AUTH_REQUIRED, LOGIN_REQUIRED, BLOCKED, SESSION_CHANGED }

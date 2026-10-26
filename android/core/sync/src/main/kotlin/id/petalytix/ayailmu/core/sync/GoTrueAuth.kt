@@ -29,10 +29,11 @@ class AuthFailure(val status: Int, val code: String) : RuntimeException("Authent
 
 /** Documented GoTrue v2 HTTP adapter. The provider owns credentials, OTPs and tokens;
  * this app does not issue/verify tokens or implement password cryptography. No logging. */
-class GoTrueAuth(baseUrl: String) {
+class GoTrueAuth(baseUrl: String, private val googleRedirectScheme: String = "id.petalytix.ayailmu.synclab") {
     private val base = URI(baseUrl.trimEnd('/'))
     private val json = Json { ignoreUnknownKeys = true }
     init {
+        require(googleRedirectScheme.matches(Regex("[a-z][a-z0-9+.-]{2,63}")))
         require(base.host != null && base.userInfo == null && base.query == null && base.fragment == null && base.path.isNullOrEmpty())
         require(base.scheme == "https" || base.scheme == "http" && base.host in setOf("127.0.0.1", "localhost"))
     }
@@ -102,7 +103,7 @@ class GoTrueAuth(baseUrl: String) {
     fun googleUrl(challenge: String, redirect: String): String {
         require(challenge.matches(Regex("[A-Za-z0-9_-]{16,128}")))
         val uri = URI(redirect)
-        require(uri.scheme == "id.petalytix.ayailmu.synclab" && uri.host == "auth-callback" && uri.userInfo == null && uri.query == null && uri.fragment == null && uri.path.matches(Regex("/[A-Za-z0-9_-]{4,128}")))
+        require(uri.scheme == googleRedirectScheme && uri.host == "auth-callback" && uri.userInfo == null && uri.query == null && uri.fragment == null && uri.path.matches(Regex("/[A-Za-z0-9_-]{4,128}")))
         fun encode(s: String) = URLEncoder.encode(s, "UTF-8")
         return "$base/authorize?provider=google&redirect_to=${encode(redirect)}&code_challenge=${encode(challenge)}&code_challenge_method=s256"
     }

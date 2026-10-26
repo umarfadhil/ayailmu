@@ -16,11 +16,12 @@ import (
 )
 
 var (
-	ErrNotFound = errors.New("not_found")
-	ErrInvalid  = errors.New("invalid_request")
-	ErrConflict = errors.New("idempotency_conflict")
-	ErrConsent  = errors.New("sync_consent_required")
-	ErrAccount  = errors.New("adult_owner_required")
+	ErrNotFound       = errors.New("not_found")
+	ErrInvalid        = errors.New("invalid_request")
+	ErrConflict       = errors.New("idempotency_conflict")
+	ErrConsent        = errors.New("sync_consent_required")
+	ErrAccount        = errors.New("adult_owner_required")
+	ErrConsentVersion = errors.New("sync_consent_update_required")
 )
 
 //go:embed migrations/*.sql
@@ -115,28 +116,49 @@ func (s *Store) Migrate(ctx context.Context) error {
 	}
 	return tx.Commit(ctx)
 }
-func (s *Store) Activate(ctx context.Context, issuer, subject string) (string, error) {
+func (s *Store) Activate(ctx context.Context, issuer, subject string, normal ...bool) (string, error) {
+	synthetic := len(normal) == 0 || !normal[0]
+	return s.ActivateWithDeclaration(ctx, issuer, subject, "adult-owner-v1", synthetic)
+}
+func (s *Store) ActivateWithDeclaration(ctx context.Context, issuer, subject, declarationVersion string, synthetic bool) (string, error) {
+	if synthetic && declarationVersion != "adult-owner-v1" || declarationVersion == "" {
+		return "", ErrInvalid
+	}
 	// Do not grant the runtime identity UPDATE on accounts merely for idempotent activation.
-	// Read committed gives the second statement a fresh snapshot after a conflicting insert waits.
 	tx, err := s.pool.BeginTx(ctx, pgx.TxOptions{IsoLevel: pgx.ReadCommitted})
 	if err != nil {
 		return "", err
 	}
 	defer tx.Rollback(ctx)
-	if _, err = tx.Exec(ctx, `INSERT INTO accounts(issuer,subject,declaration_version,synthetic) VALUES($1,$2,'adult-owner-v1',true) ON CONFLICT(issuer,subject) DO NOTHING`, issuer, subject); err != nil {
+	if _, err = tx.Exec(ctx, `INSERT INTO accounts(issuer,subject,declaration_version,synthetic) VALUES($1,$2,$3,$4) ON CONFLICT(issuer,subject) DO NOTHING`, issuer, subject, declarationVersion, synthetic); err != nil {
 		return "", err
 	}
-	var id string
-	if err = tx.QueryRow(ctx, `SELECT id::text FROM accounts WHERE issuer=$1 AND subject=$2`, issuer, subject).Scan(&id); err != nil {
+	var id, existingVersion string
+	var existingSynthetic bool
+	if err = tx.QueryRow(ctx, `SELECT id::text,declaration_version,synthetic FROM accounts WHERE issuer=$1 AND subject=$2`, issuer, subject).Scan(&id, &existingVersion, &existingSynthetic); err != nil {
 		return "", err
+	}
+	if existingSynthetic != synthetic || existingVersion != declarationVersion {
+		return "", ErrConflict
 	}
 	return id, tx.Commit(ctx)
 }
-func (s *Store) Account(ctx context.Context, issuer, subject string) (string, error) {
-	var id string
-	err := s.pool.QueryRow(ctx, `SELECT id::text FROM accounts WHERE issuer=$1 AND subject=$2`, issuer, subject).Scan(&id)
+
+type AccountIdentity struct {
+	ID                 string
+	Synthetic          bool
+	DeclarationVersion string
+}
+
+func (s *Store) AccountInfo(ctx context.Context, issuer, subject string) (AccountIdentity, error) {
+	var value AccountIdentity
+	err := s.pool.QueryRow(ctx, `SELECT id::text,synthetic,declaration_version FROM accounts WHERE issuer=$1 AND subject=$2`, issuer, subject).Scan(&value.ID, &value.Synthetic, &value.DeclarationVersion)
 	if errors.Is(err, pgx.ErrNoRows) {
-		return "", ErrAccount
+		return AccountIdentity{}, ErrAccount
 	}
-	return id, err
+	return value, err
+}
+func (s *Store) Account(ctx context.Context, issuer, subject string) (string, error) {
+	value, err := s.AccountInfo(ctx, issuer, subject)
+	return value.ID, err
 }

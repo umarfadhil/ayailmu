@@ -51,6 +51,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import id.petalytix.ayailmu.BuildConfig
 import id.petalytix.ayailmu.R
 import id.petalytix.ayailmu.core.data.Profile
 import id.petalytix.ayailmu.core.data.ProfileKind
@@ -70,6 +71,7 @@ import id.petalytix.ayailmu.core.design.theme.AyaTheme
 import id.petalytix.ayailmu.core.design.theme.AyaThemeTokens
 import id.petalytix.ayailmu.core.model.Audience
 import id.petalytix.ayailmu.core.model.Lang
+import id.petalytix.ayailmu.feature.account.NormalAccountSettingsEntry
 import id.petalytix.ayailmu.feature.common.startShare
 import id.petalytix.ayailmu.feature.home.AvatarPicker
 import id.petalytix.ayailmu.feature.home.ProfileAvatar
@@ -81,6 +83,7 @@ import kotlinx.coroutines.delay
 fun SettingsRoute(
     onBack: () -> Unit,
     onOpenStore: () -> Unit = {},
+    onOpenAccount: () -> Unit = {},
     onOpenSurvey: (SurveyCard) -> Unit = {},
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
@@ -110,6 +113,7 @@ fun SettingsRoute(
         },
         onBack = onBack,
         onOpenStore = onOpenStore,
+        onOpenAccount = onOpenAccount,
         onOpenSurvey = onOpenSurvey,
     )
 }
@@ -121,6 +125,7 @@ fun SettingsScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
     onOpenStore: () -> Unit = {},
+    onOpenAccount: () -> Unit = {},
     onOpenSurvey: (SurveyCard) -> Unit = {},
 ) {
     val colors = AyaThemeTokens.colors
@@ -149,7 +154,8 @@ fun SettingsScreen(
             if (d.profile.consentVersion != null) ConsentSection(state.busy, onEvent)
             d.survey?.let { SurveySection(it, onOpenSurvey) }
             if (d.isAdult) DataSection(d.children, state.busy, onEvent)
-            PurchasesSection(onOpenStore)
+            if (BuildConfig.BILLING_ENABLED) PurchasesSection(onOpenStore)
+            NormalAccountSettingsEntry(onOpenAccount)
             AboutSection(d, state.busy, onEvent)
         }
         AyaSecondaryButton(text = stringResource(R.string.action_back), onClick = onBack, modifier = Modifier.fillMaxWidth())
@@ -411,7 +417,7 @@ private fun DataSection(
     var confirmChild by remember { mutableStateOf<Profile?>(null) }
     PaperCard {
         SectionTitle(stringResource(R.string.settings_data))
-        Text(stringResource(R.string.settings_data_body), style = MaterialTheme.typography.bodyMedium, color = colors.inkSoft)
+        Text(stringResource(if (BuildConfig.NORMAL_AUTH_APPROVED) R.string.settings_data_body_cloud else R.string.settings_data_body), style = MaterialTheme.typography.bodyMedium, color = colors.inkSoft)
         AyaSecondaryButton(text = stringResource(R.string.settings_export), enabled = !busy, onClick = { onEvent(SettingsEvent.Export) }, modifier = Modifier.fillMaxWidth())
         TextButton(onClick = { confirmProfile = true }, enabled = !busy) { Text(stringResource(R.string.settings_delete_profile), color = colors.notYet) }
         // A parent can remove one child's profile and answers without wiping the whole phone.
@@ -425,7 +431,7 @@ private fun DataSection(
     confirmChild?.let { child ->
         ConfirmDialog(
             title = stringResource(R.string.settings_delete_child_title, child.label),
-            body = stringResource(R.string.settings_delete_child_body),
+            body = stringResource(if (BuildConfig.NORMAL_AUTH_APPROVED) R.string.settings_delete_child_body_cloud else R.string.settings_delete_child_body),
             confirm = stringResource(R.string.dev_delete_confirm_yes),
             onConfirm = { onEvent(SettingsEvent.DeleteChild(child.id)) },
             onDismiss = { confirmChild = null },
@@ -434,7 +440,7 @@ private fun DataSection(
     if (confirmProfile) {
         ConfirmDialog(
             title = stringResource(R.string.settings_delete_profile_title),
-            body = stringResource(R.string.settings_delete_profile_body),
+            body = stringResource(if (BuildConfig.NORMAL_AUTH_APPROVED) R.string.settings_delete_profile_body_cloud else R.string.settings_delete_profile_body),
             confirm = stringResource(R.string.dev_delete_confirm_yes),
             onConfirm = { onEvent(SettingsEvent.DeleteProfile) },
             onDismiss = { confirmProfile = false },
@@ -483,9 +489,10 @@ private fun AboutSection(
     val colors = AyaThemeTokens.colors
     PaperCard {
         SectionTitle(stringResource(R.string.settings_about))
-        Text(stringResource(R.string.settings_learner_id), style = MaterialTheme.typography.labelLarge, color = colors.inkSoft)
-        // Long-press to copy: testers quote it when asking for deletion (Trial_App_Spec §11).
-        SelectionContainer { Text(d.profile.id, style = MaterialTheme.typography.bodyMedium, color = colors.ink) }
+        if (d.developerDemo) {
+            Text(stringResource(R.string.settings_learner_id), style = MaterialTheme.typography.labelLarge, color = colors.inkSoft)
+            SelectionContainer { Text(d.profile.id, style = MaterialTheme.typography.bodyMedium, color = colors.ink) }
+        }
         Text(stringResource(R.string.settings_contact, stringResource(R.string.contact_email)), style = MaterialTheme.typography.bodyMedium, color = colors.ink)
         Text(stringResource(R.string.settings_version, d.appVersion), style = MaterialTheme.typography.labelSmall, color = colors.inkSoft)
         // The policy page lives on petalytix.id (docs/store/privacy_policy.md); opening it needs a browser, not the app.
@@ -495,7 +502,7 @@ private fun AboutSection(
             Text(stringResource(R.string.settings_privacy_policy), color = colors.accentDeep)
         }
         Text(stringResource(R.string.settings_font_licence), style = MaterialTheme.typography.labelSmall, color = colors.inkSoft)
-        if (d.isAdult) TesterCodeArea(d.testerUnlock, busy, onEvent)
+        if (d.isAdult && d.developerDemo) TesterCodeArea(d.testerUnlock, busy, onEvent)
     }
 }
 

@@ -95,7 +95,7 @@ internal class SyncLabRepository @Inject constructor(
         accepted: () -> Boolean = { true },
         onCommitted: ((Long) -> Unit)? = null,
     ) = withContext(Dispatchers.IO) {
-        val owner = engine.login(token, accepted, onCommitted)
+        val owner = engine.login(token, accepted = accepted, onCommitted = onCommitted)
         finishLogin(owner, accepted)
     }
     fun savedOwner(): String? = engine.owner()
@@ -350,6 +350,8 @@ internal class SyncLabRepository @Inject constructor(
         SyncResult.SYNCED -> R.string.sync_lab_synced
         SyncResult.OFFLINE -> R.string.sync_lab_offline
         SyncResult.CONSENT_OFF -> R.string.sync_lab_disabled
+        SyncResult.CONSENT_UPDATE_REQUIRED -> R.string.sync_lab_disabled
+        SyncResult.FRESH_AUTH_REQUIRED -> R.string.sync_lab_login_required
         SyncResult.LOGIN_REQUIRED -> R.string.sync_lab_login_required
         SyncResult.BLOCKED -> R.string.sync_lab_blocked
         SyncResult.SESSION_CHANGED -> R.string.sync_lab_changed

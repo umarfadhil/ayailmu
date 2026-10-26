@@ -38,6 +38,28 @@ val syncLabIdentitySuffix = if (syncLabPublicOrigin.isEmpty()) ".synclab" else {
     ".synclab.remote.r$digest"
 }
 
+// Normal owner auth is dormant unless every release-readiness value is deliberately supplied.
+val normalAuthApproved = providers.gradleProperty("umar.normalAuth.approved").orElse("false").get() == "true"
+val normalAuthOrigin = providers.gradleProperty("umar.normalAuth.publicOrigin").orElse("").get()
+val normalSyncPolicy = providers.gradleProperty("umar.normalAuth.syncPolicyVersion").orElse("").get()
+val normalOwnerDeclaration = providers.gradleProperty("umar.normalAuth.ownerDeclarationVersion").orElse("").get()
+val normalRegistrySource = providers.gradleProperty("umar.normalAuth.registrySourceCommit").orElse("").get()
+if (normalAuthOrigin.isNotEmpty()) {
+    val uri = runCatching { URI(normalAuthOrigin) }.getOrNull()
+    require(uri != null && uri.scheme == "https" && !uri.host.isNullOrEmpty() &&
+        uri.host == uri.host.lowercase(Locale.ROOT) && uri.rawUserInfo == null && uri.rawQuery == null &&
+        uri.rawFragment == null && uri.rawPath.isNullOrEmpty() && (uri.port == -1 || uri.port in 1..65535) &&
+        uri.rawAuthority == uri.host + if (uri.port == -1) "" else ":${uri.port}") {
+        "umar.normalAuth.publicOrigin must be a canonical HTTPS origin"
+    }
+}
+if (normalSyncPolicy.isNotEmpty()) require(normalSyncPolicy.matches(Regex("[a-z0-9][a-z0-9-]{2,79}")))
+if (normalOwnerDeclaration.isNotEmpty()) require(normalOwnerDeclaration.matches(Regex("[a-z0-9][a-z0-9-]{2,79}")))
+if (normalRegistrySource.isNotEmpty()) require(normalRegistrySource.matches(Regex("[0-9a-f]{40}")))
+if (normalAuthApproved) require(normalAuthOrigin.isNotEmpty() && normalSyncPolicy.isNotEmpty() && normalOwnerDeclaration.isNotEmpty() && normalRegistrySource.isNotEmpty()) {
+    "Approved normal auth requires origin, owner declaration, sync policy and registry source"
+}
+
 val playLicenseKey = providers.gradleProperty("ayailmu.playLicenseKey").getOrElse("")
 
 fun validatePlayLicenseKey(required: Boolean): String {
@@ -81,6 +103,12 @@ android {
         // Optional static config override (CR-CFG-2). Empty = disabled. Never required.
         buildConfigField("String", "REMOTE_CONFIG_URL", "\"\"")
         buildConfigField("boolean", "SYNC_LAB_ENABLED", "false")
+        buildConfigField("boolean", "BILLING_ENABLED", "${playLicenseKey.isNotEmpty()}")
+        buildConfigField("boolean", "NORMAL_AUTH_APPROVED", "false")
+        buildConfigField("String", "NORMAL_AUTH_PUBLIC_ORIGIN", "\"\"")
+        buildConfigField("String", "NORMAL_SYNC_POLICY_VERSION", "\"\"")
+        buildConfigField("String", "NORMAL_OWNER_DECLARATION_VERSION", "\"\"")
+        buildConfigField("String", "NORMAL_REGISTRY_SOURCE_COMMIT", "\"\"")
         // Play licence key (Play Console > Monetisation setup) for the local purchase signature check (CR-BIL-4).
         // Set `ayailmu.playLicenseKey=...` in ~/.gradle/gradle.properties on the build machine; never commit it.
         // Empty (the default) skips the check, which is fine for demo builds and before the Play app exists.
@@ -95,6 +123,11 @@ android {
             applicationIdSuffix = ".demo"
             versionNameSuffix = "-demo"
             buildConfigField("boolean", "DEVELOPER_DEMO", "true")
+            buildConfigField("boolean", "NORMAL_AUTH_APPROVED", "$normalAuthApproved")
+            buildConfigField("String", "NORMAL_AUTH_PUBLIC_ORIGIN", "\"$normalAuthOrigin\"")
+            buildConfigField("String", "NORMAL_SYNC_POLICY_VERSION", "\"$normalSyncPolicy\"")
+            buildConfigField("String", "NORMAL_OWNER_DECLARATION_VERSION", "\"$normalOwnerDeclaration\"")
+            buildConfigField("String", "NORMAL_REGISTRY_SOURCE_COMMIT", "\"$normalRegistrySource\"")
         }
         create("syncLab") {
             dimension = "mode"
@@ -108,6 +141,11 @@ android {
         create("prod") {
             dimension = "mode"
             buildConfigField("boolean", "DEVELOPER_DEMO", "false")
+            buildConfigField("boolean", "NORMAL_AUTH_APPROVED", "$normalAuthApproved")
+            buildConfigField("String", "NORMAL_AUTH_PUBLIC_ORIGIN", "\"$normalAuthOrigin\"")
+            buildConfigField("String", "NORMAL_SYNC_POLICY_VERSION", "\"$normalSyncPolicy\"")
+            buildConfigField("String", "NORMAL_OWNER_DECLARATION_VERSION", "\"$normalOwnerDeclaration\"")
+            buildConfigField("String", "NORMAL_REGISTRY_SOURCE_COMMIT", "\"$normalRegistrySource\"")
         }
     }
 
@@ -154,7 +192,9 @@ android {
     // App unit tests run the real session loop on the bundled packs (SessionViewModelTest, StepMapperTest).
     sourceSets {
         getByName("demo").java.srcDir("src/nonLab/java")
+        getByName("demo").manifest.srcFile("src/nonLab/AndroidManifest.xml")
         getByName("prod").java.srcDir("src/nonLab/java")
+        getByName("prod").manifest.srcFile("src/nonLab/AndroidManifest.xml")
         getByName("test") {
             resources.srcDir(rootProject.file("content/src/main/assets"))
         }
@@ -183,11 +223,11 @@ kotlin {
 }
 
 dependencies {
-    "syncLabImplementation"(project(":core:sync"))
+    implementation(project(":core:sync"))
     "syncLabImplementation"(libs.appauth)
-    "syncLabImplementation"(libs.room.runtime)
-    "syncLabImplementation"(libs.room.ktx)
-    "syncLabImplementation"("com.google.crypto.tink:tink-android:1.24.0")
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    implementation("com.google.crypto.tink:tink-android:1.24.0")
     implementation(project(":core:model"))
     implementation(project(":core:engine"))
     implementation(project(":core:content"))

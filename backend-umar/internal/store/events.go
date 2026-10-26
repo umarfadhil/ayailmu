@@ -27,6 +27,9 @@ type Page struct {
 
 func (s *Store) registration(e native.Event, p Profile) (string, error) {
 	pack, ok := s.registry.Find(e.Track, e.ContentVersion)
+	if !p.Synthetic && (!ok || pack.Synthetic || e.ReviewStatus != "approved") {
+		return "", ErrInvalid
+	}
 	if !ok {
 		return "unregistered", nil
 	}
@@ -35,17 +38,23 @@ func (s *Store) registration(e native.Event, p Profile) (string, error) {
 	}
 	item, ok := pack.Items[e.ItemID]
 	if !ok {
+		if !p.Synthetic {
+			return "", ErrInvalid
+		}
 		return "unregistered", nil
 	}
 	if item.Type != e.ItemType || item.Unit != e.Unit || item.Pool != e.Pool || item.ReviewStatus != e.ReviewStatus {
 		return "", ErrInvalid
 	}
 	if pack.RulesVersion != e.RulesVersion {
+		if !p.Synthetic {
+			return "", ErrInvalid
+		}
 		return "unregistered", nil
 	}
 	return "registered", nil
 }
-func (s *Store) Append(ctx context.Context, owner, id string, payloads []string) ([]Receipt, error) {
+func (s *Store) Append(ctx context.Context, owner, id string, payloads []string, requiredConsentVersion ...string) ([]Receipt, error) {
 	if len(payloads) == 0 || len(payloads) > 100 {
 		return nil, ErrInvalid
 	}
@@ -58,12 +67,12 @@ func (s *Store) Append(ctx context.Context, owner, id string, payloads []string)
 	if err != nil {
 		return nil, err
 	}
-	if err = consented(ctx, tx, id); err != nil {
+	if err = consented(ctx, tx, p, requiredConsentVersion...); err != nil {
 		return nil, err
 	}
 	out := make([]Receipt, 0, len(payloads))
 	for _, payload := range payloads {
-		e, err := native.Parse([]byte(payload), p.Kind == "ANAK")
+		e, err := native.ParseForMode([]byte(payload), p.Kind == "ANAK", p.Synthetic)
 		if err != nil || e.LearnerID != p.ClientLearnerID {
 			return nil, ErrInvalid
 		}
@@ -99,7 +108,7 @@ func (s *Store) Append(ctx context.Context, owner, id string, payloads []string)
 	}
 	return out, tx.Commit(ctx)
 }
-func (s *Store) Pull(ctx context.Context, owner, id string, after int64, limit int) (Page, error) {
+func (s *Store) Pull(ctx context.Context, owner, id string, after int64, limit int, requiredConsentVersion ...string) (Page, error) {
 	page := Page{Events: []Record{}, NextCursor: after}
 	if after < 0 || limit < 1 || limit > 100 {
 		return page, ErrInvalid
@@ -109,10 +118,11 @@ func (s *Store) Pull(ctx context.Context, owner, id string, after int64, limit i
 		return page, err
 	}
 	defer tx.Rollback(ctx)
-	if _, _, err = owned(ctx, tx, owner, id); err != nil {
+	profile, _, err := owned(ctx, tx, owner, id)
+	if err != nil {
 		return page, err
 	}
-	if err = consented(ctx, tx, id); err != nil {
+	if err = consented(ctx, tx, profile, requiredConsentVersion...); err != nil {
 		return page, err
 	}
 	rows, err := tx.Query(ctx, `SELECT sequence,payload,registry_status FROM answer_events WHERE learner_id=$1 AND sequence>$2 ORDER BY sequence LIMIT $3`, id, after, limit+1)

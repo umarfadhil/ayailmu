@@ -244,7 +244,7 @@ private fun SyncLabHubScreen(
         if (lab.owner == null) {
             AyaButton(text = stringResource(R.string.sync_lab_login), onClick = onSignIn, enabled = syntheticAck && !busy)
             AyaSecondaryButton(text = stringResource(R.string.sync_lab_create_account), onClick = onSignUp, enabled = syntheticAck && !busy)
-            GooglePrepButton(enabled = false)
+            Text(stringResource(R.string.sync_lab_google_unavailable), style = MaterialTheme.typography.bodySmall)
         } else {
             AccountMessage(state.account.message)
             Text(stringResource(R.string.sync_lab_hub_signed_in, state.account.email ?: lab.owner), style = MaterialTheme.typography.titleMedium)
@@ -277,11 +277,6 @@ private fun SyncLabHubScreen(
 }
 
 @Composable
-private fun GooglePrepButton(enabled: Boolean) {
-    AyaSecondaryButton(text = stringResource(R.string.sync_lab_google_disabled), onClick = {}, enabled = enabled)
-}
-
-@Composable
 private fun AccountMessage(message: Int?) {
     if (message != null) Text(stringResource(message), style = MaterialTheme.typography.bodyMedium)
 }
@@ -300,6 +295,7 @@ private fun SignInScreen(state: SyncLabScreen, vm: SyncLabViewModel, origin: Nav
     Column(Modifier.fillMaxSize().safeDrawingPadding().verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(stringResource(R.string.sync_lab_login), style = MaterialTheme.typography.headlineMedium)
         Text(stringResource(R.string.sync_lab_warning))
+        Text(stringResource(R.string.sync_lab_error_synthetic), style = MaterialTheme.typography.bodySmall)
         AccountMessage(state.account.message)
         val origin = rememberAuthOrigin(vm, origin)
         AuthFields(email, { email = it }, password, { password = it }, R.string.sync_lab_email, R.string.sync_lab_password, enabled = !busy)
@@ -318,6 +314,7 @@ private fun SignUpScreen(state: SyncLabScreen, vm: SyncLabViewModel, origin: Nav
     Column(Modifier.fillMaxSize().safeDrawingPadding().verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(stringResource(R.string.sync_lab_sign_up_title), style = MaterialTheme.typography.headlineMedium)
         Text(stringResource(R.string.sync_lab_warning))
+        Text(stringResource(R.string.sync_lab_error_synthetic), style = MaterialTheme.typography.bodySmall)
         AccountMessage(state.account.message)
         val origin = rememberAuthOrigin(vm, origin)
         AuthFields(email, { email = it }, password, { password = it }, R.string.sync_lab_email, R.string.sync_lab_password, enabled = !busy)
