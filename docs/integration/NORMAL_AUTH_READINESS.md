@@ -15,11 +15,11 @@ Status: **COMPILED / synthetic-fixture verified 2026-10-26; real-user release NO
 
 ## Current hard blockers
 
-1. **SMTP and real inbox:** the Brevo sender is verified and phone verification is complete. The approved private SMTP key handoff/configuration and authorized GoTrue restart, followed by real confirmation/reset tests, remain pending. Current GoTrue still uses Mailpit; real-inbox signup → confirmation → login has not run and must not be inferred from unit/fixture tests.
+1. **SMTP evidence is complete; the normal native backend path is not ready:** the separate authorized QA task passed real SMTP signup/confirmation/recovery/reset, old-password rejection, logout and code replay for the approved owner-only test identity. Confirmation and recovery reached the approved mailbox; AyaIlmu recovery was in Spam. This is not general deliverability proof or normal native E2E. QA app DB/API/gateway are off, no public lease was extended, and the original local runtime remains synthetic/unchanged.
 2. **Approved public route:** no stable owner-approved real-user API/auth origin is configured for this client. The temporary synthetic gateway and `@example.invalid` restriction are not a normal release backend. Do not point this client at Mailpit or relax that gateway.
 3. **Policy and reviewed content:** exact owner declaration/sync-policy versions and privacy/guardian/deletion/retention decisions remain owner/legal approvals. The app invents none. All 73 bundled packs / 3,162 native items (including Arabic's 17) are draft; therefore normal release sync currently has no approved curriculum and must stay disabled. No content was approved by this work.
 4. **Rollout approval:** production SQL migration, runtime-role/grant review, registry generation/provenance, backend restart and stable issuer/JWKS configuration require the infrastructure owner. No service was restarted or deployed here.
-5. **Release/device proof:** the evidence APKs are local-only. Production release is unsigned; debug uses the ordinary local debug signing path. There is no production signing approval, physical-device test, real account, real email or live learner/sync E2E.
+5. **Release/device proof:** the evidence APKs are local-only. Production release is unsigned; debug uses the ordinary local debug signing path. Production signing approval, physical-device testing and live normal-native account/learner/sync E2E remain outstanding. The separate QA SMTP lifecycle above does not establish those checks.
 
 ## Exact configuration contract (values intentionally absent)
 
@@ -53,7 +53,7 @@ When readiness is exactly `true`, declaration and sync versions must be the exac
 
 ## Minimal batched owner/infrastructure prerequisites
 
-1. The sender is verified and phone verification is complete. Approve the private SMTP key handoff method, then have the infrastructure owner configure GoTrue SMTP host/port/username/sender through the approved private secret process and restart only the authorized target. Keep signup enabled, external email enabled, autoconfirm disabled and minimum password length 12. Do not reuse Mailpit or test credentials. Real confirmation/reset tests remain required afterward.
+1. SMTP signup/confirmation/recovery/reset, old-password rejection, logout and code replay have passed for the approved owner-only QA identity. Next, the infrastructure owner must coordinate the normal email templates and the exact private same-origin HTTPS auth+API route before native QA. Keep signup enabled, external email enabled, autoconfirm disabled and minimum password length 12. Do not reuse Mailpit or the original synthetic runtime as a substitute.
 2. Provision a stable canonical HTTPS gateway/origin for GoTrue + Go API; set matching issuer and JWKS URLs, route only the documented normal contract, and allow the intended owner mailboxes. Remove reliance on the expiring synthetic tunnel without weakening its test guards.
 3. Obtain the actual owner/legal decisions and version identifiers for the adult/guardian declaration, learning-sync consent, privacy/Data Safety, child/guardian handling, deletion and retention. Do not use placeholder text as a substitute. Review and apply SQL 0002/0003 plus runtime grants to the approved environment only after backup/rollout review.
 4. Reviewer-approve the intended curriculum, regenerate the backend registry from that exact source, and verify approved pack/rules hashes and the Android registry source match. Until then, no real progress sync is permitted.
@@ -82,11 +82,11 @@ Room schema v3 adds only nonsecret `owner_profile_bindings` (profile ID, owner I
 
 Per-profile Settings deletion first cancels normal actions and removes that learner's local journal binding/history, then applies the existing guarded Room deletion. Surviving children are retained. Device-wide deletion cancels account actions and removes **all** designated `normal-owner-auth` and `normal-owner-sync` namespaces for current and previous origins, the retained engine state and vault before Room/settings/export reset. Any clear failure is reported. Long-lived objects remain usable for a later legitimate profile/account. Tokens are never backed up. Remote account/server data is not deleted by either operation.
 
-### Parent SMTP contract — pending, not configured here
+### Parent SMTP status — QA verified, native rollout pending
 
-The Brevo sender is verified and phone verification is complete. Approval of the private SMTP key handoff method, followed by authorized configuration/restart and real confirmation/reset tests to the owner-controlled recipient, remains PENDING. No keys were read or created and no mail was sent.
+The separate authorized SMTP task used the existing verified Brevo sender and passed the complete QA lifecycle for the approved owner-only identity. The nonsecret **SMTP Activation Handoff 2026-10-26** records confirmation/recovery delivery to the approved mailbox, AyaIlmu recovery in Spam, old-password rejection, logout and code replay. Existing QA templates still say Synthetic Umar and require a coordinated normal-template change by the runtime owner; this document does not change them or imply general deliverability. This native follow-up did not configure SMTP or send email.
 
-After those approvals, the infrastructure owner supplies through its secret/config process:
+For any separately approved target, the infrastructure owner supplies these configuration names through its secret/config process:
 
 ```text
 GOTRUE_SMTP_HOST=<approved SMTP host>
@@ -101,10 +101,10 @@ GOTRUE_EXTERNAL_EMAIL_ENABLED=true
 GOTRUE_PASSWORD_MIN_LENGTH=12
 ```
 
-These are configuration names only, not values or approval to restart. Names match the pinned official [GoTrue v2.197.0 SMTP configuration](https://raw.githubusercontent.com/supabase/auth/v2.197.0/internal/conf/configuration.go#L550-L568). Keep confirmation required. Run actual confirmation and reset tests before considering normal activation; Brevo sender verification alone is not live proof.
+These are configuration names only, not values or approval to restart. Names match the pinned official [GoTrue v2.197.0 SMTP configuration](https://raw.githubusercontent.com/supabase/auth/v2.197.0/internal/conf/configuration.go#L550-L568). Keep confirmation required. The QA SMTP lifecycle has passed, but normal native registration, lessons, durable sync and release acceptance still require the separate runtime/policy/content checks below.
 
 ### Review-resolution checklist
 
 - **FIXED + TESTED:** normal/lab deployment isolation; family/descendant and arbitrary-ID visibility guards; Room backup ownership and same-owner restore; retained flow/session-store revocation; serialized visibility publication and atomic relationship snapshots; fresh-password recovery; ordinary learner labels; operation-aware OTP/offline/429 errors; busy/Back and queued ViewModel fences; root auth without a spare profile; unconfirmed-code route; tester/prod store gates; capability-aware onboarding/Arabic consent/export/deletion copy; current+old-origin local cleanup; exact source manifest.
 - **VERIFIED ON ACTUAL PROD FLAVOR:** default-OFF onboarding/Settings has no tester, raw learner ID or unconfigured store. Zero-local-profile root account CTA is visible/clickable. Create account, Sign in, Forgot password and inline validation have ordinary wording, one Back per level and no Google entry. The reserved-origin build is layout-only and NOT FOR RELEASE; no network submissions or mock sessions occurred.
-- **OWNER/BLOCKED:** approved SMTP key/config/restart and real inbox tests; stable HTTPS origin/issuer/JWKS and normal gateway; owner/legal declaration/sync/privacy/guardian/retention/export/deletion decisions and matching published policy; approved curriculum/registry (all 73 packs/3,162 items remain draft); authorized SQL/runtime rollout; physical-device QA, live purchases, production signing and full live learner E2E.
+- **OWNER/BLOCKED:** QA SMTP lifecycle passed; normal templates, QA app DB/API/gateway startup and exact private same-origin HTTPS auth+API route remain pending; original local runtime stays synthetic/unchanged; owner/legal declaration/sync/privacy/guardian/retention/export/deletion decisions and matching published policy; approved curriculum/registry (all 73 packs/3,162 items remain draft); authorized SQL/runtime rollout; physical-device QA, live purchases, production signing and full live learner E2E.
