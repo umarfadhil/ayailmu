@@ -1,7 +1,7 @@
 {
   "meta": {
     "schema_version": 1,
-    "content_version": "mat-a-pemula-0.2",
+    "content_version": "mat-a-pemula-0.3",
     "subject": "matematika",
     "track": "mat-a",
     "mode": "casual",
@@ -252,8 +252,8 @@
           "en": "A two-digit number times 11? Add its digits and put the sum in the middle: 11 × 43 = 4 (4 + 3) 3 = 473. If the sum is 10 or more, carry 1 to the front: 11 × 68 = 748."
         },
         {
-          "id": "Patungan makan? Bagi total dengan jumlah orang, lalu bulatkan ke atas ke ribuan terdekat supaya uangnya tidak kurang.",
-          "en": "Splitting a bill? Divide the total by the number of people, then round up to the nearest thousand so the money isn't short."
+          "id": "Patungan makan? Bagi total dengan jumlah orang untuk mendapatkan bagian yang sama persis. Jika diminta memperkirakan uang yang perlu dikumpulkan, kamu dapat membulatkan tiap bagian ke atas ke ribuan terdekat supaya tidak kurang.",
+          "en": "Splitting a bill? Divide the total by the number of people to find each exact share. If asked to estimate how much to collect, you can round each share up to the nearest thousand so the collection is not short."
         }
       ],
       "review_status": "draft"
@@ -635,7 +635,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-01-002",
@@ -682,7 +682,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-01-003",
@@ -747,7 +747,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-01-004",
@@ -798,7 +798,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-01-005",
@@ -836,7 +836,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-01-006",
@@ -934,7 +934,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-01-007",
@@ -947,8 +947,8 @@
       "pool": "GEM",
       "prompt_id": "P-GEM",
       "model_answer": {
-        "id": "Trik kuadrat bilangan berakhiran 5: kalikan angka depannya dengan angka sesudahnya, lalu tempelkan 25. 35 × 35: 3 × 4 = 12, jadi 1.225. 65 × 65: 6 × 7 = 42, jadi 4.225. Bukan sulap: (10a + 5)² = 100 × a × (a + 1) + 25.",
-        "en": "Squaring a number ending in 5: multiply the front digit by the next number up, then stick 25 on the end. 35 × 35: 3 × 4 = 12, so 1,225. 65 × 65: 6 × 7 = 42, so 4,225. No magic: (10a + 5)² = 100 × a × (a + 1) + 25."
+        "id": "Trik kuadrat bilangan positif dua angka yang berakhiran 5: kalikan angka puluhannya dengan bilangan sesudahnya, lalu tempelkan 25. 35 × 35: 3 × 4 = 12, jadi 1.225. 65 × 65: 6 × 7 = 42, jadi 4.225. Bukan sulap: (10a + 5)² = 100 × a × (a + 1) + 25.",
+        "en": "Squaring a positive two-digit number ending in 5: multiply its tens digit by the next integer, then append 25. 35 × 35: 3 × 4 = 12, so 1,225. 65 × 65: 6 × 7 = 42, so 4,225. No magic: (10a + 5)² = 100 × a × (a + 1) + 25."
       },
       "gem": true,
       "source": "Arthur Benjamin & Michael Shermer, Secrets of Mental Math (Three Rivers Press, 2006), ch. 0 'Quick Tricks' (squaring numbers that end in 5); the identity (10a+5)^2 = 100a(a+1) + 25 can be checked by expanding.",
@@ -956,7 +956,7 @@
         "correct": "FB-GEM"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-01-008",
@@ -998,7 +998,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-01-009",
@@ -1063,7 +1063,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-01-010",
@@ -1111,7 +1111,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-01-011",
@@ -1187,7 +1187,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-01-012",
@@ -1254,7 +1254,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-01-013",
@@ -1296,7 +1296,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-01-014",
@@ -1360,7 +1360,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-02-001",
@@ -1403,7 +1403,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-02-002",
@@ -1468,7 +1468,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-02-003",
@@ -1566,7 +1566,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-02-004",
@@ -1613,7 +1613,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-02-005",
@@ -1678,7 +1678,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-02-006",
@@ -1729,7 +1729,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-02-007",
@@ -1772,7 +1772,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-02-008",
@@ -1839,7 +1839,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-02-009",
@@ -1939,7 +1939,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-02-010",
@@ -2009,7 +2009,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-02-011",
@@ -2107,7 +2107,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-02-012",
@@ -2129,7 +2129,7 @@
         "correct": "FB-GEM"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-02-013",
@@ -2171,7 +2171,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-02-014",
@@ -2235,7 +2235,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-03-001",
@@ -2277,7 +2277,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-03-002",
@@ -2328,7 +2328,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-03-003",
@@ -2394,7 +2394,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-03-004",
@@ -2492,7 +2492,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-03-005",
@@ -2535,7 +2535,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-03-006",
@@ -2605,7 +2605,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-03-007",
@@ -2681,7 +2681,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-03-008",
@@ -2728,7 +2728,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-03-009",
@@ -2770,7 +2770,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-03-010",
@@ -2822,7 +2822,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-03-011",
@@ -2889,7 +2889,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-03-012",
@@ -2911,7 +2911,7 @@
         "correct": "FB-GEM"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-03-013",
@@ -2952,7 +2952,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-03-014",
@@ -3016,7 +3016,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-04-001",
@@ -3040,7 +3040,7 @@
         "correct": "FB-READ"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-04-002",
@@ -3083,7 +3083,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-04-003",
@@ -3149,7 +3149,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-04-004",
@@ -3192,7 +3192,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-04-005",
@@ -3257,7 +3257,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-04-006",
@@ -3308,7 +3308,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-04-007",
@@ -3355,7 +3355,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-04-008",
@@ -3439,7 +3439,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-04-009",
@@ -3486,7 +3486,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-04-010",
@@ -3584,7 +3584,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-04-011",
@@ -3654,7 +3654,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-04-012",
@@ -3676,7 +3676,7 @@
         "correct": "FB-GEM"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-04-013",
@@ -3740,7 +3740,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-04-014",
@@ -3781,7 +3781,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-05-001",
@@ -3805,7 +3805,7 @@
         "correct": "FB-READ"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-05-002",
@@ -3848,7 +3848,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-05-003",
@@ -3914,7 +3914,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-05-004",
@@ -3957,7 +3957,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-05-005",
@@ -4057,7 +4057,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-05-006",
@@ -4099,7 +4099,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-05-007",
@@ -4159,7 +4159,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-05-008",
@@ -4201,7 +4201,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-05-009",
@@ -4252,7 +4252,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-05-010",
@@ -4294,7 +4294,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-05-011",
@@ -4341,7 +4341,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-05-012",
@@ -4439,7 +4439,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-05-013",
@@ -4461,7 +4461,7 @@
         "correct": "FB-GEM"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-05-014",
@@ -4502,7 +4502,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-05-015",
@@ -4543,7 +4543,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-06-001",
@@ -4609,7 +4609,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-06-002",
@@ -4652,7 +4652,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-06-003",
@@ -4768,7 +4768,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-06-004",
@@ -4820,7 +4820,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-06-005",
@@ -4863,7 +4863,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-06-006",
@@ -4930,7 +4930,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-06-007",
@@ -4952,7 +4952,7 @@
         "correct": "FB-GEM"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-06-008",
@@ -5023,7 +5023,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-06-009",
@@ -5089,7 +5089,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-06-010",
@@ -5131,7 +5131,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-06-011",
@@ -5196,7 +5196,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-06-012",
@@ -5265,7 +5265,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-06-013",
@@ -5330,7 +5330,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-06-014",
@@ -5372,7 +5372,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-07-001",
@@ -5419,7 +5419,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-07-002",
@@ -5489,7 +5489,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-07-003",
@@ -5544,7 +5544,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-07-004",
@@ -5592,7 +5592,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-07-005",
@@ -5657,7 +5657,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-07-006",
@@ -5680,7 +5680,7 @@
         "correct": "FB-GEM"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-07-007",
@@ -5722,7 +5722,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-07-008",
@@ -5773,7 +5773,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-07-009",
@@ -5857,7 +5857,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-07-010",
@@ -5905,7 +5905,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-07-011",
@@ -5973,7 +5973,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-07-012",
@@ -6014,7 +6014,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-07-013",
@@ -6065,7 +6065,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-08-001",
@@ -6089,7 +6089,7 @@
         "correct": "FB-READ"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-08-002",
@@ -6155,7 +6155,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-08-003",
@@ -6198,7 +6198,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-08-004",
@@ -6250,7 +6250,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-08-005",
@@ -6348,7 +6348,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-08-006",
@@ -6372,7 +6372,7 @@
         "correct": "FB-READ"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-08-007",
@@ -6438,7 +6438,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-08-008",
@@ -6489,7 +6489,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-08-009",
@@ -6573,7 +6573,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-08-010",
@@ -6638,7 +6638,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-08-011",
@@ -6660,7 +6660,7 @@
         "correct": "FB-GEM"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-08-012",
@@ -6703,7 +6703,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-08-013",
@@ -6744,7 +6744,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-08-014",
@@ -6808,7 +6808,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-09-001",
@@ -6850,7 +6850,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-09-002",
@@ -6901,7 +6901,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-09-003",
@@ -6949,7 +6949,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-09-004",
@@ -7014,7 +7014,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-09-005",
@@ -7056,7 +7056,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-09-006",
@@ -7154,7 +7154,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-09-007",
@@ -7196,7 +7196,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-09-008",
@@ -7247,7 +7247,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-09-009",
@@ -7317,7 +7317,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-09-010",
@@ -7364,7 +7364,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-09-011",
@@ -7431,7 +7431,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-09-012",
@@ -7453,7 +7453,7 @@
         "correct": "FB-GEM"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-09-013",
@@ -7494,7 +7494,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-09-014",
@@ -7558,7 +7558,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-10-001",
@@ -7600,7 +7600,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-10-002",
@@ -7690,7 +7690,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-10-003",
@@ -7737,7 +7737,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-10-004",
@@ -7779,7 +7779,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-10-005",
@@ -7830,7 +7830,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-10-006",
@@ -7872,7 +7872,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-10-007",
@@ -7937,7 +7937,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-10-008",
@@ -7984,7 +7984,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-10-009",
@@ -8074,7 +8074,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-10-010",
@@ -8144,7 +8144,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-10-011",
@@ -8243,7 +8243,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-10-012",
@@ -8265,7 +8265,7 @@
         "correct": "FB-GEM"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-10-013",
@@ -8306,7 +8306,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-10-014",
@@ -8347,7 +8347,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-DP-01",
@@ -8410,7 +8410,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-DP-02",
@@ -8473,7 +8473,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-DP-03",
@@ -8537,7 +8537,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     },
     {
       "item_id": "MAT-A-P-DP-04",
@@ -8601,7 +8601,7 @@
         "dont_know": "FB-DONTKNOW"
       },
       "review_status": "draft",
-      "content_version": "mat-a-pemula-0.2"
+      "content_version": "mat-a-pemula-0.3"
     }
   ]
 }

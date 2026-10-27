@@ -50,7 +50,7 @@ Files: ios/AyaIlmuCore/Package.swift; Sources/AyaIlmuCore/{Configuration,Contrac
 ## M4: Real starter lesson
 
 - [ ] Obtain actual review of adult math Unit01, including its18 entries and lesson screen in ID/EN; produce new immutable content/version/proof bundle after approval.
-- [ ] Correct the two confirmed lesson/card wording defects in draft version mat-a-pemula-0.3; independently recheck18 Unit01 keys and preserve all grading fields/draft statuses. Frozen backend registry remains unchanged; this is not approval or runtime activation.
+- [x] Correct the two confirmed lesson/card wording defects in draft version mat-a-pemula-0.3; independently recheck18 Unit01 keys and preserve all grading fields/draft statuses. Frozen backend registry remains unchanged; this is not approval or runtime activation.
 - [ ] Add native renderers for its supported activities with shared-core results, save-before-advance and honest progress. Keep unsupported/unreviewed content unavailable.
 - [ ] Verify lesson → offline restart → sync/replay → logout/login → restored progress on actual iOS and Android targets.
 
