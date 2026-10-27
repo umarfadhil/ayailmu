@@ -138,6 +138,29 @@ class NormalAccountTest {
         assertEquals(emailA, second.account.state.value.email)
     }
 
+    @Test fun goTrueExpiredAccess403BadJwtRefreshesTheVerifiedOwner() = runTest {
+        val h = Harness(); h.confirmed(emailA, passwordA)
+        assertTrue(h.account.signIn(emailA, passwordA, true))
+        h.gateway.failNext = AuthFailure(403, "bad_jwt")
+        val second = Harness(h.gateway, h.vault, h.sync)
+        assertTrue(second.account.restore())
+        assertEquals(1, h.gateway.refreshed)
+        assertEquals(emailA, second.account.state.value.email)
+        assertTrue(second.vault.saved!!.session.accessToken.startsWith("rotated-"))
+    }
+
+    @Test fun unrelatedForbiddenUserResponseNeverAttemptsRefresh() = runTest {
+        val h = Harness(); h.confirmed(emailA, passwordA)
+        assertTrue(h.account.signIn(emailA, passwordA, true))
+        val stored = h.vault.saved
+        h.gateway.failNext = AuthFailure(403, "not_admin")
+        val second = Harness(h.gateway, h.vault, h.sync)
+        assertFalse(second.account.restore())
+        assertEquals(0, h.gateway.refreshed)
+        assertNull(second.account.state.value.email)
+        assertEquals(stored, second.vault.saved)
+    }
+
     @Test fun cancelledLateACannotOverwriteB() = runTest {
         val h = Harness(); h.confirmed(emailA, passwordA); h.confirmed(emailB, passwordB)
         val aResponse = CompletableDeferred<AuthSession>()

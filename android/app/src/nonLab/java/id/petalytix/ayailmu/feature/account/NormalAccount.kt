@@ -132,7 +132,9 @@ internal class NormalAccount @Inject constructor(
                 val live = try {
                     verified(stored.session, stored.session.user.email)
                 } catch (e: Exception) {
-                    if (e !is AuthFailure || e.status != 401) throw e
+                    // GoTrue v2 also reports an expired access token as 403 bad_jwt.
+                    // Other forbidden responses must not trigger credential refresh.
+                    if (e !is AuthFailure || !(e.status == 401 || e.status == 403 && e.code == "bad_jwt")) throw e
                     val rotated = auth.refresh(stored.session.refreshToken)
                     require(rotated.user.id == stored.session.user.id) { "Provider subject changed" }
                     verified(rotated, stored.session.user.email).also { synchronized(lock) { check(accepted()); vault.write(saved(it)) } }
