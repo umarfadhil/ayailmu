@@ -38,20 +38,20 @@ Files: ios/AyaIlmuCore/Package.swift; Sources/AyaIlmuCore/{Configuration,Contrac
 
 ## M2: Shared learning-core bridge and parity
 
-- [ ] Identify the smallest model/content/engine subset needed for the selected unit; isolate JVM clock/normalization/IO behind platform adapters without changing Android results.
-- [ ] Build an iOS framework and run the same answer/scoring/freshness fixtures on Android/JVM and iOS. No new Swift mastery thresholds.
+- [x] Identify the smallest model/content/engine subset needed for the selected unit; isolate JVM clock/normalization/IO behind platform adapters without changing Android results.
+- [x] Build an iOS framework and run the same answer/scoring/freshness fixtures on Android/JVM and iOS. No new Swift mastery thresholds.
 
 ## M3: Adult learner and durable account-bound progress
 
-- [ ] Implement /v1/learners list/create for permitted ADULT self-profiles and lang id/en; explicit /consent version; store local identity by backend owner/learner.
-- [ ] Implement atomic SQLite answers/outbox, stable immutable event IDs/payloads, idempotent append and cursor pull; fence logout/owner changes.
+- [x] Implement /v1/learners list/create for permitted ADULT self-profiles and lang id/en; explicit /consent version; store local identity by backend owner/learner.
+- [x] Implement atomic SQLite answers/outbox, stable immutable event IDs/payloads, idempotent append and cursor pull; fence logout/owner changes.
 - [ ] Test restart, retry, duplicate replay, server readback and cross-owner isolation using separately authorized fixtures. Do not delete existing user data.
 
 ## M4: Real starter lesson
 
 - [ ] Obtain actual review of adult math Unit01, including its18 entries and lesson screen in ID/EN; produce new immutable content/version/proof bundle after approval.
 - [x] Correct the two confirmed lesson/card wording defects in draft version mat-a-pemula-0.3; independently recheck18 Unit01 keys and preserve all grading fields/draft statuses. Frozen backend registry remains unchanged; this is not approval or runtime activation.
-- [ ] Add native renderers for its supported activities with shared-core results, save-before-advance and honest progress. Keep unsupported/unreviewed content unavailable.
+- [x] Add native renderers for its supported activities with shared-core results, save-before-advance and honest progress. Keep unsupported/unreviewed content unavailable.
 - [ ] Verify lesson → offline restart → sync/replay → logout/login → restored progress on actual iOS and Android targets.
 
 ## M5: Owner phone beta
@@ -59,3 +59,15 @@ Files: ios/AyaIlmuCore/Package.swift; Sources/AyaIlmuCore/{Configuration,Contrac
 - [ ] Consume the infrastructure owner's verified stable HTTPS API/auth/issuer.
 - [ ] Confirm existing Apple team and distinct AyaIlmu identity. Obtain exact signing/device/upload approval before any provisioning or TestFlight action.
 - [ ] Produce platform artifacts, verify hashes/config/privacy surface, then test the owner's physical phones. No beta-ready claim before this evidence.
+
+## Execution status — 2026-10-27
+
+M2 and the bounded M3 client implementation are complete locally. The19-file model/content/engine closure is mechanically generated from original Android sources with recorded hashes; JVM and Foundation platform seams preserve algorithms. The actual Kotlin2.2.20 framework builds for ARM64 iOS Simulator and, unsigned, ARM64 iOS device against Xcode27.1 SDKs. One JVM golden test covers22 session operations,10 events across two content versions, actual projection and10 platform vectors. The iOS native golden executes the same operations and also runs the real Swift adapter/session/SQLite/projection path.39 native tests and39 portable Swift tests pass; the platform-specific cases differ (native ABI golden versus macOS crash subprocess).11 Python build-configuration tests and9 explicit guard cases pass.
+
+M3 implements owner/origin/learner namespaces, adult self-profile APIs, explicit consent, pending owner-wide withdrawals, immutable exact payload retry, receipt/page validation, atomic answer+opaque-snapshot/cursor storage and offline local-only capability. A real subprocess crash before SQLite COMMIT and native write-failure/restart cases preserve history. Actual authenticated provider/backend learning operations are intentionally unverified: no real credentials or mail were used. The remaining M3 server-readback acceptance task stays unchecked for that reason.
+
+M4 renderer code now covers the selected ordinary activity families with authored help/model/screen text and shared feedback, and persists before advancing. The normal app contains no approved-resource manifest or curriculum pack. All3,162 source items remain draft; no curriculum approval or registry change occurred in this slice. Fixture approval fields exist only in test targets. Separate daily-puzzle practice and advanced renderers remain unavailable.
+
+Final normal app is built separately from test-host artifacts, installed and running signed out on8568898D-1CF8-4B81-8CF9-3CC764D517CD. Its actual shared-core factory reports available; health200, unauthenticated user401, cleartext rejection and wrong-host rejection pass. No test plugins/fixture markers/approved manifest appear in the normal artifact. Physical phone runtime/signing, real authenticated iOS lifecycle/sync, actual starter approval and production infrastructure remain unverified; this is not a ready learning beta.
+
+Evidence is outside checkout at ../.runtime/umar-ios-learning-m2/result-matrix.json. No push, upload, signing/provisioning, live account submission, service change, other simulator mutation or Android algorithm modification was performed. Root handles final review/local checkpoint.

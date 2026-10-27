@@ -18,6 +18,8 @@ class ReleaseConfigurationTests(unittest.TestCase):
             AYAILMU_ORIGIN="https://api.qa.example.invalid",
             AYAILMU_RELEASE_APPROVED_ORIGIN="https://api.qa.example.invalid",
             AYAILMU_DECLARATION_VERSION="adult-owner-v1",
+            AYAILMU_SYNC_POLICY_VERSION="fixture-owner-sync-v1",
+            AYAILMU_REGISTRY_SOURCE_COMMIT="c" * 40,
         )
         env.update(changes)
         return subprocess.run(["bash", str(SCRIPT)], env=env, capture_output=True, timeout=10).returncode
@@ -39,6 +41,18 @@ class ReleaseConfigurationTests(unittest.TestCase):
 
     def test_private_compilation_flag_is_rejected(self):
         self.assertNotEqual(0, self.run_guard(SWIFT_ACTIVE_COMPILATION_CONDITIONS="PRIVATE_OWNER_QA"))
+
+    def test_missing_sync_policy_is_rejected(self):
+        self.assertNotEqual(0, self.run_guard(AYAILMU_SYNC_POLICY_VERSION=""))
+
+    def test_malformed_sync_policy_is_rejected(self):
+        self.assertNotEqual(0, self.run_guard(AYAILMU_SYNC_POLICY_VERSION="not a version"))
+
+    def test_missing_registry_source_is_rejected(self):
+        self.assertNotEqual(0, self.run_guard(AYAILMU_REGISTRY_SOURCE_COMMIT=""))
+
+    def test_malformed_registry_source_is_rejected(self):
+        self.assertNotEqual(0, self.run_guard(AYAILMU_REGISTRY_SOURCE_COMMIT="not-a-source-hash"))
 
     def test_private_ca_is_rejected(self):
         self.assertNotEqual(0, self.run_guard(AYAILMU_QA_CA_DER="fixture-public-ca.der"))

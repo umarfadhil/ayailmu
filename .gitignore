@@ -65,3 +65,8 @@ ios/**/.swiftpm/
 ios/**/xcuserdata/
 ios/**/DerivedData/
 ios/**/PrivateOwnerCA.*
+ios/**/build/
+ios/**/*.framework/
+ios/**/.gradle/
+ios/**/.kotlin/
+ios/**/*.xcframework/

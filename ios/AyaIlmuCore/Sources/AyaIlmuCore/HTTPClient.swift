@@ -13,25 +13,25 @@ public final class URLSessionTransport: NSObject, HTTPTransport, URLSessionTaskD
         let (bytes,response) = try await session.bytes(for: request, delegate: self)
         guard let http = response as? HTTPURLResponse else { throw AccountError.invalidResponse }
         if (300...399).contains(http.statusCode) { throw AccountError.redirect }
-        var data = Data(); for try await byte in bytes { guard data.count < 1_048_576 else { throw AccountError.tooLarge }; data.append(byte) }
+        var data = Data(); for try await byte in bytes { guard data.count < 4_194_304 else { throw AccountError.tooLarge }; data.append(byte) }
         return HTTPReply(status: http.statusCode, data: data)
     }
 }
 public final class AccountAPI {
     public let config: Configuration; private let transport: HTTPTransport
     public init(config: Configuration, transport: HTTPTransport) { self.config = config; self.transport = transport }
-    public func request(_ method: String, _ path: String, body: [String: Any]? = nil, token: String? = nil) async throws -> Data {
+    public func request(_ method: String, _ path: String, body: [String: Any]? = nil, token: String? = nil, errorField: String = "error_code", maxBodyBytes:Int = 16384, maxResponseBytes:Int = 1048576) async throws -> Data {
         // Paths are internal constants; prevent future callers from introducing a second origin.
         guard path.hasPrefix("/"), !path.hasPrefix("//"), !path.contains("#"), let url = URL(string: config.origin + path), url.host == URL(string:config.origin)?.host, url.port == URL(string:config.origin)?.port else { throw AccountError.configuration }
         var request = URLRequest(url:url); request.httpMethod = method; request.timeoutInterval = 10; request.setValue("application/json",forHTTPHeaderField:"Accept")
         if let token { guard !token.isEmpty, token.count <= 16384, !token.unicodeScalars.contains(where: { $0.value == 0 || $0.value == 10 || $0.value == 13 }) else { throw AccountError.input }; request.setValue("Bearer " + token,forHTTPHeaderField:"Authorization") }
-        if let body { let data = try JSONSerialization.data(withJSONObject:body); guard data.count <= 16384 else { throw AccountError.input }; request.httpBody = data; request.setValue("application/json",forHTTPHeaderField:"Content-Type") }
+        if let body { let data = try JSONSerialization.data(withJSONObject:body,options:[.sortedKeys]); guard maxBodyBytes <= 1048576, data.count <= maxBodyBytes else { throw AccountError.input }; request.httpBody = data; request.setValue("application/json",forHTTPHeaderField:"Content-Type") }
         let reply = try await transport.send(request)
-        guard reply.data.count <= 1_048_576 else { throw AccountError.tooLarge }
+        guard maxResponseBytes <= 4194304, reply.data.count <= maxResponseBytes else { throw AccountError.tooLarge }
         if (300...399).contains(reply.status) { throw AccountError.redirect }
         guard (200...299).contains(reply.status) else {
             let object = (try? JSONSerialization.jsonObject(with:reply.data)) as? [String: Any]
-            let raw = object?["error_code"] as? String ?? "request_failed"
+            let raw = object?[errorField] as? String ?? "request_failed"
             let code = raw.range(of:"^[a-z_]{1,80}$",options:.regularExpression) != nil ? raw : "request_failed"
             throw AccountError.http(reply.status, code)
         }; return reply.data

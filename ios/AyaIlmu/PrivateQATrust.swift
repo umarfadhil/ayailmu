@@ -35,7 +35,7 @@ final class AppTransport: NSObject, HTTPTransport, URLSessionTaskDelegate, @unch
         let (bytes,response) = try await session.bytes(for:request,delegate:self)
         guard let http = response as? HTTPURLResponse else { throw AccountError.invalidResponse }
         guard !(300...399).contains(http.statusCode) else { throw AccountError.redirect }
-        var data = Data(); for try await byte in bytes { guard data.count < 1048576 else { throw AccountError.tooLarge }; data.append(byte) }
+        var data = Data(); for try await byte in bytes { guard data.count < 4194304 else { throw AccountError.tooLarge }; data.append(byte) }
         return HTTPReply(status:http.statusCode,data:data)
     }
     #if DEBUG && PRIVATE_OWNER_QA

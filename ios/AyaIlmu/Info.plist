@@ -8,6 +8,10 @@
 	<string>$(AYAILMU_DECLARATION_VERSION)</string>
 	<key>AyaIlmuOrigin</key>
 	<string>$(AYAILMU_ORIGIN)</string>
+	<key>AyaIlmuRegistrySourceCommit</key>
+	<string>$(AYAILMU_REGISTRY_SOURCE_COMMIT)</string>
+	<key>AyaIlmuSyncPolicyVersion</key>
+	<string>$(AYAILMU_SYNC_POLICY_VERSION)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>

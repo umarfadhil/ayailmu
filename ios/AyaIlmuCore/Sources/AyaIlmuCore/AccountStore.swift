@@ -1,11 +1,14 @@
 import Foundation
 @MainActor public final class AccountStore {
     public private(set) var email: String?
+    public private(set) var isOffline = false
     private let api: AccountAPI; private let vault: SessionVault; private var generation = 0
+    private var currentSession: SavedSession?
     private var restoreTask: Task<Void, Error>?
     public init(api:AccountAPI,vault:SessionVault) { self.api = api; self.vault = vault }
-    private func begin() -> Int { generation += 1; restoreTask?.cancel(); restoreTask = nil; return generation }
+    private func begin() -> Int { generation += 1; isOffline = false; currentSession = nil; restoreTask?.cancel(); restoreTask = nil; return generation }
     private func check(_ mark:Int) throws { guard generation == mark, !Task.isCancelled else { throw AccountError.superseded } }
+    public func suspendForReauthentication() { _ = begin(); email = nil }
     public func cancel() { _ = begin() }
     private func verified(_ session:AuthSession,email:String) async throws -> AuthSession {
         let user = try await api.user(session.accessToken)
@@ -14,7 +17,8 @@ import Foundation
     private func install(_ s:AuthSession,email:String,mark:Int) async throws {
         let live = try await verified(s,email:email); try check(mark)
         let owner = try await api.owner(live.accessToken,activate:true); try check(mark)
-        try vault.write(SavedSession(session:live,accountID:owner,origin:api.config.origin)); self.email = live.user.email
+        let saved = SavedSession(session:live,accountID:owner,origin:api.config.origin)
+        try vault.write(saved); currentSession = saved; self.email = live.user.email
     }
     public func signIn(email:String,password:String,adult:Bool) async throws { guard adult else { throw AccountError.input }; let mark = begin(); let s = try await api.signIn(email:email,password:password); try check(mark); try await install(s,email:email,mark:mark) }
     public func confirm(email:String,code:String,adult:Bool) async throws { guard adult else { throw AccountError.input }; let mark = begin(); let s = try await api.verify(email:email,code:code,type:"signup"); try check(mark); try await install(s,email:email,mark:mark) }
@@ -52,7 +56,8 @@ import Foundation
             }
             try check(mark); let owner = try await api.owner(s.accessToken,activate:false); try check(mark)
             guard owner == stored.accountID else { throw AccountError.identity }
-            try vault.write(SavedSession(session:s,accountID:owner,origin:stored.origin)); email = s.user.email
+            let saved = SavedSession(session:s,accountID:owner,origin:stored.origin)
+            try vault.write(saved); currentSession = saved; email = s.user.email
         } catch {
             // Preserve recoverable network/forbidden failures. Delete only this generation's invalid identity.
             if generation == mark {
@@ -61,6 +66,22 @@ import Foundation
             }
             throw error
         }
+    }
+    /// Explicit local-only restore of an identity previously verified and saved in this app's Keychain.
+    /// It confers no network access; successful logout removes the only durable source.
+    public func restoreLocalSession() throws {
+        _ = begin(); email = nil
+        guard let stored = try vault.read(), stored.origin == api.config.origin,
+              validID(stored.accountID), validID(stored.session.user.id),
+              AccountAPI.emailValid(stored.session.user.email),
+              let confirmed = stored.session.user.emailConfirmedAt, !confirmed.isEmpty else { throw LearningError.signInRequired }
+        currentSession = stored; isOffline = true; email = stored.session.user.email
+    }
+    /// Opaque, memory-only capability. Every request and durable commit rechecks its generation.
+    public func ownerSession() throws -> OwnerSession {
+        guard let saved = currentSession else { throw LearningError.signInRequired }
+        let mark = generation
+        return OwnerSession(api:api,saved:saved,networkVerified:!isOffline,isCurrent:{ [self] in generation == mark && currentSession != nil })
     }
     /// True means provider local-session revocation was acknowledged; false means local removal only.
     public func signOut() async throws -> Bool {

@@ -17,8 +17,11 @@ struct AccountView: View {
                     }.padding(.top,24)
                     if let owner = model.email {
                         Label("Owner account",systemImage:"person.crop.circle.fill").font(.title2.bold())
-                        Text("Signed in as \(owner)").textSelection(.enabled)
+                        Text(model.offline ? "Saved account: \(owner)":"Signed in as \(owner)").textSelection(.enabled)
+                        if let capability = model.ownerSession { LearningView(session:capability).id(ObjectIdentifier(capability)) }
                         contentAvailability
+                        Button("Restore session") { Task { await model.restore() } }.disabled(model.busy)
+                        Button("Sign in again with password") { model.reauthenticate() }.disabled(model.busy)
                         Button("Sign out") { Task { await model.logout() } }.buttonStyle(.borderedProminent).tint(teal)
                     } else {
                         VStack(alignment:.leading,spacing:8) { Text(mode.rawValue).font(.title.bold()); Text(introduction).foregroundStyle(.secondary).fixedSize(horizontal:false,vertical:true) }
@@ -61,4 +64,116 @@ struct AccountView: View {
         password = ""; code = ""
         if success { if target == .signup { mode = .confirm }; if target == .recover { mode = .reset }; if target == .reset { mode = .login } }
     } }
+}
+
+private struct LearningView: View {
+    @StateObject private var model:LearningPresentationModel
+    @State private var language = "en"
+    let session:OwnerSession
+    init(session:OwnerSession) { self.session = session; let model:LearningPresentationModel
+        do {
+            let root = try FileManager.default.url(for:.applicationSupportDirectory,in:.userDomainMask,appropriateFor:nil,create:true).appendingPathComponent("AyaIlmu",isDirectory:true)
+            model = LearningPresentationModel(learning:LearningStore(session:session,journal:try SQLiteJournal(url:root.appendingPathComponent("learning.sqlite"))),core:AppSharedCore.make())
+        } catch { model = LearningPresentationModel(storageFailure:true) }
+        _model = StateObject(wrappedValue:model) }
+    var body: some View {
+        VStack(alignment:.leading,spacing:18) {
+            if !session.networkVerified { Label("Offline · saved account",systemImage:"wifi.slash").foregroundStyle(.secondary) }
+            Text("Owner profiles").font(.title2.bold())
+            if model.profiles.isEmpty { Text("No saved owner profiles.").foregroundStyle(.secondary) }
+            ForEach(model.profiles,id:\.id) { profile in
+                Button { model.select(profile.id) } label: {
+                    HStack { Image(systemName:model.selected == profile.id ? "checkmark.circle.fill":"person.crop.circle"); Text("Adult profile · \(profile.lang == "id" ? "Bahasa Indonesia":"English")"); Spacer() }
+                }.disabled(model.busy)
+            }
+            Picker("Profile language",selection:$language) { Text("Bahasa Indonesia").tag("id"); Text("English").tag("en") }.pickerStyle(.segmented)
+            Button("Create adult self profile") { Task { await model.run { try await $0.createAdult(language:language) } } }.disabled(model.busy || !session.networkVerified)
+            Button("Refresh profiles") { Task { await model.run { try await $0.loadProfiles() } } }.disabled(model.busy || !session.networkVerified)
+            if let summary = model.summary {
+                Divider(); Text("Progress").font(.title2.bold())
+                LabeledContent("Answers saved on this device",value:String(summary.localAnswers))
+                LabeledContent("Answers waiting to sync",value:String(summary.pending))
+                LabeledContent("Answers restored from account",value:String(summary.remoteAnswers))
+                if let progress = model.projection {
+                    LabeledContent("Skills learned",value:String(progress.learned))
+                    LabeledContent("Skills in practice",value:String(progress.practicing))
+                    LabeledContent("Skills needing follow-up",value:String(progress.blocked))
+                }
+                Text(summary.enabled ? "Sync is enabled for this profile only.":"Sync is off.").font(.subheadline)
+                if summary.withdrawalPending { Text("Sync is off on this device. Account withdrawal will be retried when connected.").font(.subheadline) }
+                Text("Device history from before activation is not uploaded. Other local profiles are not linked automatically.").font(.footnote).foregroundStyle(.secondary)
+                if summary.enabled || summary.withdrawalPending {
+                    Button("Disable sync") { Task { await model.disable() } }
+                } else {
+                    Button("Enable sync from now on") { Task { await model.run { try await $0.enableSync(proofs:ApprovedLessonLibrary.bundled.lessons.map(\.proof)) } } }
+                        .disabled(model.busy || !session.networkVerified || ApprovedLessonLibrary.bundled.lessons.isEmpty)
+                }
+                Button("Sync now") { Task { await model.run { try await $0.sync() } } }.disabled(model.busy || !session.networkVerified || !summary.enabled && !summary.withdrawalPending)
+            }
+            if model.core.isAvailable, let learning = model.learning {
+                ForEach(model.library.lessons.filter { course in model.profiles.first(where:{$0.id == model.selected})?.lang == course.language }) { course in
+                    NavigationLink(course.title) { LessonView(lesson:course,learning:learning,core:model.core) }
+                }
+            }
+            if model.busy { ProgressView() }
+            if !model.message.isEmpty { Text(model.message).font(.callout).foregroundStyle(.secondary).accessibilityIdentifier("learning.message") }
+        }.task { if session.networkVerified { await model.run { try await $0.loadProfiles() } } }
+    }
+}
+
+private struct LessonView: View {
+    let lesson:ApprovedLesson; let learning:LearningStore; let core:SharedLessonCore
+    @State private var session:LessonSession?; @State private var number = ""; @State private var message = ""; @State private var revision = 0
+    @State private var sliderValue:Double?; @State private var sequence:[String] = []; @State private var pairings:[String:String] = [:]
+    var body: some View {
+        ScrollView {
+            VStack(alignment:.leading,spacing:20) {
+                if let screen = session?.currentScreen { Text(screen.title).font(.title2.bold()); ForEach(screen.body,id:\.self) { Text($0) } }
+                if let item = session?.current { question(item).id(item.id) }
+                ForEach(session?.lastFeedback ?? [],id:\.self) { Text($0) }
+                if session?.canAdvance == true { Button("Continue") { advance() }.buttonStyle(.borderedProminent) }
+                else if session != nil && session?.current == nil { Label("Session saved",systemImage:"checkmark.circle") }
+                if !message.isEmpty { Text(message).foregroundStyle(.secondary) }
+            }.padding(24).id(revision)
+        }.navigationTitle(lesson.title).task {
+            do { session = try LessonSession(lesson:lesson,learning:learning,core:core) }
+            catch { message = "This lesson is not available. Your saved progress has not changed." }
+        }
+    }
+    @ViewBuilder private func question(_ item:LessonItem) -> some View {
+        Text(item.prompt).font(.title2.bold())
+        ForEach(item.help,id:\.self) { Text($0).foregroundStyle(.secondary) }
+        if ["choose","true_false"].contains(item.type) {
+            ForEach(item.options,id:\.id) { option in Button(option.title) { submit(["kind":"choice","option_id":option.id]) }.buttonStyle(.bordered) }
+        } else if item.type == "number_input" {
+            TextField("Answer",text:$number).keyboardType(.decimalPad).textFieldStyle(.roundedBorder)
+            Button("Submit answer") { guard let value = LocalizedNumberInput.parse(number,language:lesson.language) else { message = "Enter a number to continue."; return }; submit(["kind":"number","value":value]) }.disabled(LocalizedNumberInput.parse(number,language:lesson.language) == nil)
+        } else if item.type == "estimate_slider",let range = item.slider {
+            Slider(value:Binding(get:{sliderValue ?? range.min},set:{sliderValue = $0}),in:range.min...range.max,step:range.step)
+            Text((sliderValue ?? range.min).formatted(.number.locale(Locale(identifier:lesson.language == "id" ? "id_ID":"en_US"))))
+            Button("Submit estimate") { guard let value = sliderValue else { return }; submit(["kind":"number","value":value]) }.disabled(sliderValue == nil)
+        } else if ["tiles","fill_blank","order"].contains(item.type) {
+            ForEach(item.options,id:\.id) { option in Button(option.title) { if let index = sequence.firstIndex(of:option.id) { sequence.remove(at:index) } else { sequence.append(option.id) } }.buttonStyle(.bordered).tint(sequence.contains(option.id) ? .secondary:.accentColor) }
+            Text(sequence.compactMap{id in item.options.first{$0.id == id}?.title}.joined(separator:" → "))
+            Button("Submit answer") { submit(["kind":"sequence","sequence":sequence]) }.disabled(sequence.isEmpty)
+        } else if item.type == "match_pairs" {
+            ForEach(item.leftIDs,id:\.self) { left in
+                Picker(item.options.first{$0.id == left}?.title ?? left,selection:Binding(get:{pairings[left] ?? ""},set:{pairings[left] = $0})) {
+                    Text("Choose a match").tag("")
+                    ForEach(item.rightIDs,id:\.self) { right in Text(item.options.first{$0.id == right}?.title ?? right).tag(right).disabled(pairings.contains{$0.key != left && $0.value == right}) }
+                }
+            }
+            Button("Submit matches") { submit(["kind":"pairs","pairs":item.leftIDs.compactMap{left in pairings[left].map{["left":left,"right":$0]}}]) }.disabled(item.leftIDs.contains{pairings[$0] == nil || pairings[$0] == ""} || Set(pairings.values).count != item.leftIDs.count)
+        } else if ["info_card","mini_reading"].contains(item.type) {
+            if let body = item.modelAnswer { Text(body) }
+            Button("Continue") { submit(["kind":"choice","option_id":"seen"]) }
+        }
+        if !["info_card","mini_reading"].contains(item.type) { Button("I don’t know yet") { submit(["kind":"dont_know"]) } }
+    }
+    private func resetDraft() { number = ""; sliderValue = nil; sequence = []; pairings = [:]; message = ""; revision += 1 }
+    private func submit(_ response:[String:Any]) {
+        do { let raw = String(data:try JSONSerialization.data(withJSONObject:response,options:.sortedKeys),encoding:.utf8)!; try session?.submit(responseJSON:raw); resetDraft() }
+        catch { message = "Your answer could not be saved. Please retry before continuing." }
+    }
+    private func advance() { do { try session?.advance(); resetDraft() } catch { message = "Your progress could not be saved. Please retry before continuing." } }
 }

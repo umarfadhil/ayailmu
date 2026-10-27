@@ -1,0 +1,501 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "fixture-v1",
+    "subject": "matematika",
+    "track": "mat-a",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Fixture test-only pack",
+      "en": "Fixture test-only pack"
+    }
+  },
+  "synthetic": false,
+  "note": "TEST TARGET ONLY. Not approved curriculum or a normal app resource.",
+  "prompts": {
+    "P": {
+      "id": "Fixture prompt",
+      "en": "Fixture prompt"
+    }
+  },
+  "feedback": {
+    "OK": {
+      "id": "Fixture correct {model}",
+      "en": "Fixture correct {model}"
+    },
+    "NO": {
+      "id": "Fixture try {model}",
+      "en": "Fixture try {model}"
+    },
+    "DK": {
+      "id": "Fixture model {model}",
+      "en": "Fixture model {model}"
+    }
+  },
+  "screens": [
+    {
+      "screen_id": "FIX-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Fixture intro",
+        "en": "Fixture intro"
+      },
+      "body": [
+        {
+          "id": "Fixture paragraph",
+          "en": "Fixture paragraph"
+        }
+      ],
+      "review_status": "approved"
+    }
+  ],
+  "items": [
+    {
+      "item_id": "FIX-Q1",
+      "unit": "01",
+      "type": "choose",
+      "audience": "adults",
+      "skills": [
+        "fixture-math"
+      ],
+      "pool": "PRACT",
+      "prompt_id": "P",
+      "review_status": "approved",
+      "content_version": "fixture-v1",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Fixture authored question",
+            "en": "Fixture authored question"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Fixture model",
+        "en": "Fixture model"
+      },
+      "order": 1,
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Fixture A",
+            "en": "Fixture A"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Fixture B",
+            "en": "Fixture B"
+          },
+          "correct": true
+        }
+      ],
+      "feedback_ids": {
+        "correct": "OK",
+        "wrong": "NO",
+        "dont_know": "DK"
+      }
+    },
+    {
+      "item_id": "FIX-Q2",
+      "unit": "01",
+      "type": "number_input",
+      "audience": "adults",
+      "skills": [
+        "fixture-math"
+      ],
+      "pool": "PRACT",
+      "prompt_id": "P",
+      "review_status": "approved",
+      "content_version": "fixture-v1",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Fixture authored question",
+            "en": "Fixture authored question"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Fixture model",
+        "en": "Fixture model"
+      },
+      "order": 2,
+      "numeric": {
+        "value": 7,
+        "tolerance": 0
+      },
+      "feedback_ids": {
+        "correct": "OK",
+        "wrong": "NO",
+        "dont_know": "DK"
+      }
+    },
+    {
+      "item_id": "FIX-R1",
+      "unit": "01",
+      "type": "number_input",
+      "audience": "adults",
+      "skills": [
+        "fixture-math"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P",
+      "review_status": "approved",
+      "content_version": "fixture-v1",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Fixture authored question",
+            "en": "Fixture authored question"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Fixture model",
+        "en": "Fixture model"
+      },
+      "order": 3,
+      "numeric": {
+        "value": 3,
+        "tolerance": 0
+      },
+      "feedback_ids": {
+        "correct": "OK",
+        "wrong": "NO",
+        "dont_know": "DK"
+      }
+    },
+    {
+      "item_id": "FIX-G1",
+      "unit": "01",
+      "type": "info_card",
+      "audience": "adults",
+      "skills": [],
+      "pool": "GEM",
+      "prompt_id": "P",
+      "review_status": "approved",
+      "content_version": "fixture-v1",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Fixture authored question",
+            "en": "Fixture authored question"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Fixture model",
+        "en": "Fixture model"
+      },
+      "gem": true,
+      "source": "Test fixture only",
+      "feedback_ids": {
+        "correct": "OK"
+      }
+    },
+    {
+      "item_id": "FIX-DP",
+      "unit": "01",
+      "type": "daily_puzzle",
+      "audience": "adults",
+      "skills": [
+        "fixture-math"
+      ],
+      "pool": "SPARE",
+      "prompt_id": "P",
+      "review_status": "approved",
+      "content_version": "fixture-v1",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Fixture authored question",
+            "en": "Fixture authored question"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Fixture model",
+        "en": "Fixture model"
+      },
+      "numeric": {
+        "value": 2,
+        "tolerance": 0
+      }
+    },
+    {
+      "item_id": "FIX-TF",
+      "unit": "01",
+      "type": "true_false",
+      "audience": "adults",
+      "skills": [
+        "fixture-math"
+      ],
+      "pool": "PRACT",
+      "prompt_id": "P",
+      "review_status": "approved",
+      "content_version": "fixture-v1",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Fixture authored FIX-TF",
+            "en": "Fixture authored FIX-TF"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Fixture model",
+        "en": "Fixture model"
+      },
+      "order": 4,
+      "feedback_ids": {
+        "correct": "OK",
+        "wrong": "NO",
+        "dont_know": "DK"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Fixture false",
+            "en": "Fixture false"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Fixture true",
+            "en": "Fixture true"
+          },
+          "correct": true
+        }
+      ]
+    },
+    {
+      "item_id": "FIX-SLIDER",
+      "unit": "01",
+      "type": "estimate_slider",
+      "audience": "adults",
+      "skills": [
+        "fixture-math"
+      ],
+      "pool": "PRACT",
+      "prompt_id": "P",
+      "review_status": "approved",
+      "content_version": "fixture-v1",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Fixture authored FIX-SLIDER",
+            "en": "Fixture authored FIX-SLIDER"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Fixture model",
+        "en": "Fixture model"
+      },
+      "order": 5,
+      "feedback_ids": {
+        "correct": "OK",
+        "wrong": "NO",
+        "dont_know": "DK"
+      },
+      "numeric": {
+        "value": 9,
+        "tolerance": 1
+      },
+      "slider": {
+        "min": 0,
+        "max": 20,
+        "step": 1
+      }
+    },
+    {
+      "item_id": "FIX-TILES",
+      "unit": "01",
+      "type": "tiles",
+      "audience": "adults",
+      "skills": [
+        "fixture-math"
+      ],
+      "pool": "PRACT",
+      "prompt_id": "P",
+      "review_status": "approved",
+      "content_version": "fixture-v1",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Fixture authored FIX-TILES",
+            "en": "Fixture authored FIX-TILES"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Fixture model",
+        "en": "Fixture model"
+      },
+      "order": 6,
+      "feedback_ids": {
+        "correct": "OK",
+        "wrong": "NO",
+        "dont_know": "DK"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Fixture first",
+            "en": "Fixture first"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Fixture second",
+            "en": "Fixture second"
+          }
+        }
+      ],
+      "solution": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "item_id": "FIX-BLANK",
+      "unit": "01",
+      "type": "fill_blank",
+      "audience": "adults",
+      "skills": [
+        "fixture-math"
+      ],
+      "pool": "PRACT",
+      "prompt_id": "P",
+      "review_status": "approved",
+      "content_version": "fixture-v1",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Fixture authored FIX-BLANK",
+            "en": "Fixture authored FIX-BLANK"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Fixture model",
+        "en": "Fixture model"
+      },
+      "order": 7,
+      "feedback_ids": {
+        "correct": "OK",
+        "wrong": "NO",
+        "dont_know": "DK"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Fixture first",
+            "en": "Fixture first"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Fixture second",
+            "en": "Fixture second"
+          }
+        }
+      ],
+      "solution": [
+        "a"
+      ]
+    },
+    {
+      "item_id": "FIX-PAIRS",
+      "unit": "01",
+      "type": "match_pairs",
+      "audience": "adults",
+      "skills": [
+        "fixture-math"
+      ],
+      "pool": "PRACT",
+      "prompt_id": "P",
+      "review_status": "approved",
+      "content_version": "fixture-v1",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Fixture authored FIX-PAIRS",
+            "en": "Fixture authored FIX-PAIRS"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Fixture model",
+        "en": "Fixture model"
+      },
+      "order": 8,
+      "feedback_ids": {
+        "correct": "OK",
+        "wrong": "NO",
+        "dont_know": "DK"
+      },
+      "options": [
+        {
+          "id": "l1",
+          "text": {
+            "id": "Fixture l1",
+            "en": "Fixture l1"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "id": "Fixture r1",
+            "en": "Fixture r1"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "id": "Fixture l2",
+            "en": "Fixture l2"
+          }
+        },
+        {
+          "id": "r2",
+          "text": {
+            "id": "Fixture r2",
+            "en": "Fixture r2"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "l1": "r1",
+        "l2": "r2"
+      }
+    }
+  ]
+}

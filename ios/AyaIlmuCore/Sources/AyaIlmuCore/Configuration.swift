@@ -2,9 +2,15 @@ import Foundation
 public struct Configuration: Sendable {
     public let origin: String
     public let declarationVersion: String
-    public init(origin: String, allowedOrigins: Set<String>, declarationVersion: String) throws {
+    public let syncPolicyVersion: String?
+    public let registrySourceCommit: String?
+    public init(origin: String, allowedOrigins: Set<String>, declarationVersion: String, syncPolicyVersion: String? = nil, registrySourceCommit: String? = nil) throws {
         guard let c = URLComponents(string: origin), c.scheme == "https", let host = c.host, host == host.lowercased(), c.user == nil, c.password == nil, c.path.isEmpty, c.query == nil, c.fragment == nil, c.url?.absoluteString == origin, allowedOrigins.contains(origin), !declarationVersion.isEmpty else { throw AccountError.configuration }
+        if let policy = syncPolicyVersion, let source = registrySourceCommit {
+            guard policy.range(of:"^[a-z0-9-]{3,80}$",options:.regularExpression) != nil, source.range(of:"^[a-f0-9]{40}$",options:.regularExpression) != nil else { throw AccountError.configuration }
+        } else if syncPolicyVersion != nil || registrySourceCommit != nil { throw AccountError.configuration }
         self.origin = origin; self.declarationVersion = declarationVersion
+        self.syncPolicyVersion = syncPolicyVersion; self.registrySourceCommit = registrySourceCommit
     }
 }
 public enum AccountError: Error, CustomStringConvertible, LocalizedError {
