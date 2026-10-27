@@ -1,0 +1,14 @@
+#!/bin/bash
+set -euo pipefail
+if [ "$CONFIGURATION" = Release ]; then
+  case " ${SWIFT_ACTIVE_COMPILATION_CONDITIONS:-} " in *PRIVATE_OWNER_QA*) echo 'error: PRIVATE_OWNER_QA is forbidden in Release'; exit 1;; esac
+  [ -z "${AYAILMU_QA_CA_DER:-}" ] || { echo 'error: Private QA CA is forbidden in Release'; exit 1; }
+  [ -n "${AYAILMU_RELEASE_APPROVED_ORIGIN:-}" ] && [ "${AYAILMU_ORIGIN:-}" = "$AYAILMU_RELEASE_APPROVED_ORIGIN" ] && [ -n "${AYAILMU_DECLARATION_VERSION:-}" ] || { echo 'error: Release requires explicit approved HTTPS origin and declaration version from the infrastructure owner'; exit 1; }
+  case "$AYAILMU_ORIGIN" in https://localhost*|https://127.*|https://\[*) echo 'error: Release rejects private QA origin'; exit 1;; https://*) ;; *) echo 'error: Release requires HTTPS'; exit 1;; esac
+fi
+if [[ " ${SWIFT_ACTIVE_COMPILATION_CONDITIONS:-} " == *PRIVATE_OWNER_QA* ]]; then
+  [ "$CONFIGURATION" = Debug ] && [ "${AYAILMU_ORIGIN:-}" = https://localhost:58443 ] || { echo 'error: Private QA requires Debug and exact authorized origin'; exit 1; }
+  [ -f "${AYAILMU_QA_CA_DER:-}" ] || { echo 'error: Missing build-supplied public QA CA'; exit 1; }
+  HASH="$(shasum -a 256 "$AYAILMU_QA_CA_DER" | cut -d ' ' -f 1)"
+  [ "$HASH" = 75bf582db974accb5b4ed74936c8477fa6a6fc94f5d2ca33d8500b224f1ffbd0 ] || { echo 'error: Unexpected public QA CA'; exit 1; }
+fi
