@@ -90,12 +90,34 @@ class NormalAccountTest {
         override suspend fun revertLogin(mark: Long, accepted: () -> Boolean) { if (accepted()) { owner = null; authenticated = false } }
     }
 
-    private class Harness(val gateway: FakeGateway = FakeGateway(), val vault: FakeVault = FakeVault(), val sync: FakeSync = FakeSync()) {
-        val account = NormalAccount(gateway, vault, sync, FixedClock(Instant.parse("2026-10-26T00:00:00Z")), NormalAccountConfig.forValues(true, "https://accounts.petalytix.id", "owner-policy-1"))
+    private class Harness(val gateway: FakeGateway = FakeGateway(), val vault: FakeVault = FakeVault(), val sync: FakeSync = FakeSync(), ownerSignInOnly: Boolean = false) {
+        val account = NormalAccount(gateway, vault, sync, FixedClock(Instant.parse("2026-10-26T00:00:00Z")), NormalAccountConfig.forValues(true, "https://accounts.petalytix.id", "owner-policy-1").copy(ownerSignInOnly = ownerSignInOnly))
         fun confirmed(email: String, password: String) {
             gateway.users[email] = AuthUser("id-$email", email, "2026-10-26T00:00:00Z")
             gateway.passwords[email] = password
         }
+    }
+
+    @Test fun ownerRemoteRejectsEveryEmailActionBeforeCallingProvider() = runTest {
+        val h = Harness(ownerSignInOnly = true)
+        assertFalse(h.account.signUp(emailA, passwordA, true))
+        assertFalse(h.account.confirm(emailA, "111111", true))
+        assertFalse(h.account.resend(emailA))
+        assertFalse(h.account.recover(emailA))
+        assertFalse(h.account.reset(emailA, "222222", passwordB))
+        assertEquals(0, h.gateway.networkCalls)
+        assertNull(h.vault.saved)
+    }
+
+    @Test fun ownerRemotePreservesConfirmedSignInRestoreAndLogout() = runTest {
+        val h = Harness(ownerSignInOnly = true); h.confirmed(emailA, passwordA)
+        assertTrue(h.account.signIn(emailA, passwordA, true))
+        h.gateway.expiredAccess += h.vault.saved!!.session.accessToken
+        assertTrue(h.account.restore())
+        assertEquals(1, h.gateway.refreshed)
+        assertTrue(h.account.signOut())
+        assertEquals(1, h.gateway.logoutCalls)
+        assertNull(h.vault.saved)
     }
 
     @Test fun signupWaitsForRealConfirmationAndWrongOtpNeverInstallsASession() = runTest {

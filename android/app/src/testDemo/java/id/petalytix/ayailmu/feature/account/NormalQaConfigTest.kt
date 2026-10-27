@@ -28,6 +28,22 @@ class NormalQaConfigTest {
         assertTrue(prod.enabled)
         assertEquals("", prod.requiredOrigin)
     }
+    @Test fun ownerRemoteAdapterBlocksEmailEndpointsEvenIfCalledDirectly() = runTest {
+        val configured = NormalAccountConfig.forValues(true, "https://owner.example.invalid", "qa-sync-v1").copy(ownerSignInOnly = true)
+        val gateway = GoTrueNormalAuthGateway(configured)
+        val actions: List<suspend () -> Unit> = listOf(
+            { gateway.signUp("owner@example.invalid", "not-a-real-password") },
+            { gateway.verifyOtp("owner@example.invalid", "111111", "signup"); Unit },
+            { gateway.resend("owner@example.invalid") },
+            { gateway.recover("owner@example.invalid") },
+            { gateway.updatePassword("not-a-token", "not-a-real-password"); Unit },
+        )
+        actions.forEach { action ->
+            val error = runCatching { action() }.exceptionOrNull()
+            assertTrue(error is IllegalStateException)
+            assertEquals("Email actions are unavailable in the owner-only connection", error?.message)
+        }
+    }
     @Test fun disabledGatewayCannotMakeNetworkCalls() = runTest {
         val disabled = config(origin, approved = false)
         val gateway = GoTrueNormalAuthGateway(disabled)

@@ -22,7 +22,7 @@ internal object NormalAccountModule {
         BuildConfig.NORMAL_AUTH_APPROVED, BuildConfig.NORMAL_AUTH_PUBLIC_ORIGIN,
         BuildConfig.NORMAL_SYNC_POLICY_VERSION, BuildConfig.NORMAL_OWNER_DECLARATION_VERSION,
         BuildConfig.NORMAL_REGISTRY_SOURCE_COMMIT, BuildConfig.NORMAL_AUTH_REQUIRED_ORIGIN,
-    )
+    ).copy(ownerSignInOnly = BuildConfig.NORMAL_OWNER_SIGN_IN_ONLY)
     @Provides @Singleton internal fun backend(config: NormalAccountConfig): Backend =
         if (config.enabled) HttpBackend(config.apiOrigin, synthetic = false, config.syncPolicyVersion, config.ownerDeclarationVersion)
         else DisabledNormalBackend

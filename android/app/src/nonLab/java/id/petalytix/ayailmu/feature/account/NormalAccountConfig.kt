@@ -5,7 +5,7 @@ import java.util.Locale
 import java.security.MessageDigest
 
 /** Release opt-in is compiled only from explicit build properties. Nothing here contains an endpoint or credential. */
-internal data class NormalAccountConfig(val enabled: Boolean, val publicOrigin: String, val syncPolicyVersion: String, val ownerDeclarationVersion: String = "adult-owner-v1", val registrySourceCommit: String = "0".repeat(40), val requiredOrigin: String = "") {
+internal data class NormalAccountConfig(val enabled: Boolean, val publicOrigin: String, val syncPolicyVersion: String, val ownerDeclarationVersion: String = "adult-owner-v1", val registrySourceCommit: String = "0".repeat(40), val requiredOrigin: String = "", val ownerSignInOnly: Boolean = false) {
     val authOrigin: String get() = publicOrigin
     val apiOrigin: String get() = publicOrigin
     val environmentHash: String by lazy {

@@ -21,17 +21,21 @@ internal interface NormalAuthGateway {
 internal class GoTrueNormalAuthGateway @Inject constructor(config: NormalAccountConfig) : NormalAuthGateway {
     private val configured = config.takeIf { it.enabled }
     private val client by lazy { GoTrueAuth(requireNotNull(configured).authOrigin) }
+    private fun emailApi(): GoTrueAuth {
+        check(configured?.ownerSignInOnly == false) { "Email actions are unavailable in the owner-only connection" }
+        return api()
+    }
     private fun api(): GoTrueAuth {
         checkNotNull(configured) { "Normal account release is not approved" }
         return client
     }
-    override suspend fun signUp(email: String, password: String) = api().signUp(email, password)
+    override suspend fun signUp(email: String, password: String) = emailApi().signUp(email, password)
     override suspend fun signIn(email: String, password: String) = api().signIn(email, password)
-    override suspend fun verifyOtp(email: String, code: String, type: String) = api().verifyOtp(email, code, type)
-    override suspend fun recover(email: String) = api().recover(email)
-    override suspend fun resend(email: String) = api().resend(email)
+    override suspend fun verifyOtp(email: String, code: String, type: String) = emailApi().verifyOtp(email, code, type)
+    override suspend fun recover(email: String) = emailApi().recover(email)
+    override suspend fun resend(email: String) = emailApi().resend(email)
     override suspend fun refresh(refreshToken: String) = api().refresh(refreshToken)
     override suspend fun user(token: String) = api().user(token)
-    override suspend fun updatePassword(token: String, password: String) = api().updatePassword(token, password)
+    override suspend fun updatePassword(token: String, password: String) = emailApi().updatePassword(token, password)
     override suspend fun signOut(token: String) = api().signOut(token)
 }

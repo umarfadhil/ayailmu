@@ -73,9 +73,9 @@ internal fun NormalAccountScreen(state: NormalAccountUiState, events: NormalAcco
         SyncMessage(state.sync.notice)
         when {
             state.account.email != null -> OwnerStatus(state, events)
-            state.mode == NormalAccountMode.HUB -> {
+            state.mode == NormalAccountMode.HUB || !state.emailActionsAllowed && state.mode != NormalAccountMode.SIGN_IN -> {
                 AyaButton(stringResource(R.string.normal_account_sign_in), { events.show(NormalAccountMode.SIGN_IN) }, enabled = !state.busy)
-                AyaSecondaryButton(stringResource(R.string.normal_account_register), { events.show(NormalAccountMode.SIGN_UP) }, enabled = !state.busy)
+                if (state.emailActionsAllowed) AyaSecondaryButton(stringResource(R.string.normal_account_register), { events.show(NormalAccountMode.SIGN_UP) }, enabled = !state.busy)
             }
             state.mode == NormalAccountMode.SIGN_IN -> SignIn(state, events)
             state.mode == NormalAccountMode.SIGN_UP -> SignUp(state, events)
@@ -124,8 +124,8 @@ private fun SignIn(state: NormalAccountUiState, vm: NormalAccountEvents) {
     EmailPassword(email, { email = it }, password, { password = it }, state.busy)
     AdultDeclaration(adult, { adult = it }, state.busy)
     AyaButton(stringResource(R.string.normal_account_sign_in), { vm.signIn(email, password, adult) }, enabled = !state.busy && adult && NormalInput.email(email) && NormalInput.password(password))
-    AyaSecondaryButton(stringResource(R.string.normal_account_forgot), { vm.show(NormalAccountMode.RECOVER, email.trim()) }, enabled = !state.busy)
-    AyaSecondaryButton(stringResource(R.string.normal_account_enter_code), { vm.show(NormalAccountMode.CONFIRM, email.trim()) }, enabled = !state.busy && NormalInput.email(email))
+    if (state.emailActionsAllowed) AyaSecondaryButton(stringResource(R.string.normal_account_forgot), { vm.show(NormalAccountMode.RECOVER, email.trim()) }, enabled = !state.busy)
+    if (state.emailActionsAllowed) AyaSecondaryButton(stringResource(R.string.normal_account_enter_code), { vm.show(NormalAccountMode.CONFIRM, email.trim()) }, enabled = !state.busy && NormalInput.email(email))
     AyaSecondaryButton(stringResource(R.string.action_back), vm::back, enabled = !state.busy)
 }
 @Composable

@@ -1,3 +1,4 @@
+import java.time.Instant
 import java.net.URI
 import java.security.GeneralSecurityException
 import java.security.cert.CertificateFactory
@@ -82,6 +83,30 @@ if (normalQaApproved) require(normalQaOrigin == NORMAL_QA_ORIGIN && normalQaSync
     "Approved normal QA requires exact origin, owner declaration, sync policy and registry source"
 }
 
+// Temporary owner-only remote QA is a separate opt-in, never a localhost QA retarget.
+val ownerRemoteBuildEnabled = providers.gradleProperty("umar.ownerRemote.buildEnabled").orElse("false").get() == "true"
+val ownerRemoteApproved = providers.gradleProperty("umar.ownerRemote.approved").orElse("false").get() == "true"
+val ownerRemoteOrigin = providers.gradleProperty("umar.ownerRemote.publicOrigin").orElse("").get()
+val ownerRemoteSyncPolicy = providers.gradleProperty("umar.ownerRemote.syncPolicyVersion").orElse("").get()
+val ownerRemoteDeclaration = providers.gradleProperty("umar.ownerRemote.ownerDeclarationVersion").orElse("").get()
+val ownerRemoteRegistry = providers.gradleProperty("umar.ownerRemote.registrySourceCommit").orElse("").get()
+val ownerRemoteExpiry = providers.gradleProperty("umar.ownerRemote.expiresAtUtc").orElse("").get()
+if (ownerRemoteBuildEnabled) {
+    val uri = runCatching { URI(ownerRemoteOrigin) }.getOrNull()
+    val expiry = runCatching { Instant.parse(ownerRemoteExpiry) }.getOrNull()
+    val now = Instant.now()
+    require(ownerRemoteApproved && uri != null && uri.scheme == "https" &&
+        uri.host != null && uri.host.matches(Regex("[a-z0-9]+(?:-[a-z0-9]+)*\\.trycloudflare\\.com")) &&
+        uri.rawAuthority == uri.host && uri.rawPath.isNullOrEmpty() && uri.rawQuery == null && uri.rawFragment == null &&
+        ownerRemoteSyncPolicy == "qa-owner-sync-v1" && ownerRemoteDeclaration == "qa-adult-owner-v1" &&
+        ownerRemoteRegistry == "815e30f0da284b9818fadc0143f4da92544384d3" &&
+        expiry != null && expiry.isAfter(now) && expiry.isBefore(now.plusSeconds(36 * 3600))) {
+        "ownerRemote requires the approved temporary HTTPS origin, exact private-owner policy/registry and unexpired <=36h handoff"
+    }
+}
+val ownerRemoteIdentity = MessageDigest.getInstance("SHA-256").digest(ownerRemoteOrigin.toByteArray(Charsets.US_ASCII))
+    .joinToString("") { (it.toInt() and 255).toString(16).padStart(2, '0') }
+
 val playLicenseKey = providers.gradleProperty("ayailmu.playLicenseKey").getOrElse("")
 
 fun validatePlayLicenseKey(required: Boolean): String {
@@ -127,6 +152,7 @@ android {
         buildConfigField("boolean", "SYNC_LAB_ENABLED", "false")
         buildConfigField("boolean", "BILLING_ENABLED", "${playLicenseKey.isNotEmpty()}")
         buildConfigField("boolean", "NORMAL_AUTH_APPROVED", "false")
+        buildConfigField("boolean", "NORMAL_OWNER_SIGN_IN_ONLY", "false")
         buildConfigField("String", "NORMAL_AUTH_PUBLIC_ORIGIN", "\"\"")
         buildConfigField("String", "NORMAL_SYNC_POLICY_VERSION", "\"\"")
         buildConfigField("String", "NORMAL_OWNER_DECLARATION_VERSION", "\"\"")
@@ -169,6 +195,21 @@ android {
             buildConfigField("String", "NORMAL_SYNC_POLICY_VERSION", "\"$normalSyncPolicy\"")
             buildConfigField("String", "NORMAL_OWNER_DECLARATION_VERSION", "\"$normalOwnerDeclaration\"")
             buildConfigField("String", "NORMAL_REGISTRY_SOURCE_COMMIT", "\"$normalRegistrySource\"")
+        }
+        create("ownerRemote") {
+            dimension = "mode"
+            applicationIdSuffix = ".ownerbeta.r$ownerRemoteIdentity"
+            versionNameSuffix = "-owner-beta"
+            buildConfigField("boolean", "DEVELOPER_DEMO", "false")
+            buildConfigField("boolean", "SYNC_LAB_ENABLED", "false")
+            buildConfigField("boolean", "BILLING_ENABLED", "false")
+            buildConfigField("boolean", "NORMAL_AUTH_APPROVED", "$ownerRemoteApproved")
+            buildConfigField("boolean", "NORMAL_OWNER_SIGN_IN_ONLY", "true")
+            buildConfigField("String", "NORMAL_AUTH_PUBLIC_ORIGIN", "\"$ownerRemoteOrigin\"")
+            buildConfigField("String", "NORMAL_AUTH_REQUIRED_ORIGIN", "\"$ownerRemoteOrigin\"")
+            buildConfigField("String", "NORMAL_SYNC_POLICY_VERSION", "\"$ownerRemoteSyncPolicy\"")
+            buildConfigField("String", "NORMAL_OWNER_DECLARATION_VERSION", "\"$ownerRemoteDeclaration\"")
+            buildConfigField("String", "NORMAL_REGISTRY_SOURCE_COMMIT", "\"$ownerRemoteRegistry\"")
         }
         create("normalQa") {
             dimension = "mode"
@@ -232,6 +273,10 @@ android {
         getByName("demo").manifest.srcFile("src/nonLab/AndroidManifest.xml")
         getByName("prod").java.srcDir("src/nonLab/java")
         getByName("prod").manifest.srcFile("src/nonLab/AndroidManifest.xml")
+        getByName("ownerRemote").apply {
+            java.srcDir("src/nonLab/java")
+            manifest.srcFile("src/ownerRemote/AndroidManifest.xml")
+        }
         getByName("normalQa").apply {
             java.srcDir("src/nonLab/java")
             manifest.srcFile("src/normalQa/AndroidManifest.xml")
@@ -349,6 +394,8 @@ tasks.configureEach { if (normalQaBuildEnabled && name == "preNormalQaDebugBuild
 // Variant-level isolation: no QA release variant exists. QA debug is a separate build opt-in,
 // not an auth approval and never a default prod/demo/CI dependency.
 androidComponents {
+    beforeVariants(selector().withName("ownerRemoteRelease")) { variant -> variant.enable = false }
+    beforeVariants(selector().withName("ownerRemoteDebug")) { variant -> variant.enable = ownerRemoteBuildEnabled }
     beforeVariants(selector().withName("normalQaRelease")) { variant -> variant.enable = false }
     beforeVariants(selector().withName("normalQaDebug")) { variant -> variant.enable = normalQaBuildEnabled }
 }
