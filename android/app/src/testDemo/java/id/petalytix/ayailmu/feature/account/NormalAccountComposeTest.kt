@@ -87,6 +87,23 @@ class NormalAccountComposeTest {
         compose.onAllNodesWithText(text(R.string.normal_account_restore_action)).assertCountEquals(0)
     }
 
+    @Test fun noApprovedContentNoticeSaysAccountUnchangedWithoutLabLabels() {
+        val state = NormalAccountUiState(true, account = NormalAccountState("real.owner@gmail.com"), sync = NormalSyncState("owner-a", true, notice = NormalSyncNotice.NO_APPROVED_CONTENT))
+        compose.setContent { NormalAccountScreen(state, Events()) {} }
+        compose.onNodeWithText(text(R.string.normal_account_no_approved_content)).assertExists()
+        compose.onAllNodesWithText(text(R.string.normal_account_sync_ready)).assertCountEquals(0)
+        compose.onAllNodesWithText(text(R.string.normal_account_synced)).assertCountEquals(0)
+        compose.onAllNodesWithText("synthetic", substring = true, ignoreCase = true).assertCountEquals(0)
+        compose.onAllNodesWithText("sync lab", substring = true, ignoreCase = true).assertCountEquals(0)    }
+
+    @Test fun contentMismatchNoticeTellsOwnerToUpdateTheApp() {
+        val state = NormalAccountUiState(true, account = NormalAccountState("real.owner@gmail.com"), sync = NormalSyncState("owner-a", true, notice = NormalSyncNotice.CONTENT_MISMATCH))
+        compose.setContent { NormalAccountScreen(state, Events()) {} }
+        compose.onNodeWithText(text(R.string.normal_account_content_mismatch)).assertExists()
+        compose.onAllNodesWithText(text(R.string.normal_account_sync_ready)).assertCountEquals(0)
+        compose.onAllNodesWithText("synthetic", substring = true, ignoreCase = true).assertCountEquals(0)
+        compose.onAllNodesWithText("sync lab", substring = true, ignoreCase = true).assertCountEquals(0)    }
+
     @Test fun ownerRemoteHubDoesNotOfferRegistration() {
         compose.setContent { NormalAccountScreen(NormalAccountUiState(true, emailActionsAllowed = false), Events()) {} }
         compose.onNodeWithText(text(R.string.normal_account_sign_in)).assertExists()

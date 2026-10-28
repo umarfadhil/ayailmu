@@ -65,6 +65,21 @@ class NormalSyncEngineTest {
         assertEquals(listOf("after"), api.uploaded.map { raw -> Json.parseToJsonElement(raw).jsonObject.getValue("answer_id").jsonPrimitive.content })
     }
 
+    @Test fun preflightIsReadOnlyAndRejectsIncompatibleOrEmptyProofsBeforeAnyLearnerExists() = runTest {
+        val api = FakeBackend(proof)
+        val journal = MemoryJournal()
+        val engine = SyncEngine(api, journal, SyncMode.NORMAL)
+        assertFailsWith<ApiFailure> { engine.preflightProofs(mapOf(proof.track to proof)) }
+        engine.login("A", NormalOwnerDeclaration("owner-policy-1", true))
+        val before = journal.read()
+        engine.preflightProofs(mapOf(proof.track to proof))
+        assertFailsWith<IllegalArgumentException> { engine.preflightProofs(mapOf(proof.track to proof.copy(packSha256 = "c".repeat(64)))) }
+        assertFailsWith<IllegalArgumentException> { engine.preflightProofs(mapOf(proof.track to proof.copy(sourceCommit = "source-2"))) }
+        assertFailsWith<IllegalArgumentException> { engine.preflightProofs(emptyMap()) }
+        assertTrue(api.learnersByOwner.isEmpty())
+        assertEquals(before, journal.read())
+    }
+
     @Test fun normalOwnerNamespacesRemainIsolated() = runTest {
         val api = FakeBackend(proof)
         val engine = ready(api)

@@ -118,6 +118,13 @@ class SyncEngine(private val api: Backend, private val journal: JournalStore, pr
         synchronized(lock) { requireCurrent(c) }
         return learner
     }
+    /** Read-only: confirms the registry accepts [proofs], so callers can reject before any remote mutation. */
+    suspend fun preflightProofs(proofs: Map<String, PackProof>) {
+        require(proofs.isNotEmpty() && proofs.all { it.key == it.value.track })
+        val c = context(); val catalog = api.catalog(c.token)
+        synchronized(lock) { requireCurrent(c) }
+        proofs.values.forEach { it.verify(catalog) }
+    }
     suspend fun createNormalAdultLearner(clientId: String, lang: String, accepted: () -> Boolean = { true }): Learner {
         check(mode == SyncMode.NORMAL)
         require(clientId.matches(Regex("[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}")) && !clientId.startsWith("syn_") && lang in setOf("id", "en"))

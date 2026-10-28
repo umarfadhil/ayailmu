@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-internal enum class NormalSyncNotice { SIGNED_OUT, READY, OFFLINE, LOGIN_REQUIRED, FRESH_AUTH_REQUIRED, SYNCED, DISABLED, CONSENT_UPDATE_REQUIRED, NO_APPROVED_CONTENT, FAILED }
+internal enum class NormalSyncNotice { SIGNED_OUT, READY, OFFLINE, LOGIN_REQUIRED, FRESH_AUTH_REQUIRED, SYNCED, DISABLED, CONSENT_UPDATE_REQUIRED, NO_APPROVED_CONTENT, CONTENT_MISMATCH, FAILED }
 internal data class NormalSyncState(
     val owner: String? = null,
     val authenticated: Boolean = false,
@@ -42,6 +42,9 @@ internal data class NormalSyncState(
     val busy: Boolean = false,
     val notice: NormalSyncNotice = NormalSyncNotice.SIGNED_OUT,
 )
+
+/** Local content cannot be synced; raised before any remote mutation so [NormalSyncRepository.failed] can report it truthfully. */
+internal class NormalContentException(val notice: NormalSyncNotice, message: String) : IllegalStateException(message)
 
 /** Native normal learning bridge. Existing unbound Room profiles/history are never attached or backfilled. */
 @Singleton
@@ -97,10 +100,13 @@ internal class NormalSyncRepository @Inject constructor(
         engine.flushWithdrawals()
         if (!accepted() || engine.owner() != owner) return
         ensureOwnerContext()
-        remoteLearners = try { owner to engine.availableLearners() } catch (e: Exception) {
+        val fetched = try { fetchLearnersFor(owner, accepted) } catch (e: Exception) {
             if (e is CancellationException) throw e
             publish(NormalSyncNotice.OFFLINE); return
         }
+        // Stale (another owner/session took over while suspended): that attempt publishes its own state.
+        if (fetched == null) return
+        remoteLearners = owner to fetched
         engine.binding()?.let { if (accepted() && engine.owner() == owner) activate(it.learner, true) }
         publish(if (engine.authenticated()) NormalSyncNotice.READY else NormalSyncNotice.LOGIN_REQUIRED)
     }
@@ -111,35 +117,65 @@ internal class NormalSyncRepository @Inject constructor(
         actionMutex.withLock {
         if (!accepted()) return@withLock
         try {
+            // Anchor the create path to the creating owner and session before the first suspension.
+            // A successful engine.select later advances the session generation, so this marker only
+            // covers preflight, create and retention.
+            val owner = engine.owner()
+            val mark = engine.sessionGeneration()
+            if (owner == null || mark == null) throw ApiFailure(401, "unauthorized")
+            val creating = { accepted() && engine.owner() == owner && engine.sessionGeneration() == mark }
             val clientId = "lrn_" + UUID.randomUUID()
             check(db.profiles().get(clientId) == null) { "Local profile already exists" }
-            val learner = engine.createNormalAdultLearner(clientId, lang, accepted)
-            selectInternal(learner, label, accepted)
+            // Read-only checks first: a remote learner must never be created for content that cannot be bound.
+            val prepared = proofs()
+            check(creating()) { "Sign-in session changed" }
+            try { engine.preflightProofs(prepared) } catch (e: IllegalArgumentException) {
+                throw NormalContentException(NormalSyncNotice.CONTENT_MISMATCH, e.message.orEmpty())
+            }
+            val learner = engine.createNormalAdultLearner(clientId, lang, creating)
+            // The reply is known-successful, so cache this learner for the creating owner without network
+            // I/O; if binding fails (even offline) a retry selects it instead of creating another.
+            check(retainCreated(learner, owner, creating)) { "Sign-in session changed" }
+            try { selectInternal(learner, label, accepted, owner, mark, prepared) } catch (e: Exception) {
+                if (e !is CancellationException) refreshLearners(owner, accepted)
+                throw e
+            }
         } finally { if (accepted()) mutable.value = mutable.value.copy(busy = false) }
         }
     }
     suspend fun select(learner: Learner, newLabel: String? = null) {
         val accepted = beginAction()
         actionMutex.withLock {
-            if (accepted()) try { selectInternal(learner, newLabel, accepted) } finally { if (accepted()) mutable.value = mutable.value.copy(busy = false) }
+            if (accepted()) try {
+                // Anchor the selection to the owner and session current before the first suspension.
+                val owner = engine.owner()
+                val mark = engine.sessionGeneration()
+                if (owner == null || mark == null) throw ApiFailure(401, "unauthorized")
+                selectInternal(learner, newLabel, accepted, owner, mark)
+            } finally { if (accepted()) mutable.value = mutable.value.copy(busy = false) }
         }
     }
-    private suspend fun selectInternal(learner: Learner, newLabel: String?, accepted: () -> Boolean) {
+    /** [owner] and [mark] are the owner and engine session generation captured by the caller before its first suspension. */
+    private suspend fun selectInternal(learner: Learner, newLabel: String?, accepted: () -> Boolean, owner: String, mark: Long, prepared: Map<String, PackProof>? = null) {
         val previous = engine.binding()?.learner?.id
         val known = engine.knownLearners().any { it.id == learner.id }
         if (!known) {
             val existing = db.profiles().get(learner.clientLearnerId)
             val owned = db.ownerBindings().all().firstOrNull { it.profileId == learner.clientLearnerId }
             if (owned != null) {
-                check(owned.ownerId == engine.owner() && owned.environmentId == config.environmentHash) { "Room learner belongs to another owner/environment" }
+                check(owned.ownerId == owner && owned.environmentId == config.environmentHash) { "Room learner belongs to another owner/environment" }
             } else check(existing == null) { "Unbound device profiles cannot be attached" }
         }
         try {
-            engine.select(learner, proofs(), accepted)
+            // The engine checks this just before it commits the selection, i.e. before it advances the generation.
+            val selecting = { accepted() && engine.owner() == owner && engine.sessionGeneration() == mark }
+            engine.select(learner, prepared ?: proofs(), selecting)
             if (!accepted()) { engine.rollbackNormalSelection(learner.id, previous); publish(); return }
             if (!activate(learner, true, newLabel, accepted)) { engine.rollbackNormalSelection(learner.id, previous); publish(); return }
             if (!accepted()) return
-            remoteLearners = requireNotNull(engine.owner()) to engine.availableLearners()
+            val learners = fetchLearnersFor(owner, accepted)
+            if (learners != null) remoteLearners = owner to learners
+            else if (accepted()) throw IllegalStateException("Sign-in session changed")
             if (accepted()) publish(NormalSyncNotice.READY)
         } catch (e: Exception) {
             throw e
@@ -194,7 +230,7 @@ internal class NormalSyncRepository @Inject constructor(
         } else {
             val notice = when {
                 error is IOException -> NormalSyncNotice.OFFLINE
-                error.message == "No approved native tracks configured" -> NormalSyncNotice.NO_APPROVED_CONTENT
+                error is NormalContentException -> error.notice
                 else -> NormalSyncNotice.FAILED
             }
             mutable.value = mutable.value.copy(busy = false, notice = notice)
@@ -307,7 +343,53 @@ internal class NormalSyncRepository @Inject constructor(
         return content.tracks().filter { loaded -> loaded.pack.items.any { it.reviewStatus == ReviewStatus.APPROVED } }.associate { loaded ->
             val entry = catalog.tracks.single { it.track == loaded.track }
             loaded.track to PackProof.fromBytes(assets.read(entry.pack).encodeToByteArray(), assets.read(entry.rules).encodeToByteArray(), config.registrySourceCommit)
-        }.also { require(it.isNotEmpty()) { "No approved native tracks configured" } }
+        }.also { if (it.isEmpty()) throw NormalContentException(NormalSyncNotice.NO_APPROVED_CONTENT, "No approved native tracks configured") }
+    }
+    /**
+     * Caches a learner from a known-successful create reply, keyed by the [owner] that created it (never a
+     * freshly read owner), so a concurrent sign-in cannot attribute it to someone else. No network, and no
+     * publish: the action stays busy until binding finishes and its own success/failure path publishes.
+     * Returns false when the creating owner/session/action is no longer current.
+     */
+    private fun retainCreated(learner: Learner, owner: String, creating: () -> Boolean): Boolean {
+        if (!creating()) return false
+        val visible = remoteLearners?.takeIf { it.first == owner }?.second.orEmpty()
+        remoteLearners = owner to (visible.filterNot { it.id == learner.id } + learner)
+        return true
+    }
+    /**
+     * Fetches the learner list for the fixed [owner] and returns it only if that owner's session was current for
+     * the whole request, so a response is never attached to an owner merely read before or after an await.
+     * Generations only increase, so the same generation before and after the fetch proves no sign-in, sign-out or
+     * refresh intervened; the owner check then proves that session was [owner]'s. Returns null when stale (including
+     * a failure raised after the context changed); throws cancellation, and what the fetch throws while the context is
+     * still current (and a 401 if there is no session) so callers keep their error semantics.
+     * Callers must store the result keyed by [owner] and nothing else.
+     */
+    private suspend fun fetchLearnersFor(owner: String, accepted: () -> Boolean): List<Learner>? {
+        val mark = engine.sessionGeneration() ?: throw ApiFailure(401, "unauthorized")
+        if (!accepted() || engine.owner() != owner) return null
+        val current = { accepted() && engine.owner() == owner && engine.sessionGeneration() == mark }
+        val learners = try { engine.availableLearners() } catch (e: Exception) {
+            if (e is CancellationException) throw e
+            // A failure raised because the session moved on belongs to the superseded attempt and is discarded.
+            if (!current()) return null
+            throw e
+        }
+        return learners.takeIf { current() }
+    }
+    /**
+     * Failure path of [createAdult]: best-effort replacement of the cache with the server's list, then publish
+     * so the retained learner is visible. Everything is keyed by the creating [owner].
+     */
+    private suspend fun refreshLearners(owner: String, accepted: () -> Boolean) {
+        if (!accepted()) return
+        try {
+            fetchLearnersFor(owner, accepted)?.let { remoteLearners = owner to it }
+        } catch (e: Exception) {
+            if (e is CancellationException) throw e
+        }
+        if (accepted() && engine.owner() == owner) publish()
     }
     /** Await owned background work before the caller releases Room or journal storage. */
     suspend fun stop() {

@@ -52,6 +52,14 @@ private fun testAssets(): AssetSource {
     }
 }
 
+/** The real packaged catalog's first track with every item left in its shipped (non-approved) state. */
+private fun unapprovedAssets(): AssetSource {
+    val base = AssetSource { path -> requireNotNull(NormalSyncRepositoryTest::class.java.classLoader!!.getResourceAsStream(path)).use { it.readBytes().decodeToString() } }
+    val original = ContentJson.json.decodeFromString(ContentCatalog.serializer(), base.read(ContentRepository.CATALOG))
+    val fixtureCatalog = ContentJson.json.encodeToString(ContentCatalog.serializer(), original.copy(tracks = original.tracks.take(1)))
+    return AssetSource { path -> if (path == ContentRepository.CATALOG) fixtureCatalog else base.read(path) }
+}
+
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [28])
 class NormalSyncRepositoryTest {
@@ -63,20 +71,47 @@ class NormalSyncRepositoryTest {
         val uploaded = mutableListOf<String>()
         val remote = mutableMapOf<String, LinkedHashMap<String, String>>()
         var offline = false
+        /** Test-only: the registry becomes unreachable once any learner has been created. */
+        var catalogOfflineAfterCreate = false
+        /** Test-only: the create reply is delivered, then all connectivity is lost. */
+        var offlineAfterCreate = false
+        var creates = 0
+        var catalogGate: kotlinx.coroutines.CompletableDeferred<Unit>? = null
+        val catalogEntered = kotlinx.coroutines.CompletableDeferred<Unit>()
         var createGate: kotlinx.coroutines.CompletableDeferred<Unit>? = null
         val createEntered = kotlinx.coroutines.CompletableDeferred<Unit>()
         override suspend fun account(token: String) = "owner-$token"
         override suspend fun currentAccount(token: String) = "owner-$token"
         override suspend fun activateOwner(token: String, declarationVersion: String, adultConfirmed: Boolean): String {
-            check(adultConfirmed && declarationVersion == "adult-owner-v1"); network(); return "owner-$token"
+            check(adultConfirmed && declarationVersion == "adult-owner-v1"); network(); onActivated?.invoke(token); return "owner-$token"
         }
-        override suspend fun learners(token: String) = profiles[token].orEmpty()
+        /** Test-only: only the learner-list endpoint is unreachable; login, catalog and create still work. */
+        var learnersFail = false
+        /** Test-only: runs when an owner activation succeeds, before its reply is returned. */
+        var onActivated: ((String) -> Unit)? = null
+        /** Test-only one-shot gate: the next learners() call, once armed, suspends here until released. */
+        var learnersGate: kotlinx.coroutines.CompletableDeferred<Unit>? = null
+        val learnersEntered = kotlinx.coroutines.CompletableDeferred<Unit>()
+        override suspend fun learners(token: String): List<Learner> {
+            network()
+            if (learnersFail) throw IOException("synthetic learner list offline")
+            val gate = learnersGate
+            if (gate != null) { learnersGate = null; learnersEntered.complete(Unit); gate.await() }
+            return profiles[token].orEmpty()
+        }
         override suspend fun createLearner(token: String, clientId: String) = error("synthetic entry forbidden")
         override suspend fun createProfileLearner(token: String, clientId: String, kind: String, lang: String): Learner {
-            network(); createEntered.complete(Unit); createGate?.await()
-            return Learner("remote-$clientId", clientId, kind, "adults", lang).also { profiles.getOrPut(token) { mutableListOf() }.add(it) }
+            network(); createEntered.complete(Unit); createGate?.await(); creates++
+            return Learner("remote-$clientId", clientId, kind, "adults", lang).also {
+                profiles.getOrPut(token) { mutableListOf() }.add(it)
+                if (offlineAfterCreate) offline = true
+            }
         }
-        override suspend fun catalog(token: String) = catalogValue
+        override suspend fun catalog(token: String): Catalog {
+            catalogEntered.complete(Unit); catalogGate?.await()
+            if (catalogOfflineAfterCreate && creates > 0) throw IOException("synthetic registry offline")
+            return catalogValue
+        }
         override suspend fun consent(token: String, learnerId: String, granted: Boolean) = network()
         override suspend fun append(token: String, learnerId: String, payloads: List<String>): List<Receipt> {
             network(); val stored = remote.getOrPut(learnerId) { linkedMapOf() }
@@ -92,7 +127,18 @@ class NormalSyncRepositoryTest {
         }
         private fun network() { if (offline) throw IOException("synthetic offline") }
     }
-    private class Harness(val dir: File, val api: FakeBackend, val db: AyaDatabase, val active: InMemoryActiveProfileStore) {
+    /** Test-only active-profile store whose next read can be suspended, to hold a login continuation mid-flight. */
+    private class GatedActiveStore(private val inner: InMemoryActiveProfileStore = InMemoryActiveProfileStore()) : id.petalytix.ayailmu.core.data.settings.ActiveProfileStore {
+        @Volatile var gate: kotlinx.coroutines.CompletableDeferred<Unit>? = null
+        val entered = kotlinx.coroutines.CompletableDeferred<Unit>()
+        override val activeId = kotlinx.coroutines.flow.flow<String?> {
+            val g = gate
+            if (g != null) { gate = null; entered.complete(Unit); g.await() }
+            inner.activeId.collect { emit(it) }
+        }
+        override suspend fun setActive(id: String?) = inner.setActive(id)
+    }
+    private class Harness(val dir: File, val api: FakeBackend, val db: AyaDatabase, val active: id.petalytix.ayailmu.core.data.settings.ActiveProfileStore, val assets: AssetSource = testAssets()) {
         val visibility: NormalProfileVisibility
         val repository: NormalSyncRepository
         val profiles: ProfileRepository
@@ -100,7 +146,6 @@ class NormalSyncRepositoryTest {
             val base = ApplicationProvider.getApplicationContext<Context>()
             val context = object : ContextWrapper(base) { override fun getNoBackupFilesDir() = dir.apply { mkdirs() } }
             visibility = NormalProfileVisibility(context, testConfig, db)
-            val assets = testAssets()
             val content = ContentRepository(assets, AppBuildInfo(true, "test"))
             repository = NormalSyncRepository(context, db, active, assets, content, FixedClock(Instant.parse("2026-10-26T00:00:00Z")), api, testConfig, visibility)
             profiles = ProfileRepository(db, active, FixedClock(Instant.parse("2026-10-26T00:00:00Z")), UuidIdGenerator, visibility)
@@ -127,12 +172,323 @@ class NormalSyncRepositoryTest {
             "{\"kind\":\"choice\",\"option_id\":\"a\"}", emptyMap(), Outcome.CORRECT, firstAttempt = true, freshEvidence = false,
             reviewStatus = ReviewStatus.APPROVED, synthetic = false, itemType = item.type)
     }
-    private suspend fun newHarness(dir: File, api: FakeBackend, db: AyaDatabase, active: InMemoryActiveProfileStore): Harness {
+    private suspend fun newHarness(dir: File, api: FakeBackend, db: AyaDatabase, active: id.petalytix.ayailmu.core.data.settings.ActiveProfileStore, assets: AssetSource = testAssets()): Harness {
         if (!::catalogCache.isInitialized) catalogCache = catalog(ContentRepository(testAssets(), AppBuildInfo(true, "test")), testAssets())
         api.catalogValue = catalogCache
-        return Harness(dir, api, db, active).also { it.visibility.refresh() }
+        return Harness(dir, api, db, active, assets).also { it.visibility.refresh() }
     }
     private lateinit var catalogCache: Catalog
+
+    @Test fun createWithNoApprovedContentDoesNotMutateRemoteOrRoomAndRetryCannotDuplicate() = runTest {
+        val dir = File.createTempFile("normal-no-content", "").apply { delete() }
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val db = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
+        val active = InMemoryActiveProfileStore(); val api = FakeBackend(); val h = newHarness(dir, api, db, active, unapprovedAssets())
+        try {
+            h.repository.login("A", declaration)
+            repeat(2) {
+                val failure = runCatching { h.repository.createAdult("Owner", "id") }.exceptionOrNull()
+                assertNotNull("Creating a learner without approved content must fail", failure)
+                h.repository.failed(failure as Exception)
+                assertEquals(NormalSyncNotice.NO_APPROVED_CONTENT, h.repository.state.value.notice)
+                assertFalse(h.repository.state.value.busy)
+            }
+            assertEquals("No remote learner may be created before content is known to be syncable", 0, api.creates)
+            assertTrue(api.profiles.values.flatten().isEmpty())
+            assertTrue(h.repository.state.value.learners.isEmpty())
+            assertNull(h.repository.state.value.selected)
+            assertNull(active.activeId.first())
+            assertTrue(db.profiles().all().isEmpty())
+            assertTrue(db.ownerBindings().all().isEmpty())
+        } finally { h.stop(); db.close(); dir.deleteRecursively() }
+    }
+
+    @Test fun createWithRegistryProofMismatchFailsBeforeRemoteMutationWithAnActionableNotice() = runTest {
+        val dir = File.createTempFile("normal-registry-mismatch", "").apply { delete() }
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val db = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
+        val active = InMemoryActiveProfileStore(); val api = FakeBackend(); val h = newHarness(dir, api, db, active)
+        try {
+            h.repository.login("A", declaration)
+            api.catalogValue = api.catalogValue.copy(packs = api.catalogValue.packs.map { it.copy(packSha256 = "0".repeat(64)) })
+            val failure = runCatching { h.repository.createAdult("Owner", "id") }.exceptionOrNull()
+            assertNotNull("An incompatible registry must reject creation", failure)
+            h.repository.failed(failure as Exception)
+            assertEquals(NormalSyncNotice.CONTENT_MISMATCH, h.repository.state.value.notice)
+            assertEquals(0, api.creates)
+            assertTrue(h.repository.state.value.learners.isEmpty())
+            assertNull(h.repository.state.value.selected)
+            assertTrue(db.profiles().all().isEmpty())
+        } finally { h.stop(); db.close(); dir.deleteRecursively() }
+    }
+
+    @Test fun createdLearnerStaysVisibleAndSelectableWhenBindingFailsAfterRemoteCreate() = runTest {
+        val dir = File.createTempFile("normal-create-partial", "").apply { delete() }
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val db = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
+        val active = InMemoryActiveProfileStore(); val api = FakeBackend(); val h = newHarness(dir, api, db, active)
+        try {
+            h.repository.login("A", declaration)
+            api.catalogOfflineAfterCreate = true
+            val failure = runCatching { h.repository.createAdult("Owner", "id") }.exceptionOrNull()
+            assertTrue("Binding must surface the interrupted registry check", failure is IOException)
+            assertEquals(1, api.creates)
+            val created = h.repository.state.value.learners.single()
+            assertNull(h.repository.state.value.selected)
+            assertNull(active.activeId.first())
+            assertFalse(h.repository.state.value.busy)
+            api.catalogOfflineAfterCreate = false
+            h.repository.select(created, "Owner")
+            assertEquals(created, h.repository.state.value.selected)
+            assertEquals(created.clientLearnerId, active.activeId.first())
+            assertEquals("Retry must bind the learner that already exists instead of creating another", 1, api.creates)
+        } finally { h.stop(); db.close(); dir.deleteRecursively() }
+    }
+
+    @Test fun returnedLearnerStaysVisibleWhenAllConnectivityIsLostAfterCreateAndReconnectSelectsItWithoutASecondCreate() = runTest {
+        val dir = File.createTempFile("normal-create-disconnect", "").apply { delete() }
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val db = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
+        val active = InMemoryActiveProfileStore(); val api = FakeBackend(); val h = newHarness(dir, api, db, active)
+        try {
+            h.repository.login("A", declaration)
+            api.offlineAfterCreate = true
+            val failure = runCatching { h.repository.createAdult("Owner", "id") }.exceptionOrNull()
+            assertTrue("Bind and refresh both need the network, so the action must fail", failure is IOException)
+            assertTrue(api.offline)
+            assertEquals(1, api.creates)
+            val created = h.repository.state.value.learners.single()
+            assertEquals(api.profiles.getValue("A").single(), created)
+            assertEquals("owner-A", h.repository.state.value.owner)
+            assertNull("A failed bind must not select the learner", h.repository.state.value.selected)
+            assertFalse("A failed bind must not enable consent", h.repository.state.value.enabled)
+            assertFalse(h.repository.state.value.busy)
+            assertNull(active.activeId.first())
+            assertTrue(db.profiles().all().isEmpty())
+            assertTrue(db.ownerBindings().all().isEmpty())
+
+            api.offline = false; api.offlineAfterCreate = false
+            h.repository.select(created, "Owner")
+            assertEquals(created, h.repository.state.value.selected)
+            assertEquals(created.clientLearnerId, active.activeId.first())
+            assertEquals("owner-A", db.ownerBindings().all().single().ownerId)
+            assertFalse("Selecting must not grant sync consent", h.repository.state.value.enabled)
+            assertTrue(api.remote.isEmpty())
+            assertEquals("Exactly one remote create across failure, reconnect and select", 1, api.creates)
+        } finally { h.stop(); db.close(); dir.deleteRecursively() }
+    }
+
+    @Test fun accountActionStaysBusyUntilPostCreateBindingFinishes() = runTest {
+        val dir = File.createTempFile("normal-create-busy", "").apply { delete() }
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val db = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
+        val active = InMemoryActiveProfileStore(); val api = FakeBackend(); val h = newHarness(dir, api, db, active)
+        try {
+            h.repository.login("A", declaration)
+            val gate = kotlinx.coroutines.CompletableDeferred<Unit>(); api.learnersGate = gate
+            val creating = async { runCatching { h.repository.createAdult("Owner", "id") } }
+            api.learnersEntered.await()
+            assertEquals("The remote learner exists while binding is still in flight", 1, api.creates)
+            assertTrue("The action must stay busy until binding finishes", h.repository.state.value.busy)
+            assertNull(h.repository.state.value.selected)
+            gate.complete(Unit)
+            assertTrue(creating.await().isSuccess)
+            assertFalse(h.repository.state.value.busy)
+            assertEquals(api.profiles.getValue("A").single(), h.repository.state.value.selected)
+            assertEquals(1, api.creates)
+        } finally { h.stop(); db.close(); dir.deleteRecursively() }
+    }
+
+    @Test fun ownerChangeDuringPostCreateBindingNeverShowsTheCreatedLearnerToTheNewOwner() = runTest {
+        val dir = File.createTempFile("normal-create-owner-change", "").apply { delete() }
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val db = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
+        val active = InMemoryActiveProfileStore(); val api = FakeBackend(); val h = newHarness(dir, api, db, active)
+        try {
+            h.repository.login("A", declaration)
+            val gate = kotlinx.coroutines.CompletableDeferred<Unit>(); api.learnersGate = gate
+            val creating = async { runCatching { h.repository.createAdult("Owner", "id") } }
+            api.learnersEntered.await()
+            h.repository.logout()
+            h.repository.login("B", declaration)
+            gate.complete(Unit)
+            assertTrue("A's action must not complete under owner B", creating.await().isFailure)
+            assertEquals(1, api.creates)
+            assertEquals("owner-B", h.repository.state.value.owner)
+            assertTrue("A's learner must never be shown to B", h.repository.state.value.learners.isEmpty())
+            assertNull(h.repository.state.value.selected)
+            assertFalse(h.repository.state.value.enabled)
+            assertNull(active.activeId.first())
+            assertTrue(db.profiles().all().isEmpty())
+            assertTrue(db.ownerBindings().all().isEmpty())
+        } finally { h.stop(); db.close(); dir.deleteRecursively() }
+    }
+
+    @Test fun staleLoginListFetchedUnderAnotherOwnerIsNeverCachedForTheEarlierOwner() = runTest {
+        val dir = File.createTempFile("normal-login-stale-list", "").apply { delete() }
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val db = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
+        val active = GatedActiveStore(); val api = FakeBackend(); val h = newHarness(dir, api, db, active)
+        try {
+            val learnerA = Learner("remote-lrn_a", "lrn_a", "ADULT", "adults", "id")
+            val learnerB = Learner("remote-lrn_b", "lrn_b", "ADULT", "adults", "id")
+            api.profiles["A"] = mutableListOf(learnerA); api.profiles["B"] = mutableListOf(learnerB)
+            val gate = kotlinx.coroutines.CompletableDeferred<Unit>()
+            // A's login commits, passes finishLogin's owner check, then parks while reading the active profile.
+            api.onActivated = { token -> if (token == "A") active.gate = gate }
+            val loginA = async { runCatching { h.repository.login("A", declaration) } }
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) { kotlinx.coroutines.withTimeout(20_000) { active.entered.await() } }
+
+            h.repository.login("B", declaration)
+            assertEquals("owner-B", h.repository.state.value.owner)
+            assertEquals(listOf(learnerB), h.repository.state.value.learners)
+
+            gate.complete(Unit)
+            assertTrue(loginA.await().isSuccess)
+            assertEquals("A's late continuation must not touch owner B's visible state", "owner-B", h.repository.state.value.owner)
+            assertEquals("A's late continuation must not replace owner B's learner list", listOf(learnerB), h.repository.state.value.learners)
+
+            h.repository.logout()
+            api.learnersFail = true
+            h.repository.login("A", declaration)
+            assertEquals("owner-A", h.repository.state.value.owner)
+            assertEquals("A genuine list-fetch failure is still reported", NormalSyncNotice.OFFLINE, h.repository.state.value.notice)
+            assertTrue("B's learner must never be exposed under owner A", h.repository.state.value.learners.none { it.clientLearnerId == learnerB.clientLearnerId })
+            assertTrue("Offline, A sees only learners already bound on this device", h.repository.state.value.learners.isEmpty())
+            assertNull(h.repository.state.value.selected)
+        } finally { h.stop(); db.close(); dir.deleteRecursively() }
+    }
+
+    @Test fun staleLoginListFailureAfterAnotherOwnerSignedInNeverOverwritesTheNewOwnersReadyState() = runTest {
+        val dir = File.createTempFile("normal-login-stale-failure", "").apply { delete() }
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val db = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
+        val active = InMemoryActiveProfileStore(); val api = FakeBackend(); val h = newHarness(dir, api, db, active)
+        try {
+            val learnerA = Learner("remote-lrn_a", "lrn_a", "ADULT", "adults", "id")
+            val learnerB = Learner("remote-lrn_b", "lrn_b", "ADULT", "adults", "id")
+            api.profiles["A"] = mutableListOf(learnerA); api.profiles["B"] = mutableListOf(learnerB)
+            // A's own learners request is the one that parks; the one-shot gate is consumed by it.
+            val gate = kotlinx.coroutines.CompletableDeferred<Unit>(); api.learnersGate = gate
+            val loginA = async { runCatching { h.repository.login("A", declaration) } }
+            api.learnersEntered.await()
+
+            h.repository.login("B", declaration)
+            assertEquals("owner-B", h.repository.state.value.owner)
+            assertEquals(listOf(learnerB), h.repository.state.value.learners)
+            assertEquals(NormalSyncNotice.READY, h.repository.state.value.notice)
+
+            // Releasing A makes the engine reject its response ("Sign-in session changed").
+            gate.complete(Unit)
+            assertTrue("A's stale attempt ends quietly", loginA.await().isSuccess)
+            assertEquals("owner-B", h.repository.state.value.owner)
+            assertEquals(listOf(learnerB), h.repository.state.value.learners)
+            assertEquals("A's stale failure must not publish OFFLINE over B's READY", NormalSyncNotice.READY, h.repository.state.value.notice)
+            assertNull(h.repository.state.value.selected)
+            assertNull(active.activeId.first())
+            assertTrue(db.profiles().all().isEmpty())
+            assertTrue(db.ownerBindings().all().isEmpty())
+        } finally { h.stop(); db.close(); dir.deleteRecursively() }
+    }
+
+    @Test fun staleLoginListFailureAfterSameOwnerRelogoutAndReloginKeepsTheNewSessionsReadyState() = runTest {
+        val dir = File.createTempFile("normal-login-stale-failure-same-owner", "").apply { delete() }
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val db = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
+        val active = InMemoryActiveProfileStore(); val api = FakeBackend(); val h = newHarness(dir, api, db, active)
+        try {
+            val first = Learner("remote-lrn_first", "lrn_first", "ADULT", "adults", "id")
+            val second = Learner("remote-lrn_second", "lrn_second", "ADULT", "adults", "id")
+            api.profiles["A"] = mutableListOf(first)
+            val gate = kotlinx.coroutines.CompletableDeferred<Unit>(); api.learnersGate = gate
+            val staleLogin = async { runCatching { h.repository.login("A", declaration) } }
+            api.learnersEntered.await()
+
+            // Same owner, new session generation; the list the new session sees differs from the parked request's.
+            h.repository.logout()
+            api.profiles["A"] = mutableListOf(second)
+            h.repository.login("A", declaration)
+            assertEquals("owner-A", h.repository.state.value.owner)
+            assertEquals(listOf(second), h.repository.state.value.learners)
+            assertEquals(NormalSyncNotice.READY, h.repository.state.value.notice)
+
+            gate.complete(Unit)
+            assertTrue("The earlier session's attempt ends quietly", staleLogin.await().isSuccess)
+            assertEquals("owner-A", h.repository.state.value.owner)
+            assertEquals(listOf(second), h.repository.state.value.learners)
+            assertEquals("The earlier session's failure must not publish OFFLINE over the new READY", NormalSyncNotice.READY, h.repository.state.value.notice)
+            assertNull(h.repository.state.value.selected)
+            assertNull(active.activeId.first())
+            assertTrue(db.profiles().all().isEmpty())
+            assertTrue(db.ownerBindings().all().isEmpty())
+        } finally { h.stop(); db.close(); dir.deleteRecursively() }
+    }
+
+    @Test fun lateListAfterSelectionCannotReachAnotherOwnerOrALaterOfflineRestore() = runTest {
+        val dir = File.createTempFile("normal-select-stale-list", "").apply { delete() }
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val db = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
+        val active = InMemoryActiveProfileStore(); val api = FakeBackend(); val h = newHarness(dir, api, db, active)
+        try {
+            h.repository.login("A", declaration); h.repository.createAdult("Owner", "id")
+            val bound = h.repository.state.value.selected!!
+            val extra = Learner("remote-lrn_extra", "lrn_extra", "ADULT", "adults", "id")
+            api.profiles.getValue("A") += extra
+            // Re-selecting the bound learner skips the ownership lookup, so the first list request is the post-select refresh.
+            val gate = kotlinx.coroutines.CompletableDeferred<Unit>(); api.learnersGate = gate
+            val selecting = async { runCatching { h.repository.select(bound) } }
+            api.learnersEntered.await()
+
+            h.repository.logout()
+            h.repository.login("B", declaration)
+            gate.complete(Unit)
+            assertTrue("A's selection must not report success after B signed in", selecting.await().isFailure)
+            assertEquals("owner-B", h.repository.state.value.owner)
+            assertTrue("A's learners must not appear for B", h.repository.state.value.learners.isEmpty())
+            assertNull(h.repository.state.value.selected)
+
+            h.repository.logout()
+            api.learnersFail = true
+            h.repository.login("A", declaration)
+            assertEquals("owner-A", h.repository.state.value.owner)
+            assertEquals(NormalSyncNotice.OFFLINE, h.repository.state.value.notice)
+            assertEquals("Offline restore shows only what is bound locally, not the late server list",
+                listOf(bound.clientLearnerId), h.repository.state.value.learners.map { it.clientLearnerId })
+        } finally { h.stop(); db.close(); dir.deleteRecursively() }
+    }
+
+    private suspend fun kotlinx.coroutines.CoroutineScope.assertPreflightInterruptionMutatesNothing(interrupt: suspend (Harness) -> Unit) {
+        val dir = File.createTempFile("normal-preflight-interrupt", "").apply { delete() }
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val db = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
+        val active = InMemoryActiveProfileStore(); val api = FakeBackend(); val h = newHarness(dir, api, db, active)
+        try {
+            h.repository.login("A", declaration)
+            api.catalogGate = kotlinx.coroutines.CompletableDeferred()
+            val creating = async { runCatching { h.repository.createAdult("Owner", "id") } }
+            api.catalogEntered.await()
+            interrupt(h)
+            api.catalogGate!!.complete(Unit)
+            assertTrue("An interrupted preflight must fail the action", creating.await().isFailure)
+            assertEquals("No remote create after cancellation or session change", 0, api.creates)
+            assertTrue(api.profiles.values.flatten().isEmpty())
+            assertTrue(api.remote.isEmpty())
+            assertTrue(h.repository.state.value.learners.isEmpty())
+            assertNull(h.repository.state.value.selected)
+            assertFalse(h.repository.state.value.enabled)
+            assertNull(active.activeId.first())
+            assertTrue(db.profiles().all().isEmpty())
+            assertTrue(db.ownerBindings().all().isEmpty())
+        } finally { h.stop(); db.close(); dir.deleteRecursively() }
+    }
+
+    @Test fun cancellationWhilePreflightIsSuspendedCreatesNothingRemoteOrLocal() = runTest {
+        assertPreflightInterruptionMutatesNothing { it.repository.cancelActions() }
+    }
+
+    @Test fun signOutWhilePreflightIsSuspendedCreatesNothingRemoteOrLocal() = runTest {
+        assertPreflightInterruptionMutatesNothing { it.repository.logout() }
+    }
 
     @Test fun stopWaitsForStartupCancellationBeforeRoomCanBeClosed() = runTest {
         val dir = File.createTempFile("normal-stop", "").apply { delete() }
@@ -324,6 +680,38 @@ class NormalSyncRepositoryTest {
             assertEquals("Restore must not duplicate local answers", 2, db.answers().payloads(learner.clientLearnerId).size)
             restored.stop()
         } finally { h.stop(); db.close(); dir.deleteRecursively() }
+    }
+
+    @Test fun secondDeviceRestoresUploadedProgressIntoRoomOnceAndResyncDoesNotDuplicate() = runTest {
+        val dirA = File.createTempFile("normal-device-a", "").apply { delete() }
+        val dirB = File.createTempFile("normal-device-b", "").apply { delete() }
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val dbA = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
+        val dbB = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
+        val api = FakeBackend(); val a = newHarness(dirA, api, dbA, InMemoryActiveProfileStore())
+        val activeB = InMemoryActiveProfileStore()
+        val b = newHarness(dirB, api, dbB, activeB)
+        try {
+            a.repository.login("A", declaration); a.repository.createAdult("Owner", "id"); a.repository.enable()
+            val learner = a.repository.state.value.selected!!
+            dbA.answers().insert(event(a, "device-a-answer", learner).toEntity(learner.clientLearnerId))
+            a.repository.sync()
+            assertEquals(0, a.repository.state.value.pending)
+            assertEquals(1, api.remote.getValue(learner.id).size)
+
+            b.repository.login("A", declaration)
+            assertEquals("The second device must be offered the existing learner", listOf(learner), b.repository.state.value.learners)
+            b.repository.select(learner, "Owner")
+            assertEquals(learner.clientLearnerId, activeB.activeId.first())
+            assertTrue("Selecting a learner must not invent history", dbB.answers().payloads(learner.clientLearnerId).isEmpty())
+            b.repository.enable()
+            b.repository.sync()
+            assertEquals(1, b.repository.state.value.restoredAnswers)
+            assertEquals(1, dbB.answers().payloads(learner.clientLearnerId).size)
+            b.repository.sync()
+            assertEquals(1, dbB.answers().payloads(learner.clientLearnerId).size)
+            assertEquals("The restore must not fork the remote history", 1, api.remote.getValue(learner.id).size)
+        } finally { a.stop(); b.stop(); dbA.close(); dbB.close(); dirA.deleteRecursively(); dirB.deleteRecursively() }
     }
 
     private class ViewModelGateway : NormalAuthGateway {

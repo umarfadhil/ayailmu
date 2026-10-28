@@ -599,7 +599,8 @@
     <string name="normal_account_sync_ready">Account ready; choose or create an owner profile.</string>
     <string name="normal_account_synced">Sync complete.</string>
     <string name="sync_lab_google_unavailable">Google is unavailable: owner approval, project/client configuration, and native PKCE callback setup are required. This build has no Google sign-in button.</string>
-    <string name="normal_account_no_approved_content">Lessons are not available for online sync yet. Sync stays off; local learning is unchanged.</string>
+    <string name="normal_account_no_approved_content">Lessons are not available for online sync yet. Your account was not changed; sync stays off and local learning is unchanged.</string>
+    <string name="normal_account_content_mismatch">This app\'s lessons do not match what online sync accepts. Your account was not changed; update the app and try again.</string>
     <string name="normal_account_restore_action">Restore session</string>
     <string name="normal_account_consent_update">The sync policy changed. Enable sync again to grant the current version; nothing uploads until then.</string>
     <string name="normal_account_fresh_auth_required">For your security, sign in with your password again to continue this action.</string>

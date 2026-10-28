@@ -222,6 +222,7 @@ private fun OwnerStatus(state: NormalAccountUiState, vm: NormalAccountEvents) {
         NormalSyncNotice.DISABLED -> R.string.normal_account_sync_disabled
         NormalSyncNotice.CONSENT_UPDATE_REQUIRED -> R.string.normal_account_consent_update
         NormalSyncNotice.NO_APPROVED_CONTENT -> R.string.normal_account_no_approved_content
+        NormalSyncNotice.CONTENT_MISMATCH -> R.string.normal_account_content_mismatch
         NormalSyncNotice.FAILED -> R.string.normal_account_failed
     }
     Text(stringResource(id), style = MaterialTheme.typography.bodySmall)
