@@ -610,6 +610,8 @@
     <string name="sync_lab_google_unavailable">Google belum tersedia: perlu persetujuan pemilik, konfigurasi proyek/klien, dan callback PKCE native. Tidak ada tombol masuk Google pada build ini.</string>
     <string name="normal_account_no_approved_content">Pelajaran belum tersedia untuk sinkronisasi online. Akun Anda tidak diubah; sinkronisasi tetap nonaktif dan belajar lokal tidak berubah.</string>
     <string name="normal_account_content_mismatch">Pelajaran di aplikasi ini tidak sesuai dengan yang diterima sinkronisasi online. Akun Anda tidak diubah; perbarui aplikasi lalu coba lagi.</string>
+    <string name="normal_account_create_pending">Pembuatan profil sebelumnya mungkin belum selesai. Ketuk “Buat profil pemilik baru” lagi untuk mengulang permintaan yang sama; profil ganda tidak akan dibuat.</string>
+    <string name="normal_account_create_pending_language">Pembuatan profil sebelumnya masih menunggu konfirmasi dengan bahasa yang berbeda. Tidak ada yang diubah; ulangi sesuai permintaan awal.</string>
     <string name="normal_account_restore_action">Pulihkan sesi</string>
     <string name="normal_account_consent_update">Kebijakan sinkronisasi berubah. Aktifkan kembali untuk memberikan persetujuan versi terbaru; tidak ada unggahan sampai saat itu.</string>
     <string name="normal_account_fresh_auth_required">Demi keamanan, masuk lagi dengan kata sandi untuk melanjutkan tindakan ini.</string>

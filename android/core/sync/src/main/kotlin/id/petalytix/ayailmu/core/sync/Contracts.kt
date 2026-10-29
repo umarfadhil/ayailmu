@@ -52,6 +52,10 @@ interface Backend {
     suspend fun append(token: String, learnerId: String, payloads: List<String>): List<Receipt>
     suspend fun pull(token: String, learnerId: String, after: Long): Page
 }
+internal val OWNER_ID = Regex("[A-Za-z0-9_-]{1,128}")
+internal val CLIENT_LEARNER_ID = Regex("[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}")
 class ApiFailure(val status: Int, val code: String) : RuntimeException("Backend HTTP $status: $code")
+/** A create retry asked for different parameters than the request already recorded for this owner. */
+class PendingCreateConflict(val pending: PendingCreate) : IllegalStateException("A profile creation is already awaiting retry")
 data class NormalOwnerDeclaration(val version: String, val adultConfirmed: Boolean)
 enum class SyncResult { SYNCED, OFFLINE, CONSENT_OFF, CONSENT_UPDATE_REQUIRED, FRESH_AUTH_REQUIRED, LOGIN_REQUIRED, BLOCKED, SESSION_CHANGED }

@@ -189,6 +189,7 @@ private fun OwnerStatus(state: NormalAccountUiState, vm: NormalAccountEvents) {
         Text(stringResource(R.string.normal_account_no_backfill), style = MaterialTheme.typography.bodySmall)
     }
     var label by rememberSaveable { mutableStateOf("") }
+    if (state.sync.pendingCreate) Text(stringResource(R.string.normal_account_create_pending), style = MaterialTheme.typography.bodySmall)
     AyaTextField(label, { label = it }, label = stringResource(R.string.normal_account_new_learner), enabled = !state.busy)
     AyaSecondaryButton(stringResource(R.string.normal_account_create_learner), { vm.createLearner(label, "id") }, enabled = !state.busy && state.sync.authenticated && label.isNotBlank())
     AyaSecondaryButton(stringResource(R.string.normal_account_logout), vm::signOut, enabled = !state.busy)
@@ -223,6 +224,7 @@ private fun OwnerStatus(state: NormalAccountUiState, vm: NormalAccountEvents) {
         NormalSyncNotice.CONSENT_UPDATE_REQUIRED -> R.string.normal_account_consent_update
         NormalSyncNotice.NO_APPROVED_CONTENT -> R.string.normal_account_no_approved_content
         NormalSyncNotice.CONTENT_MISMATCH -> R.string.normal_account_content_mismatch
+        NormalSyncNotice.CREATE_PENDING_LANGUAGE -> R.string.normal_account_create_pending_language
         NormalSyncNotice.FAILED -> R.string.normal_account_failed
     }
     Text(stringResource(id), style = MaterialTheme.typography.bodySmall)

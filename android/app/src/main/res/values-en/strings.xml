@@ -601,6 +601,8 @@
     <string name="sync_lab_google_unavailable">Google is unavailable: owner approval, project/client configuration, and native PKCE callback setup are required. This build has no Google sign-in button.</string>
     <string name="normal_account_no_approved_content">Lessons are not available for online sync yet. Your account was not changed; sync stays off and local learning is unchanged.</string>
     <string name="normal_account_content_mismatch">This app\'s lessons do not match what online sync accepts. Your account was not changed; update the app and try again.</string>
+    <string name="normal_account_create_pending">An earlier profile creation may not have finished. Tap “Create new owner profile” again to retry the same request; a duplicate profile will not be created.</string>
+    <string name="normal_account_create_pending_language">An earlier profile creation is still waiting to be confirmed in a different language. Nothing was changed; retry it as it was started.</string>
     <string name="normal_account_restore_action">Restore session</string>
     <string name="normal_account_consent_update">The sync policy changed. Enable sync again to grant the current version; nothing uploads until then.</string>
     <string name="normal_account_fresh_auth_required">For your security, sign in with your password again to continue this action.</string>

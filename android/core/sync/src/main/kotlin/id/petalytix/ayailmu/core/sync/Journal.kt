@@ -4,6 +4,8 @@ import java.io.File
 import java.io.FileOutputStream
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
+import kotlinx.serialization.EncodeDefault
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
@@ -23,13 +25,35 @@ data class Binding(
     val remote: List<RemoteRecord> = emptyList(),
     val cursor: Long = 0,
 )
+/**
+ * An owner's profile-create request that may already have reached the server. It is recorded durably before the
+ * POST and never changes, so every retry (even after a restart or sign-out) replays the same request, which the
+ * backend answers idempotently per owner and client learner id. It holds no token, password or label.
+ */
+@Serializable
+data class PendingCreate(val clientLearnerId: String, val kind: String, val lang: String)
+@OptIn(ExperimentalSerializationApi::class)
 @Serializable
 data class JournalSnapshot(
     val schemaVersion: Int = 1,
     val activeOwner: String? = null,
     val activeLearner: String? = null,
     val owners: Map<String, Map<String, Binding>> = emptyMap(),
-)
+    /** At most one unresolved create per owner. Omitted from the file while empty, so old snapshots stay byte-compatible. */
+    @EncodeDefault(EncodeDefault.Mode.NEVER) val pendingCreates: Map<String, PendingCreate> = emptyMap(),
+) {
+    /** Unknown or malformed pending data is never repaired or discarded; reading fails closed instead. */
+    internal fun requireValid() {
+        require(schemaVersion == 1) { "Unknown journal schema" }
+        for ((owner, pending) in pendingCreates) {
+            require(OWNER_ID.matches(owner)) { "Malformed pending create owner" }
+            require(
+                CLIENT_LEARNER_ID.matches(pending.clientLearnerId) && !pending.clientLearnerId.startsWith("syn_") &&
+                    pending.kind == "ADULT" && pending.lang in setOf("id", "en"),
+            ) { "Malformed pending create" }
+        }
+    }
+}
 interface JournalStore {
     fun read(): JournalSnapshot
     fun update(transform: (JournalSnapshot) -> JournalSnapshot): JournalSnapshot
@@ -45,7 +69,7 @@ class FileJournal(private val file: File) : JournalStore {
     private val json = Json { encodeDefaults = true }
     @Synchronized override fun read(): JournalSnapshot {
         if (!file.exists()) return JournalSnapshot()
-        return json.decodeFromString<JournalSnapshot>(file.readText()).also { require(it.schemaVersion == 1) { "Unknown journal schema" } }
+        return json.decodeFromString<JournalSnapshot>(file.readText()).also { it.requireValid() }
     }
     @Synchronized override fun update(transform: (JournalSnapshot) -> JournalSnapshot): JournalSnapshot {
         val next = transform(read())

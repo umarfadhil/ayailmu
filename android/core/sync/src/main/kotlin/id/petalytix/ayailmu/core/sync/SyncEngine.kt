@@ -82,12 +82,23 @@ class SyncEngine(private val api: Backend, private val journal: JournalStore, pr
     }
     fun deleteNativeProfile(profileId: String) = synchronized(lock) {
         check(mode == SyncMode.NORMAL)
-        val deletingActive = journal.read().activeLearner?.let { active -> journal.read().owners[journal.read().activeOwner]?.get(active)?.learner?.clientLearnerId == profileId } == true
+        val before = journal.read()
+        val deletingActive = before.activeLearner?.let { active -> before.owners[before.activeOwner]?.get(active)?.learner?.clientLearnerId == profileId } == true
+        // Global binding cleanup does not authorize forgetting another owner's pending-only remote retry.
+        val deletingOwners = before.owners.filterValues { bindings ->
+            bindings.values.any { it.learner.clientLearnerId == profileId }
+        }.keys
         if (deletingActive) session = null
         generation++
         journal.update { state ->
             val owners = state.owners.mapValues { (_, bindings) -> bindings.filterValues { it.learner.clientLearnerId != profileId } }
-            state.copy(activeLearner = if (deletingActive) null else state.activeLearner, owners = owners)
+            // Only an owner with a matching binding in the pre-delete snapshot authorized this cleanup.
+            state.copy(
+                activeLearner = if (deletingActive) null else state.activeLearner, owners = owners,
+                pendingCreates = state.pendingCreates.filter { (owner, pending) ->
+                    owner !in deletingOwners || pending.clientLearnerId != profileId
+                },
+            )
         }
     }
     fun clearLocal() = synchronized(lock) {
@@ -125,10 +136,40 @@ class SyncEngine(private val api: Backend, private val journal: JournalStore, pr
         synchronized(lock) { requireCurrent(c) }
         proofs.values.forEach { it.verify(catalog) }
     }
+    /** The current owner's unresolved create request, if one was recorded and not yet bound or cleaned up. */
+    fun pendingCreate(): PendingCreate? = journal.read().let { s -> s.activeOwner?.let { s.pendingCreates[it] } }
+    /** Reads only [owner]'s durable request, for owner-scoped UI publication across a suspension. */
+    fun pendingCreate(owner: String): PendingCreate? = journal.read().pendingCreates[owner]
+    /**
+     * Durably records the current owner's immutable create request BEFORE any POST, or returns the one already
+     * recorded so a retry repeats the same client learner id, kind and language. A different [lang] is rejected with
+     * [PendingCreateConflict]; the recorded request is never replaced or discarded. A failed write throws before
+     * anything can be sent. [newClientId] is only invoked when no request is recorded.
+     */
+    fun reserveNormalAdultCreate(lang: String, newClientId: () -> String, accepted: () -> Boolean = { true }): PendingCreate {
+        check(mode == SyncMode.NORMAL)
+        require(lang in setOf("id", "en"))
+        return synchronized(lock) {
+            val c = session ?: throw ApiFailure(401, "unauthorized")
+            check(accepted()) { "Sign-in session changed" }
+            val recorded = journal.read().pendingCreates[c.owner]
+            if (recorded != null) {
+                if (recorded.lang != lang) throw PendingCreateConflict(recorded)
+                recorded
+            } else {
+                val request = PendingCreate(newClientId(), "ADULT", lang)
+                require(CLIENT_LEARNER_ID.matches(request.clientLearnerId) && !request.clientLearnerId.startsWith("syn_"))
+                journal.update { it.copy(pendingCreates = it.pendingCreates + (c.owner to request)) }
+                request
+            }
+        }
+    }
+    /** Sends only a request recorded by [reserveNormalAdultCreate]; the record stays until the learner is bound by [select]. */
     suspend fun createNormalAdultLearner(clientId: String, lang: String, accepted: () -> Boolean = { true }): Learner {
         check(mode == SyncMode.NORMAL)
-        require(clientId.matches(Regex("[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}")) && !clientId.startsWith("syn_") && lang in setOf("id", "en"))
+        require(CLIENT_LEARNER_ID.matches(clientId) && !clientId.startsWith("syn_") && lang in setOf("id", "en"))
         val c = context()
+        check(journal.read().pendingCreates[c.owner] == PendingCreate(clientId, "ADULT", lang)) { "Create request is not durably recorded" }
         check(accepted())
         val learner = api.createProfileLearner(c.token, clientId, "ADULT", lang)
         synchronized(lock) {
@@ -162,7 +203,17 @@ class SyncEngine(private val api: Backend, private val journal: JournalStore, pr
             check(accepted())
             journal.update { state ->
                 val bindings = state.owners[c.owner].orEmpty()
-                state.copy(activeOwner = c.owner, activeLearner = learner.id, owners = state.owners + (c.owner to (bindings + (learner.id to (known ?: Binding(learner = learner, proof = proof, proofs = proofs))))))
+                // The matching pending create is cleared in this same write as the binding: no crash can leave a
+                // bound learner with a stale request, or drop the request before the binding is durable.
+                val resolved = state.pendingCreates[c.owner]?.takeIf { it.clientLearnerId == learner.clientLearnerId }
+                check(resolved == null || learner.kind == resolved.kind && learner.lang == resolved.lang && learner.createdBy.isEmpty()) {
+                    "Selected learner does not match the pending create request"
+                }
+                state.copy(
+                    activeOwner = c.owner, activeLearner = learner.id,
+                    owners = state.owners + (c.owner to (bindings + (learner.id to (known ?: Binding(learner = learner, proof = proof, proofs = proofs))))),
+                    pendingCreates = if (resolved == null) state.pendingCreates else state.pendingCreates - c.owner,
+                )
             }
             session = c.copy(generation = ++generation)
         }

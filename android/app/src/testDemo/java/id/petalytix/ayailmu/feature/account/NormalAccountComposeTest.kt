@@ -104,6 +104,46 @@ class NormalAccountComposeTest {
         compose.onAllNodesWithText("synthetic", substring = true, ignoreCase = true).assertCountEquals(0)
         compose.onAllNodesWithText("sync lab", substring = true, ignoreCase = true).assertCountEquals(0)    }
 
+    private val labelWords = Regex("\\b(lab|dev|demo|fake|synthetic|sync lab)\\b", RegexOption.IGNORE_CASE)
+
+    @Test fun pendingCreateNoticeExplainsRetryInOrdinaryWordingAndIsHiddenOtherwise() {
+        val pending = NormalAccountUiState(true, account = NormalAccountState("real.owner@gmail.com"), sync = NormalSyncState("owner-a", true, pendingCreate = true))
+        compose.setContent { NormalAccountScreen(pending, Events()) {} }
+        compose.onNodeWithText(text(R.string.normal_account_create_pending)).assertExists()
+        compose.onNodeWithText(text(R.string.normal_account_create_learner)).assertExists()
+        assertEquals(null, labelWords.find(text(R.string.normal_account_create_pending)))
+    }
+
+    @Test fun noPendingNoticeWhenNothingIsUnresolved() {
+        val none = NormalAccountUiState(true, account = NormalAccountState("real.owner@gmail.com"), sync = NormalSyncState("owner-a", true))
+        compose.setContent { NormalAccountScreen(none, Events()) {} }
+        compose.onAllNodesWithText(text(R.string.normal_account_create_pending)).assertCountEquals(0)
+    }
+
+    @Test fun pendingLanguageConflictNoticeTellsOwnerNothingWasChanged() {
+        val state = NormalAccountUiState(true, account = NormalAccountState("real.owner@gmail.com"), sync = NormalSyncState("owner-a", true, notice = NormalSyncNotice.CREATE_PENDING_LANGUAGE, pendingCreate = true))
+        compose.setContent { NormalAccountScreen(state, Events()) {} }
+        compose.onNodeWithText(text(R.string.normal_account_create_pending_language)).assertExists()
+        compose.onAllNodesWithText(text(R.string.normal_account_sync_ready)).assertCountEquals(0)
+        assertEquals(null, labelWords.find(text(R.string.normal_account_create_pending_language)))
+    }
+
+    @Test fun pendingNoticesExistInBothIndonesianAndEnglish() {
+        val base = ApplicationProvider.getApplicationContext<android.content.Context>()
+        fun localized(tag: String, id: Int): String {
+            val configuration = android.content.res.Configuration(base.resources.configuration)
+            configuration.setLocale(java.util.Locale.forLanguageTag(tag))
+            return base.createConfigurationContext(configuration).getString(id)
+        }
+        for (id in listOf(R.string.normal_account_create_pending, R.string.normal_account_create_pending_language)) {
+            val en = localized("en", id); val ind = localized("id", id)
+            assertEquals(false, en == ind)
+            assertEquals(null, labelWords.find(en)); assertEquals(null, labelWords.find(ind))
+        }
+        assertEquals(true, localized("en", R.string.normal_account_create_pending).startsWith("An earlier profile creation"))
+        assertEquals(true, localized("id", R.string.normal_account_create_pending).startsWith("Pembuatan profil sebelumnya"))
+    }
+
     @Test fun ownerRemoteHubDoesNotOfferRegistration() {
         compose.setContent { NormalAccountScreen(NormalAccountUiState(true, emailActionsAllowed = false), Events()) {} }
         compose.onNodeWithText(text(R.string.normal_account_sign_in)).assertExists()

@@ -7,6 +7,7 @@ import androidx.test.core.app.ApplicationProvider
 import id.petalytix.ayailmu.core.content.ContentJson
 import id.petalytix.ayailmu.core.data.AppBuildInfo
 import id.petalytix.ayailmu.core.data.db.AyaDatabase
+import id.petalytix.ayailmu.core.data.db.ProfileDao
 import id.petalytix.ayailmu.core.data.db.ProfileEntity
 import id.petalytix.ayailmu.core.data.db.toEntity
 import id.petalytix.ayailmu.core.data.repo.AssetSource
@@ -81,7 +82,17 @@ class NormalSyncRepositoryTest {
         var createGate: kotlinx.coroutines.CompletableDeferred<Unit>? = null
         val createEntered = kotlinx.coroutines.CompletableDeferred<Unit>()
         override suspend fun account(token: String) = "owner-$token"
-        override suspend fun currentAccount(token: String) = "owner-$token"
+        var currentAccountGate: kotlinx.coroutines.CompletableDeferred<Unit>? = null
+        val currentAccountEntered = kotlinx.coroutines.CompletableDeferred<Unit>()
+        override suspend fun currentAccount(token: String): String {
+            val gate = currentAccountGate
+            if (gate != null) {
+                currentAccountGate = null
+                currentAccountEntered.complete(Unit)
+                gate.await()
+            }
+            return "owner-$token"
+        }
         override suspend fun activateOwner(token: String, declarationVersion: String, adultConfirmed: Boolean): String {
             check(adultConfirmed && declarationVersion == "adult-owner-v1"); network(); onActivated?.invoke(token); return "owner-$token"
         }
@@ -100,12 +111,30 @@ class NormalSyncRepositoryTest {
             return profiles[token].orEmpty()
         }
         override suspend fun createLearner(token: String, clientId: String) = error("synthetic entry forbidden")
+        /** Test-only: every create request that reached the backend, as (client learner id, kind, lang). */
+        val createRequests = mutableListOf<Triple<String, String, String>>()
+        /** Test-only: the next create commits, then its reply is lost (the app sees an IOException). */
+        var loseCreateReplyOnce = false
+        /**
+         * Mirrors the backend CreateProfile contract: per owner and client learner id, an identical kind/lang
+         * replays the existing learner and a different one conflicts. [creates] counts committed learners.
+         */
         override suspend fun createProfileLearner(token: String, clientId: String, kind: String, lang: String): Learner {
-            network(); createEntered.complete(Unit); createGate?.await(); creates++
-            return Learner("remote-$clientId", clientId, kind, "adults", lang).also {
-                profiles.getOrPut(token) { mutableListOf() }.add(it)
-                if (offlineAfterCreate) offline = true
+            network(); createEntered.complete(Unit); createGate?.await()
+            createRequests += Triple(clientId, kind, lang)
+            val existing = profiles[token].orEmpty().firstOrNull { it.clientLearnerId == clientId }
+            val learner = if (existing != null) {
+                if (existing.kind != kind || existing.lang != lang) throw ApiFailure(409, "conflict")
+                existing
+            } else {
+                creates++
+                Learner("remote-$clientId", clientId, kind, "adults", lang).also {
+                    profiles.getOrPut(token) { mutableListOf() }.add(it)
+                    if (offlineAfterCreate) offline = true
+                }
             }
+            if (loseCreateReplyOnce) { loseCreateReplyOnce = false; throw IOException("synthetic lost create reply") }
+            return learner
         }
         override suspend fun catalog(token: String): Catalog {
             catalogEntered.complete(Unit); catalogGate?.await()
@@ -138,16 +167,42 @@ class NormalSyncRepositoryTest {
         }
         override suspend fun setActive(id: String?) = inner.setActive(id)
     }
-    private class Harness(val dir: File, val api: FakeBackend, val db: AyaDatabase, val active: id.petalytix.ayailmu.core.data.settings.ActiveProfileStore, val assets: AssetSource = testAssets()) {
+    /** Test-only Room decorator: one real profiles().all() call can be held across an owner/session transition. */
+    private class GatedProfileDatabase(private val inner: AyaDatabase) : AyaDatabase() {
+        @Volatile var gate: kotlinx.coroutines.CompletableDeferred<Unit>? = null
+        val entered = kotlinx.coroutines.CompletableDeferred<Unit>()
+        private val profileDao = object : ProfileDao by inner.profiles() {
+            override suspend fun all(): List<ProfileEntity> {
+                val current = gate
+                if (current != null) {
+                    gate = null
+                    entered.complete(Unit)
+                    current.await()
+                }
+                return inner.profiles().all()
+            }
+        }
+        override fun profiles() = profileDao
+        override fun ownerBindings() = inner.ownerBindings()
+        override fun answers() = inner.answers()
+        override fun snapshots() = inner.snapshots()
+        override fun reports() = inner.reports()
+        override fun surveys() = inner.surveys()
+        override fun challenges() = inner.challenges()
+        override fun createInvalidationTracker() = inner.invalidationTracker
+        override fun clearAllTables() = inner.clearAllTables()
+    }
+
+    private class Harness(val dir: File, val api: FakeBackend, val db: AyaDatabase, val active: id.petalytix.ayailmu.core.data.settings.ActiveProfileStore, val assets: AssetSource = testAssets(), val config: NormalAccountConfig = testConfig) {
         val visibility: NormalProfileVisibility
         val repository: NormalSyncRepository
         val profiles: ProfileRepository
         init {
             val base = ApplicationProvider.getApplicationContext<Context>()
             val context = object : ContextWrapper(base) { override fun getNoBackupFilesDir() = dir.apply { mkdirs() } }
-            visibility = NormalProfileVisibility(context, testConfig, db)
+            visibility = NormalProfileVisibility(context, config, db)
             val content = ContentRepository(assets, AppBuildInfo(true, "test"))
-            repository = NormalSyncRepository(context, db, active, assets, content, FixedClock(Instant.parse("2026-10-26T00:00:00Z")), api, testConfig, visibility)
+            repository = NormalSyncRepository(context, db, active, assets, content, FixedClock(Instant.parse("2026-10-26T00:00:00Z")), api, config, visibility)
             profiles = ProfileRepository(db, active, FixedClock(Instant.parse("2026-10-26T00:00:00Z")), UuidIdGenerator, visibility)
         }
         suspend fun stop() = repository.stop()
@@ -172,12 +227,274 @@ class NormalSyncRepositoryTest {
             "{\"kind\":\"choice\",\"option_id\":\"a\"}", emptyMap(), Outcome.CORRECT, firstAttempt = true, freshEvidence = false,
             reviewStatus = ReviewStatus.APPROVED, synthetic = false, itemType = item.type)
     }
-    private suspend fun newHarness(dir: File, api: FakeBackend, db: AyaDatabase, active: id.petalytix.ayailmu.core.data.settings.ActiveProfileStore, assets: AssetSource = testAssets()): Harness {
+    private suspend fun newHarness(dir: File, api: FakeBackend, db: AyaDatabase, active: id.petalytix.ayailmu.core.data.settings.ActiveProfileStore, assets: AssetSource = testAssets(), config: NormalAccountConfig = testConfig): Harness {
         if (!::catalogCache.isInitialized) catalogCache = catalog(ContentRepository(testAssets(), AppBuildInfo(true, "test")), testAssets())
         api.catalogValue = catalogCache
-        return Harness(dir, api, db, active, assets).also { it.visibility.refresh() }
+        return Harness(dir, api, db, active, assets, config).also { it.visibility.refresh() }
     }
     private lateinit var catalogCache: Catalog
+
+    /** Disposable fixture: fabricated owners, in-memory Room, temp journal directory; every opened harness is stopped. */
+    private class Fixture(val dir: File, val db: AyaDatabase, val active: InMemoryActiveProfileStore, val api: FakeBackend) {
+        lateinit var h: Harness
+        val opened = mutableListOf<Harness>()
+        fun journal(cfg: NormalAccountConfig = testConfig) = FileJournal(File(dir, "normal-owner-sync/${cfg.environmentHash}/journal.json"))
+        fun journalDir(cfg: NormalAccountConfig = testConfig) = File(dir, "normal-owner-sync/${cfg.environmentHash}")
+    }
+    private suspend fun Fixture.open(cfg: NormalAccountConfig = testConfig): Harness = newHarness(dir, api, db, active, config = cfg).also { h = it; opened += it }
+    private suspend fun kotlinx.coroutines.CoroutineScope.fixture(name: String, block: suspend kotlinx.coroutines.CoroutineScope.(Fixture) -> Unit) {
+        val dir = File.createTempFile(name, "").apply { delete() }
+        val db = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext<Context>(), AyaDatabase::class.java).allowMainThreadQueries().build()
+        val f = Fixture(dir, db, InMemoryActiveProfileStore(), FakeBackend())
+        try { f.open(); block(f) } finally { f.opened.forEach { it.stop() }; db.close(); dir.deleteRecursively() }
+    }
+    private val other = testConfig.copy(publicOrigin = "https://accounts-b.example.invalid")
+
+    @Test fun lostCreateReplyRetryReusesTheSameClientRequestAndCreatesExactlyOneLearner() = runTest {
+        val dir = File.createTempFile("normal-create-lost-reply", "").apply { delete() }
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val db = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
+        val active = InMemoryActiveProfileStore(); val api = FakeBackend(); val h = newHarness(dir, api, db, active)
+        try {
+            h.repository.login("A", declaration)
+            api.loseCreateReplyOnce = true
+            val failure = runCatching { h.repository.createAdult("Owner", "id") }.exceptionOrNull()
+            assertTrue("A lost reply surfaces as an ambiguous network failure", failure is IOException)
+            assertEquals("The first POST committed on the server", 1, api.creates)
+            assertNull(h.repository.state.value.selected)
+            h.repository.createAdult("Owner", "id")
+            assertEquals(2, api.createRequests.size)
+            assertEquals("Retry must replay the identical client id, kind and language", api.createRequests[0], api.createRequests[1])
+            assertEquals("Exactly one remote learner may exist", 1, api.profiles.getValue("A").size)
+            assertEquals(1, api.creates)
+            val selected = h.repository.state.value.selected!!
+            assertEquals(api.createRequests[0].first, selected.clientLearnerId)
+            assertEquals(selected.clientLearnerId, active.activeId.first())
+            assertEquals(selected.clientLearnerId, db.ownerBindings().all().single().profileId)
+            assertFalse("Creating must not grant sync consent", h.repository.state.value.enabled)
+            assertTrue(api.remote.isEmpty() && api.uploaded.isEmpty())
+        } finally { h.stop(); db.close(); dir.deleteRecursively() }
+    }
+
+    private suspend fun Fixture.loseFirstReply(label: String = "Zed label") {
+        api.loseCreateReplyOnce = true
+        assertTrue("A lost reply is an ambiguous network failure", runCatching { h.repository.createAdult(label, "id") }.exceptionOrNull() is IOException)
+        assertEquals("The lost-reply POST committed on the server", 1, api.creates)
+    }
+
+    @Test fun lostReplyPendingRequestIsDurableBeforeAndAfterTransmissionAndHoldsNoLabelOrToken() = runTest { fixture("normal-pending-durable") { f ->
+        f.h.repository.login("A", declaration)
+        f.loseFirstReply()
+        val sent = f.api.createRequests.single()
+        assertTrue(f.h.repository.state.value.pendingCreate)
+        val stored = f.journal().read().pendingCreates
+        assertEquals(mapOf("owner-A" to PendingCreate(sent.first, "ADULT", "id")), stored)
+        val text = File(f.journalDir(), "journal.json").readText()
+        assertEquals(setOf("clientLearnerId", "kind", "lang"), Json.parseToJsonElement(text).jsonObject.getValue("pendingCreates").jsonObject.getValue("owner-A").jsonObject.keys)
+        assertFalse("No label may be saved in the journal", text.contains("Zed label"))
+        assertTrue(f.db.profiles().all().isEmpty() && f.db.ownerBindings().all().isEmpty())
+    } }
+
+    @Test fun pendingCreateSurvivesProcessRestartAndOnlyAnExplicitRetryReplaysIt() = runTest { fixture("normal-pending-restart") { f ->
+        f.h.repository.login("A", declaration)
+        f.loseFirstReply()
+        val sent = f.api.createRequests.single()
+        f.h.stop()
+        val restarted = f.open()
+        restarted.repository.login("A", declaration)
+        assertTrue("The restarted app still knows the request is unresolved", restarted.repository.state.value.pendingCreate)
+        assertEquals("Login must not auto-submit the create", 1, f.api.createRequests.size)
+        restarted.repository.resume("A")
+        assertEquals("Resume must not auto-submit the create", 1, f.api.createRequests.size)
+        restarted.repository.createAdult("Owner", "id")
+        assertEquals(listOf(sent, sent), f.api.createRequests)
+        assertEquals(1, f.api.profiles.getValue("A").size)
+        assertEquals(sent.first, restarted.repository.state.value.selected!!.clientLearnerId)
+        assertEquals(sent.first, f.active.activeId.first())
+        assertFalse(restarted.repository.state.value.pendingCreate)
+        assertFalse(restarted.repository.state.value.enabled)
+        assertTrue(f.api.remote.isEmpty() && f.api.uploaded.isEmpty())
+        assertTrue("Binding commit clears the request", f.journal().read().pendingCreates.isEmpty())
+        assertEquals(sent.first, f.journal().read().owners.getValue("owner-A").values.single().learner.clientLearnerId)
+    } }
+
+    @Test fun sameOwnerLogoutAndReloginKeepsThePendingRequest() = runTest { fixture("normal-pending-relogin") { f ->
+        f.h.repository.login("A", declaration)
+        f.loseFirstReply()
+        val sent = f.api.createRequests.single()
+        f.h.repository.logout()
+        assertFalse("Signed out: no owner, nothing shown", f.h.repository.state.value.pendingCreate)
+        assertEquals("Logout preserves the durable request", sent.first, f.journal().read().pendingCreates.getValue("owner-A").clientLearnerId)
+        f.h.repository.login("A", declaration)
+        assertTrue(f.h.repository.state.value.pendingCreate)
+        f.h.repository.createAdult("Owner", "id")
+        assertEquals(listOf(sent, sent), f.api.createRequests)
+        assertEquals(1, f.api.profiles.getValue("A").size)
+        assertEquals(sent.first, f.h.repository.state.value.selected!!.clientLearnerId)
+    } }
+
+    @Test fun otherOwnersAndOriginsNeverSeeOrUseAPendingRequest() = runTest { fixture("normal-pending-isolation") { f ->
+        f.h.repository.login("A", declaration)
+        f.loseFirstReply()
+        val pendingA = f.api.createRequests.single()
+        f.h.repository.logout()
+        f.h.repository.login("B", declaration)
+        assertFalse("Owner B must not see A's request", f.h.repository.state.value.pendingCreate)
+        f.h.repository.createAdult("B owner", "id")
+        val requestB = f.api.createRequests.last()
+        assertNotEquals("B must use its own client id", pendingA.first, requestB.first)
+        assertEquals(listOf(requestB.first), f.api.profiles.getValue("B").map { it.clientLearnerId })
+        assertEquals(listOf(pendingA.first), f.api.profiles.getValue("A").map { it.clientLearnerId })
+        assertEquals("A's request is untouched by B's create", PendingCreate(pendingA.first, "ADULT", "id"), f.journal().read().pendingCreates["owner-A"])
+        f.h.repository.logout()
+        f.h.repository.login("A", declaration)
+        assertTrue(f.h.repository.state.value.pendingCreate)
+        f.h.repository.createAdult("A owner", "id")
+        assertEquals(pendingA, f.api.createRequests.last())
+        assertEquals(1, f.api.profiles.getValue("A").size)
+    } }
+
+    @Test fun anotherOriginDoesNotSeeOrReuseAPendingRequest() = runTest { fixture("normal-pending-origin") { f ->
+        f.h.repository.login("A", declaration)
+        f.loseFirstReply()
+        val pending = f.api.createRequests.single()
+        f.h.stop()
+        val b = f.open(other)
+        b.repository.login("A", declaration)
+        assertFalse("A different origin must not show the request", b.repository.state.value.pendingCreate)
+        b.repository.createAdult("Other origin", "id")
+        assertNotEquals(pending.first, f.api.createRequests.last().first)
+        assertEquals(PendingCreate(pending.first, "ADULT", "id"), f.journal().read().pendingCreates["owner-A"])
+        assertTrue(f.journal(other).read().pendingCreates.isEmpty())
+    } }
+
+    @Test fun conflictingRetryLanguageIsRejectedWithoutTouchingTheRequest() = runTest { fixture("normal-pending-language") { f ->
+        f.h.repository.login("A", declaration)
+        f.loseFirstReply()
+        val sent = f.api.createRequests.single()
+        val failure = runCatching { f.h.repository.createAdult("Owner", "en") }.exceptionOrNull()
+        assertTrue(failure is NormalContentException)
+        f.h.repository.failed(failure as Exception)
+        assertEquals(NormalSyncNotice.CREATE_PENDING_LANGUAGE, f.h.repository.state.value.notice)
+        assertFalse(f.h.repository.state.value.busy)
+        assertTrue(f.h.repository.state.value.pendingCreate)
+        assertEquals("No second POST for a conflicting language", 1, f.api.createRequests.size)
+        assertEquals(PendingCreate(sent.first, "ADULT", "id"), f.journal().read().pendingCreates["owner-A"])
+        f.h.repository.createAdult("Owner", "id")
+        assertEquals(listOf(sent, sent), f.api.createRequests)
+        assertEquals("id", f.h.repository.state.value.selected!!.lang)
+        assertEquals(1, f.api.profiles.getValue("A").size)
+    } }
+
+    @Test fun failureToPersistThePendingRequestSendsNothing() = runTest { fixture("normal-pending-persist-fail") { f ->
+        f.h.repository.login("A", declaration)
+        // A directory where the journal's temp file must be written makes every journal write fail.
+        val blocker = File(f.journalDir(), "journal.json.pending").apply { mkdirs() }
+        val failure = runCatching { f.h.repository.createAdult("Owner", "id") }.exceptionOrNull()
+        assertTrue("The journal write failure must surface", failure is IOException)
+        assertTrue("No POST may be attempted without a durable record", f.api.createRequests.isEmpty())
+        assertEquals(0, f.api.creates)
+        assertTrue(f.api.profiles.isEmpty())
+        assertFalse(f.h.repository.state.value.pendingCreate)
+        assertTrue(f.journal().read().pendingCreates.isEmpty())
+        assertTrue(f.db.profiles().all().isEmpty() && f.db.ownerBindings().all().isEmpty())
+        assertTrue(blocker.delete())
+        f.h.repository.createAdult("Owner", "id")
+        assertEquals(1, f.api.createRequests.size)
+        assertEquals(1, f.api.creates)
+        assertNotNull(f.h.repository.state.value.selected)
+    } }
+
+    @Test fun cancelledCreateAfterTransmissionKeepsTheRequestAndRetryReplaysIt() = runTest { fixture("normal-pending-cancel") { f ->
+        f.h.repository.login("A", declaration)
+        f.api.createGate = kotlinx.coroutines.CompletableDeferred()
+        val creating = async { runCatching { f.h.repository.createAdult("Late owner", "id") } }
+        f.api.createEntered.await()
+        f.h.repository.cancelActions()
+        f.api.createGate!!.complete(Unit)
+        assertTrue(creating.await().isFailure)
+        assertEquals("The cancelled create had already been transmitted", 1, f.api.creates)
+        assertNull(f.h.repository.state.value.selected)
+        assertTrue(f.db.ownerBindings().all().isEmpty())
+        assertTrue("The request is retained for replay", f.h.repository.state.value.pendingCreate)
+        val sent = f.api.createRequests.single()
+        f.h.repository.createAdult("Owner", "id")
+        assertEquals(listOf(sent, sent), f.api.createRequests)
+        assertEquals(1, f.api.profiles.getValue("A").size)
+        assertEquals(sent.first, f.h.repository.state.value.selected!!.clientLearnerId)
+    } }
+
+    @Test fun staleReplyAfterSameOwnerSessionChangeIsDiscardedButRequestSurvives() = runTest { fixture("normal-pending-stale-same") { f ->
+        f.h.repository.login("A", declaration)
+        f.api.createGate = kotlinx.coroutines.CompletableDeferred()
+        val creating = async { runCatching { f.h.repository.createAdult("Late owner", "id") } }
+        f.api.createEntered.await()
+        f.h.repository.logout()
+        f.h.repository.login("A", declaration)
+        f.api.createGate!!.complete(Unit)
+        assertTrue("The superseded session's reply must not bind", creating.await().isFailure)
+        assertNull(f.h.repository.state.value.selected)
+        assertTrue(f.db.ownerBindings().all().isEmpty())
+        assertTrue(f.h.repository.state.value.pendingCreate)
+        val sent = f.api.createRequests.single()
+        f.h.repository.createAdult("Owner", "id")
+        assertEquals(listOf(sent, sent), f.api.createRequests)
+        assertEquals(1, f.api.profiles.getValue("A").size)
+    } }
+
+    @Test fun staleReplyAfterAnotherOwnerSignedInNeverShowsOrBindsTheRequestForThatOwner() = runTest { fixture("normal-pending-stale-other") { f ->
+        f.h.repository.login("A", declaration)
+        f.api.createGate = kotlinx.coroutines.CompletableDeferred()
+        val creating = async { runCatching { f.h.repository.createAdult("Late owner", "id") } }
+        f.api.createEntered.await()
+        f.h.repository.logout()
+        f.h.repository.login("B", declaration)
+        f.api.createGate!!.complete(Unit)
+        assertTrue(creating.await().isFailure)
+        assertEquals("owner-B", f.h.repository.state.value.owner)
+        assertFalse("B must not be shown A's request", f.h.repository.state.value.pendingCreate)
+        assertTrue(f.h.repository.state.value.learners.isEmpty())
+        assertNull(f.h.repository.state.value.selected)
+        assertTrue(f.db.ownerBindings().all().isEmpty())
+        assertEquals(setOf("owner-A"), f.journal().read().pendingCreates.keys)
+        f.h.repository.logout()
+        f.h.repository.login("A", declaration)
+        assertTrue(f.h.repository.state.value.pendingCreate)
+    } }
+
+    @Test fun pendingIsClearedOnlyWhenTheKnownLearnersBindingCommits() = runTest { fixture("normal-pending-clear") { f ->
+        f.h.repository.login("A", declaration)
+        f.api.catalogOfflineAfterCreate = true
+        assertTrue(runCatching { f.h.repository.createAdult("Owner", "id") }.exceptionOrNull() is IOException)
+        val created = f.h.repository.state.value.learners.single()
+        assertTrue("A returned success whose binding failed keeps the request", f.h.repository.state.value.pendingCreate)
+        assertEquals(created.clientLearnerId, f.journal().read().pendingCreates.getValue("owner-A").clientLearnerId)
+        f.api.catalogOfflineAfterCreate = false
+        f.h.repository.select(created, "Owner")
+        assertFalse(f.h.repository.state.value.pendingCreate)
+        val state = f.journal().read()
+        assertTrue(state.pendingCreates.isEmpty())
+        assertEquals(created.clientLearnerId, state.owners.getValue("owner-A").getValue(created.id).learner.clientLearnerId)
+        assertEquals(created.clientLearnerId, f.db.ownerBindings().all().single().profileId)
+        f.h.repository.createAdult("Second", "id")
+        assertNotEquals("A resolved request is never reused", created.clientLearnerId, f.api.createRequests.last().first)
+        assertEquals(2, f.api.profiles.getValue("A").size)
+    } }
+
+    @Test fun deviceCleanupClearsThePendingRequestSoItCannotBeReplayedAgain() = runTest { fixture("normal-pending-cleanup") { f ->
+        f.h.repository.login("A", declaration)
+        f.loseFirstReply()
+        val old = f.api.createRequests.single()
+        f.h.repository.deleteDevice()
+        assertNull(f.h.repository.state.value.owner)
+        assertFalse(f.h.repository.state.value.pendingCreate)
+        assertTrue(f.journal().read().pendingCreates.isEmpty())
+        f.h.repository.login("A", declaration)
+        assertFalse(f.h.repository.state.value.pendingCreate)
+        f.h.repository.createAdult("Owner", "id")
+        assertNotEquals("Device cleanup deliberately forgets the old request", old.first, f.api.createRequests.last().first)
+        assertEquals(1, f.db.ownerBindings().all().size)
+    } }
 
     @Test fun createWithNoApprovedContentDoesNotMutateRemoteOrRoomAndRetryCannotDuplicate() = runTest {
         val dir = File.createTempFile("normal-no-content", "").apply { delete() }
@@ -422,6 +739,88 @@ class NormalSyncRepositoryTest {
             assertTrue(db.profiles().all().isEmpty())
             assertTrue(db.ownerBindings().all().isEmpty())
         } finally { h.stop(); db.close(); dir.deleteRecursively() }
+    }
+
+    private suspend fun kotlinx.coroutines.CoroutineScope.assertStalePublicationCannotReplaceNewSession(nextToken: String) {
+        val dir = File.createTempFile("normal-stale-publish-$nextToken", "").apply { delete() }
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val room = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
+        val db = GatedProfileDatabase(room)
+        val active = InMemoryActiveProfileStore(); val api = FakeBackend(); val h = newHarness(dir, api, db, active)
+        val gate = kotlinx.coroutines.CompletableDeferred<Unit>()
+        try {
+            h.repository.login("A", declaration)
+            api.loseCreateReplyOnce = true
+            assertTrue(runCatching { h.repository.createAdult("Owner", "id") }.exceptionOrNull() is IOException)
+            assertTrue(h.repository.state.value.pendingCreate)
+
+            // expireSession reaches publish for owner A, then the real Room label query suspends.
+            db.gate = gate
+            val stale = async { h.repository.expireSession() }
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
+                kotlinx.coroutines.withTimeout(20_000) { db.entered.await() }
+            }
+            h.repository.logout()
+            h.repository.login(nextToken, declaration)
+            assertEquals("owner-$nextToken", h.repository.state.value.owner)
+            assertTrue(h.repository.state.value.authenticated)
+            assertEquals(NormalSyncNotice.READY, h.repository.state.value.notice)
+
+            // This is a deterministic suspendable-publication regression, not a claim to hit the tiny CAS race.
+            gate.complete(Unit)
+            stale.await()
+            assertEquals("owner-$nextToken", h.repository.state.value.owner)
+            assertTrue("The new session stays authenticated", h.repository.state.value.authenticated)
+            assertEquals("The old LOGIN_REQUIRED publication must not replace READY", NormalSyncNotice.READY, h.repository.state.value.notice)
+            assertEquals(nextToken == "A", h.repository.state.value.pendingCreate)
+            assertEquals(api.profiles[nextToken].orEmpty(), h.repository.state.value.learners)
+            assertNull(h.repository.state.value.selected)
+        } finally { gate.complete(Unit); h.stop(); room.close(); dir.deleteRecursively() }
+    }
+
+    @Test fun publicationFromClearedSessionCannotOverwriteCommitWithinSameResumeAttempt() = runTest {
+        val dir = File.createTempFile("normal-stale-publish-resume-commit", "").apply { delete() }
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val room = Room.inMemoryDatabaseBuilder(context, AyaDatabase::class.java).allowMainThreadQueries().build()
+        val db = GatedProfileDatabase(room)
+        val active = InMemoryActiveProfileStore(); val api = FakeBackend(); val h = newHarness(dir, api, db, active)
+        val resumeGate = kotlinx.coroutines.CompletableDeferred<Unit>()
+        val roomGate = kotlinx.coroutines.CompletableDeferred<Unit>()
+        try {
+            h.repository.login("A", declaration)
+            api.currentAccountGate = resumeGate
+            val restoring = async { h.repository.resume("A") }
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
+                kotlinx.coroutines.withTimeout(20_000) { api.currentAccountEntered.await() }
+            }
+
+            // resume has allocated its attempt and cleared the old session, but has not committed the new one.
+            db.gate = roomGate
+            val stale = async { h.repository.sync() }
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
+                kotlinx.coroutines.withTimeout(20_000) { db.entered.await() }
+            }
+            resumeGate.complete(Unit)
+            restoring.await()
+            assertEquals("owner-A", h.repository.state.value.owner)
+            assertTrue(h.repository.state.value.authenticated)
+            assertEquals(NormalSyncNotice.READY, h.repository.state.value.notice)
+
+            roomGate.complete(Unit)
+            assertEquals(SyncResult.LOGIN_REQUIRED, stale.await())
+            assertTrue("The committed session must remain authenticated", h.repository.state.value.authenticated)
+            assertEquals("The cleared-session publication must not replace READY", NormalSyncNotice.READY, h.repository.state.value.notice)
+        } finally {
+            resumeGate.complete(Unit); roomGate.complete(Unit); h.stop(); room.close(); dir.deleteRecursively()
+        }
+    }
+
+    @Test fun staleSuspendablePublicationCannotOverwriteAnotherOwner() = runTest {
+        assertStalePublicationCannotReplaceNewSession("B")
+    }
+
+    @Test fun staleSuspendablePublicationCannotOverwriteSameOwnerNewSession() = runTest {
+        assertStalePublicationCannotReplaceNewSession("A")
     }
 
     @Test fun lateListAfterSelectionCannotReachAnotherOwnerOrALaterOfflineRestore() = runTest {

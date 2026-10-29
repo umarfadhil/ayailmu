@@ -26,10 +26,11 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-internal enum class NormalSyncNotice { SIGNED_OUT, READY, OFFLINE, LOGIN_REQUIRED, FRESH_AUTH_REQUIRED, SYNCED, DISABLED, CONSENT_UPDATE_REQUIRED, NO_APPROVED_CONTENT, CONTENT_MISMATCH, FAILED }
+internal enum class NormalSyncNotice { SIGNED_OUT, READY, OFFLINE, LOGIN_REQUIRED, FRESH_AUTH_REQUIRED, SYNCED, DISABLED, CONSENT_UPDATE_REQUIRED, NO_APPROVED_CONTENT, CONTENT_MISMATCH, CREATE_PENDING_LANGUAGE, FAILED }
 internal data class NormalSyncState(
     val owner: String? = null,
     val authenticated: Boolean = false,
@@ -41,9 +42,11 @@ internal data class NormalSyncState(
     val restoredAnswers: Int = 0,
     val busy: Boolean = false,
     val notice: NormalSyncNotice = NormalSyncNotice.SIGNED_OUT,
+    /** An earlier profile creation may have reached the server; creating again retries that same request. */
+    val pendingCreate: Boolean = false,
 )
 
-/** Local content cannot be synced; raised before any remote mutation so [NormalSyncRepository.failed] can report it truthfully. */
+/** A create is refused before any remote mutation; raised so [NormalSyncRepository.failed] can report it truthfully. */
 internal class NormalContentException(val notice: NormalSyncNotice, message: String) : IllegalStateException(message)
 
 /** Native normal learning bridge. Existing unbound Room profiles/history are never attached or backfilled. */
@@ -85,6 +88,7 @@ internal class NormalSyncRepository @Inject constructor(
     fun cancelActions() {
         synchronized(this) { actionGeneration++ }
         mutable.value = mutable.value.copy(busy = false)
+        refreshCurrentPendingCreate()
     }
 
     override suspend fun login(token: String, declaration: NormalOwnerDeclaration, accepted: () -> Boolean, onCommitted: ((Long) -> Unit)?) = withContext(Dispatchers.IO) {
@@ -116,23 +120,31 @@ internal class NormalSyncRepository @Inject constructor(
         val accepted = beginAction()
         actionMutex.withLock {
         if (!accepted()) return@withLock
+        // Capture the publication context before the first suspension; selection's own commit advances the session.
+        val owner = engine.owner()
+        val mark = engine.sessionGeneration()
         try {
             // Anchor the create path to the creating owner and session before the first suspension.
             // A successful engine.select later advances the session generation, so this marker only
             // covers preflight, create and retention.
-            val owner = engine.owner()
-            val mark = engine.sessionGeneration()
             if (owner == null || mark == null) throw ApiFailure(401, "unauthorized")
             val creating = { accepted() && engine.owner() == owner && engine.sessionGeneration() == mark }
-            val clientId = "lrn_" + UUID.randomUUID()
-            check(db.profiles().get(clientId) == null) { "Local profile already exists" }
+            // A request left by an unfinished create is immutable: reject a different language before any I/O.
+            engine.pendingCreate()?.let { if (it.lang != lang) throw pendingLanguageConflict(it) }
             // Read-only checks first: a remote learner must never be created for content that cannot be bound.
             val prepared = proofs()
             check(creating()) { "Sign-in session changed" }
             try { engine.preflightProofs(prepared) } catch (e: IllegalArgumentException) {
                 throw NormalContentException(NormalSyncNotice.CONTENT_MISMATCH, e.message.orEmpty())
             }
-            val learner = engine.createNormalAdultLearner(clientId, lang, creating)
+            // Durable before the POST: a lost reply, crash or sign-out after transmission replays this same request.
+            // If the write fails this throws and nothing has been sent. It is cleared only by engine.select's binding commit.
+            val request = try { engine.reserveNormalAdultCreate(lang, { "lrn_" + UUID.randomUUID() }, creating) } catch (e: PendingCreateConflict) {
+                throw pendingLanguageConflict(e.pending)
+            }
+            val clientId = request.clientLearnerId
+            check(db.profiles().get(clientId) == null) { "Local profile already exists" }
+            val learner = engine.createNormalAdultLearner(clientId, request.lang, creating)
             // The reply is known-successful, so cache this learner for the creating owner without network
             // I/O; if binding fails (even offline) a retry selects it instead of creating another.
             check(retainCreated(learner, owner, creating)) { "Sign-in session changed" }
@@ -140,9 +152,29 @@ internal class NormalSyncRepository @Inject constructor(
                 if (e !is CancellationException) refreshLearners(owner, accepted)
                 throw e
             }
-        } finally { if (accepted()) mutable.value = mutable.value.copy(busy = false) }
+        } finally {
+            if (accepted()) mutable.value = mutable.value.copy(busy = false)
+            if (owner != null && mark != null) refreshPendingCreate(owner, mark, accepted)
+        }
         }
     }
+    /** Cancellation starts a new action context, so publish the still-current owner's durable flag in that context. */
+    private fun refreshCurrentPendingCreate() {
+        val owner = engine.owner() ?: return
+        val mark = engine.sessionGeneration() ?: return
+        refreshPendingCreate(owner, mark) { true }
+    }
+    /** Never let a suspended owner's result overwrite a newer owner/session/action's visible state. */
+    private fun refreshPendingCreate(owner: String, mark: Long, accepted: () -> Boolean) {
+        val pending = runCatching { engine.pendingCreate(owner) != null }.getOrNull() ?: return
+        mutable.update { state ->
+            if (state.owner == owner && accepted() && engine.owner() == owner && engine.sessionGeneration() == mark) {
+                state.copy(pendingCreate = pending)
+            } else state
+        }
+    }
+    private fun pendingLanguageConflict(pending: PendingCreate) =
+        NormalContentException(NormalSyncNotice.CREATE_PENDING_LANGUAGE, "A profile creation (${pending.lang}) is awaiting retry")
     suspend fun select(learner: Learner, newLabel: String? = null) {
         val accepted = beginAction()
         actionMutex.withLock {
@@ -327,16 +359,33 @@ internal class NormalSyncRepository @Inject constructor(
         active.setActive(db.profiles().all().firstOrNull { visibility.allows(it.id) }?.id)
     }
     private suspend fun publish(notice: NormalSyncNotice? = null) {
-        visibility.refresh()
-        val b = engine.binding()
+        // Capture one owner/session/action snapshot before Room can suspend. The global mark covers attempt
+        // changes; committedSession also covers a login/resume committing within an unchanged global attempt.
+        val actionMark = synchronized(this) { actionGeneration }
+        val sessionMark = engine.sessionMark()
+        val committedSession = engine.sessionGeneration()
         val owner = engine.owner()
+        val authenticated = engine.authenticated()
+        val b = engine.binding()
+        val pendingCreate = owner?.let { engine.pendingCreate(it) != null } == true
+        val learners = remoteLearners?.takeIf { it.first == owner }?.second ?: engine.knownLearners()
+        val pending = b?.local?.values?.count { it.acknowledgedSequence == null } ?: 0
+        val restored = b?.remote?.count { it.registryStatus == "registered" } ?: 0
+        visibility.refresh()
         val labels = db.profiles().all().associate { it.id to it.label }
-        mutable.value = NormalSyncState(
-            owner, engine.authenticated(), remoteLearners?.takeIf { it.first == owner }?.second ?: engine.knownLearners(), labels,
-            b?.learner, b?.enabled == true, engine.pendingCount(), b?.remote?.count { it.registryStatus == "registered" } ?: 0,
-            busy = false,
-            notice = notice ?: if (owner == null) NormalSyncNotice.SIGNED_OUT else if (!engine.authenticated()) NormalSyncNotice.LOGIN_REQUIRED else mutable.value.notice,
-        )
+        mutable.update { current ->
+            val unchanged = synchronized(this) { actionGeneration == actionMark } &&
+                engine.owner() == owner && engine.sessionMark() == sessionMark &&
+                engine.sessionGeneration() == committedSession
+            if (!unchanged) return@update current
+            NormalSyncState(
+                owner, authenticated, learners, labels,
+                b?.learner, b?.enabled == true, pending, restored,
+                busy = false,
+                notice = notice ?: if (owner == null) NormalSyncNotice.SIGNED_OUT else if (!authenticated) NormalSyncNotice.LOGIN_REQUIRED else current.notice,
+                pendingCreate = pendingCreate,
+            )
+        }
     }
     private suspend fun proofs(): Map<String, PackProof> {
         val catalog = ContentJson.json.decodeFromString(ContentCatalog.serializer(), assets.read(ContentRepository.CATALOG))
