@@ -1,6 +1,8 @@
 package id.petalytix.ayailmu.feature.common
 
+import android.content.ActivityNotFoundException
 import android.content.ClipData
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 
@@ -19,3 +21,18 @@ fun shareIntent(
         }
     return Intent.createChooser(send, title)
 }
+
+/** Returns false when Android cannot or will not open the chooser; the caller shows the existing export notice. */
+fun startShare(
+    context: Context,
+    uris: List<Uri>,
+    title: String,
+): Boolean =
+    try {
+        context.startActivity(shareIntent(uris, title))
+        true
+    } catch (_: ActivityNotFoundException) {
+        false
+    } catch (_: SecurityException) {
+        false
+    }

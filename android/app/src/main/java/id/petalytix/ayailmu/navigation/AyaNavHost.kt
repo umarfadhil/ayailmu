@@ -1,9 +1,13 @@
 package id.petalytix.ayailmu.navigation
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -12,6 +16,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import id.petalytix.ayailmu.BuildConfig
+import id.petalytix.ayailmu.feature.account.NormalAccountRoute
+import id.petalytix.ayailmu.feature.account.NormalAccountRootEntry
 import id.petalytix.ayailmu.feature.collection.FiguresRoute
 import id.petalytix.ayailmu.feature.collection.GemBoxRoute
 import id.petalytix.ayailmu.feature.collection.StickerShelfRoute
@@ -57,6 +64,9 @@ sealed interface AyaRoute {
 
     @Serializable
     data object Settings : AyaRoute
+
+    @Serializable
+    data object Account : AyaRoute
 
     @Serializable
     data class Progress(
@@ -141,8 +151,18 @@ fun AyaNavHost(root: RootViewModel = hiltViewModel()) {
     when (val s = state) {
         RootState.Loading -> Box(Modifier.fillMaxSize())
         is RootState.NeedsProfile -> {
-            val vm: OnboardingViewModel = hiltViewModel(key = "first-run-${s.attempt}")
-            OnboardingRoute(onDone = {}, onCancel = null, viewModel = vm)
+            var accountOnly by rememberSaveable(s.attempt) { mutableStateOf(false) }
+            if (BuildConfig.NORMAL_AUTH_APPROVED && accountOnly) {
+                NormalAccountRoute(onBack = { accountOnly = false })
+            } else {
+                Column {
+                    Box(Modifier.weight(1f)) {
+                        val vm: OnboardingViewModel = hiltViewModel(key = "first-run-${s.attempt}")
+                        OnboardingRoute(onDone = {}, onCancel = null, viewModel = vm)
+                    }
+                    if (BuildConfig.NORMAL_AUTH_APPROVED) NormalAccountRootEntry(onClick = { accountOnly = true })
+                }
+            }
         }
         RootState.Ready -> ReadyGraph()
     }
@@ -258,8 +278,12 @@ private fun ReadyGraph() {
             SettingsRoute(
                 onBack = { navController.popBackStack() },
                 onOpenStore = { navController.navigate(AyaRoute.Store) { launchSingleTop = true } },
+                onOpenAccount = { navController.navigate(AyaRoute.Account) { launchSingleTop = true } },
                 onOpenSurvey = { card -> navController.navigate(AyaRoute.Survey(card.kind.code, card.track)) { launchSingleTop = true } },
             )
+        }
+        composable<AyaRoute.Account> {
+            NormalAccountRoute(onBack = { navController.popBackStack() })
         }
         composable<AyaRoute.Store> {
             StoreRoute(onBack = { navController.popBackStack() })

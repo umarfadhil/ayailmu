@@ -7,6 +7,7 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.core.app.ApplicationProvider
 import id.petalytix.ayailmu.core.data.db.AyaDatabase
+import id.petalytix.ayailmu.core.data.db.OwnerBindingEntity
 import id.petalytix.ayailmu.core.data.repo.ChallengeRepository
 import id.petalytix.ayailmu.core.data.repo.SurveyRepository
 import id.petalytix.ayailmu.core.engine.CountingIdGenerator
@@ -79,19 +80,21 @@ class MigrationTest {
     }
 
     @Test
-    fun `a version 1 database opens as version 2 with its rows and the new tables`() =
+    fun `a version 1 database opens as version 3 with its rows and the new tables`() =
         runTest {
             createV1()
             val db = Room.databaseBuilder(context, AyaDatabase::class.java, name).allowMainThreadQueries().build()
             try {
                 assertEquals(listOf("rep-1"), db.reports().all().map { it.reportId })
-                assertEquals(2, db.openHelper.readableDatabase.version)
+                assertEquals(3, db.openHelper.readableDatabase.version)
                 val clock = TestSupport.clock()
                 val ids = CountingIdGenerator()
                 SurveyRepository(db, clock, ids).save("lrn-1", "arab", "background", mapOf("e_b4" to listOf("10")), "0.6.0")
                 ChallengeRepository(db, clock, ids).complete("lrn-1", "mat", "01")
                 assertEquals(1, db.surveys().all().size)
                 assertTrue(db.challenges().forProfile("lrn-1").single().unit == "01")
+                db.ownerBindings().upsert(OwnerBindingEntity("lrn-1", "owner-fixture", "environment-fixture"))
+                assertEquals("owner-fixture", db.ownerBindings().all().single().ownerId)
             } finally {
                 db.close()
             }

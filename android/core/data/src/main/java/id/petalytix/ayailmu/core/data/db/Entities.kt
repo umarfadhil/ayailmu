@@ -33,6 +33,15 @@ data class ProfileEntity(
     @ColumnInfo(name = "consent_at") val consentAt: Long?,
 )
 
+
+/** Nonsecret owner/environment authority backed up with learner rows; never contains tokens or payloads. */
+@Entity(tableName = "owner_profile_bindings")
+data class OwnerBindingEntity(
+    @PrimaryKey @ColumnInfo(name = "profile_id") val profileId: String,
+    @ColumnInfo(name = "owner_id") val ownerId: String,
+    @ColumnInfo(name = "environment_id") val environmentId: String,
+)
+
 @Entity(
     tableName = "answer_events",
     indices = [Index(value = ["profile_id", "track"]), Index(value = ["item_id"])],

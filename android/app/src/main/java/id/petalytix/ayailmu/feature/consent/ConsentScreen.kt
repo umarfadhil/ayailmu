@@ -31,6 +31,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import id.petalytix.ayailmu.BuildConfig
 import id.petalytix.ayailmu.R
 import id.petalytix.ayailmu.core.data.repo.ProfileRepository
 import id.petalytix.ayailmu.core.design.components.AyaButton
@@ -174,8 +175,8 @@ fun ConsentScreen(
             )
             Text(stringResource(R.string.consent_intro), style = MaterialTheme.typography.bodyLarge, color = colors.inkSoft)
             listOf(
-                R.string.consent_what_title to stringResource(R.string.consent_what_body),
-                R.string.consent_where_title to stringResource(R.string.consent_where_body),
+                R.string.consent_what_title to stringResource(if (BuildConfig.NORMAL_AUTH_APPROVED) R.string.consent_what_body_cloud else R.string.consent_what_body),
+                R.string.consent_where_title to stringResource(if (BuildConfig.NORMAL_AUTH_APPROVED) R.string.consent_where_body_cloud else R.string.consent_where_body),
                 R.string.consent_why_title to stringResource(R.string.consent_why_body),
                 R.string.consent_keep_title to stringResource(R.string.consent_keep_body),
                 R.string.consent_stop_title to stringResource(R.string.consent_stop_body, email),

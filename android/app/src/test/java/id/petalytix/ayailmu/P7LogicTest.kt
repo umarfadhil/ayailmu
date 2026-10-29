@@ -277,8 +277,8 @@ class P7LogicTest {
     }
 
     @Test
-    fun `a tester code opens everything in every build`() {
-        assertTrue(Access.unlockAll(tester = true, developerDemo = false, simulateFreeTier = false))
+    fun `a tester code opens everything only in the developer build`() {
+        assertFalse(Access.unlockAll(tester = true, developerDemo = false, simulateFreeTier = false))
         assertTrue(Access.unlockAll(tester = true, developerDemo = true, simulateFreeTier = true))
         assertTrue(Access.unlockAll(tester = false, developerDemo = true, simulateFreeTier = false))
         assertFalse(Access.unlockAll(tester = false, developerDemo = true, simulateFreeTier = true))

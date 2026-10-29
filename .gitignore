@@ -50,5 +50,11 @@ android/app/debug/
 *.keystore
 __pycache__/
 
+# Isolated integration build/runtime state
+integration-jvm/.gradle/
+integration-jvm/.kotlin/
+integration-jvm/build/
+integration/.local/
+
 # Claude handoff files (patches, bundles) — never committed
 Claude outputs/

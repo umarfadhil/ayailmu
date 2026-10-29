@@ -4,9 +4,9 @@ name: android-gate
 on:
   push:
     branches: [main]
-    paths: ["android/**", ".github/workflows/android.yml"]
+    paths: ["android/**", "integration/verify-endpoint-isolation.py", "integration/tunnel/**", ".github/workflows/android.yml"]
   pull_request:
-    paths: ["android/**", ".github/workflows/android.yml"]
+    paths: ["android/**", "integration/verify-endpoint-isolation.py", "integration/tunnel/**", ".github/workflows/android.yml"]
 
 concurrency:
   group: android-${{ github.ref }}
@@ -39,6 +39,15 @@ jobs:
 
       - name: Data layer (Room on Robolectric), app unit tests, lint, debug build (demo flavor)
         run: ./gradlew :core:data:testDebugUnitTest :app:testDemoDebugUnitTest :app:lintDemoDebug :app:assembleDemoDebug --stacktrace
+
+      - name: Sync contracts and synthetic account tests (live-provider fixtures run separately)
+        run: ./gradlew :core:sync:test :app:testSyncLabDebugUnitTest --stacktrace
+
+      - name: Unsigned production build and release lint
+        run: ./gradlew :app:lintProdRelease :app:assembleProdRelease --stacktrace
+
+      - name: Generated staging identity and callback isolation
+        run: python3 ../integration/verify-endpoint-isolation.py
 
       - name: ktlint
         run: ./gradlew ktlintCheck

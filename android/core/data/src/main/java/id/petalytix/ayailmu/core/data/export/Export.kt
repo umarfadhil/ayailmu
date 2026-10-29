@@ -15,6 +15,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import java.io.File
+import java.io.IOException
+import java.util.UUID
 
 /**
  * Learning-data export (CR-DAT-4; replaces the trial spec's upload, PROJECT_OVERVIEW "Spec deviations").
@@ -115,7 +117,7 @@ object ExportBuilder {
 
     /** One row per answer event; UTF-8 with BOM so spreadsheet apps show Arabic and Indonesian correctly. */
     fun csv(events: List<AnswerEvent>): String {
-        val sb = StringBuilder("﻿")
+        val sb = StringBuilder("\uFEFF")
         sb.append(CSV_COLUMNS.joinToString(",")).append("\r\n")
         for (e in events) {
             val row =
@@ -145,6 +147,8 @@ object ExportBuilder {
 /** Writes an export bundle to cache/exports and returns content URIs for the share sheet. */
 object ExportFiles {
     const val DIR = "exports"
+    private val lock = Any()
+    private val safeStamp = Regex("[A-Za-z0-9][A-Za-z0-9._-]{0,63}")
 
     fun authority(context: Context): String = context.packageName + ".exports"
 
@@ -154,14 +158,32 @@ object ExportFiles {
         stamp: String,
     ): List<Uri> =
         withContext(Dispatchers.IO) {
-            val dir = File(context.cacheDir, DIR).apply { mkdirs() }
-            dir.listFiles()?.forEach { it.delete() }
-            val json = File(dir, "ayailmu-export-$stamp.json").apply { writeText(bundle.json) }
-            val csv = File(dir, "ayailmu-export-$stamp.csv").apply { writeText(bundle.csv) }
-            listOf(json, csv).map { FileProvider.getUriForFile(context, authority(context), it) }
+            require(safeStamp.matches(stamp)) { "invalid export stamp" }
+            synchronized(lock) {
+                val root = File(context.cacheDir, DIR)
+                if (!root.isDirectory && !root.mkdirs()) throw IOException("cannot create export cache")
+                // A directory per publication keeps every previously granted URI away from later content.
+                val next = File(root, UUID.randomUUID().toString())
+                if (!next.mkdir()) throw IOException("cannot create export bundle")
+                var published = false
+                try {
+                    val json = File(next, "ayailmu-export-$stamp.json").apply { writeText(bundle.json) }
+                    val csv = File(next, "ayailmu-export-$stamp.csv").apply { writeText(bundle.csv) }
+                    // Do not expose or retire anything until the complete pair has provider URIs.
+                    val uris = listOf(json, csv).map { FileProvider.getUriForFile(context, authority(context), it) }
+                    root.listFiles()?.filter { it != next }?.forEach { it.deleteRecursively() }
+                    published = true
+                    uris
+                } finally {
+                    // The old complete bundle is untouched by write/provider failures.
+                    if (!published) next.deleteRecursively()
+                }
+            }
         }
 
     fun clear(context: Context) {
-        File(context.cacheDir, DIR).deleteRecursively()
+        synchronized(lock) {
+            File(context.cacheDir, DIR).deleteRecursively()
+        }
     }
 }

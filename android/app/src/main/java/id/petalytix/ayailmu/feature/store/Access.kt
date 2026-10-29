@@ -109,7 +109,7 @@ object Access {
         tester: Boolean,
         developerDemo: Boolean,
         simulateFreeTier: Boolean,
-    ): Boolean = tester || (developerDemo && !simulateFreeTier)
+    ): Boolean = tester && developerDemo || (developerDemo && !simulateFreeTier)
 }
 
 /** Subject cover in the art catalog (docs/ART_CATALOG.md; Nilai and Sejarah: MODULES_LEVELS_STORIES.md section 6.1). */

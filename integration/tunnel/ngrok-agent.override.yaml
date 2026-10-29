@@ -1,0 +1,4 @@
+# Merge after the existing ngrok config: no token or account configuration here.
+version: "2"
+web_addr: 127.0.0.1:4042
+console_ui: false
