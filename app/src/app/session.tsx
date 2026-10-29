@@ -2,6 +2,7 @@ import { Redirect, router, useFocusEffect, type Href } from 'expo-router';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ActivityIndicator, AppState, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions, type ViewInstance } from 'react-native';
 
+import { learningBetaEnabled } from '@/config/learningBeta';
 import type { ChoiceOption, Item } from '@/content/schema';
 import { prepareSession, SessionController } from '@/engine/controller';
 import type { Response } from '@/engine/scoring';
@@ -583,6 +584,8 @@ const styles = StyleSheet.create({
 });
 
 export default function SessionScreen() {
+  // A validated learning beta is bounded starter access: Home before any legacy hydration or session effect mounts.
+  if (learningBetaEnabled()) return <Redirect href="/" />;
   return (
     <HydrationGate write>
       <SessionScreenRoute />

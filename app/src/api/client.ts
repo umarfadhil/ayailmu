@@ -3,6 +3,7 @@
 // header: no cookies (credentials: 'omit'), no redirects, nothing in URLs. Every request settles within one deadline
 // that covers its reply body too, or at once when its caller aborts. Errors carry the HTTP status and the API's stable
 // problem code, never response text or the token.
+import { PRIVATE_QA } from '@/account/privateQa';
 import { accountApiOrigin } from '@/account/staging';
 import { isCanonicalUuid } from '@/account/ids';
 
@@ -113,13 +114,22 @@ export function createApiClient(options: {
   environment?: string;
   /** The explicit production capability: exactly true, beside exactly "production", for the production API's root origin. */
   productionAccounts?: boolean;
+  /** The explicit private QA capability: exactly true, beside exactly "private-qa", for the private QA API root. */
+  privateQa?: boolean;
+  /** The explicit learning-beta capability: exactly true, beside exactly "learning-beta" alone, for its API root origin. */
+  learningBeta?: boolean;
+  /** The fetch underneath; the global fetch by default. Required under the private QA profile, which has no fallback. */
   fetch?: typeof fetch;
 }): ApiClient {
-  // Revalidated here too, with its profile: an address other than that profile's API (the local pilot API, or a staging
-  // root origin under exactly the staging profile), or an unknown profile, never receives a token.
-  const base = accountApiOrigin(options?.baseUrl, options?.environment, options?.productionAccounts);
+  // Revalidated here too, with its profile, read once: an address other than that profile's API (the local pilot API, a
+  // staging root origin under exactly the staging profile, the private QA root under exactly the private profile with
+  // its capability, or a public root origin under exactly the learning-beta profile with its capability alone), or an
+  // unknown profile, never receives a token. The private profile also needs an injected fetch.
+  const environment = options?.environment;
+  const injected = options?.fetch;
+  const base = accountApiOrigin(options?.baseUrl, environment, options?.productionAccounts, options?.privateQa, options?.learningBeta);
   if (!base) throw new Error("createApiClient needs its profile's account API address; nothing was sent.");
-  const injected = options.fetch;
+  if (environment === PRIVATE_QA && typeof injected !== 'function') throw new Error('createApiClient needs an injected fetch for the private QA profile; nothing was sent.');
 
   /**
    * One authenticated request with exactly `body`: the token in the Authorization header only, no cookies, no

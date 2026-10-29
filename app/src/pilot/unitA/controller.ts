@@ -18,9 +18,15 @@
 // attempt order. Independence is derived from that context, never stored as a verdict. Anything unknown,
 // newer, foreign or inconsistent blocks without being rewritten; IO, assistance and write errors reject and
 // leave the last durable state answerable.
+// With opt-in capture, each fresh first choice also saves its answer record (an intent) in the same write, and
+// after each operation the document's verified intents are appended to the store under its exact bytes. Older
+// attempts are never captured afterwards; a failed append leaves the choice and its intent for a later operation.
+import { starterBetaBuild, type LearningBetaEnv } from '@/config/learningBeta';
+import type { PrivateBetaEnv } from '@/config/privateBeta';
 import { newId } from '@/engine/util';
 import { createSerialQueue } from '@/storage/serial';
-import type { Store } from '@/storage/types';
+import type { AnswerRecord, Store } from '@/storage/types';
+import { capturesMatch, drainPilotAnswers, makePilotAnswer, PILOT_META_KEY } from './capture';
 import {
   PILOT_CONTENT,
   validatePilotContent,
@@ -32,8 +38,9 @@ import {
   type PilotPhase,
 } from './content';
 import { canAdvanceUnitA, type PilotEvidence } from './evidence';
+import { starterReviewAccess } from './review';
 
-export const PILOT_META_KEY = 'pilot_unit_a';
+export { PILOT_META_KEY };
 
 const SCHEMA = 1;
 const CONSTRUCTS: readonly PilotConstruct[] = ['reference', 'agreement'];
@@ -61,8 +68,21 @@ export interface PilotDelayedCounts {
   valid: number;
 }
 
+/** Opt-in answer capture for one learner. */
+export interface PilotCaptureOptions {
+  /** Must be the store's learner; checked before a first choice is saved. */
+  learnerId: string;
+  /** The first-choice time, as toISOString writes it; anything else refuses the answer before it is saved. */
+  now: () => string;
+  /** Capture liveness (e.g. the account session); false blocks every operation like `active`. */
+  active: () => boolean;
+}
+
+export type PilotCaptureStatus = 'off' | 'saved' | 'pending';
+
 export interface PilotControllerOptions {
-  store: Pick<Store, 'getMeta' | 'setMeta' | 'updateMeta'>;
+  /** Capture also needs getLearner, listAnswers and appendAnswer; without them a captured answer is refused. */
+  store: Pick<Store, 'getMeta' | 'setMeta' | 'updateMeta'> & Partial<Pick<Store, 'getLearner' | 'listAnswers' | 'appendAnswer'>>;
   owner: string;
   mode: PilotMode;
   /** Local calendar day, YYYY-MM-DD. */
@@ -76,12 +96,19 @@ export interface PilotControllerOptions {
   assistedToday: (day: string) => Promise<boolean>;
   /** Used only to shuffle the option order of a new presentation. */
   random: () => number;
+  /** 'tester' only: the private beta or learning beta environment, validated on every operation; anything invalid blocks 'mode'. */
+  betaEnv?: PrivateBetaEnv & LearningBetaEnv;
+  /** 'tester' only: the starter review, re-checked against the exact content on every operation; else 'review'. */
+  starterReview?: unknown;
+  /** Absent: nothing is captured and the document keeps its exact keys. */
+  capture?: PilotCaptureOptions;
 }
 
 export type PilotBlockReason =
   | 'disposed'
   | 'inactive'
   | 'mode'
+  | 'review'
   | 'read-only'
   | 'content'
   | 'owner'
@@ -199,12 +226,19 @@ interface PilotDoc {
   lessons: LessonExposure[];
   /** Absent until the first held-out item is shown, so practice-only documents keep their exact bytes. */
   assessments?: Assessment[];
+  /**
+   * Absent until the first captured first choice. Each is exactly the answer record of one attempt, saved with it,
+   * in attempt order; attempts made without capture have none and never get one later.
+   */
+  captures?: AnswerRecord[];
 }
 
 const DOC_KEYS = [
   'owner', 'schema', 'contentVersion', 'policyVersion', 'attempts', 'current', 'presentations', 'lessons',
 ] as const;
 const ASSESSED_DOC_KEYS = [...DOC_KEYS, 'assessments'] as const;
+const CAPTURED_DOC_KEYS = [...DOC_KEYS, 'captures'] as const;
+const ASSESSED_CAPTURED_DOC_KEYS = [...DOC_KEYS, 'assessments', 'captures'] as const;
 
 // ---- Plan over the catalogue ----
 
@@ -630,7 +664,7 @@ function parseDoc(raw: string | null, owner: string, today: string, plan: Plan):
     return 'version';
   }
   if (
-    !(exactly(value, DOC_KEYS) || exactly(value, ASSESSED_DOC_KEYS)) ||
+    ![DOC_KEYS, ASSESSED_DOC_KEYS, CAPTURED_DOC_KEYS, ASSESSED_CAPTURED_DOC_KEYS].some((keys) => exactly(value, keys)) ||
     !isListOf(value.attempts, isAttempt) ||
     !isListOf(value.presentations, isPresentation) ||
     !isListOf(value.lessons, isLessonExposure) ||
@@ -641,7 +675,12 @@ function parseDoc(raw: string | null, owner: string, today: string, plan: Plan):
   }
   const doc = value as unknown as PilotDoc;
   if (daysOf(doc).some((day) => day > today)) return 'future-day';
-  return coherent(doc, plan) ? doc : 'corrupt';
+  if (!coherent(doc, plan)) return 'corrupt';
+  // Captures, when present, must each be exactly the record of its own attempt and presentation, in attempt order.
+  if (doc.captures !== undefined && !holds(() => capturesMatch(doc.captures, owner, doc.attempts, doc.presentations))) {
+    return 'corrupt';
+  }
+  return doc;
 }
 
 // ---- Position, transitions and views ----
@@ -962,20 +1001,57 @@ function holds(check: () => boolean): boolean {
 }
 
 export function createPilotController(options: PilotControllerOptions) {
-  const { store, owner, mode, random } = options;
+  const { store, owner, mode, random, capture } = options;
   const enqueue = queueFor(store);
   let disposed = false;
   /** Set once a successful operation has seen this owner's document stored. */
   let bound = false;
+  /** Whether the last capture drain appended every saved intent; pending until one has. */
+  let captured: Exclude<PilotCaptureStatus, 'off'> = 'pending';
 
-  function gate(): PilotBlockReason | null {
+  /** Every check but capture liveness, which only gates what this controller starts. */
+  function baseGate(): PilotBlockReason | null {
     if (disposed) return 'disposed';
     if (!holds(() => options.active() === true)) return 'inactive';
-    if (mode !== 'developer-demo') return 'mode';
+    if (mode === 'tester') {
+      if (!holds(() => starterBetaBuild(options.betaEnv) === true)) return 'mode';
+      if (!holds(() => starterReviewAccess(options.starterReview).allowed === true)) return 'review';
+    } else if (mode !== 'developer-demo') {
+      return 'mode';
+    }
     if (!holds(() => options.readOnly() === false)) return 'read-only';
     if (PLAN === null) return 'content';
     if (!isText(owner)) return 'owner';
     return null;
+  }
+
+  function gate(): PilotBlockReason | null {
+    const base = baseGate();
+    if (base !== null) return base;
+    // An opted-in controller never saves a first choice it could not also capture.
+    if (capture !== undefined && !holds(() => capture.active() === true)) return 'inactive';
+    return null;
+  }
+
+  /** Refuses a captured answer, before anything is written, unless the store can take it for this learner. */
+  async function captureReady(): Promise<void> {
+    if (capture === undefined) return;
+    if (!isText(capture.learnerId)) throw new Error('Pilot capture has no learner; nothing was saved.');
+    if (typeof store.getLearner !== 'function' || typeof store.listAnswers !== 'function' || typeof store.appendAnswer !== 'function') {
+      throw new Error('Pilot storage cannot capture answers; nothing was saved.');
+    }
+    const learner = await store.getLearner();
+    if (learner?.learner_id !== capture.learnerId) throw new Error('Pilot capture is for another learner; nothing was saved.');
+  }
+
+  /** Appends the stored document's intents; a failure leaves them saved locally for the next operation. */
+  async function drain(): Promise<void> {
+    try {
+      await drainPilotAnswers({ store, owner, active: () => gate() === null });
+      captured = 'saved';
+    } catch {
+      captured = 'pending';
+    }
   }
 
   // Reads only: it runs inside the queued update, so it must never call a queued store writer.
@@ -987,6 +1063,7 @@ export function createPilotController(options: PilotControllerOptions) {
 
   function run(
     step: (doc: PilotDoc, today: string, plan: Plan) => Change | Promise<Change>,
+    prepare?: () => Promise<void>,
   ): Promise<PilotView> {
     return enqueue(async () => {
       const early = gate();
@@ -1002,6 +1079,8 @@ export function createPilotController(options: PilotControllerOptions) {
       if (typeof store.updateMeta !== 'function') throw new Error('Pilot storage has no atomic metadata update; nothing was read or written.');
       const day = today;
       const plan = PLAN;
+      // Store reads outside the update, so none of them waits behind it.
+      if (prepare !== undefined) await prepare();
 
       // Filled by the transform, which returns `raw` itself whenever nothing may be written.
       const outcome: { view: PilotView | null; own: boolean } = { view: null, own: false };
@@ -1042,6 +1121,13 @@ export function createPilotController(options: PilotControllerOptions) {
       const afterWrite = gate();
       if (afterWrite !== null) return blocked(afterWrite);
       if (outcome.view === null) throw new Error('Pilot update finished without a view.');
+      // Only a document this operation read as this owner's own is drained, after its update has resolved.
+      if (capture !== undefined && outcome.view.kind !== 'blocked') {
+        await drain();
+        // A lost capture leaves the saved choice and its view; anything else still blocks.
+        const afterDrain = baseGate();
+        if (afterDrain !== null) return blocked(afterDrain);
+      }
       return outcome.view;
     });
   }
@@ -1084,12 +1170,27 @@ export function createPilotController(options: PilotControllerOptions) {
           throw new Error('Unknown option for this presentation.');
         }
         const attempt: Attempt = { presentationId, itemId: at.item.id, optionId };
+        // Made before anything is written: a bad learner or time refuses the choice itself.
+        const intent =
+          capture === undefined
+            ? null
+            : makePilotAnswer({
+                owner,
+                learnerId: capture.learnerId,
+                presentationId,
+                itemId: at.item.id,
+                optionId,
+                optionOrder: [...at.presentation.optionOrder],
+                day: today,
+                timestamp: capture.now(),
+              });
         const answered: PilotDoc = {
           ...doc,
           attempts: [...doc.attempts, attempt],
           presentations: doc.presentations.map((p) =>
             p.presentationId === presentationId ? { ...p, answered: today } : p,
           ),
+          ...(intent === null ? {} : { captures: [...(doc.captures ?? []), intent] }),
         };
         if (at.item.phase === 'practice') return { doc: answered, view: feedbackView(at.item, attempt) };
         // A later day or assistance after display keeps the raw choice; independence is derived from this context.
@@ -1106,7 +1207,12 @@ export function createPilotController(options: PilotControllerOptions) {
           return { doc: closed, view: progressView(closed, plan) };
         }
         return { doc: marked, view: deferredView(marked, plan, presentationId) };
-      });
+      }, captureReady);
+    },
+
+    /** 'off' without capture; else whether the last drain appended every saved intent ('pending' until one has). */
+    captureStatus(): PilotCaptureStatus {
+      return capture === undefined ? 'off' : captured;
     },
 
     dispose(): void {

@@ -29,6 +29,8 @@ import {
   type UserResponse,
 } from '@supabase/auth-js';
 import { isSafeGoogleConfig } from '@/account/googleConfig';
+import { LEARNING_BETA } from '@/account/learningBeta';
+import { isPrivateQaRecipient, PRIVATE_QA } from '@/account/privateQa';
 import { accountApiOrigin, STAGING } from '@/account/staging';
 import { isCanonicalUuid } from '@/account/ids';
 import { accountAuthOrigin, LOCAL_SUPABASE, type EnabledSupabaseConfig } from '@/account/supabaseConfig';
@@ -50,6 +52,7 @@ import {
 import {
   isSafeRecoveryConfig,
   readRecoveryCallback,
+  readWrappedRecoveryCallback,
   RECOVERY_ATTEMPT_TTL_MS,
   RECOVERY_CLOCK_SKEW_MS,
   RECOVERY_COOLDOWN_MS,
@@ -60,6 +63,7 @@ import {
   type RecoveryOptions,
   type RecoverySdkClient,
 } from '@/auth/recovery';
+import { asciiBytes, base64Url, hex, isRecoveryCrypto, secureBytes, sha256Bytes, type RecoveryCrypto } from '@/auth/recoveryCrypto';
 import {
   AuthError,
   type AccountAuth,
@@ -156,6 +160,18 @@ const isConventionalAddress = (email: unknown): email is string => {
   return match !== null && match[1].length <= 64;
 };
 
+/**
+ * Why the profile `profile` refuses `email` for a password sign-in, or null when it takes it: a production build takes a
+ * conventional address (its format only); a learning-beta build the same; a private QA build a conventional one that is
+ * exactly the approved recipient; local and staging builds synthetic .test ones only.
+ */
+function signInAddressRefusal(email: unknown, profile: RememberedRecord['profile']): AuthErrorCode | null {
+  if (profile === PRIVATE_QA) return !isConventionalAddress(email) ? 'invalid_email' : isPrivateQaRecipient(email) ? null : 'private_recipient';
+  if (profile === 'production') return isConventionalAddress(email) ? null : 'invalid_email';
+  if (profile === LEARNING_BETA) return isConventionalAddress(email) ? null : 'invalid_email';
+  return isSyntheticAddress(email) ? null : 'not_synthetic';
+}
+
 /** How far a Google attempt's record may claim to start in the future (a clock that moved) and still count. */
 const RECORD_CLOCK_SKEW_MS = 60_000;
 
@@ -173,7 +189,7 @@ interface RememberedRecord {
   installation: string;
   auth: string;
   api: string;
-  profile: 'local' | 'staging' | 'production';
+  profile: 'local' | 'staging' | 'production' | typeof PRIVATE_QA | typeof LEARNING_BETA;
   uid: string;
   email: string;
   accountId: string;
@@ -219,7 +235,8 @@ function recordText(record: RememberedRecord): string {
  * - it is at most 2048 UTF-8 bytes, checked before it is parsed;
  * - it has exactly its keys, at this version and kind;
  * - it is bound to `binding`;
- * - its IDs are canonical, and its address is conventional under the production profile (by its format only), synthetic otherwise;
+ * - its IDs are canonical, and its address is conventional under the production and learning-beta profiles (by its format
+ *   only), exactly the approved recipient under the private QA profile, synthetic otherwise;
  * - it was saved at most 30 days before `at`, and no later than a moved clock allows.
  */
 function rememberedRecord(text: string, binding: RecordBinding, at: number): RememberedRecord | null {
@@ -238,7 +255,7 @@ function rememberedRecord(text: string, binding: RecordBinding, at: number): Rem
   if (typeof binding.installation !== 'string' || binding.installation === '' || r.installation !== binding.installation) return null;
   if (r.auth !== binding.auth || r.api !== binding.api || r.profile !== binding.profile) return null;
   if (!isCanonicalUuid(r.uid) || !isCanonicalUuid(r.accountId)) return null;
-  if (binding.profile === 'production' ? !isConventionalAddress(r.email) : !isSyntheticAddress(r.email)) return null;
+  if (signInAddressRefusal(r.email, binding.profile) !== null) return null;
   if (typeof r.refreshToken !== 'string' || r.refreshToken === '' || typeof r.savedAt !== 'string') return null;
   const savedAt = Date.parse(r.savedAt);
   if (!Number.isFinite(savedAt) || new Date(savedAt).toISOString() !== r.savedAt) return null;
@@ -312,6 +329,8 @@ interface RecoveryRun {
   held: { sdk: RecoverySdkClient; identity: AuthIdentity; until: number } | null;
   /** A password update through it is on its way: no other may start meanwhile. */
   updating: boolean;
+  /** Private QA only: aborts its own request on its way (the recovery request or the link's verification), if any. */
+  abort: (() => void) | null;
 }
 
 /** The SDK's session reduced to the identity and the access token; null when anything needed is missing or malformed. */
@@ -518,17 +537,31 @@ export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
   // profile, the production profile without its exact capability, an API or Auth address that is not exactly that
   // profile's (local; under the staging profile a staging root origin; under the production profile a public root origin,
   // Auth's distinct from the API's; so Auth is always at its root), or a Google web callback of another profile builds no
-  // client and sends nothing. The origins and the profile validated here (which also chooses the email policy) are kept;
-  // the caller's configuration is never read again for them.
-  const config = options.config;
-  const apiOrigin =
-    config?.enabled === true && config.provider === LOCAL_SUPABASE ? accountApiOrigin(config.apiBaseUrl, config.environment, config.productionAccounts) : null;
-  const authUrl = apiOrigin !== null ? accountAuthOrigin(config.authUrl, config.environment, config.productionAccounts) : null;
-  if (!authUrl || !apiOrigin || (config.environment === 'production' && authUrl === apiOrigin)) {
+  // client and sends nothing. The private QA profile needs its exact capability, exactly its two fixed roots and an
+  // injected fetch (it never falls back to the global one), and takes no Google sign-in; it takes password recovery only
+  // with the native callback, its capability and a native crypto port. The learning-beta profile needs its exact capability
+  // (learningBeta: true, beside neither of the others) and two distinct public root origins, and takes neither Google
+  // sign-in nor password recovery. Each field of the configuration is read once, here;
+  // the origins and the profile validated here (which also chooses the email policy) are kept, and the caller's
+  // configuration is never read again.
+  const config = options?.config;
+  const supabase = config?.enabled === true && config.provider === LOCAL_SUPABASE;
+  const environment = supabase ? config.environment : undefined;
+  const productionAccounts = supabase ? config.productionAccounts : undefined;
+  const privateQa = supabase ? config.privateQa : undefined;
+  const learningBeta = supabase ? config.learningBeta : undefined;
+  const apiOrigin = supabase ? accountApiOrigin(config.apiBaseUrl, environment, productionAccounts, privateQa, learningBeta) : null;
+  const authUrl = supabase && apiOrigin !== null ? accountAuthOrigin(config.authUrl, environment, productionAccounts, privateQa, learningBeta) : null;
+  const twoRoots = environment === 'production' || environment === PRIVATE_QA || environment === LEARNING_BETA;
+  if (!authUrl || !apiOrigin || (twoRoots && authUrl === apiOrigin)) {
     throw new Error('createSupabaseAuth needs a local or staging Supabase Auth configuration; nothing was sent.');
   }
+  const injected = options.fetch;
+  if (environment === PRIVATE_QA && typeof injected !== 'function') {
+    throw new Error('createSupabaseAuth needs an injected fetch for the private QA profile; nothing was sent.');
+  }
   const googleOptions = options.google;
-  if (googleOptions !== undefined && (!isSafeGoogleConfig(googleOptions.config, config.environment) || !googleOptions.store)) {
+  if (googleOptions !== undefined && (environment === PRIVATE_QA || !isSafeGoogleConfig(googleOptions.config, environment) || !googleOptions.store)) {
     throw new Error('createSupabaseAuth needs a safe Google sign-in configuration; nothing was sent.');
   }
   const vault = options.remember?.vault ?? null;
@@ -539,13 +572,29 @@ export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
     throw new Error('createSupabaseAuth needs a session vault to remember a sign-in; nothing was sent.');
   }
   const recoveryOptions = options.recovery;
-  if (recoveryOptions !== undefined && (!isSafeRecoveryConfig(recoveryOptions.config, config.environment, config.productionAccounts) || !recoveryOptions.store)) {
+  const recoveryCrypto = recoveryOptions?.nativeCrypto;
+  if (
+    recoveryOptions !== undefined &&
+    (!isSafeRecoveryConfig(recoveryOptions.config, environment, productionAccounts, privateQa) ||
+      !recoveryOptions.store ||
+      (environment === PRIVATE_QA && !isRecoveryCrypto(recoveryCrypto)))
+  ) {
     throw new Error('createSupabaseAuth needs a safe password recovery configuration; nothing was sent.');
   }
+  /** The private QA profile's native crypto port, kept as given here; null in every other profile, which never uses it. */
+  const privateCrypto: RecoveryCrypto | null = environment === PRIVATE_QA && isRecoveryCrypto(recoveryCrypto) ? recoveryCrypto : null;
   /** The profile a remembered record is bound to: the configuration's own, never a guess from an address. */
-  const profile: RememberedRecord['profile'] = config.environment === 'production' ? 'production' : config.environment === STAGING ? 'staging' : 'local';
+  const profile: RememberedRecord['profile'] =
+    environment === 'production'
+      ? 'production'
+      : environment === PRIVATE_QA
+        ? PRIVATE_QA
+        : environment === LEARNING_BETA
+          ? LEARNING_BETA
+          : environment === STAGING
+            ? 'staging'
+            : 'local';
   const createClient = options.createClient ?? createAuthClient;
-  const injected = options.fetch;
   const now = options.now ?? Date.now;
 
   let session: Session | null = null;
@@ -716,6 +765,9 @@ export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
     if (!run) return null;
     run.dropped = code;
     run.held = null;
+    const abort = run.abort;
+    run.abort = null;
+    abort?.();
     const candidate = run.candidate;
     run.candidate = null;
     return candidate ? retire(candidate) : null;
@@ -965,11 +1017,13 @@ export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
 
     /**
      * A storage key no other client, realm or copied attempt shares, so neither does the SDK's lock or page channel named
-     * after it: this realm's count and a nonce from the runtime's secure entropy. Throws without that entropy; there is
-     * no weaker stand-in.
+     * after it: this realm's count and a nonce from the runtime's secure entropy (the native port's in the private QA
+     * profile). Throws without that entropy; there is no weaker stand-in.
      */
     const ownStorageKey = (prefix: string): string => {
-      const nonce = Array.from(globalThis.crypto.getRandomValues(new Uint8Array(16)), (byte) => byte.toString(16).padStart(2, '0')).join('');
+      const nonce = privateCrypto
+        ? hex(secureBytes(privateCrypto, 16))
+        : Array.from(globalThis.crypto.getRandomValues(new Uint8Array(16)), (byte) => byte.toString(16).padStart(2, '0')).join('');
       clientsBuilt += 1;
       return `${prefix}-${clientsBuilt}-${nonce}`;
     };
@@ -1007,8 +1061,221 @@ export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
       return { sdk, client: { sdk, seen, retired: null, google: { memory, storageKey, dispose: () => sdk.dispose() } } };
     };
 
+    const newRun = (): RecoveryRun => ({ dropped: null, candidate: null, held: null, updating: false, abort: null });
+
+    /** Native hashing cannot be aborted by Expo: fence this wait itself and ignore any late digest. */
+    const privateDigest = (run: RecoveryRun, port: RecoveryCrypto, data: Uint8Array): Promise<Uint8Array> =>
+      new Promise<Uint8Array>((resolve, reject) => {
+        let done = false;
+        const settle = (digest: Uint8Array | null) => {
+          if (done) return;
+          done = true;
+          clearTimeout(timer);
+          if (run.abort === stop) run.abort = null;
+          if (digest !== null) resolve(digest);
+          else reject(new AuthError('unavailable'));
+        };
+        const stop = () => settle(null);
+        const timer = setTimeout(stop, AUTH_REQUEST_TIMEOUT_MS);
+        if (run.dropped) return stop();
+        // Installed before invoking native crypto, including a port that never answers.
+        run.abort = stop;
+        sha256Bytes(port, data).then((digest) => settle(digest), stop);
+      });
+
+    /**
+     * Private QA only: one request of `run` to an address this adapter built under its Auth root, through the injected
+     * bound fetch, without credentials, cookies or redirects followed. It settles within AUTH_REQUEST_TIMEOUT_MS, or at
+     * once when the run is fenced, whether or not the fetch underneath honours its abort. Its reply body is never read.
+     */
+    const privateCall = (run: RecoveryRun, url: string, init: RequestInit): Promise<Response> => {
+      const base = injected as typeof fetch;
+      const controller = new AbortController();
+      return new Promise<Response>((resolve, reject) => {
+        let done = false;
+        const settle = (reply: Response | null) => {
+          if (done) return;
+          done = true;
+          clearTimeout(timer);
+          if (run.abort === stop) run.abort = null;
+          if (reply) resolve(reply);
+          else {
+            controller.abort();
+            reject(new Error('The private Auth server could not be reached.'));
+          }
+        };
+        const stop = () => settle(null);
+        const timer = setTimeout(stop, AUTH_REQUEST_TIMEOUT_MS);
+        if (run.dropped) return stop();
+        run.abort = stop;
+        let sent: Promise<Response>;
+        try {
+          sent = Promise.resolve(base(url, { ...init, credentials: 'omit', redirect: 'manual', signal: controller.signal }));
+        } catch {
+          sent = Promise.reject(new Error('No reply.'));
+        }
+        sent.then(
+          (reply) => {
+            if (done) return;
+            try {
+              // Nothing of the body is wanted: it is let go unread where the fetch underneath allows.
+              void (reply as { body?: { cancel?: () => Promise<void> } | null }).body?.cancel?.()?.catch?.(() => undefined);
+            } catch {
+              // Let go either way.
+            }
+            settle(typeof reply?.status === 'number' ? reply : null);
+          },
+          () => settle(null)
+        );
+      });
+    };
+
+    /**
+     * Private QA only: a request through the native port and the bound fetch, never the SDK's own (WebCrypto) PKCE. The
+     * address is exactly the approved recipient, or private_recipient before anything else. Within the cooldown the same
+     * result, nothing sent. Otherwise the older attempt goes first, this run is established, a fresh flow ID and verifier
+     * come from the port's entropy and the verifier (as is, never suffixed) is hashed; a cancel, sign-out or newer intent
+     * meanwhile settles it before anything is sent or saved. One POST to /recover with the exact callback carries the
+     * address and the S256 challenge; on a 2xx only the seven-key attempt is saved.
+     */
+    const requestPrivate = async (port: RecoveryCrypto, email: string): Promise<{ requested: true }> => {
+      const refused = signInAddressRefusal(email, profile);
+      if (refused !== null) throw new AuthError(refused);
+      const at = now();
+      if (lastSent !== null && Math.abs(at - lastSent) < RECOVERY_COOLDOWN_MS) return { requested: true };
+      try {
+        recovery.store.clear();
+      } catch {
+        throw new AuthError('unavailable');
+      }
+      void fenceRecovery('superseded');
+      const run = newRun();
+      recovering = run;
+      const leave = () => {
+        if (recovering === run) recovering = null;
+      };
+      let record: RecoveryAttemptRecord | null = null;
+      let challenge: string | null = null;
+      try {
+        const flowId = hex(secureBytes(port, 16));
+        const verifier = hex(secureBytes(port, 32));
+        record = recoveryAttemptRecord({ v: 1, flowId, verifier, callbackUrl, createdAt: at, auth: authUrl, profile });
+        if (record) challenge = base64Url(await privateDigest(run, port, asciiBytes(record.verifier)));
+      } catch {
+        challenge = null;
+      }
+      if (run.dropped) throw new AuthError(run.dropped);
+      if (!record || !challenge) {
+        leave();
+        throw new AuthError('unavailable');
+      }
+      // Native hashing may have waited: bind the lifetime and cooldown to actual egress.
+      const sentAt = now();
+      record = { ...record, createdAt: sentAt };
+      lastSent = sentAt;
+      let reply: Response | null = null;
+      try {
+        reply = await privateCall(run, `${authUrl}/recover?redirect_to=${encodeURIComponent(callbackUrl)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+          body: JSON.stringify({ email, code_challenge: challenge, code_challenge_method: 's256' }),
+        });
+      } catch {
+        reply = null;
+      }
+      leave();
+      if (run.dropped) throw new AuthError(run.dropped);
+      if (!reply) throw new AuthError('network');
+      if (reply.status < 200 || reply.status >= 300) throw new AuthError('provider_refused');
+      try {
+        recovery.store.save(record);
+      } catch {
+        throw new AuthError('unavailable');
+      }
+      return { requested: true };
+    };
+
+    /**
+     * Exchanges `code` once for `run`, on a new client given nothing but `record`'s verifier in the slot the SDK keeps for a
+     * recovery flow. The recovery session it gets is held, never adopted; in the private QA profile only when it is the
+     * approved recipient's.
+     */
+    const exchangeOnce = async (run: RecoveryRun, record: RecoveryAttemptRecord, code: string, storageKey: string): Promise<{ ready: true }> => {
+      // Given nothing but this attempt's verifier, in the slot and form the SDK keeps for a recovery flow.
+      const memory = new Map<string, string>([[`${storageKey}-flow-${record.flowId}-code-verifier`, JSON.stringify(`${record.verifier}/recovery`)]]);
+      let built: { sdk: RecoverySdkClient; client: Client };
+      try {
+        built = buildRecovery(storageKey, memory);
+      } catch {
+        if (recovering === run) recovering = null;
+        throw new AuthError('unavailable');
+      }
+      let reply: AuthTokenResponse | null = null;
+      try {
+        reply = await built.sdk.exchangeCodeForSession(code, { flowId: record.flowId });
+      } catch {
+        // An SDK that throws instead of answering gave no usable reply.
+      }
+      const signedIn = reply && !reply.error ? signedInAs(reply.data.session) : null;
+      const held = signedIn && (!privateCrypto || isPrivateQaRecipient(signedIn.identity.email)) ? signedIn : null;
+      if (run.dropped || !held) {
+        if (recovering === run) recovering = null;
+        // Too late, refused or not the approved owner's: nothing is kept, and a recovery session the Auth server made
+        // meanwhile is revoked, through this client's own local sign-out, before this settles.
+        await retire(built.client);
+        if (run.dropped) throw new AuthError(run.dropped);
+        throw new AuthError(reply?.error ? exchangeRefusal(reply.error) : 'bad_response');
+      }
+      run.candidate = built.client;
+      // Usable no longer than its link's lifetime, and never past the recovery session's own expiry.
+      const until = Math.min(record.createdAt + RECOVERY_ATTEMPT_TTL_MS, held.identity.expiresAt ?? Number.POSITIVE_INFINITY);
+      if (privateCrypto && now() >= until) {
+        if (recovering === run) recovering = null;
+        run.candidate = null;
+        await retire(built.client);
+        throw new AuthError('expired');
+      }
+      run.held = { sdk: built.sdk, identity: held.identity, until };
+      return { ready: true };
+    };
+
+    /**
+     * Private QA only: a wrapped link's verification, `verifyUrl` as readWrappedRecoveryCallback rebuilt it. The pending
+     * attempt is taken (single use) before anything is sent; then one GET, bounded and without credentials, must answer
+     * exactly 303 with a Location that is exactly the callback with one canonical code (an error redirect is no success),
+     * which is exchanged once. A cancel, sign-out or newer intent meanwhile fences the late reply and the exchange.
+     */
+    const resumeWrapped = async (verifyUrl: string): Promise<{ ready: true }> => {
+      const record = takeRecord();
+      if (!record) throw new AuthError('bad_callback');
+      let storageKey: string;
+      try {
+        storageKey = ownStorageKey('ayailmu-recovery');
+      } catch {
+        throw new AuthError('unavailable');
+      }
+      void fenceRecovery('superseded');
+      const run = newRun();
+      recovering = run;
+      let reply: Response | null = null;
+      try {
+        reply = await privateCall(run, verifyUrl, { method: 'GET' });
+      } catch {
+        reply = null;
+      }
+      if (run.dropped) throw new AuthError(run.dropped);
+      const location = reply?.status === 303 && typeof reply.headers?.get === 'function' ? reply.headers.get('location') : null;
+      const code = readRecoveryCallback(location, callbackUrl);
+      if (code === null) {
+        if (recovering === run) recovering = null;
+        throw new AuthError(reply ? 'bad_callback' : 'network');
+      }
+      return exchangeOnce(run, record, code, storageKey);
+    };
+
     return {
       async request(email) {
+        if (privateCrypto) return requestPrivate(privateCrypto, email);
         // As for sign-in, the profile validated when this adapter was built chooses: a production build takes a
         // conventional address (its format only); local and staging builds, synthetic .test ones only.
         if (profile === 'production' && !isConventionalAddress(email)) throw new AuthError('invalid_email');
@@ -1034,7 +1301,7 @@ export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
         }
         // A newer recovery replaces one under way, whose recovery session, if any, is retired.
         void fenceRecovery('superseded');
-        const run: RecoveryRun = { dropped: null, candidate: null, held: null, updating: false };
+        const run = newRun();
         recovering = run;
         const memory = new Map<string, string>();
         let built: { sdk: RecoverySdkClient; client: Client };
@@ -1070,6 +1337,9 @@ export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
       },
 
       async resume(url) {
+        // The private QA profile also takes its wrapped link; anything else goes on to the exact code callback's check.
+        const verifyUrl = privateCrypto ? readWrappedRecoveryCallback(url, callbackUrl, authUrl) : null;
+        if (verifyUrl !== null) return resumeWrapped(verifyUrl);
         const code = readRecoveryCallback(url, callbackUrl);
         if (code === null) throw new AuthError('bad_callback');
         const record = takeRecord();
@@ -1082,37 +1352,9 @@ export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
         }
         // A newer recovery replaces one under way, whose recovery session, if any, is retired.
         void fenceRecovery('superseded');
-        const run: RecoveryRun = { dropped: null, candidate: null, held: null, updating: false };
+        const run = newRun();
         recovering = run;
-        // Given nothing but this attempt's verifier, in the slot and form the SDK keeps for a recovery flow.
-        const memory = new Map<string, string>([[`${storageKey}-flow-${record.flowId}-code-verifier`, JSON.stringify(`${record.verifier}/recovery`)]]);
-        let built: { sdk: RecoverySdkClient; client: Client };
-        try {
-          built = buildRecovery(storageKey, memory);
-        } catch {
-          if (recovering === run) recovering = null;
-          throw new AuthError('unavailable');
-        }
-        let reply: AuthTokenResponse | null = null;
-        try {
-          reply = await built.sdk.exchangeCodeForSession(code, { flowId: record.flowId });
-        } catch {
-          // An SDK that throws instead of answering gave no usable reply.
-        }
-        const held = reply && !reply.error ? signedInAs(reply.data.session) : null;
-        if (run.dropped || !held) {
-          if (recovering === run) recovering = null;
-          // Too late, or refused: nothing is kept, and a recovery session the Auth server made meanwhile is revoked,
-          // through this client's own local sign-out, before this settles.
-          await retire(built.client);
-          if (run.dropped) throw new AuthError(run.dropped);
-          throw new AuthError(reply?.error ? exchangeRefusal(reply.error) : 'bad_response');
-        }
-        run.candidate = built.client;
-        // Usable no longer than its link's lifetime, and never past the recovery session's own expiry.
-        const until = Math.min(record.createdAt + RECOVERY_ATTEMPT_TTL_MS, held.identity.expiresAt ?? Number.POSITIVE_INFINITY);
-        run.held = { sdk: built.sdk, identity: held.identity, until };
-        return { ready: true };
+        return exchangeOnce(run, record, code, storageKey);
       },
 
       async update(password) {
@@ -1186,9 +1428,11 @@ export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
      */
     async signIn(email, password) {
       // The profile validated when this adapter was built, never the caller's configuration as it is now, chooses: a
-      // production build takes a conventional address (its format only); local and staging builds, synthetic .test ones only.
-      if (profile === 'production' && !isConventionalAddress(email)) throw new AuthError('invalid_email');
-      if (profile !== 'production' && !isSyntheticAddress(email)) throw new AuthError('not_synthetic');
+      // production build takes a conventional address (its format only); a private QA build exactly its approved recipient
+      // (any other well-formed one is private_recipient); local and staging builds, synthetic .test ones only. A refused
+      // address builds no client and sends nothing.
+      const refused = signInAddressRefusal(email, profile);
+      if (refused !== null) throw new AuthError(refused);
       // A newer sign-in: any remembered session goes first, at once. One whose record cannot be cleared refuses this
       // sign-in before anything is dropped, built or sent. This one is remembered only if the learner chooses so again.
       if (!forgetBeforeSignIn()) throw new AuthError('not_forgotten');
@@ -1205,7 +1449,15 @@ export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
       }
       if (pending === attempt) pending = null;
       const signedIn = reply && !reply.error ? signedInAs(reply.data.session) : null;
-      if (attempt.dropped || !client || !signedIn || signedIn.identity.email.toLowerCase() !== email.toLowerCase()) {
+      // The reply must be for the address asked for: case-insensitively, except that a private QA build takes exactly its
+      // approved recipient as written (a case variant is not that recipient, and is retired before it is adopted).
+      if (
+        attempt.dropped ||
+        !client ||
+        !signedIn ||
+        signedIn.identity.email.toLowerCase() !== email.toLowerCase() ||
+        (profile === PRIVATE_QA && !isPrivateQaRecipient(signedIn.identity.email))
+      ) {
         if (client) retire(client);
         if (attempt.dropped) throw new AuthError(attempt.dropped);
         throw new AuthError(reply?.error ? signInRefusal(reply.error) : 'bad_response');

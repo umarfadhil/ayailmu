@@ -10,22 +10,54 @@
 //   one, and the flag changes nothing in a local or staging build). Its API and Auth server are two distinct strict
 //   canonical HTTPS root origins of public DNS names, and the configuration says environment: 'production' with
 //   productionAccounts: true.
+// - A private native QA build needs EXPO_PUBLIC_ACCOUNT_ENV exactly "private-qa", EXPO_PUBLIC_PRIVATE_QA exactly "on" and
+//   the production flag off (unset, empty or exactly "off"). Its API and Auth server are then exactly the two fixed HTTPS
+//   loopback roots below, taken as written, and the configuration says environment: 'private-qa' with privateQa: true and
+//   never productionAccounts. The private flag changes nothing in a local, staging or production build.
+// - A learning-beta build needs EXPO_PUBLIC_ACCOUNT_ENV exactly "learning-beta", EXPO_PUBLIC_LEARNING_BETA exactly "on",
+//   EXPO_PUBLIC_APP_MODE exactly "tester", and the production, private QA, private beta, registration, Google and
+//   recovery flags each exactly "off" (unset is refused). Its API and Auth server are then two distinct strict canonical
+//   HTTPS root origins of public DNS names, and the configuration says environment: 'learning-beta' with learningBeta: true
+//   and never productionAccounts or privateQa. The learning-beta flags change nothing in another profile's build.
 // Anything absent or unsafe, any other profile and the legacy Firebase emulator variables on their own included, turns
 // account sync off before any client is built; guest learning never depends on it.
 import type { DisabledAccountConfig } from '@/account/config';
+import { LEARNING_BETA } from '@/account/learningBeta';
 import { localPilotOrigin, PILOT_API_PORT } from '@/account/loopback';
+import { PRIVATE_QA, PRIVATE_QA_API_ORIGIN, PRIVATE_QA_AUTH_ORIGIN, privateQaOrigin } from '@/account/privateQa';
 import { isUnknownAccountEnv, STAGING, STAGING_ORIGIN_RULE, stagingOrigin } from '@/account/staging';
 
 /** The one provider this configuration turns on: a retained legacy name for a standalone GoTrue at its root, in every profile. */
 export const LOCAL_SUPABASE = 'local-supabase';
 
+// The private QA profile and its two fixed roots live in account/privateQa.ts; re-exported here for this module's callers.
+export { PRIVATE_QA, PRIVATE_QA_API_ORIGIN, PRIVATE_QA_AUTH_ORIGIN };
+
 /** The build-time variables read. Expo inlines EXPO_PUBLIC_* values when it bundles the app. */
 export interface SupabaseEnv {
   EXPO_PUBLIC_AUTH_PROVIDER?: string;
-  /** Exactly "staging" for a staging build, or exactly "production" (with the production flag) for a production one; unset or empty for the local default. */
+  /**
+   * Exactly "staging" for a staging build, exactly "production" (with the production flag) for a production one, or
+   * exactly "private-qa" (with the private QA flag) for a private QA one, or exactly "learning-beta" (with the learning-beta
+   * flag and the settings below) for a learning-beta one; unset or empty for the local default.
+   */
   EXPO_PUBLIC_ACCOUNT_ENV?: string;
   /** The production flag: exactly "on", beside EXPO_PUBLIC_ACCOUNT_ENV=production, for a production build; no effect for another profile. */
   EXPO_PUBLIC_PRODUCTION_ACCOUNTS?: string;
+  /** The private QA flag: exactly "on", beside EXPO_PUBLIC_ACCOUNT_ENV=private-qa, for a private QA build; no effect for another profile. */
+  EXPO_PUBLIC_PRIVATE_QA?: string;
+  /** The learning-beta flag: exactly "on", beside EXPO_PUBLIC_ACCOUNT_ENV=learning-beta, for a learning-beta build; no effect for another profile. */
+  EXPO_PUBLIC_LEARNING_BETA?: string;
+  /** The app mode: exactly "tester" in a learning-beta build; read by no other profile here. */
+  EXPO_PUBLIC_APP_MODE?: string;
+  /** The private beta flag: exactly "off" in a learning-beta build; read by no other profile here. */
+  EXPO_PUBLIC_PRIVATE_BETA?: string;
+  /** The registration flag: exactly "off" in a learning-beta build; read by no other profile here. */
+  EXPO_PUBLIC_ACCOUNT_REGISTRATION?: string;
+  /** The Google sign-in flag: exactly "off" in a learning-beta build; read by no other profile here. */
+  EXPO_PUBLIC_GOOGLE_SIGN_IN?: string;
+  /** The password recovery flag: exactly "off" in a learning-beta build; read by no other profile here. */
+  EXPO_PUBLIC_PASSWORD_RECOVERY?: string;
   EXPO_PUBLIC_API_BASE_URL?: string;
   EXPO_PUBLIC_SUPABASE_AUTH_URL?: string;
 }
@@ -33,10 +65,18 @@ export interface SupabaseEnv {
 export interface EnabledSupabaseConfig {
   enabled: true;
   provider: typeof LOCAL_SUPABASE;
-  /** 'staging' in a staging build and 'production' in a production one, whose two origins are then public root origins; absent for the local default. */
-  environment?: typeof STAGING | 'production';
+  /**
+   * 'staging' in a staging build and 'production' in a production one, whose two origins are then public root origins;
+   * 'private-qa' in a private QA build, whose two origins are then the fixed HTTPS loopback roots; 'learning-beta' in a
+   * learning-beta build, whose two origins are then public root origins; absent for the local default.
+   */
+  environment?: typeof STAGING | 'production' | typeof PRIVATE_QA | typeof LEARNING_BETA;
   /** Only in a production build, and then exactly true: the explicit capability the API client and the Auth adapter require beside 'production'. */
   productionAccounts?: true;
+  /** Only in a private QA build, and then exactly true: the explicit capability beside 'private-qa' (never with productionAccounts). */
+  privateQa?: true;
+  /** Only in a learning-beta build, and then exactly true: the explicit capability beside 'learning-beta' (never with productionAccounts or privateQa). */
+  learningBeta?: true;
   /** Normalized origin of the account API, e.g. http://127.0.0.1:8092 (or a staging or production root origin), with no trailing slash. */
   apiBaseUrl: string;
   /** Normalized origin of the Auth server, whose endpoints are at its root, e.g. http://127.0.0.1:54321 (or a staging or production root origin). */
@@ -61,9 +101,18 @@ export function localAuthOrigin(value: unknown): string | null {
 /**
  * The Auth server's root when `value` is exactly one for the profile `environment`, as accountApiOrigin is for the API:
  * without one, a local Auth root (normalized); with exactly "staging", a staging root origin; with exactly "production"
- * and the explicit capability `productionAccounts` exactly true, a public root origin as in staging. Otherwise null.
+ * and the explicit capability `productionAccounts` exactly true, a public root origin as in staging; with exactly
+ * "private-qa" and the fourth argument, the private capability `privateQa`, exactly true (never with productionAccounts),
+ * exactly the private QA Auth root. That capability beside any other profile allows nothing. With exactly "learning-beta"
+ * and the fifth argument, the learning-beta capability `learningBeta`, exactly true (never with productionAccounts or
+ * privateQa), a public root origin as in staging; that capability beside any other profile allows nothing, and the
+ * four-argument answer of every profile is unchanged. Otherwise null.
  */
-export function accountAuthOrigin(value: unknown, environment: unknown, productionAccounts?: unknown): string | null {
+export function accountAuthOrigin(value: unknown, environment: unknown, productionAccounts?: unknown, privateQa?: unknown, learningBeta?: unknown): string | null {
+  if (learningBeta !== undefined && environment !== LEARNING_BETA) return null;
+  if (environment === LEARNING_BETA) return learningBeta === true && productionAccounts === undefined && privateQa === undefined ? stagingOrigin(value) : null;
+  if (environment === PRIVATE_QA) return privateQaOrigin(value, PRIVATE_QA_AUTH_ORIGIN, productionAccounts, privateQa);
+  if (privateQa !== undefined) return null;
   if (environment === undefined) return localAuthOrigin(value);
   if (environment === 'production') return productionAccounts === true ? stagingOrigin(value) : null;
   return environment === STAGING ? stagingOrigin(value) : null;
@@ -100,10 +149,75 @@ function loadProductionConfig(env: SupabaseEnv): SupabaseConfig {
 }
 
 /**
+ * A private QA build's configuration: the private QA flag exactly on, the production flag off (unset, empty or exactly
+ * "off"), then the API and the Auth server, each exactly its fixed HTTPS loopback root as written (so never a public
+ * origin, another port, host spelling, path or trailing slash).
+ */
+function loadPrivateQaConfig(env: SupabaseEnv): SupabaseConfig {
+  if (env.EXPO_PUBLIC_PRIVATE_QA !== 'on') return off('EXPO_PUBLIC_PRIVATE_QA', env.EXPO_PUBLIC_PRIVATE_QA, 'exactly "on" in a private QA build');
+  const productionFlag = env.EXPO_PUBLIC_PRODUCTION_ACCOUNTS;
+  if (productionFlag !== undefined && productionFlag !== '' && productionFlag !== 'off') {
+    return off('EXPO_PUBLIC_PRODUCTION_ACCOUNTS', productionFlag, 'unset or exactly "off" in a private QA build');
+  }
+  if (env.EXPO_PUBLIC_API_BASE_URL !== PRIVATE_QA_API_ORIGIN) {
+    return off('EXPO_PUBLIC_API_BASE_URL', env.EXPO_PUBLIC_API_BASE_URL, `the private QA account API (exactly ${PRIVATE_QA_API_ORIGIN})`);
+  }
+  if (env.EXPO_PUBLIC_SUPABASE_AUTH_URL !== PRIVATE_QA_AUTH_ORIGIN) {
+    return off('EXPO_PUBLIC_SUPABASE_AUTH_URL', env.EXPO_PUBLIC_SUPABASE_AUTH_URL, `the private QA Auth server's root (exactly ${PRIVATE_QA_AUTH_ORIGIN})`);
+  }
+  return {
+    enabled: true,
+    provider: LOCAL_SUPABASE,
+    environment: PRIVATE_QA,
+    privateQa: true,
+    apiBaseUrl: PRIVATE_QA_API_ORIGIN,
+    authUrl: PRIVATE_QA_AUTH_ORIGIN,
+  };
+}
+
+/** The settings a learning-beta build requires exactly "off" (unset is refused), in the order the first problem is named. */
+const LEARNING_BETA_OFF_SETTINGS: readonly (keyof SupabaseEnv)[] = [
+  'EXPO_PUBLIC_PRODUCTION_ACCOUNTS',
+  'EXPO_PUBLIC_PRIVATE_QA',
+  'EXPO_PUBLIC_PRIVATE_BETA',
+  'EXPO_PUBLIC_ACCOUNT_REGISTRATION',
+  'EXPO_PUBLIC_GOOGLE_SIGN_IN',
+  'EXPO_PUBLIC_PASSWORD_RECOVERY',
+];
+
+/**
+ * A learning-beta build's configuration: the learning-beta flag exactly on, the app mode exactly tester, every other
+ * capability and account feature flag exactly off, then the API and the Auth server on another origin, each a public root
+ * origin (so never a local address or a private QA root).
+ */
+function loadLearningBetaConfig(env: SupabaseEnv): SupabaseConfig {
+  if (env.EXPO_PUBLIC_LEARNING_BETA !== 'on') return off('EXPO_PUBLIC_LEARNING_BETA', env.EXPO_PUBLIC_LEARNING_BETA, 'exactly "on" in a learning-beta build');
+  if (env.EXPO_PUBLIC_APP_MODE !== 'tester') return off('EXPO_PUBLIC_APP_MODE', env.EXPO_PUBLIC_APP_MODE, 'exactly "tester" in a learning-beta build');
+  for (const setting of LEARNING_BETA_OFF_SETTINGS) {
+    if (env[setting] !== 'off') return off(setting, env[setting], 'exactly "off" in a learning-beta build');
+  }
+  const apiBaseUrl = stagingOrigin(env.EXPO_PUBLIC_API_BASE_URL);
+  if (!apiBaseUrl) return off('EXPO_PUBLIC_API_BASE_URL', env.EXPO_PUBLIC_API_BASE_URL, `the learning-beta account API (${STAGING_ORIGIN_RULE})`);
+  const authUrl = stagingOrigin(env.EXPO_PUBLIC_SUPABASE_AUTH_URL);
+  if (!authUrl || authUrl === apiBaseUrl) {
+    return off(
+      'EXPO_PUBLIC_SUPABASE_AUTH_URL',
+      env.EXPO_PUBLIC_SUPABASE_AUTH_URL,
+      `the learning-beta Auth server's root (${STAGING_ORIGIN_RULE}, not the account API's origin)`
+    );
+  }
+  return { enabled: true, provider: LOCAL_SUPABASE, environment: LEARNING_BETA, learningBeta: true, apiBaseUrl, authUrl };
+}
+
+/**
  * Reads the account configuration, in this order so that the first problem is the one named: the provider (exactly
  * local-supabase); then a production build, only with the profile exactly production and the production flag exactly
- * on, whose API and Auth server are two distinct strict public HTTPS root origins; then the profile (unset or empty for
- * the local default, or exactly staging; any other value is refused, the production profile without its flag included);
+ * on, whose API and Auth server are two distinct strict public HTTPS root origins; then a private QA build, only with the
+ * profile exactly private-qa, the private QA flag exactly on and the production flag off, whose API and Auth server are
+ * exactly the two fixed HTTPS loopback roots; then a learning-beta build, only with the profile exactly learning-beta,
+ * the learning-beta flag exactly on, the app mode exactly tester and every other flag exactly off, whose API and Auth
+ * server are two distinct strict public HTTPS root origins; then the profile (unset or empty for the local default, or
+ * exactly staging; any other value is refused, the production profile without its flag included);
  * then the API (http on 127.0.0.1 or localhost, port 8092) and the Auth server (http on 127.0.0.1 or localhost, a port
  * from 1 to 65535), where nothing may follow a port but one root slash. In a staging build the API and the Auth server
  * are staging root origins instead. Anything else turns account sync off instead of throwing, with a reason that names
@@ -114,12 +228,21 @@ export function loadSupabaseConfig(
     EXPO_PUBLIC_AUTH_PROVIDER: process.env.EXPO_PUBLIC_AUTH_PROVIDER,
     EXPO_PUBLIC_ACCOUNT_ENV: process.env.EXPO_PUBLIC_ACCOUNT_ENV,
     EXPO_PUBLIC_PRODUCTION_ACCOUNTS: process.env.EXPO_PUBLIC_PRODUCTION_ACCOUNTS,
+    EXPO_PUBLIC_PRIVATE_QA: process.env.EXPO_PUBLIC_PRIVATE_QA,
+    EXPO_PUBLIC_LEARNING_BETA: process.env.EXPO_PUBLIC_LEARNING_BETA,
+    EXPO_PUBLIC_APP_MODE: process.env.EXPO_PUBLIC_APP_MODE,
+    EXPO_PUBLIC_PRIVATE_BETA: process.env.EXPO_PUBLIC_PRIVATE_BETA,
+    EXPO_PUBLIC_ACCOUNT_REGISTRATION: process.env.EXPO_PUBLIC_ACCOUNT_REGISTRATION,
+    EXPO_PUBLIC_GOOGLE_SIGN_IN: process.env.EXPO_PUBLIC_GOOGLE_SIGN_IN,
+    EXPO_PUBLIC_PASSWORD_RECOVERY: process.env.EXPO_PUBLIC_PASSWORD_RECOVERY,
     EXPO_PUBLIC_API_BASE_URL: process.env.EXPO_PUBLIC_API_BASE_URL,
     EXPO_PUBLIC_SUPABASE_AUTH_URL: process.env.EXPO_PUBLIC_SUPABASE_AUTH_URL,
   }
 ): SupabaseConfig {
   if (env.EXPO_PUBLIC_AUTH_PROVIDER !== LOCAL_SUPABASE) return off('EXPO_PUBLIC_AUTH_PROVIDER', env.EXPO_PUBLIC_AUTH_PROVIDER, LOCAL_SUPABASE);
   if (env.EXPO_PUBLIC_ACCOUNT_ENV === 'production' && env.EXPO_PUBLIC_PRODUCTION_ACCOUNTS === 'on') return loadProductionConfig(env);
+  if (env.EXPO_PUBLIC_ACCOUNT_ENV === PRIVATE_QA) return loadPrivateQaConfig(env);
+  if (env.EXPO_PUBLIC_ACCOUNT_ENV === LEARNING_BETA) return loadLearningBetaConfig(env);
   if (isUnknownAccountEnv(env.EXPO_PUBLIC_ACCOUNT_ENV)) {
     return off('EXPO_PUBLIC_ACCOUNT_ENV', env.EXPO_PUBLIC_ACCOUNT_ENV, `exactly "${STAGING}" (or unset for the local build)`);
   }

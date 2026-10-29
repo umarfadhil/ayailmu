@@ -1,11 +1,19 @@
 // The registration flow as a small state machine over the registration adapter (auth/registration.ts), for a later hook
 // and AccountPanel. It only orchestrates: email stage (register), code stage (confirm, resend) and confirmed, after which
 // the learner signs in with the password elsewhere; no session, account or sign-in is ever taken here. Its state holds
-// the saved synthetic address and a stable Indonesian message only, never a password, code, token or user id, and
+// the saved address (as its email policy takes it) and a stable Indonesian message only, never a password, code, token or user id, and
 // nothing is stored or logged. One request at a time: an action in another stage, while busy, while inactive or after
 // dispose sends nothing. A newer start, cancel, an inactive owner or dispose drops the reply under way.
-import { LOCAL_SUPABASE, type EnabledSupabaseConfig, type SupabaseConfig } from '@/account/supabaseConfig';
-import { RegistrationError, type Registration, type RegistrationErrorCode } from '@/auth/registration';
+import { PRIVATE_QA, PRIVATE_QA_REGISTRATION_POLICY } from '@/account/privateQa';
+import { accountApiOrigin } from '@/account/staging';
+import { accountAuthOrigin, LOCAL_SUPABASE, type EnabledSupabaseConfig, type SupabaseConfig } from '@/account/supabaseConfig';
+import {
+  RegistrationError,
+  registrationEmailRefusal,
+  type Registration,
+  type RegistrationEmailPolicy,
+  type RegistrationErrorCode,
+} from '@/auth/registration';
 
 export type RegistrationStage = 'idle' | 'email' | 'code' | 'confirmed';
 
@@ -23,6 +31,8 @@ export interface RegistrationControllerOptions {
   /** False once the owner is gone (account changed, route blurred, app backgrounded): every action and reply is dropped. */
   active: () => boolean;
   onChange?: (state: RegistrationState) => void;
+  /** Which addresses the flow takes, read once at creation; 'synthetic' by default. Anything else sends nothing. */
+  emailPolicy?: RegistrationEmailPolicy;
 }
 
 export interface RegistrationController {
@@ -37,26 +47,63 @@ export interface RegistrationController {
   dispose(): void;
 }
 
+/** A validated origin, or null when the helper refuses it in any way. */
+const originOf = (check: () => unknown): string | null => {
+  try {
+    const origin = check();
+    return typeof origin === 'string' && origin.startsWith('https://') ? origin : null;
+  } catch {
+    return null;
+  }
+};
+
 /**
- * Whether the registration UI may be offered: the flag exactly "on", with an enabled local-supabase configuration in a
- * local build (no environment) or exactly staging. Never production, the production capability, or anything unknown.
+ * Which registration the UI may offer, or null for none. The flag exactly "on": the synthetic policy, with an enabled
+ * local-supabase configuration in a local build (no environment) or exactly staging, never the production capability.
+ * The flag exactly "confirmed-email": the confirmed-email policy, only with an enabled local-supabase configuration in a
+ * production build with productionAccounts, whose API and Auth roots are validated, distinct public HTTPS origins.
+ * The flag exactly "private-qa-confirmed-email": the private QA policy, only with an enabled local-supabase configuration
+ * of the private-qa profile with its capability (privateQa exactly true, never productionAccounts), whose API and Auth
+ * roots are exactly the fixed private ones, as the origin helpers validate them with that capability. The private
+ * capability never widens another flag or profile.
  */
-export function registrationAllowed(config: SupabaseConfig, flag: string | undefined = process.env.EXPO_PUBLIC_ACCOUNT_REGISTRATION): boolean {
-  if (flag !== 'on' || typeof config !== 'object' || config === null) return false;
-  const { enabled, provider, environment, productionAccounts } = config as Partial<EnabledSupabaseConfig>;
-  return enabled === true && provider === LOCAL_SUPABASE && productionAccounts === undefined && (environment === undefined || environment === 'staging');
+export function registrationPolicy(
+  config: SupabaseConfig,
+  flag: string | undefined = process.env.EXPO_PUBLIC_ACCOUNT_REGISTRATION
+): RegistrationEmailPolicy | null {
+  if ((flag !== 'on' && flag !== 'confirmed-email' && flag !== PRIVATE_QA_REGISTRATION_POLICY) || typeof config !== 'object' || config === null) return null;
+  const { enabled, provider, environment, productionAccounts, privateQa, apiBaseUrl, authUrl } = config as Partial<EnabledSupabaseConfig>;
+  if (enabled !== true || provider !== LOCAL_SUPABASE) return null;
+  if (flag === PRIVATE_QA_REGISTRATION_POLICY) {
+    if (environment !== PRIVATE_QA || privateQa !== true || productionAccounts !== undefined) return null;
+    const api = originOf(() => accountApiOrigin(apiBaseUrl, PRIVATE_QA, undefined, true));
+    const auth = originOf(() => accountAuthOrigin(authUrl, PRIVATE_QA, undefined, true));
+    return api !== null && auth !== null && api !== auth ? PRIVATE_QA_REGISTRATION_POLICY : null;
+  }
+  if (privateQa !== undefined) return null;
+  if (flag === 'on') return productionAccounts === undefined && (environment === undefined || environment === 'staging') ? 'synthetic' : null;
+  if (environment !== 'production' || productionAccounts !== true) return null;
+  const api = originOf(() => accountApiOrigin(apiBaseUrl as string, 'production', true));
+  const auth = originOf(() => accountAuthOrigin(authUrl as string, 'production', true));
+  return api !== null && auth !== null && api !== auth ? 'confirmed-email' : null;
 }
 
-/** The adapter's rule: a .test domain, matched whole and untrimmed, checked here so nothing reaches the adapter otherwise. */
-const SYNTHETIC_ADDRESS = /^[a-z0-9._%+-]+@(?:[a-z0-9-]+\.)+test$/i;
-const isSyntheticAddress = (email: unknown): email is string => typeof email === 'string' && email.length <= 254 && SYNTHETIC_ADDRESS.test(email);
+/** Whether the registration UI may be offered: whenever registrationPolicy names a policy. */
+export function registrationAllowed(config: SupabaseConfig, flag: string | undefined = process.env.EXPO_PUBLIC_ACCOUNT_REGISTRATION): boolean {
+  return registrationPolicy(config, flag) !== null;
+}
 
 const CODE_NOTICE = 'Masukkan kode dari kotak masuk uji.';
 const CONFIRMED_NOTICE = 'Email terkonfirmasi. Masuk dengan kata sandi Anda.';
 const RESENT_NOTICE = 'Permintaan kode baru diterima. Periksa kotak masuk uji.';
+/** The confirmed-email and private QA policies' notices: a request accepted, never a claim that an email was delivered. */
+const EMAIL_CODE_NOTICE = 'Periksa email Anda, lalu masukkan kode konfirmasi.';
+const EMAIL_RESENT_NOTICE = 'Permintaan kode baru diterima. Periksa email Anda.';
 
 const MESSAGES: Record<RegistrationErrorCode, string> = {
   not_synthetic: 'Gunakan alamat email uji yang berakhiran .test.',
+  invalid_email: 'Isi alamat email yang valid.',
+  private_recipient: 'Build uji ini hanya menerima alamat email yang sudah disetujui.',
   invalid_code: 'Kode tidak cocok atau sudah kedaluwarsa. Coba lagi.',
   weak_password: 'Kata sandi terlalu lemah. Gunakan kata sandi yang lebih panjang.',
   rate_limited: 'Terlalu banyak permintaan. Tunggu sebentar lalu coba lagi.',
@@ -84,7 +131,19 @@ function settle(call: () => Promise<unknown>): void {
   }
 }
 
-export function createRegistrationController({ registration, active, onChange }: RegistrationControllerOptions): RegistrationController {
+export function createRegistrationController({
+  registration,
+  active,
+  onChange,
+  emailPolicy = 'synthetic',
+}: RegistrationControllerOptions): RegistrationController {
+  // Read once: an unknown runtime value takes no address at all, so nothing reaches the adapter.
+  const policy = emailPolicy;
+  const emailed = policy === 'confirmed-email' || policy === PRIVATE_QA_REGISTRATION_POLICY;
+  const codeNotice = emailed ? EMAIL_CODE_NOTICE : CODE_NOTICE;
+  const resentNotice = emailed ? EMAIL_RESENT_NOTICE : RESENT_NOTICE;
+  /** Why the policy refuses the address (the adapter's own rule), or null when it takes it. */
+  const refusalOf = (email: unknown): RegistrationErrorCode | null => registrationEmailRefusal(email, policy);
   let state: RegistrationState = { ...IDLE };
   let generation = 0;
   let disposed = false;
@@ -135,22 +194,24 @@ export function createRegistrationController({ registration, active, onChange }:
     async register(email, password) {
       if (!usable() || state.stage !== 'email' || state.busy) return;
       const form = { stage: 'email' as const, busy: false, email: null };
-      if (!isSyntheticAddress(email)) return set({ ...form, message: MESSAGES.not_synthetic, error: 'not_synthetic' });
+      const refusal = refusalOf(email);
+      if (refusal !== null) return set({ ...form, message: MESSAGES[refusal], error: refusal });
       await request(
         { ...form, busy: true, message: null, error: null },
         () => registration.register(email, password),
-        { stage: 'code', busy: false, email, message: CODE_NOTICE, error: null },
+        { stage: 'code', busy: false, email, message: codeNotice, error: null },
         form
       );
     },
 
     useCode(email) {
       if (!usable() || state.busy) return;
-      if (!isSyntheticAddress(email)) {
+      const refusal = refusalOf(email);
+      if (refusal !== null) {
         const stage = state.stage === 'email' ? 'email' : 'idle';
-        return reset({ stage, busy: false, email: null, message: MESSAGES.not_synthetic, error: 'not_synthetic' }, false);
+        return reset({ stage, busy: false, email: null, message: MESSAGES[refusal], error: refusal }, false);
       }
-      reset({ stage: 'code', busy: false, email, message: CODE_NOTICE, error: null }, false);
+      reset({ stage: 'code', busy: false, email, message: codeNotice, error: null }, false);
     },
 
     async confirm(code) {
@@ -172,7 +233,7 @@ export function createRegistrationController({ registration, active, onChange }:
       await request(
         { ...form, busy: true, message: null, error: null },
         () => registration.resend(email),
-        { ...form, message: RESENT_NOTICE, error: null },
+        { ...form, message: resentNotice, error: null },
         form
       );
     },

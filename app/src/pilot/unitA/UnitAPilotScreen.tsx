@@ -3,16 +3,19 @@
 // answers show only that they were saved until the block closes.
 // One inner panel per binding (store identity, owner, mode, read-only): a changed binding unmounts the old
 // panel in the same commit, so its question never flashes, and its controller is disposed with it.
-// Needs no router or app context; the route owns Back, focus and the learner binding.
+// Needs no router or app context (only the type of its capture notice); the route owns Back, focus and the learner binding.
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { ActivityIndicator, AppState, Pressable, StyleSheet, Text, View, type ViewInstance } from 'react-native';
 
+import { starterBetaBuild } from '@/config/learningBeta';
 import { loadScreenViews } from '@/engine/exposure';
 import { nextLessonAssistedOn } from '@/pilot/nextLesson/assistance';
 import type { Store } from '@/storage/types';
 import { moveFocus } from '@/ui/a11y';
+import type { AnswerSaveNotice } from '@/ui/AppContext';
 import { ArabicText, Btn, Caption, Card, Eyebrow, MixedText, Notice, Page, type PageHandle } from '@/ui/components';
 import { colors, radius, typography } from '@/ui/theme';
+import { isPilotAnswer } from './capture';
 import type { PilotPhase } from './content';
 import {
   createPilotController,
@@ -24,6 +27,7 @@ import {
   type PilotMode,
   type PilotView,
 } from './controller';
+import { starterReviewAccess } from './review';
 
 export interface UnitAPilotScreenProps {
   store: Store;
@@ -37,17 +41,32 @@ export interface UnitAPilotScreenProps {
   today: () => string;
   /** Opens the next lesson; offered only while this owner's Unit A qualifies. */
   onNextLesson?: () => void;
+  /** Dataset liveness (e.g. the selected account's); only exactly true lets the controller act. */
+  active?: () => boolean;
+  /** The store's learner, to capture answers for; used only in a validated beta with the reviewed starter. */
+  captureLearnerId?: string;
+  /**
+   * Tells the signed-in account that answers were saved here. Only for the reviewed tester's account capture (used
+   * nowhere else), and bound to the controller it is mounted with: another one is a new controller. It runs only after a
+   * safe view, and states what the controller knows: `capturePending` false once every captured answer is in the store,
+   * true while one is held on this device (its row append failed). Its rejection never touches the saved answer.
+   */
+  onAnswersSaved?: (notice?: AnswerSaveNotice) => Promise<void>;
 }
 
 type PilotController = ReturnType<typeof createPilotController>;
+type Notify = NonNullable<UnitAPilotScreenProps['onAnswersSaved']>;
 type Failure = 'load' | 'save';
 
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
+const CAPTURE_PENDING = 'Jawaban tersimpan di perangkat. Pencatatan akun akan dicoba lagi.';
+const SYNC_NOTE = 'Jawaban tersimpan di perangkat. Status sinkronisasi belum tersedia.';
 
 /**
  * Whether the learner saw teaching or answered legacy practice on `day` in the selected store. Conservative:
- * any same-day screen view or answer, or a next lesson help day of `owner`, counts as assistance. Unreadable data
- * rejects, never reads as "unexposed".
+ * any same-day screen view or answer, or a next lesson help day of `owner`, counts as assistance. With `owner`,
+ * only that owner's own exactly recognized pilot answers are left out (the pilot document dates those itself);
+ * foreign, altered or legacy answers still count. Unreadable data rejects, never reads as "unexposed".
  */
 export async function pilotAssistedOn(store: Store, day: string, owner?: string): Promise<boolean> {
   if (!DAY.test(day)) throw new Error('Pilot assistance check needs a local day (YYYY-MM-DD).');
@@ -58,7 +77,7 @@ export async function pilotAssistedOn(store: Store, day: string, owner?: string)
   for (const answer of answers) {
     const date: unknown = (answer as { local_date?: unknown } | null)?.local_date;
     if (typeof date !== 'string' || !DAY.test(date)) throw new Error('A stored answer has no readable local date.');
-    if (date === day) assisted = true;
+    if (date === day && !(owner !== undefined && isPilotAnswer(answer, owner))) assisted = true;
   }
   const nextLesson = await nextLessonAssistedOn(store, owner, day);
   return assisted || nextLesson;
@@ -77,9 +96,15 @@ function storeId(store: object): number {
   return id;
 }
 
+/** A tester build opens Unit A only in a validated private beta or learning beta build whose compiled review approves the exact starter. */
+function betaStarterOpen(): boolean {
+  return starterBetaBuild() && starterReviewAccess().allowed === true;
+}
+
 export function UnitAPilotScreen(props: UnitAPilotScreenProps) {
   const { store, owner, mode, readOnly } = props;
-  if (mode !== 'developer-demo') return <Unavailable>Unit A uji coba hanya tersedia di mode pengembang.</Unavailable>;
+  // The controller re-checks the beta and the review on every operation; this only keeps it from mounting otherwise.
+  if (mode !== 'developer-demo' && !(mode === 'tester' && betaStarterOpen())) return <Unavailable>Unit A uji coba hanya tersedia di mode pengembang.</Unavailable>;
   if (readOnly !== null) return <Unavailable>{`Penyimpanan sedang hanya-baca (${readOnly}). Unit A tidak dibuka di tab ini.`}</Unavailable>;
   return <PilotPanel key={JSON.stringify([storeId(store), owner, mode, readOnly])} {...props} />;
 }
@@ -101,6 +126,7 @@ const BLOCKED: Record<PilotBlockReason, string> = {
   disposed: 'Unit A ditutup.',
   inactive: 'Unit A sedang tidak aktif.',
   mode: 'Unit A uji coba hanya tersedia di mode pengembang.',
+  review: 'Materi Unit A masih menunggu tinjauan.',
   'read-only': 'Penyimpanan sedang hanya-baca, jadi Unit A tidak dibuka.',
   content: 'Materi Unit A tidak lolos pemeriksaan otomatis, jadi tidak ditampilkan.',
   owner: 'Data Unit A tersimpan milik profil lain. Data itu tidak diubah.',
@@ -170,12 +196,18 @@ function viewKey(view: PilotView | null): string {
   }
 }
 
-function PilotPanel({ store, owner, mode, readOnly, arabicScale, today, onNextLesson }: UnitAPilotScreenProps) {
+function PilotPanel({ store, owner, mode, readOnly, arabicScale, today, onNextLesson, active, captureLearnerId, onAnswersSaved }: UnitAPilotScreenProps) {
   const [view, setView] = useState<PilotView | null>(null);
   const [choice, setChoice] = useState<{ presentationId: string; optionId: string } | null>(null);
   const [busy, setBusy] = useState(false);
   const [failure, setFailure] = useState<Failure | null>(null);
+  // Whether the last successful operation left a captured answer only on this device; never a claim of upload.
+  const [capturePending, setCapturePending] = useState(false);
+  // Whether the account's latest notification failed: the answer is saved, only its sync status is unknown.
+  const [syncNote, setSyncNote] = useState(false);
   const ctrl = useRef<PilotController | null>(null);
+  const notifier = useRef<Notify | undefined>(undefined); // the current controller's own, never a later prop
+  const notifySeq = useRef(0); // only the newest notification's outcome is shown
   const epoch = useRef(0); // a disposed controller's late results are dropped
   const busyRef = useRef(false); // synchronous duplicate-press guard; the controller's own guard stays authoritative
   const todayRef = useRef(today);
@@ -187,45 +219,94 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today, onNextLe
     todayRef.current = today;
   }, [today]);
 
-  const run = useCallback((action: (c: PilotController) => Promise<PilotView>, kind: Failure): Promise<void> => {
-    const c = ctrl.current;
-    if (c === null || busyRef.current) return Promise.resolve();
-    busyRef.current = true;
-    const ticket = ++epoch.current;
-    setBusy(true);
-    setFailure(null);
-    const current = () => ticket === epoch.current && ctrl.current === c;
-    return Promise.resolve()
-      .then(() => action(c))
+  // Tells the account through `notify`, the callback `c` was mounted with (none: clears the note), what the controller
+  // knows of its capture as `notice`. It never waits for the screen's own work, and its outcome counts only while `c` is
+  // still this panel's controller and no newer one has run.
+  const tell = useCallback((c: PilotController, notify: Notify | undefined, notice?: AnswerSaveNotice): void => {
+    const turn = ++notifySeq.current;
+    if (notify === undefined) {
+      setSyncNote(false);
+      return;
+    }
+    const current = () => turn === notifySeq.current && ctrl.current === c;
+    void Promise.resolve()
+      .then(() => notify(notice))
       .then(
-        (next) => {
-          if (!current()) return;
-          busyRef.current = false;
-          setView(next);
-          setBusy(false);
+        () => {
+          if (current()) setSyncNote(false);
         },
         () => {
-          if (!current()) return;
-          busyRef.current = false;
-          setFailure(kind);
-          setBusy(false);
+          if (current()) setSyncNote(true);
         }
       );
   }, []);
 
+  const run = useCallback(
+    (action: (c: PilotController) => Promise<PilotView>, kind: Failure): Promise<void> => {
+      const c = ctrl.current;
+      if (c === null || busyRef.current) return Promise.resolve();
+      const notify = notifier.current;
+      busyRef.current = true;
+      const ticket = ++epoch.current;
+      setBusy(true);
+      setFailure(null);
+      const current = () => ticket === epoch.current && ctrl.current === c;
+      return Promise.resolve()
+        .then(() => action(c))
+        .then(
+          (next) => {
+            if (!current()) return;
+            busyRef.current = false;
+            setView(next);
+            const captured = c.captureStatus();
+            setCapturePending(next.kind !== 'blocked' && captured === 'pending');
+            setBusy(false);
+            // Only a safe view of a capturing controller tells the account, and always what it knows: a held capture (its
+            // row append failed) as pending, every captured answer in the store as saved. Capture off or blocked says nothing.
+            const notice: AnswerSaveNotice | undefined =
+              next.kind === 'blocked' ? undefined : captured === 'pending' ? { capturePending: true } : captured === 'saved' ? { capturePending: false } : undefined;
+            tell(c, notice === undefined ? undefined : notify, notice);
+          },
+          () => {
+            if (!current()) return;
+            busyRef.current = false;
+            setFailure(kind);
+            setBusy(false);
+          }
+        );
+    },
+    [tell]
+  );
+
   useEffect(() => {
     let live = true;
+    // The dataset's own liveness, bound once per controller: a later callback never revives this one.
+    const datasetLive = (): boolean => {
+      if (active === undefined) return true;
+      try {
+        return active() === true;
+      } catch {
+        return false;
+      }
+    };
+    const isLive = () => live && datasetLive();
+    // Capture only in a validated beta whose compiled review approves the exact starter, for a named learner.
+    const learnerId =
+      mode === 'tester' && betaStarterOpen() && typeof captureLearnerId === 'string' && captureLearnerId.length > 0 ? captureLearnerId : null;
     const c = createPilotController({
       store,
       owner,
       mode,
       today: () => todayRef.current(),
       readOnly: () => readOnly !== null,
-      active: () => live,
+      active: isLive,
       assistedToday: (day?: string) => pilotAssistedOn(store, day ?? todayRef.current(), owner),
       random: Math.random,
+      ...(learnerId !== null ? { capture: { learnerId, now: () => new Date().toISOString(), active: isLive } } : {}),
     });
     ctrl.current = c;
+    // Bound with the controller, and only where it captures: a later or foreign callback never stands in for it.
+    notifier.current = learnerId !== null && typeof onAnswersSaved === 'function' ? onAnswersSaved : undefined;
     busyRef.current = false;
     void run((x) => x.load(), 'load');
     // Back in the foreground (possibly on a new day): show where the learner is now.
@@ -239,11 +320,14 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today, onNextLe
       live = false;
       c.dispose();
       sub.remove();
-      if (ctrl.current === c) ctrl.current = null;
+      if (ctrl.current === c) {
+        ctrl.current = null;
+        notifier.current = undefined;
+      }
       epoch.current += 1;
       busyRef.current = false;
     };
-  }, [store, owner, mode, readOnly, run]);
+  }, [store, owner, mode, readOnly, active, captureLearnerId, onAnswersSaved, run]);
 
   const shown = viewKey(view);
   useLayoutEffect(() => {
@@ -559,9 +643,22 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today, onNextLe
     <Page width="exercise" ref={page} footer={footer}>
       <View style={styles.top}>
         <Eyebrow tone="accent">Unit A · uji coba</Eyebrow>
-        <Caption>Draf belum ditinjau · progres hanya tersimpan di perangkat ini</Caption>
+        {/* A tester panel mounts only in a validated beta with the exact starter reviewed (UnitAPilotScreen). */}
+        <Caption>{mode === 'tester' ? 'Beta privat · hasil sementara' : 'Draf belum ditinjau · progres hanya tersimpan di perangkat ini'}</Caption>
       </View>
       {body}
+      {capturePending && view !== null && view.kind !== 'blocked' ? (
+        <Notice tone="info" testID="pilot-capture-pending">
+          {CAPTURE_PENDING}
+        </Notice>
+      ) : null}
+      {syncNote && view !== null && view.kind !== 'blocked' ? (
+        <View role="status" accessibilityLiveRegion="polite">
+          <Notice tone="info" testID="pilot-sync-note">
+            {SYNC_NOTE}
+          </Notice>
+        </View>
+      ) : null}
       {errorNotice}
     </Page>
   );

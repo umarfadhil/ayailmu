@@ -93,6 +93,7 @@ interface RawCapableStore {
   addCopy(copy: RawDataset): Promise<CopyResult>;
   loadDoc(name: string): Promise<string | null>;
   saveDoc(name: string, text: string): Promise<void>;
+  saveDocGuarded(name: string, text: string, active: () => boolean): Promise<boolean>;
 }
 
 /** The name of the sync journal's document beside an account dataset. */
@@ -129,6 +130,11 @@ export interface JournalStorage {
   load(): Promise<string | null>;
   /** Replaces the document in one atomic write. */
   save(text: string): Promise<void>;
+  /**
+   * Replaces the document only while `active()` is exactly true, checked inside the writer itself: false, with
+   * nothing written, once the guard is lost. Absent on storage that cannot guard; callers must not fall back to `save`.
+   */
+  saveGuarded?(text: string, active: () => boolean): Promise<boolean>;
 }
 
 /** The journal document of an opened dataset, through its current store. The guest dataset never has one. */
@@ -137,6 +143,8 @@ function journalStorage(namespace: Namespace, store: () => RawCapableStore): Jou
   return {
     load: () => (guest ? Promise.resolve(null) : store().loadDoc(JOURNAL_DOC)),
     save: (text) => (guest ? Promise.reject(new DatasetError('guest_read_only')) : store().saveDoc(JOURNAL_DOC, text)),
+    saveGuarded: (text, active) =>
+      guest ? Promise.reject(new DatasetError('guest_read_only')) : store().saveDocGuarded(JOURNAL_DOC, text, active),
   };
 }
 

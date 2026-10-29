@@ -17,6 +17,8 @@ import {
 } from 'react-native';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 
+import { learningBetaEnabled } from '@/config/learningBeta';
+import { isReleasePresentation } from '@/config/releasePresentation';
 import type { HelpLine } from '@/content/schema';
 import { moveFocus } from './a11y';
 import { useApp } from './AppContext';
@@ -458,11 +460,13 @@ export function DraftChip() {
   );
 }
 
-/** The prototype mode, stated plainly (welcome, settings, empty states). */
+/** The prototype mode, stated plainly (welcome, settings, empty states). A validated production build shows none; a validated learning beta says it is a private beta. */
 export function ModeNote({ align = 'center' }: { align?: 'center' | 'left' }) {
   const { rules, content } = useApp();
-  const text =
-    rules.mode === 'tester'
+  if (isReleasePresentation(rules.mode)) return null;
+  const text = learningBetaEnabled()
+    ? 'Beta privat · Hanya materi yang disetujui yang ditampilkan'
+    : rules.mode === 'tester'
       ? 'Prototipe · mode penguji · Hanya materi yang disetujui yang ditampilkan'
       : content.unreviewed
         ? 'Prototipe pengembang · Konten contoh, belum ditinjau'

@@ -3,6 +3,7 @@
 import { router, usePathname, type Href } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { learningBetaEnabled } from '@/config/learningBeta';
 import { useApp } from './AppContext';
 import { Icon, ModeNote, useInsets, Wordmark, type IconName } from './components';
 import { colors, fonts, radius, SIDEBAR_WIDTH } from './theme';
@@ -28,10 +29,13 @@ export function isTabRoute(pathname: string) {
   return Object.values(TAB_PATHS).includes(pathname);
 }
 
-/** Navigation exists only after consent and the basic profile (a learner exists) and only with showable content. */
+/**
+ * Navigation exists only after consent and the basic profile (a learner exists) and only with showable content. A
+ * validated learning beta has none: its tabs lead to routes that redirect Home, so it never shows dead tabs.
+ */
 export function useLearnerNav(): boolean {
   const { learner, content } = useApp();
-  return !!learner && !content.empty;
+  return !!learner && !content.empty && !learningBetaEnabled();
 }
 
 /** To a tab: back to it when it is already in the history, otherwise in place of the current tab. */

@@ -1,5 +1,6 @@
 // Registration with required email confirmation against a standalone Supabase Auth server (GoTrue) at its root, never a
-// hosted /auth/v1 prefix, in a local or staging build only (never production), for synthetic .test addresses only. It
+// hosted /auth/v1 prefix. By default (the synthetic policy) only in a local or staging build and for synthetic .test
+// addresses only; a production build takes conventional addresses only with the explicit confirmed-email policy. It
 // goes through the maintained SDK (@supabase/auth-js AuthClient), one fresh in-memory client per call (no persistence, no
 // URL detection, no debug output, no background refresh, no API key, implicit flow), which reaches the Auth root only
 // through a bounded transport: its one operation path (/signup, /verify or /resend) once, without any credential, and
@@ -19,7 +20,8 @@ import {
   type GoTrueClientOptions,
 } from '@supabase/auth-js';
 import { isCanonicalUuid } from '@/account/ids';
-import { accountApiOrigin } from '@/account/staging';
+import { isPrivateQaRecipient, PRIVATE_QA, PRIVATE_QA_REGISTRATION_POLICY } from '@/account/privateQa';
+import { accountApiOrigin, STAGING } from '@/account/staging';
 import { accountAuthOrigin, LOCAL_SUPABASE, type EnabledSupabaseConfig } from '@/account/supabaseConfig';
 import { AUTH_REQUEST_TIMEOUT_MS } from '@/auth/supabaseAuth';
 
@@ -27,8 +29,12 @@ import { AUTH_REQUEST_TIMEOUT_MS } from '@/auth/supabaseAuth';
 export type RegistrationSdkClient = Pick<GoTrueClient, 'signUp' | 'verifyOtp' | 'resend' | 'signOut' | 'stopAutoRefresh'>;
 
 export type RegistrationErrorCode =
-  /** The address is not a synthetic local-demo address (a .test domain); nothing was built or sent. */
+  /** Synthetic policy: the address is not a synthetic local-demo address (a .test domain); nothing was built or sent. */
   | 'not_synthetic'
+  /** Confirmed-email and private QA policies: the address is not a conventional email address; nothing was built or sent. */
+  | 'invalid_email'
+  /** Private QA policy: a well-formed address that is not the one approved recipient; nothing was built or sent. */
+  | 'private_recipient'
   /** The code is not 6 to 10 digits (nothing was sent), or the Auth server refused it (wrong, used or expired). */
   | 'invalid_code'
   | 'weak_password'
@@ -53,11 +59,21 @@ export class RegistrationError extends Error {
   }
 }
 
+/**
+ * Which addresses registration takes. 'synthetic' (the default): .test addresses, in a local or staging build only.
+ * 'confirmed-email': conventional addresses, in a production build (with productionAccounts) only.
+ * 'private-qa-confirmed-email': exactly the approved recipient, in a private QA build (with privateQa) and with an
+ * injected fetch only; never a production build. Anything else is refused.
+ */
+export type RegistrationEmailPolicy = 'synthetic' | 'confirmed-email' | typeof PRIVATE_QA_REGISTRATION_POLICY;
+
 export interface RegistrationOptions {
   config: EnabledSupabaseConfig;
+  /** Which addresses registration takes; see RegistrationEmailPolicy. Anything else is refused. */
+  emailPolicy?: RegistrationEmailPolicy;
   /** Builds each SDK client; the app's default is `new AuthClient(options)`. Tests inject a fake SDK here. */
   createClient?: (options: GoTrueClientOptions) => RegistrationSdkClient;
-  /** The fetch under the SDK's bounded transport; the global fetch by default. */
+  /** The fetch under the SDK's bounded transport; the global fetch by default. Required by the private QA policy. */
   fetch?: typeof fetch;
   /** Accepted as the sign-in adapter's is; registration keeps nothing that depends on the time. */
   now?: () => number;
@@ -88,6 +104,32 @@ const LOGOUT_PATH = '/logout?scope=local';
 const SYNTHETIC_ADDRESS = /^[a-z0-9._%+-]+@(?:[a-z0-9-]+\.)+test$/i;
 const isSyntheticAddress = (email: unknown): email is string =>
   typeof email === 'string' && email.length <= 254 && SYNTHETIC_ADDRESS.test(email);
+
+/**
+ * The same rule as production sign-in's conventional address: ASCII, at most 254 characters, a local part of at most 64
+ * with no leading, trailing or repeated dot, then DNS labels of 1 to 63 characters with inner hyphens only, the last one
+ * starting with a letter (so never an IP literal). Matched whole, so whitespace and control characters never match.
+ */
+const CONVENTIONAL_ADDRESS = /^([a-z0-9_%+-]+(?:\.[a-z0-9_%+-]+)*)@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z](?:[a-z0-9-]{0,61}[a-z0-9])?$/i;
+const isConventionalAddress = (email: unknown): email is string => {
+  if (typeof email !== 'string' || email.length > 254) return false;
+  const match = CONVENTIONAL_ADDRESS.exec(email);
+  return match !== null && match[1].length <= 64;
+};
+
+/**
+ * Why `policy` refuses the address, or null when it takes it: the same rules the adapter checks, shared so a caller
+ * refuses before sending. The private QA policy refuses a malformed address as invalid_email and any other well-formed
+ * one than the approved recipient as private_recipient. An unknown policy takes nothing.
+ */
+export function registrationEmailRefusal(email: unknown, policy: unknown): RegistrationErrorCode | null {
+  if (policy === PRIVATE_QA_REGISTRATION_POLICY) return !isConventionalAddress(email) ? 'invalid_email' : isPrivateQaRecipient(email) ? null : 'private_recipient';
+  if (policy === 'confirmed-email') return isConventionalAddress(email) ? null : 'invalid_email';
+  return policy === 'synthetic' && isSyntheticAddress(email) ? null : 'not_synthetic';
+}
+
+/** Whether `policy` takes the address: the same rules the adapter checks, shared so a caller refuses before sending. */
+export const registrationEmailAllowed = (email: unknown, policy: RegistrationEmailPolicy): email is string => registrationEmailRefusal(email, policy) === null;
 
 /** A confirmation code: 6 to 10 ASCII digits and nothing else. */
 const CONFIRMATION_CODE = /^[0-9]{6,10}$/;
@@ -134,18 +176,22 @@ const accessTokenOf = (session: unknown): string | null => {
   return typeof token === 'string' && token !== '' ? token : null;
 };
 
-/** A user for `email`: a canonical UUID id and that very address, up to the provider's lower-casing. Nothing else is read. */
-const isUserFor = (user: unknown, email: string): user is { id: string; email: string } => {
+/**
+ * A user for `email`: a canonical UUID id and that very address, up to the provider's lower-casing; with `exact` (the
+ * private QA policy), exactly the approved recipient as written. Nothing else is read.
+ */
+const isUserFor = (user: unknown, email: string, exact = false): user is { id: string; email: string } => {
   if (typeof user !== 'object' || user === null) return false;
   const { id, email: address } = user as { id?: unknown; email?: unknown };
-  return isCanonicalUuid(id) && typeof address === 'string' && address.toLowerCase() === email.toLowerCase();
+  if (!isCanonicalUuid(id) || typeof address !== 'string') return false;
+  return exact ? address === email && isPrivateQaRecipient(address) : address.toLowerCase() === email.toLowerCase();
 };
 
-/** A usable session for `email`: both tokens, non-empty strings, and a user for `email`. */
-const isSessionFor = (session: unknown, email: string): session is { user: { id: string; email: string } } => {
+/** A usable session for `email`: both tokens, non-empty strings, and a user for `email` (exactly so with `exact`). */
+const isSessionFor = (session: unknown, email: string, exact = false): session is { user: { id: string; email: string } } => {
   if (typeof session !== 'object' || session === null) return false;
   const { access_token, refresh_token, user } = session as { access_token?: unknown; refresh_token?: unknown; user?: unknown };
-  return typeof access_token === 'string' && access_token !== '' && typeof refresh_token === 'string' && refresh_token !== '' && isUserFor(user, email);
+  return typeof access_token === 'string' && access_token !== '' && typeof refresh_token === 'string' && refresh_token !== '' && isUserFor(user, email, exact);
 };
 
 /** A refusal as a stable code, from the SDK error's class, status and code only: never its text. */
@@ -268,21 +314,53 @@ function storageKey(): string {
 }
 
 export function createRegistration(options: RegistrationOptions): Registration {
-  // Revalidated here, once: a missing, disabled, legacy or unknown-profile configuration, the production profile in any
-  // form, or an API or Auth address that is not exactly its profile's (local, or staging root origins; so Auth is always
-  // at its root) builds no client and sends nothing. The Auth root validated here is kept; the caller's configuration is
-  // never read again.
-  const { enabled, provider, environment, productionAccounts, apiBaseUrl, authUrl: configuredAuthUrl } = options?.config ?? ({} as Partial<EnabledSupabaseConfig>);
-  const safeProfile = enabled === true && provider === LOCAL_SUPABASE && environment !== 'production' && productionAccounts === undefined;
-  const apiOrigin = safeProfile ? accountApiOrigin(apiBaseUrl, environment) : null;
-  const authUrl = apiOrigin !== null ? accountAuthOrigin(configuredAuthUrl, environment) : null;
-  if (!authUrl) throw new Error('createRegistration needs a local or staging Supabase Auth configuration; nothing was sent.');
+  // Revalidated here, once, with the policy: an unknown policy, a missing, disabled, legacy or unknown-profile
+  // configuration, a profile the policy does not allow (synthetic: local or staging only; confirmed-email: production
+  // with productionAccounts only), or an API or Auth address that is not exactly its profile's (local, or staging or
+  // production root origins, the production two distinct; so Auth is always at its root) builds no client and sends
+  // nothing. The private QA policy needs the private profile with its exact capability, exactly its two fixed roots and an
+  // injected fetch; no other policy takes the private profile or its capability. Each field is read once, here: the policy,
+  // the Auth root and the fetch validated here are kept, and the caller's options are never read again for them.
+  const { enabled, provider, environment, productionAccounts, privateQa, apiBaseUrl, authUrl: configuredAuthUrl } =
+    options?.config ?? ({} as Partial<EnabledSupabaseConfig>);
+  const requestedPolicy: unknown = options?.emailPolicy;
+  const policy = requestedPolicy === undefined ? 'synthetic' : requestedPolicy;
+  const injected = options?.fetch;
+  const supabase = enabled === true && provider === LOCAL_SUPABASE;
+  let authUrl: string | null = null;
+  if (supabase && policy === 'synthetic' && (environment === undefined || environment === STAGING) && productionAccounts === undefined && privateQa === undefined) {
+    const apiOrigin = accountApiOrigin(apiBaseUrl, environment);
+    authUrl = apiOrigin !== null ? accountAuthOrigin(configuredAuthUrl, environment) : null;
+  } else if (supabase && policy === 'confirmed-email' && environment === 'production' && productionAccounts === true && privateQa === undefined) {
+    const apiOrigin = accountApiOrigin(apiBaseUrl, environment, productionAccounts);
+    const authOrigin = apiOrigin !== null ? accountAuthOrigin(configuredAuthUrl, environment, productionAccounts) : null;
+    authUrl = authOrigin !== apiOrigin ? authOrigin : null;
+  } else if (
+    supabase &&
+    policy === PRIVATE_QA_REGISTRATION_POLICY &&
+    environment === PRIVATE_QA &&
+    privateQa === true &&
+    productionAccounts === undefined &&
+    typeof injected === 'function'
+  ) {
+    const apiOrigin = accountApiOrigin(apiBaseUrl, environment, undefined, privateQa);
+    const authOrigin = apiOrigin !== null ? accountAuthOrigin(configuredAuthUrl, environment, undefined, privateQa) : null;
+    authUrl = authOrigin !== apiOrigin ? authOrigin : null;
+  }
+  if (!authUrl) {
+    throw new Error(
+      'createRegistration needs a local or staging Supabase Auth configuration, a production one with the confirmed-email policy, or the private QA one with its policy and an injected fetch; nothing was sent.'
+    );
+  }
+  // The captured policy's address rule: its refusal for an address it does not take, or null.
+  const addressRefusal = (email: unknown): RegistrationErrorCode | null => registrationEmailRefusal(email, policy);
+  /** Whether a reply's user must be exactly the approved recipient as written (the private QA policy); otherwise case-insensitive. */
+  const exactOwner = policy === PRIVATE_QA_REGISTRATION_POLICY;
   const timeoutMs = options.timeoutMs === undefined ? AUTH_REQUEST_TIMEOUT_MS : options.timeoutMs;
   if (typeof timeoutMs !== 'number' || !Number.isFinite(timeoutMs) || timeoutMs <= 0 || timeoutMs > AUTH_REQUEST_TIMEOUT_MS) {
     throw new Error(`createRegistration takes a deadline of at most ${AUTH_REQUEST_TIMEOUT_MS} ms; nothing was sent.`);
   }
   const createClient = options.createClient ?? createAuthClient;
-  const injected = options.fetch;
 
   let current: Run | null = null;
   let disposed = false;
@@ -419,35 +497,38 @@ export function createRegistration(options: RegistrationOptions): Registration {
   return {
     async register(email, password) {
       usable();
-      if (!isSyntheticAddress(email)) throw new RegistrationError('not_synthetic');
+      const refused = addressRefusal(email);
+      if (refused !== null) throw new RegistrationError(refused);
       if (typeof password !== 'string' || password === '') throw new RegistrationError('weak_password');
       return operate('/signup', (sdk) => sdk.signUp({ email, password }), false, ({ data }) => {
         // A session here means the server confirmed the address itself: refused (and already retired), never signed in.
         if (data?.session) throw new RegistrationError('auto_confirm_refused');
         // A repeated sign-up's obfuscated user still has a canonical id and the address; its role and identities aren't read.
-        if (!isUserFor(data?.user, email)) throw new RegistrationError('bad_response');
+        if (!isUserFor(data?.user, email, exactOwner)) throw new RegistrationError('bad_response');
         return { status: 'confirmation_required' as const };
       });
     },
 
     async confirm(email, code) {
       usable();
-      if (!isSyntheticAddress(email)) throw new RegistrationError('not_synthetic');
+      const refused = addressRefusal(email);
+      if (refused !== null) throw new RegistrationError(refused);
       if (typeof code !== 'string' || !CONFIRMATION_CODE.test(code)) throw new RegistrationError('invalid_code');
       return operate('/verify', (sdk) => sdk.verifyOtp({ email, token: code, type: 'signup' }), true, ({ data }) => {
         // GoTrue answers a signup verification with a session, so a user-only reply is never one. The session (well formed
         // or not) is already retired; nothing of it, its user included, is handed out.
         const session = data?.session;
-        if (!isSessionFor(session, email)) throw new RegistrationError('bad_response');
+        if (!isSessionFor(session, email, exactOwner)) throw new RegistrationError('bad_response');
         const user = data?.user;
-        if (user !== undefined && user !== null && (!isUserFor(user, email) || user.id !== session.user.id)) throw new RegistrationError('bad_response');
+        if (user !== undefined && user !== null && (!isUserFor(user, email, exactOwner) || user.id !== session.user.id)) throw new RegistrationError('bad_response');
         return { status: 'confirmed' as const, signInRequired: true as const };
       });
     },
 
     async resend(email) {
       usable();
-      if (!isSyntheticAddress(email)) throw new RegistrationError('not_synthetic');
+      const refused = addressRefusal(email);
+      if (refused !== null) throw new RegistrationError(refused);
       return operate('/resend', (sdk) => sdk.resend({ email, type: 'signup' }), false, () => ({ status: 'resent' as const }));
     },
 

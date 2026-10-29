@@ -1,6 +1,8 @@
 import { router, useFocusEffect, useLocalSearchParams, type Href } from 'expo-router';
 import { useCallback, useEffect, type EffectCallback } from 'react';
 
+import { PRIVATE_QA } from '@/account/privateQa';
+import { loadSupabaseConfig } from '@/account/supabaseConfig';
 import { useAccount } from '@/ui/AccountContext';
 import { AccountPanel } from '@/ui/account/AccountPanel';
 import { BackLink } from '@/ui/BackLink';
@@ -14,6 +16,12 @@ function useMountEffect(effect: EffectCallback) {
 // Chosen once per module, never per render or per registration: Expo Router's own focus effect wherever it has one.
 const useRouteFocusEffect: (effect: EffectCallback) => void = typeof useFocusEffect === 'function' ? useFocusEffect : useMountEffect;
 
+/** The real account configuration, re-read through loadSupabaseConfig, is a validated private QA one. */
+function isValidatedPrivateQa(): boolean {
+  const config = loadSupabaseConfig();
+  return config.enabled === true && config.environment === PRIVATE_QA && config.privateQa === true && config.productionAccounts === undefined;
+}
+
 /** «Akun lokal»: sign-in, the adult profile, the explicit guest copy and manual sync of the local developer pilot. */
 function AccountRoute() {
   const account = useAccount();
@@ -23,11 +31,18 @@ function AccountRoute() {
   const endRegistration = useCallback(() => () => cancel?.(), [cancel]);
   useRouteFocusEffect(endRegistration);
   const deleting = account.signedIn && account.deletion && ['unknown', 'pending', 'completed'].includes(account.deletion.state.phase);
+  // A private build whose transport is unavailable: the context's marker, confirmed by the validated environment. Only
+  // the fact is shown, never the panel, its reason or anything it carries.
+  const privateUnavailable = !account.enabled && account.privateQa === true && isValidatedPrivateQa();
   return (
     <Page>
       <BackLink />
       {account.enabled ? (
         deleting ? <Notice tone="info">{account.deletion?.state.phase === 'completed' ? 'Akun sudah dihapus. Lihat status di Data akun.' : 'Penghapusan akun sedang ditangani. Periksa status di Data akun.'}</Notice> : <AccountPanel {...account.panel} />
+      ) : privateUnavailable ? (
+        <Notice tone="info" testID="account-private-unavailable">
+          Koneksi akun belum tersedia di build ini.
+        </Notice>
       ) : (
         <Notice tone="info" testID="account-disabled">
           Akun lokal tidak aktif di build ini. Belajar tetap bisa tanpa akun; data tetap di perangkat ini.

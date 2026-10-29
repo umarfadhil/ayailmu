@@ -2,6 +2,7 @@ import { Redirect, router, useFocusEffect, useLocalSearchParams } from 'expo-rou
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, AppState, Pressable, StyleSheet, Text, View, type ViewInstance } from 'react-native';
 
+import { learningBetaEnabled } from '@/config/learningBeta';
 import { recordScreenView } from '@/engine/exposure';
 import { localDate } from '@/engine/util';
 import { useApp } from '@/ui/AppContext';
@@ -319,6 +320,8 @@ const styles = StyleSheet.create({
 });
 
 export default function Guide() {
+  // A validated learning beta is bounded starter access: Home before any legacy hydration or learning effect mounts.
+  if (learningBetaEnabled()) return <Redirect href="/" />;
   return (
     <HydrationGate write>
       <GuideRoute />

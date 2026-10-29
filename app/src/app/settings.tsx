@@ -2,6 +2,8 @@ import { Redirect, router, type Href } from 'expo-router';
 import { useState, type ReactNode } from 'react';
 import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { learningBetaEnabled } from '@/config/learningBeta';
+import { isReleasePresentation } from '@/config/releasePresentation';
 import { useAccount } from '@/ui/AccountContext';
 import { useApp } from '@/ui/AppContext';
 import { BackLink } from '@/ui/BackLink';
@@ -71,9 +73,13 @@ function SettingsRoute() {
   const account = useAccount();
   if (!learner) return <Redirect href="/" />;
   const environment = account.panel.environment;
-  const remote = environment === 'production' || environment === 'staging';
-  const serviceName = environment === 'staging' ? 'server akun staging' : 'layanan akun';
+  const learningBeta = environment === 'learning-beta';
+  const remote = environment === 'production' || environment === 'staging' || learningBeta;
+  const serviceName = environment === 'staging' ? 'server akun staging' : learningBeta ? 'server akun beta' : 'layanan akun';
   const accountLabel = account.signedIn ? 'Kelola akun' : 'Masuk ke akun';
+  // Presentation only, not production approval: a genuine release or a validated learning beta shows the plain consent date,
+  // no raw technical consent ID, and does not advertise the unbuilt reminder or a developer link, so «Lainnya» would be empty.
+  const release = isReleasePresentation(rules.mode) || learningBetaEnabled();
 
   return (
     <Page>
@@ -118,7 +124,9 @@ function SettingsRoute() {
           <Text style={styles.localText}>
             {account.connected
               ? remote ? `Jawaban dan pengaturan dikirim ke ${serviceName} saat Anda menekan «Sinkronkan sekarang».` : 'Akun lokal: jawaban dan pengaturan dikirim ke layanan akun lokal (uji coba) hanya saat Anda menekan «Sinkronkan sekarang».'
-              : 'Tanpa akun. Data tidak dikirim ke mana pun.'}
+              : account.signedIn
+                ? 'Sudah masuk ke akun. Data belajar tetap di perangkat ini sampai profil terhubung dan disinkronkan.'
+                : 'Tanpa akun. Data tidak dikirim ke mana pun.'}
           </Text>
         </View>
       </View>
@@ -138,11 +146,15 @@ function SettingsRoute() {
           <Row title="Hapus data" unavailable><Muted>Belum bisa dari aplikasi. Alamat kontak untuk permintaan penghapusan belum ditetapkan.</Muted></Row>
         </>}
         <Row title="Persetujuan">
-          <Muted>{`Versi ${learner.consent_version} · ${new Date(learner.consent_at).toLocaleDateString('id-ID')}`}</Muted>
+          <Muted>
+            {release
+              ? `Disetujui pada ${new Date(learner.consent_at).toLocaleDateString('id-ID')}`
+              : `Versi ${learner.consent_version} · ${new Date(learner.consent_at).toLocaleDateString('id-ID')}`}
+          </Muted>
         </Row>
       </View>
 
-      <SectionLabel>{environment === 'production' ? 'Akun' : environment === 'staging' ? 'Akun staging' : 'Akun lokal'}</SectionLabel>
+      <SectionLabel>{environment === 'production' || learningBeta ? 'Akun' : environment === 'staging' ? 'Akun staging' : 'Akun lokal'}</SectionLabel>
       <View style={styles.list}>
         {account.enabled ? (
           <Pressable
@@ -167,21 +179,25 @@ function SettingsRoute() {
         )}
       </View>
 
-      <SectionLabel>Lainnya</SectionLabel>
-      <View style={styles.list}>
-        <Row title="Pengingat harian" unavailable first />
-        {rules.mode === 'developer-demo' ? (
-          <Pressable
-            testID="open-dev"
-            accessibilityRole="link"
-            onPress={() => router.push('/dev')}
-            style={({ pressed }) => [styles.row, styles.rowDivider, styles.linkRow, pressed && styles.pressed]}
-          >
-            <Text style={styles.rowTitle}>Data pengembang</Text>
-            <Icon name="chevron-forward" size={18} color={colors.muted} />
-          </Pressable>
-        ) : null}
-      </View>
+      {release ? null : (
+        <>
+          <SectionLabel>Lainnya</SectionLabel>
+          <View style={styles.list}>
+            <Row title="Pengingat harian" unavailable first />
+            {rules.mode === 'developer-demo' ? (
+              <Pressable
+                testID="open-dev"
+                accessibilityRole="link"
+                onPress={() => router.push('/dev')}
+                style={({ pressed }) => [styles.row, styles.rowDivider, styles.linkRow, pressed && styles.pressed]}
+              >
+                <Text style={styles.rowTitle}>Data pengembang</Text>
+                <Icon name="chevron-forward" size={18} color={colors.muted} />
+              </Pressable>
+            ) : null}
+          </View>
+        </>
+      )}
       <ModeNote />
     </Page>
   );

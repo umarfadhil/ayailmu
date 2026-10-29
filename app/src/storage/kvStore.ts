@@ -1,7 +1,7 @@
 import { arrayElements, objectMembers, parseCopy, type CopyResult, type ParsedCopy, type RawDataset, type RawRecord } from './rawRecords';
 import { createSerialQueue } from './serial';
 import { answerProblem, learnerProblem, reportProblem } from './validate';
-import { STORAGE_SCHEMA, type AnswerRecord, type ArchivedSnapshot, type Learner, type ReportRecord, type Snapshot, type Store } from './types';
+import { STORAGE_SCHEMA, type AnswerAppendGuard, type AnswerRecord, type ArchivedSnapshot, type Learner, type ReportRecord, type Snapshot, type Store } from './types';
 
 export interface KvBackend {
   getItem(key: string): string | null;
@@ -29,6 +29,15 @@ const EMPTY: Blob = { schema: STORAGE_SCHEMA, meta: {}, learner: null, answers: 
 
 const isObj = (v: unknown): v is Record<string, unknown> => !!v && typeof v === 'object' && !Array.isArray(v);
 const isStr = (v: unknown): v is string => typeof v === 'string';
+
+/** A guard holds only when it returns exactly `true`; one that throws, or returns anything else, is lost. */
+const guardHolds = (active: () => boolean): boolean => {
+  try {
+    return active() === true;
+  } catch {
+    return false;
+  }
+};
 
 /**
  * Validates the outer envelope of a stored blob (REV-2). Accepts v1 (no schema/meta) and v2.
@@ -213,6 +222,39 @@ export class KvStore implements Store {
     );
   }
 
+  /**
+   * See Store.appendAnswer. The record is copied when called, so later caller changes cannot reach the write; the
+   * guard is checked when its turn comes, and the single setItem keeps the rest of the blob exactly as it is.
+   */
+  appendAnswer(record: AnswerRecord, guard: AnswerAppendGuard): Promise<void> {
+    let json: string;
+    let copy: AnswerRecord;
+    let metaKey: string, expectedRaw: string, learnerId: string;
+    try {
+      ({ metaKey, expectedRaw, learnerId } = guard);
+      json = JSON.stringify(record);
+      copy = JSON.parse(json) as AnswerRecord;
+      const p = answerProblem(copy);
+      if (p) throw new Error(`Answer is malformed (${p}); nothing was written.`);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+    return this.enqueue(async () => {
+      this.checkWritable();
+      if (typeof learnerId !== 'string' || copy.learner_id !== learnerId || this.blob.learner?.learner_id !== learnerId) {
+        throw new Error('Answer refused: its learner is not the stored learner; nothing was written.');
+      }
+      if (this.blob.meta?.[metaKey] !== expectedRaw) throw new Error('Answer refused: its session metadata changed; nothing was written.');
+      if (!guard.active()) throw new Error('Answer refused: its session is no longer active; nothing was written.');
+      const existing = this.blob.answers.find((a) => a.answer_id === copy.answer_id);
+      if (existing) {
+        if (JSON.stringify(existing) === json) return; // identical replay: nothing to write
+        throw new Error('Answer refused: a different answer with this answer_id is already stored; nothing was written.');
+      }
+      this.persist({ ...this.blob, answers: [...this.blob.answers, copy] });
+    });
+  }
+
   async loadSnapshotRaw(): Promise<string | null> {
     return this.blob.snapshot;
   }
@@ -331,6 +373,20 @@ export class KvStore implements Store {
       if (this.readOnly) throw new Error(`Storage is read-only: ${this.readOnly}`);
       if (this.erased) throw new Error('Storage retired: an account-data erase began in this store instance, so it refuses every further write.');
       this.kv.setItem(`${this.key}/${name}`, text);
+    });
+  }
+
+  /**
+   * saveDoc that writes only while `active()` is exactly true, checked inside the queue right before the single
+   * synchronous setItem. A lost or throwing guard returns false and writes nothing; a storage failure rejects. The
+   * refused, read-only and retired refusals are the same as saveDoc's.
+   */
+  saveDocGuarded(name: string, text: string, active: () => boolean): Promise<boolean> {
+    return this.enqueue(async () => {
+      this.checkWritable();
+      if (!guardHolds(active)) return false;
+      this.kv.setItem(`${this.key}/${name}`, text);
+      return true;
     });
   }
 

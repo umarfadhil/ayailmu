@@ -2,6 +2,8 @@ import { Redirect, router, useFocusEffect } from 'expo-router';
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import { learningBetaEnabled } from '@/config/learningBeta';
+import { isReleasePresentation } from '@/config/releasePresentation';
 import { localDate } from '@/engine/util';
 import { NextLessonScreen } from '@/pilot/nextLesson/NextLessonScreen';
 import type { Store } from '@/storage/types';
@@ -12,7 +14,8 @@ import { colors } from '@/ui/theme';
 /**
  * Next lesson pilot (developer prototype), opened from qualified Unit A progress. Writes its own progress, so
  * read-only tabs see the notice instead. A direct link opens the same screen, whose controller checks the
- * learner's Unit A qualification afresh on every operation.
+ * learner's Unit A qualification afresh on every operation. A genuine release presentation never offers it: a direct
+ * link goes Home before any screen mounts or storage is read.
  */
 export default function NextLessonRoute() {
   const { ready, error, store, learner, dataset, rules, readOnly } = useApp();
@@ -36,6 +39,9 @@ export default function NextLessonRoute() {
       s.store === forStore
     );
   }, []);
+  // After every hook above, so the hook order stays the same when the mode or configuration changes.
+  // A validated learning beta is bounded starter access: the same Home redirect, before the gate mounts.
+  if (isReleasePresentation(rules.mode) || learningBetaEnabled()) return <Redirect href="/" />;
   return (
     <HydrationGate write>
       <NextLesson consented={consented} />

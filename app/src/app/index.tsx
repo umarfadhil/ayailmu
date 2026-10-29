@@ -2,6 +2,11 @@ import { router, useFocusEffect, type Href } from 'expo-router';
 import { useCallback, type ReactNode } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View, type ViewStyle } from 'react-native';
 
+import { PRIVATE_QA } from '@/account/privateQa';
+import { loadSupabaseConfig } from '@/account/supabaseConfig';
+import { isReleasePresentation } from '@/config/releasePresentation';
+import type { AppMode } from '@/config/rules';
+import { StarterHome, starterBeta } from '@/pilot/unitA/StarterHome';
 import { useAccount } from '@/ui/AccountContext';
 import { useApp } from '@/ui/AppContext';
 import {
@@ -28,7 +33,8 @@ import { colors, fonts, radius, shadow, typography } from '@/ui/theme';
 import { formatDue, formatLongDate, isLearningError, useLearning, type LearningState } from '@/ui/useLearning';
 
 export default function Home() {
-  const { ready, error, content, learner } = useApp();
+  const { ready, error, content, learner, rules } = useApp();
+  const account = useAccount();
   const learning = useLearning();
 
   if (!ready) {
@@ -42,9 +48,38 @@ export default function Home() {
   if (error) return <StorageRefused message={error} />;
   if (isLearningError(learning)) return <StorageRefused message={learning.error} />;
 
+  // A validated private beta has its own bounded Home, whatever the legacy content holds.
+  const beta = starterBeta(rules.mode);
+  if (beta !== 'off') return <StarterHome reviewed={beta === 'reviewed'} />;
+
   if (content.empty) {
+    // A validated production build: the brand and a plain notice; no learner or material is created, only the account entry.
+    if (isReleasePresentation(rules.mode)) {
+      return (
+        <Page
+          footer={
+            account.enabled ? (
+              <Btn testID="welcome-account" kind="quiet" label="Masuk ke akun" onPress={() => router.push('/account' as Href)} />
+            ) : undefined
+          }
+        >
+          <View style={styles.welcomeTop}>
+            <Wordmark />
+          </View>
+          <EmptyState icon="hourglass-outline" title="Materi sedang disiapkan">
+            <P style={{ textAlign: 'center' }}>Materi masih ditinjau. Silakan kembali lagi nanti.</P>
+          </EmptyState>
+        </Page>
+      );
+    }
     return (
-      <Page>
+      <Page
+        footer={
+          isValidatedPrivateQa(rules.mode) ? (
+            <Btn testID="welcome-account" kind="quiet" label="Masuk ke akun" onPress={() => router.push('/account' as Href)} />
+          ) : undefined
+        }
+      >
         <EmptyState icon="hourglass-outline" title="Belum ada materi yang disetujui untuk uji coba">
           <P style={{ textAlign: 'center' }}>Materi masih ditinjau. Silakan kembali lagi nanti.</P>
         </EmptyState>
@@ -55,6 +90,16 @@ export default function Home() {
 
   if (!learner) return <Welcome />;
   return <Today learning={learning} />;
+}
+
+/**
+ * Only a tester build whose real account configuration is a validated private QA one, re-read through loadSupabaseConfig;
+ * the account projection's privateQa is never trusted for it. Whether its transport is ready is the account route's concern.
+ */
+function isValidatedPrivateQa(mode: AppMode): boolean {
+  if (mode !== 'tester') return false;
+  const config = loadSupabaseConfig();
+  return config.enabled === true && config.environment === PRIVATE_QA && config.privateQa === true && config.productionAccounts === undefined;
 }
 
 /** Guest-first welcome (board 13). Nothing is saved until the profile and consent step. */
@@ -69,7 +114,9 @@ function Welcome() {
           {account.enabled ? (
             <Btn testID="welcome-account" kind="quiet" label="Masuk ke akun" onPress={() => router.push('/account' as Href)} />
           ) : null}
-          <Text style={styles.modeCaption}>{rules.mode === 'tester' ? 'Prototipe · mode penguji' : 'Prototipe pengembang'}</Text>
+          {isReleasePresentation(rules.mode) ? null : (
+            <Text style={styles.modeCaption}>{rules.mode === 'tester' ? 'Prototipe · mode penguji' : 'Prototipe pengembang'}</Text>
+          )}
         </>
       }
     >
@@ -290,7 +337,11 @@ function Today({ learning }: { learning: LearningState }) {
       <View style={styles.storage}>
         <Icon name="phone-portrait-outline" size={16} color={colors.muted} />
         <Text style={styles.storageText}>
-          {dataset === 'account' ? 'Tersimpan di perangkat ini · akun lokal, dikirim saat Anda menyinkronkan' : 'Tersimpan di perangkat ini · tanpa akun'}
+          {dataset !== 'account'
+            ? 'Tersimpan di perangkat ini · tanpa akun'
+            : isReleasePresentation(rules.mode)
+              ? 'Tersimpan di perangkat ini · akun, dikirim ke layanan saat Anda menyinkronkan'
+              : 'Tersimpan di perangkat ini · akun lokal, dikirim saat Anda menyinkronkan'}
         </Text>
       </View>
     </Page>

@@ -5,8 +5,10 @@
 export type AuthErrorCode =
   /** The address is not a synthetic local-demo address (a .test domain). */
   | 'not_synthetic'
-  /** Production only: the address is not in a conventional email format (checked by its format alone, never its delivery). */
+  /** Production and private QA: the address is not in a conventional email format (checked by its format alone, never its delivery). */
   | 'invalid_email'
+  /** Private QA only: a well-formed address that is not the one approved recipient; nothing was built or sent. */
+  | 'private_recipient'
   | 'invalid_credentials'
   /** Legacy emulator sign-up only: the address is already registered. */
   | 'email_exists'

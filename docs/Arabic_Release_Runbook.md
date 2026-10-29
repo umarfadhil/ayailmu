@@ -1,11 +1,12 @@
 # AyaFasih release runbook
 
-Status (checkpoint 2026-10-26): GitHub CI passed for the published registration commit `754129f`
-(https://github.com/umarfadhil/ayailmu/actions/runs/40214005686). The SDK 58 base `951bb16` plus the local AyaFasih
-rename passes 1305/144 tests, typecheck and lint locally only; publishing the SDK 58 source and branding is pending, and
-no remote CI result exists for it. The `754129f` run is historical and does not prove CI for the new unpublished head.
-No native binary, signing, store upload, production deployment or content approval exists, and nothing here is legal,
-privacy, content or store approval.
+Status (checkpoint 2026-10-26): the current verified published head is `3d5c11eb41bdfd2789992754b3b1513b5185471e`
+(SDK 58 base plus AyaFasih branding, both public); GitHub CI run `40219803350` succeeded on it
+(https://github.com/umarfadhil/ayailmu/actions/runs/40219803350). The older `754129f` run is historical only. New,
+unpublished production-registration source on top of that head passes 1324 tests in 148 suites, typecheck, and lint with
+0 errors (2 pre-existing warnings: a duplicate import in the nextLesson `routeBinding`), locally only; no CI result
+exists for it. No native binary, signing, store upload, production deployment, real SMTP delivery, phone proof or content
+approval exists, and nothing here is legal, privacy, content or store approval.
 
 AyaFasih is distinct from Umar AyaIlmu. No Umar credential or identity is claimed reusable (pending non-secret
 coordination); no ID, package or account is invented here. File paths keep the `arabic-app` names to avoid overlaps.
@@ -22,7 +23,8 @@ coordination); no ID, package or account is invented here. File paths keep the `
 | Device proof | A named build ran the checklist on a physical phone | Backend readiness |
 | Deploy | A service serves the build's mode, with provenance | Nothing here is deployed |
 
-Today only local checks and earlier local exports/Expo Go runs exist. Those exports are not signed-release QA.
+Today only local checks, earlier local exports/Expo Go runs and GitHub CI on published commits (latest `3d5c11e`) exist;
+no CI covers the unpublished registration source. Those exports are not signed-release QA.
 
 ## 2. Commands (run from `app/`)
 
@@ -61,9 +63,11 @@ on or change an export. `dist/` is ignored by Jest; do not commit it.
 - Concurrency group is repo + head branch, so a PR run and a push run of one checkpoint share it and stale runs are
   cancelled (no duplicate exports). `main` runs get a unique group and are never cancelled. A fork PR whose branch
   name matches a repo branch would share that branch's group. Timeout 30 minutes.
-- Validity: coordinator local YAML/JSON config and security probes passed 26/26. An actual GitHub workflow run is NOT
-  yet verified and no native binary is built. Unconfirmed: whether `EXPO_PUBLIC_ACCOUNT_ENV=staging` with the provider
-  `off` exports cleanly.
+- Validity: coordinator local YAML/JSON config and security probes passed 26/26. GitHub CI run `40219803350` verified
+  success on the published head `3d5c11e`; the new registration source is unpublished and has no CI run yet. A local
+  branch is not publication or approval; only an approved push to the exact approved target, the PR 5 branch
+  `feature/rn-correctness-20261020`, will trigger this workflow for it. No native binary is built. Unconfirmed: whether
+  `EXPO_PUBLIC_ACCOUNT_ENV=staging` with the provider `off` exports cleanly.
 
 ## 4. Native build profiles: `app/eas.json`
 
@@ -115,6 +119,23 @@ unverified against EAS. Distribution prerequisites differ by route:
 - All curriculum is a synthetic draft; tester mode is empty. The new 20-item bank is reviewable only and not wired to the UI.
   `docs/Unit_A_Pilot_Content_Review.md` lists risks awaiting human review and makes no efficacy claim.
 
+### Normal-email registration (unpublished source, default off)
+
+- Default is off. All EAS profiles stay auth off (section 4). This section activates no public enrolment, SMTP, gateway
+  or credential.
+- The legacy `EXPO_PUBLIC_ACCOUNT_REGISTRATION=on` path is unchanged: local/staging, `.test` addresses only.
+- Exact confirmed-email registration is reachable only when ALL hold: the `local-supabase` auth provider is enabled,
+  `EXPO_PUBLIC_ACCOUNT_ENV=production`, `EXPO_PUBLIC_PRODUCTION_ACCOUNTS=on`, and distinct, strict public HTTPS API and
+  Auth roots are set in `EXPO_PUBLIC_API_BASE_URL` and `EXPO_PUBLIC_SUPABASE_AUTH_URL` (roots only, no `/auth/v1`
+  prefix).
+- Adapter, controller, hook and panel now support normal-email sign-up, a required OTP confirmation, resend, and then
+  ordinary password sign-in with no auto-login, plus timeouts and cancellation. Proven by in-memory tests only.
+- Do not enable unsupported Google sign-in or recovery buttons for appearance. Non-production fixture/private-inbox copy
+  stays labelled as such; do not relabel it as the real app.
+- Production readiness still requires: owner-approved real SMTP sender and credential configuration plus a delivery
+  test; a real-address gateway policy and appropriate origins; supported password recovery verified with a real inbox;
+  current phone, runtime and native-binary proof; and the existing privacy, content and store gates (sections 6-7).
+
 ## 6. Gates
 
 A gate is met only with a recorded artifact (link, log or signed note), not a statement. These are proposed gates, not an
@@ -165,3 +186,7 @@ not legal certification, and meeting the rules is not store approval.
    Play access and signing keys, and an approved local setup or EAS cloud.
 2. **Hosting, domain, organisation, SMTP:** database organisation and host, API and Auth domains, SMTP provider and sender.
 3. **Reviewers:** a qualified Arabic/curriculum reviewer, and a privacy/consent/retention and support-text reviewer.
+
+### Public-source private-QA recipient
+
+The committed private-QA recipient is the reserved synthetic fixture `owner-qa@example.invalid`. It retains exact-address enforcement and does not authorize real inbox sends. Live owner-only QA requires the separately retained, excluded local binding; do not place a real recipient or runtime credentials in source, commits or build artifacts intended for publication. Normal-email learning-beta accounts use their separate policy and still require an explicitly approved starter subset.

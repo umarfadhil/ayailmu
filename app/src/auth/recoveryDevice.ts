@@ -10,7 +10,7 @@ import Constants, { ExecutionEnvironment } from 'expo-constants';
 import { Linking } from 'react-native';
 
 import { accountApiOrigin } from '@/account/staging';
-import { accountAuthOrigin, LOCAL_SUPABASE, type SupabaseConfig } from '@/account/supabaseConfig';
+import { accountAuthOrigin, LOCAL_SUPABASE, PRIVATE_QA, type SupabaseConfig } from '@/account/supabaseConfig';
 import {
   createSecureRecoveryStore,
   memoryRecoveryStore,
@@ -88,15 +88,32 @@ type CryptoModule = Pick<typeof import('expo-crypto'), 'randomUUID'>;
  * the native callback, only when this configuration is validated here again (the provider, the production profile with
  * its exact capability, two distinct public root origins), recovery is on and this is not Expo Go; otherwise, or when the
  * native modules or the marker database are not there, it gets no store at all, never one in RAM. The native modules
- * load only then.
+ * load only then. A private QA build (its profile or its capability, checked first) is the same with its own exact
+ * capability and its two fixed roots, never the production one; it never gets a store in RAM either.
  */
 export function deviceRecoveryStore(config?: SupabaseConfig): RecoveryAttemptStore | null {
+  const marker = config as { environment?: unknown; privateQa?: unknown } | undefined;
+  if (marker !== undefined && (marker.environment === PRIVATE_QA || marker.privateQa !== undefined)) {
+    if (!config?.enabled) return null;
+    if (config.environment !== PRIVATE_QA || config.privateQa !== true || config.productionAccounts !== undefined) return null;
+    if (config.provider !== LOCAL_SUPABASE || !passwordRecoveryEnabled()) return null;
+    if (Constants.executionEnvironment === ExecutionEnvironment.StoreClient) return null;
+    const api = accountApiOrigin(config.apiBaseUrl, config.environment, undefined, config.privateQa);
+    const auth = accountAuthOrigin(config.authUrl, config.environment, undefined, config.privateQa);
+    if (api === null || auth === null || api === auth) return null;
+    return secureRecoveryStore({ api, auth, callbackUrl: NATIVE_RECOVERY_CALLBACK, environment: PRIVATE_QA, privateQa: true });
+  }
   if (config === undefined || !config.enabled || config.environment !== 'production') return memoryRecoveryStore();
   if (config.provider !== LOCAL_SUPABASE || config.productionAccounts !== true || !passwordRecoveryEnabled()) return null;
   if (Constants.executionEnvironment === ExecutionEnvironment.StoreClient) return null;
   const api = accountApiOrigin(config.apiBaseUrl, config.environment, config.productionAccounts);
   const auth = accountAuthOrigin(config.authUrl, config.environment, config.productionAccounts);
   if (api === null || auth === null || api === auth) return null;
+  return secureRecoveryStore({ api, auth, callbackUrl: NATIVE_RECOVERY_CALLBACK });
+}
+
+/** The secure store's own item under `binding`, over this installation's marker database; null when a native module is not there. */
+function secureRecoveryStore(binding: Parameters<typeof createSecureRecoveryStore>[1]): RecoveryAttemptStore | null {
   try {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const secureStore = require('expo-secure-store') as SecureStoreModule;
@@ -122,7 +139,7 @@ export function deviceRecoveryStore(config?: SupabaseConfig): RecoveryAttemptSto
         },
         newMarker: () => crypto.randomUUID(),
       },
-      { api, auth, callbackUrl: NATIVE_RECOVERY_CALLBACK },
+      binding,
       () => Date.now(),
     );
   } catch {

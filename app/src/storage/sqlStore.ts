@@ -2,7 +2,7 @@ import { parseCopy, SCHEMA_META_KEY, type CopyResult, type ParsedCopy, type RawD
 import type { SqlDb } from './sqlDb';
 import { answerProblem, learnerProblem } from './validate';
 import { createSerialQueue } from './serial';
-import { STORAGE_SCHEMA, type AnswerRecord, type ArchivedSnapshot, type Learner, type ReportRecord, type Snapshot, type Store } from './types';
+import { STORAGE_SCHEMA, type AnswerAppendGuard, type AnswerRecord, type ArchivedSnapshot, type Learner, type ReportRecord, type Snapshot, type Store } from './types';
 
 const MIGRATION_1 = `
 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY NOT NULL, value TEXT NOT NULL);
@@ -54,6 +54,15 @@ export async function readSqlRaw(db: SqlDb): Promise<RawDataset | null> {
 }
 
 const asText = (value: unknown): string => (typeof value === 'string' ? value : '');
+
+/** A guard holds only when it returns exactly `true`; one that throws, or returns anything else, is lost. */
+const guardHolds = (active: () => boolean): boolean => {
+  try {
+    return active() === true;
+  } catch {
+    return false;
+  }
+};
 
 /** Why a retired store refuses a write: an erase began on it (see SqlStore.erase), whether or not it completed. */
 const RETIRED = 'Storage retired: an account-data erase began in this store instance, so it refuses every further write.';
@@ -157,6 +166,51 @@ export class SqlStore implements Store {
           ]
         );
         await this.writeSnapshot(snapshot);
+      })
+    );
+  }
+
+  /**
+   * See Store.appendAnswer. The record is copied when called, so later caller changes cannot reach the write. In one
+   * transaction on the write queue: the guard is checked, the answer inserted, and the guard checked again just before
+   * commit; any refusal or failure rolls back. Only the answers table is written.
+   */
+  appendAnswer(record: AnswerRecord, guard: AnswerAppendGuard): Promise<void> {
+    let json: string;
+    let copy: AnswerRecord;
+    let metaKey: string, expectedRaw: string, learnerId: string;
+    try {
+      ({ metaKey, expectedRaw, learnerId } = guard);
+      json = JSON.stringify(record);
+      copy = JSON.parse(json) as AnswerRecord;
+      const p = answerProblem(copy);
+      if (p) throw new Error(`Answer is malformed (${p}); nothing was written.`);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+    const check = async () => {
+      if (this.retired) throw new Error(RETIRED);
+      const learner = await this.getLearner();
+      if (typeof learnerId !== 'string' || copy.learner_id !== learnerId || learner?.learner_id !== learnerId) {
+        throw new Error('Answer refused: its learner is not the stored learner; nothing was written.');
+      }
+      if ((await this.metaValue(metaKey)) !== expectedRaw) throw new Error('Answer refused: its session metadata changed; nothing was written.');
+      if (!guard.active()) throw new Error('Answer refused: its session is no longer active; nothing was written.');
+    };
+    return this.write(() =>
+      this.db.transaction(async () => {
+        await check();
+        const existing = await this.db.all<{ json: string }>('SELECT json FROM answers WHERE answer_id = ?', [copy.answer_id]);
+        if (existing.length) {
+          if (existing[0].json === json) return; // identical replay: nothing to write
+          throw new Error('Answer refused: a different answer with this answer_id is already stored; nothing was written.');
+        }
+        await this.db.run(
+          `INSERT INTO answers (answer_id, learner_id, item_id, session_id, timestamp, outcome, json)
+           VALUES (?, ?, ?, ?, ?, ?, ?)`,
+          [copy.answer_id, copy.learner_id, copy.item_id, copy.session_id, copy.timestamp, copy.outcome, json]
+        );
+        await check(); // rechecked immediately before commit
       })
     );
   }
@@ -310,6 +364,34 @@ export class SqlStore implements Store {
     return this.write(async () => {
       await this.db.exec('CREATE TABLE IF NOT EXISTS docs (name TEXT PRIMARY KEY NOT NULL, json TEXT NOT NULL);');
       await this.db.run('INSERT OR REPLACE INTO docs (name, json) VALUES (?, ?)', [name, text]);
+    });
+  }
+
+  /**
+   * saveDoc that writes only while `active()` is exactly true and this store is not retired. One transaction on the
+   * write queue: both are checked before the first statement, after each await and after the INSERT, just before
+   * commit. A lost or throwing guard rolls back and returns false; a retirement or any other failure rejects.
+   */
+  saveDocGuarded(name: string, text: string, active: () => boolean): Promise<boolean> {
+    const lost = new Error('Document save refused: its guard is no longer active; nothing was written.');
+    const check = () => {
+      if (this.retired) throw new Error(RETIRED);
+      if (!guardHolds(active)) throw lost;
+    };
+    return this.write(async () => {
+      try {
+        await this.db.transaction(async () => {
+          check();
+          await this.db.exec('CREATE TABLE IF NOT EXISTS docs (name TEXT PRIMARY KEY NOT NULL, json TEXT NOT NULL);');
+          check();
+          await this.db.run('INSERT OR REPLACE INTO docs (name, json) VALUES (?, ?)', [name, text]);
+          check(); // rechecked immediately before commit
+        });
+        return true;
+      } catch (e) {
+        if (e === lost) return false;
+        throw e;
+      }
     });
   }
 

@@ -14,13 +14,18 @@
 // after a password sign-in, for the same verified account only. Signing out forgets it.
 // Where a local or staging build turns it on, a signed-out learner may register and confirm a test account; that never
 // signs in. A normal sign-in, sign-out, remembered restore or recovery ends any registration under way.
+// A learning-beta build (its validated profile, which refuses registration, Google and recovery) is ordinary email sign-in
+// to its own beta server only: the API client gets its learning-beta capability, the messages name the beta server, and a
+// new adult profile records its own unreviewed draft consent version. It is not a production service.
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
 import { createAccountDeletionController, type AccountDeletionController, type AccountDeletionState } from '@/account/accountDeletion';
 import { accountNamespace, copyGuestToAccount, GUEST_NAMESPACE, type Namespace, type OpenedAccountDataset, type RawSource } from '@/account/datasets';
 import { loadGoogleConfig } from '@/account/googleConfig';
 import { isCanonicalUuid } from '@/account/ids';
+import { LEARNING_BETA } from '@/account/learningBeta';
 import { openAccountDataset } from '@/account/openAccountDataset';
+import { PRIVATE_QA } from '@/account/privateQa';
 import { rememberDeviceEnabled } from '@/account/rememberConfig';
 import { createAccountSession, exportOwnAccountData } from '@/account/session';
 import { STAGING } from '@/account/staging';
@@ -29,17 +34,22 @@ import { ApiError, createAccountControls, createApiClient, discoverOwnAccountDel
 import type { PendingGoogleStore } from '@/auth/google';
 import type { GoogleBrowser, GoogleBrowserResult } from '@/auth/googleBrowser';
 import { deviceGoogleBrowser, deviceGoogleStore } from '@/auth/googleDevice';
+import { devicePrivateQaNetwork } from '@/auth/privateQaDevice';
+import type { PrivateQaNetworkFailure } from '@/auth/privateQaNetwork';
 import { prepareRecovery, type RecoveryAttemptStore, type RecoveryRuntime } from '@/auth/recoverySetup';
 import { deviceSessionVault } from '@/auth/sessionVault';
 import { createSupabaseAuth } from '@/auth/supabaseAuth';
 import { AuthError, type AuthIdentity, type SessionVault } from '@/auth/types';
-import { newId } from '@/engine/util';
+import { localDate, newId } from '@/engine/util';
+import { drainPilotAnswers, PILOT_META_KEY } from '@/pilot/unitA/capture';
+import { adoptGuestPilot, hasGuestPilotProgress, type GuestPilotAdoption } from '@/pilot/unitA/guestImport';
 import { runCheckpoints } from '@/storage/checkpoints';
 import type { RawDataset } from '@/storage/rawRecords';
 import type { Store } from '@/storage/types';
-import { openJournal, SyncError, type JournalView, type LinkChoice, type SyncConnection, type SyncJournal } from '@/sync/journal';
+import { projectAccountProgress, type AccountSyncProgress, type ProgressReceipt } from '@/sync/accountProgress';
+import { openJournal, SyncError, type JournalView, type LinkChoice, type PreferencePush, type SyncConnection, type SyncJournal, type SyncReport } from '@/sync/journal';
 import type { AccountBusy, AccountMode, AccountPanelProps, AccountProfileChoice, ConnectedProfile } from '@/ui/account/AccountPanel';
-import { APP_VERSION, LOCAL_ACCOUNT_CONSENT_VERSION, STAGING_ACCOUNT_CONSENT_VERSION, useApp } from '@/ui/AppContext';
+import { APP_VERSION, LOCAL_ACCOUNT_CONSENT_VERSION, STAGING_ACCOUNT_CONSENT_VERSION, useApp, type AnswerSaveNotice } from '@/ui/AppContext';
 import { useAccountRegistration } from '@/ui/useAccountRegistration';
 import { usePasswordRecovery } from '@/ui/usePasswordRecovery';
 
@@ -56,6 +66,10 @@ export interface AccountContextValue {
   dataControls?: AccountDataControls;
   /** In-run deletion status survives navigation and sign-out; a new verified account gets its own status. */
   deletion?: AccountDeletionModel;
+  /** Only in an explicitly private native QA build: never set for an ordinary or disabled one. */
+  privateQa?: true;
+  /** Only while that private build's transport is unavailable: why, as its preparation named it. Nothing was built. */
+  unavailableReason?: PrivateQaNetworkFailure;
 }
 
 export interface AccountDeletionModel {
@@ -107,6 +121,10 @@ const PREFERENCE_FIELDS = ['session_minutes', 'arabic_scale'] as const;
 const PROFILE_LABEL = 'Profil dewasa';
 const LOST_RESPONSE = 'Respons layanan akun belum diterima. Jawaban tetap tersimpan di perangkat ini; sinkronkan lagi untuk mengirim ulang permintaan yang sama.';
 const ENDED = 'Sesi akun berakhir. Masuk lagi; data di perangkat ini tetap ada.';
+/** Some Unit A answers stayed only in the pilot document: never a claim that everything was sent. */
+const CAPTURE_HELD = 'Jawaban tersimpan di perangkat. Pencatatan akun akan dicoba lagi.';
+/** The account's dataset could not be re-read for learning after an account data operation: never a sync claim. */
+const RELOAD_FAILED = 'Data akun di perangkat ini belum bisa dibuka lagi untuk belajar. Data di perangkat ini tetap ada.';
 
 /**
  * The account service as this layer's messages name it, and the version its adult-profile consent records: the local
@@ -127,6 +145,12 @@ const STAGING_SERVICE: AccountService = { name: 'server akun staging', account: 
  * production profile never records the local or staging consent instead.
  */
 const PRODUCTION_SERVICE: AccountService = { name: 'layanan akun', account: 'akun', consentVersion: 'draft-production-account-sync-consent-0.1' };
+/**
+ * The learning-beta account service: ordinary account names, and the remote beta server by name. Its consent version is its
+ * own UNREVIEWED draft marker, never the local, staging or production one: it needs the owner's and a privacy review's
+ * approval before any release, and nothing here says the beta is a production service.
+ */
+const LEARNING_BETA_SERVICE: AccountService = { name: 'server akun beta', account: 'akun', consentVersion: 'draft-learning-beta-account-sync-consent-0.1' };
 
 /** `text` starting a sentence. */
 const upperFirst = (text: string): string => text.charAt(0).toUpperCase() + text.slice(1);
@@ -153,6 +177,9 @@ function authMessage(e: unknown, s: AccountService): string {
         return 'Pakai alamat email uji yang berakhiran .test.';
       case 'invalid_email':
         return 'Periksa alamat email.';
+      case 'private_recipient':
+        // Refused before anything was sent: this build takes its one approved address only.
+        return 'Gunakan email yang disetujui untuk build ini.';
       case 'invalid_credentials':
         return 'Email atau kata sandi tidak cocok.';
       case 'network':
@@ -205,6 +232,20 @@ function syncFailure(e: unknown, view: JournalView, s: AccountService): string {
   return 'Sinkronisasi belum selesai. Jawaban tetap tersimpan di perangkat ini.';
 }
 
+const ALL_SENT = 'Semua jawaban terkirim.';
+
+/** What the latest journal facts allow saying after a sync: never everything sent while an answer is queued, blocked or held. */
+function progressStatus(p: AccountSyncProgress, linked: boolean): string {
+  const notes: string[] = [];
+  if (p.blocked > 0) notes.push(`${p.blocked} jawaban tersimpan di perangkat ini tetapi tidak bisa dikirim ke akun.`);
+  if (p.capturePending) notes.push(CAPTURE_HELD);
+  if (p.queued > 0) {
+    const differs = p.conflicts > 0 && p.conflicts === p.queued;
+    return [`${p.queued} jawaban belum diterima akun${differs ? ' karena salinannya di akun berbeda' : ''}. Jawaban tetap tersimpan di perangkat ini.`, ...notes].join(' ');
+  }
+  return `${linked ? 'Profil tersambung. ' : ''}${notes.length ? notes.join(' ') : ALL_SENT}`;
+}
+
 /** What differs, in the learner's words: this device's choice and the account's. */
 function conflictDetail(view: JournalView): string | undefined {
   const server = view.preferenceConflict?.settings;
@@ -226,6 +267,23 @@ interface Binding {
   /** Set once the sign-in that published the view has finished its own work. */
   ready: boolean;
   deletionTurn?: number;
+  /** The server's progress counts as last read for this account and its linked profile, and whether a later read failed. */
+  receipt?: ProgressReceipt;
+  receiptState?: 'verified' | 'stale';
+  /** One manual sync at a time; set and cleared synchronously. */
+  syncInFlight?: boolean;
+  /** An answer was saved while a sync was in flight: the sync records it locally once all its network work has ended. */
+  deferred?: boolean;
+  /** Saved answers the journal may not hold yet: deferred, or their local recording failed. */
+  capturePending?: boolean;
+  /** Unit A captures the last sync could not append to the store yet, or the screen told are held. */
+  held?: boolean;
+  /**
+   * The screen's own latest word on its capture (held, or fully saved) and how many were applied to this binding. Local
+   * only, never stored: a sync whose drain began before the latest one never overrides it.
+   */
+  noticeHeld?: boolean;
+  notices?: number;
 }
 
 export function AccountProvider({
@@ -264,43 +322,81 @@ export function AccountProvider({
 
   const config = useMemo(() => loadSupabaseConfig(), []);
   // The validated configuration's own profile (never a guess from an address): 'staging' in a staging build, 'production'
-  // in a production one, else absent.
+  // in a production one, 'learning-beta' in a learning-beta one, else absent.
   const environment = config.enabled ? config.environment : undefined;
-  const service = environment === 'production' ? PRODUCTION_SERVICE : environment === STAGING ? STAGING_SERVICE : LOCAL_SERVICE;
-  // Continue with Google: only with the account service on, in a build that turns it on, where its platform can run it.
+  const service =
+    environment === 'production'
+      ? PRODUCTION_SERVICE
+      : environment === LEARNING_BETA
+        ? LEARNING_BETA_SERVICE
+        : environment === STAGING
+          ? STAGING_SERVICE
+          : LOCAL_SERVICE;
+  // The private native QA transport, decided once per configuration by the device port: off for an ordinary or disabled
+  // profile (its clients keep their usual transport), else the one bound fetch every account client gets, or unavailable.
+  const privateNetwork = useMemo(() => devicePrivateQaNetwork(config), [config]);
+  const privateFetch = privateNetwork.state === 'ready' ? privateNetwork.fetch : undefined;
+  // An explicitly private profile builds no account client without that fetch: never a fallback to the global one.
+  const privateProfile = privateNetwork.state !== 'off' || (config.enabled && (config.environment === PRIVATE_QA || config.privateQa !== undefined));
+  const privateBlocked = privateProfile && privateFetch === undefined;
+  // Continue with Google: only with the account service on, in a build that turns it on, where its platform can run it;
+  // never in the private profile.
   const google = useMemo(() => {
-    if (!config.enabled) return null;
+    if (!config.enabled || privateProfile) return null;
     const browser = googleBrowser ?? deviceGoogleBrowser();
     if (!browser) return null;
     const settings = loadGoogleConfig(browser.platform);
     if (!settings.enabled) return null;
     const store = googleStore ?? deviceGoogleStore();
     return store ? { browser, settings, store } : null;
-  }, [config, googleBrowser, googleStore]);
+  }, [config, googleBrowser, googleStore, privateProfile]);
   // Remembering an email sign-in: only with the account service on, in a build that turns it on, with a secure vault.
   const vault = useMemo(() => {
-    if (!config.enabled || !rememberDeviceEnabled()) return null;
+    if (!config.enabled || privateBlocked || !rememberDeviceEnabled()) return null;
     return sessionVault === undefined ? deviceSessionVault() : sessionVault;
-  }, [config, sessionVault]);
+  }, [config, sessionVault, privateBlocked]);
   // Password recovery: only with the account service on, in a build that turns it on, with a callback this profile may use.
-  const recoverySetup = useMemo(() => prepareRecovery(config, recoveryRuntime, recoveryStore), [config, recoveryRuntime, recoveryStore]);
+  // The private profile takes it only with its bound fetch; prepareRecovery then allows the native callback only, with
+  // its secure store and native crypto port (never a store in RAM).
+  const recoverySetup = useMemo(
+    () => (privateBlocked ? null : prepareRecovery(config, recoveryRuntime, recoveryStore)),
+    [config, recoveryRuntime, recoveryStore, privateBlocked]
+  );
+  /** The Auth adapter's recovery option: a store, and in the private profile also its native crypto port; otherwise none. */
+  const recoveryOptions = useMemo(() => {
+    const store = recoverySetup?.store;
+    if (!recoverySetup || !store) return null;
+    if (!privateProfile) return { config: recoverySetup.config, store };
+    const nativeCrypto = recoverySetup.crypto;
+    return privateFetch && nativeCrypto ? { config: recoverySetup.config, store, nativeCrypto } : null;
+  }, [recoverySetup, privateProfile, privateFetch]);
   const services = useMemo(() => {
-    if (!config.enabled) return null;
-    // The platform's fetch as this provider found it: a sign-out still on its way after leaving uses the same one.
+    if (!config.enabled || privateBlocked) return null;
+    // The private profile's bound fetch, else the platform's fetch as this provider found it: a sign-out still on its way
+    // after leaving uses the same one.
     const auth = createSupabaseAuth({
       config,
-      fetch: globalThis.fetch,
+      fetch: privateFetch ?? globalThis.fetch,
       google: google ? { config: google.settings, store: google.store } : undefined,
       ...(vault ? { remember: { vault } } : {}),
-      // Without a pending-attempt store the Auth adapter gets no recovery; recoverySetup still recognizes its links.
-      ...(recoverySetup?.store ? { recovery: { config: recoverySetup.config, store: recoverySetup.store } } : {}),
+      // Without a pending-attempt store (or, privately, a crypto port) the Auth adapter gets no recovery; recoverySetup
+      // still recognizes its links.
+      ...(recoveryOptions ? { recovery: recoveryOptions } : {}),
     });
     // The API client revalidates its address under the same profile the Auth adapter takes from `config`.
-    const api = createApiClient({ baseUrl: config.apiBaseUrl, environment: config.environment, productionAccounts: config.productionAccounts });
+    // Only the private profile names its transport and capability, and only a learning-beta build its own; ordinary options
+    // stay as they were.
+    const api = createApiClient({
+      baseUrl: config.apiBaseUrl,
+      environment: config.environment,
+      productionAccounts: config.productionAccounts,
+      ...(privateFetch ? { fetch: privateFetch, privateQa: true } : {}),
+      ...(config.learningBeta === true ? { learningBeta: true } : {}),
+    });
     const session = createAccountSession({ auth, api });
     const conn: SyncConnection = { auth, session, api };
     return { auth, api, session, conn, google };
-  }, [config, google, vault, recoverySetup]);
+  }, [config, google, vault, recoveryOptions, privateBlocked, privateFetch]);
 
   const [account, setAccount] = useState<{ key: string; label: string } | null>(null);
   const [busy, setBusy] = useState<AccountBusy | null>(null);
@@ -362,6 +458,8 @@ export function AccountProvider({
     owner: services,
     available: account === null && busy === null && !recoveryActive,
     onIntent: onRegistrationIntent,
+    // The private profile's one bound fetch; an ordinary build keeps the platform's.
+    ...(privateFetch ? { fetch: privateFetch } : {}),
   });
   const { cancel: registrationNormalStarting } = registrationControl;
 
@@ -416,19 +514,152 @@ export function AccountProvider({
       setConnected(null);
       setPrefsConflict(null);
     };
+    /** `bound`'s factual progress from its own journal and its own receipt only. */
+    const projectOf = (bound: Binding, j: SyncJournal): AccountSyncProgress =>
+      projectAccountProgress({
+        journal: j.view(),
+        receipt: bound.receipt ?? null,
+        receiptState: bound.receiptState,
+        capturePending: bound.capturePending === true || bound.held === true,
+      });
+    /** The same, or null without a journal (a read-only tab has none). */
+    const progressOf = (bound: Binding | null, j: SyncJournal | null): AccountSyncProgress | null => (bound && j ? projectOf(bound, j) : null);
     const showConnected = (syncStatus: string) =>
       setConnected({
         label: PROFILE_LABEL,
         syncStatus,
         savedAnswers: connectedRef.current?.savedAnswers ?? 0,
         otherDeviceAnswers: journal.current?.view().remote.length ?? 0,
+        progress: progressOf(binding.current, journal.current),
       });
+    /** Republishes the shown profile with `bound`'s latest progress (and a status derived from it), only while that binding is the one shown. */
+    const refreshProgress = (bound: Binding, j: SyncJournal, status?: (current: string, progress: AccountSyncProgress) => string) => {
+      const shown = connectedRef.current;
+      if (!shown || binding.current !== bound) return;
+      const progress = projectOf(bound, j);
+      setConnected({ ...shown, progress, syncStatus: status ? status(shown.syncStatus, progress) : shown.syncStatus });
+    };
+    /**
+     * Synchronous liveness of dataset `o` as published with `bound` in turn `t`: the same view, handle and turn, its
+     * sign-in finished, no deletion or account data operation, and the sign-in in use neither signed out nor another
+     * provider user or account. Turns false the moment a sign-out, another sign-in or a deletion starts its turn,
+     * before any rerender. Reads the auth status and verified account only, never a credential.
+     */
+    const datasetLive = (bound: Binding | null, o: OpenedAccountDataset, t: number) => (): boolean => {
+      try {
+        if (!services || bound === null || !live(t) || binding.current !== bound || bound.opened !== o || opened.current !== o) return false;
+        if (bound.ready !== true || deletionBlocked() || dataOp.current) return false;
+        const now = services.auth.status();
+        if (now.state === 'signed-out' || now.identity.uid !== bound.uid) return false;
+        const verified = services.session.current();
+        return verified === null || verified.accountId === bound.accountId;
+      } catch {
+        return false;
+      }
+    };
+    /**
+     * Locally, never over the network: the saved answers of `bound`'s dataset the journal does not hold yet join it, only
+     * while the binding is live in turn `t` for journal `j` and `extra` holds (the journal's own writer guard). Returns how
+     * many joined, or null when the guard was lost or the recording failed.
+     */
+    async function reconcileLocal(bound: Binding, j: SyncJournal, t: number, extra: () => boolean = () => true): Promise<number | null> {
+      const live = datasetLive(bound, bound.opened, t);
+      const holds = () => extra() === true && live() && journal.current === j;
+      try {
+        const added = await j.reconcile(holds);
+        return holds() ? added : null;
+      } catch {
+        return null;
+      }
+    }
+    /**
+     * An answer was just saved to account dataset `o` (journal `j`, binding `bound`, turn `t`; `learnerId` is the learner
+     * the selection began with). Only while the app's generation guard `active`, the binding and that learner all still
+     * hold. With a sync in flight nothing is read or recorded: the answer is marked for the sync's own final local
+     * recording, so it cannot ride the batch the sync already took. Otherwise it joins the journal locally, with no
+     * request. A failed recording keeps the saved answer, says so truthfully and is retried by the next manual sync; the
+     * answer itself is never written again.
+     * With an explicit `notice` the screen states its capture: held (its row append failed) is marked at once, locally,
+     * with nothing recorded or sent, even during a sync; saved clears a known held state before the recording above.
+     * Without one nothing is stated, and a held capture stays as it is.
+     */
+    async function answerSaved(
+      bound: Binding,
+      o: OpenedAccountDataset,
+      j: SyncJournal,
+      t: number,
+      learnerId: string,
+      active: () => boolean,
+      notice?: AnswerSaveNotice
+    ): Promise<void> {
+      const live = datasetLive(bound, o, t);
+      const holds = () => active() === true && live() && journal.current === j;
+      // Read before anything is awaited: only a literal boolean states anything about the capture.
+      const stated = typeof notice?.capturePending === 'boolean' ? notice.capturePending : null;
+      const defer = () => {
+        bound.deferred = true;
+        bound.capturePending = true;
+        refreshProgress(bound, j);
+      };
+      /** The screen's latest word: kept on the binding, so a sync whose drain began earlier never overrides it. */
+      const note = (held: boolean) => {
+        bound.notices = (bound.notices ?? 0) + 1;
+        bound.noticeHeld = held;
+        bound.held = held;
+      };
+      if (!holds()) return;
+      if (bound.syncInFlight && stated === null) {
+        defer();
+        return;
+      }
+      let added: number | null = null;
+      try {
+        const learner = await o.store.getLearner();
+        if (!holds() || learner?.learner_id !== learnerId) return;
+        if (stated !== null) note(stated);
+        if (stated === true) {
+          // Held: nothing is appended, recorded or sent; only an earlier claim that everything was sent is withdrawn.
+          refreshProgress(bound, j, (current, progress) => (current.includes(ALL_SENT) ? progressStatus(progress, false) : current));
+          return;
+        }
+        if (bound.syncInFlight) {
+          defer();
+          return;
+        }
+        // A sync starting meanwhile loses this guard and records the answer itself (or leaves it to its final recording).
+        added = await reconcileLocal(bound, j, t, () => holds() && !bound.syncInFlight);
+      } catch {
+        added = null;
+      }
+      if (!holds()) return;
+      if (bound.syncInFlight) {
+        defer();
+        return;
+      }
+      if (added === null) {
+        bound.capturePending = true;
+        refreshProgress(bound, j, () => CAPTURE_HELD);
+        return;
+      }
+      bound.capturePending = false;
+      const recorded = added;
+      // A new answer makes an earlier claim that everything was sent untrue, and a held capture's note is out of date.
+      refreshProgress(bound, j, (current, progress) => ((recorded > 0 && current.includes(ALL_SENT)) || current.includes(CAPTURE_HELD) ? progressStatus(progress, false) : current));
+    }
     /** Learning uses the account's dataset from now on; preference changes go through its journal. */
-    const selectAccountDataset = (o: OpenedAccountDataset, j: SyncJournal | null) => {
-      if (opened.current !== o || deletionBlocked() || dataOp.current) return Promise.resolve();
-      return appRef.current.selectDataset({
+    const selectAccountDataset = async (o: OpenedAccountDataset, j: SyncJournal | null): Promise<void> => {
+      const blocked = () => opened.current !== o || deletionBlocked() || !!dataOp.current;
+      if (blocked()) return;
+      const bound = binding.current;
+      const t = turn.current;
+      // The learner this selection begins with: an answer of any other learner is never recorded through it.
+      const original = j ? await o.store.getLearner() : null;
+      if (blocked() || t !== turn.current) return;
+      await appRef.current.selectDataset({
         store: o.store,
         readOnly: o.access === 'owner' ? null : (o.reason ?? 'Akun ini sedang dipakai di tab lain; tab ini hanya bisa membaca.'),
+        active: datasetLive(bound, o, t),
+        answersSaved: j && bound && original ? (active, notice) => answerSaved(bound, o, j, t, original.learner_id, active, notice) : undefined,
         savePreferences: j
           ? async (patch) => {
               for (const field of PREFERENCE_FIELDS) {
@@ -439,6 +670,34 @@ export function AccountProvider({
           : undefined,
       });
     };
+    /** Learning is live in `bound`'s own dataset right now; read before an account data operation sets its dataOp. */
+    const learningIn = (bound: Binding): boolean => {
+      const a = appRef.current;
+      try {
+        return a.dataset === 'account' && a.store === bound.opened.store && a.datasetActive?.() === true;
+      } catch {
+        return false;
+      }
+    };
+    /**
+     * After a non-destructive account data operation of turn `t` has ended (its own dataOp cleared): learning, live in
+     * `bound`'s dataset before it, resumes there through a fresh selection, while the same ready view, handle and turn
+     * are current and no deletion blocks it. Callbacks published earlier stay fenced; a newer turn owns everything and
+     * is never touched. Never rejects: a failed re-read leaves the dataset inactive and says so, nothing more.
+     */
+    async function resumeLearning(t: number, bound: Binding, shown: ConnectedProfile | null): Promise<void> {
+      const o = bound.opened;
+      const own = () => live(t) && binding.current === bound && opened.current === o && bound.ready === true && !dataOp.current && !deletionBlocked();
+      if (!own()) return;
+      try {
+        await selectAccountDataset(o, journal.current);
+      } catch {
+        if (live(t) && binding.current === bound) setError(RELOAD_FAILED);
+        return;
+      }
+      // A failed deletion's quiescing hid the connected profile; it comes back with the dataset.
+      if (own() && connectedRef.current === null && shown) setConnected({ ...shown, progress: progressOf(bound, journal.current) });
+    }
 
     /**
      * Ends the sign-in at once: its work stops, no token is handed out again, a remembered sign-in is forgotten and
@@ -481,42 +740,105 @@ export function AccountProvider({
     /** The sign-in this work belonged to is gone (expired, refused, replaced or signed out): sign out visibly. */
     const ended = (e: unknown) => sessionEnded(e) || services?.auth.status().state === 'signed-out';
 
+    /**
+     * Locally, before a sync of turn `t` sends anything: the account learner's saved Unit A intents are appended to the
+     * account's own store, owned "account:<learner>", under the live binding only. Nothing is sent and nothing but
+     * answers is written; a document without captures is left as it is. True when some may still be unrecorded.
+     */
+    async function drainCaptures(t: number): Promise<boolean> {
+      const bound = binding.current;
+      const o = bound?.opened;
+      if (!bound || !o || opened.current !== o || o.access !== 'owner' || typeof o.store.getMeta !== 'function') return false;
+      try {
+        // Only a stored pilot document with captures has anything to record.
+        const raw: unknown = await o.store.getMeta(PILOT_META_KEY);
+        if (typeof raw !== 'string') return false;
+        const doc: unknown = JSON.parse(raw);
+        if (typeof doc === 'object' && doc !== null && !Object.prototype.hasOwnProperty.call(doc, 'captures')) return false;
+        const learner = await o.store.getLearner();
+        if (!learner) return true;
+        await drainPilotAnswers({ store: o.store, owner: `account:${learner.learner_id}`, active: datasetLive(bound, o, t) });
+        return false;
+      } catch {
+        return true;
+      }
+    }
+
     async function sync(link: LinkChoice | null): Promise<void> {
       const j = journal.current;
-      // Nothing ordinary starts while an account data operation is under way.
-      if (!j || !services || dataOp.current || deletionBlocked()) return;
+      const bound = binding.current;
+      // Nothing ordinary starts while an account data operation is under way, and this binding syncs one at a time.
+      if (!j || !services || !bound || bound.opened !== opened.current || bound.syncInFlight || dataOp.current || deletionBlocked()) return;
+      bound.syncInFlight = true;
+      try {
+        await runSync(j, bound, link);
+      } finally {
+        bound.syncInFlight = false;
+      }
+    }
+
+    /**
+     * The one manual sync of `bound`, whose syncInFlight is set. An answer saved while it runs is only marked, so it never
+     * rides a batch already taken; once ALL its network work (the progress read included) has ended, the answers saved
+     * meanwhile are recorded locally under the same guard, and stay queued for the next manual sync.
+     */
+    async function runSync(j: SyncJournal, bound: Binding, link: LinkChoice | null): Promise<void> {
       const t = turn.current;
       setBusy('sync');
       setError(null);
       showConnected('Menyinkronkan…');
-      let status: string;
+      let report: SyncReport | null = null;
+      let prefs: PreferencePush | null = null;
+      // Unit A captures held back stay claimed as held until a sync gets to append them.
+      let held = bound.held === true;
+      // How many capture notices of the screen this binding had when `held` was last known: a later one is newer than it.
+      let seen = bound.notices ?? 0;
+      let failure: string | null = null;
       try {
         await ensureFresh();
-        const report = await j.sync(connectionFor(t), link);
-        const prefs = await j.pushPreferences(connectionFor(t));
-        const differs = report.conflicts.length > 0 && report.conflicts.length === report.pending;
-        status =
-          report.pending > 0
-            ? `${report.pending} jawaban belum diterima akun${differs ? ' karena salinannya di akun berbeda' : ''}. Jawaban tetap tersimpan di perangkat ini.`
-            : `${report.linked.length ? 'Profil tersambung. ' : ''}Semua jawaban terkirim.`;
-        if (prefs === 'conflict') status += ' Pengaturan di akun berbeda; pilih yang dipakai.';
+        // Refreshed first; the pilot's saved answers then join the account's store, before anything is sent.
+        seen = bound.notices ?? 0;
+        held = await drainCaptures(t);
+        report = await j.sync(connectionFor(t), link);
+        prefs = await j.pushPreferences(connectionFor(t));
       } catch (e) {
         if (!live(t)) return;
         if (ended(e)) {
           await signOut(ENDED);
           return;
         }
-        status = syncFailure(e, j.view(), service);
+        failure = syncFailure(e, j.view(), service);
       }
       let savedAnswers = connectedRef.current?.savedAnswers ?? 0;
       try {
-        savedAnswers = (await j.readProgress(connectionFor(t))).events;
+        const read = await j.readProgress(connectionFor(t));
+        savedAnswers = read.events;
+        if (live(t) && binding.current === bound) {
+          bound.receipt = { accountId: bound.accountId, progress: read, checkedAt: new Date().toISOString() };
+          bound.receiptState = 'verified';
+        }
       } catch {
-        // Not linked yet, or unreachable: the last known count stays.
+        // Not linked yet, or unreachable: the last count of this binding stays, now as stale; another binding never gets it.
+        if (bound.receipt) bound.receiptState = 'stale';
       }
       if (!live(t)) return;
+      // Only now, with every request done: the answers saved meanwhile join the journal, locally and under the same guard.
+      let recorded: boolean;
+      do {
+        bound.deferred = false;
+        recorded = (await reconcileLocal(bound, j, t)) !== null;
+      } while (bound.deferred && recorded);
+      if (!live(t)) return;
+      bound.capturePending = !recorded;
+      // A capture notice told after the drain began (held or saved, even while the upload ran) is newer than its result.
+      bound.held = (bound.notices ?? 0) === seen ? held : bound.noticeHeld === true;
+      // Nothing awaits between the last deferred check and the flag's end: an answer saved from now on finds the sync over.
       const view = j.view();
-      setConnected({ label: PROFILE_LABEL, syncStatus: status, savedAnswers, otherDeviceAnswers: view.remote.length });
+      const progress = projectOf(bound, j);
+      bound.syncInFlight = false;
+      let status = failure ?? progressStatus(progress, (report?.linked.length ?? 0) > 0);
+      if (failure === null && prefs === 'conflict') status += ' Pengaturan di akun berbeda; pilih yang dipakai.';
+      setConnected({ label: PROFILE_LABEL, syncStatus: status, savedAnswers, otherDeviceAnswers: view.remote.length, progress });
       setPrefsConflict(view.preferenceConflict ? { detail: conflictDetail(view) } : null);
       setBusy(null);
     }
@@ -650,10 +972,20 @@ export function AccountProvider({
           !j ? 'Akun ini sedang dipakai di tab lain; tab ini hanya bisa membaca.' : view?.profileId ? 'Belum disinkronkan sejak masuk. Tekan «Sinkronkan sekarang».' : LOST_RESPONSE
         );
       } else {
-        const guest = appRef.current.guestStore;
+        const guest = appRef.current.guestStore as (Store & { readRaw?: () => Promise<RawDataset | null> }) | null;
         const answers = guest ? (await guest.listAnswers()).length : 0;
+        // Guest Unit A progress lives in the pilot document only: offered as well, even without answers. Its read never
+        // fails this sign-in; unreadable, it is simply not offered.
+        let pilotProgress = false;
+        if (guest?.readRaw) {
+          try {
+            pilotProgress = hasGuestPilotProgress(await guest.readRaw(), localDate(Date.now()));
+          } catch {
+            pilotProgress = false;
+          }
+        }
         if (!live(t)) return;
-        setGuestCopy(answers > 0 ? { answers } : null);
+        setGuestCopy(pilotProgress ? { answers, pilotProgress: true } : answers > 0 ? { answers } : null);
         setProfiles(verified.profiles.map((p) => ({ id: p.profileId, label: `${PROFILE_LABEL} · ${p.highSeq} jawaban tercatat di akun` })));
       }
       bound.ready = true;
@@ -797,22 +1129,62 @@ export function AccountProvider({
       const o = opened.current;
       const j = journal.current;
       const guest = appRef.current.guestStore as (Store & { readRaw?: () => Promise<RawDataset | null> }) | null;
-      if (!o || !j || !guest || dataOp.current || deletionBlocked()) return;
+      const bound = binding.current;
+      if (!o || !j || !guest || !bound || bound.opened !== o || dataOp.current || deletionBlocked()) return;
       const t = turn.current;
       setBusy('guest-copy');
       setError(null);
       try {
-        // Read through the open guest store's own queue; written only through the account dataset's owner.
-        const source: RawSource = { namespace: GUEST_NAMESPACE, readRaw: () => (guest.readRaw ? guest.readRaw() : Promise.resolve(null)) };
-        const result = await copyGuestToAccount({ from: source, to: o.raw, consent: { copyGuestData: true, at: new Date().toISOString() } });
+        // Read through the open guest store's own queue; written only through the account dataset's owner. The exact
+        // snapshot the copy read is the one whose Unit A progress is adopted below.
+        let snapshot: RawDataset | null = null;
+        const source: RawSource = {
+          namespace: GUEST_NAMESPACE,
+          readRaw: async () => {
+            snapshot = guest.readRaw ? await guest.readRaw() : null;
+            return snapshot;
+          },
+        };
+        const consent = { copyGuestData: true as const, at: new Date().toISOString() };
+        const result = await copyGuestToAccount({ from: source, to: o.raw, consent });
+        // Only for this verified account's own handle, in this turn: the guest's Unit A document, owner only.
+        let pilot: GuestPilotAdoption | 'failed' = 'none';
+        try {
+          pilot = await adoptGuestPilot({
+            store: o.store,
+            source: snapshot,
+            consent,
+            active: () => live(t) && binding.current === bound && opened.current === o && journal.current === j && !deletionBlocked(),
+            today: localDate(Date.now()),
+          });
+        } catch {
+          pilot = 'failed';
+        }
         await j.reconcile();
         if (!live(t)) return;
+        refreshProgress(bound, j);
+        if (pilot === 'failed') {
+          // The archive and the imported document stay for a retry; never a claim the progress was copied.
+          setError('Kemajuan Unit A tamu belum bisa dipindahkan ke akun ini. Coba salin lagi; data tamu tetap tersimpan di perangkat ini.');
+          return;
+        }
+        const answersCopied = result.answers > 0 ? `${result.answers} jawaban tamu disalin ke akun ini. ` : '';
         setGuestCopy((c) => ({
           answers: c?.answers ?? result.answers,
+          ...(c?.pilotProgress ? { pilotProgress: true } : {}),
           result:
-            result.answers > 0
-              ? `${result.answers} jawaban tamu disalin ke akun ini. Data tamu tetap tersimpan di perangkat ini.`
-              : 'Tidak ada jawaban tamu baru untuk disalin. Data tamu tetap tersimpan di perangkat ini.',
+            pilot === 'adopted'
+              ? `${answersCopied}Kemajuan Unit A tamu disalin ke akun ini. Data tamu tetap tersimpan di perangkat ini.`
+              : // An earlier copy's snapshot resumed; the newer guest progress is only archived, never merged.
+                pilot === 'restored'
+                ? `${answersCopied}Kemajuan Unit A tamu yang disalin sebelumnya dilanjutkan di akun ini. Kemajuan tamu yang lebih baru disimpan sebagai arsip terpisah, tidak digabungkan. Data tamu tetap tersimpan di perangkat ini.`
+                : pilot === 'archived'
+                  ? `${answersCopied}Kemajuan Unit A tamu disimpan sebagai arsip terpisah di akun ini, tetapi tidak dilanjutkan sebagai kemajuan profil akun ini. Data tamu tetap tersimpan di perangkat ini.`
+                  : pilot === 'unchanged'
+                    ? `${answersCopied}Kemajuan Unit A tamu sudah tersimpan di akun ini sebelumnya. Data tamu tetap tersimpan di perangkat ini.`
+                    : result.answers > 0
+                      ? `${result.answers} jawaban tamu disalin ke akun ini. Data tamu tetap tersimpan di perangkat ini.`
+                      : 'Tidak ada jawaban tamu baru untuk disalin. Data tamu tetap tersimpan di perangkat ini.',
         }));
       } catch {
         if (live(t)) setError('Data tamu belum bisa disalin. Data tamu tetap tersimpan di perangkat ini.');
@@ -934,6 +1306,7 @@ export function AccountProvider({
               choice === 'keep-local'
                 ? 'Pilihan disimpan: pengaturan perangkat ini dipakai. Tekan «Sinkronkan sekarang» untuk mengirimnya.'
                 : 'Pengaturan akun dipakai di perangkat ini.',
+            progress: progressOf(binding.current, j),
           });
         }
       } catch {
@@ -954,6 +1327,8 @@ export function AccountProvider({
       const bound = binding.current;
       if (!services || !bound || opened.current !== bound.opened) throw new AuthError('signed_out');
       if (!bound.ready || dataOp.current || deletionBlocked()) throw new Error('Another account request is still on its way; nothing was sent.');
+      const resume = learningIn(bound);
+      const shown = connectedRef.current;
       const op = {};
       dataOp.current = op;
       normalWork.current = true;
@@ -996,6 +1371,8 @@ export function AccountProvider({
       } finally {
         // Only this operation's own turn ends what it started: a newer sign-in or a sign-out owns the panel from then on.
         if (dataOp.current === op) dataOp.current = null;
+        // The same view's learning resumes with a fresh selection; this never rejects, so the outcome above stands.
+        if (resume) await resumeLearning(t, bound, shown);
         if (live(t)) setBusy(null);
       }
     }
@@ -1004,6 +1381,7 @@ export function AccountProvider({
       const bound = binding.current; const controller = deletionController.current;
       if (!services || !bound?.ready || !controller || opened.current !== bound.opened) throw new AuthError('signed_out');
       if (dataOp.current) throw new Error('Account operation already running');
+      const resume = learningIn(bound); const shown = connectedRef.current;
       const op = {}; dataOp.current = op; const t = ++turn.current; bound.deletionTurn = t;
       normalWork.current = true; recoveryNormalStarting(); setBusy('data'); setError(null);
       try {
@@ -1019,7 +1397,10 @@ export function AccountProvider({
         }
       } finally {
         if (dataOp.current === op) dataOp.current = null;
-        if (live(t)) { if (controller.state().phase === 'failed') deletionQuiescing.current = false; setBusy(null); }
+        if (live(t) && controller.state().phase === 'failed') deletionQuiescing.current = false;
+        // Only an idle or failed deletion with local data kept and quiescing cleared resumes (resumeLearning checks the rest).
+        if (resume && controller.state().local === 'kept') await resumeLearning(t, bound, shown);
+        if (live(t)) setBusy(null);
       }
     }
     return { signOut, sync, submit, restoreRemembered, continueWithGoogle, resumeGoogle, copyGuest, skipGuest, createProfile, linkProfile, resolvePrefs, exportData, deletionAction };
@@ -1070,6 +1451,7 @@ export function AccountProvider({
         enabled: true,
         signedIn: account !== null,
         connected: connected !== null,
+        ...(privateProfile ? { privateQa: true as const } : {}),
         // Only for a signed-in, verified account: its own server data, never the guest's.
         ...(account !== null && !['unknown', 'pending', 'completed'].includes(deletionRecord?.state.phase ?? 'idle') ? { dataControls } : {}),
         ...(deletionRecord ? { deletion: { ...deletionRecord, available: account !== null, remove: (password: string, confirmed: boolean) => actions.deletionAction('remove', password, confirmed), check: () => actions.deletionAction('check'), retryIdentity: (password: string, confirmed: boolean) => actions.deletionAction('retryIdentity', password, confirmed), retryCleanup: () => actions.deletionAction('retryCleanup') } } : {}),
@@ -1102,6 +1484,9 @@ export function AccountProvider({
           onSignOut: () => void actions.signOut(),
         },
       }
-    : OFF;
+    : privateProfile
+      ? // Off, with only the reason preparation named: nothing was built, and nothing can reach any fetch.
+        { ...OFF, privateQa: true, unavailableReason: privateNetwork.state === 'unavailable' ? privateNetwork.reason : 'configuration' }
+      : OFF;
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

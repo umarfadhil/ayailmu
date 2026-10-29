@@ -3,7 +3,10 @@
 // exact configured callback with one canonical code and nothing else; anything else is refused before any SDK client
 // is built or anything is sent. Nothing here holds an email, a password or a session token.
 import type { GoTrueClient, GoTrueClientOptions } from '@supabase/auth-js';
+import { LEARNING_BETA } from '@/account/learningBeta';
+import { PRIVATE_QA, PRIVATE_QA_API_ORIGIN, PRIVATE_QA_AUTH_ORIGIN } from '@/account/privateQa';
 import { STAGING, stagingOrigin } from '@/account/staging';
+import type { RecoveryCrypto } from '@/auth/recoveryCrypto';
 import type { SessionVaultParts, VaultStoreOptions } from '@/auth/sessionVault';
 import { AuthError } from '@/auth/types';
 
@@ -35,7 +38,7 @@ export interface RecoveryAttemptRecord {
   createdAt: number;
   /** The configured Auth origin the attempt was made at. */
   auth: string;
-  profile: 'local' | 'staging' | 'production';
+  profile: 'local' | 'staging' | 'production' | typeof PRIVATE_QA;
 }
 const RECORD_KEYS = ['v', 'flowId', 'verifier', 'callbackUrl', 'createdAt', 'auth', 'profile'];
 /** The most the whole serialized record may take, in UTF-8 bytes. */
@@ -82,6 +85,11 @@ export interface RecoveryOptions {
   store: RecoveryAttemptStore;
   /** Builds recovery's dedicated SDK client, only when an exchange needs one; the app's default is `new AuthClient(options)`. */
   createClient?: (options: GoTrueClientOptions) => RecoverySdkClient;
+  /**
+   * Required by, and used only in, the private QA profile: the native entropy and SHA-256 its own PKCE request and its
+   * clients' storage keys use (the device's expo-crypto in the app; tests inject one). Never WebCrypto or Math.random there.
+   */
+  nativeCrypto?: RecoveryCrypto;
 }
 
 /**
@@ -135,12 +143,20 @@ const MAX_CALLBACK_LENGTH = 4096;
 /**
  * Whether `config` is a recovery configuration this profile may use: exactly the native callback, or this profile's web
  * /recover. The production profile allows either only with its explicit capability (`productionAccounts` exactly true),
- * its web page then being a public root origin as in staging.
+ * its web page then being a public root origin as in staging. The private QA profile allows the native callback only, and
+ * only with its own explicit capability (`privateQa` exactly true, never with productionAccounts); that capability beside
+ * any other profile allows nothing. The learning-beta profile has no recovery at all, so it allows nothing, the native
+ * callback included.
  */
-export function isSafeRecoveryConfig(config: unknown, environment: unknown, productionAccounts?: unknown): config is RecoveryConfig {
+export function isSafeRecoveryConfig(config: unknown, environment: unknown, productionAccounts?: unknown, privateQa?: unknown): config is RecoveryConfig {
+  if (environment === LEARNING_BETA) return false;
   if (typeof config !== 'object' || config === null) return false;
   const c = config as Partial<RecoveryConfig>;
   if (c.enabled !== true || typeof c.callbackUrl !== 'string') return false;
+  if (environment === PRIVATE_QA) {
+    return privateQa === true && productionAccounts === undefined && c.platform === 'native' && c.callbackUrl === NATIVE_RECOVERY_CALLBACK;
+  }
+  if (privateQa !== undefined) return false;
   if (environment === 'production' && productionAccounts !== true) return false;
   if (c.platform === 'native') return c.callbackUrl === NATIVE_RECOVERY_CALLBACK;
   if (c.platform !== 'web') return false;
@@ -167,7 +183,7 @@ export function recoveryAttemptRecord(value: unknown): RecoveryAttemptRecord | n
   if (typeof callbackUrl !== 'string' || typeof auth !== 'string' || callbackUrl.length + auth.length > RECOVERY_RECORD_MAX_BYTES) return null;
   if (r.v !== 1 || typeof r.flowId !== 'string' || !FLOW_ID.test(r.flowId)) return null;
   if (typeof r.verifier !== 'string' || !VERIFIER.test(r.verifier)) return null;
-  if (r.profile !== 'local' && r.profile !== 'staging' && r.profile !== 'production') return null;
+  if (r.profile !== 'local' && r.profile !== 'staging' && r.profile !== 'production' && r.profile !== PRIVATE_QA) return null;
   if (typeof r.createdAt !== 'number' || !Number.isFinite(r.createdAt)) return null;
   if (!fitsUtf8(JSON.stringify(r), RECOVERY_RECORD_MAX_BYTES)) return null;
   return r as unknown as RecoveryAttemptRecord;
@@ -195,22 +211,29 @@ const isMarker = (id: unknown): id is string => typeof id === 'string' && id !==
  *   behind never matches again (whether that held is not claimed), and throws unavailable.
  * Nothing is ever deleted asynchronously. An unsafe binding, or any failure of the store or the marker, leaves this store
  * refusing for good: save throws unavailable and take is null, even if the storage later recovers.
+ * A private native QA build binds the same way with `environment: 'private-qa'` and `privateQa: true` (never a production
+ * capability): its API and Auth roots are then exactly the two fixed private ones, and its attempts the private profile's.
  */
 export function createSecureRecoveryStore(
   parts: SessionVaultParts,
-  binding: { api: string; auth: string; callbackUrl: string },
+  binding: { api: string; auth: string; callbackUrl: string; environment?: typeof PRIVATE_QA; privateQa?: true },
   now: () => number
 ): RecoveryAttemptStore {
   const { secureStore, marker, newMarker } = parts;
   const options: VaultStoreOptions = { keychainAccessible: parts.whenUnlockedThisDeviceOnly, requireAuthentication: false };
   // The binding as given now, never read again from the caller's object.
-  const { api, auth, callbackUrl } = binding;
+  const { api, auth, callbackUrl, environment, privateQa } = binding;
+  const productionAccounts = (binding as { productionAccounts?: unknown }).productionAccounts;
+  const privateBinding = environment === PRIVATE_QA && privateQa === true;
+  /** The one profile this store's attempts are of. */
+  const recordProfile: RecoveryAttemptRecord['profile'] = privateBinding ? PRIVATE_QA : 'production';
   let refusing =
     typeof options.keychainAccessible !== 'number' ||
-    stagingOrigin(api) !== api ||
-    stagingOrigin(auth) !== auth ||
     api === auth ||
-    callbackUrl !== NATIVE_RECOVERY_CALLBACK;
+    callbackUrl !== NATIVE_RECOVERY_CALLBACK ||
+    (privateBinding
+      ? productionAccounts !== undefined || api !== PRIVATE_QA_API_ORIGIN || auth !== PRIVATE_QA_AUTH_ORIGIN
+      : environment !== undefined || privateQa !== undefined || stagingOrigin(api) !== api || stagingOrigin(auth) !== auth);
   let installation: string | null = null;
 
   /**
@@ -260,7 +283,7 @@ export function createSecureRecoveryStore(
   /** `value` as this store's own attempt, within its lifetime by `now`, with exactly its seven keys; otherwise null. */
   const boundRecord = (value: unknown): RecoveryAttemptRecord | null => {
     const r = recoveryAttemptRecord(value);
-    if (!r || r.profile !== 'production' || r.auth !== auth || r.callbackUrl !== callbackUrl) return null;
+    if (!r || r.profile !== recordProfile || r.auth !== auth || r.callbackUrl !== callbackUrl) return null;
     const at = now();
     if (typeof at !== 'number' || !Number.isFinite(at)) return null;
     const age = at - r.createdAt;
@@ -365,6 +388,66 @@ export function readRecoveryCallback(url: unknown, callbackUrl: string): string 
   if (!url.startsWith(prefix)) return null;
   const code = url.slice(prefix.length);
   return CODE.test(code) ? code : null;
+}
+
+/** A private QA recovery link's one-time token: pkce_ and 56 lower-case hex digits. */
+const VERIFY_TOKEN = /^pkce_[0-9a-f]{56}$/;
+/** A query value as sent: unreserved characters (and : / for a URL left unencoded), or well-formed percent escapes. */
+const RAW_QUERY_VALUE = /^(?:[A-Za-z0-9._~:/-]|%[0-9A-Fa-f]{2})*$/;
+
+/**
+ * `raw` decoded once, when it is written exactly one canonical way: as is (no escape at all) or exactly as
+ * encodeURIComponent writes what it decodes to, and that decodes to no further escape. Otherwise null.
+ */
+function strictValue(raw: string): string | null {
+  if (!RAW_QUERY_VALUE.test(raw)) return null;
+  let value: string;
+  try {
+    value = decodeURIComponent(raw);
+  } catch {
+    return null;
+  }
+  if (value.includes('%') || (raw !== value && raw !== encodeURIComponent(value))) return null;
+  return value;
+}
+
+/**
+ * A private QA build's wrapped recovery link: exactly `callbackUrl` followed by ?verify_url= and nothing else, whose one
+ * value is exactly encodeURIComponent of the Auth server's own link `authUrl`/verify with exactly the parameters
+ * token=pkce_<56 lower-case hex>, type=recovery and redirect_to=`callbackUrl` (decoded exactly; in any order, each once).
+ * No fragment, user info, other host, port or path, extra, repeated or empty parameter, or loose escape. The result is the
+ * verification URL rebuilt here in one canonical form (never the text as given), or null. Read without a URL parser.
+ */
+export function readWrappedRecoveryCallback(url: unknown, callbackUrl: string, authUrl: string): string | null {
+  if (typeof url !== 'string' || url.length > MAX_CALLBACK_LENGTH || url.includes('#')) return null;
+  const prefix = `${callbackUrl}?verify_url=`;
+  if (!url.startsWith(prefix)) return null;
+  const raw = url.slice(prefix.length);
+  if (!/^(?:[A-Za-z0-9._~-]|%[0-9A-Fa-f]{2})+$/.test(raw)) return null;
+  let inner: string;
+  try {
+    inner = decodeURIComponent(raw);
+  } catch {
+    return null;
+  }
+  // The inner link keeps its own escapes (its redirect_to, as the Auth server writes it); the wrapper adds exactly one layer.
+  if (inner.includes('#') || raw !== encodeURIComponent(inner)) return null;
+  const innerPrefix = `${authUrl}/verify?`;
+  if (!inner.startsWith(innerPrefix)) return null;
+  const pairs = inner.slice(innerPrefix.length).split('&');
+  if (pairs.length !== 3) return null;
+  const values = new Map<string, string>();
+  for (const pair of pairs) {
+    const eq = pair.indexOf('=');
+    const key = eq > 0 ? pair.slice(0, eq) : '';
+    if ((key !== 'token' && key !== 'type' && key !== 'redirect_to') || values.has(key)) return null;
+    const value = strictValue(pair.slice(eq + 1));
+    if (value === null) return null;
+    values.set(key, value);
+  }
+  const token = values.get('token');
+  if (token === undefined || !VERIFY_TOKEN.test(token) || values.get('type') !== 'recovery' || values.get('redirect_to') !== callbackUrl) return null;
+  return `${authUrl}/verify?token=${token}&type=recovery&redirect_to=${encodeURIComponent(callbackUrl)}`;
 }
 
 /** Whether this build turns password recovery on: EXPO_PUBLIC_PASSWORD_RECOVERY exactly "on". Read when called (Expo inlines the literal). */

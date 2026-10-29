@@ -92,6 +92,17 @@ export interface ArchivedSnapshot {
   raw: string | null;
 }
 
+/** What must still hold for Store.appendAnswer to write. */
+export type AnswerAppendGuard = {
+  /** Metadata key that must be present with exactly `expectedRaw` (compared byte-for-byte). */
+  metaKey: string;
+  expectedRaw: string;
+  /** Must equal the record's learner_id and the stored learner's. */
+  learnerId: string;
+  /** Asked inside the write queue; false refuses. */
+  active: () => boolean;
+};
+
 export interface Store {
   init(): Promise<void>;
   getLearner(): Promise<Learner | null>;
@@ -125,6 +136,15 @@ export interface Store {
    * without it.
    */
   updateMeta?(key: string, transform: (raw: string | null) => Promise<string | null>): Promise<void>;
+  /**
+   * Appends one answer on this store's write queue, leaving the snapshot (byte-for-byte), metadata, reports and
+   * learner as they are. Refuses, writing nothing, unless the guard's learner is the record's and the stored learner,
+   * `guard.metaKey` is present with exactly `guard.expectedRaw`, and `guard.active()` holds, all checked when its turn
+   * comes (and, where transactional, again just before commit). A duplicate answer_id with identical JSON writes
+   * nothing; with different JSON it is refused. Optional only so older typed fixtures still compile; callers must
+   * refuse without it.
+   */
+  appendAnswer?(record: AnswerRecord, guard: AnswerAppendGuard): Promise<void>;
   addReport(report: ReportRecord): Promise<void>;
   listReports(): Promise<ReportRecord[]>;
   reset(): Promise<void>;

@@ -29,6 +29,7 @@ export function recoveryFailure(error: unknown, operation: RecoveryOperation): R
   if (operation === 'update' && code === 'network') return { stage: 'ready', message: UPDATE_UNKNOWN };
   if (code === 'network') return { stage: 'email', message: UNREACHABLE };
   if (code === 'not_synthetic') return { stage: 'email', message: NOT_SYNTHETIC };
+  if (code === 'private_recipient') return { stage: 'email', message: 'Gunakan email yang disetujui untuk build ini.' };
   if (code === 'invalid_email') return { stage: 'email', message: INVALID_EMAIL };
   if (code === 'bad_callback' || code === 'expired') return { stage: 'email', message: BAD_LINK };
   return { stage: 'email', message: UNAVAILABLE };
