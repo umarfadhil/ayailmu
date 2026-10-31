@@ -1,5 +1,6 @@
 // «Akun lokal»: the account and profile panel of the local developer pilot, presentational only; in a staging build
-// («Akun staging») the same panel names the remote staging server instead, its consent statement included. The caller
+// («Akun staging») the same panel names the remote staging server instead, its consent statement included. The private
+// QA build is titled «Akun» with ordinary account words, never the local service's. The caller
 // owns sign-in, profiles, guest-data copying and sync, and supplies every fact and callback. The panel keeps only
 // transient form and checkbox state: the typed password leaves it once per submit and is never kept, logged or
 // stored, and every tick starts over with each sign-in. Where the caller offers Continue with Google, it sits in the
@@ -10,6 +11,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View, type TextInputProps, type ViewInstance } from 'react-native';
 
 import { PRIVATE_QA_REGISTRATION_POLICY } from '@/account/privateQa';
+import { loadRules } from '@/config/rules';
 import { localDate } from '@/engine/util';
 import type { AccountSyncProgress } from '@/sync/accountProgress';
 import { moveFocus } from '@/ui/a11y';
@@ -37,8 +39,9 @@ export interface ConnectedProfile {
   /** Answers that came from other devices. */
   otherDeviceAnswers: number;
   /**
-   * Factual sync progress. Null when it is unavailable (a read-only tab has no journal); absent only in legacy fixtures.
-   * The numeric fields above stay for compatibility; a UI prefers this when it is there.
+   * Factual sync progress. Null when it is unavailable (a read-only tab has no journal); absent only in legacy fixtures,
+   * and then the numeric fields above show only in the isolated local developer view. Everywhere else, absent is
+   * unavailable too. A UI prefers this when it is there.
    */
   progress?: AccountSyncProgress | null;
 }
@@ -70,8 +73,8 @@ export interface AccountPanelProps {
   signUp?: boolean;
   /**
    * The caller's validated account profile: 'staging' where the account service is the remote staging server; absent: the
-   * local one. 'private-qa' (the private native QA build): the local service's names, with ordinary email wording and
-   * only its own registration policy. 'learning-beta': ordinary account and email wording for sign-in only; it never
+   * local one. 'private-qa' (the private native QA build): ordinary account and email wording, never the local service's
+   * names, and only its own registration policy. 'learning-beta': ordinary account and email wording for sign-in only; it never
    * shows sign-up, registration, recovery or Google, whatever else is passed.
    */
   environment?: 'staging' | 'production' | 'private-qa' | 'learning-beta';
@@ -84,6 +87,13 @@ export interface AccountPanelProps {
   onSubmit: (request: { mode: AccountMode; email: string; password: string; remember?: boolean }) => void;
   /** Continue with Google, where the caller offers it (signed out only, beside the password form): called with nothing. */
   onGoogle?: () => void;
+  /**
+   * Caller-worded notes for a requested capability that cannot run on this build or device. Production presentation only,
+   * signed out and outside registration and recovery: the Google note shows only without `onGoogle`, the recovery note
+   * only when the recovery model is not available. Plain text, never a control, and never a new panel mode; the panel
+   * does not interpret or log them, and shows nothing once the capability is available or the account is signed in.
+   */
+  unavailableFeatures?: { google?: string; recovery?: string };
   onGuestCopy: () => void;
   onGuestSkip: () => void;
   /** Gets a profile's id back unchanged. */
@@ -138,10 +148,11 @@ const PRODUCTION_WORDS: ServiceWords = {
 };
 
 /**
- * The private native QA build: the same account service names and consent as the local one (whose consent version the
- * provider records), with ordinary email wording. Never production's words, and no claim the service is reachable.
+ * The private native QA build: ordinary account and email wording, never the local service's names. Its consent statement
+ * stays the local one's, as the consent version the provider records is the statement's. Never production's words, and no
+ * claim the service is reachable.
  */
-const PRIVATE_QA_WORDS: ServiceWords = { ...LOCAL_WORDS, privateQa: true, email: true };
+const PRIVATE_QA_WORDS: ServiceWords = { ...LOCAL_WORDS, title: 'Akun', account: 'akun', service: 'layanan akun', privateQa: true, email: true };
 
 /**
  * The learning-beta build: ordinary account and email wording, and its consent statement names the beta server (the
@@ -370,6 +381,11 @@ export function AccountPanel(props: AccountPanelProps) {
   const onGoogle = words.learningBeta ? undefined : props.onGoogle;
   const registering = registration !== undefined && registration.stage !== 'idle';
   const recovering = recovery !== undefined && recovery.stage !== 'idle';
+  // A production build, signed out and in no other flow: a requested Google or recovery that cannot run says so in the
+  // caller's words, only while that capability is truly absent (never beside the control it would replace).
+  const notesShown = words.production === true && !account && !registering && !recovering;
+  const googleNote = notesShown && onGoogle === undefined ? props.unavailableFeatures?.google : undefined;
+  const recoveryNote = notesShown && recovery?.available !== true ? props.unavailableFeatures?.recovery : undefined;
   const errorRegion = useRef<ViewInstance>(null);
   useEffect(() => {
     if (error) moveFocus(errorRegion);
@@ -392,8 +408,8 @@ export function AccountPanel(props: AccountPanelProps) {
         </Text>
         <Text style={styles.note}>
           {props.rememberChoice
-            ? 'Belajar tetap bisa tanpa akun. Setelah aplikasi ditutup atau dimuat ulang, Anda perlu masuk lagi, kecuali Anda memilih mengingat sesi masuk dengan email di perangkat ini.'
-            : 'Belajar tetap bisa tanpa akun. Setelah aplikasi ditutup atau dimuat ulang, Anda perlu masuk lagi.'}
+            ? 'Setelah aplikasi ditutup atau dimuat ulang, Anda perlu masuk lagi, kecuali Anda memilih mengingat sesi masuk dengan email di perangkat ini.'
+            : 'Setelah aplikasi ditutup atau dimuat ulang, Anda perlu masuk lagi.'}
         </Text>
         <View role="status" accessibilityLiveRegion="polite">
           <Text testID="account-status" style={styles.status}>
@@ -426,8 +442,19 @@ export function AccountPanel(props: AccountPanelProps) {
           onGoogle={onGoogle}
         />
       )}
+      {googleNote ? (
+        <Text accessibilityRole="text" testID="account-google-unavailable" style={styles.note}>
+          {googleNote}
+        </Text>
+      ) : null}
       {!account && !recovering && registration && !registering ? <RegistrationPanel model={registration} working={busy !== null} /> : null}
-      {!account && !registering && recovery?.stage === 'idle' ? (
+      {recoveryNote ? (
+        <Text accessibilityRole="text" testID="account-recovery-unavailable" style={styles.note}>
+          {recoveryNote}
+        </Text>
+      ) : null}
+      {/* A production build never offers to start a recovery its model says cannot run: no enabled dead button. */}
+      {!account && !registering && recovery?.stage === 'idle' && (words.production !== true || recovery.available === true) ? (
         <Btn testID="account-recovery-start" label="Lupa kata sandi?" onPress={() => recovery.onStart()} disabled={busy !== null} kind="secondary" />
       ) : null}
     </View>
@@ -521,11 +548,13 @@ function SignInForm({
 function SignedIn(props: AccountPanelProps & { busy: AccountBusy | null; words: ServiceWords }) {
   const { busy, guestCopy, connected, prefsConflict, words } = props;
   const working = busy !== null;
+  // Old saved-answers fixtures show only in the isolated local developer view: no named environment, developer-demo rules.
+  const allowLegacy = props.environment === undefined && loadRules().mode === 'developer-demo';
   return (
     <View style={styles.panel}>
       {guestCopy ? <GuestCopy offer={guestCopy} working={working} words={words} onCopy={props.onGuestCopy} onSkip={props.onGuestSkip} /> : null}
       {connected ? (
-        <Connected profile={connected} working={working} onSyncNow={props.onSyncNow} />
+        <Connected profile={connected} working={working} allowLegacy={allowLegacy} onSyncNow={props.onSyncNow} />
       ) : (
         <ProfileChoice profiles={props.profiles ?? []} working={working} words={words} onLink={props.onLinkProfile} onCreate={props.onCreateProfile} />
       )}
@@ -694,12 +723,13 @@ export function localSyncLines(progress: AccountSyncProgress): { queued: string;
 
 /**
  * The connected profile: the caller's sync status, a sync action, and factual counts (learning is not judged). With the
- * caller's `progress` (null: no local journal) the counts come from it alone; without it (legacy fixtures) the old
- * saved-answers count shows as it always did.
+ * caller's `progress` (null: no local journal) the counts come from it alone. Without it (legacy fixtures) the old
+ * saved-answers count shows only where `allowLegacy` says this is the isolated local developer view; anywhere else a
+ * missing progress is unavailable, never a zero or a legacy count.
  */
-function Connected({ profile, working, onSyncNow }: { profile: ConnectedProfile; working: boolean; onSyncNow: () => void }) {
-  const { progress } = profile;
-  const legacy = progress === undefined;
+function Connected({ profile, working, allowLegacy, onSyncNow }: { profile: ConnectedProfile; working: boolean; allowLegacy: boolean; onSyncNow: () => void }) {
+  const progress = profile.progress ?? null;
+  const legacy = profile.progress === undefined && allowLegacy;
   const lines = progress ? localSyncLines(progress) : null;
   const lastKnown = legacy ? null : serverCountLastKnown(progress);
   return (

@@ -1,10 +1,12 @@
 // Unit A pilot controller, tester mode: runs only when the private beta configuration is enabled AND the starter
 // review is an exact approval of the content, both checked on every operation. Real KvStore on an isolated in-memory
 // backend (no accounts, no network, no module mocks, injected day). The approved review here is a fictional fixture
-// built only in this file; the compiled review stays pending and the source content stays a synthetic draft.
+// built only in this file, never evidence of a real review lifecycle. The actual compiled review is an owner-authorized
+// AI-only trial acceptance (no human, expert or mastery claim) and now allows access by default, so every blocked-review
+// case below passes an explicit review; the source content stays a synthetic draft.
 // Proposed interface pinned here: PilotControllerOptions gains optional betaEnv (PrivateBetaEnv) and starterReview
-// (unknown); a missing or invalid beta blocks 'mode', a validated beta with a missing, stale or incomplete review
-// blocks 'review'. 'developer-demo' behaviour is unchanged (controller.initial.test.ts).
+// (unknown); a missing or invalid beta blocks 'mode', a validated beta with an explicit pending, stale or incomplete
+// review blocks 'review'. 'developer-demo' behaviour is unchanged (controller.initial.test.ts).
 import { loadPrivateBetaConfig, type PrivateBetaEnv } from '@/config/privateBeta';
 import { KvStore, memoryKv } from '@/storage/kvStore';
 import { sha256Hex } from '@/sync/sha256';
@@ -130,7 +132,8 @@ describe('Unit A pilot controller (tester mode behind beta and review)', () => {
       enabled: true, apiBaseUrl: 'https://api.beta.example.com', authUrl: 'https://auth.beta.example.com',
     });
     expect(starterReviewAccess(approvedReview())).toEqual({ allowed: true });
-    expect(starterReviewAccess()).toMatchObject({ allowed: false });
+    expect(starterReviewAccess()).toEqual({ allowed: true });
+    expect(starterReviewAccess({ status: 'pending' })).toMatchObject({ allowed: false });
   });
 
   afterAll(() => {
@@ -140,11 +143,11 @@ describe('Unit A pilot controller (tester mode behind beta and review)', () => {
     expect(sha256Hex(JSON.stringify(PILOT_CONTENT))).toBe(FIXTURE_SHA);
   });
 
-  it('a valid beta with the compiled pending review blocks review and creates no pilot metadata', async () => {
+  it('a valid beta with an explicit pending review blocks review and creates no pilot metadata', async () => {
     const kv = backend();
     const store = await open(kv);
     await store.setMeta('legacy_sentinel', 'keep-me');
-    await expectAllBlocked(kv, make(store, { starterReview: undefined }), 'review');
+    await expectAllBlocked(kv, make(store, { starterReview: { status: 'pending' } }), 'review');
     expect(await readMeta(kv)).toBeNull();
     expect(await (await open(kv)).getMeta('legacy_sentinel')).toBe('keep-me');
   });

@@ -22,7 +22,14 @@ function isValidatedPrivateQa(): boolean {
   return config.enabled === true && config.environment === PRIVATE_QA && config.privateQa === true && config.productionAccounts === undefined;
 }
 
-/** «Akun lokal»: sign-in, the adult profile, the explicit guest copy and manual sync of the local developer pilot. */
+/** Back-compat for the unnamed local/default profile (no account environment; provider unset or local-supabase); never selected by the general-user profile. */
+function isLegacyAccountPresentation(): boolean {
+  const environment = process.env.EXPO_PUBLIC_ACCOUNT_ENV;
+  const provider = process.env.EXPO_PUBLIC_AUTH_PROVIDER;
+  return !environment && (provider === undefined || provider === 'local-supabase');
+}
+
+/** Account: sign-in or registration, the adult profile, the explicit guest copy and manual sync; a neutral notice when the account service is off. */
 function AccountRoute() {
   const account = useAccount();
   // Leaving the route (blur or unmount) ends the registration it shows, through that registration's own cancel; an
@@ -45,7 +52,10 @@ function AccountRoute() {
         </Notice>
       ) : (
         <Notice tone="info" testID="account-disabled">
-          Akun lokal tidak aktif di build ini. Belajar tetap bisa tanpa akun; data tetap di perangkat ini.
+          {/* The original copy only for the unnamed legacy local/default profile; every named profile and an explicit provider 'off' get the neutral one. */}
+          {isLegacyAccountPresentation()
+            ? 'Akun lokal tidak aktif di build ini. Belajar tetap bisa tanpa akun; data tetap di perangkat ini.'
+            : 'Layanan akun belum tersedia di build ini. Data tetap tersimpan di perangkat ini.'}
         </Notice>
       )}
       {account.dataControls || account.deletion ? <Btn testID="account-data-open" label="Data akun" kind="secondary" onPress={() => router.push('/account-data' as Href)} disabled={account.panel.busy !== null && account.panel.busy !== undefined} /> : null}

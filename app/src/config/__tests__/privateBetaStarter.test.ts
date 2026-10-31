@@ -1,6 +1,9 @@
 // The private tester starter contract: a frontend beta capability read from explicit public env, and a content-review
 // gate bound to the exact Unit A content. Config never approves content; only an exact compiled review record does.
-// Every reviewer, timestamp and origin below is fictional fixture data for this test only.
+// The actual compiled record is an owner-authorized, AI-only trial acceptance (one AI reviewer in all three sections):
+// not human or expert certification, no mastery claim, and the content stays a synthetic draft.
+// Every fixture reviewer, timestamp and origin below is fictional data for this test only, never evidence of a real
+// review lifecycle.
 import { loadSupabaseConfig } from '@/account/supabaseConfig';
 import { PRIVATE_QA_API_ORIGIN, PRIVATE_QA_AUTH_ORIGIN } from '@/account/privateQa';
 import { stagingOrigin } from '@/account/staging';
@@ -149,6 +152,12 @@ const approvedFor = (content: PilotContent = PILOT_CONTENT) => ({
 });
 
 const APPROVED = approvedFor();
+
+// The actual compiled record's exact binding, written out here rather than read from the module under test.
+const ACTUAL_SHA256 = '5e8882a34ed33284f9145d11db8486c48f6ec778605ae91b1cd571236bf1a54e';
+const ACTUAL_REVIEWED_AT = '2026-10-30T10:25:22.000Z';
+const ACTUAL_REVIEWER = '/root/check_fasih_expo';
+const SECTIONS = ['arabic', 'indonesian', 'assessment'] as const;
 const without = (record: object, key: string) => Object.fromEntries(Object.entries(record).filter(([name]) => name !== key));
 const withReviews = (reviews: object) => ({ ...APPROVED, reviews });
 const withSection = (section: 'arabic' | 'indonesian' | 'assessment', value: unknown) => withReviews({ ...APPROVED.reviews, [section]: value });
@@ -161,7 +170,7 @@ const changedLessonBody = (): PilotContent => ({
 });
 
 describe('Unit A starter review gate', () => {
-  it('exports the pending review, the fingerprint and the access decision', () => {
+  it('exports the AI-bound compiled review, the fingerprint and the access decision', () => {
     expect(review.error).toBeUndefined();
     expect(review.mod.UNIT_A_STARTER_REVIEW).toBeDefined();
     expect(typeof review.mod.unitAContentFingerprint).toBe('function');
@@ -175,12 +184,23 @@ describe('Unit A starter review gate', () => {
     expect(fingerprint(PILOT_CONTENT)).toBe(expected);
   });
 
-  it('defaults to a pending review with no invented reviewer, which is never approved', () => {
-    const starter = need(review, 'UNIT_A_STARTER_REVIEW');
-    expect(starter).toMatchObject({ status: 'pending' });
-    expect(JSON.stringify(starter)).not.toMatch(/"reviewer"/);
-    expect(access()).toEqual(DENIED);
-    expect(access(starter, PILOT_CONTENT)).toEqual(DENIED);
+  it('defaults to the actual AI-bound compiled review: exact approved status and content hash, access allowed', () => {
+    const starter = need(review, 'UNIT_A_STARTER_REVIEW') as { reviews: Record<string, { reviewer: string; reviewedAt: string }> };
+    expect(starter).toMatchObject({ status: 'approved-for-trial', contentVersion: PILOT_CONTENT.contentVersion, contentSha256: ACTUAL_SHA256 });
+    expect(fingerprint()).toBe(ACTUAL_SHA256);
+    // One AI reviewer is recorded under all three sections, at the one acceptance time.
+    const sections = SECTIONS.map((section) => starter.reviews[section]);
+    const reviewers = sections.map((entry) => entry?.reviewer);
+    expect(new Set(reviewers).size).toBe(1);
+    expect(String(reviewers[0])).toContain(ACTUAL_REVIEWER);
+    expect(sections.map((entry) => entry?.reviewedAt)).toEqual([ACTUAL_REVIEWED_AT, ACTUAL_REVIEWED_AT, ACTUAL_REVIEWED_AT]);
+    expect(access()).toEqual({ allowed: true });
+    expect(access(starter, PILOT_CONTENT)).toEqual({ allowed: true });
+  });
+
+  it('denies a bare pending record, which the actual default never falls back to', () => {
+    expect(access({ status: 'pending' })).toEqual(DENIED);
+    expect(access({ status: 'pending' }, PILOT_CONTENT)).toEqual(DENIED);
   });
 
   it('leaves the source content a synthetic draft', () => {
@@ -245,11 +265,22 @@ describe('Unit A starter review gate', () => {
     expect(access(loadConfig(READY))).toEqual(DENIED);
     expect(access(READY)).toEqual(DENIED);
 
+    const compiled = need(review, 'UNIT_A_STARTER_REVIEW');
+    const compiledBefore = JSON.stringify(compiled);
+
     Object.assign(process.env, READY, { EXPO_PUBLIC_CONTENT_REVIEW: 'approved-for-trial', EXPO_PUBLIC_STARTER_REVIEW: 'approved-for-trial' });
     jest.isolateModules(() => {
       const fresh = jest.requireActual<ReviewModule>('../../pilot/unitA/review');
-      expect(fresh.UNIT_A_STARTER_REVIEW).toMatchObject({ status: 'pending' });
-      expect(fresh.starterReviewAccess()).toEqual(DENIED);
+      // The approval comes from the compiled record alone: a fresh load under these variables is that same record.
+      expect(fresh.UNIT_A_STARTER_REVIEW).toEqual(compiled);
+      expect(JSON.stringify(fresh.UNIT_A_STARTER_REVIEW)).toBe(compiledBefore);
+      expect(fresh.starterReviewAccess()).toEqual({ allowed: true });
+      // The variables cannot approve a missing, pending, stale or env-shaped record.
+      expect(fresh.starterReviewAccess(null)).toEqual(DENIED);
+      expect(fresh.starterReviewAccess({ status: 'pending' })).toEqual(DENIED);
+      expect(fresh.starterReviewAccess({ ...APPROVED, contentSha256: '0'.repeat(64) })).toEqual(DENIED);
+      expect(fresh.starterReviewAccess(process.env)).toEqual(DENIED);
     });
+    expect(JSON.stringify(need(review, 'UNIT_A_STARTER_REVIEW'))).toBe(compiledBefore);
   });
 });

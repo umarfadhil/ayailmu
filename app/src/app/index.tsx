@@ -6,7 +6,7 @@ import { PRIVATE_QA } from '@/account/privateQa';
 import { loadSupabaseConfig } from '@/account/supabaseConfig';
 import { isReleasePresentation } from '@/config/releasePresentation';
 import type { AppMode } from '@/config/rules';
-import { StarterHome, starterBeta } from '@/pilot/unitA/StarterHome';
+import { StarterHome, normalStarter, starterBeta } from '@/pilot/unitA/StarterHome';
 import { useAccount } from '@/ui/AccountContext';
 import { useApp } from '@/ui/AppContext';
 import {
@@ -47,6 +47,12 @@ export default function Home() {
 
   if (error) return <StorageRefused message={error} />;
   if (isLearningError(learning)) return <StorageRefused message={learning.error} />;
+
+  // The explicit normal user build has the same bounded Home without the beta wording: it shows only the starter's review
+  // state or its entry, whatever the legacy content holds. No learner, material or progress is made here; a pending one
+  // keeps just the account entry.
+  const normal = normalStarter(rules.mode);
+  if (normal !== 'off') return <StarterHome reviewed={normal === 'reviewed'} audience="normal-user" />;
 
   // A validated private beta has its own bounded Home, whatever the legacy content holds.
   const beta = starterBeta(rules.mode);

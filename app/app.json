@@ -43,7 +43,8 @@
       ],
       "./plugins/withPrivateQa",
       "./plugins/withPrivateBeta",
-      "./plugins/withLearningBeta"
+      "./plugins/withLearningBeta",
+      "./plugins/withGeneralUser"
     ],
     "scheme": "arabictrial",
     "experiments": {

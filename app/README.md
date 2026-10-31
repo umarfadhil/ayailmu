@@ -91,6 +91,8 @@ CI=1 npm run export:tester
 
 The export commands only create JavaScript bundles; they do not build signed apps or deploy anything. The scripts use POSIX environment syntax (macOS/Linux).
 
+Normal email-account preview: `npm run config:general-user`, `npm run start:general-user` and `npm run export:general-user` override the developer-demo default above. They need the normal-user preset and an operator-made `profiles/general-user.env.local`; see [`docs/GENERAL_USER_PROFILE.md`](docs/GENERAL_USER_PROFILE.md).
+
 ### Switching modes
 
 `EXPO_PUBLIC_APP_MODE` is inlined at bundle time. To switch modes:

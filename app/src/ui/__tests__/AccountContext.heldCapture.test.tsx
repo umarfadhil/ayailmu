@@ -7,9 +7,11 @@
 // through the fictional hosts (example.org) of test/productionNetwork.ts, here used as the staging roots, never resolved or
 // contacted. The screen is hosted with the route's own props (app/unit-a-pilot.tsx) minus the router. ONE answer-growing
 // write of the account's main blob fails, once; the intent's own save succeeds, and no controller or storage behavior is
-// replaced. MOCK PROJECTION / TEST FIXTURES, NOT LIVE PROOF: only the compiled UNIT_A_STARTER_REVIEW is swapped, pending in
-// its file and a FICTIONAL approval here; no real content approval, service, email or credential is claimed. Every value is
-// a fixture; no password or token is stored or printed.
+// replaced. MOCK PROJECTION / TEST FIXTURES, NOT LIVE PROOF: only the compiled UNIT_A_STARTER_REVIEW is swapped, for a per-test
+// FICTIONAL approval. The actual record in its file is an owner-authorized, AI-only trial acceptance of the exact draft content
+// (one coordinating AI reviewer under three sections); it is not human/expert review, not three independent reviewers, and no
+// efficacy proof. No human content approval, service, email or credential is claimed. Every value is a fixture; no password or
+// token is stored or printed.
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import { useCallback, useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -39,7 +41,7 @@ jest.mock('@/storage/openStore', () => ({
   },
 }));
 
-// Only the compiled review is swapped (pending by default, a fictional approval in the cases); the real checks run.
+// Only the compiled review is swapped (the actual record by default, a fictional per-test approval in the cases); the real checks run.
 let mockStarterReview: unknown;
 jest.mock('@/pilot/unitA/review', () => {
   const actual = jest.requireActual('@/pilot/unitA/review');
@@ -172,10 +174,29 @@ function PilotHost() {
   );
 }
 
+const ACTUAL_SHA256 = '5e8882a34ed33284f9145d11db8486c48f6ec778605ae91b1cd571236bf1a54e';
+const ACTUAL_REVIEWED_AT = '2026-10-30T10:25:22.000Z';
+/**
+ * The actual compiled record: the owner-authorized, AI-only trial acceptance of the exact current draft content, with one
+ * coordinating AI reviewer under all three sections. Not human/expert review, not three independent reviewers, and no efficacy,
+ * native or backend proof; the content itself stays a synthetic, constructed draft. The cases below still use the fictional approval.
+ */
+function expectActualAiAcceptedRecord() {
+  const section = { reviewer: expect.stringMatching(/^\/root\/check_fasih_expo .*AI-only/), reviewedAt: ACTUAL_REVIEWED_AT };
+  expect(actualReview.UNIT_A_STARTER_REVIEW).toMatchObject({
+    status: 'approved-for-trial', contentVersion: PILOT_CONTENT.contentVersion, contentSha256: ACTUAL_SHA256,
+    reviews: { arabic: section, indonesian: section, assessment: section },
+  });
+  expect(sha256Hex(JSON.stringify(PILOT_CONTENT))).toBe(ACTUAL_SHA256);
+  expect(actualReview.starterReviewAccess()).toEqual({ allowed: true });
+  expect(PILOT_CONTENT).toMatchObject({ synthetic: true, constructed: true, reviewStatus: 'draft' });
+}
+
 beforeAll(() => {
-  // Preconditions on the real gates: the fixture roots are staging roots, the compiled review stays pending, only the fixture approves.
+  // Preconditions on the real gates: the fixture roots are staging roots, the actual compiled record is the AI-only accepted one for
+  // the current draft content, and the per-test fictional approval is a separate fixture that the same verifier also accepts.
   expect(loadPrivateBetaConfig(BETA_BUILD)).toMatchObject({ enabled: true });
-  expect(actualReview.UNIT_A_STARTER_REVIEW).toEqual({ status: 'pending' });
+  expectActualAiAcceptedRecord();
   expect(actualReview.starterReviewAccess(fictionalApproval())).toEqual({ allowed: true });
 });
 

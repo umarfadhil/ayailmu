@@ -1,8 +1,10 @@
 // The screen's post-answer notification over the real KvStore, controller and UnitAPilotScreen: a throwing or late
 // callback never undoes, repeats or relabels a durable first choice, and never leaks into another dataset's panel.
 // MOCK PROJECTION / TEST FIXTURES, NOT LIVE PROOF (as in capture.boundaries.test.tsx): only the compiled
-// UNIT_A_STARTER_REVIEW is swapped, pending by default and a FICTIONAL approval for these cases; the real beta
-// config check, review verifier and controller run on in-memory stores. No account, session, network or native proof.
+// UNIT_A_STARTER_REVIEW is swapped, per test, for a FICTIONAL approval fixture; the real beta config check, review
+// verifier and controller run on in-memory stores. The actual compiled record is an owner-authorized, AI-only trial
+// acceptance of the current draft content (not human or expert review, not 3 independent people, no efficacy, native or
+// backend proof) and is only checked as a precondition. No account, session, network or native proof.
 // `onAnswersSaved` is not a typed screen prop yet, so it is passed through a local cast.
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react-native';
 import type { ReactElement } from 'react';
@@ -34,6 +36,8 @@ const OTHER_OWNER = 'guest:lrn-pilot-2';
 const LEARNER_ID = 'lrn-pilot-1';
 const OTHER_LEARNER_ID = 'lrn-pilot-2';
 const DAY = '2026-10-27';
+/** The actual compiled record's current content fingerprint. */
+const ACTUAL_SHA256 = '5e8882a34ed33284f9145d11db8486c48f6ec778605ae91b1cd571236bf1a54e';
 
 const ENV_KEYS = [
   'EXPO_PUBLIC_PRIVATE_BETA',
@@ -64,7 +68,7 @@ const setEnv = (env: Env) => {
   }
 };
 
-/** FICTIONAL approval of the exact draft content, for the reviewed tester fixture only; not a real review. */
+/** FICTIONAL approval of the exact draft content, a per-test fixture for the same generic validator; not a real review. */
 const fictionalApproval = () => ({
   status: 'approved-for-trial',
   contentVersion: PILOT_CONTENT.contentVersion,
@@ -160,9 +164,13 @@ async function docOf(store: KvStore): Promise<{ attempts: { presentationId: stri
 describe('UnitAPilotScreen post-answer notification in a fictional reviewed tester build', () => {
   let saved: Env = {};
   beforeAll(() => {
-    // Preconditions on the real gates: the compiled review stays pending; only the fixture approves.
+    // Preconditions on the real gates: the actual compiled record is approved for the current content fingerprint, which is
+    // still a synthetic, constructed draft; each case below nevertheless uses its own fictional fixture approval.
     expect(loadPrivateBetaConfig(BETA)).toMatchObject({ enabled: true });
-    expect(actualReview.UNIT_A_STARTER_REVIEW).toEqual({ status: 'pending' });
+    expect(actualReview.UNIT_A_STARTER_REVIEW).toMatchObject({ status: 'approved-for-trial', contentSha256: ACTUAL_SHA256 });
+    expect(actualReview.unitAContentFingerprint()).toBe(ACTUAL_SHA256);
+    expect(actualReview.starterReviewAccess(actualReview.UNIT_A_STARTER_REVIEW)).toEqual({ allowed: true });
+    expect(PILOT_CONTENT).toMatchObject({ synthetic: true, constructed: true, reviewStatus: 'draft' });
     expect(actualReview.starterReviewAccess(fictionalApproval())).toEqual({ allowed: true });
   });
   beforeEach(() => {

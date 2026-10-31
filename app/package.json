@@ -45,6 +45,9 @@
     "web:tester": "EXPO_PUBLIC_APP_MODE=tester expo start --web --localhost --port 8082 --clear",
     "export:dev": "EXPO_PUBLIC_APP_MODE=developer-demo expo export --platform all --clear --output-dir dist/developer-demo",
     "export:tester": "EXPO_PUBLIC_APP_MODE=tester expo export --platform all --clear --output-dir dist/tester",
+    "config:general-user": "AYAFASIH_GENERAL_USER=on EXPO_NO_DOTENV=1 EXPO_OFFLINE=1 node --env-file=profiles/general-user.env.local node_modules/expo/bin/cli config --type public",
+    "start:general-user": "AYAFASIH_GENERAL_USER=on EXPO_NO_DOTENV=1 node --env-file=profiles/general-user.env.local node_modules/expo/bin/cli start --go --localhost --clear",
+    "export:general-user": "AYAFASIH_GENERAL_USER=on EXPO_NO_DOTENV=1 EXPO_OFFLINE=1 node --env-file=profiles/general-user.env.local node_modules/expo/bin/cli export --platform all --max-workers 1 --output-dir dist/general-user",
     "test": "TZ=Asia/Jakarta jest",
     "typecheck": "tsc --noEmit",
     "lint": "expo lint"

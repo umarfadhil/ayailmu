@@ -91,6 +91,34 @@
         "simulator": false
       }
     },
+    "general-user": {
+      "distribution": "internal",
+      "node": "22.16.0",
+      "autoIncrement": false,
+      "env": {
+        "AYAFASIH_GENERAL_USER": "on",
+        "EXPO_PUBLIC_APP_MODE": "tester",
+        "EXPO_PUBLIC_ACCOUNT_ENV": "production",
+        "EXPO_PUBLIC_AUTH_PROVIDER": "local-supabase",
+        "EXPO_PUBLIC_PRODUCTION_ACCOUNTS": "on",
+        "EXPO_PUBLIC_ACCOUNT_REGISTRATION": "confirmed-email",
+        "EXPO_PUBLIC_PRIVATE_QA": "off",
+        "EXPO_PUBLIC_PRIVATE_BETA": "off",
+        "EXPO_PUBLIC_LEARNING_BETA": "off",
+        "EXPO_PUBLIC_GOOGLE_SIGN_IN": "off",
+        "EXPO_PUBLIC_PASSWORD_RECOVERY": "off",
+        "EXPO_PUBLIC_REMEMBER_DEVICE": "on",
+        "EXPO_PUBLIC_NORMAL_USER_STARTER": "on",
+        "EXPO_NO_DOTENV": "1",
+        "EXPO_NO_TELEMETRY": "1"
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": false
+      }
+    },
     "production": {
       "distribution": "store",
       "node": "22.16.0",

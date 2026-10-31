@@ -41,6 +41,8 @@ export type RegistrationErrorCode =
   | 'rate_limited'
   /** The Auth server was unreachable, or the call outlasted its deadline. */
   | 'network'
+  /** The Auth server answered HTTP 503: it was reached, but the service is unavailable. Never retried here. */
+  | 'service_unavailable'
   /** Sign-up answered with a session (confirmation off on the server): refused, and that session retired. */
   | 'auto_confirm_refused'
   | 'provider_refused'
@@ -196,8 +198,10 @@ const isSessionFor = (session: unknown, email: string, exact = false): session i
 
 /** A refusal as a stable code, from the SDK error's class, status and code only: never its text. */
 function refusal(error: unknown, verifying: boolean): RegistrationErrorCode {
-  if (isAuthRetryableFetchError(error)) return 'network';
   const status = isAuthError(error) ? error.status : undefined;
+  // The SDK maps a received 503 to a retryable fetch error; a reply came, so it is not the unreachable network.
+  if (status === 503) return 'service_unavailable';
+  if (isAuthRetryableFetchError(error)) return 'network';
   const code = isAuthError(error) ? error.code : undefined;
   if (status === 429 || (typeof code === 'string' && RATE_LIMITS.has(code))) return 'rate_limited';
   if (isAuthWeakPasswordError(error) || code === 'weak_password') return 'weak_password';

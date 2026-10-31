@@ -10,3 +10,6 @@ expo-env.d.ts
 /modules/aya-private-qa-transport/ios/Resources/aya-private-qa-binding.json
 /modules/aya-private-qa-transport/android/src/main/assets/aya-private-qa-ca.der
 /modules/aya-private-qa-transport/android/src/main/assets/aya-private-qa-binding.json
+
+# Operator-local general-user settings (copied by hand from profiles/general-user.env.example), never committed.
+profiles/*.env.local

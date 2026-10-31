@@ -561,7 +561,7 @@ export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
     throw new Error('createSupabaseAuth needs an injected fetch for the private QA profile; nothing was sent.');
   }
   const googleOptions = options.google;
-  if (googleOptions !== undefined && (environment === PRIVATE_QA || !isSafeGoogleConfig(googleOptions.config, environment) || !googleOptions.store)) {
+  if (googleOptions !== undefined && (environment === PRIVATE_QA || !isSafeGoogleConfig(googleOptions.config, environment, productionAccounts) || !googleOptions.store)) {
     throw new Error('createSupabaseAuth needs a safe Google sign-in configuration; nothing was sent.');
   }
   const vault = options.remember?.vault ?? null;

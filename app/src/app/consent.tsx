@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { isReleasePresentation } from '@/config/releasePresentation';
-import { starterBeta } from '@/pilot/unitA/StarterHome';
+import { normalStarter, starterBeta } from '@/pilot/unitA/StarterHome';
 import { useApp } from '@/ui/AppContext';
 import { ArabicText, Btn, Icon, IconButton, Notice, Page, Segmented, type IconName } from '@/ui/components';
 import { ARABIC_SCALES, NEUTRAL_PREVIEW } from '@/ui/labels';
@@ -52,15 +52,17 @@ function ConsentRoute() {
 
   // A learner who already exists on arrival goes Home.
   if (learner && !creating) return <Redirect href="/" />;
-  // Empty legacy content goes Home, unless a validated private beta's starter is reviewed: it is studied from here.
-  // A beta whose starter is still pending goes Home whatever the legacy content says.
+  // Empty legacy content goes Home, unless a validated private beta's or the normal user build's starter is reviewed: it is
+  // studied from here. A starter that is still pending goes Home whatever the legacy content says.
   const beta = starterBeta(rules.mode);
-  if (beta === 'pending' || (content.empty && beta !== 'reviewed')) return <Redirect href="/" />;
+  const normal = normalStarter(rules.mode);
+  const reviewed = beta === 'reviewed' || normal === 'reviewed';
+  if (beta === 'pending' || normal === 'pending' || (content.empty && !reviewed)) return <Redirect href="/" />;
   // An account dataset gets its learner through the account's own profile and consent, never this guest form.
-  if (beta === 'reviewed' && dataset === 'account' && !learner) return <Redirect href={'/account' as Href} />;
+  if (reviewed && dataset === 'account' && !learner) return <Redirect href={'/account' as Href} />;
   const ready = adult && agree;
-  // Only the heading changes in a genuine release presentation or private beta; the statements, facts and checks stay as they are.
-  const consentTitle = isReleasePresentation(rules.mode) || beta !== 'off' ? 'Persetujuan' : 'Persetujuan (versi demo)';
+  // Only the heading changes in a genuine release presentation, private beta or normal user build; the statements, facts and checks stay as they are.
+  const consentTitle = isReleasePresentation(rules.mode) || beta !== 'off' || normal !== 'off' ? 'Persetujuan' : 'Persetujuan (versi demo)';
 
   const start = async () => {
     setBusy(true);

@@ -19,9 +19,11 @@ import { sha256Hex } from '@/sync/sha256';
 // learning beta profile (LEARNING_BETA on, PRIVATE_BETA explicitly off). MOCK PROJECTION / TEST FIXTURES, NOT LIVE PROOF.
 // Only the AppContext, AccountContext and useLearning hooks are replaced, with fixed values; the screens, routing, the
 // real env config, the real review verifier, the real Unit A controller and a real KvStore run. The compiled
-// UNIT_A_STARTER_REVIEW is swapped for a per-test record: the real pending record by default, or, for the counterfactual
-// reviewed build only, a FICTIONAL approval built below. None of this is native, backend or linguistic approval proof:
-// the source review stays pending, the content stays a synthetic draft, and no account, mail or network is used.
+// UNIT_A_STARTER_REVIEW is swapped for a per-test record: an explicit pending TEST FIXTURE by default (the actual compiled
+// record is now approved, so it cannot serve as the pending case), or a FICTIONAL approval built below for the reviewed
+// cases. The actual compiled record is an owner-authorized, AI-only trial acceptance of the current content: not human or
+// expert review, not 3 independent people, and no efficacy, native or backend proof. The content stays a synthetic,
+// constructed draft, and these mocks and fixtures are not backend proof; no account, mail or network is used.
 let mockApp: Record<string, unknown> = {};
 let mockAccount: Record<string, unknown> = {};
 let mockStarterReview: unknown;
@@ -108,7 +110,7 @@ const setEnv = (env: Env) => {
   }
 };
 
-/** FICTIONAL approval of the exact draft content, for the counterfactual reviewed build only; not a real review. */
+/** FICTIONAL approval of the exact draft content, a per-test fixture for the same generic validator; not a real review. */
 function fictionalApproval() {
   return {
     status: 'approved-for-trial',
@@ -120,6 +122,30 @@ function fictionalApproval() {
       assessment: { reviewer: 'FICTIONAL FIXTURE, not a real assessment review', reviewedAt: '2026-10-22T09:00:00.000Z' },
     },
   };
+}
+
+/** The actual compiled record's current content fingerprint and review timestamp (all 3 sections). */
+const ACTUAL_SHA256 = '5e8882a34ed33284f9145d11db8486c48f6ec778605ae91b1cd571236bf1a54e';
+const ACTUAL_REVIEWED_AT = '2026-10-30T10:25:22.000Z';
+
+/** EXPLICIT PENDING TEST FIXTURE, not the compiled record: pending behavior needs a pending review and the actual one is approved. */
+const pendingFixture = () => ({ status: 'pending' as const });
+
+/**
+ * Pre/postcondition on the ACTUAL compiled record, which no test here may change: approved-for-trial for the current
+ * content fingerprint, by one AI-only coordinating reviewer in all 3 sections. Not human or expert review, not 3
+ * independent people and no efficacy, native or backend proof; the actual content itself stays a synthetic, constructed draft.
+ */
+function expectActualCompiledApproval() {
+  const section = { reviewer: expect.stringMatching(/\/root\/check_fasih_expo.*AI-only/), reviewedAt: ACTUAL_REVIEWED_AT };
+  expect(actualReview.UNIT_A_STARTER_REVIEW).toMatchObject({
+    status: 'approved-for-trial',
+    contentSha256: ACTUAL_SHA256,
+    reviews: { arabic: section, indonesian: section, assessment: section },
+  });
+  expect(actualReview.unitAContentFingerprint()).toBe(ACTUAL_SHA256);
+  expect(actualReview.starterReviewAccess(actualReview.UNIT_A_STARTER_REVIEW)).toEqual({ allowed: true });
+  expect(PILOT_CONTENT).toMatchObject({ synthetic: true, constructed: true, reviewStatus: 'draft' });
 }
 
 /** Test fixture learner (never created by the screens under test). */
@@ -163,13 +189,14 @@ async function mount(...args: Parameters<typeof renderRouter>) {
 
 beforeAll(() => {
   // Preconditions on the real gates, so a failure below is the UI's, not the fixture's.
-  expect(actualReview.UNIT_A_STARTER_REVIEW).toEqual({ status: 'pending' });
+  expectActualCompiledApproval();
   expect(actualReview.starterReviewAccess(fictionalApproval())).toEqual({ allowed: true });
 });
 beforeEach(() => {
   saved = Object.fromEntries(ENV_KEYS.map((k) => [k, process.env[k]]));
   setEnv(LEARNING);
-  mockStarterReview = actualReview.UNIT_A_STARTER_REVIEW;
+  // Explicit pending TEST FIXTURE by default, not the (now approved) actual compiled record; approved cases set their own.
+  mockStarterReview = pendingFixture();
 });
 afterEach(() => {
   for (const key of ENV_KEYS) {
@@ -179,13 +206,11 @@ afterEach(() => {
   jest.restoreAllMocks();
 });
 afterAll(() => {
-  // The fixture never touches the source: the compiled review stays pending and the content a synthetic draft.
-  expect(actualReview.UNIT_A_STARTER_REVIEW).toEqual({ status: 'pending' });
-  expect(actualReview.starterReviewAccess().allowed).toBe(false);
-  expect(PILOT_CONTENT).toMatchObject({ synthetic: true, constructed: true, reviewStatus: 'draft' });
+  // The fixtures never touch the source: the actual compiled record is unchanged and the content is still a synthetic draft.
+  expectActualCompiledApproval();
 });
 
-it('learning beta Home with the compiled pending review shows the branded review state and the account entry, no study CTA', async () => {
+it('learning beta Home with an explicit pending review TEST FIXTURE shows the branded review state and the account entry, no study CTA', async () => {
   expect(starterReviewAccess()).toMatchObject({ allowed: false });
   expect(starterBeta('tester')).toBe('pending');
   expect(starterBeta('developer-demo')).toBe('off');
@@ -204,7 +229,7 @@ it('learning beta Home with the compiled pending review shows the branded review
   }
 });
 
-it('pending review: direct /unit-a-pilot and /consent, query spoofing included, never read storage, teach or create a learner', async () => {
+it('explicit pending TEST FIXTURE: direct /unit-a-pilot and /consent, query spoofing included, never read storage, teach or create a learner', async () => {
   const spoof = 'review=approved-for-trial&approved=1&learning-beta=on&dataset=account';
   for (const initialUrl of ['/unit-a-pilot', `/unit-a-pilot?${spoof}`]) {
     const { store, reads } = sentinelStore();
@@ -227,7 +252,7 @@ it('pending review: direct /unit-a-pilot and /consent, query spoofing included, 
   }
 });
 
-it('an account or provider projection claiming learning beta and approval cannot make a pending starter reviewed', async () => {
+it('an account or provider projection claiming learning beta and approval cannot make an explicit pending TEST FIXTURE starter reviewed', async () => {
   const claim = { ...CLAIM, starterReview: 'approved-for-trial', approved: true };
   expect(starterBeta('tester')).toBe('pending');
   project({ content: EMPTY, learner: null }, claim);

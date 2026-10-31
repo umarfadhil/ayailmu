@@ -1,11 +1,12 @@
-// The private tester beta's Home: the brand, «Beta privat», and either the starter's review state or one entry into
-// the Unit A starter. Only the real build configuration and the compiled starter review open it, never the account
-// projection or a URL. It offers no session, legacy unit or next lesson. A reviewed Home with a connected account also
-// shows that account's own compact sync facts and a manual sync, as the account panel words them; nothing otherwise.
+// The tester starter's Home: the brand, «Beta privat» (private beta audience only), and either the starter's review state
+// or one entry into the Unit A starter. Only the real build configuration and the compiled starter review open it, never
+// the account projection or a URL. It offers no session, legacy unit or next lesson. A reviewed Home with a connected
+// account also shows that account's own compact sync facts and a manual sync, as the account panel words them; nothing otherwise.
 import { router, type Href } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { starterBetaBuild } from '@/config/learningBeta';
+import { normalStarterBuild } from '@/config/normalStarter';
 import type { AppMode } from '@/config/rules';
 import type { AccountSyncProgress } from '@/sync/accountProgress';
 import { useAccount } from '@/ui/AccountContext';
@@ -20,6 +21,15 @@ export type StarterBeta = 'off' | 'pending' | 'reviewed';
 
 export function starterBeta(mode: AppMode): StarterBeta {
   if (mode !== 'tester' || !starterBetaBuild()) return 'off';
+  return starterReviewAccess().allowed === true ? 'reviewed' : 'pending';
+}
+
+/**
+ * 'off' outside the explicit, validated normal user build (tester mode); otherwise whether the same unchanged compiled
+ * review approves the exact starter. The build only makes the starter eligible, the review alone makes it reviewed.
+ */
+export function normalStarter(mode: AppMode): StarterBeta {
+  if (mode !== 'tester' || !normalStarterBuild()) return 'off';
   return starterReviewAccess().allowed === true ? 'reviewed' : 'pending';
 }
 
@@ -52,7 +62,8 @@ function BetaSync({ profile, progress, busy, onSyncNow }: { profile: ConnectedPr
   );
 }
 
-export function StarterHome({ reviewed }: { reviewed: boolean }) {
+/** Only the audience changes the wording: a normal user sees no «Beta privat» chip; the default stays the private beta's. */
+export function StarterHome({ reviewed, audience = 'private-beta' }: { reviewed: boolean; audience?: 'normal-user' | 'private-beta' }) {
   const { learner } = useApp();
   const account = useAccount();
   const study = !reviewed ? null : learner ? (
@@ -83,7 +94,7 @@ export function StarterHome({ reviewed }: { reviewed: boolean }) {
     >
       <View style={styles.top}>
         <Wordmark />
-        <Chip label="Beta privat" />
+        {audience === 'normal-user' ? null : <Chip label="Beta privat" />}
       </View>
       {reviewed ? (
         <View style={styles.text}>

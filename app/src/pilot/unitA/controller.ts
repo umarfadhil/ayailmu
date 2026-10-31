@@ -22,6 +22,7 @@
 // after each operation the document's verified intents are appended to the store under its exact bytes. Older
 // attempts are never captured afterwards; a failed append leaves the choice and its intent for a later operation.
 import { starterBetaBuild, type LearningBetaEnv } from '@/config/learningBeta';
+import { normalStarterBuild, type NormalStarterEnv } from '@/config/normalStarter';
 import type { PrivateBetaEnv } from '@/config/privateBeta';
 import { newId } from '@/engine/util';
 import { createSerialQueue } from '@/storage/serial';
@@ -96,9 +97,9 @@ export interface PilotControllerOptions {
   assistedToday: (day: string) => Promise<boolean>;
   /** Used only to shuffle the option order of a new presentation. */
   random: () => number;
-  /** 'tester' only: the private beta or learning beta environment, validated on every operation; anything invalid blocks 'mode'. */
-  betaEnv?: PrivateBetaEnv & LearningBetaEnv;
-  /** 'tester' only: the starter review, re-checked against the exact content on every operation; else 'review'. */
+  /** 'tester' only: the private beta, learning beta or normal user build environment, validated on every operation; anything invalid blocks 'mode'. */
+  betaEnv?: PrivateBetaEnv & LearningBetaEnv & NormalStarterEnv;
+  /** 'tester' only: the starter review, re-checked against the exact content on every operation, for every build; else 'review'. */
   starterReview?: unknown;
   /** Absent: nothing is captured and the document keeps its exact keys. */
   capture?: PilotCaptureOptions;
@@ -1014,7 +1015,8 @@ export function createPilotController(options: PilotControllerOptions) {
     if (disposed) return 'disposed';
     if (!holds(() => options.active() === true)) return 'inactive';
     if (mode === 'tester') {
-      if (!holds(() => starterBetaBuild(options.betaEnv) === true)) return 'mode';
+      // A build only makes the starter eligible: the review is still re-checked on every operation, whichever build it is.
+      if (!holds(() => starterBetaBuild(options.betaEnv) === true) && !holds(() => normalStarterBuild(options.betaEnv) === true)) return 'mode';
       if (!holds(() => starterReviewAccess(options.starterReview).allowed === true)) return 'review';
     } else if (mode !== 'developer-demo') {
       return 'mode';

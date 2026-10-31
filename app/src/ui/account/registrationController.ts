@@ -108,6 +108,7 @@ const MESSAGES: Record<RegistrationErrorCode, string> = {
   weak_password: 'Kata sandi terlalu lemah. Gunakan kata sandi yang lebih panjang.',
   rate_limited: 'Terlalu banyak permintaan. Tunggu sebentar lalu coba lagi.',
   network: 'Server akun tidak terjangkau. Periksa koneksi lalu coba lagi.',
+  service_unavailable: 'Layanan akun sedang tidak tersedia. Coba lagi nanti.',
   auto_confirm_refused: 'Server akun tidak meminta konfirmasi email, jadi pendaftaran dihentikan.',
   provider_refused: 'Server akun menolak permintaan ini.',
   bad_response: 'Jawaban server akun tidak dikenali. Coba lagi.',

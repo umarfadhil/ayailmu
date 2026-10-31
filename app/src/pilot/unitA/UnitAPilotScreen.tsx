@@ -8,6 +8,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNo
 import { ActivityIndicator, AppState, Pressable, StyleSheet, Text, View, type ViewInstance } from 'react-native';
 
 import { starterBetaBuild } from '@/config/learningBeta';
+import { normalStarterBuild } from '@/config/normalStarter';
 import { loadScreenViews } from '@/engine/exposure';
 import { nextLessonAssistedOn } from '@/pilot/nextLesson/assistance';
 import type { Store } from '@/storage/types';
@@ -96,24 +97,33 @@ function storeId(store: object): number {
   return id;
 }
 
-/** A tester build opens Unit A only in a validated private beta or learning beta build whose compiled review approves the exact starter. */
+/**
+ * A tester build opens Unit A only in a validated private beta, learning beta or normal user build whose compiled review
+ * approves the exact starter. A build alone never opens it: the same review check always applies.
+ */
 function betaStarterOpen(): boolean {
-  return starterBetaBuild() && starterReviewAccess().allowed === true;
+  return (starterBetaBuild() || normalStarterBuild()) && starterReviewAccess().allowed === true;
+}
+
+/** The explicit normal user build (never also a beta one): its screen carries no prototype or beta wording. */
+function normalUserView(mode: PilotMode): boolean {
+  return mode === 'tester' && normalStarterBuild() && !starterBetaBuild();
 }
 
 export function UnitAPilotScreen(props: UnitAPilotScreenProps) {
   const { store, owner, mode, readOnly } = props;
-  // The controller re-checks the beta and the review on every operation; this only keeps it from mounting otherwise.
-  if (mode !== 'developer-demo' && !(mode === 'tester' && betaStarterOpen())) return <Unavailable>Unit A uji coba hanya tersedia di mode pengembang.</Unavailable>;
-  if (readOnly !== null) return <Unavailable>{`Penyimpanan sedang hanya-baca (${readOnly}). Unit A tidak dibuka di tab ini.`}</Unavailable>;
+  const normalUser = normalUserView(mode);
+  // The controller re-checks the build and the review on every operation; this only keeps it from mounting otherwise.
+  if (mode !== 'developer-demo' && !(mode === 'tester' && betaStarterOpen())) return <Unavailable normalUser={normalUser}>Unit A uji coba hanya tersedia di mode pengembang.</Unavailable>;
+  if (readOnly !== null) return <Unavailable normalUser={normalUser}>{`Penyimpanan sedang hanya-baca (${readOnly}). Unit A tidak dibuka di tab ini.`}</Unavailable>;
   return <PilotPanel key={JSON.stringify([storeId(store), owner, mode, readOnly])} {...props} />;
 }
 
-function Unavailable({ children }: { children: string }) {
+function Unavailable({ children, normalUser = false }: { children: string; normalUser?: boolean }) {
   return (
     <Page width="exercise">
       <View style={styles.top}>
-        <Eyebrow tone="accent">Unit A · uji coba</Eyebrow>
+        <Eyebrow tone="accent">{normalUser ? 'Unit A' : 'Unit A · uji coba'}</Eyebrow>
       </View>
       <Notice tone="info" testID="pilot-unavailable">
         {children}
@@ -197,6 +207,7 @@ function viewKey(view: PilotView | null): string {
 }
 
 function PilotPanel({ store, owner, mode, readOnly, arabicScale, today, onNextLesson, active, captureLearnerId, onAnswersSaved }: UnitAPilotScreenProps) {
+  const normalUser = normalUserView(mode);
   const [view, setView] = useState<PilotView | null>(null);
   const [choice, setChoice] = useState<{ presentationId: string; optionId: string } | null>(null);
   const [busy, setBusy] = useState(false);
@@ -290,7 +301,7 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today, onNextLe
       }
     };
     const isLive = () => live && datasetLive();
-    // Capture only in a validated beta whose compiled review approves the exact starter, for a named learner.
+    // Capture only in a validated beta or normal user build whose compiled review approves the exact starter, for a named learner.
     const learnerId =
       mode === 'tester' && betaStarterOpen() && typeof captureLearnerId === 'string' && captureLearnerId.length > 0 ? captureLearnerId : null;
     const c = createPilotController({
@@ -642,9 +653,15 @@ function PilotPanel({ store, owner, mode, readOnly, arabicScale, today, onNextLe
   return (
     <Page width="exercise" ref={page} footer={footer}>
       <View style={styles.top}>
-        <Eyebrow tone="accent">Unit A · uji coba</Eyebrow>
-        {/* A tester panel mounts only in a validated beta with the exact starter reviewed (UnitAPilotScreen). */}
-        <Caption>{mode === 'tester' ? 'Beta privat · hasil sementara' : 'Draf belum ditinjau · progres hanya tersimpan di perangkat ini'}</Caption>
+        <Eyebrow tone="accent">{normalUser ? 'Unit A' : 'Unit A · uji coba'}</Eyebrow>
+        {/* A tester panel mounts only in a validated beta or normal user build with the exact starter reviewed (UnitAPilotScreen). */}
+        <Caption>
+          {normalUser
+            ? 'Kemajuan latihan sementara'
+            : mode === 'tester'
+              ? 'Beta privat · hasil sementara'
+              : 'Draf belum ditinjau · progres hanya tersimpan di perangkat ini'}
+        </Caption>
       </View>
       {body}
       {capturePending && view !== null && view.kind !== 'blocked' ? (

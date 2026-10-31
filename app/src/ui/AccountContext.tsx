@@ -31,7 +31,7 @@ import { createAccountSession, exportOwnAccountData } from '@/account/session';
 import { STAGING } from '@/account/staging';
 import { loadSupabaseConfig } from '@/account/supabaseConfig';
 import { ApiError, createAccountControls, createApiClient, discoverOwnAccountDeletion, type AccountDeletion } from '@/api/client';
-import type { PendingGoogleStore } from '@/auth/google';
+import { missingWebCrypto, type PendingGoogleStore } from '@/auth/google';
 import type { GoogleBrowser, GoogleBrowserResult } from '@/auth/googleBrowser';
 import { deviceGoogleBrowser, deviceGoogleStore } from '@/auth/googleDevice';
 import { devicePrivateQaNetwork } from '@/auth/privateQaDevice';
@@ -52,6 +52,18 @@ import type { AccountBusy, AccountMode, AccountPanelProps, AccountProfileChoice,
 import { APP_VERSION, LOCAL_ACCOUNT_CONSENT_VERSION, STAGING_ACCOUNT_CONSENT_VERSION, useApp, type AnswerSaveNotice } from '@/ui/AppContext';
 import { useAccountRegistration } from '@/ui/useAccountRegistration';
 import { usePasswordRecovery } from '@/ui/usePasswordRecovery';
+
+// Safe, already-worded notes for a production capability that was asked for and cannot run here: never an environment
+// name, address, secret or provider detail, and never a claim that Expo Go can run the app's own callback scheme.
+const GOOGLE_EXPO_GO_NOTE = 'Masuk dengan Google belum tersedia di Expo Go. Masuk dengan email dan kata sandi tetap bisa dipakai.';
+const GOOGLE_UNAVAILABLE_NOTE = 'Masuk dengan Google belum tersedia di perangkat ini. Masuk dengan email dan kata sandi tetap bisa dipakai.';
+const RECOVERY_UNAVAILABLE_NOTE = 'Pemulihan kata sandi belum tersedia di perangkat ini. Masuk dengan email dan kata sandi tetap bisa dipakai.';
+
+/** The note for a Google configuration that is off: the honest Expo Go one for that native reason, else the generic one; never the reason itself. */
+function googleUnavailableNote(settings: object): string {
+  const reason = 'reason' in settings && typeof settings.reason === 'string' ? settings.reason : '';
+  return /expo[\s_-]*go/i.test(reason) ? GOOGLE_EXPO_GO_NOTE : GOOGLE_UNAVAILABLE_NOTE;
+}
 
 export interface AccountContextValue {
   /** The account service (the local one, or a staging build's staging server) is configured for this build. */
@@ -128,7 +140,8 @@ const RELOAD_FAILED = 'Data akun di perangkat ini belum bisa dibuka lagi untuk b
 
 /**
  * The account service as this layer's messages name it, and the version its adult-profile consent records: the local
- * account service by default, or the remote staging server under the validated configuration's staging profile.
+ * account service by default, or the remote staging server under the validated configuration's staging profile. The
+ * private native QA profile names ordinary «layanan akun» and «akun», never the local service.
  */
 interface AccountService {
   /** Mid-sentence, e.g. «layanan akun lokal». */
@@ -139,6 +152,11 @@ interface AccountService {
 }
 const LOCAL_SERVICE: AccountService = { name: 'layanan akun lokal', account: 'akun lokal', consentVersion: LOCAL_ACCOUNT_CONSENT_VERSION };
 const STAGING_SERVICE: AccountService = { name: 'server akun staging', account: 'akun staging', consentVersion: STAGING_ACCOUNT_CONSENT_VERSION };
+/**
+ * The private native QA build's account service: ordinary account names, never the local service's, and no claim that it is
+ * production or reachable. Its adult-profile consent statement is still the local one's, so it records that version.
+ */
+const PRIVATE_QA_SERVICE: AccountService = { name: 'layanan akun', account: 'akun', consentVersion: LOCAL_ACCOUNT_CONSENT_VERSION };
 /**
  * The production account service. Its consent version is a distinct, UNREVIEWED draft marker for keeping a learner's
  * answers and settings on the server: it needs the owner's and a privacy review's approval before any release, and a
@@ -168,9 +186,14 @@ const rememberedOffline = (s: AccountService) =>
 /** The sign-in this work belonged to is gone (expired, or ended without this layer's sign-out): sign out visibly. */
 const sessionEnded = (e: unknown): boolean => e instanceof AuthError && (e.code === 'expired' || e.code === 'signed_out' || e.code === 'superseded');
 
-/** A fixed message for a sign-in failure at service `s`: never the server's text, the address or the password. */
-function authMessage(e: unknown, s: AccountService): string {
-  const unreachable = `${upperFirst(s.name)} tidak terjangkau. Belajar tetap bisa tanpa akun.`;
+/**
+ * A fixed message for a sign-in failure at service `s`: never the server's text, the address or the password. Only where
+ * `guestLearning` (the isolated local developer case) does it say that learning goes on without an account; every other
+ * profile gets a neutral retry and data-kept note instead.
+ */
+function authMessage(e: unknown, s: AccountService, guestLearning: boolean): string {
+  const kept = guestLearning ? 'Belajar tetap bisa tanpa akun.' : 'Coba lagi nanti; data di perangkat ini tetap ada.';
+  const unreachable = `${upperFirst(s.name)} tidak terjangkau. ${kept}`;
   if (e instanceof AuthError) {
     switch (e.code) {
       case 'not_synthetic':
@@ -187,20 +210,20 @@ function authMessage(e: unknown, s: AccountService): string {
       case 'expired':
         return ENDED;
       case 'cancelled':
-        return 'Masuk dengan Google dibatalkan. Belajar tetap bisa tanpa akun.';
+        return `Masuk dengan Google dibatalkan. ${kept}`;
       case 'not_registered':
-        return `Akun Google ini belum terdaftar di ${s.name}, dan pendaftaran baru tidak tersedia. Belajar tetap bisa tanpa akun.`;
+        return `Akun Google ini belum terdaftar di ${s.name}, dan pendaftaran baru tidak tersedia. ${kept}`;
       case 'bad_callback':
         return 'Masuk dengan Google tidak bisa diselesaikan. Mulai lagi dari tombol Google; data di perangkat ini tetap ada.';
       case 'provider_refused':
-        return `Google atau ${s.name} menolak permintaan masuk ini. Coba lagi nanti; belajar tetap bisa tanpa akun.`;
+        return `Google atau ${s.name} menolak permintaan masuk ini. ${guestLearning ? 'Coba lagi nanti; belajar tetap bisa tanpa akun.' : kept}`;
       case 'unavailable':
-        return 'Masuk dengan Google belum bisa dipakai di perangkat ini. Belajar tetap bisa tanpa akun.';
+        return `Masuk dengan Google belum bisa dipakai di perangkat ini. ${kept}`;
       case 'not_forgotten':
         // Refused before anything was sent for it: never a claim that the earlier sign-in was forgotten.
         return `${NOT_FORGOTTEN} Jadi masuk ini tidak dilanjutkan. Coba lagi nanti; data di perangkat ini tetap ada.`;
       default:
-        return `Belum bisa masuk ke ${s.account}. Belajar tetap bisa tanpa akun.`;
+        return `Belum bisa masuk ke ${s.account}. ${kept}`;
     }
   }
   if (e instanceof ApiError && (e.code === 'network' || e.code === 'aborted')) return unreachable;
@@ -331,7 +354,9 @@ export function AccountProvider({
         ? LEARNING_BETA_SERVICE
         : environment === STAGING
           ? STAGING_SERVICE
-          : LOCAL_SERVICE;
+          : environment === PRIVATE_QA
+            ? PRIVATE_QA_SERVICE
+            : LOCAL_SERVICE;
   // The private native QA transport, decided once per configuration by the device port: off for an ordinary or disabled
   // profile (its clients keep their usual transport), else the one bound fetch every account client gets, or unavailable.
   const privateNetwork = useMemo(() => devicePrivateQaNetwork(config), [config]);
@@ -339,17 +364,37 @@ export function AccountProvider({
   // An explicitly private profile builds no account client without that fetch: never a fallback to the global one.
   const privateProfile = privateNetwork.state !== 'off' || (config.enabled && (config.environment === PRIVATE_QA || config.privateQa !== undefined));
   const privateBlocked = privateProfile && privateFetch === undefined;
+  // A normal production account service (never the private profile or the learning beta): the only one whose optional Google
+  // and recovery check for secure crypto, and say safely why they cannot run. Only an explicit «on» asks for either.
+  const productionService = config.enabled && !privateProfile && config.environment === 'production' && config.learningBeta !== true;
+  const recoveryRequested = process.env.EXPO_PUBLIC_PASSWORD_RECOVERY === 'on';
   // Continue with Google: only with the account service on, in a build that turns it on, where its platform can run it;
-  // never in the private profile.
-  const google = useMemo(() => {
-    if (!config.enabled || privateProfile) return null;
-    const browser = googleBrowser ?? deviceGoogleBrowser();
-    if (!browser) return null;
-    const settings = loadGoogleConfig(browser.platform);
-    if (!settings.enabled) return null;
-    const store = googleStore ?? deviceGoogleStore();
-    return store ? { browser, settings, store } : null;
-  }, [config, googleBrowser, googleStore, privateProfile]);
+  // never in the private profile. One setup makes the browser and the store once. A production build that asked for Google
+  // and cannot run it keeps no service and a safe note instead (a missing or unsafe callback, browser, store or secure
+  // crypto, or a setup that throws): its email sign-in and registration never depend on it. Elsewhere nothing is caught.
+  const googleSetup = useMemo(() => {
+    if (!config.enabled || privateProfile) return { service: null, note: undefined };
+    const requested = productionService && process.env.EXPO_PUBLIC_GOOGLE_SIGN_IN === 'on';
+    if (productionService && !requested) return { service: null, note: undefined };
+    const setup = () => {
+      const browser = googleBrowser ?? deviceGoogleBrowser();
+      if (!browser) return { service: null, note: requested ? GOOGLE_UNAVAILABLE_NOTE : undefined };
+      const settings = loadGoogleConfig(browser.platform);
+      if (!settings.enabled) return { service: null, note: requested ? googleUnavailableNote(settings) : undefined };
+      // Never a shim: the production sign-in's entropy, SHA-256 and encoder are the platform's own, or Google is not offered.
+      if (requested && missingWebCrypto()) return { service: null, note: GOOGLE_UNAVAILABLE_NOTE };
+      const store = googleStore ?? deviceGoogleStore();
+      if (!store) return { service: null, note: requested ? GOOGLE_UNAVAILABLE_NOTE : undefined };
+      return { service: { browser, settings, store }, note: undefined };
+    };
+    if (!requested) return setup();
+    try {
+      return setup();
+    } catch {
+      return { service: null, note: GOOGLE_UNAVAILABLE_NOTE };
+    }
+  }, [config, googleBrowser, googleStore, privateProfile, productionService]);
+  const google = googleSetup.service;
   // Remembering an email sign-in: only with the account service on, in a build that turns it on, with a secure vault.
   const vault = useMemo(() => {
     if (!config.enabled || privateBlocked || !rememberDeviceEnabled()) return null;
@@ -366,10 +411,15 @@ export function AccountProvider({
   const recoveryOptions = useMemo(() => {
     const store = recoverySetup?.store;
     if (!recoverySetup || !store) return null;
-    if (!privateProfile) return { config: recoverySetup.config, store };
+    if (!privateProfile) {
+      // Normal production recovery runs on the platform's secure WebCrypto, never a shim: without it the Auth adapter gets no
+      // recovery, while recoverySetup still recognizes and fences every incoming link.
+      if (productionService && missingWebCrypto()) return null;
+      return { config: recoverySetup.config, store };
+    }
     const nativeCrypto = recoverySetup.crypto;
     return privateFetch && nativeCrypto ? { config: recoverySetup.config, store, nativeCrypto } : null;
-  }, [recoverySetup, privateProfile, privateFetch]);
+  }, [recoverySetup, privateProfile, privateFetch, productionService]);
   const services = useMemo(() => {
     if (!config.enabled || privateBlocked) return null;
     // The private profile's bound fetch, else the platform's fetch as this provider found it: a sign-out still on its way
@@ -397,6 +447,15 @@ export function AccountProvider({
     const conn: SyncConnection = { auth, session, api };
     return { auth, api, session, conn, google };
   }, [config, google, vault, recoveryOptions, privateBlocked, privateFetch]);
+  // Production only, for a capability the build explicitly turned on that this device cannot run: one safe note each. Off
+  // flags and available capabilities add none; nothing here reads a credential or provider detail, or fakes a success.
+  const unavailableFeatures = useMemo(() => {
+    if (!productionService || !services) return undefined;
+    const googleNote = googleSetup.note;
+    const recoveryNote = recoveryRequested && (!recoverySetup?.store || !services.auth.recovery) ? RECOVERY_UNAVAILABLE_NOTE : undefined;
+    if (!googleNote && !recoveryNote) return undefined;
+    return { ...(googleNote ? { google: googleNote } : {}), ...(recoveryNote ? { recovery: recoveryNote } : {}) };
+  }, [productionService, services, googleSetup, recoveryRequested, recoverySetup]);
 
   const [account, setAccount] = useState<{ key: string; label: string } | null>(null);
   const [busy, setBusy] = useState<AccountBusy | null>(null);
@@ -1000,7 +1059,8 @@ export function AccountProvider({
       if (services.auth.status().state !== 'signed-out') void services.auth.signOut();
       close();
       clear();
-      setError(authMessage(e, service));
+      // The guest-learning promise is only the isolated local developer case's: no named profile, developer-demo rules.
+      setError(authMessage(e, service, environment === undefined && appRef.current.rules.mode === 'developer-demo'));
       setBusy(null);
     }
 
@@ -1404,7 +1464,7 @@ export function AccountProvider({
       }
     }
     return { signOut, sync, submit, restoreRemembered, continueWithGoogle, resumeGoogle, copyGuest, skipGuest, createProfile, linkProfile, resolvePrefs, exportData, deletionAction };
-  }, [services, service, openDataset, setConnected, recoveryNormalStarting, registrationNormalStarting]);
+  }, [services, service, environment, openDataset, setConnected, recoveryNormalStarting, registrationNormalStarting]);
   const dataControls = useMemo<AccountDataControls>(() => ({ exportData: actions.exportData }), [actions]);
 
   // Leaving the app run (unmount) drops all account work and lets go of the account dataset; nothing is deleted. Its
@@ -1471,6 +1531,8 @@ export function AccountProvider({
           ...(recoveryControl.panel ? { recovery: recoveryControl.panel } : {}),
           // Only where registrationAllowed says so (local or staging, never production): its own flow, never a sign-in.
           ...(registrationControl.panel ? { registration: registrationControl.panel } : {}),
+          // Only a production build's explicitly requested Google or recovery that cannot run: a safe note, never a control.
+          ...(unavailableFeatures ? { unavailableFeatures } : {}),
           onSubmit: (request) => void actions.submit(request),
           // Only where the build turns Google on, with the account service, and the platform can run its browser and store.
           onGoogle: services.google && services.auth.google ? () => void actions.continueWithGoogle() : undefined,

@@ -1,7 +1,11 @@
-# Production client profile: code checkpoint
+# Production client profile: code checkpoint (historical snapshot)
 
 Status: a client code checkpoint for reviewers, not a deployment or release approval. Nothing was deployed, no hosting
 or credentials were bought or configured, and no real email was sent.
+
+Historical snapshot: this page records the checkpoint as it stood. Its statements that sign-up is off and that export is
+unfinished are stale and are superseded by the current [General-user profile](GENERAL_USER_PROFILE.md). Neither page
+claims that a service exists.
 
 ## What turns it on
 

@@ -73,7 +73,7 @@ export const PILOT_CONTENT: PilotContent = {
       construct: 'reference',
       title: 'Kata ganti tunggal: siapa yang dimaksud?',
       body: [
-        'Kalimat nominal sederhana masa kini = kata ganti + keterangan. Dalam kalimat seperti ini bahasa Arab tidak memakai kata untuk "adalah"; urutannya saja sudah cukup.',
+        'Di unit ini kita mempelajari pola kalimat nominal sederhana masa kini: kata ganti + keterangan, tanpa kata khusus untuk "adalah". Ini bukan definisi semua kalimat nominal; subjeknya juga dapat berupa kata benda.',
         'أَنَا = aku (si pembicara). هُوَ = dia laki-laki. هِيَ = dia perempuan.',
         'أَنْتَ = kamu laki-laki, أَنْتِ = kamu perempuan. Bedanya hanya harakat huruf terakhir: fathah atau kasrah.',
         'Tentukan dulu siapa yang dimaksud kata ganti, lalu baca arti keterangannya dari glosa.',
@@ -93,10 +93,10 @@ export const PILOT_CONTENT: PilotContent = {
       construct: 'agreement',
       title: 'Kata sifat mengikuti jenis yang diterangkan',
       body: [
-        'Kata sifat yang menjadi keterangan harus cocok jenisnya (maskulin atau feminin) dengan kata benda atau orang yang diterangkan.',
-        'Untuk yang maskulin, sifatnya bentuk dasar, misalnya كَبِيرٌ. Untuk yang feminin, sifatnya ditambah ـَةٌ: كَبِيرَةٌ.',
+        'Dalam pola kalimat di unit ini, kata sifat sebagai keterangan mengikuti jenis gramatikal (maskulin atau feminin) subjeknya. Untuk benda, jenis gramatikal bukan jenis kelamin biologis.',
+        'Pada bentuk kata sifat tunggal beraturan yang dipakai di unit ini, bentuk feminin ditandai ـَةٌ, misalnya كَبِيرٌ → كَبِيرَةٌ. Pola ini tidak berlaku untuk semua kata sifat.',
         'Akhiran ـَة sering menandai kata benda feminin, tetapi bukan aturan pasti: ada kata benda feminin tanpa ـَة. Jadi, tidak adanya ـَة belum membuktikan maskulin. Di soal latihan ini jenisnya selalu disebutkan; pakailah keterangan itu.',
-        'Aturan yang sama berlaku untuk kata ganti: هُوَ dan أَنْتَ → sifat bentuk dasar; هِيَ dan أَنْتِ → sifat dengan ـَةٌ.',
+        'Dengan kata sifat beraturan di unit ini, هُوَ dan أَنْتَ memakai bentuk maskulin; هِيَ dan أَنْتِ memakai bentuk feminin dengan ـَةٌ.',
         'أَنَا tidak punya bentuk maskulin atau feminin. Sifatnya mengikuti jenis orang yang sebenarnya berbicara, jadi perhatikan konteksnya.',
       ],
       examples: [
