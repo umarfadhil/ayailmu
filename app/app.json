@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Arabic Trial (Prototype)",
+    "name": "AyaFasih",
     "slug": "arabic-trial-app",
     "version": "0.1.0",
     "orientation": "portrait",
@@ -16,7 +16,12 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "blockedPermissions": [
+        "android.permission.SYSTEM_ALERT_WINDOW",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -28,7 +33,18 @@
       "expo-sqlite",
       "expo-font",
       "expo-router",
-      "expo-asset"
+      "expo-asset",
+      [
+        "expo-secure-store",
+        {
+          "configureAndroidBackup": true,
+          "faceIDPermission": false
+        }
+      ],
+      "./plugins/withPrivateQa",
+      "./plugins/withPrivateBeta",
+      "./plugins/withLearningBeta",
+      "./plugins/withGeneralUser"
     ],
     "scheme": "arabictrial",
     "experiments": {

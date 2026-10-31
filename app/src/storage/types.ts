@@ -92,6 +92,17 @@ export interface ArchivedSnapshot {
   raw: string | null;
 }
 
+/** What must still hold for Store.appendAnswer to write. */
+export type AnswerAppendGuard = {
+  /** Metadata key that must be present with exactly `expectedRaw` (compared byte-for-byte). */
+  metaKey: string;
+  expectedRaw: string;
+  /** Must equal the record's learner_id and the stored learner's. */
+  learnerId: string;
+  /** Asked inside the write queue; false refuses. */
+  active: () => boolean;
+};
+
 export interface Store {
   init(): Promise<void>;
   getLearner(): Promise<Learner | null>;
@@ -116,6 +127,24 @@ export interface Store {
   archiveSnapshot(reason: string, replacement: Snapshot | null, notice?: string): Promise<boolean>;
   getMeta(key: string): Promise<string | null>;
   setMeta(key: string, value: string | null): Promise<void>;
+  /**
+   * One read/modify/write of a single metadata key on this store's write queue: `transform` gets the freshest value
+   * (null when absent) and returns the new one (null removes it). Writes at most once, after the transform succeeds,
+   * and only when the value changed; a throwing transform or failed write leaves everything as it was. The transform
+   * may call this store's unqueued reads, never its writers (they queue behind it). A result that is neither a string
+   * nor null rejects. Optional only so older typed fixtures still compile; callers needing atomicity must refuse
+   * without it.
+   */
+  updateMeta?(key: string, transform: (raw: string | null) => Promise<string | null>): Promise<void>;
+  /**
+   * Appends one answer on this store's write queue, leaving the snapshot (byte-for-byte), metadata, reports and
+   * learner as they are. Refuses, writing nothing, unless the guard's learner is the record's and the stored learner,
+   * `guard.metaKey` is present with exactly `guard.expectedRaw`, and `guard.active()` holds, all checked when its turn
+   * comes (and, where transactional, again just before commit). A duplicate answer_id with identical JSON writes
+   * nothing; with different JSON it is refused. Optional only so older typed fixtures still compile; callers must
+   * refuse without it.
+   */
+  appendAnswer?(record: AnswerRecord, guard: AnswerAppendGuard): Promise<void>;
   addReport(report: ReportRecord): Promise<void>;
   listReports(): Promise<ReportRecord[]>;
   reset(): Promise<void>;

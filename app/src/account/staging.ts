@@ -3,7 +3,9 @@
 // HTTPS root origins of public DNS names, and a local address never is one. Without the opt-in, local addresses only.
 // Every value is matched whole and taken exactly as written, never normalized (no URL parsing: React Native's URL does
 // not implement its parts), so an address that would need normalizing is refused.
+import { LEARNING_BETA } from '@/account/learningBeta';
 import { localPilotOrigin, PILOT_API_PORT } from '@/account/loopback';
+import { PRIVATE_QA, PRIVATE_QA_API_ORIGIN, privateQaOrigin } from '@/account/privateQa';
 
 /** The one account profile besides the local default, exactly as EXPO_PUBLIC_ACCOUNT_ENV and a configuration's environment spell it. */
 export const STAGING = 'staging';
@@ -47,10 +49,21 @@ export function isUnknownAccountEnv(value: unknown): boolean {
 
 /**
  * The account API origin when `value` is exactly one for the profile `environment`: without one, the local pilot API
- * (normalized); with exactly "staging", a staging root origin. Any other profile allows nothing, so an address is only
- * ever taken together with its own profile.
+ * (normalized); with exactly "staging", a staging root origin; with exactly "production" and the explicit capability
+ * `productionAccounts` exactly true, a public root origin as in staging. Any other profile, or production without the
+ * capability, allows nothing, so an address is only ever taken together with its own profile. With exactly
+ * "private-qa" and the fourth argument, the private capability `privateQa`, exactly true (never with productionAccounts),
+ * exactly the private QA API root; that capability beside any other profile allows nothing. With exactly "learning-beta"
+ * and the fifth argument, the learning-beta capability `learningBeta`, exactly true (never with productionAccounts or
+ * privateQa), a public root origin as in staging; that capability beside any other profile allows nothing, and the
+ * four-argument answer of every profile is unchanged.
  */
-export function accountApiOrigin(value: unknown, environment: unknown): string | null {
+export function accountApiOrigin(value: unknown, environment: unknown, productionAccounts?: unknown, privateQa?: unknown, learningBeta?: unknown): string | null {
+  if (learningBeta !== undefined && environment !== LEARNING_BETA) return null;
+  if (environment === LEARNING_BETA) return learningBeta === true && productionAccounts === undefined && privateQa === undefined ? stagingOrigin(value) : null;
+  if (environment === PRIVATE_QA) return privateQaOrigin(value, PRIVATE_QA_API_ORIGIN, productionAccounts, privateQa);
+  if (privateQa !== undefined) return null;
   if (environment === undefined) return localPilotOrigin(value, PILOT_API_PORT);
+  if (environment === 'production') return productionAccounts === true ? stagingOrigin(value) : null;
   return environment === STAGING ? stagingOrigin(value) : null;
 }

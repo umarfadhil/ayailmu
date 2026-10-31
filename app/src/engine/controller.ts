@@ -2,6 +2,7 @@
 // after the matching write has succeeded, so a lost write never looks saved.
 import type { RulesConfig } from '@/config/rules';
 import type { GatedContent } from '@/content/gating';
+import { isOwnPilotAnswer } from '@/pilot/unitA/capture';
 import type { AnswerRecord, Learner, Store } from '@/storage/types';
 import type { Response } from './scoring';
 import { loadScreenViews, recordScreenView } from './exposure';
@@ -269,6 +270,15 @@ const ARCHIVE_REASON: Partial<Record<SnapshotStatus['kind'], { reason: string; n
   'invalid-order': { reason: 'invalid-option-order', notice: 'order-invalid' },
 };
 
+/**
+ * The answer log as the legacy session sees it: the learner's own Unit A pilot answers, recognized exactly, are left
+ * out (the pilot keeps its own document and schedule); every other record, lookalikes and other learners' included,
+ * stays in stored order. Nothing stored changes.
+ */
+export function legacyHistory(answers: AnswerRecord[], learnerId: string): AnswerRecord[] {
+  return answers.filter((r) => !isOwnPilotAnswer(r, learnerId));
+}
+
 export type Prepared =
   | { kind: 'resume'; state: SessionState; learner: Learner; history: AnswerRecord[] }
   | { kind: 'new'; state: SessionState; learner: Learner; history: AnswerRecord[]; notice?: string }
@@ -293,7 +303,7 @@ export async function prepareSession(a: {
 }): Promise<Prepared> {
   const learner = await a.store.getLearner();
   if (!learner) throw new Error('No learner: consent and setup come first');
-  const history = await a.store.listAnswers();
+  const history = legacyHistory(await a.store.listAnswers(), learner.learner_id);
   const status = classifySnapshot(await a.store.loadSnapshotRaw(), a.content);
   if (status.kind === 'future') {
     return { kind: 'refused', reason: `Sesi tersimpan berasal dari versi aplikasi yang lebih baru (${String(status.version)}).` };

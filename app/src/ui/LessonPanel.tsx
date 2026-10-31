@@ -1,5 +1,5 @@
 import type { RefObject } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, type ViewInstance } from 'react-native';
 
 import type { LessonScreen } from '@/content/schema';
 import { ClueBlock, ConstructedLabel, Eyebrow, ExampleGrid, MixedText } from './components';
@@ -19,7 +19,7 @@ export function LessonPanel({
   scale: number;
   eyebrow?: string;
   /** Focus target when a new lesson screen is shown (UI-01). */
-  headingRef?: RefObject<View | null>;
+  headingRef?: RefObject<ViewInstance | null>;
 }) {
   return (
     <View testID="lesson-panel" style={styles.panel}>

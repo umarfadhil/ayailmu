@@ -1,6 +1,8 @@
-# Arabic Trial App — local prototype
+# AyaFasih — Arabic learning prototype
 
-Expo SDK 57, React Native 0.86, TypeScript and Expo Router. Learner-facing text is Indonesian. Arabic keeps its vowel marks and uses bundled Noto Naskh Arabic.
+**Identity:** the current display brand is AyaFasih. The legacy technical slug `arabic-trial-app`, the scheme `arabictrial` and the storage and protocol names are retained for compatibility. A final distinct iOS bundle identifier, Android package and EAS project need owner coordination with Umar and are not configured.
+
+Expo SDK 58, React Native 0.88, TypeScript and Expo Router. Learner-facing text is Indonesian. Arabic keeps its vowel marks and uses bundled Noto Naskh Arabic.
 
 ## Status and behaviour
 
@@ -9,6 +11,8 @@ This is a developer prototype.
 - **History registry:** the previous packs `demo-synthetic-0.2` (`A2-*`, `B2-*`) and `demo-synthetic-0.1` (`DEMO-*`) are kept read-only, only to interpret old answers: their lineages (including retired items such as B2-Y1, B2-D7V1, B2-W4) and the forms each old item actually displayed.
 - **Draft notice:** visible throughout developer mode.
 - **Content review:** see [`../docs/Four_Choice_Content_Review.md`](../docs/Four_Choice_Content_Review.md) for every key and distractor with its rationale, what is taught before use, the 44 original IDs and what happened to them, retired reservations and open review questions. No qualified Arabic or Indonesian reviewer has approved any item.
+
+**Unit A pilot:** a separate developer-beta loop (worked lessons, practice, held-out transfer, delayed checks) is reachable at `/unit-a-pilot` and is not the legacy four-choice engine described below. See [`../docs/Unit_A_Pilot_Runtime.md`](../docs/Unit_A_Pilot_Runtime.md). Its content is draft and unreviewed.
 
 ### Four-choice learning loop
 
@@ -68,7 +72,7 @@ Moving past a lesson screen merges the new seen screen into the learner as curre
   - A saved option order that no longer matches the question is set aside, not re-graded.
   - With nothing due, the last real summary is kept.
 
-**What doesn't exist:** a backend, authentication, uploads or remote configuration. Audio is disabled. The icons are unchanged Expo template placeholders.
+**Services and assets:** production services are not configured. Optional GoTrue/API account and sync plumbing exists (it can post answers to a local API), is off by default and is not proof of a production service. Remote configuration is not implemented. Audio is disabled. The icons are unchanged Expo template placeholders.
 
 ## Commands
 
@@ -87,6 +91,8 @@ CI=1 npm run export:tester
 
 The export commands only create JavaScript bundles; they do not build signed apps or deploy anything. The scripts use POSIX environment syntax (macOS/Linux).
 
+Normal email-account preview: `npm run config:general-user`, `npm run start:general-user` and `npm run export:general-user` override the developer-demo default above. They need the normal-user preset and an operator-made `profiles/general-user.env.local`; see [`docs/GENERAL_USER_PROFILE.md`](docs/GENERAL_USER_PROFILE.md).
+
 ### Switching modes
 
 `EXPO_PUBLIC_APP_MODE` is inlined at bundle time. To switch modes:
@@ -97,7 +103,7 @@ A successful export alone does not prove content gating. A clean tester build mu
 
 ## Verification
 
-22 Jest suites with 366 tests pass, as do TypeScript and Expo lint. They cover:
+Run the current tests, type check and lint (see Commands) and check CI; this README records no pass counts. The legacy-engine tests cover:
 - **Content:** pack validity and hand-checked keys, distractor rules, reserved-form exposure.
 - **Answer handling:** shuffle and order persistence, four-choice scoring.
 - **Saved data:** v1 → v2 migration, malformed snapshot recovery and future-schema refusal in both stores; malformed web-store refusal; atomic rollback; duplicate replay.

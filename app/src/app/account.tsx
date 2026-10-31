@@ -1,25 +1,64 @@
-import { router, useLocalSearchParams, type Href } from 'expo-router';
-import { useEffect } from 'react';
+import { router, useFocusEffect, useLocalSearchParams, type Href } from 'expo-router';
+import { useCallback, useEffect, type EffectCallback } from 'react';
 
+import { PRIVATE_QA } from '@/account/privateQa';
+import { loadSupabaseConfig } from '@/account/supabaseConfig';
 import { useAccount } from '@/ui/AccountContext';
 import { AccountPanel } from '@/ui/account/AccountPanel';
 import { BackLink } from '@/ui/BackLink';
-import { Notice, Page } from '@/ui/components';
+import { Btn, Notice, Page } from '@/ui/components';
 import { HydrationGate } from '@/ui/Hydration';
 
-/** «Akun lokal»: sign-in, the adult profile, the explicit guest copy and manual sync of the local developer pilot. */
+/** For a mocked or embedded host without a focus API: the route's own lifetime stands in for its focus. */
+function useMountEffect(effect: EffectCallback) {
+  useEffect(effect, [effect]);
+}
+// Chosen once per module, never per render or per registration: Expo Router's own focus effect wherever it has one.
+const useRouteFocusEffect: (effect: EffectCallback) => void = typeof useFocusEffect === 'function' ? useFocusEffect : useMountEffect;
+
+/** The real account configuration, re-read through loadSupabaseConfig, is a validated private QA one. */
+function isValidatedPrivateQa(): boolean {
+  const config = loadSupabaseConfig();
+  return config.enabled === true && config.environment === PRIVATE_QA && config.privateQa === true && config.productionAccounts === undefined;
+}
+
+/** Back-compat for the unnamed local/default profile (no account environment; provider unset or local-supabase); never selected by the general-user profile. */
+function isLegacyAccountPresentation(): boolean {
+  const environment = process.env.EXPO_PUBLIC_ACCOUNT_ENV;
+  const provider = process.env.EXPO_PUBLIC_AUTH_PROVIDER;
+  return !environment && (provider === undefined || provider === 'local-supabase');
+}
+
+/** Account: sign-in or registration, the adult profile, the explicit guest copy and manual sync; a neutral notice when the account service is off. */
 function AccountRoute() {
   const account = useAccount();
+  // Leaving the route (blur or unmount) ends the registration it shows, through that registration's own cancel; an
+  // ordinary stage or busy rerender keeps the same onCancel, so it neither cancels nor resubscribes.
+  const cancel = account.panel.registration?.onCancel;
+  const endRegistration = useCallback(() => () => cancel?.(), [cancel]);
+  useRouteFocusEffect(endRegistration);
+  const deleting = account.signedIn && account.deletion && ['unknown', 'pending', 'completed'].includes(account.deletion.state.phase);
+  // A private build whose transport is unavailable: the context's marker, confirmed by the validated environment. Only
+  // the fact is shown, never the panel, its reason or anything it carries.
+  const privateUnavailable = !account.enabled && account.privateQa === true && isValidatedPrivateQa();
   return (
     <Page>
       <BackLink />
       {account.enabled ? (
-        <AccountPanel {...account.panel} />
+        deleting ? <Notice tone="info">{account.deletion?.state.phase === 'completed' ? 'Akun sudah dihapus. Lihat status di Data akun.' : 'Penghapusan akun sedang ditangani. Periksa status di Data akun.'}</Notice> : <AccountPanel {...account.panel} />
+      ) : privateUnavailable ? (
+        <Notice tone="info" testID="account-private-unavailable">
+          Koneksi akun belum tersedia di build ini.
+        </Notice>
       ) : (
         <Notice tone="info" testID="account-disabled">
-          Akun lokal tidak aktif di build ini. Belajar tetap bisa tanpa akun; data tetap di perangkat ini.
+          {/* The original copy only for the unnamed legacy local/default profile; every named profile and an explicit provider 'off' get the neutral one. */}
+          {isLegacyAccountPresentation()
+            ? 'Akun lokal tidak aktif di build ini. Belajar tetap bisa tanpa akun; data tetap di perangkat ini.'
+            : 'Layanan akun belum tersedia di build ini. Data tetap tersimpan di perangkat ini.'}
         </Notice>
       )}
+      {account.dataControls || account.deletion ? <Btn testID="account-data-open" label="Data akun" kind="secondary" onPress={() => router.push('/account-data' as Href)} disabled={account.panel.busy !== null && account.panel.busy !== undefined} /> : null}
     </Page>
   );
 }

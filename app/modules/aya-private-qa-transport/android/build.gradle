@@ -1,0 +1,20 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'expo.modules.ayaprivateqa'
+version = '0.1.0'
+
+android {
+  namespace "expo.modules.ayaprivateqa"
+  defaultConfig {
+    versionCode 1
+    versionName "0.1.0"
+  }
+}
+
+dependencies {
+  // Pinned to the OkHttp version shipped with the installed React Native.
+  implementation "com.squareup.okhttp3:okhttp:4.9.2"
+}

@@ -1,19 +1,27 @@
 // «Akun lokal»: the account and profile panel of the local developer pilot, presentational only; in a staging build
-// («Akun staging») the same panel names the remote staging server instead, its consent statement included. The caller
+// («Akun staging») the same panel names the remote staging server instead, its consent statement included. The private
+// QA build is titled «Akun» with ordinary account words, never the local service's. The caller
 // owns sign-in, profiles, guest-data copying and sync, and supplies every fact and callback. The panel keeps only
 // transient form and checkbox state: the typed password leaves it once per submit and is never kept, logged or
 // stored, and every tick starts over with each sign-in. Where the caller offers Continue with Google, it sits in the
-// same form, beside the password sign-in: it hands nothing typed over, and leaves no typed password behind.
+// same form, beside the password sign-in: it hands nothing typed over, and leaves no typed password behind. A learning-beta
+// build («Akun») words an ordinary email sign-in only: whatever the caller hands over, it never offers sign-up,
+// registration, recovery or Google.
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View, type TextInputProps } from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View, type TextInputProps, type ViewInstance } from 'react-native';
 
+import { PRIVATE_QA_REGISTRATION_POLICY } from '@/account/privateQa';
+import { loadRules } from '@/config/rules';
+import { localDate } from '@/engine/util';
+import type { AccountSyncProgress } from '@/sync/accountProgress';
 import { moveFocus } from '@/ui/a11y';
+import { RegistrationPanel, registrationIntro, type RegistrationPanelModel } from '@/ui/account/RegistrationPanel';
 import { Btn, Chip, Icon, Notice, Segmented } from '@/ui/components';
 import { colors, fonts, radius, typography } from '@/ui/theme';
 
 export type AccountMode = 'create' | 'signin';
 /** The account action in progress: its controls are disabled and the wait is announced. */
-export type AccountBusy = 'auth' | 'guest-copy' | 'profile' | 'sync' | 'prefs' | 'signout';
+export type AccountBusy = 'auth' | 'guest-copy' | 'profile' | 'sync' | 'prefs' | 'signout' | 'data';
 
 /** One of the account's own profiles: an opaque id (a view key only) and a caller-worded label with no personal details. */
 export interface AccountProfileChoice {
@@ -30,28 +38,62 @@ export interface ConnectedProfile {
   savedAnswers: number;
   /** Answers that came from other devices. */
   otherDeviceAnswers: number;
+  /**
+   * Factual sync progress. Null when it is unavailable (a read-only tab has no journal); absent only in legacy fixtures,
+   * and then the numeric fields above show only in the isolated local developer view. Everywhere else, absent is
+   * unavailable too. A UI prefers this when it is there.
+   */
+  progress?: AccountSyncProgress | null;
 }
 
 export interface AccountPanelProps {
   /** The signed-in account, or null when signed out. `key` is opaque and changes with every sign-in; `label` is shown. */
   account: { key: string; label: string } | null;
+  /** Password recovery, when offered: its own flow, apart from the normal sign-in, which it never signs into. */
+  recovery?: RecoveryPanelModel;
+  /**
+   * Registration, when offered: its own flow beside the normal sign-in, which then only signs in. It never signs in
+   * itself, and is never shown to a signed-in account. A production build shows it only when the model is marked
+   * 'confirmed-email'; the synthetic test-account flow (no marker) is never shown there.
+   */
+  registration?: RegistrationPanelModel;
   busy?: AccountBusy | null;
   /** A safe, already-worded message about the last action, shown as an alert. */
   error?: string | null;
-  /** Guest answers on this device (none: no copy is offered), or the caller's message once copied or skipped. */
-  guestCopy?: { answers: number; result?: string | null } | null;
+  /**
+   * Guest answers on this device, and whether the guest also has Unit A progress of its own (without either, no copy is
+   * offered), or the caller's message once copied or skipped.
+   */
+  guestCopy?: { answers: number; pilotProgress?: boolean; result?: string | null } | null;
   profiles?: AccountProfileChoice[];
   connected?: ConnectedProfile | null;
   /** Device and account settings differ (with an optional caller-worded detail); the learner chooses which to use. */
   prefsConflict?: { detail?: string } | null;
   /** Whether creating a test account is offered (true unless set). False where the provider has sign-up off: sign-in only. */
   signUp?: boolean;
-  /** The caller's validated account profile: 'staging' where the account service is the remote staging server; absent: the local one. */
-  environment?: 'staging';
+  /**
+   * The caller's validated account profile: 'staging' where the account service is the remote staging server; absent: the
+   * local one. 'private-qa' (the private native QA build): ordinary account and email wording, never the local service's
+   * names, and only its own registration policy. 'learning-beta': ordinary account and email wording for sign-in only; it never
+   * shows sign-up, registration, recovery or Google, whatever else is passed.
+   */
+  environment?: 'staging' | 'production' | 'private-qa' | 'learning-beta';
+  /**
+   * Offers an unchecked choice, beside the password, to remember this email sign-in on this device. Only a remembering
+   * build with a secure session vault offers it, and never for Google. Each submit then says whether it was ticked.
+   */
+  rememberChoice?: boolean;
   /** Gets the typed values once per submit; the panel keeps no password afterwards. */
-  onSubmit: (request: { mode: AccountMode; email: string; password: string }) => void;
+  onSubmit: (request: { mode: AccountMode; email: string; password: string; remember?: boolean }) => void;
   /** Continue with Google, where the caller offers it (signed out only, beside the password form): called with nothing. */
   onGoogle?: () => void;
+  /**
+   * Caller-worded notes for a requested capability that cannot run on this build or device. Production presentation only,
+   * signed out and outside registration and recovery: the Google note shows only without `onGoogle`, the recovery note
+   * only when the recovery model is not available. Plain text, never a control, and never a new panel mode; the panel
+   * does not interpret or log them, and shows nothing once the capability is available or the account is signed in.
+   */
+  unavailableFeatures?: { google?: string; recovery?: string };
   onGuestCopy: () => void;
   onGuestSkip: () => void;
   /** Gets a profile's id back unchanged. */
@@ -72,6 +114,14 @@ interface ServiceWords {
   service: string;
   /** The adult profile's consent statement (the caller records its version). */
   consent: string;
+  /** Only in a production build: its own header note (or the confirmed-email registration's), never the local or staging introduction. */
+  production?: true;
+  /** Only in the private native QA build: its own registration policy only, and no local or staging introduction. */
+  privateQa?: true;
+  /** Ordinary email wording (production's, the private QA build's and the learning beta's): no test-account or .test copy. */
+  email?: true;
+  /** Only in a learning-beta build: its own sign-in-only introduction, and never sign-up, registration, recovery or Google. */
+  learningBeta?: true;
 }
 
 const LOCAL_WORDS: ServiceWords = {
@@ -88,12 +138,45 @@ const STAGING_WORDS: ServiceWords = {
   consent: 'Saya setuju jawaban dan pengaturan saya dikirim ke server akun staging jarak jauh dan disimpan di profil akun staging ini.',
 };
 
+const PRODUCTION_WORDS: ServiceWords = {
+  title: 'Akun',
+  account: 'akun',
+  service: 'layanan akun',
+  production: true,
+  email: true,
+  consent: 'Saya setuju jawaban dan pengaturan saya dikirim ke server dan disimpan di akun ini.',
+};
+
+/**
+ * The private native QA build: ordinary account and email wording, never the local service's names. Its consent statement
+ * stays the local one's, as the consent version the provider records is the statement's. Never production's words, and no
+ * claim the service is reachable.
+ */
+const PRIVATE_QA_WORDS: ServiceWords = { ...LOCAL_WORDS, title: 'Akun', account: 'akun', service: 'layanan akun', privateQa: true, email: true };
+
+/**
+ * The learning-beta build: ordinary account and email wording, and its consent statement names the beta server (the
+ * caller records its own draft consent version). Never the local, staging or test-account words, and no claim that it is
+ * a production service.
+ */
+const LEARNING_BETA_WORDS: ServiceWords = {
+  title: 'Akun',
+  account: 'akun',
+  service: 'server akun beta',
+  learningBeta: true,
+  email: true,
+  consent: 'Saya setuju jawaban dan pengaturan saya dikirim ke server akun beta dan disimpan di akun ini.',
+};
+
+const LEARNING_BETA_INTRO = 'Masuk dengan email dan kata sandi akun yang sudah ada. Pendaftaran tidak tersedia di aplikasi ini.';
+
 const BUSY: Record<Exclude<AccountBusy, 'auth'>, string> = {
   'guest-copy': 'Sedang menyalin data tamu…',
   profile: 'Sedang menyiapkan profil…',
   sync: 'Sedang menyinkronkan…',
   prefs: 'Sedang menerapkan pilihan pengaturan…',
   signout: 'Sedang keluar dari akun…',
+  data: 'Menyiapkan data akun…',
 };
 
 /** The wait announced for `busy`; signing in names the account. */
@@ -121,10 +204,189 @@ function introNote(signUp: boolean, google: boolean, service: string): string {
     : `Masuk dengan akun uji coba yang sudah disiapkan di ${service}, khusus untuk pengembangan; pendaftaran baru tidak tersedia. Pakai alamat email berakhiran .test: tidak ada email yang dikirim.`;
 }
 
+/** Password recovery as the account panel shows it: from the recovery controller, never the normal sign-in. */
+export interface RecoveryPanelModel {
+  stage: 'idle' | 'email' | 'sent' | 'ready' | 'done';
+  busy: boolean;
+  message: string | null;
+  available: boolean;
+  platform: 'web' | 'native';
+  onStart(): void;
+  onRequest(email: string): void;
+  onUpdate(password: string): void;
+  onCancel(): void;
+  onBack(): void;
+}
+
+const RECOVERY_MISMATCH = 'Kata sandi tidak sama.';
+
+/**
+ * Recovery's password step: the new password typed twice, with the step's status. The pair lives only while this step
+ * is shown: it goes once it is sent, on cancel, or when the step ends and this unmounts. Nothing is checked here beyond
+ * the pair matching: the server decides what is too weak.
+ */
+function RecoveryPasswordFields({ model }: { model: RecoveryPanelModel }) {
+  const [password, setPassword] = useState('');
+  const [confirmation, setConfirmation] = useState('');
+  const [mismatch, setMismatch] = useState<string | null>(null);
+  const blocked = model.busy || !model.available;
+
+  const update = () => {
+    if (blocked || !password || !confirmation) return;
+    if (password !== confirmation) {
+      setMismatch(RECOVERY_MISMATCH);
+      return;
+    }
+    const candidate = password;
+    setPassword('');
+    setConfirmation('');
+    setMismatch(null);
+    model.onUpdate(candidate);
+  };
+  const cancel = () => {
+    setPassword('');
+    setConfirmation('');
+    setMismatch(null);
+    model.onCancel();
+  };
+
+  return (
+    <>
+      <Text testID="account-recovery-status" style={styles.note} accessibilityLiveRegion="polite">
+        {mismatch ?? model.message ?? ''}
+      </Text>
+      <LabeledInput
+        label="Kata sandi baru"
+        testID="account-recovery-password"
+        value={password}
+        onChangeText={(value: string) => {
+          setPassword(value);
+          setMismatch(null);
+        }}
+        secureTextEntry
+        editable={!model.busy}
+      />
+      <LabeledInput
+        label="Ulangi kata sandi baru"
+        testID="account-recovery-confirm"
+        value={confirmation}
+        onChangeText={(value: string) => {
+          setConfirmation(value);
+          setMismatch(null);
+        }}
+        secureTextEntry
+        editable={!model.busy}
+        onSubmitEditing={update}
+      />
+      <Btn testID="account-recovery-update" label="Ganti kata sandi" onPress={update} disabled={blocked || !password || !confirmation} />
+      <Btn testID="account-recovery-cancel" label="Batal" onPress={cancel} disabled={false} kind="secondary" />
+    </>
+  );
+}
+
+/**
+ * The password recovery card: an address to ask a link for, the wait for that link, then the password step. What is
+ * typed stays in this form only; the recovery itself is the controller's, ended here only by an explicit cancel.
+ * `email` is the ordinary email presentation (production's and the private QA build's: a normal address, and a link
+ * that survives the app closing, as both keep the attempt in the secure store); it never stands for production itself.
+ */
+export function RecoveryForm({ model, production = false, email: ordinaryEmail = false }: { model: RecoveryPanelModel; production?: boolean; email?: boolean }) {
+  const [email, setEmail] = useState('');
+  const normalEmail = production || ordinaryEmail;
+
+  if (model.stage === 'idle') return null;
+  const blocked = model.busy || !model.available;
+
+  const request = () => {
+    const address = email.trim();
+    if (blocked || !address) return;
+    model.onRequest(address);
+  };
+  const cancel = () => {
+    setEmail('');
+    model.onCancel();
+  };
+  const back = () => {
+    setEmail('');
+    model.onBack();
+  };
+
+  return (
+    <View style={styles.card}>
+      <Text style={styles.cardTitle}>Lupa kata sandi?</Text>
+      {model.stage === 'email' || model.stage === 'sent' ? (
+        <Text style={styles.hint}>
+          {model.platform === 'native'
+            ? normalEmail
+              ? 'Buka tautan pemulihan di perangkat ini.'
+              : 'Buka tautan pemulihan di perangkat ini, dan biarkan aplikasi tetap terbuka sampai selesai.'
+            : 'Buka tautan pemulihan di tab ini, pada peramban yang sama.'}
+        </Text>
+      ) : null}
+      {model.stage === 'ready' ? (
+        <RecoveryPasswordFields model={model} />
+      ) : (
+        <>
+          <Text testID="account-recovery-status" style={styles.note} accessibilityLiveRegion="polite">
+            {model.message ?? ''}
+          </Text>
+          {model.stage === 'email' ? (
+            <>
+              <LabeledInput
+                label="Email"
+                testID="account-recovery-email"
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+                placeholder={normalEmail ? 'nama@contoh.com' : 'nama@contoh.test'}
+                editable={!model.busy}
+                onSubmitEditing={request}
+              />
+              <Btn testID="account-recovery-request" label="Kirim tautan pemulihan" onPress={request} disabled={blocked || !email.trim()} />
+            </>
+          ) : null}
+          {model.stage === 'sent' ? <Text style={styles.note}>Menunggu tautan pemulihan dibuka.</Text> : null}
+          {model.stage === 'done' ? (
+            <Btn testID="account-recovery-back" label="Kembali ke masuk" onPress={back} disabled={false} />
+          ) : (
+            <Btn testID="account-recovery-cancel" label="Batal" onPress={cancel} disabled={false} kind="secondary" />
+          )}
+        </>
+      )}
+    </View>
+  );
+}
+
 export function AccountPanel(props: AccountPanelProps) {
   const { account, busy = null, error = null, signUp = true } = props;
-  const words = props.environment === 'staging' ? STAGING_WORDS : LOCAL_WORDS;
-  const errorRegion = useRef<View>(null);
+  const words =
+    props.environment === 'production'
+      ? PRODUCTION_WORDS
+      : props.environment === 'staging'
+        ? STAGING_WORDS
+        : props.environment === 'private-qa'
+          ? PRIVATE_QA_WORDS
+          : props.environment === 'learning-beta'
+            ? LEARNING_BETA_WORDS
+            : LOCAL_WORDS;
+  // Production offers only the explicit confirmed-email registration, and the private QA build only its own policy's;
+  // neither ever shows the synthetic test-account one. A learning-beta build offers no registration, recovery or Google at
+  // all, and never sign-up, whatever the caller hands over.
+  const policy = props.registration?.emailPolicy;
+  const registration =
+    words.learningBeta || (words.production && policy !== 'confirmed-email') || (words.privateQa && policy !== PRIVATE_QA_REGISTRATION_POLICY)
+      ? undefined
+      : props.registration;
+  const recovery = words.learningBeta ? undefined : props.recovery;
+  const onGoogle = words.learningBeta ? undefined : props.onGoogle;
+  const registering = registration !== undefined && registration.stage !== 'idle';
+  const recovering = recovery !== undefined && recovery.stage !== 'idle';
+  // A production build, signed out and in no other flow: a requested Google or recovery that cannot run says so in the
+  // caller's words, only while that capability is truly absent (never beside the control it would replace).
+  const notesShown = words.production === true && !account && !registering && !recovering;
+  const googleNote = notesShown && onGoogle === undefined ? props.unavailableFeatures?.google : undefined;
+  const recoveryNote = notesShown && recovery?.available !== true ? props.unavailableFeatures?.recovery : undefined;
+  const errorRegion = useRef<ViewInstance>(null);
   useEffect(() => {
     if (error) moveFocus(errorRegion);
   }, [error]);
@@ -135,8 +397,20 @@ export function AccountPanel(props: AccountPanelProps) {
         <Text accessibilityRole="header" testID="account-title" style={styles.title}>
           {words.title}
         </Text>
-        <Text style={styles.note}>{introNote(signUp, props.onGoogle !== undefined, words.service)}</Text>
-        <Text style={styles.note}>Belajar tetap bisa tanpa akun. Setelah aplikasi ditutup atau dimuat ulang, Anda perlu masuk lagi.</Text>
+        <Text style={styles.note}>
+          {registration
+            ? registrationIntro(onGoogle !== undefined, words.service, registration.emailPolicy)
+            : words.learningBeta
+              ? LEARNING_BETA_INTRO
+              : words.production || words.privateQa
+                ? 'Masuk dengan akun yang sudah terdaftar. Pendaftaran belum dibuka.'
+                : introNote(signUp, onGoogle !== undefined, words.service)}
+        </Text>
+        <Text style={styles.note}>
+          {props.rememberChoice
+            ? 'Setelah aplikasi ditutup atau dimuat ulang, Anda perlu masuk lagi, kecuali Anda memilih mengingat sesi masuk dengan email di perangkat ini.'
+            : 'Setelah aplikasi ditutup atau dimuat ulang, Anda perlu masuk lagi.'}
+        </Text>
         <View role="status" accessibilityLiveRegion="polite">
           <Text testID="account-status" style={styles.status}>
             {account ? `Masuk sebagai ${account.label}` : 'Belum masuk'}
@@ -151,41 +425,71 @@ export function AccountPanel(props: AccountPanelProps) {
           <Notice tone="danger">{error}</Notice>
         </View>
       ) : null}
-      {/* Keyed by the sign-in: another session never inherits a tick. Signed out, only the form is shown. */}
-      {account ? (
+      {/* Keyed by the sign-in: another session never inherits a tick. Signed out, only the form (or registration) is shown. */}
+      {recovery && recovery.stage !== 'idle' ? (
+        <RecoveryForm model={recovery} production={words.production === true} email={words.email === true} />
+      ) : account ? (
         <SignedIn key={account.key} {...props} busy={busy} words={words} />
+      ) : registration && registering ? (
+        <RegistrationPanel model={registration} working={busy !== null} />
       ) : (
-        <SignInForm busy={busy} signUp={signUp} words={words} onSubmit={props.onSubmit} onGoogle={props.onGoogle} />
+        <SignInForm
+          busy={busy}
+          signUp={signUp && !registration && !words.learningBeta}
+          words={words}
+          rememberChoice={props.rememberChoice === true}
+          onSubmit={props.onSubmit}
+          onGoogle={onGoogle}
+        />
       )}
+      {googleNote ? (
+        <Text accessibilityRole="text" testID="account-google-unavailable" style={styles.note}>
+          {googleNote}
+        </Text>
+      ) : null}
+      {!account && !recovering && registration && !registering ? <RegistrationPanel model={registration} working={busy !== null} /> : null}
+      {recoveryNote ? (
+        <Text accessibilityRole="text" testID="account-recovery-unavailable" style={styles.note}>
+          {recoveryNote}
+        </Text>
+      ) : null}
+      {/* A production build never offers to start a recovery its model says cannot run: no enabled dead button. */}
+      {!account && !registering && recovery?.stage === 'idle' && (words.production !== true || recovery.available === true) ? (
+        <Btn testID="account-recovery-start" label="Lupa kata sandi?" onPress={() => recovery.onStart()} disabled={busy !== null} kind="secondary" />
+      ) : null}
     </View>
   );
 }
 
 /**
  * The sign-in (and, where offered, synthetic sign-up) form, with Continue with Google beside it where the caller offers
- * it. Its values live only here and are gone once signed in or unmounted.
+ * it, and the unchecked choice to remember the email sign-in where the caller offers that. Its values live only here
+ * and are gone once signed in or unmounted.
  */
 function SignInForm({
   busy,
   signUp,
   words,
+  rememberChoice,
   onSubmit,
   onGoogle,
 }: {
   busy: AccountBusy | null;
   signUp: boolean;
   words: ServiceWords;
+  rememberChoice: boolean;
   onSubmit: AccountPanelProps['onSubmit'];
   onGoogle?: () => void;
 }) {
   const [mode, setMode] = useState<AccountMode>(signUp ? 'create' : 'signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [remember, setRemember] = useState(false);
   const working = busy !== null;
   const ready = email.trim() !== '' && password !== '';
   const submit = () => {
     if (!ready || working) return;
-    const request = { mode, email: email.trim(), password };
+    const request = { mode, email: email.trim(), password, ...(rememberChoice ? { remember } : {}) };
     setPassword(''); // handed over once: the panel keeps no password
     onSubmit(request);
   };
@@ -199,12 +503,12 @@ function SignInForm({
     <View style={styles.card} testID="account-form">
       {signUp ? <Segmented testIDPrefix="account-mode-" accessibilityLabel="Akun uji coba" value={mode} onChange={setMode} options={MODES} /> : null}
       <LabeledInput
-        label="Email uji (.test)"
+        label={words.email ? 'Email' : 'Email uji (.test)'}
         testID="account-email"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
-        placeholder="nama@ayailmu.test"
+        placeholder={words.email ? 'nama@contoh.com' : 'nama@ayailmu.test'}
         editable={!working}
       />
       <LabeledInput
@@ -215,8 +519,17 @@ function SignInForm({
         secureTextEntry
         editable={!working}
         onSubmitEditing={submit}
-        hint={mode === 'create' ? `Minimal 6 karakter. ${OWN_PASSWORD}` : OWN_PASSWORD}
+        hint={words.email ? undefined : mode === 'create' ? `Minimal 6 karakter. ${OWN_PASSWORD}` : OWN_PASSWORD}
       />
+      {rememberChoice ? (
+        <Check
+          testID="account-remember"
+          label="Ingat sesi masuk dengan email dan kata sandi di perangkat ini"
+          value={remember}
+          onChange={setRemember}
+          disabled={working}
+        />
+      ) : null}
       <Btn
         testID="account-submit"
         label={mode === 'create' ? 'Buat akun dan masuk' : `Masuk ke ${words.account}`}
@@ -224,7 +537,9 @@ function SignInForm({
         disabled={!ready || working}
         onPress={submit}
       />
-      {ready || working ? null : <Text style={styles.hint}>Isi email .test dan kata sandi untuk melanjutkan.</Text>}
+      {ready || working ? null : (
+        <Text style={styles.hint}>{words.email ? 'Isi email dan kata sandi untuk melanjutkan.' : 'Isi email .test dan kata sandi untuk melanjutkan.'}</Text>
+      )}
       {onGoogle ? <Btn testID="account-google" kind="secondary" icon="logo-google" label="Lanjutkan dengan Google" disabled={working} onPress={google} /> : null}
     </View>
   );
@@ -233,11 +548,13 @@ function SignInForm({
 function SignedIn(props: AccountPanelProps & { busy: AccountBusy | null; words: ServiceWords }) {
   const { busy, guestCopy, connected, prefsConflict, words } = props;
   const working = busy !== null;
+  // Old saved-answers fixtures show only in the isolated local developer view: no named environment, developer-demo rules.
+  const allowLegacy = props.environment === undefined && loadRules().mode === 'developer-demo';
   return (
     <View style={styles.panel}>
       {guestCopy ? <GuestCopy offer={guestCopy} working={working} words={words} onCopy={props.onGuestCopy} onSkip={props.onGuestSkip} /> : null}
       {connected ? (
-        <Connected profile={connected} working={working} onSyncNow={props.onSyncNow} />
+        <Connected profile={connected} working={working} allowLegacy={allowLegacy} onSyncNow={props.onSyncNow} />
       ) : (
         <ProfileChoice profiles={props.profiles ?? []} working={working} words={words} onLink={props.onLinkProfile} onCreate={props.onCreateProfile} />
       )}
@@ -258,7 +575,7 @@ function SignedIn(props: AccountPanelProps & { busy: AccountBusy | null; words: 
   );
 }
 
-/** Copying guest answers into the account: offered only when there are some, and only after an explicit tick. */
+/** Copying guest answers or Unit A progress into the account: offered only when there is some, and only after an explicit tick. */
 function GuestCopy({
   offer,
   working,
@@ -282,11 +599,14 @@ function GuestCopy({
       </View>
     );
   }
-  if (!(offer.answers > 0)) return null; // no guest data on this device: nothing to copy
+  const answers = offer.answers > 0;
+  if (!answers && offer.pilotProgress !== true) return null; // no guest data on this device: nothing to copy
   return (
     <Section title="Data tamu di perangkat ini" testID="guest-copy">
       <Text style={styles.body}>
-        {`${offer.answers} jawaban tersimpan di perangkat ini tanpa akun. Menyalinnya ke ${words.account} tidak menghapus data di perangkat ini.`}
+        {answers
+          ? `${offer.answers} jawaban tersimpan di perangkat ini tanpa akun. Menyalinnya ke ${words.account} tidak menghapus data di perangkat ini.`
+          : `Kemajuan Unit A tersimpan di perangkat ini tanpa akun. Menyalinnya ke ${words.account} tidak menghapus data di perangkat ini.`}
       </Text>
       <Check testID="guest-copy-consent" label="Salin data tamu" value={consent} onChange={setConsent} disabled={working} />
       <Btn testID="guest-copy-confirm" kind="secondary" label="Salin sekarang" disabled={!consent || working} onPress={() => consent && !working && onCopy()} />
@@ -353,8 +673,65 @@ function ProfileChoice({
   );
 }
 
-/** The connected profile: the caller's sync status, a sync action, and factual counts (learning is not judged). */
-function Connected({ profile, working, onSyncNow }: { profile: ConnectedProfile; working: boolean; onSyncNow: () => void }) {
+/** Said wherever account progress is shown: the account holds no lesson position. */
+export const POSITION_NOTE = 'Posisi pelajaran tetap di perangkat ini.';
+
+/** `iso` as the device's local «2026-10-27 19.00»; null when it is not a readable time. */
+function localTime(iso: string | null): string | null {
+  const ms = iso === null ? Number.NaN : Date.parse(iso);
+  if (Number.isNaN(ms)) return null;
+  const at = new Date(ms);
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${localDate(ms)} ${pad(at.getHours())}.${pad(at.getMinutes())}`;
+}
+
+/** The account's answer count alone. Unknown or unavailable (no projection) is said so, never shown as 0. */
+export function serverAnswerCount(progress: AccountSyncProgress | null): string {
+  if (progress === null) return 'Tidak tersedia';
+  const { state, total } = progress.server;
+  if (state === 'unknown' || total === null) return 'Belum diperiksa';
+  return `${total} jawaban`;
+}
+
+/**
+ * For a stale count only: «terakhir diketahui 2026-10-27 19.00», the time that count was read (no time where it is not
+ * readable), so it is never taken as current. A verified, unknown or unavailable count has nothing to add: null.
+ */
+export function serverCountLastKnown(progress: AccountSyncProgress | null): string | null {
+  if (progress === null) return null;
+  const { state, total, checkedAt } = progress.server;
+  if (state !== 'stale' || total === null) return null;
+  const at = localTime(checkedAt);
+  return `terakhir diketahui${at === null ? '' : ` ${at}`}`;
+}
+
+/** The count and, where it is only the last known one, that note beside it, as Home words it on one line. */
+export function serverAnswersText(progress: AccountSyncProgress | null): string {
+  const lastKnown = serverCountLastKnown(progress);
+  return lastKnown === null ? serverAnswerCount(progress) : `${serverAnswerCount(progress)} (${lastKnown})`;
+}
+
+/** This device's own sync facts, one line each and never added together; null where a fact does not apply. */
+export function localSyncLines(progress: AccountSyncProgress): { queued: string; blocked: string | null; conflicts: string | null; capture: string | null } {
+  return {
+    queued: `Menunggu dikirim: ${progress.queued} jawaban`,
+    blocked: progress.blocked > 0 ? `Tidak bisa dikirim: ${progress.blocked} jawaban` : null,
+    conflicts: progress.conflicts > 0 ? `Konflik dengan salinan di akun: ${progress.conflicts} jawaban` : null,
+    capture: progress.capturePending ? 'Pencatatan jawaban belum selesai.' : null,
+  };
+}
+
+/**
+ * The connected profile: the caller's sync status, a sync action, and factual counts (learning is not judged). With the
+ * caller's `progress` (null: no local journal) the counts come from it alone. Without it (legacy fixtures) the old
+ * saved-answers count shows only where `allowLegacy` says this is the isolated local developer view; anywhere else a
+ * missing progress is unavailable, never a zero or a legacy count.
+ */
+function Connected({ profile, working, allowLegacy, onSyncNow }: { profile: ConnectedProfile; working: boolean; allowLegacy: boolean; onSyncNow: () => void }) {
+  const progress = profile.progress ?? null;
+  const legacy = profile.progress === undefined && allowLegacy;
+  const lines = progress ? localSyncLines(progress) : null;
+  const lastKnown = legacy ? null : serverCountLastKnown(progress);
   return (
     <>
       <Section title="Profil terhubung" testID="sync-panel">
@@ -364,19 +741,37 @@ function Connected({ profile, working, onSyncNow }: { profile: ConnectedProfile;
             {profile.syncStatus}
           </Text>
         </View>
+        {lines ? (
+          <View style={styles.lines}>
+            <Text testID="sync-queued" style={styles.body}>{lines.queued}</Text>
+            {lines.blocked ? <Text testID="sync-blocked" style={styles.body}>{lines.blocked}</Text> : null}
+            {lines.conflicts ? <Text testID="sync-conflicts" style={styles.body}>{lines.conflicts}</Text> : null}
+            {lines.capture ? <Text testID="sync-capture" style={styles.body}>{lines.capture}</Text> : null}
+          </View>
+        ) : null}
         <Btn testID="sync-now" icon="sync-outline" label="Sinkronkan sekarang" disabled={working} onPress={onSyncNow} />
       </Section>
       <Section title="Catatan di akun" testID="account-progress">
         <Fact title="Tersimpan di akun">
-          <Text testID="account-progress-events" style={styles.factValue}>{`${profile.savedAnswers} jawaban`}</Text>
+          <Text testID="account-progress-events" style={styles.factValue}>
+            {legacy ? `${profile.savedAnswers} jawaban` : serverAnswerCount(progress)}
+          </Text>
         </Fact>
+        {lastKnown ? (
+          <Text testID="account-progress-last-known" style={styles.hint}>
+            {`Jumlah ${lastKnown}`}
+          </Text>
+        ) : null}
         <Fact title="Sudah dipelajari">
           <Chip label="Belum dinilai" testID="account-progress-learned" />
         </Fact>
-        <Fact title="Dari perangkat lain">
-          <Text testID="account-remote-count" style={styles.factValue}>{`${profile.otherDeviceAnswers} jawaban`}</Text>
-        </Fact>
+        {legacy || (progress !== null && profile.otherDeviceAnswers > 0) ? (
+          <Fact title="Dari perangkat lain">
+            <Text testID="account-remote-count" style={styles.factValue}>{`${profile.otherDeviceAnswers} jawaban`}</Text>
+          </Fact>
+        ) : null}
         <Text style={styles.hint}>Angka ini hanya menghitung jawaban; penguasaan belum dinilai.</Text>
+        {legacy ? null : <Text style={styles.hint}>{POSITION_NOTE}</Text>}
       </Section>
     </>
   );
@@ -513,5 +908,6 @@ const styles = StyleSheet.create({
   },
   factTitle: { ...typography.small, fontFamily: fonts.semibold, color: colors.ink },
   factValue: { ...typography.label },
+  lines: { gap: 4 },
   signout: { gap: 6 },
 });

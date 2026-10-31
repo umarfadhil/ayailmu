@@ -1,0 +1,9 @@
+# Private native AyaFasih QA
+
+Owner-approved outcome: a local installable native build using the matching API https://localhost:58444 and Auth https://localhost:58445, hostname-verified trust of only the runtime owner's designated CA, and only owner-qa@example.invalid. No public tunnel, global trust, live production resources, automatic content approval or source publication. Four emails reserved under the shared eight-message ledger; no send before runtime/client readiness and per-send runtime-owner coordination.
+
+Use Expo58/RN0.88, Xcode27.1, Opus5.5 HIGH. New isolated branch based592072f7; preserve e057 and592 separate checkouts. QA profile must be genuinely distinct from production/local/staging, not masquerade as production or weaken its strict public-origin/format gates.
+
+Selected reversible approach: explicit private-qa profile/capability, fixed API/Auth origins and exact owner-address policy; existing AccountContext/auth/registration/controller flows with the same safety/timeout/owner fences. An app-local Expo native transport (or a smaller verified app-only native request handler if supported) trusts supplied public CA only for these exact origins, verifies localhost hostname, rejects redirects and all out-of-scope requests. Ordinary builds keep ordinary transport/trust and existing profiles. Never trust-all, disable TLS validation or use global CA installation. Public CA fingerprint is a build binding; private keys/SMTP values never enter source/JS/build env. No CA generation in this worker.
+
+Registration stays confirmation-required. Remember-device and PKCE recovery reuse existing secure vault/callback arabictrial://recover, including warm/cold resume. QA is native-only; no ExpoGo recovery claim. Content/reviewer gates remain honest. Device testing uses allocated iPhoneDuo simulator. Runtime provisioning belongs solely to separate runtime task.

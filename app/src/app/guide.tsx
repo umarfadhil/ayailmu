@@ -1,7 +1,8 @@
 import { Redirect, router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, AppState, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, AppState, Pressable, StyleSheet, Text, View, type ViewInstance } from 'react-native';
 
+import { learningBetaEnabled } from '@/config/learningBeta';
 import { recordScreenView } from '@/engine/exposure';
 import { localDate } from '@/engine/util';
 import { useApp } from '@/ui/AppContext';
@@ -17,7 +18,7 @@ import { HydrationGate } from '@/ui/Hydration';
 const clock = () => Date.now();
 
 const ABOUT =
-  'Membaca panduan tidak mengubah sesi atau dihitung sebagai latihan. Tanggal membaca dicatat. Cek ingatan yang memakai materi ini ditunda ke hari lain; jika cek sudah berjalan hari ini, jawabannya dicatat tetapi tidak dihitung sebagai bukti ingatan.';
+  'Membaca panduan bukan latihan dan tidak mengubah sesi. Tanggal membaca dicatat. Cek ingatan yang memakai materi ini ditunda ke hari lain. Jika cek itu sudah dimulai hari ini, jawabannya tetap dicatat, tetapi tidak dihitung sebagai bukti ingatan.';
 
 /**
  * Browser for the lesson screens of units already open (S19–S22 guide anatomy). It never marks
@@ -37,11 +38,11 @@ function GuideRoute() {
   const [attempt, setAttempt] = useState(0);
   const page = useRef<PageHandle>(null);
   // UI-01 focus targets: the title of the lesson shown, or the error shown instead of it.
-  const heading = useRef<View>(null);
-  const errorRegion = useRef<View>(null);
+  const heading = useRef<ViewInstance>(null);
+  const errorRegion = useRef<ViewInstance>(null);
   // Openers of the two sheets: focus returns there when a sheet is dismissed.
-  const topicsButton = useRef<View>(null);
-  const aboutButton = useRef<View>(null);
+  const topicsButton = useRef<ViewInstance>(null);
+  const aboutButton = useRef<ViewInstance>(null);
   const params = useLocalSearchParams<{ screen?: string }>();
   const learning = useLearning();
   const [chosen, setIndex] = useState<number | null>(null);
@@ -124,13 +125,13 @@ function GuideRoute() {
   const pager = (
     <View style={styles.pager}>
       <View style={styles.pagerBack}>
-        <Btn kind="secondary" icon="arrow-back" label="Sebelumnya" disabled={index === 0} onPress={() => choose(index - 1)} />
+        <Btn kind="secondary" icon="arrow-back" label="Sebelumnya" disabled={index === 0} onPress={() => choose(index - 1)} style={styles.pagerButton} />
       </View>
       <View style={styles.pagerNext}>
         {last ? (
-          <Btn testID="guide-practice" label="Ke latihan" icon="arrow-forward" onPress={() => router.push('/session')} />
+          <Btn testID="guide-practice" label="Ke latihan" icon="arrow-forward" onPress={() => router.push('/session')} style={styles.pagerButton} />
         ) : (
-          <Btn testID="guide-next" label="Berikutnya" icon="arrow-forward" onPress={() => choose(index + 1)} />
+          <Btn testID="guide-next" label="Berikutnya" icon="arrow-forward" onPress={() => choose(index + 1)} style={styles.pagerButton} />
         )}
       </View>
     </View>
@@ -159,7 +160,7 @@ function GuideRoute() {
         <>
           <View role="alert" accessibilityLiveRegion="assertive" ref={errorRegion} tabIndex={-1} testID="guide-record-error-region">
             <Notice tone="danger" testID="guide-record-error">
-              Panduan tidak dapat dibuka karena tanggal Anda membuka materi ini tidak bisa disimpan. Silakan coba lagi nanti.
+              Panduan tidak dapat dibuka. Tanggal membaca belum tersimpan. Coba lagi nanti.
             </Notice>
           </View>
           <ErrorDetail message={recordError.message} />
@@ -178,7 +179,7 @@ function GuideRoute() {
       <View style={styles.note}>
         <Icon name="information-circle-outline" size={18} color={colors.muted} />
         <View style={styles.noteBody}>
-          <Text style={styles.noteText}>Membaca panduan tidak dihitung sebagai latihan. Cek ingatan yang memakai materi ini akan ditunda.</Text>
+          <Text style={styles.noteText}>Membaca panduan bukan latihan. Cek ingatan materi ini ditunda.</Text>
           <Pressable
             ref={aboutButton}
             testID="guide-about"
@@ -293,9 +294,10 @@ const styles = StyleSheet.create({
   more: { minHeight: 44, justifyContent: 'center' },
   moreText: { fontFamily: fonts.bold, fontSize: 14, lineHeight: 20, color: colors.accentInk, textDecorationLine: 'underline' },
 
-  pager: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
-  pagerBack: { flexGrow: 1, flexBasis: 130 },
-  pagerNext: { flexGrow: 1.3, flexBasis: 160 },
+  pager: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'stretch', gap: 10 },
+  pagerBack: { flexGrow: 1, flexBasis: 180, minWidth: 0 },
+  pagerNext: { flexGrow: 1, flexBasis: 180, minWidth: 0 },
+  pagerButton: { flexGrow: 1 },
 
   group: { gap: 2 },
   groupTitle: { fontFamily: fonts.extrabold, fontSize: 13, lineHeight: 18, letterSpacing: 0.5, color: colors.muted, marginHorizontal: 8, marginVertical: 4 },
@@ -318,6 +320,8 @@ const styles = StyleSheet.create({
 });
 
 export default function Guide() {
+  // A validated learning beta is bounded starter access: Home before any legacy hydration or learning effect mounts.
+  if (learningBetaEnabled()) return <Redirect href="/" />;
   return (
     <HydrationGate write>
       <GuideRoute />
