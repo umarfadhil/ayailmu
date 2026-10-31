@@ -49,6 +49,7 @@ val normalAuthOrigin = providers.gradleProperty("umar.normalAuth.publicOrigin").
 val normalSyncPolicy = providers.gradleProperty("umar.normalAuth.syncPolicyVersion").orElse("").get()
 val normalOwnerDeclaration = providers.gradleProperty("umar.normalAuth.ownerDeclarationVersion").orElse("").get()
 val normalRegistrySource = providers.gradleProperty("umar.normalAuth.registrySourceCommit").orElse("").get()
+val reviewedProdAssetsDirectory = layout.buildDirectory.dir("generated/assets/reviewedProd")
 if (normalAuthOrigin.isNotEmpty()) {
     val uri = runCatching { URI(normalAuthOrigin) }.getOrNull()
     require(uri != null && uri.scheme == "https" && !uri.host.isNullOrEmpty() &&
@@ -132,6 +133,18 @@ tasks.register("checkPlayLicenseKey") {
     group = "verification"
     description = "Requires a syntactically usable Play licensing RSA public key; does not verify account ownership."
     doLast { validatePlayLicenseKey(required = true) }
+}
+
+// The ordinary app ships the exact reviewed subset, through the same approved-
+// only loader as before. Original stock assets remain source/demo/test inputs.
+val prepareReviewedProdAssets by tasks.registering(Sync::class) {
+    from(rootProject.file("content/src/main/assets")) {
+        include("art/index.json", "audio/index.json", "strokes/index.json", "config/app_config.json", "licenses/KanjiVG.txt", "licenses/OFL-NotoNaskhArabic.txt")
+    }
+    from(rootProject.file("content/src/reviewed/assets")) {
+        include("config/catalog.json", "config/rules.mat-a-local.json", "packs/matematika/mat-a-local/v1.json", "provenance.json")
+    }
+    into(reviewedProdAssetsDirectory)
 }
 
 android {
@@ -271,8 +284,11 @@ android {
     sourceSets {
         getByName("demo").java.srcDir("src/nonLab/java")
         getByName("demo").manifest.srcFile("src/nonLab/AndroidManifest.xml")
-        getByName("prod").java.srcDir("src/nonLab/java")
-        getByName("prod").manifest.srcFile("src/nonLab/AndroidManifest.xml")
+        getByName("prod").apply {
+            java.srcDir("src/nonLab/java")
+            manifest.srcFile("src/nonLab/AndroidManifest.xml")
+            assets.setSrcDirs(listOf(prepareReviewedProdAssets.map { it.destinationDir }))
+        }
         getByName("ownerRemote").apply {
             java.srcDir("src/nonLab/java")
             manifest.srcFile("src/ownerRemote/AndroidManifest.xml")
@@ -322,7 +338,9 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:billing"))
     implementation(project(":core:design"))
-    implementation(project(":content"))
+    listOf("demo", "syncLab", "normalQa", "ownerRemote").forEach { mode ->
+        add("${mode}Implementation", project(":content"))
+    }
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat) // per-app language on API 26–32 (CR-I18N-2)

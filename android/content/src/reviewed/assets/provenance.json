@@ -1,0 +1,63 @@
+{
+  "source": {
+    "publicSourceCommit": "3204868946037dd42997d1ccc92948af3e2a3cca",
+    "path": "android/content/src/main/assets/packs/matematika/mat-a/v1.json",
+    "sha256": "ec18d67409618aebb1ce5b12403c05e2ebd03c35d709e10727bca0381bd31256",
+    "status": "real nonsynthetic authored draft; no production approval implied"
+  },
+  "derivation": {
+    "profile": "localPilot",
+    "contentVersion": "mat-a-local-pemula-0.3",
+    "screenIds": [
+      "MAT-A-P-01-S1"
+    ],
+    "itemIds": [
+      "MAT-A-P-01-001",
+      "MAT-A-P-01-002",
+      "MAT-A-P-01-003",
+      "MAT-A-P-01-004",
+      "MAT-A-P-01-005",
+      "MAT-A-P-01-006",
+      "MAT-A-P-01-007",
+      "MAT-A-P-01-008",
+      "MAT-A-P-01-009",
+      "MAT-A-P-01-010",
+      "MAT-A-P-01-011",
+      "MAT-A-P-01-012",
+      "MAT-A-P-01-013",
+      "MAT-A-P-01-014"
+    ],
+    "excluded": "daily puzzles and every unit other than 01",
+    "registry": "separate localPilot catalog; live production/demo catalog unchanged",
+    "copyCorrections": [
+      "adult address consistency",
+      "neutral bill-split surplus",
+      "remove nonexistent Gem-box promise",
+      "matching stem uses multiplication",
+      "Gem uses independently verified algebra instead of an unverified external citation"
+    ],
+    "schedulingCorrection": "MAT-A-P-01-009 changes from PRACT to REMED: a fresh rounded-share question follows an incorrect exact-share answer. The same 14 reviewed questions remain, with 10 PRACT, 3 REMED and 1 GEM; no grading/mastery algorithm or rule changed."
+  },
+  "review": {
+    "status": "approved-exact-local-derivative",
+    "subjectReviewer": "Codex AI independent local review: arithmetic, keys, tolerances and coherent adult beginner scope",
+    "indonesianReviewer": "Codex AI independent local review of all Indonesian fields",
+    "englishReviewer": "Codex AI independent local review of all English fields",
+    "record": "LOCAL-CONTENT-REVIEW.json",
+    "independentArithmeticChecks": 42,
+    "humanSpecialistReview": "not performed; not claimed",
+    "releaseApproval": false,
+    "limits": [
+      "No physical rendering/accessibility or learning-effectiveness evidence",
+      "No other unit, original pack, children or specialist subject reviewed",
+      "No live registry/runtime/mail/device activation"
+    ],
+    "packSHA256": "7ed58f9684e68f6fef43fcd9ea3e65ff50e530663cec495f207bce20b1bcab0c",
+    "authoringGuidelineDecision": "The guide targets two REMED items per unit and also asks for one per skill. This bounded three-skill derivative uses three REMED items to cover every practice skill, retaining ten practice questions within the stated 8–12 range."
+  },
+  "activation": {
+    "enabledByDefault": false,
+    "configuredDeployment": false,
+    "externalApprovalRequired": true
+  }
+}

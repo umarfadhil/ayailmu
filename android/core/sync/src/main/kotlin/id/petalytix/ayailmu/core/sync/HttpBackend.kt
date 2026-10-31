@@ -3,13 +3,14 @@ package id.petalytix.ayailmu.core.sync
 import java.net.HttpURLConnection
 import java.net.Proxy
 import java.net.URI
+import java.net.URL
 import java.io.ByteArrayOutputStream
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.*
 
 /** Existing backend v1, with no raw payload rewriting and no redirects carrying bearer credentials. */
-class HttpBackend(baseUrl: String, private val synthetic: Boolean = true, private val consentVersion: String = "synthetic-sync-v1", private val declarationVersion: String = "adult-owner-v1") : Backend {
+class HttpBackend(baseUrl: String, private val synthetic: Boolean = true, private val consentVersion: String = "synthetic-sync-v1", private val declarationVersion: String = "adult-owner-v1", private val connectionFactory: (URL, Boolean) -> HttpURLConnection = { url, local -> (if (local) url.openConnection(Proxy.NO_PROXY) else url.openConnection()) as HttpURLConnection }) : Backend {
     private val base = URI(baseUrl.trimEnd('/'))
     private val json = Json { ignoreUnknownKeys = true }
     init {
@@ -21,7 +22,7 @@ class HttpBackend(baseUrl: String, private val synthetic: Boolean = true, privat
     private suspend inline fun <reified T> request(method: String, path: String, token: String, body: JsonElement? = null): T = withContext(Dispatchers.IO) {
         require(token.isNotBlank() && '\n' !in token && '\r' !in token)
         val url = URI(base.toString() + path).toURL()
-        val connection = (if (base.host in setOf("127.0.0.1", "localhost")) url.openConnection(Proxy.NO_PROXY) else url.openConnection()) as HttpURLConnection
+        val connection = connectionFactory(url, base.host in setOf("127.0.0.1", "localhost"))
         try {
             connection.requestMethod = method; connection.instanceFollowRedirects = false
             connection.connectTimeout = 5_000; connection.readTimeout = 5_000
