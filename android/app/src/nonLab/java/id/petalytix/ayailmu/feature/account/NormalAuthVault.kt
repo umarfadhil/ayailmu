@@ -26,7 +26,7 @@ internal interface NormalAuthVault {
 
 /** Normal-account-only Tink AEAD vault; Android Keystore holds the key and no-backup storage holds ciphertext. */
 @Singleton
-internal class KeystoreNormalAuthVault private constructor(private val file: File, private val environmentId: String, aeadSource: () -> Aead) : NormalAuthVault {
+internal class KeystoreNormalAuthVault private constructor(private val file: File, private val environmentId: String, aeadSource: () -> Aead) : NormalAuthVault, NormalMailStore {
     @Inject constructor(@ApplicationContext context: Context, config: NormalAccountConfig) : this(
         File(context.noBackupFilesDir, "normal-owner-auth/${config.environmentHash}/session.enc"),
         config.publicOrigin,
@@ -35,6 +35,23 @@ internal class KeystoreNormalAuthVault private constructor(private val file: Fil
     internal constructor(context: Context, aead: Aead, config: NormalAccountConfig) : this(File(context.noBackupFilesDir, "normal-owner-auth/${config.environmentHash}/session.enc"), config.publicOrigin, { aead })
     private val aead by lazy(aeadSource)
     private val associated = ("ayailmu-normal-gotrue-session-v1:" + environmentId).encodeToByteArray()
+    private val mailFile get() = File(file.parentFile, "mail-operation.enc")
+    private val mailAssociated = ("ayailmu-normal-mail-operation-v1:" + environmentId).encodeToByteArray()
+    @Synchronized override fun readMail(): SavedMailOperation? {
+        if (!mailFile.exists()) return null
+        check(mailFile.length() <= 16_384)
+        // Corruption stays closed; never delete an uncertain operation to enable a resend.
+        return Json.decodeFromString<SavedMailOperation>(aead.decrypt(mailFile.readBytes(), mailAssociated).decodeToString()).also { check(it.environment == environmentId) }
+    }
+    @Synchronized override fun writeMail(value: SavedMailOperation?) {
+        if (value == null) { check(!mailFile.exists() || mailFile.delete()); return }
+        val encrypted = aead.encrypt(Json.encodeToString(SavedMailOperation.serializer(), value).encodeToByteArray(), mailAssociated)
+        val parent = requireNotNull(mailFile.parentFile); check(parent.exists() || parent.mkdirs())
+        val temp = File(parent, "mail-operation.pending")
+        FileOutputStream(temp).use { it.write(encrypted); it.fd.sync() }
+        temp.setReadable(false, false); temp.setReadable(true, true); temp.setWritable(false, false); temp.setWritable(true, true)
+        Files.move(temp.toPath(), mailFile.toPath(), StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING)
+    }
     @Synchronized override fun read(): SavedNormalAuth? {
         if (!file.exists()) return null
         require(file.length() <= 65_536)

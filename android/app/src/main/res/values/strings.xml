@@ -626,7 +626,10 @@
     <string name="settings_delete_profile_body_cloud">Profil dan jawabannya hanya dihapus dari HP ini. Ini tidak menghapus akun cloud atau data server dan tidak dapat dibatalkan.</string>
     <string name="settings_delete_child_body_cloud">Profil anak dan jawabannya hanya dihapus dari HP ini. Profil lain tetap ada. Ini tidak menghapus akun cloud atau data server dan tidak dapat dibatalkan.</string>
     <string name="normal_account_store_unavailable">Paket belajar belum tersedia pada build ini. Pembelian yang sudah sah tetap tersimpan.</string>
-    <string name="normal_account_root_body">Punya akun pemilik? Masuk atau buat akun tanpa membuat profil lokal lain.</string>
-    <string name="normal_account_root_action">Masuk atau buat akun pemilik</string>
+    <string name="normal_account_root_body">Sudah punya akun? Masuk, atau buat akun untuk mulai belajar.</string>
+    <string name="normal_account_root_action">Masuk atau buat akun</string>
     <string name="normal_account_enter_code">Masukkan kode konfirmasi</string>
+    <string name="normal_account_mail_unknown">Kami belum bisa memastikan apakah email terkirim. Periksa kotak masuk sebelum mencoba lagi.</string>
+    <string name="normal_account_mail_new_required">Formulir ini tidak lagi cocok dengan permintaan tersimpan. Periksa kotak masuk atau mulai permintaan email baru.</string>
+    <string name="normal_account_new_mail_request">Mulai permintaan email baru</string>
 </resources>

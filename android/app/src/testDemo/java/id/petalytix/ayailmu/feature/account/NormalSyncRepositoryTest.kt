@@ -1118,14 +1118,14 @@ class NormalSyncRepositoryTest {
         var signInGate: kotlinx.coroutines.CompletableDeferred<Unit>? = null
         val signInEntered = kotlinx.coroutines.CompletableDeferred<Unit>()
         private val user = AuthUser("owner-fixture", "owner@gmail.com", "2026-10-26T00:00:00Z")
-        override suspend fun signUp(email: String, password: String) { calls++ }
+        override suspend fun signUp(email: String, password: String, operationId: String) { calls++ }
         override suspend fun signIn(email: String, password: String): AuthSession {
             calls++; signInEntered.complete(Unit); signInGate?.await()
             return AuthSession("fixture-access", "fixture-refresh", 60, "bearer", user)
         }
         override suspend fun verifyOtp(email: String, code: String, type: String): AuthSession { calls++; return AuthSession("fixture-access", "fixture-refresh", 60, "bearer", user) }
-        override suspend fun recover(email: String) { calls++ }
-        override suspend fun resend(email: String) { calls++ }
+        override suspend fun recover(email: String, operationId: String) { calls++ }
+        override suspend fun resend(email: String, operationId: String) { calls++ }
         override suspend fun refresh(refreshToken: String): AuthSession { calls++; return AuthSession("fixture-access", "fixture-refresh", 60, "bearer", user) }
         override suspend fun user(token: String): AuthUser { calls++; return user }
         override suspend fun updatePassword(token: String, password: String): AuthUser { calls++; return user }
@@ -1137,7 +1137,7 @@ class NormalSyncRepositoryTest {
         override fun write(value: SavedNormalAuth?) { this.value = value }
     }
     private fun viewModel(h: Harness, gateway: ViewModelGateway = ViewModelGateway(), vault: NormalAuthVault = MemoryVault()): NormalAccountViewModel {
-        val account = NormalAccount(gateway, vault, h.repository, FixedClock(Instant.parse("2026-10-26T00:00:00Z")), config)
+        val account = NormalAccount(gateway, vault, h.repository, FixedClock(Instant.parse("2026-10-26T00:00:00Z")), config, testMail(FixedClock(Instant.parse("2026-10-26T00:00:00Z")), config.publicOrigin))
         return NormalAccountViewModel(account, h.repository, config)
     }
 
@@ -1181,7 +1181,7 @@ class NormalSyncRepositoryTest {
             KeystoreNormalAuthVault(context, aead, other).write(SavedNormalAuth(session, 1000, 1, other.publicOrigin))
             FileJournal(File(dir, "normal-owner-sync/${other.environmentHash}/journal.json")).update { JournalSnapshot(activeOwner = "old-owner") }
             val gateway = ViewModelGateway()
-            val account = NormalAccount(gateway, vault, h.repository, FixedClock(Instant.parse("2026-10-26T00:00:00Z")), config)
+            val account = NormalAccount(gateway, vault, h.repository, FixedClock(Instant.parse("2026-10-26T00:00:00Z")), config, testMail(FixedClock(Instant.parse("2026-10-26T00:00:00Z")), config.publicOrigin))
             gateway.signInGate = kotlinx.coroutines.CompletableDeferred()
             val late = async { account.signIn("owner@gmail.com", "synthetic-password", true) }
             gateway.signInEntered.await()
@@ -1210,7 +1210,7 @@ class NormalSyncRepositoryTest {
                 override fun read(): SavedNormalAuth? = null
                 override fun write(value: SavedNormalAuth?) { if (value == null) error("synthetic vault clear failure") }
             }
-            val account = NormalAccount(ViewModelGateway(), failing, h.repository, FixedClock(Instant.parse("2026-10-26T00:00:00Z")), config)
+            val account = NormalAccount(ViewModelGateway(), failing, h.repository, FixedClock(Instant.parse("2026-10-26T00:00:00Z")), config, testMail(FixedClock(Instant.parse("2026-10-26T00:00:00Z")), config.publicOrigin))
             val old = File(dir, "normal-owner-sync/old-environment/journal.json")
             FileJournal(old).update { JournalSnapshot(activeOwner = "old-owner") }
             assertThrows(IllegalStateException::class.java) {

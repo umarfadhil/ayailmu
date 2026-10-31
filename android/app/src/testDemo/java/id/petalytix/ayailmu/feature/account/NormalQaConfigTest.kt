@@ -32,10 +32,10 @@ class NormalQaConfigTest {
         val configured = NormalAccountConfig.forValues(true, "https://owner.example.invalid", "qa-sync-v1").copy(ownerSignInOnly = true)
         val gateway = GoTrueNormalAuthGateway(configured)
         val actions: List<suspend () -> Unit> = listOf(
-            { gateway.signUp("owner@example.invalid", "not-a-real-password") },
+            { gateway.signUp("owner@example.invalid", "not-a-real-password", "test-operation") },
             { gateway.verifyOtp("owner@example.invalid", "111111", "signup"); Unit },
-            { gateway.resend("owner@example.invalid") },
-            { gateway.recover("owner@example.invalid") },
+            { gateway.resend("owner@example.invalid", "test-operation") },
+            { gateway.recover("owner@example.invalid", "test-operation") },
             { gateway.updatePassword("not-a-token", "not-a-real-password"); Unit },
         )
         actions.forEach { action ->

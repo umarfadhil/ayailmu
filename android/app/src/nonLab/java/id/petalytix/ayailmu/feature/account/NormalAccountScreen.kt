@@ -70,6 +70,13 @@ internal fun NormalAccountScreen(state: NormalAccountUiState, events: NormalAcco
         Text(stringResource(R.string.normal_account_title), style = MaterialTheme.typography.headlineMedium)
         Text(stringResource(R.string.normal_account_local_boundary), style = MaterialTheme.typography.bodyMedium)
         Message(state.account.message)
+        if (state.emailActionsAllowed && state.account.mail != null && !state.busy) {
+            val pending = state.account.mail
+            AyaSecondaryButton(stringResource(R.string.normal_account_enter_code), {
+                events.show(if (pending.action == NormalMailAction.RECOVER) NormalAccountMode.RESET else NormalAccountMode.CONFIRM, pending.recipient)
+            })
+            AyaSecondaryButton(stringResource(R.string.normal_account_new_mail_request), events::startNewMailRequest)
+        }
         SyncMessage(state.sync.notice)
         when {
             state.account.email != null -> OwnerStatus(state, events)
@@ -109,7 +116,7 @@ private fun AdultDeclaration(checked: Boolean, onChange: (Boolean) -> Unit, busy
 }
 @Composable
 private fun SignUp(state: NormalAccountUiState, vm: NormalAccountEvents) {
-    var email by rememberSaveable { mutableStateOf("") }; var password by remember { mutableStateOf("") }; var adult by remember { mutableStateOf(false) }
+    var email by remember(state.account.mail?.id) { mutableStateOf(state.account.mail?.recipient.orEmpty()) }; var password by remember { mutableStateOf("") }; var adult by remember { mutableStateOf(false) }
     Text(stringResource(R.string.normal_account_register), style = MaterialTheme.typography.titleLarge)
     Text(stringResource(R.string.normal_account_registration_body))
     EmailPassword(email, { email = it }, password, { password = it }, state.busy)
@@ -119,7 +126,7 @@ private fun SignUp(state: NormalAccountUiState, vm: NormalAccountEvents) {
 }
 @Composable
 private fun SignIn(state: NormalAccountUiState, vm: NormalAccountEvents) {
-    var email by rememberSaveable(state.confirmationEmail) { mutableStateOf(state.confirmationEmail) }; var password by remember { mutableStateOf("") }; var adult by remember { mutableStateOf(false) }
+    var email by remember(state.confirmationEmail) { mutableStateOf(state.confirmationEmail) }; var password by remember { mutableStateOf("") }; var adult by remember { mutableStateOf(false) }
     Text(stringResource(R.string.normal_account_sign_in), style = MaterialTheme.typography.titleLarge)
     EmailPassword(email, { email = it }, password, { password = it }, state.busy)
     AdultDeclaration(adult, { adult = it }, state.busy)
@@ -145,7 +152,7 @@ private fun Confirm(state: NormalAccountUiState, vm: NormalAccountEvents) {
 }
 @Composable
 private fun Recover(state: NormalAccountUiState, vm: NormalAccountEvents) {
-    var email by rememberSaveable(state.confirmationEmail) { mutableStateOf(state.confirmationEmail) }
+    var email by remember(state.confirmationEmail) { mutableStateOf(state.confirmationEmail) }
     Text(stringResource(R.string.normal_account_recover_title), style = MaterialTheme.typography.titleLarge)
     Text(stringResource(R.string.normal_account_recover_body))
     AyaTextField(email, { email = it }, label = stringResource(R.string.normal_account_email), enabled = !state.busy, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email))
@@ -208,6 +215,8 @@ private fun OwnerStatus(state: NormalAccountUiState, vm: NormalAccountEvents) {
         NormalMessage.THROTTLED -> R.string.normal_account_throttled
         NormalMessage.OFFLINE -> R.string.normal_account_offline
         NormalMessage.SESSION_EXPIRED -> R.string.normal_account_session_expired
+        NormalMessage.MAIL_UNKNOWN -> R.string.normal_account_mail_unknown
+        NormalMessage.MAIL_NEW_REQUIRED -> R.string.normal_account_mail_new_required
         NormalMessage.FAILED, null -> R.string.normal_account_failed
     }
     if (message != null) Text(stringResource(id), color = MaterialTheme.colorScheme.primary)

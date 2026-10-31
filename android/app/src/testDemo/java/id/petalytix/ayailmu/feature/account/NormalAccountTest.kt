@@ -17,8 +17,8 @@ private fun session(email: String, access: String = "access-$email", confirmed: 
 )
 
 class NormalAccountTest {
-    private val emailA = "owner.a@gmail.com"
-    private val emailB = "owner.b@outlook.com"
+    private val emailA = "owner.a@example.invalid"
+    private val emailB = "owner.b@example.invalid"
     private val passwordA = "correct horse battery"
     private val passwordB = "another safe password"
 
@@ -30,32 +30,51 @@ class NormalAccountTest {
         val signInStarted = CompletableDeferred<String>()
         var networkCalls = 0
         var failNext: Exception? = null
+        var loseSignUpReply = false
+        var loseOtpReply = false
+        val mailIds = mutableListOf<Pair<String, String>>()
+        var mailGate: CompletableDeferred<Unit>? = null
+        val mailEntered = CompletableDeferred<Unit>()
+        private suspend fun mail(action: String, id: String) { mailIds += action to id; mailEntered.complete(Unit); mailGate?.await(); request() }
+        private val usedCodes = mutableSetOf<Pair<String, String>>()
         private fun request() { networkCalls++; failNext?.let { failNext = null; throw it } }
         var refreshed = 0
         var tokenCounter = 0
         var logoutCalls = 0
         val expiredAccess = mutableSetOf<String>()
-        override suspend fun signUp(email: String, password: String) { request(); users[email] = AuthUser("id-$email", email) }
+        override suspend fun signUp(email: String, password: String, operationId: String) {
+            mail("signup", operationId)
+            // Model enumeration-safe repeated signup without replacing the existing identity.
+            if (email !in users) {
+                users[email] = AuthUser(java.util.UUID.nameUUIDFromBytes(email.encodeToByteArray()).toString(), email)
+                passwords[email] = password
+            }
+            if (loseSignUpReply) { loseSignUpReply = false; throw java.io.IOException("synthetic lost signup reply") }
+        }
         override suspend fun signIn(email: String, password: String): AuthSession {
             request()
             signIns[email]?.let { signInStarted.complete(email); return it.await() }
             val user = users[email] ?: throw AuthFailure(400, "invalid_credentials")
             if (passwords[email] != password) throw AuthFailure(400, "invalid_credentials")
             if (user.emailConfirmedAt == null) throw AuthFailure(400, "email_not_confirmed")
-            return session(email, "access-${++tokenCounter}-$email").also { sessions[it.accessToken] = it }
+            return session(email, "access-${++tokenCounter}-$email").copy(user = user).also { sessions[it.accessToken] = it }
         }
         override suspend fun verifyOtp(email: String, code: String, type: String): AuthSession {
             request()
             if (code != if (type == "signup") "111111" else "222222") throw AuthFailure(400, "invalid_otp")
+            val key = email to type
+            if (email !in users || key in usedCodes) throw AuthFailure(400, "invalid_otp")
+            usedCodes += key
             if (type == "signup") users[email] = users.getValue(email).copy(emailConfirmedAt = "2026-10-26T00:00:00Z")
-            return session(email, "access-$type-$email").also { sessions[it.accessToken] = it }
+            if (loseOtpReply) { loseOtpReply = false; throw java.io.IOException("synthetic lost OTP reply") }
+            return session(email, "access-$type-$email").copy(user = users.getValue(email)).also { sessions[it.accessToken] = it }
         }
-        override suspend fun recover(email: String) { request() }
-        override suspend fun resend(email: String) { request() }
+        override suspend fun recover(email: String, operationId: String) { mail("recover", operationId) }
+        override suspend fun resend(email: String, operationId: String) { mail("resend", operationId) }
         override suspend fun refresh(refreshToken: String): AuthSession {
             request(); refreshed++
             val old = sessions.values.first { it.refreshToken == refreshToken }
-            return session(old.user.email, "rotated-${++tokenCounter}-${old.user.email}").also { sessions[it.accessToken] = it }
+            return session(old.user.email, "rotated-${++tokenCounter}-${old.user.email}").copy(user = old.user).also { sessions[it.accessToken] = it }
         }
         override suspend fun user(token: String): AuthUser {
             request()
@@ -71,7 +90,10 @@ class NormalAccountTest {
         override suspend fun signOut(token: String) { request(); logoutCalls++ }
     }
 
-    private class FakeVault : NormalAuthVault {
+    private class FakeVault : NormalAuthVault, NormalMailStore {
+        var pendingMail: SavedMailOperation? = null
+        override fun readMail() = pendingMail
+        override fun writeMail(value: SavedMailOperation?) { pendingMail = value }
         var saved: SavedNormalAuth? = null
         var failClear = false
         override fun read() = saved
@@ -91,7 +113,9 @@ class NormalAccountTest {
     }
 
     private class Harness(val gateway: FakeGateway = FakeGateway(), val vault: FakeVault = FakeVault(), val sync: FakeSync = FakeSync(), ownerSignInOnly: Boolean = false) {
-        val account = NormalAccount(gateway, vault, sync, FixedClock(Instant.parse("2026-10-26T00:00:00Z")), NormalAccountConfig.forValues(true, "https://accounts.petalytix.id", "owner-policy-1").copy(ownerSignInOnly = ownerSignInOnly))
+        val clock = FixedClock(Instant.parse("2026-10-26T00:00:00Z"))
+        val config = NormalAccountConfig.forValues(true, "https://accounts.petalytix.id", "owner-policy-1").copy(ownerSignInOnly = ownerSignInOnly)
+        val account = NormalAccount(gateway, vault, sync, clock, config, testMail(clock, config.publicOrigin, vault))
         fun confirmed(email: String, password: String) {
             gateway.users[email] = AuthUser("id-$email", email, "2026-10-26T00:00:00Z")
             gateway.passwords[email] = password
@@ -291,4 +315,155 @@ class NormalAccountTest {
         assertFalse(h.account.signIn(emailA, "short"))
         assertEquals(0, h.gateway.networkCalls)
     }
+
+    @Test fun generalSignupRejectsInvalidInputAndMissingDeclarationBeforeNetwork() = runTest {
+        val h = Harness()
+        assertFalse(h.account.signUp("not-an-address", passwordA, true))
+        assertFalse(h.account.signUp(emailA, "short", true))
+        assertFalse(h.account.signUp(emailA, passwordA, false))
+        assertFalse(h.account.confirm(emailA, "11111", true))
+        assertFalse(h.account.confirm(emailA, "111111", false))
+        assertFalse(h.account.resend("not-an-address"))
+        assertEquals(0, h.gateway.networkCalls)
+        assertNull(h.vault.saved)
+        assertNull(h.sync.owner)
+    }
+
+    @Test fun resendRequiresConfirmationAndReportsThrottleAndUnknownOutcome() = runTest {
+        val h = Harness()
+        assertTrue(h.account.signUp(emailA, passwordA, true))
+        assertTrue(h.account.resend(emailA))
+        assertEquals(NormalMessage.RESENT, h.account.state.value.message)
+        assertNull(h.vault.saved)
+        assertTrue(h.account.newMailRequest())
+        h.gateway.failNext = AuthFailure(429, "over_rate_limit")
+        assertFalse(h.account.resend(emailA))
+        assertEquals(NormalMessage.THROTTLED, h.account.state.value.message)
+        h.gateway.failNext = java.io.IOException("synthetic lost resend reply")
+        assertFalse(h.account.resend(emailA))
+        assertEquals(NormalMessage.MAIL_UNKNOWN, h.account.state.value.message)
+        assertNull(h.vault.saved)
+        assertNull(h.sync.owner)
+    }
+
+    @Test fun lostSignupAndOtpRepliesNeverInstallOrClaimALocalSession() = runTest {
+        val h = Harness()
+        h.gateway.loseSignUpReply = true
+        assertFalse(h.account.signUp(emailA, passwordA, true))
+        assertEquals(NormalMessage.MAIL_UNKNOWN, h.account.state.value.message)
+        assertNull(h.vault.saved)
+        assertNull(h.sync.owner)
+        h.gateway.loseOtpReply = true
+        assertFalse(h.account.confirm(emailA, "111111", true))
+        assertEquals(NormalMessage.OFFLINE, h.account.state.value.message)
+        assertNull(h.vault.saved)
+        assertNull(h.sync.owner)
+        // The provider may already have consumed the code before its response was lost.
+        assertFalse(h.account.confirm(emailA, "111111", true))
+        assertEquals(NormalMessage.INVALID_OTP, h.account.state.value.message)
+        assertNull(h.vault.saved)
+        assertTrue(h.account.signIn(emailA, passwordA, true))
+        assertNotNull(h.vault.saved)
+    }
+
+    @Test fun repeatedSignupCannotReplaceAConfirmedIdentityOrPassword() = runTest {
+        val h = Harness()
+        assertTrue(h.account.signUp(emailA, passwordA, true))
+        assertTrue(h.account.confirm(emailA, "111111", true))
+        val identity = h.vault.saved!!.session.user.id
+        assertTrue(h.account.signOut())
+        assertTrue(h.account.signUp(emailA, passwordB, true))
+        assertTrue(h.account.signIn(emailA, passwordA, true))
+        assertEquals(identity, h.vault.saved!!.session.user.id)
+        assertFalse(h.account.signIn(emailA, passwordB, true))
+        assertEquals(identity, h.vault.saved!!.session.user.id)
+    }
+
+    @Test fun twoGeneralRecipientsKeepIndependentUuidSessionsAndVaults() = runTest {
+        val provider = FakeGateway()
+        val a = Harness(provider)
+        val b = Harness(provider)
+        assertTrue(a.account.signUp(emailA, passwordA, true))
+        assertTrue(b.account.signUp(emailB, passwordB, true))
+        assertTrue(a.account.confirm(emailA, "111111", true))
+        assertTrue(b.account.confirm(emailB, "111111", true))
+        val savedA = requireNotNull(a.vault.saved)
+        val savedB = requireNotNull(b.vault.saved)
+        val idA = java.util.UUID.fromString(savedA.session.user.id)
+        val idB = java.util.UUID.fromString(savedB.session.user.id)
+        assertNotEquals(idA, idB)
+        assertNotEquals(savedA.session.accessToken, savedB.session.accessToken)
+        assertNotEquals(a.sync.owner, b.sync.owner)
+        assertTrue(a.account.signOut())
+        assertNull(a.vault.saved)
+        assertEquals(savedB, b.vault.saved)
+        assertTrue(b.sync.authenticated)
+        assertTrue(b.account.restore())
+        assertEquals(idB.toString(), b.vault.saved?.session?.user?.id)
+    }
+
+    @Test fun concurrentDuplicateMailTapCannotInvalidateOrRepeatTheOriginal() = runTest {
+        val h = Harness(); h.gateway.mailGate = CompletableDeferred()
+        val first = async { h.account.recover(emailA) }
+        h.gateway.mailEntered.await()
+        assertFalse(h.account.recover(emailA))
+        assertEquals(1, h.gateway.mailIds.size)
+        h.gateway.mailGate!!.complete(Unit)
+        assertTrue(first.await())
+        assertEquals(NormalMessage.RECOVERY_SENT, h.account.state.value.message)
+    }
+    @Test fun lostResponseRetryAndRecreationUseTheOriginalIdWithoutClaimingSent() = runTest {
+        val h = Harness(); h.gateway.failNext = java.io.IOException("synthetic lost response")
+        assertFalse(h.account.recover(emailA))
+        val original = h.gateway.mailIds.single().second
+        assertEquals(NormalMessage.MAIL_UNKNOWN, h.account.state.value.message)
+        val restored = Harness(h.gateway, h.vault, h.sync)
+        assertFalse(restored.account.restore())
+        assertEquals(1, h.gateway.mailIds.size)
+        assertTrue(restored.account.recover(emailA))
+        assertEquals(original, h.gateway.mailIds.last().second)
+    }
+    @Test fun recreatedSignupRequiresNewIntentButStillOffersConfirmation() = runTest {
+        val h = Harness(); h.gateway.loseSignUpReply = true
+        assertFalse(h.account.signUp(emailA, passwordA, true))
+        val restored = Harness(h.gateway, h.vault, h.sync)
+        val before = h.gateway.networkCalls
+        assertFalse(restored.account.signUp(emailA, passwordA, true))
+        assertEquals(before, h.gateway.networkCalls)
+        assertEquals(NormalMessage.MAIL_NEW_REQUIRED, restored.account.state.value.message)
+        assertEquals(emailA, restored.account.state.value.mail!!.recipient)
+        assertTrue(restored.account.confirm(emailA, "111111", true))
+        assertNull(h.vault.pendingMail)
+    }
+    @Test fun logoutAndOwnerChangeDiscardOldIntentAndFenceCancelledMail() = runTest {
+        val h = Harness(); h.gateway.mailGate = CompletableDeferred()
+        val pending = async { h.account.recover(emailA) }
+        h.gateway.mailEntered.await()
+        assertTrue(h.account.signOut())
+        h.gateway.mailGate!!.complete(Unit)
+        assertFalse(pending.await())
+        assertNull(h.vault.pendingMail)
+        h.gateway.mailGate = null
+        assertTrue(h.account.recover(emailB))
+        assertNotEquals(h.gateway.mailIds[0].second, h.gateway.mailIds[1].second)
+        assertEquals(emailB, h.vault.pendingMail!!.recipient)
+    }
+
+
+    @Test fun coroutineCancellationPreservesUncertainIdAndClearsBusyWithoutSendingAgain() = runTest {
+        val h = Harness(); h.gateway.mailGate = CompletableDeferred()
+        val request = async { h.account.recover(emailA) }
+        h.gateway.mailEntered.await()
+        val original = h.gateway.mailIds.single().second
+        request.cancel()
+        request.join()
+        assertFalse(h.account.state.value.busy)
+        assertEquals(MailPhase.UNKNOWN, h.vault.pendingMail!!.phase)
+        assertEquals(NormalMessage.MAIL_UNKNOWN, h.account.state.value.message)
+        assertEquals(1, h.gateway.mailIds.size)
+        h.gateway.mailGate = null
+        assertTrue(h.account.recover(emailA))
+        assertEquals(original, h.gateway.mailIds.last().second)
+    }
+
 }

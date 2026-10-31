@@ -617,7 +617,10 @@
     <string name="settings_delete_profile_body_cloud">This profile and its answers will be deleted from this phone only. This does not delete a cloud account or server data. This cannot be undone.</string>
     <string name="settings_delete_child_body_cloud">This child profile and its answers will be deleted from this phone only. Other profiles stay. It does not delete a cloud account or server data. This cannot be undone.</string>
     <string name="normal_account_store_unavailable">Learning packs are not available in this build. Valid existing purchases are preserved.</string>
-    <string name="normal_account_root_body">Have an owner account? Sign in or create one without making another local profile.</string>
-    <string name="normal_account_root_action">Sign in or create owner account</string>
+    <string name="normal_account_root_body">Already have an account? Sign in, or create one to get started.</string>
+    <string name="normal_account_root_action">Sign in or create account</string>
     <string name="normal_account_enter_code">Enter confirmation code</string>
+    <string name="normal_account_mail_unknown">We could not confirm whether the email was sent. Check your inbox before trying again.</string>
+    <string name="normal_account_mail_new_required">This form no longer matches the saved request. Check your inbox, or start a new email request.</string>
+    <string name="normal_account_new_mail_request">Start a new email request</string>
 </resources>

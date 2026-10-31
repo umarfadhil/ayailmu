@@ -30,6 +30,7 @@ internal interface NormalAccountEvents {
     fun enableSync()
     fun disableSync()
     fun syncNow()
+    fun startNewMailRequest() {}
 }
 
 internal enum class NormalAccountMode { HUB, SIGN_IN, SIGN_UP, CONFIRM, RECOVER, RESET }
@@ -88,6 +89,7 @@ internal class NormalAccountViewModel @Inject constructor(
         action(mark) { if (account.signOut() && current(mark)) mode.value = NormalAccountMode.SIGN_IN }
     }
     override fun signOut() { val mark = next(); action(mark) { account.signOut() } }
+    override fun startNewMailRequest() { if (!state.value.busy) account.newMailRequest() }
     override fun createLearner(label: String, lang: String) { val mark = next(); action(mark) { sync.createAdult(label, lang) } }
     override fun selectLearner(learner: Learner) { val mark = next(); action(mark) { sync.select(learner) } }
     override fun enableSync() { val mark = next(); action(mark) { sync.enable() } }

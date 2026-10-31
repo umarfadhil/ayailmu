@@ -1,11 +1,9 @@
 package id.petalytix.ayailmu.feature.account
 
-import android.content.Context
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import id.petalytix.ayailmu.BuildConfig
 import id.petalytix.ayailmu.core.data.repo.ProfileVisibility
@@ -13,6 +11,7 @@ import id.petalytix.ayailmu.feature.settings.NormalLocalCleaner
 import id.petalytix.ayailmu.core.sync.Backend
 import id.petalytix.ayailmu.core.sync.HttpBackend
 import java.io.IOException
+import id.petalytix.ayailmu.core.engine.Clock
 import javax.inject.Singleton
 
 @Module
@@ -27,7 +26,7 @@ internal object NormalAccountModule {
         if (config.enabled) HttpBackend(config.apiOrigin, synthetic = false, config.syncPolicyVersion, config.ownerDeclarationVersion)
         else DisabledNormalBackend
     @Provides @Singleton internal fun visibility(impl: NormalProfileVisibility): ProfileVisibility = impl
-    @Provides @Singleton internal fun vault(@ApplicationContext context: Context, config: NormalAccountConfig): NormalAuthVault = KeystoreNormalAuthVault(context, config)
+    @Provides @Singleton internal fun mail(store: NormalMailStore, clock: Clock, config: NormalAccountConfig) = NormalMailOperations(store, clock, config.publicOrigin)
 }
 @Module
 @InstallIn(SingletonComponent::class)
@@ -35,6 +34,8 @@ internal abstract class NormalAccountBindings {
     @Binds internal abstract fun gateway(impl: GoTrueNormalAuthGateway): NormalAuthGateway
     @Binds internal abstract fun localCleaner(impl: NormalAccountLocalCleaner): NormalLocalCleaner
     @Binds internal abstract fun ownerSync(impl: NormalSyncRepository): NormalOwnerSync
+    @Binds internal abstract fun vault(impl: KeystoreNormalAuthVault): NormalAuthVault
+    @Binds internal abstract fun mailStore(impl: KeystoreNormalAuthVault): NormalMailStore
 }
 private object DisabledNormalBackend : Backend {
     private fun disabled(): Nothing = throw IOException("Normal account release is not approved")

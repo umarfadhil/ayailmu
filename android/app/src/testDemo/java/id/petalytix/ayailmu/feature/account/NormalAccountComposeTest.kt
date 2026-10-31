@@ -29,9 +29,12 @@ class NormalAccountComposeTest {
     private class Events : NormalAccountEvents {
         var registered = false
         var restores = 0
-        override fun show(target: NormalAccountMode, email: String) = Unit
+        var newMail = 0
+        var routed: Pair<NormalAccountMode, String>? = null
+        override fun show(target: NormalAccountMode, email: String) { routed = target to email }
+        override fun startNewMailRequest() { newMail++ }
         override fun back() = Unit
-        override fun signUp(email: String, password: String, adult: Boolean) { registered = email == "real.owner@gmail.com" && password.length >= 12 && adult }
+        override fun signUp(email: String, password: String, adult: Boolean) { registered = email == "owner@example.invalid" && password.length >= 12 && adult }
         override fun confirm(email: String, code: String, adult: Boolean) = Unit
         override fun signIn(email: String, password: String, adult: Boolean) = Unit
         override fun resend(email: String) = Unit
@@ -50,7 +53,7 @@ class NormalAccountComposeTest {
         val events = Events()
         compose.setContent { NormalAccountScreen(NormalAccountUiState(true, NormalAccountMode.SIGN_UP), events) {} }
         compose.onAllNodesWithText(text(R.string.normal_account_register))[1].assertIsNotEnabled()
-        compose.onNodeWithText(text(R.string.normal_account_email)).performTextInput("real.owner@gmail.com")
+        compose.onNodeWithText(text(R.string.normal_account_email)).performTextInput("owner@example.invalid")
         compose.onNodeWithText(text(R.string.normal_account_password)).performTextInput("synthetic-password-123")
         compose.onAllNodesWithText(text(R.string.normal_account_register))[1].performScrollTo().assertIsNotEnabled()
         compose.onNode(isToggleable()).performScrollTo().performClick()
@@ -62,7 +65,7 @@ class NormalAccountComposeTest {
     }
     @Test fun readyOwnerStatusHasRealLearnerAndCloudControls() {
         val learner = Learner("remote-a", "lrn_owner_a", "ADULT", "adults", "id")
-        val state = NormalAccountUiState(true, account = NormalAccountState("real.owner@gmail.com"), sync = NormalSyncState(owner = "owner-a", authenticated = true, learners = listOf(learner), learnerLabels = mapOf(learner.clientLearnerId to "Owner learner"), selected = learner, enabled = true, pending = 2, restoredAnswers = 3))
+        val state = NormalAccountUiState(true, account = NormalAccountState("owner@example.invalid"), sync = NormalSyncState(owner = "owner-a", authenticated = true, learners = listOf(learner), learnerLabels = mapOf(learner.clientLearnerId to "Owner learner"), selected = learner, enabled = true, pending = 2, restoredAnswers = 3))
         compose.setContent { NormalAccountScreen(state, Events()) {} }
         compose.onAllNodesWithText("Owner learner", substring = true).assertCountEquals(2)
         compose.onAllNodesWithText("lrn_owner_a").assertCountEquals(0)
@@ -73,7 +76,7 @@ class NormalAccountComposeTest {
 
     @Test fun expiredSessionHasReachableRestoreAction() {
         val events = Events()
-        val state = NormalAccountUiState(true, account = NormalAccountState("real.owner@gmail.com"), sync = NormalSyncState("owner-a", false))
+        val state = NormalAccountUiState(true, account = NormalAccountState("owner@example.invalid"), sync = NormalSyncState("owner-a", false))
         compose.setContent { NormalAccountScreen(state, events) {} }
         compose.onNodeWithText(text(R.string.normal_account_restore_action)).performScrollTo().assertIsEnabled().performClick()
         compose.runOnIdle { assertEquals(1, events.restores) }
@@ -81,14 +84,14 @@ class NormalAccountComposeTest {
 
 
     @Test fun freshAuthHasSignInAgainInsteadOfRestoreLoop() {
-        val state = NormalAccountUiState(true, account = NormalAccountState("real.owner@gmail.com"), sync = NormalSyncState("owner-a", false, notice = NormalSyncNotice.FRESH_AUTH_REQUIRED))
+        val state = NormalAccountUiState(true, account = NormalAccountState("owner@example.invalid"), sync = NormalSyncState("owner-a", false, notice = NormalSyncNotice.FRESH_AUTH_REQUIRED))
         compose.setContent { NormalAccountScreen(state, Events()) {} }
         compose.onNodeWithText(text(R.string.normal_account_sign_in_again)).assertIsEnabled()
         compose.onAllNodesWithText(text(R.string.normal_account_restore_action)).assertCountEquals(0)
     }
 
     @Test fun noApprovedContentNoticeSaysAccountUnchangedWithoutLabLabels() {
-        val state = NormalAccountUiState(true, account = NormalAccountState("real.owner@gmail.com"), sync = NormalSyncState("owner-a", true, notice = NormalSyncNotice.NO_APPROVED_CONTENT))
+        val state = NormalAccountUiState(true, account = NormalAccountState("owner@example.invalid"), sync = NormalSyncState("owner-a", true, notice = NormalSyncNotice.NO_APPROVED_CONTENT))
         compose.setContent { NormalAccountScreen(state, Events()) {} }
         compose.onNodeWithText(text(R.string.normal_account_no_approved_content)).assertExists()
         compose.onAllNodesWithText(text(R.string.normal_account_sync_ready)).assertCountEquals(0)
@@ -97,7 +100,7 @@ class NormalAccountComposeTest {
         compose.onAllNodesWithText("sync lab", substring = true, ignoreCase = true).assertCountEquals(0)    }
 
     @Test fun contentMismatchNoticeTellsOwnerToUpdateTheApp() {
-        val state = NormalAccountUiState(true, account = NormalAccountState("real.owner@gmail.com"), sync = NormalSyncState("owner-a", true, notice = NormalSyncNotice.CONTENT_MISMATCH))
+        val state = NormalAccountUiState(true, account = NormalAccountState("owner@example.invalid"), sync = NormalSyncState("owner-a", true, notice = NormalSyncNotice.CONTENT_MISMATCH))
         compose.setContent { NormalAccountScreen(state, Events()) {} }
         compose.onNodeWithText(text(R.string.normal_account_content_mismatch)).assertExists()
         compose.onAllNodesWithText(text(R.string.normal_account_sync_ready)).assertCountEquals(0)
@@ -107,7 +110,7 @@ class NormalAccountComposeTest {
     private val labelWords = Regex("\\b(lab|dev|demo|fake|synthetic|sync lab)\\b", RegexOption.IGNORE_CASE)
 
     @Test fun pendingCreateNoticeExplainsRetryInOrdinaryWordingAndIsHiddenOtherwise() {
-        val pending = NormalAccountUiState(true, account = NormalAccountState("real.owner@gmail.com"), sync = NormalSyncState("owner-a", true, pendingCreate = true))
+        val pending = NormalAccountUiState(true, account = NormalAccountState("owner@example.invalid"), sync = NormalSyncState("owner-a", true, pendingCreate = true))
         compose.setContent { NormalAccountScreen(pending, Events()) {} }
         compose.onNodeWithText(text(R.string.normal_account_create_pending)).assertExists()
         compose.onNodeWithText(text(R.string.normal_account_create_learner)).assertExists()
@@ -115,13 +118,13 @@ class NormalAccountComposeTest {
     }
 
     @Test fun noPendingNoticeWhenNothingIsUnresolved() {
-        val none = NormalAccountUiState(true, account = NormalAccountState("real.owner@gmail.com"), sync = NormalSyncState("owner-a", true))
+        val none = NormalAccountUiState(true, account = NormalAccountState("owner@example.invalid"), sync = NormalSyncState("owner-a", true))
         compose.setContent { NormalAccountScreen(none, Events()) {} }
         compose.onAllNodesWithText(text(R.string.normal_account_create_pending)).assertCountEquals(0)
     }
 
     @Test fun pendingLanguageConflictNoticeTellsOwnerNothingWasChanged() {
-        val state = NormalAccountUiState(true, account = NormalAccountState("real.owner@gmail.com"), sync = NormalSyncState("owner-a", true, notice = NormalSyncNotice.CREATE_PENDING_LANGUAGE, pendingCreate = true))
+        val state = NormalAccountUiState(true, account = NormalAccountState("owner@example.invalid"), sync = NormalSyncState("owner-a", true, notice = NormalSyncNotice.CREATE_PENDING_LANGUAGE, pendingCreate = true))
         compose.setContent { NormalAccountScreen(state, Events()) {} }
         compose.onNodeWithText(text(R.string.normal_account_create_pending_language)).assertExists()
         compose.onAllNodesWithText(text(R.string.normal_account_sync_ready)).assertCountEquals(0)
@@ -167,4 +170,18 @@ class NormalAccountComposeTest {
         compose.setContent { NormalAccountSettingsEntry {} }
         compose.onAllNodesWithText(text(R.string.normal_account_open)).assertCountEquals(0)
     }
+
+    @Test fun uncertainMailOffersCodeEntryAndExplicitNewIntentWithoutClaimingDelivery() {
+        val events = Events()
+        val record = SavedMailOperation("operation-one", NormalMailAction.RECOVER, "one@example.invalid", "anonymous", "https://accounts.example.invalid", 1, 86_400_001, MailPhase.UNKNOWN)
+        val state = NormalAccountUiState(true, account = NormalAccountState(message = NormalMessage.MAIL_UNKNOWN, mail = record))
+        compose.setContent { NormalAccountScreen(state, events) {} }
+        compose.onNodeWithText(text(R.string.normal_account_mail_unknown)).assertExists()
+        compose.onAllNodesWithText(text(R.string.normal_account_recovery_sent)).assertCountEquals(0)
+        compose.onNodeWithText(text(R.string.normal_account_enter_code)).performScrollTo().performClick()
+        compose.runOnIdle { assertEquals(NormalAccountMode.RESET to "one@example.invalid", events.routed) }
+        compose.onNodeWithText(text(R.string.normal_account_new_mail_request)).performScrollTo().performClick()
+        compose.runOnIdle { assertEquals(1, events.newMail) }
+    }
+
 }

@@ -5,6 +5,7 @@ import java.net.HttpURLConnection
 import java.net.Proxy
 import java.net.URI
 import java.net.URLEncoder
+import java.net.URL
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerialName
@@ -29,7 +30,7 @@ class AuthFailure(val status: Int, val code: String) : RuntimeException("Authent
 
 /** Documented GoTrue v2 HTTP adapter. The provider owns credentials, OTPs and tokens;
  * this app does not issue/verify tokens or implement password cryptography. No logging. */
-class GoTrueAuth(baseUrl: String, private val googleRedirectScheme: String = "id.petalytix.ayailmu.synclab") {
+class GoTrueAuth(baseUrl: String, private val googleRedirectScheme: String = "id.petalytix.ayailmu.synclab", private val connectionFactory: (URL, Boolean) -> HttpURLConnection = { url, local -> (if (local) url.openConnection(Proxy.NO_PROXY) else url.openConnection()) as HttpURLConnection }) {
     private val base = URI(baseUrl.trimEnd('/'))
     private val json = Json { ignoreUnknownKeys = true }
     init {
@@ -37,14 +38,16 @@ class GoTrueAuth(baseUrl: String, private val googleRedirectScheme: String = "id
         require(base.host != null && base.userInfo == null && base.query == null && base.fragment == null && base.path.isNullOrEmpty())
         require(base.scheme == "https" || base.scheme == "http" && base.host in setOf("127.0.0.1", "localhost"))
     }
-    private suspend fun request(method: String, path: String, body: JsonObject? = null, token: String? = null): JsonElement = withContext(Dispatchers.IO) {
+    private suspend fun request(method: String, path: String, body: JsonObject? = null, token: String? = null, operationId: String? = null): JsonElement = withContext(Dispatchers.IO) {
         require(token == null || token.isNotBlank() && token.length <= 16_384 && '\n' !in token && '\r' !in token)
         val url = URI(base.toString() + path).toURL()
-        val connection = (if (base.host in setOf("127.0.0.1", "localhost")) url.openConnection(Proxy.NO_PROXY) else url.openConnection()) as HttpURLConnection
+        require(operationId == null || operationId.matches(Regex("[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}")))
+        val connection = connectionFactory(url, base.host in setOf("127.0.0.1", "localhost"))
         try {
             connection.requestMethod = method; connection.instanceFollowRedirects = false
             connection.connectTimeout = 5_000; connection.readTimeout = 5_000
             connection.setRequestProperty("Accept", "application/json")
+            operationId?.let { connection.setRequestProperty("X-Request-ID", it) }
             token?.let { connection.setRequestProperty("Authorization", "Bearer $it") }
             if (body != null) {
                 val bytes = body.toString().encodeToByteArray(); require(bytes.size <= 16_384)
@@ -65,7 +68,7 @@ class GoTrueAuth(baseUrl: String, private val googleRedirectScheme: String = "id
             require(bytes.size <= 1_048_576) { "Authentication response too large" }
             val value = runCatching { if (bytes.isEmpty()) JsonNull else json.parseToJsonElement(bytes.decodeToString()) }.getOrNull()
             if (status !in 200..299) {
-                val code = (value as? JsonObject)?.get("error_code")?.jsonPrimitive?.content
+                val code = (value as? JsonObject)?.let { it["error_code"] ?: it["error"] }?.jsonPrimitive?.content
                 throw AuthFailure(status, code?.takeIf { it.matches(Regex("[a-z_]{1,80}")) } ?: "request_failed")
             }
             value ?: error("Invalid authentication response")
@@ -76,9 +79,9 @@ class GoTrueAuth(baseUrl: String, private val googleRedirectScheme: String = "id
     private fun session(value: JsonElement): AuthSession = json.decodeFromJsonElement<AuthSession>(value).also {
         require(it.accessToken.isNotBlank() && it.accessToken.length <= 16_384 && it.refreshToken.isNotBlank() && it.refreshToken.length <= 4096 && it.tokenType.equals("bearer", true) && it.expiresIn in 1..86_400 && it.user.id.isNotBlank())
     }
-    suspend fun signUp(email: String, password: String) {
+    suspend fun signUp(email: String, password: String, operationId: String? = null) {
         identity(email); password(password)
-        request("POST", "/signup", buildJsonObject { put("email", email); put("password", password) })
+        request("POST", "/signup", buildJsonObject { put("email", email); put("password", password) }, operationId = operationId)
     }
     suspend fun signIn(email: String, password: String): AuthSession {
         identity(email); password(password)
@@ -88,8 +91,8 @@ class GoTrueAuth(baseUrl: String, private val googleRedirectScheme: String = "id
         identity(email); require(code.matches(Regex("[0-9]{6}")) && type in setOf("signup", "recovery"))
         return session(request("POST", "/verify", buildJsonObject { put("email", email); put("token", code); put("type", type) }))
     }
-    suspend fun recover(email: String) { identity(email); request("POST", "/recover", buildJsonObject { put("email", email) }) }
-    suspend fun resend(email: String) { identity(email); request("POST", "/resend", buildJsonObject { put("email", email); put("type", "signup") }) }
+    suspend fun recover(email: String, operationId: String? = null) { identity(email); request("POST", "/recover", buildJsonObject { put("email", email) }, operationId = operationId) }
+    suspend fun resend(email: String, operationId: String? = null) { identity(email); request("POST", "/resend", buildJsonObject { put("email", email); put("type", "signup") }, operationId = operationId) }
     suspend fun refresh(refreshToken: String): AuthSession {
         require(refreshToken.isNotBlank() && refreshToken.length <= 4096)
         return session(request("POST", "/token?grant_type=refresh_token", buildJsonObject { put("refresh_token", refreshToken) }))
