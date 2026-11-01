@@ -1,0 +1,166 @@
+name: umar-release-candidate
+# CI artifact preparation only (unsigned, unapproved). Not CD: no signing, store upload, deploy, environments or secrets.
+on:
+  pull_request:
+    paths: ['backend-umar/**', 'android/**', 'integration/tunnel/**', 'integration/verify-endpoint-isolation.py', '.github/workflows/umar-release-candidate.yml']
+  push:
+    branches: [main, feature/umar-native-integration-20261019]
+    paths: ['backend-umar/**', 'android/**', 'integration/tunnel/**', 'integration/verify-endpoint-isolation.py', '.github/workflows/umar-release-candidate.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: umar-release-candidate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    services:
+      postgres:
+        image: postgres:17.11-alpine
+        env:
+          POSTGRES_DB: umar_synthetic
+          # Disposable hosted-runner service only, bound to loopback, never a deployment setting.
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - "127.0.0.1:16585:5432"
+        options: >-
+          --health-cmd "pg_isready -U postgres -d umar_synthetic"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      # Fixed cmd package paths (main.go sources verified), never user input.
+      API_PKG: ./cmd/server
+      MIGRATE_PKG: ./cmd/migrate
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: backend-umar/go.mod
+          cache-dependency-path: backend-umar/go.sum
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: ${{ github.ref != 'refs/heads/main' }}
+      - name: Backend race suite with disposable Postgres and test OIDC issuer (native Kotlin/Robolectric real-GoTrue sync cases skip without fixtures)
+        working-directory: backend-umar
+        env:
+          UMAR_TEST_DATABASE_URL: postgres://postgres@127.0.0.1:16585/umar_synthetic?sslmode=disable
+        run: |
+          echo '::notice::Backend Go tests run fully with disposable Postgres and a test OIDC issuer. Native Kotlin/Robolectric sync cases that need real GoTrue skip without fixtures. No hosted real-GoTrue CI coverage.'
+          echo 'Backend Go tests run fully with disposable Postgres and a test OIDC issuer; native Kotlin/Robolectric sync cases that need real GoTrue skip without fixtures; no hosted real-GoTrue CI coverage.' >> "$GITHUB_STEP_SUMMARY"
+          go test -count=1 -race ./...
+      - name: Backend vet and build of all cmd binaries (output outside checkout)
+        working-directory: backend-umar
+        run: |
+          go vet ./...
+          mkdir -p "$RUNNER_TEMP/umar-gate-build"
+          go build -o "$RUNNER_TEMP/umar-gate-build/" ./cmd/...
+      - name: Tunnel helper unit tests and endpoint isolation check (no endpoint opened)
+        run: |
+          (cd backend-umar && python3 -m unittest discover -s ../integration/tunnel -p 'test_*.py')
+          (cd android && python3 ../integration/verify-endpoint-isolation.py)
+      - name: Android pure modules and pack validation
+        working-directory: android
+        run: sh gradlew :core:model:test :core:engine:test :core:content:test :core:content:validatePacks --stacktrace
+      - name: Android data, demo and synthetic sync-lab unit tests
+        working-directory: android
+        run: sh gradlew :core:data:testDebugUnitTest :app:testDemoDebugUnitTest :core:sync:test :app:testSyncLabDebugUnitTest --stacktrace
+      - name: Android prod release lint and unsigned bundle
+        working-directory: android
+        run: sh gradlew :app:lintProdRelease :app:bundleProdRelease --stacktrace
+      - name: Source revision equals GITHUB_SHA and tree is clean before cross-build
+        run: |
+          set -eu
+          head="$(git rev-parse HEAD)"
+          [ "$head" = "$GITHUB_SHA" ] || { echo "HEAD $head != GITHUB_SHA $GITHUB_SHA" >&2; exit 1; }
+          dirty="$(git status --porcelain)"
+          [ -z "$dirty" ] || { echo "dirty tree:" >&2; echo "$dirty" >&2; exit 1; }
+      - name: Collect unsigned AAB and cross-build linux and darwin server and migrator
+        working-directory: backend-umar
+        run: |
+          set -eu
+          out="$RUNNER_TEMP/umar-candidate"
+          src="$GITHUB_WORKSPACE/android/app/build/outputs/bundle/prodRelease/app-prod-release.aab"
+          if [ -L "$src" ] || [ ! -f "$src" ]; then echo "AAB missing, non-regular or symlink: $src" >&2; exit 1; fi
+          rm -rf "$out"
+          mkdir -p "$out"
+          cp "$src" "$out/app-prod-release.aab"
+          for target in linux/amd64 linux/arm64 darwin/arm64; do
+            os="${target%/*}"
+            arch="${target#*/}"
+            CGO_ENABLED=0 GOOS="$os" GOARCH="$arch" go build -trimpath -buildvcs=true -o "$out/umar-api-${os}-${arch}" "$API_PKG"
+            CGO_ENABLED=0 GOOS="$os" GOARCH="$arch" go build -trimpath -buildvcs=true -o "$out/umar-migrate-${os}-${arch}" "$MIGRATE_PKG"
+          done
+      - name: Verify candidate files and write manifest.json and SHA256SUMS
+        run: |
+          python3 -I - <<'PY'
+          import hashlib, json, os, pathlib, re, stat, subprocess, zipfile
+          out = os.path.join(os.environ['RUNNER_TEMP'], 'umar-candidate')
+          rev = os.environ['GITHUB_SHA']
+          allow = {
+              'app-prod-release.aab': 'android-aab',
+              'umar-api-linux-amd64': 'linux/amd64',
+              'umar-migrate-linux-amd64': 'linux/amd64',
+              'umar-api-linux-arm64': 'linux/arm64',
+              'umar-migrate-linux-arm64': 'linux/arm64',
+              'umar-api-darwin-arm64': 'darwin/arm64',
+              'umar-migrate-darwin-arm64': 'darwin/arm64',
+          }
+          assert sorted(os.listdir(out)) == sorted(allow), os.listdir(out)
+          P = lambda n: os.path.join(out, n)
+          for n, plat in allow.items():
+              st = os.lstat(P(n))
+              assert stat.S_ISREG(st.st_mode) and st.st_size > 0, n
+              if plat == 'android-aab':
+                  continue
+              txt = subprocess.run(['go', 'version', '-m', P(n)], check=True, capture_output=True, text=True).stdout
+              bi = dict(re.findall(r'^\s+build\s+(\S+?)=(\S*)', txt, re.M))
+              goos, goarch = plat.split('/')
+              want = {'vcs.revision': rev, 'vcs.modified': 'false', 'CGO_ENABLED': '0', 'GOOS': goos, 'GOARCH': goarch}
+              assert all(bi.get(k) == v for k, v in want.items()), (n, bi)
+          with zipfile.ZipFile(P('app-prod-release.aab')) as z:
+              assert z.testzip() is None
+              names = z.namelist()
+          assert {'BundleConfig.pb', 'base/manifest/AndroidManifest.xml'} <= set(names), names
+          assert not [x for x in names if x.upper().startswith('META-INF/') and x.upper().endswith(('.SF', '.RSA', '.DSA', '.EC'))], 'AAB is signed'
+          def sha(n):
+              return hashlib.sha256(pathlib.Path(P(n)).read_bytes()).hexdigest()
+          files = [{'name': n, 'sha256': sha(n), 'size': os.lstat(P(n)).st_size, 'platform': p} for n, p in allow.items()]
+          doc = {'schema': 1, 'source_revision': rev, 'status': 'unsigned-unapproved-candidate', 'files': files}
+          pathlib.Path(P('manifest.json')).write_text(json.dumps(doc, indent=2, sort_keys=True) + '\n')
+          pathlib.Path(P('SHA256SUMS')).write_text(''.join('%s  %s\n' % (sha(n), n) for n in sorted([*allow, 'manifest.json'])))
+          PY
+      - name: Verify checksums and exact file set
+        run: |
+          set -eu
+          cd "$RUNNER_TEMP/umar-candidate"
+          sha256sum -c SHA256SUMS
+          test "$(ls -A | wc -l)" -eq 9
+      - name: Upload unsigned candidate (explicit files only)
+        uses: actions/upload-artifact@v4
+        with:
+          name: umar-release-candidate-unsigned
+          path: |
+            ${{ runner.temp }}/umar-candidate/app-prod-release.aab
+            ${{ runner.temp }}/umar-candidate/umar-api-linux-amd64
+            ${{ runner.temp }}/umar-candidate/umar-migrate-linux-amd64
+            ${{ runner.temp }}/umar-candidate/umar-api-linux-arm64
+            ${{ runner.temp }}/umar-candidate/umar-migrate-linux-arm64
+            ${{ runner.temp }}/umar-candidate/umar-api-darwin-arm64
+            ${{ runner.temp }}/umar-candidate/umar-migrate-darwin-arm64
+            ${{ runner.temp }}/umar-candidate/manifest.json
+            ${{ runner.temp }}/umar-candidate/SHA256SUMS
+          retention-days: 7
+          if-no-files-found: error

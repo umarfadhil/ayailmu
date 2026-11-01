@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "tracks": [
+    {
+      "track": "mat-a-local",
+      "pack": "packs/matematika/mat-a-local/v1.json",
+      "rules": "config/rules.mat-a-local.json",
+      "free_units": ["01"]
+    }
+  ]
+}

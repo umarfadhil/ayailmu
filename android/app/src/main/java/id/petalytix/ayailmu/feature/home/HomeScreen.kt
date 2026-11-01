@@ -193,8 +193,8 @@ fun HomeScreen(
             if (state.developerDemo) {
                 Spacer(Modifier.height(AyaSpacing.sm))
                 DevCheckCard(state = state, onEvent = onEvent)
+                Text(text = stringResource(R.string.home_phase_label), style = MaterialTheme.typography.labelSmall, color = colors.inkSoft)
             }
-            Text(text = stringResource(R.string.home_phase_label), style = MaterialTheme.typography.labelSmall, color = colors.inkSoft)
         }
     }
 }

@@ -1,0 +1,390 @@
+{
+  "atUTC": "2026-10-30T04:47:38.025105+00:00",
+  "reviewer": "Codex direct local independent AI reviewer; not a human specialist",
+  "inputPackSHA256": "56c789194fd5aa911645070200140a96bda2f4f052adcf967dd6491957b0a4be",
+  "sourceCommit": "3204868946037dd42997d1ccc92948af3e2a3cca",
+  "checks": [
+    {
+      "check": "item 1 numeric",
+      "actual": 14700,
+      "expected": 14700,
+      "passed": true
+    },
+    {
+      "check": "item 2 numeric",
+      "actual": 84900,
+      "expected": 84900,
+      "passed": true
+    },
+    {
+      "check": "item 5 numeric",
+      "actual": 572,
+      "expected": 572,
+      "passed": true
+    },
+    {
+      "check": "item 8 numeric",
+      "actual": 46500,
+      "expected": 46500.0,
+      "passed": true
+    },
+    {
+      "check": "item 10 numeric",
+      "actual": 75000,
+      "expected": 75000.0,
+      "passed": true
+    },
+    {
+      "check": "item 13 numeric",
+      "actual": 14750,
+      "expected": 14750,
+      "passed": true
+    },
+    {
+      "check": "item 3 key",
+      "actual": [
+        "b"
+      ],
+      "expected": [
+        "b"
+      ],
+      "passed": true
+    },
+    {
+      "check": "item 3 option id",
+      "actual": 1200,
+      "expected": 1200,
+      "passed": true
+    },
+    {
+      "check": "item 3 option en",
+      "actual": 1200,
+      "expected": 1200,
+      "passed": true
+    },
+    {
+      "check": "item 9 key",
+      "actual": [
+        "c"
+      ],
+      "expected": [
+        "c"
+      ],
+      "passed": true
+    },
+    {
+      "check": "item 9 option id",
+      "actual": 42000,
+      "expected": 42000,
+      "passed": true
+    },
+    {
+      "check": "item 9 option en",
+      "actual": 42000,
+      "expected": 42000,
+      "passed": true
+    },
+    {
+      "check": "item 14 key",
+      "actual": [
+        "c"
+      ],
+      "expected": [
+        "c"
+      ],
+      "passed": true
+    },
+    {
+      "check": "item 14 option id",
+      "actual": 600,
+      "expected": 600,
+      "passed": true
+    },
+    {
+      "check": "item 14 option en",
+      "actual": 600,
+      "expected": 600,
+      "passed": true
+    },
+    {
+      "check": "item 4 arithmetic",
+      "actual": 340,
+      "expected": 340,
+      "passed": true
+    },
+    {
+      "check": "item 4 key",
+      "actual": [
+        "t"
+      ],
+      "expected": [
+        "t"
+      ],
+      "passed": true
+    },
+    {
+      "check": "matching m1",
+      "actual": "r120",
+      "expected": "r120",
+      "passed": true
+    },
+    {
+      "check": "matching r120",
+      "actual": 120,
+      "expected": 120,
+      "passed": true
+    },
+    {
+      "check": "matching m2",
+      "actual": "r400",
+      "expected": "r400",
+      "passed": true
+    },
+    {
+      "check": "matching r400",
+      "actual": 400,
+      "expected": 400,
+      "passed": true
+    },
+    {
+      "check": "matching m3",
+      "actual": "r385",
+      "expected": "r385",
+      "passed": true
+    },
+    {
+      "check": "matching r385",
+      "actual": 385,
+      "expected": 385,
+      "passed": true
+    },
+    {
+      "check": "matching m4",
+      "actual": "r396",
+      "expected": "r396",
+      "passed": true
+    },
+    {
+      "check": "matching r396",
+      "actual": 396,
+      "expected": 396,
+      "passed": true
+    },
+    {
+      "check": "tile order",
+      "actual": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "expected": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "passed": true
+    },
+    {
+      "check": "tile arithmetic",
+      "actual": 39800,
+      "expected": 39800,
+      "passed": true
+    },
+    {
+      "check": "blank solution",
+      "actual": [
+        "f4"
+      ],
+      "expected": [
+        "f4"
+      ],
+      "passed": true
+    },
+    {
+      "check": "blank divisor",
+      "actual": 4.0,
+      "expected": 4,
+      "passed": true
+    },
+    {
+      "check": "item 2 slider",
+      "actual": [
+        80000,
+        81000,
+        82000,
+        83000,
+        84000,
+        85000,
+        86000,
+        87000,
+        88000,
+        89000
+      ],
+      "expected": [
+        80000,
+        81000,
+        82000,
+        83000,
+        84000,
+        85000,
+        86000,
+        87000,
+        88000,
+        89000
+      ],
+      "passed": true
+    },
+    {
+      "check": "item 10 slider",
+      "actual": [
+        65000,
+        70000,
+        75000,
+        80000,
+        85000
+      ],
+      "expected": [
+        65000,
+        70000,
+        75000,
+        80000,
+        85000
+      ],
+      "passed": true
+    },
+    {
+      "check": "square a=1",
+      "actual": 225,
+      "expected": 225,
+      "passed": true
+    },
+    {
+      "check": "square a=2",
+      "actual": 625,
+      "expected": 625,
+      "passed": true
+    },
+    {
+      "check": "square a=3",
+      "actual": 1225,
+      "expected": 1225,
+      "passed": true
+    },
+    {
+      "check": "square a=4",
+      "actual": 2025,
+      "expected": 2025,
+      "passed": true
+    },
+    {
+      "check": "square a=5",
+      "actual": 3025,
+      "expected": 3025,
+      "passed": true
+    },
+    {
+      "check": "square a=6",
+      "actual": 4225,
+      "expected": 4225,
+      "passed": true
+    },
+    {
+      "check": "square a=7",
+      "actual": 5625,
+      "expected": 5625,
+      "passed": true
+    },
+    {
+      "check": "square a=8",
+      "actual": 7225,
+      "expected": 7225,
+      "passed": true
+    },
+    {
+      "check": "square a=9",
+      "actual": 9025,
+      "expected": 9025,
+      "passed": true
+    },
+    {
+      "check": "exact ids",
+      "actual": [
+        "MAT-A-P-01-001",
+        "MAT-A-P-01-002",
+        "MAT-A-P-01-003",
+        "MAT-A-P-01-004",
+        "MAT-A-P-01-005",
+        "MAT-A-P-01-006",
+        "MAT-A-P-01-007",
+        "MAT-A-P-01-008",
+        "MAT-A-P-01-009",
+        "MAT-A-P-01-010",
+        "MAT-A-P-01-011",
+        "MAT-A-P-01-012",
+        "MAT-A-P-01-013",
+        "MAT-A-P-01-014"
+      ],
+      "expected": [
+        "MAT-A-P-01-001",
+        "MAT-A-P-01-002",
+        "MAT-A-P-01-003",
+        "MAT-A-P-01-004",
+        "MAT-A-P-01-005",
+        "MAT-A-P-01-006",
+        "MAT-A-P-01-007",
+        "MAT-A-P-01-008",
+        "MAT-A-P-01-009",
+        "MAT-A-P-01-010",
+        "MAT-A-P-01-011",
+        "MAT-A-P-01-012",
+        "MAT-A-P-01-013",
+        "MAT-A-P-01-014"
+      ],
+      "passed": true
+    },
+    {
+      "check": "final pools",
+      "actual": {
+        "PRACT": 10,
+        "GEM": 1,
+        "REMED": 3
+      },
+      "expected": {
+        "PRACT": 10,
+        "GEM": 1,
+        "REMED": 3
+      },
+      "passed": true
+    }
+  ],
+  "manualReview": "Read both languages of every intro paragraph, question/help line, option, model answer and feedback for the 14-entry adult set. Arithmetic and translations agree; English match stem should say product/expression instead of sum. Remove unverified external book citation and use the self-contained algebraic derivation already shown in the Gem.",
+  "scope": "Candidate-only content review; no live catalog, account, email, artifact or deployment approval",
+  "notVerified": [
+    "physical native rendering/accessibility",
+    "learning effectiveness or age suitability beyond this adult beginner slice",
+    "external book citation",
+    "real multiuser network/mail/phone journey"
+  ],
+  "reviewedDerivativeVersion": "mat-a-local-pemula-0.3",
+  "reviewedDerivativeSHA256": "7ed58f9684e68f6fef43fcd9ea3e65ff50e530663cec495f207bce20b1bcab0c",
+  "reviewConditionsCompleted": true,
+  "decision": "Approve only this local derivative and exact 14 items/one screen under the documented independent AI subject/ID/EN review; no live release approval",
+  "normalGateVerification": "PASS: ReviewedPilotRepositoryTest 3/3; normal loader sees14, draft and synthetic substitutions denied",
+  "reviewCompletedUTC": "2026-10-30T05:09:52.998173+00:00",
+  "practiceSkills": [
+    "BILL-SPLIT",
+    "MENTAL-MULT",
+    "MENTAL-ROUND"
+  ],
+  "freshRemediationSkills": [
+    "BILL-SPLIT",
+    "MENTAL-MULT",
+    "MENTAL-ROUND"
+  ],
+  "schedulingCorrection": "MAT-A-P-01-009 changes from PRACT to REMED: a fresh rounded-share question follows an incorrect exact-share answer. The same 14 reviewed questions remain, with 10 PRACT, 3 REMED and 1 GEM; no grading/mastery algorithm or rule changed.",
+  "authoringGuidelineDecision": "The guide targets two REMED items per unit and also asks for one per skill. This bounded three-skill derivative uses three REMED items to cover every practice skill, retaining ten practice questions within the stated 8–12 range.",
+  "engineRedEvidence": "LOCAL-REVIEW-REMED-RED.log: six engine tests, one expected failure (PRACT instead of REMED role)",
+  "checksAgainstDerivativeSHA256": "7ed58f9684e68f6fef43fcd9ea3e65ff50e530663cec495f207bce20b1bcab0c",
+  "engineFollowUpVerification": "PASS: wrong exact bill share queues fresh rounded-share REMED; ordinary engine unchanged",
+  "verificationCompletedUTC": "2026-10-30T05:17:30.051461+00:00"
+}

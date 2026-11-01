@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "provider": "Keycloak 26.8.1",
+  "flow": "authorization_code + PKCE S256",
+  "password_grant": "disabled for native client",
+  "id_token_as_bearer": "rejected",
+  "events": [
+    "trace",
+    "story"
+  ],
+  "registry_status": "registered",
+  "byte_preservation": true,
+  "replay": "duplicate receipts",
+  "withdrawal": "upload blocked",
+  "synthetic_only": true,
+  "source_commit": "815e30f0da284b9818fadc0143f4da92544384d3"
+}

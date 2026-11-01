@@ -36,3 +36,5 @@ include(":core:data")
 include(":core:billing")
 include(":core:design")
 include(":content")
+
+include(":core:sync")

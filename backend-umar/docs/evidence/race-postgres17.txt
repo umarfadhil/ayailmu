@@ -1,0 +1,114 @@
+?   	github.com/umarfadhil/ayailmu/backend-umar/cmd/server	[no test files]
+=== RUN   TestHTTPAccountOwnershipAndSync
+--- PASS: TestHTTPAccountOwnershipAndSync (0.98s)
+PASS
+ok  	github.com/umarfadhil/ayailmu/backend-umar/internal/api	2.428s
+=== RUN   TestJWKSClaimsAndFreshness
+=== RUN   TestJWKSClaimsAndFreshness/issuer
+=== RUN   TestJWKSClaimsAndFreshness/client
+=== RUN   TestJWKSClaimsAndFreshness/expired
+=== RUN   TestJWKSClaimsAndFreshness/nbf
+=== RUN   TestJWKSClaimsAndFreshness/scope
+=== RUN   TestJWKSClaimsAndFreshness/empty-subject
+=== RUN   TestJWKSClaimsAndFreshness/audience
+=== RUN   TestJWKSClaimsAndFreshness/type
+=== RUN   TestJWKSClaimsAndFreshness/future-iat
+--- PASS: TestJWKSClaimsAndFreshness (0.27s)
+    --- PASS: TestJWKSClaimsAndFreshness/issuer (0.00s)
+    --- PASS: TestJWKSClaimsAndFreshness/client (0.00s)
+    --- PASS: TestJWKSClaimsAndFreshness/expired (0.00s)
+    --- PASS: TestJWKSClaimsAndFreshness/nbf (0.00s)
+    --- PASS: TestJWKSClaimsAndFreshness/scope (0.00s)
+    --- PASS: TestJWKSClaimsAndFreshness/empty-subject (0.00s)
+    --- PASS: TestJWKSClaimsAndFreshness/audience (0.00s)
+    --- PASS: TestJWKSClaimsAndFreshness/type (0.00s)
+    --- PASS: TestJWKSClaimsAndFreshness/future-iat (0.00s)
+=== RUN   TestConfigurationFailsClosed
+--- PASS: TestConfigurationFailsClosed (0.00s)
+PASS
+ok  	github.com/umarfadhil/ayailmu/backend-umar/internal/auth	1.490s
+=== RUN   TestPinnedRegistry
+--- PASS: TestPinnedRegistry (0.05s)
+PASS
+ok  	github.com/umarfadhil/ayailmu/backend-umar/internal/catalog	1.222s
+=== RUN   TestNativeResponseContracts
+=== RUN   TestNativeResponseContracts/number_input
+=== RUN   TestNativeResponseContracts/tiles
+=== RUN   TestNativeResponseContracts/match_pairs
+=== RUN   TestNativeResponseContracts/trace
+=== RUN   TestNativeResponseContracts/story
+=== RUN   TestNativeResponseContracts/audio_match
+=== RUN   TestNativeResponseContracts/choose
+=== RUN   TestNativeResponseContracts/type_in
+--- PASS: TestNativeResponseContracts (0.00s)
+    --- PASS: TestNativeResponseContracts/number_input (0.00s)
+    --- PASS: TestNativeResponseContracts/tiles (0.00s)
+    --- PASS: TestNativeResponseContracts/match_pairs (0.00s)
+    --- PASS: TestNativeResponseContracts/trace (0.00s)
+    --- PASS: TestNativeResponseContracts/story (0.00s)
+    --- PASS: TestNativeResponseContracts/audio_match (0.00s)
+    --- PASS: TestNativeResponseContracts/choose (0.00s)
+    --- PASS: TestNativeResponseContracts/type_in (0.00s)
+=== RUN   TestRejectUnsafeOrMalformedEvents
+--- PASS: TestRejectUnsafeOrMalformedEvents (0.01s)
+=== RUN   TestRejectCaseAliasesThatChangePreservedNativeMeaning
+--- PASS: TestRejectCaseAliasesThatChangePreservedNativeMeaning (0.00s)
+=== RUN   TestChildTypedResponseCannotUseCaseAliases
+--- PASS: TestChildTypedResponseCannotUseCaseAliases (0.00s)
+=== RUN   TestRejectNullsOutsideNativeNullableFields
+--- PASS: TestRejectNullsOutsideNativeNullableFields (0.00s)
+PASS
+ok  	github.com/umarfadhil/ayailmu/backend-umar/internal/native	1.380s
+=== RUN   TestPostgresOwnershipConsentAndAtomicReplay
+--- PASS: TestPostgresOwnershipConsentAndAtomicReplay (0.47s)
+=== RUN   TestPostgresConcurrentCursorAndDuplicate
+--- PASS: TestPostgresConcurrentCursorAndDuplicate (0.38s)
+=== RUN   TestRejectImplicitDatabaseTarget
+--- PASS: TestRejectImplicitDatabaseTarget (0.04s)
+=== RUN   TestPostgresConcurrentSameAnswerAndWithdrawal
+--- PASS: TestPostgresConcurrentSameAnswerAndWithdrawal (0.28s)
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/choose
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/type_in
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/tiles
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/true_false
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/pick_image
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/match_pairs
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/audio_match
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/mini_reading
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/fill_blank
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/sort_buckets
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/daily_puzzle
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/info_card
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/order
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/memory_flip
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/tap_hotspot
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/trace
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/number_input
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/estimate_slider
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/story_choice
+=== RUN   TestPostgresEveryCatalogActivityAndProvenance/story
+--- PASS: TestPostgresEveryCatalogActivityAndProvenance (0.33s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/choose (0.01s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/type_in (0.00s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/tiles (0.00s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/true_false (0.01s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/pick_image (0.00s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/match_pairs (0.01s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/audio_match (0.00s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/mini_reading (0.00s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/fill_blank (0.00s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/sort_buckets (0.01s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/daily_puzzle (0.00s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/info_card (0.00s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/order (0.00s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/memory_flip (0.00s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/tap_hotspot (0.00s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/trace (0.00s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/number_input (0.01s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/estimate_slider (0.00s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/story_choice (0.00s)
+    --- PASS: TestPostgresEveryCatalogActivityAndProvenance/story (0.00s)
+PASS
+ok  	github.com/umarfadhil/ayailmu/backend-umar/internal/store	2.951s
+?   	github.com/umarfadhil/ayailmu/backend-umar/internal/testoidc	[no test files]

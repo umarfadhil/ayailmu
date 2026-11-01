@@ -18,22 +18,28 @@ class RoomSessionStore(
     private val db: AyaDatabase,
     private val profileId: String,
     private val clock: Clock,
+    private val isVisible: () -> Boolean = { true },
 ) : SessionStore {
+    private fun requireVisible() = require(isVisible()) { "Profile is not available in this owner context" }
     override suspend fun recordAnswer(
         event: AnswerEvent,
         snapshot: SessionState,
     ) {
+        requireVisible()
         db.withTransaction {
+            requireVisible()
             db.answers().insert(event.toEntity(profileId))
             db.snapshots().upsert(snapshot.toEntity(profileId, clock.now().toEpochMilli()))
         }
     }
 
     override suspend fun saveSnapshot(snapshot: SessionState) {
+        requireVisible()
         db.snapshots().upsert(snapshot.toEntity(profileId, clock.now().toEpochMilli()))
     }
 
     override suspend fun saveScreensSeen(screenIds: List<String>) {
+        requireVisible()
         db.profiles().setScreensSeen(profileId, Mappers.encodeIds(screenIds))
     }
 }

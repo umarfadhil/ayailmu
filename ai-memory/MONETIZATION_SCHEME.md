@@ -9,7 +9,7 @@ Why this model fits the constraints:
 - **Kids + adults.** No ads means no Families ad-SDK certification, no age-based ad personalisation logic, no interstitial rules to police. One-time purchases are the least manipulative monetisation Play allows for children; the store sits behind an adult gate on Anak profiles (CR-BIL-5).
 - **Indonesian market.** "Bayar sekali, milik selamanya, bisa offline" is a strong, honest pitch where subscriptions churn and data plans are metered. Pending payments (Indomaret/Alfamart, bank transfer) are supported by Play and handled by CR-BIL-1.
 - **Solo founder.** No entitlement server, no receipt-validation endpoint, no webhook, no subscription-state machine to maintain.
-- **iOS at launch (DECIDED 2026-10-22):** App Store in-app purchase counterparts of every product, restore, and whether a purchase on one store unlocks the other — all OPEN.
+- **Android first (DECIDED 2026-10-25):** iOS is deferred for this release. App Store in-app purchase counterparts, restore, cross-store entitlement and all Apple billing decisions are deferred with track I; no StoreKit/KMP work starts now.
 
 ## Products (DECIDED 2026-10-17; IN SOURCE in `:core:billing`) — all `INAPP` non-consumable
 

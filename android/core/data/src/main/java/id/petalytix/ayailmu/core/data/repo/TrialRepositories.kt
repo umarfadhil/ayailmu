@@ -9,6 +9,7 @@ import id.petalytix.ayailmu.core.data.db.UnitChallengeEntity
 import id.petalytix.ayailmu.core.engine.Clock
 import id.petalytix.ayailmu.core.engine.IdGenerator
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.MapSerializer
@@ -19,6 +20,7 @@ class SurveyRepository(
     private val db: AyaDatabase,
     private val clock: Clock,
     private val ids: IdGenerator,
+    private val visibility: ProfileVisibility = AllowAllProfiles,
 ) {
     suspend fun save(
         profileId: String,
@@ -27,6 +29,7 @@ class SurveyRepository(
         answers: Map<String, List<String>>,
         appVersion: String,
     ): SurveyRecord {
+        require(visibility.allows(profileId)) { "Profile is not available in this owner context" }
         val entity =
             SurveyAnswerEntity(
                 surveyId = ids.newId("srv"),
@@ -41,11 +44,11 @@ class SurveyRepository(
         return entity.toModel()
     }
 
-    fun observe(profileId: String): Flow<List<SurveyRecord>> = db.surveys().observeFor(profileId).map { list -> list.map { it.toModel() } }
+    fun observe(profileId: String): Flow<List<SurveyRecord>> = combine(db.surveys().observeFor(profileId), visibility.changes) { list, _ -> if (visibility.allows(profileId)) list.map { it.toModel() } else emptyList() }
 
-    suspend fun forProfile(profileId: String): List<SurveyRecord> = db.surveys().forProfile(profileId).map { it.toModel() }
+    suspend fun forProfile(profileId: String): List<SurveyRecord> = if (visibility.allows(profileId)) db.surveys().forProfile(profileId).map { it.toModel() } else emptyList()
 
-    suspend fun all(): List<SurveyRecord> = db.surveys().all().map { it.toModel() }
+    suspend fun all(): List<SurveyRecord> = db.surveys().all().filter { visibility.allows(it.profileId) }.map { it.toModel() }
 
     companion object {
         val ANSWERS = MapSerializer(String.serializer(), ListSerializer(String.serializer()))
@@ -57,12 +60,14 @@ class ChallengeRepository(
     private val db: AyaDatabase,
     private val clock: Clock,
     private val ids: IdGenerator,
+    private val visibility: ProfileVisibility = AllowAllProfiles,
 ) {
     suspend fun complete(
         profileId: String,
         track: String,
         unit: String,
     ): UnitChallenge {
+        require(visibility.allows(profileId)) { "Profile is not available in this owner context" }
         val entity =
             UnitChallengeEntity(
                 challengeId = ids.newId("chl"),
@@ -75,11 +80,11 @@ class ChallengeRepository(
         return entity.toModel()
     }
 
-    fun observe(profileId: String): Flow<List<UnitChallenge>> = db.challenges().observeFor(profileId).map { list -> list.map { it.toModel() } }
+    fun observe(profileId: String): Flow<List<UnitChallenge>> = combine(db.challenges().observeFor(profileId), visibility.changes) { list, _ -> if (visibility.allows(profileId)) list.map { it.toModel() } else emptyList() }
 
-    suspend fun forProfile(profileId: String): List<UnitChallenge> = db.challenges().forProfile(profileId).map { it.toModel() }
+    suspend fun forProfile(profileId: String): List<UnitChallenge> = if (visibility.allows(profileId)) db.challenges().forProfile(profileId).map { it.toModel() } else emptyList()
 
-    suspend fun all(): List<UnitChallenge> = db.challenges().all().map { it.toModel() }
+    suspend fun all(): List<UnitChallenge> = db.challenges().all().filter { visibility.allows(it.profileId) }.map { it.toModel() }
 }
 
 fun SurveyAnswerEntity.toModel(): SurveyRecord =

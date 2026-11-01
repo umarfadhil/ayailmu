@@ -1,0 +1,53 @@
+name: umar-backend-gate
+
+on:
+  push:
+    branches: [main]
+    paths: ["backend-umar/**", "integration/tunnel/**", ".github/workflows/umar-backend.yml"]
+  pull_request:
+    paths: ["backend-umar/**", "integration/tunnel/**", ".github/workflows/umar-backend.yml"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: umar-backend-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17.11-alpine
+        env:
+          POSTGRES_DB: umar_synthetic
+          # Disposable hosted-runner service only, bound to loopback, never a deployment setting.
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - "127.0.0.1:16585:5432"
+        options: >-
+          --health-cmd "pg_isready -U postgres -d umar_synthetic"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      UMAR_TEST_DATABASE_URL: postgres://postgres@127.0.0.1:16585/umar_synthetic?sslmode=disable
+    defaults:
+      run:
+        working-directory: backend-umar
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: backend-umar/go.mod
+          cache-dependency-path: backend-umar/go.sum
+      - name: Full backend race suite with real disposable Postgres
+        run: go test -count=1 -race -v ./...
+      - name: Static checks and both API/migration binaries
+        run: |
+          go vet ./...
+          go build ./cmd/...
+      - name: Bounded tunnel preparation helpers (no endpoint opened)
+        run: python3 -m unittest discover -s ../integration/tunnel -p 'test_*.py'

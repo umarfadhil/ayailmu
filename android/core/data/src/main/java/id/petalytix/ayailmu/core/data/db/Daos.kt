@@ -59,6 +59,22 @@ interface ProfileDao {
     suspend fun delete(id: String)
 }
 
+
+@Dao
+interface OwnerBindingDao {
+    @Query("SELECT * FROM owner_profile_bindings")
+    fun observeAll(): Flow<List<OwnerBindingEntity>>
+
+    @Query("SELECT * FROM owner_profile_bindings")
+    suspend fun all(): List<OwnerBindingEntity>
+
+    @Upsert
+    suspend fun upsert(binding: OwnerBindingEntity)
+
+    @Query("DELETE FROM owner_profile_bindings WHERE profile_id = :profileId")
+    suspend fun delete(profileId: String)
+}
+
 @Dao
 interface AnswerDao {
     /** Idempotent by answer_id: a retried write never duplicates an answer (prototype parity). */
@@ -73,6 +89,16 @@ interface AnswerDao {
 
     @Query("SELECT * FROM answer_events ORDER BY profile_id, local_date, timestamp")
     suspend fun all(): List<AnswerEventEntity>
+
+    @Query("SELECT * FROM answer_events WHERE answer_id = :answerId")
+    suspend fun byId(answerId: String): AnswerEventEntity?
+
+    /** Exact original payload strings, for the explicitly opted-in synthetic integration only. */
+    @Query("SELECT payload FROM answer_events WHERE profile_id = :profileId ORDER BY timestamp, answer_id")
+    fun observePayloads(profileId: String): Flow<List<String>>
+
+    @Query("SELECT payload FROM answer_events WHERE profile_id = :profileId ORDER BY timestamp, answer_id")
+    suspend fun payloads(profileId: String): List<String>
 
     @Query("SELECT COUNT(*) FROM answer_events")
     fun observeCount(): Flow<Int>

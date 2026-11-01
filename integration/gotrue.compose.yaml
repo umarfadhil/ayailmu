@@ -1,0 +1,65 @@
+# Additive migration: same Umar application DB, new isolated identity volume.
+# Existing Keycloak auth/auth-db containers and volumes are preserved.
+name: umar-native-integration
+services:
+  gotrue-db:
+    image: postgres:17.11-alpine
+    environment: {POSTGRES_USER: umar_gotrue, POSTGRES_DB: umar_gotrue, POSTGRES_PASSWORD_FILE: /run/secrets/gotrue_db_password}
+    secrets: [gotrue_db_password]
+    volumes:
+      - gotrue_identity:/var/lib/postgresql/data
+      - ./gotrue-init.sql:/docker-entrypoint-initdb.d/10-auth.sql:ro
+    healthcheck: {test: ["CMD-SHELL", "pg_isready -U umar_gotrue -d umar_gotrue"], interval: 3s, timeout: 3s, retries: 30}
+  gotrue-mail:
+    image: axllent/mailpit:v1.31.6
+    ports: ["127.0.0.1:8387:8025"]
+  gotrue-templates:
+    image: nginx:1.28-alpine
+    volumes: ["./mail:/usr/share/nginx/html:ro"]
+  gotrue:
+    image: docker.io/supabase/gotrue:v2.197.0@sha256:1736a63078f5922b198c4cbe50f80ab9a2d3b54fe8b7b6cfb2e9dc5dbbc12c6b
+    user: "0:0"
+    entrypoint: ["/bin/sh", "/umar/gotrue-entrypoint.sh"]
+    mem_limit: 256m
+    environment:
+      GOTRUE_DB_DRIVER: postgres
+      GOTRUE_DB_NAMESPACE: auth
+      GOTRUE_API_HOST: 0.0.0.0
+      PORT: "9999"
+      API_EXTERNAL_URL: http://127.0.0.1:8287
+      GOTRUE_SITE_URL: id.petalytix.ayailmu.synclab://auth-callback
+      GOTRUE_URI_ALLOW_LIST: id.petalytix.ayailmu.synclab://auth-callback
+      GOTRUE_JWT_ISSUER: http://127.0.0.1:8287
+      GOTRUE_JWT_AUD: authenticated
+      GOTRUE_JWT_DEFAULT_GROUP_NAME: authenticated
+      GOTRUE_JWT_ADMIN_ROLES: service_role
+      GOTRUE_JWT_EXP: "60"
+      GOTRUE_DISABLE_SIGNUP: "false"
+      GOTRUE_EXTERNAL_EMAIL_ENABLED: "true"
+      GOTRUE_MAILER_AUTOCONFIRM: "false"
+      GOTRUE_EXTERNAL_PHONE_ENABLED: "false"
+      GOTRUE_EXTERNAL_ANONYMOUS_USERS_ENABLED: "false"
+      GOTRUE_EXTERNAL_GOOGLE_ENABLED: "false"
+      GOTRUE_PASSWORD_MIN_LENGTH: "12"
+      GOTRUE_SMTP_HOST: gotrue-mail
+      GOTRUE_SMTP_PORT: "1025"
+      GOTRUE_SMTP_ADMIN_EMAIL: synthetic@example.invalid
+      GOTRUE_SMTP_SENDER_NAME: Umar Synthetic Lab
+      GOTRUE_SMTP_MAX_FREQUENCY: "1s"
+      GOTRUE_RATE_LIMIT_EMAIL_SENT: "1000"
+      GOTRUE_MAILER_TEMPLATES_CONFIRMATION: http://gotrue-templates/confirmation.html
+      GOTRUE_MAILER_TEMPLATES_RECOVERY: http://gotrue-templates/recovery.html
+      GOTRUE_TRACING_ENABLED: "false"
+      GOTRUE_METRICS_ENABLED: "false"
+    ports: ["127.0.0.1:8287:9999"]
+    volumes:
+      - ./.local/gotrue:/run/umar-auth:ro
+      - ./gotrue-entrypoint.sh:/umar/gotrue-entrypoint.sh:ro
+    depends_on:
+      gotrue-db: {condition: service_healthy}
+      gotrue-mail: {condition: service_started}
+      gotrue-templates: {condition: service_started}
+secrets:
+  gotrue_db_password: {file: ./.local/gotrue/db_password}
+volumes:
+  gotrue_identity:

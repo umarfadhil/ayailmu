@@ -6,6 +6,7 @@ import id.petalytix.ayailmu.core.data.ProfileKind
 import id.petalytix.ayailmu.core.data.db.AyaDatabase
 import id.petalytix.ayailmu.core.data.db.Mappers
 import id.petalytix.ayailmu.core.data.db.ProfileEntity
+import id.petalytix.ayailmu.core.data.db.OwnerBindingEntity
 import id.petalytix.ayailmu.core.data.settings.ActiveProfileStore
 import id.petalytix.ayailmu.core.engine.Clock
 import id.petalytix.ayailmu.core.engine.IdGenerator
@@ -13,6 +14,7 @@ import id.petalytix.ayailmu.core.model.Audience
 import id.petalytix.ayailmu.core.model.Lang
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
@@ -27,18 +29,22 @@ class ProfileRepository(
     private val active: ActiveProfileStore,
     private val clock: Clock,
     private val ids: IdGenerator,
+    private val visibility: ProfileVisibility = AllowAllProfiles,
 ) {
-    fun observeProfiles(): Flow<List<Profile>> = db.profiles().observeAll().map { rows -> rows.map { it.toModel() } }
+    fun observeProfiles(): Flow<List<Profile>> = combine(db.profiles().observeAll(), visibility.changes) { rows, _ -> rows }
+        .map { rows -> rows.filter { visibility.allows(it.id) }.map { it.toModel() } }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     fun observeActive(): Flow<Profile?> =
-        active.activeId.flatMapLatest { id ->
-            if (id == null) flowOf(null) else db.profiles().observe(id).map { it?.toModel() }
+        combine(active.activeId, visibility.changes) { id, _ -> id }.flatMapLatest { id ->
+            if (id == null || !visibility.allows(id)) flowOf(null) else db.profiles().observe(id).map { entity -> entity?.takeIf { visibility.allows(it.id) }?.toModel() }
         }
 
-    suspend fun all(): List<Profile> = db.profiles().all().map { it.toModel() }
+    suspend fun all(): List<Profile> = db.profiles().all().filter { visibility.allows(it.id) }.map { it.toModel() }
 
-    suspend fun activeProfile(): Profile? = active.activeId.first()?.let { db.profiles().get(it)?.toModel() }
+    suspend fun activeProfile(): Profile? = active.activeId.first()?.takeIf(visibility::allows)?.let { db.profiles().get(it)?.takeIf { row -> visibility.allows(row.id) }?.toModel() }
+
+    private fun requireVisible(profileId: String) = require(visibility.allows(profileId)) { "Profile is not available in this owner context" }
 
     suspend fun create(
         label: String,
@@ -50,7 +56,9 @@ class ProfileRepository(
     ): Profile {
         require(label.isNotBlank()) { "label must not be blank" }
         if (kind == ProfileKind.ANAK) {
-            val creator = createdBy?.let { db.profiles().get(it) }
+            requireNotNull(createdBy) { "An Anak profile needs a visible Adult creator" }
+            requireVisible(createdBy)
+            val creator = db.profiles().get(createdBy)
             require(creator != null && creator.kind == ProfileKind.ADULT.name) {
                 "An Anak profile can only be created from an existing Adult profile (CR-DAT-5)"
             }
@@ -71,26 +79,37 @@ class ProfileRepository(
                 consentVersion = null,
                 consentAt = null,
             )
-        db.profiles().upsert(entity)
+        db.withTransaction {
+            db.profiles().upsert(entity)
+            if (kind == ProfileKind.ANAK) {
+                visibility.ownership(requireNotNull(createdBy))?.let { owned ->
+                    db.ownerBindings().upsert(OwnerBindingEntity(entity.id, owned.ownerId, owned.environmentId))
+                }
+            }
+        }
         if (makeActive || active.activeId.first() == null) active.setActive(entity.id)
         return entity.toModel()
     }
 
     suspend fun setActive(id: String) {
-        require(db.profiles().get(id) != null) { "unknown profile $id" }
+        require(visibility.allows(id) && db.profiles().get(id) != null) { "unknown or unavailable profile" }
         active.setActive(id)
     }
 
     suspend fun setLanguage(
         id: String,
         lang: Lang,
-    ) = db.profiles().setLang(id, lang.tag)
+    ) {
+        requireVisible(id)
+        db.profiles().setLang(id, lang.tag)
+    }
 
     /** Daily session length; null = each track's default (CR-HAB-1). */
     suspend fun setSessionMinutes(
         id: String,
         minutes: Int?,
     ) {
+        requireVisible(id)
         require(minutes == null || minutes > 0) { "session minutes must be positive" }
         db.profiles().setSessionMinutes(id, minutes)
     }
@@ -99,28 +118,45 @@ class ProfileRepository(
     suspend fun setArabicScale(
         id: String,
         scale: Float,
-    ) = db.profiles().setArabicScale(id, scale.coerceIn(ARABIC_SCALE_MIN, ARABIC_SCALE_MAX))
+    ) {
+        requireVisible(id)
+        db.profiles().setArabicScale(id, scale.coerceIn(ARABIC_SCALE_MIN, ARABIC_SCALE_MAX))
+    }
 
     /** Records the consent the learner just gave (Trial_App_Spec §11): which text version, and when. */
     suspend fun recordConsent(
         id: String,
         version: String,
-    ) = db.profiles().setConsent(id, version, clock.now().toEpochMilli())
+    ) {
+        requireVisible(id)
+        db.profiles().setConsent(id, version, clock.now().toEpochMilli())
+    }
 
     /** Withdraws consent; the evidence track asks again before the next session. */
-    suspend fun withdrawConsent(id: String) = db.profiles().setConsent(id, null, null)
+    suspend fun withdrawConsent(id: String) {
+        requireVisible(id)
+        db.profiles().setConsent(id, null, null)
+    }
 
     /** Removes the profile and everything recorded for it. */
     suspend fun delete(id: String) {
+        requireVisible(id)
+        val ownership = visibility.ownership(id)
         db.withTransaction {
+            if (ownership != null) {
+                db.profiles().all().filter { it.createdBy == id }.forEach { child ->
+                    db.ownerBindings().upsert(OwnerBindingEntity(child.id, ownership.ownerId, ownership.environmentId))
+                }
+            }
             db.answers().deleteForProfile(id)
             db.snapshots().deleteForProfile(id)
             db.reports().deleteForProfile(id)
             db.surveys().deleteForProfile(id)
             db.challenges().deleteForProfile(id)
             db.profiles().delete(id)
+            db.ownerBindings().delete(id)
         }
-        if (active.activeId.first() == id) active.setActive(db.profiles().all().firstOrNull()?.id)
+        if (active.activeId.first() == id) active.setActive(db.profiles().all().firstOrNull { visibility.allows(it.id) }?.id)
     }
 }
 

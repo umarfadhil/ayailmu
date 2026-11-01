@@ -48,6 +48,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import id.petalytix.ayailmu.BuildConfig
 import id.petalytix.ayailmu.R
 import id.petalytix.ayailmu.core.billing.BillingNotice
 import id.petalytix.ayailmu.core.billing.Product
@@ -72,6 +73,13 @@ fun StoreRoute(
     onBack: () -> Unit,
     viewModel: StoreViewModel = hiltViewModel(),
 ) {
+    if (!BuildConfig.BILLING_ENABLED) {
+        Column(Modifier.fillMaxSize().safeDrawingPadding().padding(AyaSpacing.lg), verticalArrangement = Arrangement.spacedBy(AyaSpacing.md)) {
+            Text(stringResource(R.string.normal_account_store_unavailable), style = MaterialTheme.typography.bodyLarge)
+            AyaSecondaryButton(text = stringResource(R.string.action_back), onClick = onBack, modifier = Modifier.fillMaxWidth())
+        }
+        return
+    }
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
     StoreScreen(

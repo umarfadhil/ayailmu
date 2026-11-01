@@ -6,6 +6,14 @@ Budget: ≤ 60 KB active. Newest first. One entry per session (or per follow-up 
 
 Compaction (run when `check_budget.py` reports over budget, or quarterly): entries older than 90 days or fully superseded move verbatim to `archive/SESSION_LEARNINGS_<YYYY-Qn>.md`; anything still true becomes a numbered rule in CODE_RULES or a row in FILE_MAP first, then the entry is removed here. A learning never lives in two files.
 
+## 2026-10-26 — normal owner auth + native sync release integration (COMPILED; real release blocked)
+
+- **Change:** Non-lab owner registration/confirmation/login/recovery/reset, encrypted origin-bound sessions, explicit adult declaration, owner learner selection, native outbox/pull/Room restore, owner-scoped profile/export visibility, backend normal API/store and additive SQL 0002–0003. Default OFF; no Google CTA or old-history backfill.
+- **Why:** normal registration and real learner/progress sync required actual non-lab code and mode-aware backend contracts, not a syncLab relabel. Existing local profiles/history and synthetic lab guards stay isolated.
+- **Verified by:** demo 337/337; syncLab 369 pass/2 skip; core sync 23 pass/1 skip; data 42; engine 81; content 73; ktlint; prod release/lint; Go test/vet; fresh disposable PostgreSQL store/API; dedicated Android 35 AVD default-OFF cold start. Logs/hashes in normal-auth evidence.
+- **Follow-up:** review fixes add normal/lab deployment modes, Room-backed family ownership/restore, local all-origin cleanup, action fences and prod UX gates; final 925 Android passes/3 skips and actual prod root/auth captures.
+- **Open:** approved SMTP sender/DNS/secret + stable real-user origin/issuer, policy versions and privacy/guardian decisions, SQL/runtime rollout, reviewed curriculum/registry, production signing and physical-device/live-inbox E2E. All 73 packs (3,162 items) remain draft; no real activation performed.
+
 ## 2026-10-24 — merge kit refreshed for Amar's new commits; remote-head guard (IN SOURCE; nothing pushed yet)
 
 - **Change:** `align/rn-reference-20261022` rebuilt on #5's new head `b009159` (10 commits of 2026-10-22/23: production account profile, owner-bound export, account-data deletion) → tip `472148c`. `merge.ps1` / `merge.sh` now compare every PR branch's remote head with the prepared state first and stop if Amar pushed since; bundle and PR texts regenerated.

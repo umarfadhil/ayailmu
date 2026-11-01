@@ -1,6 +1,6 @@
 # AyaIlmu Build Plan
 
-**Status:** PLANNED 2026-10-16; backend (B) and iOS (I) tracks added 2026-10-22 (§1b). Phases map to the milestones in `ai-memory/PROJECT_OVERVIEW.md` (M0–M7) but are cut small enough that one phase = one well-produced piece of work with its own gate. Rules referenced as `CR-xxx-n` live in `ai-memory/CODE_RULES.md`. Umar approves the scope of each phase before it starts and signs its gate before the next one (CR-SES-2).
+**Status:** Android-first launch DECIDED 2026-10-25; backend (B) and the now-deferred iOS (I) track were added 2026-10-22 (§1b). The Android-first decision supersedes only the old launch timing; it does not start or approve KMP/Swift work. Phases map to the milestones in `ai-memory/PROJECT_OVERVIEW.md` (M0–M7) but are cut small enough that one phase = one well-produced piece of work with its own gate. Rules referenced as `CR-xxx-n` live in `ai-memory/CODE_RULES.md`. Umar approves the scope of each phase before it starts and signs its gate before the next one (CR-SES-2).
 
 ## 0. Where work happens (checked 2026-10-16)
 
@@ -53,7 +53,7 @@ Effort is in sessions (≈ 2–4 focused hours each). Stamps are the CODE_RULES 
 
 **Produce:** `:core:billing` on Play Billing 8.x: products from MONETIZATION_SCHEME, `queryPurchasesAsync` on start/resume, acknowledge, `PENDING` handling, local signature check, DataStore entitlement cache (CR-BIL-1..6); store screen with Play-formatted prices; adult gate on Anak profiles; restore button; Play Console: products created, licence testers, internal testing track.
 **Gate:** test purchases for each product pass; airplane-mode launch keeps entitlements; refund in Play Console revokes on next online start.
-**Status (2026-10-17): IN SOURCE** — code complete (CR-BIL-1..7), prices DECIDED (defaults). Open: Play Console products, licence key, licence testers, the gate's test purchases.
+**Status (2026-10-17): IN SOURCE** — code complete (CR-BIL-1..7), prices DECIDED (defaults). Open: Play Console products, the account-specific licence public key (with `:app:checkPlayLicenseKey` green before closed testing), licence testers, and the gate's test purchases. Blank-key unsigned CI candidates remain supported.
 
 ### P6 — v2 renderers, gems, daily puzzle (2 sessions)
 
@@ -79,9 +79,9 @@ Effort is in sessions (≈ 2–4 focused hours each). Stamps are the CODE_RULES 
 
 Inggris Pemula–Menengah (kids + adults), Bahasa Indonesia Literasi Pemula, more math/science/social levels, Play Pass application, cross-promo in AyaKasir, optional static config override (OPEN), kids Arabic track once its curriculum is reviewed.
 
-## 1b. Backend and iOS tracks (PLANNED 2026-10-22)
+## 1b. Backend and deferred iOS tracks (PLANNED 2026-10-22; iOS DEFERRED 2026-10-25)
 
-Decisions: `ai-memory/PROJECT_OVERVIEW.md` (constraint 1, stack, go-live gates). Backend design: `docs/backend/FAMILY_SYNC_DESIGN.md` (PROPOSAL). Amar builds; Umar approves each phase's scope and signs its gate. The tracks run beside P7–P9; B5 and I5 depend on the Android store work in P7/P8.
+Decisions: `ai-memory/PROJECT_OVERVIEW.md` (constraint 1, stack, go-live gates). Backend design: `docs/backend/FAMILY_SYNC_DESIGN.md` (PROPOSAL). Amar builds; Umar approves each phase's scope and signs its gate. Backend work remains governed by its own approvals. The old iOS track is retained only as historical backlog and is out of this Android-first release: I0–I5, KMP, Swift and TestFlight do not start. B5 still depends on the Android store work in P7/P8; the former I5 dependency is deferred.
 
 ### Track B — backend (`backend/`, Go)
 
@@ -92,7 +92,9 @@ Decisions: `ai-memory/PROJECT_OVERVIEW.md` (constraint 1, stack, go-live gates).
 - **B4 — Staging on Cloud Run + Supabase PostgreSQL.** PR #4 preflight packet first; every cloud step approved by Umar at the time; synthetic users only; backups and the restore drill on staging; billing owner named. **Gate:** export, deletion and withdrawal proven on staging; restore drill passes.
 - **B5 — Go-live.** Privacy policy, Data safety and Families self-review rewritten for sync (`docs/store/`); consent texts ID + EN; UU PDP review; real-data switch. **Gate:** Umar's sign-off; Play listing updated.
 
-### Track I — iOS (SwiftUI + shared Kotlin core, DECIDED 2026-10-22; builds on Amar's Mac)
+### Track I — iOS (DEFERRED 2026-10-25; historical 2026-10-22 SwiftUI + shared Kotlin core proposal)
+
+The I0–I5 checklist below is not an active release track. Do not begin KMP conversion, Swift/Xcode projects, StoreKit, TestFlight or Apple billing decisions under the Android-first launch.
 
 - **I0 — Kotlin Multiplatform core.** Make `:core:model`, `:core:engine`, `:core:content` multiplatform (`commonMain` + JVM + iOS targets); replace JVM-only calls (hashing, `java.time`, file IO) with `expect`/`actual`; keep CR-ARC-3 determinism and CR-KT-9 regex rules on both targets; choose the iOS store (Room KMP vs SQLDelight) and record it. **Gate:** CR-REL-2 green on Windows (Android unchanged) and the engine/content tests green on the iOS simulator target on the Mac.
 - **I1 — iOS shell.** `ios/` Xcode project, SwiftUI theme from the AyaTheme tokens, bundled packs, ID + EN strings, one full session for the Arabic demo and Matematika. **Gate:** both sessions on a simulator and one iPhone.

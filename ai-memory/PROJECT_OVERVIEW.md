@@ -5,7 +5,7 @@ Status stamps used everywhere: **PLANNED · IN SOURCE (not compiled) · COMPILED
 
 ## What AyaIlmu is (DECIDED 2026-10-16)
 
-Native learning app — **Kotlin Android + Swift iOS at launch** (DECIDED 2026-10-22; was Android-only) — by PT Petalytix Teknologi Indonesia for people who want to spend free time learning and keeping skills sharp. Six modules: **Bahasa (one module, languages Arab/Inggris/Korea/Jepang/Mandarin), Matematika, Sains, Sosial & Seni, Nilai (universal values, free) and Sejarah (noble people of history, animated stories)** — each with Pemula/Menengah/Mahir/Master per audience (DECIDED 2026-10-18). Feel: fun, light, worth coming back to every day — through delight and visible progress, never through guilt, timers or fake scarcity (see CODE_RULES §Healthy habit loop).
+Native learning app — **Kotlin Android first at launch** (DECIDED 2026-10-25; supersedes the 2026-10-22 Android + iOS launch direction). **iOS is deferred, not cancelled:** no Swift, Kotlin Multiplatform or TestFlight work is in this release — by PT Petalytix Teknologi Indonesia for people who want to spend free time learning and keeping skills sharp. Six modules: **Bahasa (one module, languages Arab/Inggris/Korea/Jepang/Mandarin), Matematika, Sains, Sosial & Seni, Nilai (universal values, free) and Sejarah (noble people of history, animated stories)** — each with Pemula/Menengah/Mahir/Master per audience (DECIDED 2026-10-18). Feel: fun, light, worth coming back to every day — through delight and visible progress, never through guilt, timers or fake scarcity (see CODE_RULES §Healthy habit loop).
 
 Audience: **kids and adults together at launch** (DECIDED 2026-10-16). Two profile kinds on one device: Adult and Anak (child, created by a guardian). Kids track targets **readers, about 7–12 (SD)**; pre-readers are out of scope for v1 (DECIDED 2026-10-16).
 
@@ -24,7 +24,7 @@ Mascot: **Aya** — the same character family as the "Aya" coach bubble in AyaKa
 
 ## Stack (DECIDED 2026-10-16)
 
-Kotlin + Jetpack Compose (Material 3 as the base, heavily themed), Room, Proto DataStore, Hilt, Coroutines/Flow, kotlinx.serialization, Play Billing Library 8+, Rive runtime for character/mascot animation, Lottie only for simple decorative loops. Same family as AyaKasir, so rules and habits transfer. Exact versions are pinned in `android/gradle/libs.versions.toml` and mirrored in FILE_MAP.md once the project exists. iOS: native Swift app at launch (DECIDED 2026-10-22) — SwiftUI on the shared Kotlin core (`:core:model/engine/content` via Kotlin Multiplatform), built on Amar's Mac (DECIDED 2026-10-22); not started, plan in `docs/BUILD_PLAN.md` track I; App Store counterparts of the Play-specific decisions OPEN.
+Kotlin + Jetpack Compose (Material 3 as the base, heavily themed), Room, Proto DataStore, Hilt, Coroutines/Flow, kotlinx.serialization, Play Billing Library 8+, Rive runtime for character/mascot animation, Lottie only for simple decorative loops. Same family as AyaKasir, so rules and habits transfer. Exact versions are pinned in `android/gradle/libs.versions.toml` and mirrored in FILE_MAP.md once the project exists. iOS: native SwiftUI/Kotlin Multiplatform direction recorded on 2026-10-22 is **DEFERRED 2026-10-25**. Track I0–I5 remains historical backlog in `docs/BUILD_PLAN.md`; no KMP/Swift/TestFlight work starts for this Android-first release. App Store counterparts of the Play-specific decisions are deferred.
 
 ## Relationship to the Arabic trial (DECIDED 2026-10-16)
 

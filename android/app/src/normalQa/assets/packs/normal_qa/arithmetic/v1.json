@@ -1,0 +1,29 @@
+{
+  "meta": {"schema_version": 1, "content_version": "normal-qa-arithmetic-0.1", "subject": "matematika", "track": "normal-qa-arithmetic", "mode": "casual", "level": "pemula", "audiences": ["adults"], "instruction_langs": ["id", "en"], "title": {"id": "Aritmetika QA dewasa", "en": "Adult QA arithmetic"}},
+  "synthetic": false,
+  "note": "Private normalQa fixture only. Manually checked answers: 2+3=5 and 7-4=3. Not release curriculum and not present in prod/demo/syncLab source sets.",
+  "prompts": {
+    "NQA-P-ADD": {"id": "Berapa 2 + 3?", "en": "What is 2 + 3?"},
+    "NQA-P-SUB": {"id": "Berapa 7 - 4?", "en": "What is 7 - 4?"}
+  },
+  "feedback": {
+    "NQA-FB-OK": {"id": "Betul!", "en": "That's right!"},
+    "NQA-FB-NO": {"id": "Belum tepat. Coba hitung lagi.", "en": "Not quite. Try calculating again."},
+    "NQA-FB-DK": {"id": "Tidak apa-apa. Coba lagi.", "en": "That's okay. Try again."}
+  },
+  "units": [
+    {"unit": "01", "title": {"id": "Tambah dan kurang", "en": "Add and subtract"}}
+  ],
+  "items": [
+    {"item_id": "NQA-ADD-001", "unit": "01", "audience": "adults", "level": "pemula", "step": 1, "type": "choose", "skills": ["NQA-ADD"], "pool": "PRACT", "order": 1, "prompt_id": "NQA-P-ADD", "options": [
+      {"id": "a", "text": {"id": "4", "en": "4"}},
+      {"id": "b", "text": {"id": "5", "en": "5"}, "correct": true},
+      {"id": "c", "text": {"id": "6", "en": "6"}}
+    ], "feedback_ids": {"correct": "NQA-FB-OK", "wrong": "NQA-FB-NO", "dont_know": "NQA-FB-DK"}, "review_status": "approved", "content_version": "normal-qa-arithmetic-0.1"},
+    {"item_id": "NQA-SUB-001", "unit": "01", "audience": "adults", "level": "pemula", "step": 1, "type": "choose", "skills": ["NQA-SUB"], "pool": "PRACT", "order": 2, "prompt_id": "NQA-P-SUB", "options": [
+      {"id": "a", "text": {"id": "2", "en": "2"}},
+      {"id": "b", "text": {"id": "3", "en": "3"}, "correct": true},
+      {"id": "c", "text": {"id": "4", "en": "4"}}
+    ], "feedback_ids": {"correct": "NQA-FB-OK", "wrong": "NQA-FB-NO", "dont_know": "NQA-FB-DK"}, "review_status": "approved", "content_version": "normal-qa-arithmetic-0.1"}
+  ]
+}

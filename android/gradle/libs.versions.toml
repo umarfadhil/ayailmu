@@ -5,6 +5,7 @@
 # Play Billing must stay >= 8.x (Google requires 8+ for updates after 31 Aug 2026, CR-BIL-1).
 
 [versions]
+appauth = "0.11.1"
 agp = "8.12.2"
 kotlin = "2.2.20"
 ksp = "2.2.20-2.0.3"
@@ -38,6 +39,7 @@ ktlint = "12.1.1"
 roborazzi = "1.47.0"
 
 [libraries]
+appauth = { group = "net.openid", name = "appauth", version.ref = "appauth" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }

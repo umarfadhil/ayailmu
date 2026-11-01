@@ -19,8 +19,8 @@ Goal: M5 (BUILD_PLAN P7): at least 12 testers, 14 days, no P0. The trial runs at
 
 ## 2. Signing and the first build
 
-1. New upload keystore, not AyaKasir's (CR-REL-5); enrol in Play App Signing; record path and alias (no secrets) in SESSION_LEARNINGS.
-2. Run the CR-REL-2 gate including `:app:assembleProdRelease`, then build the bundle with `./gradlew :app:bundleProdRelease`.
+1. [UMAR/build owner] First confirm the existing AyaIlmu app and upload-key record, then use its approved existing AyaIlmu upload key; never reuse AyaKasir's key. Record only the nonsecret keystore path, alias and public certificate fingerprint in SESSION_LEARNINGS. If no approved AyaIlmu upload key exists, stop this signing step pending explicit owner approval before any key generation or Play App Signing enrolment; do not automatically generate or replace a key (CR-REL-5).
+2. After the public licence key in §4 is installed on the build machine, run `./gradlew :app:checkPlayLicenseKey` from `android/`. Then run the CR-REL-2 gate including `:app:assembleProdRelease`, and build the keyed bundle with `./gradlew :app:bundleProdRelease`. The check is a required closed-test prerequisite, not a substitute for signing or Play testing.
 3. Upload it to **Internal testing** with you as tester. Play needs an uploaded build that uses Billing before it lets you create products.
 
 ## 3. App content (Policy → App content)
@@ -47,7 +47,15 @@ IDs never change once live. Titles and descriptions in ID + EN, Play's local pri
 ayailmu.playLicenseKey=MIIBIjANBg...
 ```
 
-Never in `android/gradle.properties` or the repo (CR-BIL-7). An empty key skips the signature check, so the closed-test build **must** carry the key.
+Never in `android/gradle.properties` or the repo (CR-BIL-7). The key is public configuration, not an upload/signing key or private credential. From `android/`, the build owner must run:
+
+```
+./gradlew :app:checkPlayLicenseKey
+```
+
+This rejects an empty key and uses standard JCA to require Base64 RSA X.509 public-key encoding. It does **not** check key ownership, Play account/product setup, upload signing or production readiness; those remain separate owner checks. Keep the raw key out of logs and reports. Blank-key unsigned CI/demo candidates remain supported, but an empty key skips purchase-signature verification, so the closed-test bundle **must** pass this check and carry the intended key.
+
+**Owner inputs before the keyed closed-test build:** Umar/build owner supplies the AyaIlmu Play Console licensing public key and verifies it belongs to the AyaIlmu app; the existing AyaIlmu upload keystore path and alias plus its secrets are supplied privately on the signing machine; Play App Signing enrolment and the upload-key/store record are confirmed. Those existing AyaIlmu upload-key/store details are currently unknown in this repository—do not generate a replacement or reuse AyaKasir keys. No key material or passwords belong in this runbook or source control.
 
 **Licence testers** (Settings → License testing): add your and the testers' Google accounts (test cards, no charge). On internal testing run the M4 checks: approved card; slow card → "menunggu pembayaran", no early unlock; declined card; «Pulihkan pembelian»; airplane-mode launch; refund revokes access.
 

@@ -23,6 +23,7 @@ import id.petalytix.ayailmu.core.data.repo.ContentRepository
 import id.petalytix.ayailmu.core.data.repo.DataResetter
 import id.petalytix.ayailmu.core.data.repo.MediaRepository
 import id.petalytix.ayailmu.core.data.repo.ProfileRepository
+import id.petalytix.ayailmu.core.data.repo.ProfileVisibility
 import id.petalytix.ayailmu.core.data.repo.SurveyRepository
 import id.petalytix.ayailmu.core.data.settings.ActiveProfileStore
 import id.petalytix.ayailmu.core.data.settings.AppSettings
@@ -127,7 +128,8 @@ object DataModule {
         db: AyaDatabase,
         clock: Clock,
         ids: IdGenerator,
-    ): SurveyRepository = SurveyRepository(db, clock, ids)
+        visibility: ProfileVisibility,
+    ): SurveyRepository = SurveyRepository(db, clock, ids, visibility)
 
     @Provides
     @Singleton
@@ -135,7 +137,8 @@ object DataModule {
         db: AyaDatabase,
         clock: Clock,
         ids: IdGenerator,
-    ): ChallengeRepository = ChallengeRepository(db, clock, ids)
+        visibility: ProfileVisibility,
+    ): ChallengeRepository = ChallengeRepository(db, clock, ids, visibility)
 
     @Provides
     @Singleton
@@ -163,7 +166,8 @@ object DataModule {
         active: ActiveProfileStore,
         clock: Clock,
         ids: IdGenerator,
-    ): ProfileRepository = ProfileRepository(db, active, clock, ids)
+        visibility: ProfileVisibility,
+    ): ProfileRepository = ProfileRepository(db, active, clock, ids, visibility)
 
     @Provides
     @Singleton
@@ -171,7 +175,8 @@ object DataModule {
         db: AyaDatabase,
         clock: Clock,
         ids: IdGenerator,
-    ): AnswerRepository = AnswerRepository(db, clock, ids)
+        visibility: ProfileVisibility,
+    ): AnswerRepository = AnswerRepository(db, clock, ids, visibility)
 
     @Provides
     @Singleton
