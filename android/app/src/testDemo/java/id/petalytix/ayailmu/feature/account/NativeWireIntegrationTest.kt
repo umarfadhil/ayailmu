@@ -292,6 +292,18 @@ class NativeWireIntegrationTest {
             try { a.backend.append(a.token, learner.id, batch + batch.first()); fail("101-event batch") } catch (e: ApiFailure) { assertEquals(400, e.status) }
         }
     }
+    @Test fun ordinaryRestartDoesNotPromiseDurableMailReplaySuppression() = runBlocking {
+        Pipe().use { p ->
+            assumeTrue(p.control("stats").getValue("runtime_http").jsonPrimitive.boolean)
+            val a = Harness(p)
+            a.auth.signUp(email, password, "restart-signup")
+            p.control("restart_gateway")
+            p.control("advance", 61)
+            // This is an explicit caller retry. No client auto-resend is added.
+            a.auth.signUp(email, password, "restart-signup")
+            assertEquals(2, p.mail())
+        }
+    }
     @Test fun mailCooldownAndGlobalExhaustionDoNotDispatchExtraMail() = runBlocking {
         Pipe().use { p ->
             val a = Harness(p)

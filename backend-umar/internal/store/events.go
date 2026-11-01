@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/jackc/pgx/v5"
+	"github.com/umarfadhil/ayailmu/backend-umar/internal/catalog"
 	"github.com/umarfadhil/ayailmu/backend-umar/internal/native"
 	"slices"
 )
@@ -26,7 +27,16 @@ type Page struct {
 }
 
 func (s *Store) registration(e native.Event, p Profile) (string, error) {
-	pack, ok := s.registry.Find(e.Track, e.ContentVersion)
+	return ValidateRegistryEvent(s.registry, e, p)
+}
+
+// ValidateRegistryEvent is the shared pure registry/native-reference contract;
+// persistence and owner/consent checks remain in Append's transaction.
+func ValidateRegistryEvent(registry *catalog.Registry, e native.Event, p Profile) (string, error) {
+	if e.LearnerID != p.ClientLearnerID {
+		return "", ErrInvalid
+	}
+	pack, ok := registry.Find(e.Track, e.ContentVersion)
 	if !p.Synthetic && (!ok || pack.Synthetic || e.ReviewStatus != "approved") {
 		return "", ErrInvalid
 	}

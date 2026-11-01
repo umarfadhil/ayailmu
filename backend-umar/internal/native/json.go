@@ -11,6 +11,21 @@ import (
 
 // Decode rejects duplicate object keys at every depth, trailing values and unknown fields.
 func Decode(b []byte, target any) error {
+	if err := ValidateDocument(b); err != nil {
+		return err
+	}
+	if err := exactFields(b, reflect.TypeOf(target)); err != nil {
+		return err
+	}
+	d := json.NewDecoder(bytes.NewReader(b))
+	d.DisallowUnknownFields()
+	return d.Decode(target)
+}
+
+// ValidateDocument checks duplicate keys/depth/trailing values without imposing
+// a DTO schema. Upstream adapters must separately extract exact canonical keys;
+// this is not a substitute for Decode on native client requests.
+func ValidateDocument(b []byte) error {
 	d := json.NewDecoder(bytes.NewReader(b))
 	d.UseNumber()
 	if err := walk(d, 0); err != nil {
@@ -19,12 +34,7 @@ func Decode(b []byte, target any) error {
 	if _, err := d.Token(); err != io.EOF {
 		return fmt.Errorf("trailing JSON")
 	}
-	if err := exactFields(b, reflect.TypeOf(target)); err != nil {
-		return err
-	}
-	d = json.NewDecoder(bytes.NewReader(b))
-	d.DisallowUnknownFields()
-	return d.Decode(target)
+	return nil
 }
 func walk(d *json.Decoder, depth int) error {
 	if depth > 24 {

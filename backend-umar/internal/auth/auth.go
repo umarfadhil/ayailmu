@@ -43,13 +43,25 @@ func validURL(raw string, allow bool) bool {
 	return allow && u.Scheme == "http" && (host == "localhost" || ip != nil && ip.IsLoopback())
 }
 func New(ctx context.Context, cfg Config) (*Verifier, error) {
+	client := &http.Client{Timeout: 5 * time.Second, CheckRedirect: func(r *http.Request, via []*http.Request) error { return errors.New("JWKS redirect refused") }}
+	return newWithClient(ctx, cfg, client)
+}
+
+// NewWithClient permits an explicitly injected bounded transport, including the
+// ingress's pinned private client. It never substitutes a default client.
+func NewWithClient(ctx context.Context, cfg Config, client *http.Client) (*Verifier, error) {
+	if client == nil || client.Transport == nil || client.CheckRedirect == nil || client.Timeout <= 0 || client.Timeout > 5*time.Second {
+		return nil, errors.New("explicit bounded OIDC client required")
+	}
+	return newWithClient(ctx, cfg, client)
+}
+func newWithClient(ctx context.Context, cfg Config, client *http.Client) (*Verifier, error) {
 	if cfg.Provider == "" {
 		cfg.Provider = "keycloak"
 	}
 	if (cfg.Provider != "keycloak" && cfg.Provider != "gotrue") || !validURL(cfg.Issuer, cfg.AllowLoopbackHTTP) || !validURL(cfg.JWKSURL, cfg.AllowLoopbackHTTP) || cfg.Audience == "" || (cfg.Provider == "keycloak" && cfg.ClientID == "") || (cfg.Provider == "gotrue" && cfg.Audience != "authenticated") {
 		return nil, errors.New("invalid OIDC configuration")
 	}
-	client := &http.Client{Timeout: 5 * time.Second, CheckRedirect: func(r *http.Request, via []*http.Request) error { return errors.New("JWKS redirect refused") }}
 	keys := oidc.NewRemoteKeySet(oidc.ClientContext(ctx, client), cfg.JWKSURL)
 	algorithms := []string{oidc.RS256}
 	if cfg.Provider == "gotrue" {
