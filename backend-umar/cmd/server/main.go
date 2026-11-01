@@ -67,7 +67,7 @@ func run() error {
 	if release.Enabled && dataMode != api.DeploymentNormalOnly {
 		return errors.New("normal readiness requires UMAR_DATA_MODE=NORMAL_ONLY")
 	}
-	r, err := catalog.Load()
+	r, err := startupRegistry(release.Enabled && dataMode == api.DeploymentNormalOnly)
 	if err != nil {
 		return errors.New("catalog initialization failed")
 	}
@@ -98,4 +98,14 @@ func run() error {
 		return server.Shutdown(shutdown)
 	}
 	return nil
+}
+
+// An enabled normal release must select its exact reviewed artifact. Legacy
+// unready/lab startup keeps its embedded default only when no selection is set.
+func startupRegistry(normal bool) (*catalog.Registry, error) {
+	path := os.Getenv("UMAR_REVIEWED_REGISTRY_PATH")
+	if normal && path == "" {
+		return nil, errors.New("normal release requires an explicit reviewed registry")
+	}
+	return catalog.LoadDeployment(path, os.Getenv("UMAR_REVIEWED_REGISTRY_SHA256"), os.Getenv("UMAR_REVIEWED_REGISTRY_SOURCE_COMMIT"), normal)
 }
