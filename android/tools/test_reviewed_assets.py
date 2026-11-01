@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import sys
 import unittest
+import zipfile
 
 
 PACK = "packs/matematika/mat-a-local/v1.json"
@@ -45,6 +46,17 @@ class ReviewedProductionAssetsTest(unittest.TestCase):
 
     def test_prod_inventory_is_exact(self):
         self.assertSetEqual(SHARED | REVIEWED, inventory(self.prod))
+
+    def test_assembled_apk_contains_the_exact_reviewed_assets(self):
+        if OPTIONS.apk is None:
+            self.skipTest("Pass --apk to verify an assembled package")
+        with zipfile.ZipFile(OPTIONS.apk) as apk:
+            self.assertIsNone(apk.testzip())
+            actual = {n[7:] for n in apk.namelist() if n.startswith("assets/") and not n.endswith("/")}
+            self.assertSetEqual(SHARED | REVIEWED, actual)
+            for name in actual:
+                source = self.main_source if name in SHARED else self.reviewed_source
+                self.assertEqual(digest(source / name), hashlib.sha256(apk.read("assets/" + name)).hexdigest(), name)
 
     def test_reviewed_catalog_and_hash_are_unchanged(self):
         self.assertTrue(all((self.prod / name).is_file() for name in REVIEWED), "ordinary prod is missing the exact reviewed payload")
@@ -96,6 +108,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source-root", type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument("--prod-merged", type=Path, required=True)
+    parser.add_argument("--apk", type=Path)
     parser.add_argument("--baseline-merged", type=Path, required=True, action="append")
     OPTIONS = parser.parse_args()
     unittest.main(argv=[sys.argv[0]], verbosity=2)

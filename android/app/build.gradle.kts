@@ -10,6 +10,16 @@ import java.security.MessageDigest
 import java.security.spec.X509EncodedKeySpec
 import java.util.Base64
 import java.util.Locale
+import org.gradle.api.DefaultTask
+import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.file.FileSystemOperations
+import org.gradle.api.tasks.CacheableTask
+import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.OutputDirectory
+import org.gradle.api.tasks.PathSensitive
+import org.gradle.api.tasks.PathSensitivity
+import org.gradle.api.tasks.TaskAction
+import javax.inject.Inject
 
 // :app — DI wiring, navigation and feature screens (features split into modules when > ~40 files, CR-ARC-1).
 plugins {
@@ -49,7 +59,6 @@ val normalAuthOrigin = providers.gradleProperty("umar.normalAuth.publicOrigin").
 val normalSyncPolicy = providers.gradleProperty("umar.normalAuth.syncPolicyVersion").orElse("").get()
 val normalOwnerDeclaration = providers.gradleProperty("umar.normalAuth.ownerDeclarationVersion").orElse("").get()
 val normalRegistrySource = providers.gradleProperty("umar.normalAuth.registrySourceCommit").orElse("").get()
-val reviewedProdAssetsDirectory = layout.buildDirectory.dir("generated/assets/reviewedProd")
 if (normalAuthOrigin.isNotEmpty()) {
     val uri = runCatching { URI(normalAuthOrigin) }.getOrNull()
     require(uri != null && uri.scheme == "https" && !uri.host.isNullOrEmpty() &&
@@ -137,14 +146,34 @@ tasks.register("checkPlayLicenseKey") {
 
 // The ordinary app ships the exact reviewed subset, through the same approved-
 // only loader as before. Original stock assets remain source/demo/test inputs.
-val prepareReviewedProdAssets by tasks.registering(Sync::class) {
-    from(rootProject.file("content/src/main/assets")) {
-        include("art/index.json", "audio/index.json", "strokes/index.json", "config/app_config.json", "licenses/KanjiVG.txt", "licenses/OFL-NotoNaskhArabic.txt")
+@CacheableTask
+abstract class PrepareReviewedProdAssets : DefaultTask() {
+    @get:InputDirectory
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    abstract val sharedAssets: DirectoryProperty
+
+    @get:InputDirectory
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    abstract val reviewedAssets: DirectoryProperty
+
+    @get:OutputDirectory
+    abstract val outputDirectory: DirectoryProperty
+
+    @get:Inject
+    abstract val fileSystem: FileSystemOperations
+
+    @TaskAction
+    fun prepare() {
+        fileSystem.sync {
+            from(sharedAssets) {
+                include("art/index.json", "audio/index.json", "strokes/index.json", "config/app_config.json", "licenses/KanjiVG.txt", "licenses/OFL-NotoNaskhArabic.txt")
+            }
+            from(reviewedAssets) {
+                include("config/catalog.json", "config/rules.mat-a-local.json", "packs/matematika/mat-a-local/v1.json", "provenance.json")
+            }
+            into(outputDirectory)
+        }
     }
-    from(rootProject.file("content/src/reviewed/assets")) {
-        include("config/catalog.json", "config/rules.mat-a-local.json", "packs/matematika/mat-a-local/v1.json", "provenance.json")
-    }
-    into(reviewedProdAssetsDirectory)
 }
 
 android {
@@ -287,7 +316,6 @@ android {
         getByName("prod").apply {
             java.srcDir("src/nonLab/java")
             manifest.srcFile("src/nonLab/AndroidManifest.xml")
-            assets.setSrcDirs(listOf(prepareReviewedProdAssets.map { it.destinationDir }))
         }
         getByName("ownerRemote").apply {
             java.srcDir("src/nonLab/java")
@@ -412,6 +440,13 @@ tasks.configureEach { if (normalQaBuildEnabled && name == "preNormalQaDebugBuild
 // Variant-level isolation: no QA release variant exists. QA debug is a separate build opt-in,
 // not an auth approval and never a default prod/demo/CI dependency.
 androidComponents {
+    onVariants(selector().withFlavor("mode" to "prod")) { variant ->
+        val producer = tasks.register<PrepareReviewedProdAssets>("prepare${variant.name.replaceFirstChar { it.uppercaseChar() }}ReviewedAssets") {
+            sharedAssets.set(rootProject.layout.projectDirectory.dir("content/src/main/assets"))
+            reviewedAssets.set(rootProject.layout.projectDirectory.dir("content/src/reviewed/assets"))
+        }
+        requireNotNull(variant.sources.assets).addGeneratedSourceDirectory(producer) { it.outputDirectory }
+    }
     beforeVariants(selector().withName("ownerRemoteRelease")) { variant -> variant.enable = false }
     beforeVariants(selector().withName("ownerRemoteDebug")) { variant -> variant.enable = ownerRemoteBuildEnabled }
     beforeVariants(selector().withName("normalQaRelease")) { variant -> variant.enable = false }
