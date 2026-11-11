@@ -1,6 +1,7 @@
 import { Redirect, router, type Href } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
+import { learningBetaEnabled } from '@/config/learningBeta';
 import { summarize } from '@/engine/session';
 import { useApp } from '@/ui/AppContext';
 import { Btn, EmptyState, Eyebrow, H1, Icon, Notice, P, Page, StorageRefused } from '@/ui/components';
@@ -209,6 +210,8 @@ const styles = StyleSheet.create({
 });
 
 export default function Summary() {
+  // A validated learning beta is bounded starter access: Home before any legacy hydration or learning effect mounts.
+  if (learningBetaEnabled()) return <Redirect href="/" />;
   return (
     <HydrationGate>
       <SummaryRoute />

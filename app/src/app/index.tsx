@@ -1,7 +1,12 @@
 import { router, useFocusEffect, type Href } from 'expo-router';
-import { Fragment, useCallback, type ReactNode } from 'react';
+import { useCallback, type ReactNode } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View, type ViewStyle } from 'react-native';
 
+import { PRIVATE_QA } from '@/account/privateQa';
+import { loadSupabaseConfig } from '@/account/supabaseConfig';
+import { isReleasePresentation } from '@/config/releasePresentation';
+import type { AppMode } from '@/config/rules';
+import { StarterHome, normalStarter, starterBeta } from '@/pilot/unitA/StarterHome';
 import { useAccount } from '@/ui/AccountContext';
 import { useApp } from '@/ui/AppContext';
 import {
@@ -28,7 +33,8 @@ import { colors, fonts, radius, shadow, typography } from '@/ui/theme';
 import { formatDue, formatLongDate, isLearningError, useLearning, type LearningState } from '@/ui/useLearning';
 
 export default function Home() {
-  const { ready, error, content, learner } = useApp();
+  const { ready, error, content, learner, rules } = useApp();
+  const account = useAccount();
   const learning = useLearning();
 
   if (!ready) {
@@ -42,14 +48,46 @@ export default function Home() {
   if (error) return <StorageRefused message={error} />;
   if (isLearningError(learning)) return <StorageRefused message={learning.error} />;
 
+  // The explicit normal user build has the same bounded Home without the beta wording: it shows only the starter's review
+  // state or its entry, whatever the legacy content holds. No learner, material or progress is made here; a pending one
+  // keeps just the account entry.
+  const normal = normalStarter(rules.mode);
+  if (normal !== 'off') return <StarterHome reviewed={normal === 'reviewed'} audience="normal-user" />;
+
+  // A validated private beta has its own bounded Home, whatever the legacy content holds.
+  const beta = starterBeta(rules.mode);
+  if (beta !== 'off') return <StarterHome reviewed={beta === 'reviewed'} />;
+
   if (content.empty) {
+    // A validated production build: the brand and a plain notice; no learner or material is created, only the account entry.
+    if (isReleasePresentation(rules.mode)) {
+      return (
+        <Page
+          footer={
+            account.enabled ? (
+              <Btn testID="welcome-account" kind="quiet" label="Masuk ke akun" onPress={() => router.push('/account' as Href)} />
+            ) : undefined
+          }
+        >
+          <View style={styles.welcomeTop}>
+            <Wordmark />
+          </View>
+          <EmptyState icon="hourglass-outline" title="Materi sedang disiapkan">
+            <P style={{ textAlign: 'center' }}>Materi masih ditinjau. Silakan kembali lagi nanti.</P>
+          </EmptyState>
+        </Page>
+      );
+    }
     return (
-      <Page>
+      <Page
+        footer={
+          isValidatedPrivateQa(rules.mode) ? (
+            <Btn testID="welcome-account" kind="quiet" label="Masuk ke akun" onPress={() => router.push('/account' as Href)} />
+          ) : undefined
+        }
+      >
         <EmptyState icon="hourglass-outline" title="Belum ada materi yang disetujui untuk uji coba">
-          <P style={{ textAlign: 'center' }}>
-            Materi pelajaran masih ditinjau oleh peninjau bahasa Arab dan bahasa Indonesia. Aplikasi hanya menampilkan
-            materi yang sudah disetujui untuk uji coba. Silakan kembali lagi nanti.
-          </P>
+          <P style={{ textAlign: 'center' }}>Materi masih ditinjau. Silakan kembali lagi nanti.</P>
         </EmptyState>
         <ModeNote />
       </Page>
@@ -58,6 +96,16 @@ export default function Home() {
 
   if (!learner) return <Welcome />;
   return <Today learning={learning} />;
+}
+
+/**
+ * Only a tester build whose real account configuration is a validated private QA one, re-read through loadSupabaseConfig;
+ * the account projection's privateQa is never trusted for it. Whether its transport is ready is the account route's concern.
+ */
+function isValidatedPrivateQa(mode: AppMode): boolean {
+  if (mode !== 'tester') return false;
+  const config = loadSupabaseConfig();
+  return config.enabled === true && config.environment === PRIVATE_QA && config.privateQa === true && config.productionAccounts === undefined;
 }
 
 /** Guest-first welcome (board 13). Nothing is saved until the profile and consent step. */
@@ -70,9 +118,11 @@ function Welcome() {
         <>
           <Btn testID="welcome-start" label="Mulai" icon="arrow-forward" onPress={() => router.push('/consent')} />
           {account.enabled ? (
-            <Btn testID="welcome-account" kind="quiet" label="Sudah punya akun lokal? Masuk di sini" onPress={() => router.push('/account' as Href)} />
+            <Btn testID="welcome-account" kind="quiet" label="Masuk ke akun" onPress={() => router.push('/account' as Href)} />
           ) : null}
-          <Text style={styles.modeCaption}>{rules.mode === 'tester' ? 'Prototipe · mode penguji' : 'Prototipe pengembang'}</Text>
+          {isReleasePresentation(rules.mode) ? null : (
+            <Text style={styles.modeCaption}>{rules.mode === 'tester' ? 'Prototipe · mode penguji' : 'Prototipe pengembang'}</Text>
+          )}
         </>
       }
     >
@@ -115,13 +165,20 @@ const DOT: Record<UnitState, ViewStyle> = {
   closed: { backgroundColor: colors.sheet, borderColor: '#A89A84', borderWidth: 2 },
 };
 
+/** A unit's place on the home path, by its offset from the current unit: only its direct neighbours are shown. */
+const RELATION: Partial<Record<number, { id: 'previous' | 'current' | 'next'; label: string }>> = {
+  [-1]: { id: 'previous', label: 'Sebelumnya' },
+  0: { id: 'current', label: 'Saat ini' },
+  1: { id: 'next', label: 'Berikutnya' },
+};
+
 /**
  * Home (board 01): one hero card with the unit, today's state and ONE primary action, then the
  * learning path. Every date and count comes from the saved projection; there are no lesson previews
  * here (they live in Panduan, where each view is dated).
  */
 function Today({ learning }: { learning: LearningState }) {
-  const { readOnly, content, learner, flash, setFlash, dataset } = useApp();
+  const { readOnly, content, learner, flash, setFlash, dataset, rules } = useApp();
   // The note left by closing a session is for this visit to Home only.
   useFocusEffect(useCallback(() => () => setFlash(null), [setFlash]));
   if (!learner) return null;
@@ -178,6 +235,15 @@ function Today({ learning }: { learning: LearningState }) {
     );
 
   const states = data ? unitStates(data, content) : [];
+  const current = states.findIndex((s) => s.unit === unit);
+  // Read out the rows the card shows (the current unit and its direct neighbours), in the same order.
+  const pathLabel = states
+    .flatMap((s, n) => {
+      const rel = current < 0 ? undefined : RELATION[n - current];
+      if (current >= 0 && !rel) return [];
+      return [`Unit ${s.unit}${rel ? `, ${rel.label.toLowerCase()}` : ''}: ${UNIT_TITLE[s.unit]}, ${UNIT_STATE_LABEL[s.state].toLowerCase()}`];
+    })
+    .join('. ');
 
   return (
     <Page>
@@ -215,6 +281,25 @@ function Today({ learning }: { learning: LearningState }) {
         <View style={styles.action}>{action}</View>
       </View>
 
+      {/* Unit A pilot: developer prototype only, never offered in tester mode. */}
+      {rules.mode === 'developer-demo' ? (
+        <View style={styles.pilot} testID="unit-a-pilot-card">
+          <Text accessibilityRole="header" style={styles.pilotTitle}>
+            Belajar dengan contoh
+          </Text>
+          <Text style={styles.pilotText}>Contoh yang dijelaskan, lalu latihan empat pilihan.</Text>
+          <Text style={styles.pilotNote}>Uji coba · konten draf, belum ditinjau · tersimpan di perangkat ini</Text>
+          <Btn
+            testID="unit-a-pilot-entry"
+            label="Buka latihan baru"
+            kind="secondary"
+            icon="arrow-forward"
+            disabled={!!readOnly}
+            onPress={() => router.push('/unit-a-pilot' as Href)}
+          />
+        </View>
+      ) : null}
+
       {states.length ? (
         <View style={styles.pathSection}>
           <Text accessibilityRole="header" style={styles.pathTitle}>
@@ -223,23 +308,34 @@ function Today({ learning }: { learning: LearningState }) {
           <Pressable
             testID="home-path"
             accessibilityRole="link"
-            accessibilityLabel={`Jalur belajar: ${states.map((s) => `Unit ${s.unit} ${UNIT_STATE_LABEL[s.state].toLowerCase()}`).join(', ')}. Buka Kemajuan.`}
+            accessibilityLabel={`Jalur belajar. ${pathLabel}. Lihat kemajuan.`}
             onPress={() => router.dismissTo('/progress' as Href)}
             style={({ pressed }) => [styles.path, pressed && styles.pathPressed]}
           >
             <View style={styles.pathUnits}>
-              {states.map((s, n) => (
-                <Fragment key={s.unit}>
-                  {n > 0 ? <View style={[styles.connector, s.state === 'closed' && styles.connectorOff]} /> : null}
-                  <View style={styles.pathUnit}>
+              {states.map((s, n) => {
+                const rel = current < 0 ? undefined : RELATION[n - current];
+                if (current >= 0 && !rel) return null;
+                const on = rel?.id === 'current';
+                return (
+                  <View key={s.unit} testID={rel && `home-path-${rel.id}`} style={[styles.pathUnit, on && styles.pathUnitOn]}>
                     <View style={[styles.dot, DOT[s.state]]} />
-                    <Text style={styles.pathUnitLabel}>{`Unit ${s.unit}`}</Text>
-                    <Text style={[styles.pathState, s.state === 'closed' && styles.pathStateOff]}>{UNIT_STATE_LABEL[s.state]}</Text>
+                    <View style={styles.pathUnitBody}>
+                      <View style={styles.pathRelationRow}>
+                        <Text style={[styles.pathRelation, on && styles.pathRelationOn]}>{`Unit ${s.unit}`}</Text>
+                        {rel ? <Text style={[styles.pathRelation, on && styles.pathRelationOn]}>{`· ${rel.label}`}</Text> : null}
+                      </View>
+                      <Text style={styles.pathUnitTitle}>{UNIT_TITLE[s.unit]}</Text>
+                      <Text style={[styles.pathState, s.state === 'closed' && styles.pathStateOff]}>{UNIT_STATE_LABEL[s.state]}</Text>
+                    </View>
                   </View>
-                </Fragment>
-              ))}
+                );
+              })}
             </View>
-            <Icon name="chevron-forward" color={colors.muted} />
+            <View style={styles.pathMore}>
+              <Text style={styles.pathMoreText}>Lihat kemajuan</Text>
+              <Icon name="chevron-forward" size={18} color={colors.accentInk} />
+            </View>
           </Pressable>
         </View>
       ) : null}
@@ -247,7 +343,11 @@ function Today({ learning }: { learning: LearningState }) {
       <View style={styles.storage}>
         <Icon name="phone-portrait-outline" size={16} color={colors.muted} />
         <Text style={styles.storageText}>
-          {dataset === 'account' ? 'Tersimpan di perangkat ini · akun lokal, dikirim saat Anda menyinkronkan' : 'Tersimpan di perangkat ini · tanpa akun'}
+          {dataset !== 'account'
+            ? 'Tersimpan di perangkat ini · tanpa akun'
+            : isReleasePresentation(rules.mode)
+              ? 'Tersimpan di perangkat ini · akun, dikirim ke layanan saat Anda menyinkronkan'
+              : 'Tersimpan di perangkat ini · akun lokal, dikirim saat Anda menyinkronkan'}
         </Text>
       </View>
     </Page>
@@ -256,6 +356,11 @@ function Today({ learning }: { learning: LearningState }) {
 
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: 'center' },
+
+  pilot: { marginTop: 16, gap: 8, padding: 18, borderRadius: radius.card, borderWidth: 1, borderColor: colors.line, backgroundColor: colors.sheet, ...shadow },
+  pilotTitle: { ...typography.heading },
+  pilotText: { ...typography.body },
+  pilotNote: { ...typography.caption, color: colors.draftInk, marginBottom: 4 },
 
   welcomeTop: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 8, minHeight: 44 },
   figure: {
@@ -292,7 +397,7 @@ const styles = StyleSheet.create({
   },
   heroTop: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
   date: { ...typography.caption },
-  unitTitle: { ...typography.display },
+  unitTitle: { ...typography.screenTitle, fontSize: 24, lineHeight: 30 },
   status: { flexDirection: 'row', alignItems: 'flex-start', gap: 8 },
   statusText: { flex: 1, fontFamily: fonts.regular, fontSize: 15, lineHeight: 22, writingDirection: 'ltr', textAlign: 'left' },
   statusStrong: { fontFamily: fonts.semibold },
@@ -303,27 +408,30 @@ const styles = StyleSheet.create({
   pathSection: { gap: 10, marginTop: 4 },
   pathTitle: { fontFamily: fonts.bold, fontSize: 13, lineHeight: 18, letterSpacing: 0.5, color: colors.muted, marginHorizontal: 4 },
   path: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    minHeight: 72,
-    paddingVertical: 14,
-    paddingLeft: 16,
-    paddingRight: 10,
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    gap: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
     borderRadius: radius.card,
     backgroundColor: colors.sheet2,
     borderWidth: 1,
     borderColor: colors.line,
   },
   pathPressed: { backgroundColor: colors.chipBg },
-  pathUnits: { flex: 1, flexDirection: 'row', alignItems: 'flex-start', gap: 6 },
-  connector: { flex: 1, height: 2, marginTop: 7, borderRadius: 2, backgroundColor: colors.lineStrong },
-  connectorOff: { backgroundColor: colors.line },
-  pathUnit: { alignItems: 'flex-start', gap: 6, flexShrink: 1 },
-  dot: { width: 16, height: 16, borderRadius: radius.pill },
-  pathUnitLabel: { fontFamily: fonts.bold, fontSize: 13, lineHeight: 16, color: colors.ink },
-  pathState: { fontFamily: fonts.semibold, fontSize: 12, lineHeight: 16, color: colors.accentInk },
+  pathUnits: { flexDirection: 'column', gap: 10 },
+  pathUnit: { flexDirection: 'row', alignItems: 'flex-start', gap: 10, minWidth: 0, padding: 8, borderRadius: 10 },
+  pathUnitOn: { backgroundColor: colors.chipBg },
+  pathUnitBody: { flex: 1, minWidth: 0, gap: 2 },
+  dot: { width: 16, height: 16, borderRadius: radius.pill, marginTop: 1 },
+  pathRelation: { fontFamily: fonts.bold, fontSize: 13, lineHeight: 18, color: colors.muted },
+  pathRelationOn: { color: colors.accentInk },
+  pathRelationRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'baseline', columnGap: 4 },
+  pathUnitTitle: { fontFamily: fonts.semibold, fontSize: 15, lineHeight: 21, color: colors.ink },
+  pathState: { fontFamily: fonts.semibold, fontSize: 12, lineHeight: 18, color: colors.accentInk },
   pathStateOff: { fontFamily: fonts.regular, color: colors.muted },
+  pathMore: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 8 },
+  pathMoreText: { fontFamily: fonts.bold, fontSize: 14, lineHeight: 20, color: colors.accentInk },
 
   storage: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 8, marginHorizontal: 4 },
   storageText: { fontFamily: fonts.regular, fontSize: 13, lineHeight: 18, color: colors.muted },

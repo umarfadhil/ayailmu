@@ -47,7 +47,28 @@ function GuestReset({ readOnly, onReset }: { readOnly: string | null; onReset: (
   );
 }
 
-/** Developer-demo only: answer log, config and content checks, and the guest data reset (never an account dataset's). */
+/** A commit as the builder reports it: 7 to 40 lowercase hex digits, and nothing else. */
+const REPORTED_REVISION = /^[0-9a-f]{7,40}$/;
+
+/**
+ * The build this bundle reports: two public variables the builder sets when it exports the bundle, sanitized here. The
+ * revision is shown only as 7 to 40 lowercase hex digits and the dirty flag only as exactly "true" or "false"; anything
+ * missing or else is unknown, and no raw value is ever shown. It is what the build reported, not a check of HEAD, the
+ * native app or the runtime. Read when the page renders, through static accesses so that Expo inlines them.
+ */
+function reportedBuild(): string {
+  const revision = process.env.EXPO_PUBLIC_BUILD_REVISION;
+  const dirty = process.env.EXPO_PUBLIC_BUILD_DIRTY;
+  const shown = typeof revision === 'string' && REPORTED_REVISION.test(revision) ? revision : 'tidak diketahui';
+  const status =
+    dirty === 'true' ? 'ada perubahan yang belum di-commit' : dirty === 'false' ? 'tanpa perubahan yang belum di-commit' : 'status perubahan tidak diketahui';
+  return `Revisi bundel (dilaporkan saat build): ${shown}; ${status}.`;
+}
+
+/** Whether this bundle came from the development server (Metro's __DEV__ global), read when the page renders. */
+const fromDevelopmentServer = () => (globalThis as { __DEV__?: unknown }).__DEV__ === true;
+
+/** Developer-demo only: answer log, config and content checks, the build the bundle reports, and the guest data reset (never an account dataset's). */
 export default function Dev() {
   const { store, readOnly, rules, content, resetAll, dataset } = useApp();
   const account = useAccount();
@@ -84,6 +105,10 @@ export default function Dev() {
         <P>Mode: {rules.mode}</P>
         <P>Aturan: {rules.rules_version}</P>
         <P>Konten: {content.content_version} (sintetis, belum ditinjau)</P>
+        <P testID="build-provenance">{reportedBuild()}</P>
+        {fromDevelopmentServer() ? (
+          <P testID="build-provenance-dev">Bundel dari server pengembangan: kodenya bisa sudah berubah sejak server dimulai.</P>
+        ) : null}
         <P>
           Penyimpanan: {STORAGE_KIND}. {scope}
         </P>

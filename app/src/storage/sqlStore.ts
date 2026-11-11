@@ -2,7 +2,7 @@ import { parseCopy, SCHEMA_META_KEY, type CopyResult, type ParsedCopy, type RawD
 import type { SqlDb } from './sqlDb';
 import { answerProblem, learnerProblem } from './validate';
 import { createSerialQueue } from './serial';
-import { STORAGE_SCHEMA, type AnswerRecord, type ArchivedSnapshot, type Learner, type ReportRecord, type Snapshot, type Store } from './types';
+import { STORAGE_SCHEMA, type AnswerAppendGuard, type AnswerRecord, type ArchivedSnapshot, type Learner, type ReportRecord, type Snapshot, type Store } from './types';
 
 const MIGRATION_1 = `
 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY NOT NULL, value TEXT NOT NULL);
@@ -55,13 +55,43 @@ export async function readSqlRaw(db: SqlDb): Promise<RawDataset | null> {
 
 const asText = (value: unknown): string => (typeof value === 'string' ? value : '');
 
+/** A guard holds only when it returns exactly `true`; one that throws, or returns anything else, is lost. */
+const guardHolds = (active: () => boolean): boolean => {
+  try {
+    return active() === true;
+  } catch {
+    return false;
+  }
+};
+
+/** Why a retired store refuses a write: an erase began on it (see SqlStore.erase), whether or not it completed. */
+const RETIRED = 'Storage retired: an account-data erase began in this store instance, so it refuses every further write.';
+
 /** SQLite-backed store. Answers carry a `synced` flag for the future upload queue (no backend yet). */
 export class SqlStore implements Store {
   private enqueue = createSerialQueue();
+  /** Set once an erase begins here: every later write, and init(), is refused, even if that erase fails. */
+  private retired = false;
 
   constructor(private db: SqlDb) {}
 
-  async init(): Promise<void> {
+  /** Queues a write, refused when its turn comes if an erase has begun here by then (see erase). */
+  private write<T>(task: () => Promise<T>): Promise<T> {
+    return this.enqueue(async () => {
+      if (this.retired) throw new Error(RETIRED);
+      return task();
+    });
+  }
+
+  /**
+   * Checks the stored data and prepares the schema, as one operation in the same queue as every write: after the
+   * writes already queued here, and refused when its turn comes if an erase has begun here by then.
+   */
+  init(): Promise<void> {
+    return this.write(() => this.initialize());
+  }
+
+  private async initialize(): Promise<void> {
     // Refuse data from a newer app version before writing anything.
     const hasMeta = await this.db.all<{ name: string }>(`SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'meta'`);
     if (hasMeta.length) {
@@ -107,7 +137,7 @@ export class SqlStore implements Store {
   }
 
   saveLearner(learner: Learner): Promise<void> {
-    return this.enqueue(() =>
+    return this.write(() =>
       this.db.run('INSERT OR REPLACE INTO learner (id, json) VALUES (1, ?)', [JSON.stringify(learner)])
     );
   }
@@ -118,7 +148,7 @@ export class SqlStore implements Store {
   }
 
   recordAnswer(record: AnswerRecord, snapshot: Snapshot | null): Promise<void> {
-    return this.enqueue(() =>
+    return this.write(() =>
       this.db.transaction(async () => {
         const existing = await this.db.all<{ one: number }>('SELECT 1 AS one FROM answers WHERE answer_id = ?', [record.answer_id]);
         if (existing.length) return; // replayed duplicate: no new event, no snapshot rewind
@@ -140,13 +170,58 @@ export class SqlStore implements Store {
     );
   }
 
+  /**
+   * See Store.appendAnswer. The record is copied when called, so later caller changes cannot reach the write. In one
+   * transaction on the write queue: the guard is checked, the answer inserted, and the guard checked again just before
+   * commit; any refusal or failure rolls back. Only the answers table is written.
+   */
+  appendAnswer(record: AnswerRecord, guard: AnswerAppendGuard): Promise<void> {
+    let json: string;
+    let copy: AnswerRecord;
+    let metaKey: string, expectedRaw: string, learnerId: string;
+    try {
+      ({ metaKey, expectedRaw, learnerId } = guard);
+      json = JSON.stringify(record);
+      copy = JSON.parse(json) as AnswerRecord;
+      const p = answerProblem(copy);
+      if (p) throw new Error(`Answer is malformed (${p}); nothing was written.`);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+    const check = async () => {
+      if (this.retired) throw new Error(RETIRED);
+      const learner = await this.getLearner();
+      if (typeof learnerId !== 'string' || copy.learner_id !== learnerId || learner?.learner_id !== learnerId) {
+        throw new Error('Answer refused: its learner is not the stored learner; nothing was written.');
+      }
+      if ((await this.metaValue(metaKey)) !== expectedRaw) throw new Error('Answer refused: its session metadata changed; nothing was written.');
+      if (!guard.active()) throw new Error('Answer refused: its session is no longer active; nothing was written.');
+    };
+    return this.write(() =>
+      this.db.transaction(async () => {
+        await check();
+        const existing = await this.db.all<{ json: string }>('SELECT json FROM answers WHERE answer_id = ?', [copy.answer_id]);
+        if (existing.length) {
+          if (existing[0].json === json) return; // identical replay: nothing to write
+          throw new Error('Answer refused: a different answer with this answer_id is already stored; nothing was written.');
+        }
+        await this.db.run(
+          `INSERT INTO answers (answer_id, learner_id, item_id, session_id, timestamp, outcome, json)
+           VALUES (?, ?, ?, ?, ?, ?, ?)`,
+          [copy.answer_id, copy.learner_id, copy.item_id, copy.session_id, copy.timestamp, copy.outcome, json]
+        );
+        await check(); // rechecked immediately before commit
+      })
+    );
+  }
+
   async loadSnapshotRaw(): Promise<string | null> {
     const rows = await this.db.all<{ json: string | null }>('SELECT json FROM snapshot WHERE id = 1');
     return rows.length ? rows[0].json : null;
   }
 
   archiveSnapshot(reason: string, replacement: Snapshot | null, notice?: string): Promise<boolean> {
-    return this.enqueue(async () => {
+    return this.write(async () => {
       let archived = false;
       await this.db.transaction(async () => {
         const raw = await this.loadSnapshotRaw();
@@ -174,15 +249,33 @@ export class SqlStore implements Store {
   }
 
   setMeta(key: string, value: string | null): Promise<void> {
-    return this.enqueue(() =>
+    return this.write(() =>
       value === null
         ? this.db.run('DELETE FROM meta WHERE key = ?', [key])
         : this.db.run('INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)', [key, value])
     );
   }
 
+  /**
+   * See Store.updateMeta. Holds the write queue across the async transform, which sees the freshest stored value;
+   * then one INSERT or DELETE, only when the value changed, so a failed transform or statement writes nothing.
+   */
+  updateMeta(key: string, transform: (raw: string | null) => Promise<string | null>): Promise<void> {
+    return this.write(async () => {
+      const raw = await this.getMeta(key);
+      const out: unknown = await transform(raw);
+      if (out !== null && typeof out !== 'string') throw new Error('Metadata update must produce text or null; nothing was written.');
+      const next = out as string | null;
+      if (next === raw) return;
+      if (this.retired) throw new Error(RETIRED);
+      await (next === null
+        ? this.db.run('DELETE FROM meta WHERE key = ?', [key])
+        : this.db.run('INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)', [key, next]));
+    });
+  }
+
   saveSnapshot(snapshot: Snapshot | null): Promise<void> {
-    return this.enqueue(() => this.writeSnapshot(snapshot));
+    return this.write(() => this.writeSnapshot(snapshot));
   }
 
   private writeSnapshot(snapshot: Snapshot | null): Promise<void> {
@@ -203,7 +296,7 @@ export class SqlStore implements Store {
   }
 
   addReport(report: ReportRecord): Promise<void> {
-    return this.enqueue(() =>
+    return this.write(() =>
       this.db.run('INSERT OR IGNORE INTO reports (report_id, json) VALUES (?, ?)', [report.report_id, JSON.stringify(report)])
     );
   }
@@ -214,7 +307,7 @@ export class SqlStore implements Store {
   }
 
   reset(): Promise<void> {
-    return this.enqueue(() =>
+    return this.write(() =>
       this.db.transaction(async () => {
         for (const table of ['learner', 'answers', 'snapshot', 'reports']) {
           await this.db.run(`DELETE FROM ${table}`);
@@ -222,6 +315,33 @@ export class SqlStore implements Store {
         await this.db.run(`DELETE FROM meta WHERE key != 'schema_version'`);
       })
     );
+  }
+
+  /**
+   * Erases this dataset from its database, through the same queue as every write and in one transaction: every
+   * learner, answer, snapshot and report row, all metadata but the schema version, and every side document, which
+   * reset() leaves alone. When its turn comes this instance is retired: every later write, and init(), is refused even
+   * if the erase then fails, while reads keep working and the erase itself may be retried. Resolves only once a check
+   * inside the transaction finds none of those rows left; a leftover or a failed statement rejects, and the transaction
+   * rolls back. Rows are deleted, not the database file, and nothing is stored to mark the database: a store opened on
+   * it later is not retired.
+   */
+  erase(): Promise<void> {
+    return this.enqueue(async () => {
+      this.retired = true;
+      await this.db.transaction(async () => {
+        const hasDocs = (await this.db.all<{ name: string }>(`SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'docs'`)).length > 0;
+        const tables = ['learner', 'answers', 'snapshot', 'reports', ...(hasDocs ? ['docs'] : [])];
+        for (const table of tables) await this.db.run(`DELETE FROM ${table}`);
+        await this.db.run(`DELETE FROM meta WHERE key != 'schema_version'`);
+        // Checked, not assumed, before the transaction commits: no row of this dataset is left.
+        let left = 0;
+        for (const from of [...tables, `meta WHERE key != 'schema_version'`]) {
+          left += Number((await this.db.all<{ n: number }>(`SELECT COUNT(*) AS n FROM ${from}`))[0]?.n ?? 0);
+        }
+        if (left) throw new Error(`Storage was not erased: ${left} stored rows remained after deletion.`);
+      });
+    });
   }
 
   /** Every record exactly as stored (see readSqlRaw), after the writes already queued here. */
@@ -241,9 +361,37 @@ export class SqlStore implements Store {
 
   /** Replaces a side document in one statement, through the same queue as every other write. */
   saveDoc(name: string, text: string): Promise<void> {
-    return this.enqueue(async () => {
+    return this.write(async () => {
       await this.db.exec('CREATE TABLE IF NOT EXISTS docs (name TEXT PRIMARY KEY NOT NULL, json TEXT NOT NULL);');
       await this.db.run('INSERT OR REPLACE INTO docs (name, json) VALUES (?, ?)', [name, text]);
+    });
+  }
+
+  /**
+   * saveDoc that writes only while `active()` is exactly true and this store is not retired. One transaction on the
+   * write queue: both are checked before the first statement, after each await and after the INSERT, just before
+   * commit. A lost or throwing guard rolls back and returns false; a retirement or any other failure rejects.
+   */
+  saveDocGuarded(name: string, text: string, active: () => boolean): Promise<boolean> {
+    const lost = new Error('Document save refused: its guard is no longer active; nothing was written.');
+    const check = () => {
+      if (this.retired) throw new Error(RETIRED);
+      if (!guardHolds(active)) throw lost;
+    };
+    return this.write(async () => {
+      try {
+        await this.db.transaction(async () => {
+          check();
+          await this.db.exec('CREATE TABLE IF NOT EXISTS docs (name TEXT PRIMARY KEY NOT NULL, json TEXT NOT NULL);');
+          check();
+          await this.db.run('INSERT OR REPLACE INTO docs (name, json) VALUES (?, ?)', [name, text]);
+          check(); // rechecked immediately before commit
+        });
+        return true;
+      } catch (e) {
+        if (e === lost) return false;
+        throw e;
+      }
     });
   }
 
@@ -259,7 +407,7 @@ export class SqlStore implements Store {
     } catch (e) {
       return Promise.reject(e);
     }
-    return this.enqueue(async () => {
+    return this.write(async () => {
       const haveAnswers = new Set((await this.db.all<{ answer_id: string }>('SELECT answer_id FROM answers')).map((r) => r.answer_id));
       const haveReports = new Set((await this.db.all<{ report_id: string }>('SELECT report_id FROM reports')).map((r) => r.report_id));
       const haveMeta = new Set((await this.db.all<{ key: string }>('SELECT key FROM meta')).map((r) => r.key));

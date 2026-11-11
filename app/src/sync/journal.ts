@@ -185,8 +185,13 @@ export type PreferencePush = 'sent' | 'nothing' | 'conflict';
 
 export interface SyncJournal {
   view(): JournalView;
-  /** Adds every saved answer of the dataset the journal does not hold yet, e.g. after a stop between saving and queueing. Returns how many. */
-  reconcile(): Promise<number>;
+  /**
+   * Adds every saved answer of the dataset the journal does not hold yet, e.g. after a stop between saving and queueing. Returns how many.
+   * With `active`, the journal is saved only while it returns exactly true (a throwing guard counts as lost): checked around each read,
+   * in the journal's commit and in the storage writer. A lost guard saves and publishes nothing and returns 0; storage that cannot
+   * save under a guard rejects, never saving unguarded.
+   */
+  reconcile(active?: () => boolean): Promise<number>;
   /** One manual sync: link each local learner source (frozen imports), upload later answers, pull the family's new answers. */
   sync(conn: SyncConnection, link: LinkChoice | null): Promise<SyncReport>;
   /** Records a preference change: the intent is saved first, then the learner record. */
@@ -259,6 +264,14 @@ const isCount = (v: unknown): v is number => typeof v === 'number' && Number.isS
 const byteLength = (s: string) => utf8Bytes(s).length;
 const idText = (v: unknown): v is string => typeof v === 'string' && v !== '' && byteLength(v) <= 128 && !v.includes(NUL);
 const clone = <T>(v: T): T => JSON.parse(JSON.stringify(v)) as T;
+/** A guard holds only when it returns exactly `true`; one that throws, or returns anything else, is lost. */
+const guardHolds = (active: () => boolean): boolean => {
+  try {
+    return active() === true;
+  } catch {
+    return false;
+  }
+};
 
 function validPreference(field: PreferenceField, value: unknown): value is number {
   if (typeof value !== 'number' || !Number.isFinite(value)) return false;
@@ -419,13 +432,25 @@ export async function openJournal(options: JournalOptions): Promise<SyncJournal>
   /** Syncs and pushes, one at a time. */
   const runs = createSerialQueue();
 
-  /** Applies `update` to a copy of the state and saves it; only a successful save makes it current. */
-  const commit = (update: (d: JournalDoc) => boolean) =>
+  /**
+   * Applies `update` to a copy of the state and saves it; only a successful save makes it current. With `active` the save
+   * is the storage's guarded one, never the plain save, and false means the guard was lost: nothing was saved or published.
+   */
+  const commit = (update: (d: JournalDoc) => boolean, active?: () => boolean): Promise<boolean> =>
     commits(async () => {
+      const { journal } = dataset;
+      if (active && typeof journal.saveGuarded !== 'function') throw new Error('The sync journal storage cannot save under a guard; nothing was saved.');
+      if (active && !guardHolds(active)) return false;
       const next = clone(doc);
-      if (!update(next)) return;
-      await dataset.journal.save(JSON.stringify(next));
+      if (!update(next)) return true;
+      const text = JSON.stringify(next);
+      if (active) {
+        if (!(await journal.saveGuarded!(text, active))) return false;
+      } else {
+        await journal.save(text);
+      }
       doc = next;
+      return true;
     });
 
   /** The connection's verified account, which must be this dataset's. */
@@ -462,11 +487,15 @@ export async function openJournal(options: JournalOptions): Promise<SyncJournal>
     // A read-only dataset keeps the intent in the journal until a writable open.
   }
 
-  async function reconcile(): Promise<number> {
+  async function reconcile(active?: () => boolean): Promise<number> {
+    const lost = () => active !== undefined && !guardHolds(active);
+    if (lost()) return 0;
     const raw = await dataset.raw.readRaw();
+    if (lost()) return 0;
     const learner = await dataset.store.getLearner();
+    if (lost()) return 0;
     let added = 0;
-    await commit((d) => {
+    const saved = await commit((d) => {
       added = 0;
       const known = new Set(d.originals.map((o) => o.eventId));
       for (const a of raw?.answers ?? []) {
@@ -484,8 +513,8 @@ export async function openJournal(options: JournalOptions): Promise<SyncJournal>
         }
       }
       return changed;
-    });
-    return added;
+    }, active);
+    return saved ? added : 0;
   }
 
   /** Freezes the import of one learner source: its ID and exact request text are saved before it is first sent. */

@@ -1,7 +1,7 @@
 import { arrayElements, objectMembers, parseCopy, type CopyResult, type ParsedCopy, type RawDataset, type RawRecord } from './rawRecords';
 import { createSerialQueue } from './serial';
 import { answerProblem, learnerProblem, reportProblem } from './validate';
-import { STORAGE_SCHEMA, type AnswerRecord, type ArchivedSnapshot, type Learner, type ReportRecord, type Snapshot, type Store } from './types';
+import { STORAGE_SCHEMA, type AnswerAppendGuard, type AnswerRecord, type ArchivedSnapshot, type Learner, type ReportRecord, type Snapshot, type Store } from './types';
 
 export interface KvBackend {
   getItem(key: string): string | null;
@@ -29,6 +29,15 @@ const EMPTY: Blob = { schema: STORAGE_SCHEMA, meta: {}, learner: null, answers: 
 
 const isObj = (v: unknown): v is Record<string, unknown> => !!v && typeof v === 'object' && !Array.isArray(v);
 const isStr = (v: unknown): v is string => typeof v === 'string';
+
+/** A guard holds only when it returns exactly `true`; one that throws, or returns anything else, is lost. */
+const guardHolds = (active: () => boolean): boolean => {
+  try {
+    return active() === true;
+  } catch {
+    return false;
+  }
+};
 
 /**
  * Validates the outer envelope of a stored blob (REV-2). Accepts v1 (no schema/meta) and v2.
@@ -120,6 +129,8 @@ export class KvStore implements Store {
   private blob: Blob = EMPTY;
   /** Set when init refused the stored data: every later write is refused too (no overwrite). */
   private refused = false;
+  /** Set once an erase begins here: every later write is refused, so nothing erased is written back. */
+  private erased = false;
   private enqueue = createSerialQueue();
 
   /**
@@ -160,14 +171,24 @@ export class KvStore implements Store {
    */
   private commit(update: (current: Blob) => Blob | null): Promise<void> {
     return this.enqueue(async () => {
-      if (this.refused) throw new Error('Storage refused: the stored data was not accepted, so nothing is written.');
-      if (this.readOnly) throw new Error(`Storage is read-only: ${this.readOnly}`);
+      this.checkWritable();
       const next = update(this.blob);
       if (!next) return;
-      const stamped = { ...next, schema: STORAGE_SCHEMA };
-      this.kv.setItem(this.key, JSON.stringify(stamped));
-      this.blob = stamped;
+      this.persist(next);
     });
+  }
+
+  private checkWritable(): void {
+    if (this.refused) throw new Error('Storage refused: the stored data was not accepted, so nothing is written.');
+    if (this.readOnly) throw new Error(`Storage is read-only: ${this.readOnly}`);
+    if (this.erased) throw new Error('Storage retired: an account-data erase began in this store instance, so it refuses every further write.');
+  }
+
+  /** One setItem; the in-memory blob changes only after it succeeds. */
+  private persist(next: Blob): void {
+    const stamped = { ...next, schema: STORAGE_SCHEMA };
+    this.kv.setItem(this.key, JSON.stringify(stamped));
+    this.blob = stamped;
   }
 
   /**
@@ -199,6 +220,39 @@ export class KvStore implements Store {
         ? null
         : { ...b, answers: [...b.answers, record], snapshot: snapshot ? JSON.stringify(snapshot) : null }
     );
+  }
+
+  /**
+   * See Store.appendAnswer. The record is copied when called, so later caller changes cannot reach the write; the
+   * guard is checked when its turn comes, and the single setItem keeps the rest of the blob exactly as it is.
+   */
+  appendAnswer(record: AnswerRecord, guard: AnswerAppendGuard): Promise<void> {
+    let json: string;
+    let copy: AnswerRecord;
+    let metaKey: string, expectedRaw: string, learnerId: string;
+    try {
+      ({ metaKey, expectedRaw, learnerId } = guard);
+      json = JSON.stringify(record);
+      copy = JSON.parse(json) as AnswerRecord;
+      const p = answerProblem(copy);
+      if (p) throw new Error(`Answer is malformed (${p}); nothing was written.`);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+    return this.enqueue(async () => {
+      this.checkWritable();
+      if (typeof learnerId !== 'string' || copy.learner_id !== learnerId || this.blob.learner?.learner_id !== learnerId) {
+        throw new Error('Answer refused: its learner is not the stored learner; nothing was written.');
+      }
+      if (this.blob.meta?.[metaKey] !== expectedRaw) throw new Error('Answer refused: its session metadata changed; nothing was written.');
+      if (!guard.active()) throw new Error('Answer refused: its session is no longer active; nothing was written.');
+      const existing = this.blob.answers.find((a) => a.answer_id === copy.answer_id);
+      if (existing) {
+        if (JSON.stringify(existing) === json) return; // identical replay: nothing to write
+        throw new Error('Answer refused: a different answer with this answer_id is already stored; nothing was written.');
+      }
+      this.persist({ ...this.blob, answers: [...this.blob.answers, copy] });
+    });
   }
 
   async loadSnapshotRaw(): Promise<string | null> {
@@ -234,6 +288,26 @@ export class KvStore implements Store {
     });
   }
 
+  /**
+   * See Store.updateMeta. Holds the queue across the async transform, which sees this blob's freshest value; the
+   * guard is checked before it runs and again before the single setItem, and the blob is replaced only after that.
+   */
+  updateMeta(key: string, transform: (raw: string | null) => Promise<string | null>): Promise<void> {
+    return this.enqueue(async () => {
+      this.checkWritable();
+      const raw = this.blob.meta?.[key] ?? null;
+      const out: unknown = await transform(raw);
+      if (out !== null && typeof out !== 'string') throw new Error('Metadata update must produce text or null; nothing was written.');
+      const next = out as string | null;
+      if (next === raw) return;
+      this.checkWritable();
+      const meta = { ...(this.blob.meta ?? {}) };
+      if (next === null) delete meta[key];
+      else meta[key] = next;
+      this.persist({ ...this.blob, meta });
+    });
+  }
+
   saveSnapshot(snapshot: Snapshot | null) {
     return this.commit((b) => ({ ...b, snapshot: snapshot ? JSON.stringify(snapshot) : null }));
   }
@@ -262,6 +336,26 @@ export class KvStore implements Store {
     return this.commit(() => ({ ...EMPTY, meta: {} }));
   }
 
+  /**
+   * Removes this dataset from storage (reset() only empties it), through the same queue and writer guard as every
+   * write: each side document in `docs`, then the main key, so the dataset stays findable until everything beside it
+   * is gone. Nothing of its learning state stays cached here, and this instance writes nothing more, so no later write
+   * brings any of it back (a retried erase still runs). Resolves only once every one of those keys is absent. Storage
+   * has no transaction across keys: a failure part-way rejects, leaving what was not yet removed and rolling nothing back.
+   */
+  erase(docs: readonly string[]): Promise<void> {
+    return this.enqueue(async () => {
+      if (this.refused) throw new Error('Storage refused: the stored data was not accepted, so nothing is written.');
+      if (this.readOnly) throw new Error(`Storage is read-only: ${this.readOnly}`);
+      this.erased = true;
+      this.blob = { ...EMPTY, meta: {} };
+      const keys = [...docs.map((name) => `${this.key}/${name}`), this.key];
+      for (const key of keys) this.kv.removeItem(key);
+      const left = keys.filter((key) => this.kv.getItem(key) !== null).length;
+      if (left) throw new Error(`Storage was not erased: ${left} of ${keys.length} stored values are still there.`);
+    });
+  }
+
   /** Every record exactly as stored (see readKvRaw), after the writes already queued here. */
   readRaw(): Promise<RawDataset | null> {
     return this.enqueue(async () => readKvRaw(this.kv, this.key));
@@ -277,7 +371,22 @@ export class KvStore implements Store {
     return this.enqueue(async () => {
       if (this.refused) throw new Error('Storage refused: the stored data was not accepted, so nothing is written.');
       if (this.readOnly) throw new Error(`Storage is read-only: ${this.readOnly}`);
+      if (this.erased) throw new Error('Storage retired: an account-data erase began in this store instance, so it refuses every further write.');
       this.kv.setItem(`${this.key}/${name}`, text);
+    });
+  }
+
+  /**
+   * saveDoc that writes only while `active()` is exactly true, checked inside the queue right before the single
+   * synchronous setItem. A lost or throwing guard returns false and writes nothing; a storage failure rejects. The
+   * refused, read-only and retired refusals are the same as saveDoc's.
+   */
+  saveDocGuarded(name: string, text: string, active: () => boolean): Promise<boolean> {
+    return this.enqueue(async () => {
+      this.checkWritable();
+      if (!guardHolds(active)) return false;
+      this.kv.setItem(`${this.key}/${name}`, text);
+      return true;
     });
   }
 

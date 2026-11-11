@@ -1,0 +1,11 @@
+import { fireEvent, render } from '@testing-library/react-native';
+import { router } from 'expo-router';
+import Account from '@/app/account';
+import type { AccountContextValue } from '@/ui/AccountContext';
+const mockAccount: AccountContextValue = {enabled:true,signedIn:false,connected:false,panel:{account:null,onSubmit:jest.fn(),onGuestCopy:jest.fn(),onGuestSkip:jest.fn(),onLinkProfile:jest.fn(),onCreateProfile:jest.fn(),onSyncNow:jest.fn(),onKeepLocalPrefs:jest.fn(),onUseServerPrefs:jest.fn(),onSignOut:jest.fn()},deletion:{key:'A',state:{phase:'pending',local:'erased',busy:false},available:false,remove:jest.fn(),check:jest.fn(),retryIdentity:jest.fn(),retryCleanup:jest.fn()}};
+jest.mock('@/ui/AccountContext',()=>({useAccount:()=>mockAccount}));
+jest.mock('@/ui/Hydration',()=>({HydrationGate:({children}: {children:React.ReactNode})=>children}));
+jest.mock('@/ui/BackLink',()=>({BackLink:()=>null}));
+jest.mock('expo-router',()=>({router:{push:jest.fn(),replace:jest.fn()},useLocalSearchParams:()=>({})}));
+jest.mock('@/ui/components',()=>{const actual=jest.requireActual('@/ui/components');const {View}=jest.requireActual('react-native');return {...actual,Page:({children}:{children:React.ReactNode})=><View>{children}</View>};});
+it('retained deletion status does not hide the real sign-in form after sign-out and status remains reachable',async()=>{const v=await render(<Account/>);expect(v.getByTestId('account-email')).toBeTruthy();expect(v.getByTestId('account-password')).toBeTruthy();await fireEvent.press(v.getByTestId('account-data-open'));expect(router.push).toHaveBeenCalledWith('/account-data');});

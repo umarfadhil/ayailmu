@@ -1,7 +1,7 @@
 import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
 
-import { classifySnapshot, type SnapshotStatus } from "@/engine/controller";
+import { classifySnapshot, legacyHistory, type SnapshotStatus } from "@/engine/controller";
 import { loadScreenViews } from "@/engine/exposure";
 import { progress, type Progress } from "@/engine/progress";
 import { openUnits, toAttempt } from "@/engine/session";
@@ -30,12 +30,29 @@ export function isLearningError(v: LearningState): v is { error: string } {
   return !!v && "error" in v;
 }
 
+type App = ReturnType<typeof useApp>;
+
+/** A published state tagged with the selection that produced it. */
+interface Owned {
+  value: LearningState;
+  store: App["store"];
+  learnerId: string | null;
+  dataset: App["dataset"];
+  content: App["content"];
+  rules: App["rules"];
+}
+
 export function useLearning(): LearningState {
-  const { store, content, rules } = useApp();
-  const [data, setData] = useState<LearningState>(undefined);
+  const { store, content, rules, dataset, learner: selected } = useApp();
+  const learnerId = selected?.learner_id ?? null;
+  const [owned, setOwned] = useState<Owned | undefined>(undefined);
   useFocusEffect(
     useCallback(() => {
       let alive = true;
+      const setData = (value: LearningState) =>
+        setOwned({ value, store, learnerId, dataset, content, rules });
+      // A new focused read starts empty: the previous projection is never shown while it waits.
+      setOwned(undefined);
       (async () => {
         try {
           if (!store || content.empty) return;
@@ -44,7 +61,8 @@ export function useLearning(): LearningState {
             if (alive) setData(null);
             return;
           }
-          const answers = await store.listAnswers();
+          // The learner's own Unit A pilot answers are not legacy progress; everything else is projected as stored.
+          const answers = legacyHistory(await store.listAnswers(), learner.learner_id);
           const raw = await store.loadSnapshotRaw();
           const views = await loadScreenViews(store);
           const now = Date.now();
@@ -76,9 +94,21 @@ export function useLearning(): LearningState {
       return () => {
         alive = false;
       };
-    }, [store, content, rules]),
+    }, [store, content, rules, learnerId, dataset]),
   );
-  return data;
+  // Only the current selection's own state is returned; anything else reads as still loading.
+  if (
+    !owned ||
+    !store ||
+    content.empty ||
+    owned.store !== store ||
+    owned.learnerId !== learnerId ||
+    owned.dataset !== dataset ||
+    owned.content !== content ||
+    owned.rules !== rules
+  )
+    return undefined;
+  return owned.value;
 }
 
 const DAYS = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];

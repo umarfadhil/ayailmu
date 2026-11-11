@@ -1,7 +1,9 @@
-import { Redirect, router } from 'expo-router';
+import { Redirect, router, type Href } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { isReleasePresentation } from '@/config/releasePresentation';
+import { normalStarter, starterBeta } from '@/pilot/unitA/StarterHome';
 import { useApp } from '@/ui/AppContext';
 import { ArabicText, Btn, Icon, IconButton, Notice, Page, Segmented, type IconName } from '@/ui/components';
 import { ARABIC_SCALES, NEUTRAL_PREVIEW } from '@/ui/labels';
@@ -38,7 +40,7 @@ function Fact({ icon, children, warn }: { icon: IconName; children: string; warn
  * both statements are ticked; then the profile is saved on this device only.
  */
 function ConsentRoute() {
-  const { learner, content, rules, giveConsent, createLearner } = useApp();
+  const { learner, content, rules, dataset, giveConsent, createLearner } = useApp();
   const [adult, setAdult] = useState(false);
   const [agree, setAgree] = useState(false);
   const [minutes, setMinutes] = useState(rules.default_session_minutes);
@@ -50,8 +52,17 @@ function ConsentRoute() {
 
   // A learner who already exists on arrival goes Home.
   if (learner && !creating) return <Redirect href="/" />;
-  if (content.empty) return <Redirect href="/" />;
+  // Empty legacy content goes Home, unless a validated private beta's or the normal user build's starter is reviewed: it is
+  // studied from here. A starter that is still pending goes Home whatever the legacy content says.
+  const beta = starterBeta(rules.mode);
+  const normal = normalStarter(rules.mode);
+  const reviewed = beta === 'reviewed' || normal === 'reviewed';
+  if (beta === 'pending' || normal === 'pending' || (content.empty && !reviewed)) return <Redirect href="/" />;
+  // An account dataset gets its learner through the account's own profile and consent, never this guest form.
+  if (reviewed && dataset === 'account' && !learner) return <Redirect href={'/account' as Href} />;
   const ready = adult && agree;
+  // Only the heading changes in a genuine release presentation, private beta or normal user build; the statements, facts and checks stay as they are.
+  const consentTitle = isReleasePresentation(rules.mode) || beta !== 'off' || normal !== 'off' ? 'Persetujuan' : 'Persetujuan (versi demo)';
 
   const start = async () => {
     setBusy(true);
@@ -118,7 +129,7 @@ function ConsentRoute() {
 
       <View style={styles.section}>
         <Text accessibilityRole="header" style={styles.sectionTitle}>
-          Persetujuan (versi demo)
+          {consentTitle}
         </Text>
         <View style={styles.consent}>
           <Fact icon="file-tray-outline">Disimpan: jawaban, waktu menjawab, dan ID acak. Tanpa nama, kontak, lokasi, atau foto.</Fact>

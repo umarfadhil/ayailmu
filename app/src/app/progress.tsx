@@ -2,6 +2,7 @@ import { Redirect } from 'expo-router';
 import type { ReactNode } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
+import { learningBetaEnabled } from '@/config/learningBeta';
 import type { CheckLine, SkillProgress, UnitProgress } from '@/engine/progress';
 import { useApp } from '@/ui/AppContext';
 import { ArabicText, Chip, DraftChip, Icon, Muted, Notice, Page, ScreenHeader, StorageRefused } from '@/ui/components';
@@ -348,6 +349,8 @@ const styles = StyleSheet.create({
 });
 
 export default function ProgressScreen() {
+  // A validated learning beta is bounded starter access: Home before any legacy hydration or learning effect mounts.
+  if (learningBetaEnabled()) return <Redirect href="/" />;
   return (
     <HydrationGate>
       <ProgressRoute />
