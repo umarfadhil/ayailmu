@@ -6,7 +6,7 @@ public enum LearningError: Error, LocalizedError {
     case backend(Int,String)
     public var errorDescription:String? {
         switch self {
-        case .signInRequired: return "Sign in to your owner account to continue."
+        case .signInRequired: return "Sign in to your account to continue."
         case .staleSession: return "The account or profile changed. Please try again."
         case .consentOff: return "Sync is off for this profile."
         case .noContent: return "No lessons are available yet."

@@ -43,20 +43,38 @@ public struct ApprovedLesson: Identifiable, Sendable {
 public struct ApprovedLessonLibrary: Sendable {
     public let lessons:[ApprovedLesson]
     public static var bundled:ApprovedLessonLibrary {
-        // No resources are shipped until actual approval. A future reviewed resource manifest can use
-        // this same loader; a malformed/missing resource never unlocks a lesson.
+        // Resources remain bound to the exact reviewed catalog bytes and source snapshot.
+        // A malformed/missing resource fails closed for the entire bundled library.
         guard let manifestURL = Bundle.main.url(forResource:"ApprovedLearning",withExtension:"json"),
-              let data = try? Data(contentsOf:manifestURL), let manifest = try? JSONDecoder().decode(ResourceManifest.self,from:data),
+              let data = try? Data(contentsOf:manifestURL),
               let source = Bundle.main.object(forInfoDictionaryKey:"AyaIlmuRegistrySourceCommit") as? String else { return ApprovedLessonLibrary(lessons:[]) }
-        do {
-            var lessons:[ApprovedLesson] = []
-            for entry in manifest.packs {
-                guard [entry.pack,entry.rules,manifest.catalog].allSatisfy({$0.range(of:"^[A-Za-z0-9_-]{1,128}$",options:.regularExpression) != nil}), let pack = Bundle.main.url(forResource:entry.pack,withExtension:"json"), let rules = Bundle.main.url(forResource:entry.rules,withExtension:"json"), let catalog = Bundle.main.url(forResource:manifest.catalog,withExtension:"json") else { throw LearningError.noContent }
-                lessons += try load(pack:Data(contentsOf:pack),rules:Data(contentsOf:rules),catalog:Data(contentsOf:catalog),source:source,language:manifest.language).lessons
-            }; return ApprovedLessonLibrary(lessons:lessons)
-        } catch { return ApprovedLessonLibrary(lessons:[]) }
+        return (try? loadResources(manifest:data,source:source) { name in
+            guard let url = Bundle.main.url(forResource:name,withExtension:"json") else { throw LearningError.noContent }
+            return try Data(contentsOf:url)
+        }) ?? ApprovedLessonLibrary(lessons:[])
     }
-    private struct ResourceManifest:Decodable { struct Entry:Decodable { let pack:String; let rules:String }; let catalog:String; let language:String; let packs:[Entry] }
+    private struct ResourceManifest:Decodable { struct Entry:Decodable { let pack:String; let rules:String }; let catalog:String; let languages:[String]; let packs:[Entry] }
+    static func loadResources(manifest data:Data,source:String,resource:(String) throws -> Data) throws -> ApprovedLessonLibrary {
+        guard data.count <= 65536 else { throw LearningError.noContent }
+        let manifest = try JSONDecoder().decode(ResourceManifest.self,from:data)
+        let names = [manifest.catalog] + manifest.packs.flatMap{[$0.pack,$0.rules]}
+        guard !manifest.packs.isEmpty,manifest.packs.count <= 100,
+              !manifest.languages.isEmpty,manifest.languages.count <= 2,
+              Set(manifest.languages).count == manifest.languages.count,
+              manifest.languages.allSatisfy({["id","en"].contains($0)}),
+              names.allSatisfy({$0.range(of:"^[A-Za-z0-9_-]{1,128}$",options:.regularExpression) != nil}) else { throw LearningError.noContent }
+        let catalog = try resource(manifest.catalog)
+        var lessons:[ApprovedLesson] = []
+        for entry in manifest.packs {
+            let pack = try resource(entry.pack), rules = try resource(entry.rules)
+            for language in manifest.languages {
+                lessons += try load(pack:pack,rules:rules,catalog:catalog,source:source,language:language).lessons
+            }
+        }
+        let identities = lessons.map{$0.language+"|"+$0.id}
+        guard Set(identities).count == identities.count else { throw LearningError.noContent }
+        return ApprovedLessonLibrary(lessons:lessons)
+    }
     public static func proof(pack:Data,rules:Data,source:String) -> PackProof {
         let p = (try? JSONSerialization.jsonObject(with:pack)) as? [String:Any]
         let meta = p?["meta"] as? [String:Any]; let r = (try? JSONSerialization.jsonObject(with:rules)) as? [String:Any]

@@ -19,7 +19,7 @@ public enum AccountError: Error, CustomStringConvertible, LocalizedError {
     public var description: String {
         switch self {
         case .configuration: return "The account service configuration is invalid."
-        case .input: return "Enter a valid email, a password of 12–256 characters, and a six-digit code where requested. Confirm the owner declaration to continue."
+        case .input: return "Enter a valid email, a password of 12–256 characters, and a six-digit code where requested. Confirm the adult or guardian declaration to continue."
         case .identity: return "Your account could not be verified. Sign in again."
         case .storage: return "Secure storage failed. Please try again."
         case .superseded: return "Account operation cancelled."

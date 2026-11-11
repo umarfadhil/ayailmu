@@ -76,7 +76,66 @@ func fixtureProof() -> PackProof { PackProof(track:"math",contentVersion:"v1",ru
     func testSharedGradingAndContentFailClosed() throws {
         XCTAssertFalse(UnavailableSharedGrader().isAvailable)
         XCTAssertThrowsError(try UnavailableSharedGrader().grade(itemJSON:"{}",responseJSON:"{}",rulesJSON:"{}",language:"en"))
+        #if os(iOS)
+        XCTAssertEqual(ApprovedLessonLibrary.bundled.lessons.count,2)
+        #else
         XCTAssertTrue(ApprovedLessonLibrary.bundled.lessons.isEmpty)
+        #endif
+    }
+
+    /// Catches missing/altered reviewed resources and accidental widening to draft or synthetic content.
+    func testReviewedMathResourcesLoadOnlyTheExactApprovedSubset() throws {
+        #if os(iOS)
+        let resources = try XCTUnwrap(Bundle.main.resourceURL)
+        #else
+        let resources = URL(fileURLWithPath:#filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent("AyaIlmu/Resources/ReviewedMath")
+        #endif
+        let names = ["ApprovedLearning","ReviewedMathPack","ReviewedMathRules","ReviewedCatalog"]
+        for name in names { XCTAssertTrue(FileManager.default.fileExists(atPath:resources.appendingPathComponent(name+".json").path),"Missing reviewed resource: \(name)") }
+        guard names.allSatisfy({FileManager.default.fileExists(atPath:resources.appendingPathComponent($0+".json").path)}) else { return }
+        let pack = try Data(contentsOf:resources.appendingPathComponent("ReviewedMathPack.json"))
+        let rules = try Data(contentsOf:resources.appendingPathComponent("ReviewedMathRules.json"))
+        let catalog = try Data(contentsOf:resources.appendingPathComponent("ReviewedCatalog.json"))
+        let manifest = try Data(contentsOf:resources.appendingPathComponent("ApprovedLearning.json"))
+        let source = "b6e0d6123cb359436f83ce3ae0685198ee13a815"
+        let expectedIDs = Set((1...14).map { String(format:"MAT-A-P-01-%03d",$0) })
+        for language in ["id","en"] {
+            let library = try ApprovedLessonLibrary.load(pack:pack,rules:rules,catalog:catalog,source:source,language:language)
+            XCTAssertEqual(library.lessons.count,1)
+            let lesson = try XCTUnwrap(library.lessons.first)
+            XCTAssertEqual(lesson.id,"mat-a-local:01"); XCTAssertEqual(lesson.language,language)
+            XCTAssertEqual(Set(lesson.items.map(\.id)),expectedIDs)
+            XCTAssertEqual(lesson.screens.map(\.id),["MAT-A-P-01-S1"])
+            XCTAssertEqual(lesson.proof.packSHA256,"7ed58f9684e68f6fef43fcd9ea3e65ff50e530663cec495f207bce20b1bcab0c")
+            XCTAssertEqual(lesson.proof.rulesSHA256,"1871e9d58f00593138026d7adb332b870b31b9cb5c03b874aae0fdfa68440ce9")
+            XCTAssertEqual(lesson.proof.sourceCommit,source)
+        }
+        XCTAssertThrowsError(try ApprovedLessonLibrary.load(pack:pack+Data(" ".utf8),rules:rules,catalog:catalog,source:source,language:"en"))
+        XCTAssertThrowsError(try ApprovedLessonLibrary.load(pack:pack,rules:rules+Data(" ".utf8),catalog:catalog,source:source,language:"en"))
+        XCTAssertThrowsError(try ApprovedLessonLibrary.load(pack:pack,rules:rules,catalog:catalog,source:String(repeating:"0",count:40),language:"en"))
+        XCTAssertThrowsError(try ApprovedLessonLibrary.load(pack:pack,rules:rules,catalog:catalog,source:source,language:"fr"))
+        let changed = Data(String(data:pack,encoding:.utf8)!.replacingOccurrences(of:"\"review_status\": \"approved\"",with:"\"review_status\": \"draft\"").utf8)
+        XCTAssertNotEqual(changed,pack)
+        XCTAssertThrowsError(try ApprovedLessonLibrary.load(pack:changed,rules:rules,catalog:catalog,source:source,language:"en"))
+        let read:(String) throws -> Data = { try Data(contentsOf:resources.appendingPathComponent($0+".json")) }
+        let bilingual = try ApprovedLessonLibrary.loadResources(manifest:manifest,source:source,resource:read)
+        XCTAssertEqual(bilingual.lessons.map(\.language),["id","en"])
+        XCTAssertEqual(bilingual.lessons.map(\.id),["mat-a-local:01","mat-a-local:01"])
+        XCTAssertTrue(bilingual.lessons.allSatisfy{$0.items.count == 14 && $0.screens.count == 1})
+        XCTAssertThrowsError(try ApprovedLessonLibrary.loadResources(manifest:manifest,source:source) { name in
+            if name == "ReviewedMathPack" { return changed }; return try read(name)
+        })
+        XCTAssertThrowsError(try ApprovedLessonLibrary.loadResources(manifest:manifest,source:source) { name in
+            if name == "ReviewedMathRules" { throw CocoaError(.fileNoSuchFile) }; return try read(name)
+        })
+        for mutation in [
+            ["catalog":"../ReviewedCatalog","languages":["en"],"packs":[["pack":"ReviewedMathPack","rules":"ReviewedMathRules"]]],
+            ["catalog":"ReviewedCatalog","languages":["fr"],"packs":[["pack":"ReviewedMathPack","rules":"ReviewedMathRules"]]],
+            ["catalog":"ReviewedCatalog","languages":["en","en"],"packs":[["pack":"ReviewedMathPack","rules":"ReviewedMathRules"]]],
+            ["catalog":"ReviewedCatalog","languages":["en"],"packs":[["pack":"ReviewedMathPack","rules":"ReviewedMathRules"],["pack":"ReviewedMathPack","rules":"ReviewedMathRules"]]],
+        ] as [[String:Any]] {
+            XCTAssertThrowsError(try ApprovedLessonLibrary.loadResources(manifest:JSONSerialization.data(withJSONObject:mutation),source:source,resource:read))
+        }
     }
     func testOwnerAndLearnerNamespacesAndStaleSelection() async throws {
         let(account,s,j,t,url) = try await fixture(); try s.capture(fixtureEvent,proof:fixtureProof())
@@ -298,6 +357,90 @@ import AyaIlmuSharedLearning
 @testable import AyaIlmu
 #endif
 extension LearningTests {
+    #if canImport(AyaIlmu)
+    /// Exercises the shipped reviewed resources and real planner/grader in both languages.
+    /// Accounts, network, journals and live progress are deliberately absent from this test.
+    func testActualNativeReviewedSessionsGradeCorrectAnswersInBothLanguages() throws {
+        let responses:[String:[String:Any]] = [
+            "001":["kind":"number","value":14700],
+            "002":["kind":"number","value":84900],
+            "003":["kind":"choice","option_id":"b"],
+            "004":["kind":"choice","option_id":"t"],
+            "005":["kind":"number","value":572],
+            "006":["kind":"pairs","pairs":[["left":"m1","right":"r120"],["left":"m2","right":"r400"],["left":"m3","right":"r385"],["left":"m4","right":"r396"]]],
+            "007":["kind":"choice","option_id":"seen"],
+            "008":["kind":"number","value":46500],
+            "009":["kind":"choice","option_id":"c"],
+            "010":["kind":"number","value":75000],
+            "011":["kind":"sequence","sequence":["t1","t2","t3"]],
+            "012":["kind":"sequence","sequence":["f4"]],
+            "013":["kind":"number","value":14750],
+            "014":["kind":"choice","option_id":"c"]
+        ]
+        for language in ["id","en"] {
+            let lesson = try XCTUnwrap(ApprovedLessonLibrary.bundled.lessons.first{$0.language == language})
+            let core = AppSharedCore.make(); XCTAssertTrue(core.isAvailable)
+            var values = ["unit":"01","lang":language,"learner_id":"ios-reviewed-\(language)","session_id":"ios-reviewed-session-\(language)","app_version":"0.1.0","zone_id":"UTC","timestamp":"2026-11-03T00:00:00Z","screens_seen":"[]","time_on_item_ms":"1000"]
+            func encode(_ value:Any) throws -> String { String(data:try JSONSerialization.data(withJSONObject:value,options:.sortedKeys),encoding:.utf8)! }
+            var history:[String] = []
+            var state = try core.start(packJSON:lesson.packJSON,rulesJSON:lesson.rulesJSON,contextJSON:encode(values),historyJSON:"[]")
+            var sawIntroduction = false
+            var scoredAnswers = 0
+            for _ in 0..<64 {
+                if state.completed { break }
+                if ["screen","feedback"].contains(state.phase) {
+                    if state.phase == "screen" { sawIntroduction = true; XCTAssertEqual(state.screenID,"MAT-A-P-01-S1") }
+                    state = try core.advance(packJSON:lesson.packJSON,rulesJSON:lesson.rulesJSON,stateJSON:state.stateJSON,contextJSON:encode(values))
+                    continue
+                }
+                XCTAssertEqual(state.phase,"step")
+                let item = try XCTUnwrap(lesson.items.first{$0.id == state.currentItemID})
+                let suffix = String(item.id.suffix(3))
+                values["answer_id"] = "ios-reviewed-\(language)-\(history.count)"
+                let result = try core.submit(packJSON:lesson.packJSON,rulesJSON:lesson.rulesJSON,stateJSON:state.stateJSON,responseJSON:encode(XCTUnwrap(responses[suffix])),contextJSON:encode(values),historyJSON:encode(history))
+                let event = try XCTUnwrap(JSONSerialization.jsonObject(with:Data(result.eventPayload.utf8)) as? [String:Any])
+                XCTAssertEqual(event["item_id"] as? String,item.id)
+                XCTAssertEqual(event["lang"] as? String,language)
+                XCTAssertEqual(event["review_status"] as? String,"approved")
+                XCTAssertFalse(event["synthetic"] as? Bool ?? false)
+                XCTAssertEqual(event["outcome"] as? String,item.type == "info_card" ? "not_assessed":"correct")
+                if item.type != "info_card" { scoredAnswers += 1 }
+                history.append(result.eventPayload); state = result.next
+            }
+            XCTAssertTrue(sawIntroduction)
+            XCTAssertTrue(state.completed,"The actual \(language) planner must finish its session.")
+            XCTAssertGreaterThan(scoredAnswers,0)
+        }
+    }
+
+    /// Pure Kotlin/Native session check: no account transport, mailbox, journal, or backend writes.
+    func testActualNativeSharedCoreStartsAndGradesReviewedMathWithoutAccount() throws {
+        let lesson = try XCTUnwrap(ApprovedLessonLibrary.bundled.lessons.first{$0.language == "en"})
+        XCTAssertEqual(lesson.items.count,14)
+        let core = AppSharedCore.make(); XCTAssertTrue(core.isAvailable)
+        let values = ["unit":"01","lang":"en","learner_id":"ios-curriculum-isolated","session_id":"ios-curriculum-session","app_version":"0.1.0","zone_id":"UTC","timestamp":"2026-11-03T00:00:00Z","screens_seen":"[]","answer_id":"ios-curriculum-answer","time_on_item_ms":"1000"]
+        let context = String(data:try JSONSerialization.data(withJSONObject:values,options:.sortedKeys),encoding:.utf8)!
+        var state = try core.start(packJSON:lesson.packJSON,rulesJSON:lesson.rulesJSON,contextJSON:context,historyJSON:"[]")
+        for _ in 0..<10 {
+            if state.phase == "step" { break }
+            XCTAssertTrue(["screen","feedback"].contains(state.phase))
+            state = try core.advance(packJSON:lesson.packJSON,rulesJSON:lesson.rulesJSON,stateJSON:state.stateJSON,contextJSON:context)
+        }
+        XCTAssertEqual(state.phase,"step")
+        let item = try XCTUnwrap(lesson.items.first{$0.id == state.currentItemID})
+        let isReading = ["info_card","mini_reading"].contains(item.type)
+        let response = isReading ? "{\"kind\":\"choice\",\"option_id\":\"seen\"}":"{\"kind\":\"dont_know\"}"
+        let submission = try core.submit(packJSON:lesson.packJSON,rulesJSON:lesson.rulesJSON,stateJSON:state.stateJSON,responseJSON:response,contextJSON:context,historyJSON:"[]")
+        let event = try XCTUnwrap(JSONSerialization.jsonObject(with:Data(submission.eventPayload.utf8)) as? [String:Any])
+        XCTAssertEqual(event["item_id"] as? String,item.id)
+        XCTAssertEqual(event["track"] as? String,"mat-a-local")
+        XCTAssertEqual(event["content_version"] as? String,"mat-a-local-pemula-0.3")
+        XCTAssertEqual(event["review_status"] as? String,"approved")
+        XCTAssertEqual(event["outcome"] as? String,isReading ? "not_assessed":"dont_know")
+        XCTAssertFalse(event["synthetic"] as? Bool ?? false)
+        XCTAssertEqual(event["learner_id"] as? String,"ios-curriculum-isolated")
+    }
+    #endif
     func testActualNativeSharedCoreMatchesJVMGoldenAndThrowsSafely() async throws {
         let resources = Bundle(for:LearningTests.self)
         func read(_ name:String) throws -> String { try String(contentsOf:XCTUnwrap(resources.url(forResource:name,withExtension:"json")),encoding:.utf8) }
