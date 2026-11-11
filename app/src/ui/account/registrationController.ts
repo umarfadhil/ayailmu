@@ -4,6 +4,7 @@
 // the saved address (as its email policy takes it) and a stable Indonesian message only, never a password, code, token or user id, and
 // nothing is stored or logged. One request at a time: an action in another stage, while busy, while inactive or after
 // dispose sends nothing. A newer start, cancel, an inactive owner or dispose drops the reply under way.
+import { LOCAL_DEVELOPMENT, isLocalDevelopmentConfig } from '@/account/localDevelopment';
 import { PRIVATE_QA, PRIVATE_QA_REGISTRATION_POLICY } from '@/account/privateQa';
 import { accountApiOrigin } from '@/account/staging';
 import { accountAuthOrigin, LOCAL_SUPABASE, type EnabledSupabaseConfig, type SupabaseConfig } from '@/account/supabaseConfig';
@@ -74,6 +75,8 @@ export function registrationPolicy(
   if ((flag !== 'on' && flag !== 'confirmed-email' && flag !== PRIVATE_QA_REGISTRATION_POLICY) || typeof config !== 'object' || config === null) return null;
   const { enabled, provider, environment, productionAccounts, privateQa, apiBaseUrl, authUrl } = config as Partial<EnabledSupabaseConfig>;
   if (enabled !== true || provider !== LOCAL_SUPABASE) return null;
+  if (environment === LOCAL_DEVELOPMENT) return flag === 'confirmed-email' && isLocalDevelopmentConfig(config) ? 'confirmed-email' : null;
+  if ((config as Partial<EnabledSupabaseConfig>).localDevelopment !== undefined) return null;
   if (flag === PRIVATE_QA_REGISTRATION_POLICY) {
     if (environment !== PRIVATE_QA || privateQa !== true || productionAccounts !== undefined) return null;
     const api = originOf(() => accountApiOrigin(apiBaseUrl, PRIVATE_QA, undefined, true));

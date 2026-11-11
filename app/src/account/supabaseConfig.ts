@@ -21,6 +21,7 @@
 //   and never productionAccounts or privateQa. The learning-beta flags change nothing in another profile's build.
 // Anything absent or unsafe, any other profile and the legacy Firebase emulator variables on their own included, turns
 // account sync off before any client is built; guest learning never depends on it.
+import { LOCAL_DEVELOPMENT, LOCAL_DEVELOPMENT_AUTH_ORIGIN, LOCAL_DEVELOPMENT_API_ORIGIN, localDevelopmentOrigin } from '@/account/localDevelopment';
 import type { DisabledAccountConfig } from '@/account/config';
 import { LEARNING_BETA } from '@/account/learningBeta';
 import { localPilotOrigin, PILOT_API_PORT } from '@/account/loopback';
@@ -35,6 +36,7 @@ export { PRIVATE_QA, PRIVATE_QA_API_ORIGIN, PRIVATE_QA_AUTH_ORIGIN };
 
 /** The build-time variables read. Expo inlines EXPO_PUBLIC_* values when it bundles the app. */
 export interface SupabaseEnv {
+  EXPO_PUBLIC_LOCAL_DEVELOPMENT?: string;
   EXPO_PUBLIC_AUTH_PROVIDER?: string;
   /**
    * Exactly "staging" for a staging build, exactly "production" (with the production flag) for a production one, or
@@ -70,9 +72,11 @@ export interface EnabledSupabaseConfig {
    * 'private-qa' in a private QA build, whose two origins are then the fixed HTTPS loopback roots; 'learning-beta' in a
    * learning-beta build, whose two origins are then public root origins; absent for the local default.
    */
-  environment?: typeof STAGING | 'production' | typeof PRIVATE_QA | typeof LEARNING_BETA;
+  environment?: typeof STAGING | 'production' | typeof PRIVATE_QA | typeof LEARNING_BETA | typeof LOCAL_DEVELOPMENT;
   /** Only in a production build, and then exactly true: the explicit capability the API client and the Auth adapter require beside 'production'. */
   productionAccounts?: true;
+  /** Normal local native accounts; never a production/private-QA/learning-beta capability. */
+  localDevelopment?: true;
   /** Only in a private QA build, and then exactly true: the explicit capability beside 'private-qa' (never with productionAccounts). */
   privateQa?: true;
   /** Only in a learning-beta build, and then exactly true: the explicit capability beside 'learning-beta' (never with productionAccounts or privateQa). */
@@ -108,7 +112,9 @@ export function localAuthOrigin(value: unknown): string | null {
  * privateQa), a public root origin as in staging; that capability beside any other profile allows nothing, and the
  * four-argument answer of every profile is unchanged. Otherwise null.
  */
-export function accountAuthOrigin(value: unknown, environment: unknown, productionAccounts?: unknown, privateQa?: unknown, learningBeta?: unknown): string | null {
+export function accountAuthOrigin(value: unknown, environment: unknown, productionAccounts?: unknown, privateQa?: unknown, learningBeta?: unknown, localDevelopment?: unknown): string | null {
+  if (environment === LOCAL_DEVELOPMENT) return localDevelopmentOrigin(value, LOCAL_DEVELOPMENT_AUTH_ORIGIN, productionAccounts, privateQa, learningBeta, localDevelopment);
+  if (localDevelopment !== undefined) return null;
   if (learningBeta !== undefined && environment !== LEARNING_BETA) return null;
   if (environment === LEARNING_BETA) return learningBeta === true && productionAccounts === undefined && privateQa === undefined ? stagingOrigin(value) : null;
   if (environment === PRIVATE_QA) return privateQaOrigin(value, PRIVATE_QA_AUTH_ORIGIN, productionAccounts, privateQa);
@@ -223,8 +229,25 @@ function loadLearningBetaConfig(env: SupabaseEnv): SupabaseConfig {
  * are staging root origins instead. Anything else turns account sync off instead of throwing, with a reason that names
  * the setting, never its value.
  */
+function loadLocalDevelopmentConfig(env: SupabaseEnv): SupabaseConfig {
+  const expected = {
+    EXPO_PUBLIC_LOCAL_DEVELOPMENT: 'on', EXPO_PUBLIC_APP_MODE: 'tester',
+    EXPO_PUBLIC_PRODUCTION_ACCOUNTS: 'off', EXPO_PUBLIC_PRIVATE_QA: 'off',
+    EXPO_PUBLIC_PRIVATE_BETA: 'off', EXPO_PUBLIC_LEARNING_BETA: 'off',
+    EXPO_PUBLIC_GOOGLE_SIGN_IN: 'off', EXPO_PUBLIC_PASSWORD_RECOVERY: 'off',
+    EXPO_PUBLIC_ACCOUNT_REGISTRATION: 'confirmed-email',
+  } as const;
+  for (const [key, value] of Object.entries(expected)) {
+    if (env[key as keyof SupabaseEnv] !== value) return off(key as keyof SupabaseEnv, env[key as keyof SupabaseEnv], `exactly "${value}" in local development`);
+  }
+  if (env.EXPO_PUBLIC_API_BASE_URL !== LOCAL_DEVELOPMENT_API_ORIGIN) return off('EXPO_PUBLIC_API_BASE_URL', env.EXPO_PUBLIC_API_BASE_URL, 'the exact local development HTTPS API root');
+  if (env.EXPO_PUBLIC_SUPABASE_AUTH_URL !== LOCAL_DEVELOPMENT_AUTH_ORIGIN) return off('EXPO_PUBLIC_SUPABASE_AUTH_URL', env.EXPO_PUBLIC_SUPABASE_AUTH_URL, 'the exact local development HTTPS Auth root');
+  return { enabled: true, provider: LOCAL_SUPABASE, environment: LOCAL_DEVELOPMENT, localDevelopment: true, apiBaseUrl: LOCAL_DEVELOPMENT_API_ORIGIN, authUrl: LOCAL_DEVELOPMENT_AUTH_ORIGIN };
+}
+
 export function loadSupabaseConfig(
   env: SupabaseEnv = {
+    EXPO_PUBLIC_LOCAL_DEVELOPMENT: process.env.EXPO_PUBLIC_LOCAL_DEVELOPMENT,
     EXPO_PUBLIC_AUTH_PROVIDER: process.env.EXPO_PUBLIC_AUTH_PROVIDER,
     EXPO_PUBLIC_ACCOUNT_ENV: process.env.EXPO_PUBLIC_ACCOUNT_ENV,
     EXPO_PUBLIC_PRODUCTION_ACCOUNTS: process.env.EXPO_PUBLIC_PRODUCTION_ACCOUNTS,
@@ -240,6 +263,8 @@ export function loadSupabaseConfig(
   }
 ): SupabaseConfig {
   if (env.EXPO_PUBLIC_AUTH_PROVIDER !== LOCAL_SUPABASE) return off('EXPO_PUBLIC_AUTH_PROVIDER', env.EXPO_PUBLIC_AUTH_PROVIDER, LOCAL_SUPABASE);
+  if (env.EXPO_PUBLIC_ACCOUNT_ENV === LOCAL_DEVELOPMENT) return loadLocalDevelopmentConfig(env);
+  if (env.EXPO_PUBLIC_LOCAL_DEVELOPMENT === 'on') return off('EXPO_PUBLIC_LOCAL_DEVELOPMENT', env.EXPO_PUBLIC_LOCAL_DEVELOPMENT, 'only the local-development profile');
   if (env.EXPO_PUBLIC_ACCOUNT_ENV === 'production' && env.EXPO_PUBLIC_PRODUCTION_ACCOUNTS === 'on') return loadProductionConfig(env);
   if (env.EXPO_PUBLIC_ACCOUNT_ENV === PRIVATE_QA) return loadPrivateQaConfig(env);
   if (env.EXPO_PUBLIC_ACCOUNT_ENV === LEARNING_BETA) return loadLearningBetaConfig(env);

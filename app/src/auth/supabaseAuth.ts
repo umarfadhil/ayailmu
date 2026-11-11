@@ -29,6 +29,7 @@ import {
   type UserResponse,
 } from '@supabase/auth-js';
 import { isSafeGoogleConfig } from '@/account/googleConfig';
+import { LOCAL_DEVELOPMENT } from '@/account/localDevelopment';
 import { LEARNING_BETA } from '@/account/learningBeta';
 import { isPrivateQaRecipient, PRIVATE_QA } from '@/account/privateQa';
 import { accountApiOrigin, STAGING } from '@/account/staging';
@@ -167,7 +168,7 @@ const isConventionalAddress = (email: unknown): email is string => {
  */
 function signInAddressRefusal(email: unknown, profile: RememberedRecord['profile']): AuthErrorCode | null {
   if (profile === PRIVATE_QA) return !isConventionalAddress(email) ? 'invalid_email' : isPrivateQaRecipient(email) ? null : 'private_recipient';
-  if (profile === 'production') return isConventionalAddress(email) ? null : 'invalid_email';
+  if (profile === 'production' || profile === LOCAL_DEVELOPMENT) return isConventionalAddress(email) ? null : 'invalid_email';
   if (profile === LEARNING_BETA) return isConventionalAddress(email) ? null : 'invalid_email';
   return isSyntheticAddress(email) ? null : 'not_synthetic';
 }
@@ -189,7 +190,7 @@ interface RememberedRecord {
   installation: string;
   auth: string;
   api: string;
-  profile: 'local' | 'staging' | 'production' | typeof PRIVATE_QA | typeof LEARNING_BETA;
+  profile: 'local' | 'staging' | 'production' | typeof PRIVATE_QA | typeof LEARNING_BETA | typeof LOCAL_DEVELOPMENT;
   uid: string;
   email: string;
   accountId: string;
@@ -550,18 +551,19 @@ export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
   const productionAccounts = supabase ? config.productionAccounts : undefined;
   const privateQa = supabase ? config.privateQa : undefined;
   const learningBeta = supabase ? config.learningBeta : undefined;
-  const apiOrigin = supabase ? accountApiOrigin(config.apiBaseUrl, environment, productionAccounts, privateQa, learningBeta) : null;
-  const authUrl = supabase && apiOrigin !== null ? accountAuthOrigin(config.authUrl, environment, productionAccounts, privateQa, learningBeta) : null;
-  const twoRoots = environment === 'production' || environment === PRIVATE_QA || environment === LEARNING_BETA;
+  const localDevelopment = supabase ? config.localDevelopment : undefined;
+  const apiOrigin = supabase ? accountApiOrigin(config.apiBaseUrl, environment, productionAccounts, privateQa, learningBeta, localDevelopment) : null;
+  const authUrl = supabase && apiOrigin !== null ? accountAuthOrigin(config.authUrl, environment, productionAccounts, privateQa, learningBeta, localDevelopment) : null;
+  const twoRoots = environment === LOCAL_DEVELOPMENT || environment === 'production' || environment === PRIVATE_QA || environment === LEARNING_BETA;
   if (!authUrl || !apiOrigin || (twoRoots && authUrl === apiOrigin)) {
     throw new Error('createSupabaseAuth needs a local or staging Supabase Auth configuration; nothing was sent.');
   }
   const injected = options.fetch;
-  if (environment === PRIVATE_QA && typeof injected !== 'function') {
+  if ((environment === PRIVATE_QA || environment === LOCAL_DEVELOPMENT) && typeof injected !== 'function') {
     throw new Error('createSupabaseAuth needs an injected fetch for the private QA profile; nothing was sent.');
   }
   const googleOptions = options.google;
-  if (googleOptions !== undefined && (environment === PRIVATE_QA || !isSafeGoogleConfig(googleOptions.config, environment, productionAccounts) || !googleOptions.store)) {
+  if (googleOptions !== undefined && (environment === PRIVATE_QA || environment === LOCAL_DEVELOPMENT || !isSafeGoogleConfig(googleOptions.config, environment, productionAccounts) || !googleOptions.store)) {
     throw new Error('createSupabaseAuth needs a safe Google sign-in configuration; nothing was sent.');
   }
   const vault = options.remember?.vault ?? null;
@@ -585,7 +587,7 @@ export function createSupabaseAuth(options: SupabaseAuthOptions): SupabaseAuth {
   const privateCrypto: RecoveryCrypto | null = environment === PRIVATE_QA && isRecoveryCrypto(recoveryCrypto) ? recoveryCrypto : null;
   /** The profile a remembered record is bound to: the configuration's own, never a guess from an address. */
   const profile: RememberedRecord['profile'] =
-    environment === 'production'
+    environment === LOCAL_DEVELOPMENT ? LOCAL_DEVELOPMENT : environment === 'production'
       ? 'production'
       : environment === PRIVATE_QA
         ? PRIVATE_QA

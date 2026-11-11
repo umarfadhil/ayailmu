@@ -124,7 +124,7 @@ function isPrivateProfile(env) {
 }
 
 /** The verified DER of the CA at `caPath` whose DER SHA-256 is `caSha256`; throws (with any message) otherwise. */
-function readPrivateQaCa(caPath, caSha256, io) {
+function readPrivateQaCa(caPath, caSha256, io = DEFAULT_RESOLVE_IO) {
   const bytes = io.readFileSync(caPath);
   if (!Buffer.isBuffer(bytes) || bytes.length === 0 || bytes.length > MAX_PEM_BYTES) throw fail();
   const text = bytes.toString('latin1');
@@ -267,3 +267,6 @@ function withPrivateQa(config) {
 module.exports = withPrivateQa;
 module.exports.resolvePrivateQaBuild = resolvePrivateQaBuild;
 module.exports.applyPrivateQaResources = applyPrivateQaResources;
+
+// Shared certificate validator: no account, recipient or registration policy input.
+module.exports.readPrivateQaCa = readPrivateQaCa;

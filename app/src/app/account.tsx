@@ -4,6 +4,7 @@ import { useCallback, useEffect, type EffectCallback } from 'react';
 import { PRIVATE_QA } from '@/account/privateQa';
 import { loadSupabaseConfig } from '@/account/supabaseConfig';
 import { useAccount } from '@/ui/AccountContext';
+import { AccountConnectionUnavailable } from '@/ui/account/AccountConnectionUnavailable';
 import { AccountPanel } from '@/ui/account/AccountPanel';
 import { BackLink } from '@/ui/BackLink';
 import { Btn, Notice, Page } from '@/ui/components';
@@ -46,6 +47,8 @@ function AccountRoute() {
       <BackLink />
       {account.enabled ? (
         deleting ? <Notice tone="info">{account.deletion?.state.phase === 'completed' ? 'Akun sudah dihapus. Lihat status di Data akun.' : 'Penghapusan akun sedang ditangani. Periksa status di Data akun.'}</Notice> : <AccountPanel {...account.panel} />
+      ) : account.connectionUnavailable ? (
+        <AccountConnectionUnavailable onRetry={account.connectionUnavailable.onRetry} />
       ) : privateUnavailable ? (
         <Notice tone="info" testID="account-private-unavailable">
           Koneksi akun belum tersedia di build ini.

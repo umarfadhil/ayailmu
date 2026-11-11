@@ -3,6 +3,7 @@
 // header: no cookies (credentials: 'omit'), no redirects, nothing in URLs. Every request settles within one deadline
 // that covers its reply body too, or at once when its caller aborts. Errors carry the HTTP status and the API's stable
 // problem code, never response text or the token.
+import { LOCAL_DEVELOPMENT } from '@/account/localDevelopment';
 import { PRIVATE_QA } from '@/account/privateQa';
 import { accountApiOrigin } from '@/account/staging';
 import { isCanonicalUuid } from '@/account/ids';
@@ -114,6 +115,7 @@ export function createApiClient(options: {
   environment?: string;
   /** The explicit production capability: exactly true, beside exactly "production", for the production API's root origin. */
   productionAccounts?: boolean;
+  localDevelopment?: boolean;
   /** The explicit private QA capability: exactly true, beside exactly "private-qa", for the private QA API root. */
   privateQa?: boolean;
   /** The explicit learning-beta capability: exactly true, beside exactly "learning-beta" alone, for its API root origin. */
@@ -127,9 +129,9 @@ export function createApiClient(options: {
   // unknown profile, never receives a token. The private profile also needs an injected fetch.
   const environment = options?.environment;
   const injected = options?.fetch;
-  const base = accountApiOrigin(options?.baseUrl, environment, options?.productionAccounts, options?.privateQa, options?.learningBeta);
+  const base = accountApiOrigin(options?.baseUrl, environment, options?.productionAccounts, options?.privateQa, options?.learningBeta, options?.localDevelopment);
   if (!base) throw new Error("createApiClient needs its profile's account API address; nothing was sent.");
-  if (environment === PRIVATE_QA && typeof injected !== 'function') throw new Error('createApiClient needs an injected fetch for the private QA profile; nothing was sent.');
+  if ((environment === PRIVATE_QA || environment === LOCAL_DEVELOPMENT) && typeof injected !== 'function') throw new Error('createApiClient needs an injected fetch for the private QA profile; nothing was sent.');
 
   /**
    * One authenticated request with exactly `body`: the token in the Authorization header only, no cookies, no

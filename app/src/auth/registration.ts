@@ -20,6 +20,7 @@ import {
   type GoTrueClientOptions,
 } from '@supabase/auth-js';
 import { isCanonicalUuid } from '@/account/ids';
+import { LOCAL_DEVELOPMENT, isLocalDevelopmentConfig } from '@/account/localDevelopment';
 import { isPrivateQaRecipient, PRIVATE_QA, PRIVATE_QA_REGISTRATION_POLICY } from '@/account/privateQa';
 import { accountApiOrigin, STAGING } from '@/account/staging';
 import { accountAuthOrigin, LOCAL_SUPABASE, type EnabledSupabaseConfig } from '@/account/supabaseConfig';
@@ -330,12 +331,17 @@ export function createRegistration(options: RegistrationOptions): Registration {
   const requestedPolicy: unknown = options?.emailPolicy;
   const policy = requestedPolicy === undefined ? 'synthetic' : requestedPolicy;
   const injected = options?.fetch;
+  if (options?.config?.localDevelopment !== undefined && environment !== LOCAL_DEVELOPMENT) {
+    throw new Error('Local development account capability belongs only to its own profile; nothing was sent.');
+  }
   const supabase = enabled === true && provider === LOCAL_SUPABASE;
   let authUrl: string | null = null;
   if (supabase && policy === 'synthetic' && (environment === undefined || environment === STAGING) && productionAccounts === undefined && privateQa === undefined) {
     const apiOrigin = accountApiOrigin(apiBaseUrl, environment);
     authUrl = apiOrigin !== null ? accountAuthOrigin(configuredAuthUrl, environment) : null;
-  } else if (supabase && policy === 'confirmed-email' && environment === 'production' && productionAccounts === true && privateQa === undefined) {
+  } else if (supabase && policy === 'confirmed-email' && environment === LOCAL_DEVELOPMENT && isLocalDevelopmentConfig(options.config) && typeof injected === 'function') {
+    authUrl = configuredAuthUrl;
+  } else if (supabase && policy === 'confirmed-email' && (options.config as Partial<EnabledSupabaseConfig>).localDevelopment === undefined && environment === 'production' && productionAccounts === true && privateQa === undefined) {
     const apiOrigin = accountApiOrigin(apiBaseUrl, environment, productionAccounts);
     const authOrigin = apiOrigin !== null ? accountAuthOrigin(configuredAuthUrl, environment, productionAccounts) : null;
     authUrl = authOrigin !== apiOrigin ? authOrigin : null;

@@ -10,6 +10,7 @@ import { normalStarterBuild } from '@/config/normalStarter';
 import type { AppMode } from '@/config/rules';
 import type { AccountSyncProgress } from '@/sync/accountProgress';
 import { useAccount } from '@/ui/AccountContext';
+import { AccountConnectionUnavailable } from '@/ui/account/AccountConnectionUnavailable';
 import { POSITION_NOTE, localSyncLines, serverAnswersText, type ConnectedProfile } from '@/ui/account/AccountPanel';
 import { useApp } from '@/ui/AppContext';
 import { Btn, Chip, EmptyState, P, Page, Wordmark } from '@/ui/components';
@@ -71,8 +72,8 @@ export function StarterHome({ reviewed, audience = 'private-beta' }: { reviewed:
   ) : (
     <Btn testID="beta-starter-start" label="Mulai" icon="arrow-forward" onPress={() => router.push('/consent')} />
   );
-  const accountEntry = account.enabled ? (
-    <Btn testID="welcome-account" kind="quiet" label={account.signedIn ? 'Akun' : 'Masuk ke akun'} onPress={() => router.push('/account' as Href)} />
+  const accountEntry = account.enabled || account.connectionUnavailable ? (
+    <Btn testID="welcome-account" kind="quiet" label={account.signedIn || !account.enabled ? 'Akun' : 'Masuk ke akun'} onPress={() => router.push('/account' as Href)} />
   ) : null;
   // Only a reviewed Home, for a signed-in account whose profile is connected and whose caller reports a progress model
   // (null: no local journal). A legacy profile without one, a guest or a pending review shows no account facts.
@@ -106,6 +107,7 @@ export function StarterHome({ reviewed, audience = 'private-beta' }: { reviewed:
       ) : (
         <StarterPending />
       )}
+      {!account.enabled && account.connectionUnavailable ? <AccountConnectionUnavailable onRetry={account.connectionUnavailable.onRetry} /> : null}
       {sync}
     </Page>
   );

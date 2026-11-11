@@ -23,6 +23,8 @@ import { createAccountDeletionController, type AccountDeletionController, type A
 import { accountNamespace, copyGuestToAccount, GUEST_NAMESPACE, type Namespace, type OpenedAccountDataset, type RawSource } from '@/account/datasets';
 import { loadGoogleConfig } from '@/account/googleConfig';
 import { isCanonicalUuid } from '@/account/ids';
+import { LOCAL_DEVELOPMENT } from '@/account/localDevelopment';
+import { deviceLocalDevelopmentNetwork } from '@/auth/localDevelopmentNetwork';
 import { LEARNING_BETA } from '@/account/learningBeta';
 import { openAccountDataset } from '@/account/openAccountDataset';
 import { PRIVATE_QA } from '@/account/privateQa';
@@ -66,7 +68,7 @@ function googleUnavailableNote(settings: object): string {
 }
 
 export interface AccountContextValue {
-  /** The account service (the local one, or a staging build's staging server) is configured for this build. */
+  /** The configured account service has the transport required to build its clients. */
   enabled: boolean;
   /** A signed-in, verified account. */
   signedIn: boolean;
@@ -82,6 +84,8 @@ export interface AccountContextValue {
   privateQa?: true;
   /** Only while that private build's transport is unavailable: why, as its preparation named it. Nothing was built. */
   unavailableReason?: PrivateQaNetworkFailure;
+  /** A configured local service whose required device transport is unavailable; retry only rechecks readiness, sending nothing. */
+  connectionUnavailable?: { onRetry(): void };
 }
 
 export interface AccountDeletionModel {
@@ -156,6 +160,7 @@ const STAGING_SERVICE: AccountService = { name: 'server akun staging', account: 
  * The private native QA build's account service: ordinary account names, never the local service's, and no claim that it is
  * production or reachable. Its adult-profile consent statement is still the local one's, so it records that version.
  */
+const LOCAL_DEVELOPMENT_SERVICE: AccountService = { name: 'layanan akun lokal', account: 'akun', consentVersion: LOCAL_ACCOUNT_CONSENT_VERSION };
 const PRIVATE_QA_SERVICE: AccountService = { name: 'layanan akun', account: 'akun', consentVersion: LOCAL_ACCOUNT_CONSENT_VERSION };
 /**
  * The production account service. Its consent version is a distinct, UNREVIEWED draft marker for keeping a learner's
@@ -348,7 +353,7 @@ export function AccountProvider({
   // in a production one, 'learning-beta' in a learning-beta one, else absent.
   const environment = config.enabled ? config.environment : undefined;
   const service =
-    environment === 'production'
+    environment === LOCAL_DEVELOPMENT ? LOCAL_DEVELOPMENT_SERVICE : environment === 'production'
       ? PRODUCTION_SERVICE
       : environment === LEARNING_BETA
         ? LEARNING_BETA_SERVICE
@@ -357,13 +362,18 @@ export function AccountProvider({
           : environment === PRIVATE_QA
             ? PRIVATE_QA_SERVICE
             : LOCAL_SERVICE;
-  // The private native QA transport, decided once per configuration by the device port: off for an ordinary or disabled
+  // The private native QA transport, decided per configuration by the device port: off for an ordinary or disabled
   // profile (its clients keep their usual transport), else the one bound fetch every account client gets, or unavailable.
-  const privateNetwork = useMemo(() => devicePrivateQaNetwork(config), [config]);
+  const localDevelopmentProfile = config.enabled && (config.environment === LOCAL_DEVELOPMENT || config.localDevelopment !== undefined);
+  const [transportCheck, setTransportCheck] = useState(0);
+  const privateNetwork = useMemo(() => localDevelopmentProfile ? deviceLocalDevelopmentNetwork(config) : devicePrivateQaNetwork(config), [config, localDevelopmentProfile, transportCheck]);
   const privateFetch = privateNetwork.state === 'ready' ? privateNetwork.fetch : undefined;
   // An explicitly private profile builds no account client without that fetch: never a fallback to the global one.
-  const privateProfile = privateNetwork.state !== 'off' || (config.enabled && (config.environment === PRIVATE_QA || config.privateQa !== undefined));
-  const privateBlocked = privateProfile && privateFetch === undefined;
+  const privateProfile = !localDevelopmentProfile && (privateNetwork.state !== 'off' || (config.enabled && (config.environment === PRIVATE_QA || config.privateQa !== undefined)));
+  const privateBlocked = (privateProfile || localDevelopmentProfile) && privateFetch === undefined;
+  const retryConnection = useCallback(() => {
+    if (localDevelopmentProfile && privateBlocked) setTransportCheck((check) => check + 1);
+  }, [localDevelopmentProfile, privateBlocked]);
   // A normal production account service (never the private profile or the learning beta): the only one whose optional Google
   // and recovery check for secure crypto, and say safely why they cannot run. Only an explicit «on» asks for either.
   const productionService = config.enabled && !privateProfile && config.environment === 'production' && config.learningBeta !== true;
@@ -373,7 +383,7 @@ export function AccountProvider({
   // and cannot run it keeps no service and a safe note instead (a missing or unsafe callback, browser, store or secure
   // crypto, or a setup that throws): its email sign-in and registration never depend on it. Elsewhere nothing is caught.
   const googleSetup = useMemo(() => {
-    if (!config.enabled || privateProfile) return { service: null, note: undefined };
+    if (!config.enabled || privateProfile || localDevelopmentProfile) return { service: null, note: undefined };
     const requested = productionService && process.env.EXPO_PUBLIC_GOOGLE_SIGN_IN === 'on';
     if (productionService && !requested) return { service: null, note: undefined };
     const setup = () => {
@@ -393,7 +403,7 @@ export function AccountProvider({
     } catch {
       return { service: null, note: GOOGLE_UNAVAILABLE_NOTE };
     }
-  }, [config, googleBrowser, googleStore, privateProfile, productionService]);
+  }, [config, googleBrowser, googleStore, privateProfile, localDevelopmentProfile, productionService]);
   const google = googleSetup.service;
   // Remembering an email sign-in: only with the account service on, in a build that turns it on, with a secure vault.
   const vault = useMemo(() => {
@@ -440,13 +450,15 @@ export function AccountProvider({
       baseUrl: config.apiBaseUrl,
       environment: config.environment,
       productionAccounts: config.productionAccounts,
-      ...(privateFetch ? { fetch: privateFetch, privateQa: true } : {}),
+      ...(privateFetch ? { fetch: privateFetch } : {}),
+      ...(privateProfile ? { privateQa: true } : {}),
+      ...(localDevelopmentProfile ? { localDevelopment: true } : {}),
       ...(config.learningBeta === true ? { learningBeta: true } : {}),
     });
     const session = createAccountSession({ auth, api });
     const conn: SyncConnection = { auth, session, api };
     return { auth, api, session, conn, google };
-  }, [config, google, vault, recoveryOptions, privateBlocked, privateFetch]);
+  }, [config, google, vault, recoveryOptions, privateBlocked, privateFetch, privateProfile, localDevelopmentProfile]);
   // Production only, for a capability the build explicitly turned on that this device cannot run: one safe note each. Off
   // flags and available capabilities add none; nothing here reads a credential or provider detail, or fakes a success.
   const unavailableFeatures = useMemo(() => {
@@ -1499,12 +1511,13 @@ export function AccountProvider({
     void actions.resumeGoogle();
   }, [app.ready, allowNormalStartup, canAutoStart, actions]);
 
-  // A new run restores a remembered email sign-in, once, after the app has opened the guest's dataset.
+  // A new run restores a remembered email sign-in, once, after the guest's dataset and the remembering auth are usable.
+  // An unavailable transport must not consume that opportunity before an explicit readiness retry can build the auth.
   useEffect(() => {
-    if (!app.ready || !allowNormalStartup || !canAutoStart() || restored.current) return;
+    if (!app.ready || !allowNormalStartup || !canAutoStart() || !services?.auth.remembered || restored.current) return;
     restored.current = true;
     void actions.restoreRemembered();
-  }, [app.ready, allowNormalStartup, canAutoStart, actions]);
+  }, [app.ready, allowNormalStartup, canAutoStart, services, actions]);
 
   const value: AccountContextValue = services
     ? {
@@ -1549,6 +1562,8 @@ export function AccountProvider({
     : privateProfile
       ? // Off, with only the reason preparation named: nothing was built, and nothing can reach any fetch.
         { ...OFF, privateQa: true, unavailableReason: privateNetwork.state === 'unavailable' ? privateNetwork.reason : 'configuration' }
-      : OFF;
+      : localDevelopmentProfile && privateBlocked
+        ? { ...OFF, connectionUnavailable: { onRetry: retryConnection } }
+        : OFF;
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

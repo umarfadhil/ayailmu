@@ -3,6 +3,7 @@
 // HTTPS root origins of public DNS names, and a local address never is one. Without the opt-in, local addresses only.
 // Every value is matched whole and taken exactly as written, never normalized (no URL parsing: React Native's URL does
 // not implement its parts), so an address that would need normalizing is refused.
+import { LOCAL_DEVELOPMENT, LOCAL_DEVELOPMENT_API_ORIGIN, localDevelopmentOrigin } from '@/account/localDevelopment';
 import { LEARNING_BETA } from '@/account/learningBeta';
 import { localPilotOrigin, PILOT_API_PORT } from '@/account/loopback';
 import { PRIVATE_QA, PRIVATE_QA_API_ORIGIN, privateQaOrigin } from '@/account/privateQa';
@@ -58,7 +59,9 @@ export function isUnknownAccountEnv(value: unknown): boolean {
  * privateQa), a public root origin as in staging; that capability beside any other profile allows nothing, and the
  * four-argument answer of every profile is unchanged.
  */
-export function accountApiOrigin(value: unknown, environment: unknown, productionAccounts?: unknown, privateQa?: unknown, learningBeta?: unknown): string | null {
+export function accountApiOrigin(value: unknown, environment: unknown, productionAccounts?: unknown, privateQa?: unknown, learningBeta?: unknown, localDevelopment?: unknown): string | null {
+  if (environment === LOCAL_DEVELOPMENT) return localDevelopmentOrigin(value, LOCAL_DEVELOPMENT_API_ORIGIN, productionAccounts, privateQa, learningBeta, localDevelopment);
+  if (localDevelopment !== undefined) return null;
   if (learningBeta !== undefined && environment !== LEARNING_BETA) return null;
   if (environment === LEARNING_BETA) return learningBeta === true && productionAccounts === undefined && privateQa === undefined ? stagingOrigin(value) : null;
   if (environment === PRIVATE_QA) return privateQaOrigin(value, PRIVATE_QA_API_ORIGIN, productionAccounts, privateQa);

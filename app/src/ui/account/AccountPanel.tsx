@@ -77,7 +77,7 @@ export interface AccountPanelProps {
    * names, and only its own registration policy. 'learning-beta': ordinary account and email wording for sign-in only; it never
    * shows sign-up, registration, recovery or Google, whatever else is passed.
    */
-  environment?: 'staging' | 'production' | 'private-qa' | 'learning-beta';
+  environment?: 'staging' | 'production' | 'private-qa' | 'learning-beta' | 'local-development';
   /**
    * Offers an unchecked choice, beside the password, to remember this email sign-in on this device. Only a remembering
    * build with a secure session vault offers it, and never for Google. Each submit then says whether it was ticked.
@@ -118,6 +118,7 @@ interface ServiceWords {
   production?: true;
   /** Only in the private native QA build: its own registration policy only, and no local or staging introduction. */
   privateQa?: true;
+  localDevelopment?: true;
   /** Ordinary email wording (production's, the private QA build's and the learning beta's): no test-account or .test copy. */
   email?: true;
   /** Only in a learning-beta build: its own sign-in-only introduction, and never sign-up, registration, recovery or Google. */
@@ -152,6 +153,7 @@ const PRODUCTION_WORDS: ServiceWords = {
  * stays the local one's, as the consent version the provider records is the statement's. Never production's words, and no
  * claim the service is reachable.
  */
+const LOCAL_DEVELOPMENT_WORDS: ServiceWords = { ...LOCAL_WORDS, title: 'Akun', account: 'akun', email: true, localDevelopment: true };
 const PRIVATE_QA_WORDS: ServiceWords = { ...LOCAL_WORDS, title: 'Akun', account: 'akun', service: 'layanan akun', privateQa: true, email: true };
 
 /**
@@ -360,7 +362,7 @@ export function RecoveryForm({ model, production = false, email: ordinaryEmail =
 export function AccountPanel(props: AccountPanelProps) {
   const { account, busy = null, error = null, signUp = true } = props;
   const words =
-    props.environment === 'production'
+    props.environment === 'local-development' ? LOCAL_DEVELOPMENT_WORDS : props.environment === 'production'
       ? PRODUCTION_WORDS
       : props.environment === 'staging'
         ? STAGING_WORDS
@@ -374,7 +376,7 @@ export function AccountPanel(props: AccountPanelProps) {
   // all, and never sign-up, whatever the caller hands over.
   const policy = props.registration?.emailPolicy;
   const registration =
-    words.learningBeta || (words.production && policy !== 'confirmed-email') || (words.privateQa && policy !== PRIVATE_QA_REGISTRATION_POLICY)
+    words.learningBeta || ((words.production || words.localDevelopment) && policy !== 'confirmed-email') || (words.privateQa && policy !== PRIVATE_QA_REGISTRATION_POLICY)
       ? undefined
       : props.registration;
   const recovery = words.learningBeta ? undefined : props.recovery;
@@ -402,7 +404,7 @@ export function AccountPanel(props: AccountPanelProps) {
             ? registrationIntro(onGoogle !== undefined, words.service, registration.emailPolicy)
             : words.learningBeta
               ? LEARNING_BETA_INTRO
-              : words.production || words.privateQa
+              : words.production || words.localDevelopment || words.privateQa
                 ? 'Masuk dengan akun yang sudah terdaftar. Pendaftaran belum dibuka.'
                 : introNote(signUp, onGoogle !== undefined, words.service)}
         </Text>

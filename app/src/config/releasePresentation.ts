@@ -1,4 +1,5 @@
-// Whether the screens present as a released app rather than a prototype: only a tester build whose real account
+import { isLocalDevelopmentConfig } from '@/account/localDevelopment';
+// Normal account presentation for real email use, including explicit local native development: only a tester build whose real account
 // configuration is a validated production one. The decision always re-reads the environment through
 // loadSupabaseConfig (which already requires local-supabase, the exact production profile and flag, and two distinct
 // strict public HTTPS root origins); an account panel's projected environment is never trusted for it.
@@ -9,5 +10,5 @@ import type { AppMode } from '@/config/rules';
 export function isReleasePresentation(mode: AppMode): boolean {
   if (mode !== 'tester') return false;
   const config = loadSupabaseConfig();
-  return config.enabled === true && config.environment === 'production' && config.productionAccounts === true;
+  return config.enabled === true && ((config.environment === 'production' && config.productionAccounts === true && config.localDevelopment === undefined) || isLocalDevelopmentConfig(config));
 }

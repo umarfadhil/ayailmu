@@ -1,3 +1,4 @@
+import { LOCAL_DEVELOPMENT, isLocalDevelopmentConfig } from '@/account/localDevelopment';
 import { loadSupabaseConfig, type SupabaseEnv } from '@/account/supabaseConfig';
 import { registrationPolicy } from '@/ui/account/registrationController';
 
@@ -20,8 +21,8 @@ const REQUIRED_FLAGS: readonly (readonly [string, readonly string[]])[] = [
   ['EXPO_PUBLIC_NORMAL_USER_STARTER', ['on']],
   ['EXPO_PUBLIC_APP_MODE', ['tester']],
   ['EXPO_PUBLIC_AUTH_PROVIDER', ['local-supabase']],
-  ['EXPO_PUBLIC_ACCOUNT_ENV', ['production']],
-  ['EXPO_PUBLIC_PRODUCTION_ACCOUNTS', ['on']],
+  ['EXPO_PUBLIC_ACCOUNT_ENV', ['production', LOCAL_DEVELOPMENT]],
+  ['EXPO_PUBLIC_PRODUCTION_ACCOUNTS', ['on','off']],
   ['EXPO_PUBLIC_ACCOUNT_REGISTRATION', ['confirmed-email']],
   ['EXPO_PUBLIC_PRIVATE_QA', ['off']],
   ['EXPO_PUBLIC_PRIVATE_BETA', ['off']],
@@ -35,6 +36,7 @@ const REQUIRED_FLAGS: readonly (readonly [string, readonly string[]])[] = [
 // key is named explicitly here rather than spreading or indexing process.env.
 function processEnvSnapshot(): NormalStarterEnv {
   return {
+    EXPO_PUBLIC_LOCAL_DEVELOPMENT: process.env.EXPO_PUBLIC_LOCAL_DEVELOPMENT,
     EXPO_PUBLIC_NORMAL_USER_STARTER: process.env.EXPO_PUBLIC_NORMAL_USER_STARTER,
     EXPO_PUBLIC_APP_MODE: process.env.EXPO_PUBLIC_APP_MODE,
     EXPO_PUBLIC_AUTH_PROVIDER: process.env.EXPO_PUBLIC_AUTH_PROVIDER,
@@ -68,8 +70,7 @@ export function normalStarterBuild(
     const config = loadSupabaseConfig(env);
     if (
       config.enabled !== true ||
-      config.environment !== 'production' ||
-      config.productionAccounts !== true ||
+      !((config.environment === 'production' && config.productionAccounts === true && config.localDevelopment === undefined) || isLocalDevelopmentConfig(config)) ||
       config.privateQa !== undefined ||
       config.learningBeta !== undefined
     ) {
