@@ -1,0 +1,348 @@
+# Local synthetic Compose stack of Amar's adult Arabic app: the API (AYA_MODE=local-compose), its PostgreSQL and its own
+# standalone GoTrue v2.197.0, behind a Caddy front whose TLS comes from Caddy's own local CA, on ONE literal-loopback
+# port. Synthetic local fixtures only: no production, public bind, ACME, host trust store or DNS change.
+#
+# Run it only through deploy/tools/aya_stack.py (prepare, up, status, verify, backup, down; see deploy/README.md). The
+# helper writes the private runtime directory and the --env-file this file reads, which holds names, a port and paths,
+# never a secret. No secret appears in this file, an environment variable, an argument or an image layer: the one-shot
+# aya-secrets-init copies each service's own private files into that service's own volume, with exactly its user and
+# mode, and each service mounts only its own volume.
+#
+# Networks: only aya-proxy is on the ordinary bridge "edge", which carries its loopback-published port (it makes no
+# outbound request: no ACME, no OCSP). Everything else is on internal networks without a route out: api-net (front to
+# API), auth-net (front and API to Auth) and data-net (API, migration, Auth and backup to PostgreSQL). No database, API or
+# Auth port is published.
+
+name: ${AYA_STACK_PROJECT:?run deploy/tools/aya_stack.py prepare first}
+
+x-images:
+  postgres: &postgres-image docker.io/library/postgres:16.15-bookworm@sha256:0ea6700a3b4f0ae6ce746519073558aed4d88a79d8d07622a9a644946c7319c4
+  gotrue: &gotrue-image docker.io/supabase/gotrue:v2.197.0@sha256:1736a63078f5922b198c4cbe50f80ab9a2d3b54fe8b7b6cfb2e9dc5dbbc12c6b
+  caddy: &caddy-image docker.io/library/caddy:2.11.7-alpine@sha256:d8542f48d34a9cf4e4c11a478865229840e87e4c96ea3f439101f31a5d35f75f
+  golang: &golang-image docker.io/library/golang:1.27.2-bookworm@sha256:5cf287a799e6b94384bad13d16b14904c531f51ba65792237e122ce42b392f61
+
+# Every container: no pull, a read-only root, no capability, no privilege gain, no automatic restart, bounded logs and
+# this stack's label. A service adds back only what it needs, by name.
+x-hardened: &hardened
+  pull_policy: never
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+  restart: "no"
+  labels:
+    aya.stack: ${AYA_STACK_LABEL:?}
+  logging:
+    driver: json-file
+    options:
+      max-size: "1m"
+      max-file: "3"
+
+services:
+  # One-shot: copies each service's own synthetic secret files from the private runtime directory (bind-mounted
+  # read-only, where they keep the host user's ownership) into that service's volume, owned by the service's user with
+  # mode 0400, every volume root 0700. Root only for chown and for reading the host user's 0600 files; no network.
+  aya-secrets-init:
+    <<: *hardened
+    image: *postgres-image
+    user: "0:0"
+    cap_add: [CHOWN, DAC_OVERRIDE, FOWNER]
+    network_mode: none
+    entrypoint: ["/bin/sh", "/aya/secrets-init.sh"]
+    volumes:
+      - type: bind
+        source: ${AYA_STACK_SECRETS_DIR:?}
+        target: /in
+        read_only: true
+      - ./secrets-init/secrets-init.sh:/aya/secrets-init.sh:ro
+      - db-secrets:/out/db
+      - auth-secrets:/out/auth
+      - migrate-secrets:/out/migrate
+      - api-secrets:/out/api
+      - backup-secrets:/out/backup
+      - ops-secrets:/out/ops
+      - proxy-data:/out/proxy-data
+    mem_limit: 64m
+    pids_limit: 32
+
+  # PostgreSQL 16: the app database aya_app (schema ayailmu, owned by the migration role) and Auth's database aya_auth
+  # (owned by Auth's dedicated non-superuser role). postgres/initdb creates the roles and grants once, and allows the
+  # bootstrap superuser only over this container's own socket.
+  aya-db:
+    <<: *hardened
+    image: *postgres-image
+    user: "999:999"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD_FILE: /run/aya/db/postgres-password
+      POSTGRES_INITDB_ARGS: "--auth-local=peer --auth-host=scram-sha-256"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - db-secrets:/run/aya/db:ro
+      - ./postgres/initdb:/docker-entrypoint-initdb.d:ro
+    tmpfs:
+      - /var/run/postgresql:uid=999,gid=999,mode=0775,size=8m
+      - /tmp:uid=999,gid=999,mode=1777,size=64m
+    networks: [data-net]
+    healthcheck:
+      test: ["CMD", "pg_isready", "--host=/var/run/postgresql", "--username=postgres", "--dbname=postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    depends_on:
+      aya-secrets-init:
+        condition: service_completed_successfully
+    mem_limit: 512m
+    cpus: 1.0
+    pids_limit: 256
+    stop_grace_period: 30s
+
+  # One-shot migration job, as the app schema's owner: applies the embedded migrations and prints only the version.
+  aya-migrate:
+    <<: *hardened
+    image: aya-amar-api:${AYA_STACK_LABEL:?}
+    user: "65532:65532"
+    entrypoint: ["/ayailmu-migrate"]
+    environment:
+      AYA_DATABASE_URL_FILE: /run/aya/migrate/database-url
+      AYA_DB_HOSTS: aya-db
+      AYA_DB_SCHEMA: ayailmu
+    volumes:
+      - migrate-secrets:/run/aya/migrate:ro
+    networks: [data-net]
+    depends_on:
+      aya-secrets-init:
+        condition: service_completed_successfully
+      aya-db:
+        condition: service_healthy
+    mem_limit: 128m
+    pids_limit: 64
+
+  # Standalone GoTrue as aya_auth_owner. Its secret settings (database URL, signing keys, JWT secret) are exported from
+  # its own private files by auth/auth-entrypoint.sh; only these non-secret settings are in its configuration. Sign-up,
+  # phone, anonymous and every social provider are off, and no mail is sent: users are admin-created .test fixtures.
+  aya-auth:
+    <<: *hardened
+    image: *gotrue-image
+    user: "1000:1000"
+    entrypoint: ["/bin/sh", "/aya/auth-entrypoint.sh"]
+    environment:
+      GOTRUE_DB_DRIVER: postgres
+      GOTRUE_DB_NAMESPACE: auth
+      GOTRUE_DB_MAX_POOL_SIZE: "5"
+      GOTRUE_API_HOST: 0.0.0.0
+      PORT: "9999"
+      API_EXTERNAL_URL: https://${AYA_STACK_AUTH_HOST:?}:${AYA_STACK_PORT:?}
+      GOTRUE_SITE_URL: https://${AYA_STACK_APP_HOST:?}
+      GOTRUE_JWT_ISSUER: ${AYA_STACK_ISSUER:?}
+      GOTRUE_JWT_AUD: authenticated
+      GOTRUE_JWT_ADMIN_ROLES: service_role
+      GOTRUE_JWT_EXP: "3600"
+      GOTRUE_DISABLE_SIGNUP: "true"
+      GOTRUE_EXTERNAL_EMAIL_ENABLED: "true"
+      GOTRUE_MAILER_AUTOCONFIRM: "false"
+      GOTRUE_EXTERNAL_PHONE_ENABLED: "false"
+      GOTRUE_EXTERNAL_ANONYMOUS_USERS_ENABLED: "false"
+      GOTRUE_TRACING_ENABLED: "false"
+      GOTRUE_METRICS_ENABLED: "false"
+    volumes:
+      - auth-secrets:/run/aya/auth:ro
+      - ./auth/auth-entrypoint.sh:/aya/auth-entrypoint.sh:ro
+    networks: [auth-net, data-net]
+    healthcheck:
+      test: ["CMD", "/usr/bin/wget", "-q", "-O", "/dev/null", "http://127.0.0.1:9999/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    depends_on:
+      aya-secrets-init:
+        condition: service_completed_successfully
+      aya-db:
+        condition: service_healthy
+    mem_limit: 256m
+    cpus: 0.5
+    pids_limit: 128
+
+  # The API: a scratch image of two static binaries, as 65532 on a read-only root. It only verifies the schema the
+  # migration job brought up to date, and answers exactly the front's API name with that port. No web origin is granted
+  # (AYA_CORS_ORIGINS unset: native clients only).
+  aya-api:
+    <<: *hardened
+    image: aya-amar-api:${AYA_STACK_LABEL:?}
+    build:
+      context: ../backend
+      dockerfile: ../deploy/api/Dockerfile
+      labels:
+        aya.stack: ${AYA_STACK_LABEL:?}
+    user: "65532:65532"
+    environment:
+      AYA_MODE: local-compose
+      AYA_LISTEN: 0.0.0.0:8080
+      AYA_ALLOWED_HOSTS: ${AYA_STACK_API_HOST:?}:${AYA_STACK_PORT:?}
+      AYA_DB_HOSTS: aya-db
+      AYA_DATABASE_URL_FILE: /run/aya/api/database-url
+      AYA_DB_SCHEMA: ayailmu
+      AYA_SUPABASE_URL: http://aya-auth:9999
+      AYA_AUTH_HOSTS: aya-auth:9999
+      AYA_SUPABASE_ISSUER: ${AYA_STACK_ISSUER:?}
+      AYA_SUPABASE_AUDIENCE: authenticated
+      AYA_SUPABASE_ADMIN_KEY_FILE: /run/aya/api/admin-key
+    volumes:
+      - api-secrets:/run/aya/api:ro
+    networks: [api-net, auth-net, data-net]
+    healthcheck:
+      test: ["CMD", "/ayailmu-api", "probe", "http://127.0.0.1:8080/v1/readyz"]
+      interval: 5s
+      timeout: 8s
+      retries: 12
+      start_period: 20s
+    depends_on:
+      aya-secrets-init:
+        condition: service_completed_successfully
+      aya-migrate:
+        condition: service_completed_successfully
+      aya-db:
+        condition: service_healthy
+      aya-auth:
+        condition: service_healthy
+    mem_limit: 256m
+    cpus: 1.0
+    pids_limit: 128
+
+  # The front: the only published port, on literal 127.0.0.1. The official binary carries the file capability
+  # cap_net_bind_service, so exec fails unless the bounding set keeps NET_BIND_SERVICE: that one capability is kept,
+  # even though the port is high. It runs as 65532 with its CA and certificates in its own volume.
+  aya-proxy:
+    <<: *hardened
+    image: *caddy-image
+    user: "65532:65532"
+    cap_add: [NET_BIND_SERVICE]
+    command: ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
+    environment:
+      AYA_STACK_PORT: ${AYA_STACK_PORT:?}
+      AYA_STACK_API_HOST: ${AYA_STACK_API_HOST:?}
+      AYA_STACK_AUTH_HOST: ${AYA_STACK_AUTH_HOST:?}
+    volumes:
+      - ./proxy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - proxy-data:/data
+    tmpfs:
+      - /config:uid=65532,gid=65532,mode=0700,size=8m
+    ports:
+      - "127.0.0.1:${AYA_STACK_PORT:?}:${AYA_STACK_PORT:?}"
+    networks: [edge, api-net, auth-net]
+    depends_on:
+      aya-secrets-init:
+        condition: service_completed_successfully
+      aya-api:
+        condition: service_healthy
+      aya-auth:
+        condition: service_healthy
+    mem_limit: 128m
+    cpus: 0.5
+    pids_limit: 128
+
+  # Ops one-shot (profile ops): creates, deletes or describes the prepared .test users through Auth's internal admin
+  # API, which the front never serves. curl reads the admin header and each request body from files: nothing secret is
+  # in an argument. It prints statuses and user IDs only.
+  aya-users:
+    <<: *hardened
+    profiles: ["ops"]
+    image: *golang-image
+    user: "65532:65532"
+    entrypoint: ["/bin/sh", "/aya/users.sh"]
+    volumes:
+      - ops-secrets:/run/aya/ops:ro
+      - ./ops/users.sh:/aya/users.sh:ro
+    tmpfs:
+      - /tmp:uid=65532,gid=65532,mode=0700,size=8m
+    networks: [auth-net]
+    mem_limit: 128m
+    pids_limit: 32
+
+  # Ops one-shot (profile ops): prints the owner, mode, type and size of every file of the secret volumes, never a
+  # content. DAC_READ_SEARCH lets it walk each service's 0700 volume root; no network.
+  aya-inspect:
+    <<: *hardened
+    profiles: ["ops"]
+    image: *postgres-image
+    user: "0:0"
+    cap_add: [DAC_READ_SEARCH]
+    network_mode: none
+    entrypoint: ["/bin/sh", "/aya/inspect-secrets.sh"]
+    volumes:
+      - ./ops/inspect-secrets.sh:/aya/inspect-secrets.sh:ro
+      - db-secrets:/probe/db:ro
+      - auth-secrets:/probe/auth:ro
+      - migrate-secrets:/probe/migrate:ro
+      - api-secrets:/probe/api:ro
+      - backup-secrets:/probe/backup:ro
+      - ops-secrets:/probe/ops:ro
+    mem_limit: 64m
+    pids_limit: 32
+
+  # Backup one-shot (profile backup): pg_dump or pg_restore --list as the read-only aya_backup role, writing to stdout
+  # only; the helper writes the owner-only file on the host. Restoring is not part of this slice.
+  aya-backup:
+    <<: *hardened
+    profiles: ["backup"]
+    image: *postgres-image
+    user: "999:999"
+    environment:
+      PGHOST: aya-db
+      PGPORT: "5432"
+      PGUSER: aya_backup
+      PGPASSFILE: /run/aya/backup/pgpass
+      PGSSLMODE: disable
+      PGCONNECT_TIMEOUT: "10"
+    volumes:
+      - backup-secrets:/run/aya/backup:ro
+    tmpfs:
+      - /tmp:uid=999,gid=999,mode=0700,size=64m
+    networks: [data-net]
+    mem_limit: 256m
+    pids_limit: 32
+
+networks:
+  edge:
+    labels:
+      aya.stack: ${AYA_STACK_LABEL:?}
+  api-net:
+    internal: true
+    labels:
+      aya.stack: ${AYA_STACK_LABEL:?}
+  auth-net:
+    internal: true
+    labels:
+      aya.stack: ${AYA_STACK_LABEL:?}
+  data-net:
+    internal: true
+    labels:
+      aya.stack: ${AYA_STACK_LABEL:?}
+
+volumes:
+  db-data:
+    labels:
+      aya.stack: ${AYA_STACK_LABEL:?}
+  db-secrets:
+    labels:
+      aya.stack: ${AYA_STACK_LABEL:?}
+  auth-secrets:
+    labels:
+      aya.stack: ${AYA_STACK_LABEL:?}
+  migrate-secrets:
+    labels:
+      aya.stack: ${AYA_STACK_LABEL:?}
+  api-secrets:
+    labels:
+      aya.stack: ${AYA_STACK_LABEL:?}
+  backup-secrets:
+    labels:
+      aya.stack: ${AYA_STACK_LABEL:?}
+  ops-secrets:
+    labels:
+      aya.stack: ${AYA_STACK_LABEL:?}
+  proxy-data:
+    labels:
+      aya.stack: ${AYA_STACK_LABEL:?}

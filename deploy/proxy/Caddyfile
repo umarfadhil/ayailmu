@@ -1,0 +1,63 @@
+# Front of the local synthetic Compose stack (deploy/compose.yaml). Two exact site names on the one loopback-published
+# port, with certificates from Caddy's own local CA only: no ACME, no OCSP, no install into any trust store, no admin
+# endpoint, no plain-HTTP listener or redirect. A client trusts the exported root (aya_stack.py writes it to the stack's
+# runtime directory) explicitly, in its own process only, and reaches the names through its own resolution to
+# 127.0.0.1: no DNS or hosts file changes. No access log is written, so no request header can reach a log.
+{
+	admin off
+	persist_config off
+	auto_https disable_redirects
+	local_certs
+	skip_install_trust
+	ocsp_stapling off
+	servers {
+		protocols h1 h2
+		timeouts {
+			read_header 10s
+			idle 60s
+		}
+	}
+}
+
+# The API, exactly as it is: it applies its own Host, CORS, HSTS, authentication and body rules. Its largest body is an
+# import of 16 MiB.
+https://{$AYA_STACK_API_HOST}:{$AYA_STACK_PORT} {
+	tls internal
+	request_body {
+		max_size 17MB
+	}
+	reverse_proxy aya-api:8080
+}
+
+# Auth, for the SDK flows the app uses only: password and refresh grants, local logout and the current user. Its admin
+# API, sign-up, recovery, OTP, settings, key set and every other route answer 404 here.
+https://{$AYA_STACK_AUTH_HOST}:{$AYA_STACK_PORT} {
+	tls internal
+	request_body {
+		max_size 64KB
+	}
+	@token {
+		method POST
+		path /token
+	}
+	@logout {
+		method POST
+		path /logout
+	}
+	@user {
+		method GET
+		path /user
+	}
+	handle @token {
+		reverse_proxy aya-auth:9999
+	}
+	handle @logout {
+		reverse_proxy aya-auth:9999
+	}
+	handle @user {
+		reverse_proxy aya-auth:9999
+	}
+	handle {
+		respond 404
+	}
+}
