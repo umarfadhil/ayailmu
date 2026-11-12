@@ -238,8 +238,7 @@ class DefaultSettingsDataSource
 
         override suspend fun deleteAll() {
             requireAdult()
-            normalCleaner.deleteDevice()
-            resetter.deleteAll()
+            normalCleaner.deleteDevice { resetter.deleteAll() }
         }
 
         override suspend fun enterTesterCode(code: String): Boolean {

@@ -131,7 +131,7 @@
     <string name="dev_create_profile_en">Create an English test profile</string>
     <string name="dev_delete_all">Delete all data</string>
     <string name="dev_delete_confirm_title">Delete all data?</string>
-    <string name="dev_delete_confirm_body">Every profile, answer and saved session on this phone will be deleted. This cannot be undone.</string>
+    <string name="dev_delete_confirm_body">Every profile, answer, saved session and account-deletion recovery proof on this phone will be deleted. This does not delete server data or cancel a server deletion already requested. You may lose the ability to check an unfinished deletion here. This cannot be undone.</string>
     <string name="dev_delete_confirm_yes">Delete</string>
     <string name="dev_cancel">Cancel</string>
     <string name="dev_free_tier_off">Simulate the free tier: off (every unit open)</string>
@@ -301,7 +301,7 @@
     <string name="settings_delete_child_title">Delete %1$s\'s profile?</string>
     <string name="settings_delete_child_body">This child profile and all of its answers will be deleted from this phone. Other profiles stay as they are. This cannot be undone.</string>
     <string name="settings_privacy_policy">Privacy policy</string>
-    <string name="settings_font_licence">Arabic typeface: Noto Naskh Arabic, licensed under the SIL Open Font License 1.1. Kana and hanzi stroke data: KanjiVG © Ulrich Apel, licensed under CC BY-SA 3.0.</string>
+    <string name="settings_font_licence">Arabic typeface: Noto Naskh Arabic, licensed under the SIL Open Font License 1.1. Kana and hanzi stroke data: KanjiVG © Ulrich Apel, licensed under CC BY-SA 3.0. Networking: OkHttp and Okio, Apache License 2.0; notices are included with the app.</string>
     <string name="settings_about">About</string>
     <string name="settings_learner_id">Learner ID (long-press to copy)</string>
     <string name="settings_contact">Questions or deletion requests: %1$s</string>
@@ -623,4 +623,26 @@
     <string name="normal_account_mail_unknown">We could not confirm whether the email was sent. Check your inbox before trying again.</string>
     <string name="normal_account_mail_new_required">This form no longer matches the saved request. Check your inbox, or start a new email request.</string>
     <string name="normal_account_new_mail_request">Start a new email request</string>
+    <string name="normal_account_erase_server">Delete server copy</string>
+    <string name="normal_account_erase_retry">Retry server deletion</string>
+    <string name="normal_account_erase_title">Delete the server copy of %1$s?</string>
+    <string name="normal_account_erase_body">This profile, its synced answers and consent records will be permanently removed from the server. History on this phone and your sign-in account remain. A minimal deletion receipt is retained to prevent old retries restoring data. This profile cannot sync again.</string>
+    <string name="normal_account_erase_confirm">Permanently delete server copy</string>
+    <string name="normal_account_erase_pending">Server deletion is not yet confirmed. Sync for this profile is stopped. Sign in again if asked, then retry the same request.</string>
+    <string name="normal_account_erase_done">The server copy was deleted. History on this phone and your sign-in account remain.</string>
+    <string name="normal_account_erase_dependents">This profile still manages child profiles. Delete their server copies first. This request did not delete data.</string>
+    <string name="normal_account_delete_title">Delete account and server data</string>
+    <string name="normal_account_delete_body">Delete the sign-in account %1$s and all its learner profiles, answers, and sync consent on the server, including dependent child profiles? This cannot be undone. Learning on this device stays here. Minimal anti-replay and deletion records remain, and backups are not erased immediately. Keep this app installed until completion so it can securely check the result.</string>
+    <string name="normal_account_delete_confirm">Permanently delete account</string>
+    <string name="normal_account_delete_uploads_stopped">Uploads for this account are stopped. Local learning is kept on this device.</string>
+    <string name="normal_account_delete_unknown">Deletion is not yet confirmed. Uploads are stopped and the same request is saved securely. Check its status or retry after signing in to the same account.</string>
+    <string name="normal_account_delete_identity_pending">Server learning data is erased. Deleting the sign-in account is still pending. You can check here without signing in. Local learning is kept.</string>
+    <string name="normal_account_delete_completed">Account deletion is confirmed: server learning data and the sign-in identity are erased. Local learning stays on this device. Minimal deletion and anti-replay records remain; this does not confirm immediate removal from backups.</string>
+    <string name="normal_account_delete_check">Check deletion status</string>
+    <string name="normal_account_delete_retry">Retry the same deletion request</string>
+    <string name="normal_account_delete_storage_failed">The saved deletion proof cannot be read securely. Account actions are paused to avoid losing or replacing it. Local learning is still available. Do not clear app data while this is unresolved.</string>
+    <string name="normal_account_delete_fresh_auth">Sign in again to the same account, then retry the saved deletion request. You can still check its status without signing in.</string>
+    <string name="normal_account_delete_sign_in">To retry sending this request, sign in to the account that requested deletion. Checking status does not require sign-in.</string>
+    <string name="normal_account_delete_check_failed">Deletion could not be confirmed. The saved request is kept; no new request was created. Check again when connected.</string>
+    <string name="normal_account_delete_storage_retry">Retry reading secure storage</string>
 </resources>

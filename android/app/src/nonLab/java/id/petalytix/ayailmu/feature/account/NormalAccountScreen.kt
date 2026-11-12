@@ -6,6 +6,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -77,7 +79,8 @@ internal fun NormalAccountScreen(state: NormalAccountUiState, events: NormalAcco
             })
             AyaSecondaryButton(stringResource(R.string.normal_account_new_mail_request), events::startNewMailRequest)
         }
-        SyncMessage(state.sync.notice)
+        AccountErasureStatus(state, events)
+        if (!state.sync.accountErasure) SyncMessage(state.sync.notice)
         when {
             state.account.email != null -> OwnerStatus(state, events)
             state.mode == NormalAccountMode.HUB || !state.emailActionsAllowed && state.mode != NormalAccountMode.SIGN_IN -> {
@@ -91,7 +94,41 @@ internal fun NormalAccountScreen(state: NormalAccountUiState, events: NormalAcco
             state.mode == NormalAccountMode.RESET -> Reset(state, events)
         }
         if (state.mode == NormalAccountMode.HUB || state.account.email != null && state.sync.selected != null) {
-            AyaSecondaryButton(stringResource(R.string.action_back), onBack, enabled = !state.busy)
+            AyaSecondaryButton(stringResource(R.string.action_back), onBack, enabled = !state.account.busy && !state.sync.busy && !state.erasure.busy)
+        }
+    }
+}
+
+@Composable
+private fun AccountErasureStatus(state: NormalAccountUiState, events: NormalAccountEvents) {
+    state.erasure.notice?.let { notice ->
+        Text(stringResource(when (notice) {
+            AccountErasureNotice.STORAGE_FAILED -> R.string.normal_account_delete_storage_failed
+            AccountErasureNotice.FRESH_AUTH_REQUIRED -> R.string.normal_account_delete_fresh_auth
+            AccountErasureNotice.SIGN_IN_REQUIRED -> R.string.normal_account_delete_sign_in
+            AccountErasureNotice.CHECK_FAILED -> R.string.normal_account_delete_check_failed
+        }), color = MaterialTheme.colorScheme.error)
+        if (notice == AccountErasureNotice.STORAGE_FAILED) {
+            AyaSecondaryButton(stringResource(R.string.normal_account_delete_storage_retry), events::retryErasureStorage, enabled = !state.erasure.busy && !state.account.busy && !state.sync.busy)
+        }
+        if (notice in setOf(AccountErasureNotice.FRESH_AUTH_REQUIRED, AccountErasureNotice.SIGN_IN_REQUIRED) && state.account.email != null) {
+            AyaSecondaryButton(stringResource(R.string.normal_account_sign_in_again), events::signInAgain, enabled = !state.busy)
+        }
+    }
+    state.erasure.records.forEach { record ->
+        PaperCard {
+            Text(stringResource(R.string.normal_account_delete_title), style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(when (record.phase) {
+                AccountErasurePhase.UNCONFIRMED -> R.string.normal_account_delete_unknown
+                AccountErasurePhase.IDENTITY_PENDING -> R.string.normal_account_delete_identity_pending
+                AccountErasurePhase.COMPLETED -> R.string.normal_account_delete_completed
+            }))
+            if (record.phase != AccountErasurePhase.COMPLETED) {
+                AyaSecondaryButton(stringResource(R.string.normal_account_delete_check), { events.checkAccountErasure(record.request) }, enabled = !state.busy)
+                if (record.phase == AccountErasurePhase.UNCONFIRMED && record.owner == state.sync.owner && state.sync.authenticated) {
+                    AyaSecondaryButton(stringResource(R.string.normal_account_delete_retry), { events.retryAccountErasure(record.request) }, enabled = !state.busy)
+                }
+            }
         }
     }
 }
@@ -174,31 +211,62 @@ private fun Reset(state: NormalAccountUiState, vm: NormalAccountEvents) {
 @Composable
 private fun OwnerStatus(state: NormalAccountUiState, vm: NormalAccountEvents) {
     Text(stringResource(R.string.normal_account_signed_in_as, state.account.email.orEmpty()), style = MaterialTheme.typography.titleMedium)
-    if (state.sync.notice == NormalSyncNotice.FRESH_AUTH_REQUIRED) {
+    if (state.sync.accountErasure) {
+        Text(stringResource(R.string.normal_account_delete_uploads_stopped))
+    } else if (state.sync.notice == NormalSyncNotice.FRESH_AUTH_REQUIRED) {
         Text(stringResource(R.string.normal_account_fresh_auth_required))
         AyaButton(stringResource(R.string.normal_account_sign_in_again), vm::signInAgain, enabled = !state.busy)
     } else if (!state.sync.authenticated) {
         Text(stringResource(R.string.normal_account_session_restore))
         AyaButton(stringResource(R.string.normal_account_restore_action), vm::restoreSession, enabled = !state.busy)
     }
-    state.sync.learners.forEach { learner ->
+    if (!state.sync.accountErasure) state.sync.learners.forEach { learner ->
         val label = state.sync.learnerLabels[learner.clientLearnerId] ?: stringResource(R.string.normal_account_default_learner)
         AyaSecondaryButton(stringResource(R.string.normal_account_learner, label), { vm.selectLearner(learner) }, enabled = !state.busy)
     }
-    state.sync.selected?.let { selected ->
+    if (!state.sync.accountErasure) state.sync.selected?.let { selected ->
         val label = state.sync.learnerLabels[selected.clientLearnerId] ?: stringResource(R.string.normal_account_default_learner)
         Text(stringResource(R.string.normal_account_bound_learner, label))
         Text(stringResource(if (state.sync.enabled) R.string.normal_account_sync_enabled else R.string.normal_account_sync_disabled))
         Text(stringResource(R.string.normal_account_pending, state.sync.pending))
-        if (state.sync.enabled) AyaSecondaryButton(stringResource(R.string.normal_account_disable_sync), vm::disableSync, enabled = !state.busy)
-        else AyaButton(stringResource(R.string.normal_account_enable_sync), vm::enableSync, enabled = !state.busy && state.sync.authenticated)
-        AyaButton(stringResource(R.string.normal_account_sync_now), vm::syncNow, enabled = !state.busy && state.sync.enabled && state.sync.authenticated)
+        if (state.sync.serverCopyErased) Text(stringResource(R.string.normal_account_erase_done))
+        else {
+            if (state.sync.erasurePending) Text(stringResource(R.string.normal_account_erase_pending))
+            else {
+                if (state.sync.enabled) AyaSecondaryButton(stringResource(R.string.normal_account_disable_sync), vm::disableSync, enabled = !state.busy)
+                else AyaButton(stringResource(R.string.normal_account_enable_sync), vm::enableSync, enabled = !state.busy && state.sync.authenticated)
+                AyaButton(stringResource(R.string.normal_account_sync_now), vm::syncNow, enabled = !state.busy && state.sync.enabled && state.sync.authenticated)
+            }
+            var confirmErasure by remember(selected.id, state.sync.owner) { mutableStateOf(false) }
+            AyaSecondaryButton(stringResource(if (state.sync.erasurePending) R.string.normal_account_erase_retry else R.string.normal_account_erase_server), { confirmErasure = true }, enabled = !state.busy && state.sync.authenticated)
+            if (confirmErasure) AlertDialog(
+                onDismissRequest = { confirmErasure = false },
+                title = { Text(stringResource(R.string.normal_account_erase_title, label)) },
+                text = { Text(stringResource(R.string.normal_account_erase_body)) },
+                confirmButton = { TextButton(onClick = { confirmErasure = false; vm.eraseServerCopy(selected.id) }, enabled = !state.busy && state.sync.authenticated) { Text(stringResource(R.string.normal_account_erase_confirm)) } },
+                dismissButton = { TextButton(onClick = { confirmErasure = false }) { Text(stringResource(android.R.string.cancel)) } },
+            )
+        }
         Text(stringResource(R.string.normal_account_no_backfill), style = MaterialTheme.typography.bodySmall)
     }
+    if (!state.sync.accountErasure) {
     var label by rememberSaveable { mutableStateOf("") }
     if (state.sync.pendingCreate) Text(stringResource(R.string.normal_account_create_pending), style = MaterialTheme.typography.bodySmall)
     AyaTextField(label, { label = it }, label = stringResource(R.string.normal_account_new_learner), enabled = !state.busy)
     AyaSecondaryButton(stringResource(R.string.normal_account_create_learner), { vm.createLearner(label, "id") }, enabled = !state.busy && state.sync.authenticated && label.isNotBlank())
+    }
+    if (!state.sync.accountErasure && state.sync.owner != null) {
+        val owner = state.sync.owner
+        var confirmAccountErasure by remember(owner, state.account.email) { mutableStateOf(false) }
+        AyaSecondaryButton(stringResource(R.string.normal_account_delete_title), { confirmAccountErasure = true }, enabled = !state.busy && state.sync.authenticated)
+        if (confirmAccountErasure) AlertDialog(
+            onDismissRequest = { confirmAccountErasure = false },
+            title = { Text(stringResource(R.string.normal_account_delete_title)) },
+            text = { Text(stringResource(R.string.normal_account_delete_body, state.account.email.orEmpty())) },
+            confirmButton = { TextButton(onClick = { confirmAccountErasure = false; vm.eraseAccount(owner) }, enabled = !state.busy && state.sync.authenticated) { Text(stringResource(R.string.normal_account_delete_confirm)) } },
+            dismissButton = { TextButton(onClick = { confirmAccountErasure = false }) { Text(stringResource(android.R.string.cancel)) } },
+        )
+    }
     AyaSecondaryButton(stringResource(R.string.normal_account_logout), vm::signOut, enabled = !state.busy)
 }
 @Composable private fun Message(message: NormalMessage?) {
@@ -222,6 +290,7 @@ private fun OwnerStatus(state: NormalAccountUiState, vm: NormalAccountEvents) {
     if (message != null) Text(stringResource(id), color = MaterialTheme.colorScheme.primary)
 }
 @Composable private fun SyncMessage(message: NormalSyncNotice) {
+    if (message == NormalSyncNotice.SERVER_COPY_ERASED) return // The selected profile already shows its receipt.
     val id = when (message) {
         NormalSyncNotice.SIGNED_OUT -> R.string.normal_account_signed_out
         NormalSyncNotice.READY -> R.string.normal_account_sync_ready
@@ -234,6 +303,8 @@ private fun OwnerStatus(state: NormalAccountUiState, vm: NormalAccountEvents) {
         NormalSyncNotice.NO_APPROVED_CONTENT -> R.string.normal_account_no_approved_content
         NormalSyncNotice.CONTENT_MISMATCH -> R.string.normal_account_content_mismatch
         NormalSyncNotice.CREATE_PENDING_LANGUAGE -> R.string.normal_account_create_pending_language
+        NormalSyncNotice.SERVER_COPY_ERASED -> R.string.normal_account_erase_done
+        NormalSyncNotice.DEPENDENT_LEARNERS -> R.string.normal_account_erase_dependents
         NormalSyncNotice.FAILED -> R.string.normal_account_failed
     }
     Text(stringResource(id), style = MaterialTheme.typography.bodySmall)

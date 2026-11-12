@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-internal enum class NormalSyncNotice { SIGNED_OUT, READY, OFFLINE, LOGIN_REQUIRED, FRESH_AUTH_REQUIRED, SYNCED, DISABLED, CONSENT_UPDATE_REQUIRED, NO_APPROVED_CONTENT, CONTENT_MISMATCH, CREATE_PENDING_LANGUAGE, FAILED }
+internal enum class NormalSyncNotice { SIGNED_OUT, READY, OFFLINE, LOGIN_REQUIRED, FRESH_AUTH_REQUIRED, SYNCED, DISABLED, CONSENT_UPDATE_REQUIRED, NO_APPROVED_CONTENT, CONTENT_MISMATCH, CREATE_PENDING_LANGUAGE, SERVER_COPY_ERASED, DEPENDENT_LEARNERS, FAILED }
 internal data class NormalSyncState(
     val owner: String? = null,
     val authenticated: Boolean = false,
@@ -44,6 +44,9 @@ internal data class NormalSyncState(
     val notice: NormalSyncNotice = NormalSyncNotice.SIGNED_OUT,
     /** An earlier profile creation may have reached the server; creating again retries that same request. */
     val pendingCreate: Boolean = false,
+    val erasurePending: Boolean = false,
+    val serverCopyErased: Boolean = false,
+    val accountErasure: Boolean = false,
 )
 
 /** A create is refused before any remote mutation; raised so [NormalSyncRepository.failed] can report it truthfully. */
@@ -101,6 +104,12 @@ internal class NormalSyncRepository @Inject constructor(
     }
     private suspend fun finishLogin(owner: String, accepted: () -> Boolean) {
         if (!accepted()) return
+        if (engine.accountErasure(owner) != null) {
+            ensureOwnerContext()
+            engine.binding()?.let { if (accepted() && engine.owner() == owner) activate(it.learner, true) }
+            publish()
+            return
+        }
         engine.flushWithdrawals()
         if (!accepted() || engine.owner() != owner) return
         ensureOwnerContext()
@@ -231,6 +240,25 @@ internal class NormalSyncRepository @Inject constructor(
         } finally { if (accepted()) mutable.value = mutable.value.copy(busy = false) }
         }
     }
+    suspend fun eraseServerCopy(learnerId: String) {
+        val accepted = beginAction()
+        actionMutex.withLock {
+            if (!accepted()) return@withLock
+            val owner = engine.owner()
+            try {
+                require(engine.binding()?.learner?.id == learnerId) { "The selected learner changed" }
+                engine.eraseServerCopy(learnerId, confirmed = true, accepted)
+                if (accepted() && engine.owner() == owner) {
+                    remoteLearners = remoteLearners?.let { (who, learners) -> who to if (who == owner) learners.filterNot { it.id == learnerId } else learners }
+                    publish(NormalSyncNotice.SERVER_COPY_ERASED)
+                }
+            } finally {
+                // The engine froze its intent before sending. Expose pending state even when the reply is lost.
+                if (accepted() && engine.owner() == owner) publish()
+                if (accepted()) mutable.value = mutable.value.copy(busy = false)
+            }
+        }
+    }
     suspend fun disable() {
         val accepted = beginAction()
         actionMutex.withLock {
@@ -256,11 +284,15 @@ internal class NormalSyncRepository @Inject constructor(
         }
     }
     fun failed(error: Exception) {
-        if (error is ApiFailure && error.code == "fresh_authentication_required") {
+        if (error is ApiFailure && error.code in setOf("fresh_authentication_required", "fresh_auth_required")) {
             engine.expireSession()
             scope.launch { publish(NormalSyncNotice.FRESH_AUTH_REQUIRED) }
+        } else if (error is ApiFailure && error.status == 401) {
+            engine.expireSession()
+            scope.launch { publish(NormalSyncNotice.LOGIN_REQUIRED) }
         } else {
             val notice = when {
+                error is ApiFailure && error.code == "dependent_learners" -> NormalSyncNotice.DEPENDENT_LEARNERS
                 error is IOException -> NormalSyncNotice.OFFLINE
                 error is NormalContentException -> error.notice
                 else -> NormalSyncNotice.FAILED
@@ -338,6 +370,20 @@ internal class NormalSyncRepository @Inject constructor(
         if (current != null && !visibility.allows(current)) selectBestLocalProfile()
         publish(NormalSyncNotice.SIGNED_OUT)
     }
+    internal fun erasureOwner(): String? = if (engine.authenticated()) engine.owner() else null
+    internal fun freezeAccountErasure(record: SavedAccountErasure) {
+        engine.freezeAccountErasure(record.owner, record.request)
+        mutable.update { if (it.owner == record.owner) it.copy(accountErasure = true, enabled = false) else it }
+    }
+    internal suspend fun beginAccountErasure(record: SavedAccountErasure, credential: NormalAccount.ErasureCredential, api: AccountErasureApi, accepted: () -> Boolean): AccountDeletionReceipt =
+        engine.withAccountErasureSession(record.owner, record.request, { accepted() && credential.accepted() }) { token ->
+            check(token == credential.token && credential.subject == record.subject && credential.accepted() && accepted())
+            api.begin(token, record.owner, record.request, record.proof)
+        }
+    internal fun expireErasedOwner(record: SavedAccountErasure, commit: () -> Boolean): Boolean =
+        // Engine → account lock order matches login/resume's accepted() checks. Never invert it.
+        engine.expireAccountErasureSession(record.owner, record.request, commit)
+    internal suspend fun publishAccountErasure() { publish() }
     override suspend fun expireSession(accepted: () -> Boolean) = withContext(Dispatchers.IO) {
         if (accepted()) engine.expireSession()
         publish(NormalSyncNotice.LOGIN_REQUIRED)
@@ -368,8 +414,8 @@ internal class NormalSyncRepository @Inject constructor(
         val authenticated = engine.authenticated()
         val b = engine.binding()
         val pendingCreate = owner?.let { engine.pendingCreate(it) != null } == true
-        val learners = remoteLearners?.takeIf { it.first == owner }?.second ?: engine.knownLearners()
-        val pending = b?.local?.values?.count { it.acknowledgedSequence == null } ?: 0
+        val learners = ((remoteLearners?.takeIf { it.first == owner }?.second ?: engine.knownLearners()) + engine.retainedErasureLearners()).distinctBy { it.id }
+        val pending = b?.takeIf { it.deletionRequestId == null }?.local?.values?.count { it.acknowledgedSequence == null } ?: 0
         val restored = b?.remote?.count { it.registryStatus == "registered" } ?: 0
         visibility.refresh()
         val labels = db.profiles().all().associate { it.id to it.label }
@@ -384,6 +430,9 @@ internal class NormalSyncRepository @Inject constructor(
                 busy = false,
                 notice = notice ?: if (owner == null) NormalSyncNotice.SIGNED_OUT else if (!authenticated) NormalSyncNotice.LOGIN_REQUIRED else current.notice,
                 pendingCreate = pendingCreate,
+                erasurePending = b?.deletionRequestId != null && b.deletionReceipt == null,
+                serverCopyErased = b?.deletionReceipt != null,
+                accountErasure = engine.accountErasure(owner) != null,
             )
         }
     }

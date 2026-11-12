@@ -231,7 +231,7 @@ func (p *HTTPProvider) request(ctx context.Context, method, target string, body 
 		if json.Unmarshal(fields["error_code"], &code) != nil {
 			_ = json.Unmarshal(fields["error"], &code)
 		}
-		allowed := map[string]int{"sync_consent_required": 403, "sync_consent_update_required": 403, "adult_owner_required": 403, "fresh_auth_required": 403, "not_found": 404, "idempotency_conflict": 409, "invalid_request": 400, "invalid_native_event": 400, "invalid_reference": 400, "email_not_confirmed": 400, "invalid_credentials": 401, "invalid_otp": 401, "invalid_refresh_token": 401, "unauthorized": 401}
+		allowed := map[string]int{"sync_consent_required": 403, "sync_consent_update_required": 403, "adult_owner_required": 403, "fresh_auth_required": 403, "fresh_authentication_required": 403, "not_found": 404, "idempotency_conflict": 409, "dependent_learners": 409, "server_copy_deleted": 410, "account_deleted": 410, "account_erasure_unavailable": 503, "invalid_request": 400, "invalid_native_event": 400, "invalid_reference": 400, "email_not_confirmed": 400, "invalid_credentials": 401, "invalid_otp": 401, "invalid_refresh_token": 401, "unauthorized": 401}
 		if allowed[code] == resp.StatusCode {
 			return nil, &wireFailure{resp.StatusCode, code}
 		}
@@ -528,7 +528,8 @@ func (b *HTTPBackend) Call(ctx context.Context, c Claims, method, target string,
 	if err != nil || !strings.HasPrefix(parsed.path, "/v1/") {
 		return nil, ErrDenied
 	}
-	if parsed.learner != "" {
+	// Erasure retries are authorized by the backend receipt, even after the learner is gone.
+	if parsed.learner != "" && !strings.HasSuffix(parsed.path, "/deletion") {
 		owned, err := b.Owns(ctx, c, parsed.learner, token)
 		if err != nil {
 			return nil, err
@@ -546,6 +547,15 @@ func (b *HTTPBackend) Call(ctx context.Context, c Claims, method, target string,
 	raw, err := b.p.request(ctx, method, target, payload, token)
 	if err != nil {
 		return nil, err
+	}
+	if target == accountDeletionPath {
+		var in struct {
+			RequestID string `json:"request_id"`
+		}
+		if json.Unmarshal(body, &in) != nil {
+			return nil, ErrUnavailable
+		}
+		return accountReceipt(raw, in.RequestID)
 	}
 	var result any
 	if json.Unmarshal(raw, &result) != nil {

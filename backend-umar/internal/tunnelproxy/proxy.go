@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-var learnerRoute = regexp.MustCompile(`^/v1/learners/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/(consent|events)$`)
+var learnerRoute = regexp.MustCompile(`^/v1/learners/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/(consent|events|deletion)$`)
 
 func loopbackUpstream(raw string) (*url.URL, error) {
 	u, err := url.Parse(raw)
@@ -49,6 +49,8 @@ func allowed(r *http.Request) (auth bool, ok bool) {
 	switch p {
 	case "/healthz", "/v1/packs":
 		return false, noQuery && method == http.MethodGet
+	case "/v1/account/deletion", "/v1/account/deletion/status":
+		return false, r.URL.RawQuery == "" && !r.URL.ForceQuery && method == http.MethodPost
 	case "/v1/account", "/v1/learners":
 		return false, noQuery && getOrPost
 	case "/token":
@@ -63,7 +65,7 @@ func allowed(r *http.Request) (auth bool, ok bool) {
 	if !learnerRoute.MatchString(p) {
 		return false, false
 	}
-	if strings.HasSuffix(p, "/consent") {
+	if strings.HasSuffix(p, "/consent") || strings.HasSuffix(p, "/deletion") {
 		return false, noQuery && method == http.MethodPost
 	}
 	if method == http.MethodPost {

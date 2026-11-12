@@ -10,6 +10,8 @@ import id.petalytix.ayailmu.core.data.repo.ProfileVisibility
 import id.petalytix.ayailmu.feature.settings.NormalLocalCleaner
 import id.petalytix.ayailmu.core.sync.Backend
 import id.petalytix.ayailmu.core.sync.HttpBackend
+import id.petalytix.ayailmu.core.sync.AccountErasureApi
+import id.petalytix.ayailmu.core.sync.HttpAccountErasure
 import java.io.IOException
 import id.petalytix.ayailmu.core.engine.Clock
 import javax.inject.Singleton
@@ -25,6 +27,11 @@ internal object NormalAccountModule {
     @Provides @Singleton internal fun backend(config: NormalAccountConfig): Backend =
         if (config.enabled) HttpBackend(config.apiOrigin, synthetic = false, config.syncPolicyVersion, config.ownerDeclarationVersion)
         else DisabledNormalBackend
+    @Provides @Singleton internal fun erasureApi(config: NormalAccountConfig): AccountErasureApi =
+        if (config.enabled) HttpAccountErasure(config.apiOrigin) else object : AccountErasureApi {
+            override suspend fun begin(token: String, accountId: String, requestId: String, recoveryProof: String): Nothing = throw IOException("Normal account release is not approved")
+            override suspend fun status(requestId: String, recoveryProof: String): Nothing = throw IOException("Normal account release is not approved")
+        }
     @Provides @Singleton internal fun visibility(impl: NormalProfileVisibility): ProfileVisibility = impl
     @Provides @Singleton internal fun mail(store: NormalMailStore, clock: Clock, config: NormalAccountConfig) = NormalMailOperations(store, clock, config.publicOrigin)
 }
@@ -35,6 +42,8 @@ internal abstract class NormalAccountBindings {
     @Binds internal abstract fun localCleaner(impl: NormalAccountLocalCleaner): NormalLocalCleaner
     @Binds internal abstract fun ownerSync(impl: NormalSyncRepository): NormalOwnerSync
     @Binds internal abstract fun vault(impl: KeystoreNormalAuthVault): NormalAuthVault
+    @Binds internal abstract fun erasureVault(impl: KeystoreNormalAuthVault): NormalAccountErasureVault
+    @Binds internal abstract fun erasureOwner(impl: NativeNormalErasureOwner): NormalErasureOwner
     @Binds internal abstract fun mailStore(impl: KeystoreNormalAuthVault): NormalMailStore
 }
 private object DisabledNormalBackend : Backend {

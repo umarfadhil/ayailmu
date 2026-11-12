@@ -8,9 +8,11 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 	"time"
 
+	"github.com/umarfadhil/ayailmu/backend-umar/internal/accounterase"
 	"github.com/umarfadhil/ayailmu/backend-umar/internal/api"
 	"github.com/umarfadhil/ayailmu/backend-umar/internal/auth"
 	"github.com/umarfadhil/ayailmu/backend-umar/internal/catalog"
@@ -67,6 +69,10 @@ func run() error {
 	if release.Enabled && dataMode != api.DeploymentNormalOnly {
 		return errors.New("normal readiness requires UMAR_DATA_MODE=NORMAL_ONLY")
 	}
+	erasureProvider, err := accountErasureProvider(os.Getenv, dataMode, provider, issuer)
+	if err != nil {
+		return err
+	}
 	r, err := startupRegistry(release.Enabled && dataMode == api.DeploymentNormalOnly)
 	if err != nil {
 		return errors.New("catalog initialization failed")
@@ -81,7 +87,23 @@ func run() error {
 	if err = s.Prepare(startup, migrate); err != nil {
 		return errors.New("database preparation failed; verify schema and role configuration")
 	}
-	server := &http.Server{Addr: addr, Handler: api.NewWithRelease(s, v, r, release, dataMode), ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 15 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 32768}
+	var erasure *accounterase.Coordinator
+	if erasureProvider != nil {
+		erasure, err = accounterase.New(s, erasureProvider)
+		if err != nil {
+			return errors.New("account erasure initialization failed")
+		}
+	}
+	workerDone := make(chan error, 1)
+	workerContext, stopWorker := context.WithCancel(ctx)
+	var worker sync.WaitGroup
+	if erasure != nil {
+		worker.Add(1)
+		go func() { defer worker.Done(); workerDone <- erasure.Run(workerContext) }()
+	}
+	// Stop/join the worker before the deferred database close, including HTTP startup errors.
+	defer func() { stopWorker(); worker.Wait() }()
+	server := &http.Server{Addr: addr, Handler: api.NewWithAccountErasure(s, v, r, release, erasure, dataMode), ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 15 * time.Second, WriteTimeout: 15 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 32768}
 	done := make(chan error, 1)
 	go func() {
 		log.Printf("Umar API listening at http://%s (normal release enabled=%t, data mode=%s)", addr, release.Enabled, dataMode)
@@ -92,6 +114,14 @@ func run() error {
 		if !errors.Is(err, http.ErrServerClosed) {
 			return errors.New("HTTP server failed")
 		}
+	case <-workerDone:
+		shutdown, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		_ = server.Shutdown(shutdown)
+		if ctx.Err() != nil {
+			return nil
+		}
+		return errors.New("account erasure worker stopped unexpectedly")
 	case <-ctx.Done():
 		shutdown, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()

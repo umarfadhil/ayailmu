@@ -18,6 +18,7 @@ SHARED = {
     "strokes/index.json",
     "config/app_config.json",
     "licenses/KanjiVG.txt",
+    "licenses/OkHttp-Okio-Apache-2.0.txt",
     "licenses/OFL-NotoNaskhArabic.txt",
 }
 REVIEWED = {
@@ -25,6 +26,12 @@ REVIEWED = {
     "config/rules.mat-a-local.json",
     PACK,
     "provenance.json",
+}
+# AGP adds these optimization profiles to Release APKs after the asset merge.
+# They are not curriculum. Keep the allowlist exact, not a dexopt/ prefix bypass.
+RUNTIME_PROFILES = {
+    "dexopt/baseline.prof": b"pro\x00",
+    "dexopt/baseline.profm": b"prm\x00",
 }
 OPTIONS = None
 
@@ -53,8 +60,12 @@ class ReviewedProductionAssetsTest(unittest.TestCase):
         with zipfile.ZipFile(OPTIONS.apk) as apk:
             self.assertIsNone(apk.testzip())
             actual = {n[7:] for n in apk.namelist() if n.startswith("assets/") and not n.endswith("/")}
-            self.assertSetEqual(SHARED | REVIEWED, actual)
-            for name in actual:
+            for name, magic in RUNTIME_PROFILES.items():
+                if name in actual:
+                    self.assertTrue(apk.read("assets/" + name).startswith(magic), name)
+            content = actual - RUNTIME_PROFILES.keys()
+            self.assertSetEqual(SHARED | REVIEWED, content)
+            for name in content:
                 source = self.main_source if name in SHARED else self.reviewed_source
                 self.assertEqual(digest(source / name), hashlib.sha256(apk.read("assets/" + name)).hexdigest(), name)
 

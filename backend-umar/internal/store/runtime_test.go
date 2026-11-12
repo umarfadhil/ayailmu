@@ -131,12 +131,55 @@ func TestRestrictedRuntimeLifecycleAndPermissions(t *testing.T) {
 		"UPDATE public.accounts SET issuer=issuer WHERE false",
 		"INSERT INTO public.schema_migrations(version,sha256) VALUES('forbidden',repeat('0',64))",
 		"DELETE FROM public.pack_versions WHERE false",
+		"SELECT recovery_hash FROM public.account_deletions",
+		"UPDATE public.account_deletions SET identity_deleted_at=clock_timestamp() WHERE false",
+		"UPDATE public.accounts SET erasure_requested_at=NULL WHERE false",
+		"DELETE FROM public.account_deletions WHERE false",
 	} {
 		_, err = runtime.pool.Exec(ctx, statement)
 		var denied *pgconn.PgError
 		if !errors.As(err, &denied) || denied.Code != "42501" {
 			t.Fatalf("expected permission denial for %s: %v", statement, err)
 		}
+	}
+	// Only the narrow erasure function may delete; arbitrary SQL remains denied.
+	if _, err = runtime.DeleteLearner(ctx, owner, learner.ID, "aafe486e-4437-4edb-8236-6a14fbf1df27"); !errors.Is(err, ErrDependents) {
+		t.Fatal("runtime parent erasure bypassed dependents", err)
+	}
+	if _, err = runtime.DeleteLearner(ctx, owner, child.ID, "abfe486e-4437-4edb-8236-6a14fbf1df27"); err != nil {
+		t.Fatal("runtime child erasure", err)
+	}
+	if _, err = runtime.DeleteLearner(ctx, owner, learner.ID, "aafe486e-4437-4edb-8236-6a14fbf1df27"); err != nil {
+		t.Fatal("runtime erasure", err)
+	}
+	if _, err = runtime.CreateProfile(ctx, owner, ProfileInput{ClientLearnerID: learner.ClientLearnerID, Kind: "ADULT", Lang: "id", Synthetic: true}); !errors.Is(err, ErrDeleted) {
+		t.Fatal("runtime resurrected erased learner", err)
+	}
+	if _, err = runtime.pool.Exec(ctx, `SET ayailmu.erasure_authorized='on'; DELETE FROM public.answer_events WHERE false`); err == nil {
+		t.Fatal("caller-controlled erasure flag authorized direct DELETE")
+	}
+	// Account state also changes only through narrow functions, not runtime table writes.
+	accountOwner, err := runtime.Activate(ctx, "runtime-erasure-issuer", t.Name(), true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	requestID := "acfe486e-4437-4edb-8236-6a14fbf1df27"
+	receipt, err := runtime.BeginAccountDeletion(ctx, accountOwner, "runtime-erasure-issuer", t.Name(), requestID, recoveryFixture)
+	if err != nil {
+		t.Fatal("restricted account erasure", err)
+	}
+	if _, err = runtime.pool.Exec(ctx, `INSERT INTO public.learners(owner_id,client_learner_id,kind,audience,lang,synthetic) VALUES($1,'forbidden-after-erasure','ADULT','adults','id',false)`, accountOwner); err == nil {
+		t.Fatal("direct insert resurrected deleted account")
+	}
+	job, err := runtime.ClaimAccountDeletion(ctx, "runtime-erasure-issuer")
+	if err != nil || job == nil || job.DeletionID != receipt.DeletionID {
+		t.Fatal("restricted claim", job, err)
+	}
+	if err = runtime.FinishAccountDeletion(ctx, job.DeletionID, job.LeaseID, true); err != nil {
+		t.Fatal("restricted finish", err)
+	}
+	if got, err := runtime.AccountDeletionStatus(ctx, requestID, recoveryFixture); err != nil || got.Status != "completed" {
+		t.Fatal("restricted receipt", got, err)
 	}
 	// Inherited/excessive rights must be rejected instead of trusting the grant template alone.
 	if _, err = admin.pool.Exec(ctx, "GRANT DELETE ON public.accounts TO "+quoted); err != nil {

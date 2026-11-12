@@ -18,6 +18,9 @@ func TestWireRefusalsPreserveOnlyDocumentedSafeStatusPairs(t *testing.T) {
 	}{
 		{"consent", 403, `{"error":"sync_consent_required"}`, true},
 		{"consent version", 403, `{"error":"sync_consent_update_required"}`, true},
+		{"API recent authentication", 403, `{"error":"fresh_authentication_required"}`, true},
+		{"erased", 410, `{"error":"server_copy_deleted"}`, true},
+		{"dependents", 409, `{"error":"dependent_learners"}`, true},
 		{"collision", 409, `{"error":"idempotency_conflict"}`, true},
 		{"unconfirmed", 400, `{"error_code":"email_not_confirmed"}`, true},
 		{"unknown upstream text", 403, `{"error":"private_provider_diagnostic","message":"must not escape"}`, false},

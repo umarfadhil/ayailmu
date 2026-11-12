@@ -29,10 +29,15 @@ class NormalAccountComposeTest {
     private class Events : NormalAccountEvents {
         var registered = false
         var restores = 0
+        var erased: String? = null
         var newMail = 0
+        var deletedAccount: String? = null
+        var checkedDeletion: String? = null
         var routed: Pair<NormalAccountMode, String>? = null
         override fun show(target: NormalAccountMode, email: String) { routed = target to email }
         override fun startNewMailRequest() { newMail++ }
+        override fun eraseAccount(owner: String) { deletedAccount = owner }
+        override fun checkAccountErasure(request: String) { checkedDeletion = request }
         override fun back() = Unit
         override fun signUp(email: String, password: String, adult: Boolean) { registered = email == "owner@example.invalid" && password.length >= 12 && adult }
         override fun confirm(email: String, code: String, adult: Boolean) = Unit
@@ -46,8 +51,36 @@ class NormalAccountComposeTest {
         override fun createLearner(label: String, lang: String) = Unit
         override fun selectLearner(learner: Learner) = Unit
         override fun enableSync() = Unit
+        override fun eraseServerCopy(learnerId: String) { erased = learnerId }
         override fun disableSync() = Unit
         override fun syncNow() = Unit
+    }
+    @Test fun accountDeletionRequiresExplicitConfirmationAndCapturesOwner() {
+        val events = Events()
+        val state = NormalAccountUiState(true, account = NormalAccountState("owner@example.invalid"), sync = NormalSyncState(owner = "captured-owner", authenticated = true))
+        compose.setContent { NormalAccountScreen(state, events) {} }
+        compose.onNodeWithText(text(R.string.normal_account_delete_title)).performScrollTo().performClick()
+        compose.runOnIdle { assertEquals(null, events.deletedAccount) }
+        compose.onNodeWithText(text(R.string.normal_account_delete_body, "owner@example.invalid")).assertExists()
+        compose.onNodeWithText(text(R.string.normal_account_delete_confirm)).performClick()
+        compose.runOnIdle { assertEquals("captured-owner", events.deletedAccount) }
+    }
+    @Test fun pendingDeletionHasAnonymousCheckAndNeverClaimsCompletionOrShowsUploadControls() {
+        val events = Events()
+        val state = NormalAccountUiState(true, sync = NormalSyncState(owner = "old-owner", accountErasure = true), erasure = NormalAccountErasureState(restored = true, records = listOf(AccountErasureSummary("old-owner", "request", AccountErasurePhase.IDENTITY_PENDING))))
+        compose.setContent { NormalAccountScreen(state, events) {} }
+        compose.onNodeWithText(text(R.string.normal_account_delete_identity_pending)).assertExists()
+        compose.onAllNodesWithText(text(R.string.normal_account_delete_completed)).assertCountEquals(0)
+        compose.onAllNodesWithText(text(R.string.normal_account_enable_sync)).assertCountEquals(0)
+        compose.onNodeWithText(text(R.string.normal_account_delete_check)).performScrollTo().assertIsEnabled().performClick()
+        compose.runOnIdle { assertEquals("request", events.checkedDeletion) }
+    }
+    @Test fun unreadableProofStopsAccountActionsButAllowsLeavingForOfflineLearning() {
+        val state = NormalAccountUiState(true, erasure = NormalAccountErasureState(restored = true, blocked = true, notice = AccountErasureNotice.STORAGE_FAILED))
+        compose.setContent { NormalAccountScreen(state, Events()) {} }
+        compose.onNodeWithText(text(R.string.normal_account_sign_in)).assertIsNotEnabled()
+        compose.onNodeWithText(text(R.string.normal_account_delete_storage_retry)).assertIsEnabled()
+        compose.onNodeWithText(text(R.string.action_back)).assertIsEnabled()
     }
     @Test fun registrationAcceptsGenuineMailboxOnlyWithValidPasswordAndDeclaration() {
         val events = Events()
@@ -182,6 +215,26 @@ class NormalAccountComposeTest {
         compose.runOnIdle { assertEquals(NormalAccountMode.RESET to "one@example.invalid", events.routed) }
         compose.onNodeWithText(text(R.string.normal_account_new_mail_request)).performScrollTo().performClick()
         compose.runOnIdle { assertEquals(1, events.newMail) }
+    }
+
+    @Test fun serverErasureRequiresExplicitTargetedConfirmation() {
+        val learner = Learner("20000000-0000-0000-0000-000000000001", "local-a", "ADULT", "adults", "id")
+        val events = Events()
+        val state = NormalAccountUiState(true, account = NormalAccountState("owner@example.invalid"), sync = NormalSyncState(owner = "owner-a", authenticated = true, selected = learner))
+        compose.setContent { NormalAccountScreen(state, events) {} }
+        compose.onNodeWithText(text(R.string.normal_account_erase_server)).performScrollTo().performClick()
+        compose.runOnIdle { assertEquals(null, events.erased) }
+        compose.onNodeWithText(text(R.string.normal_account_erase_body)).assertExists()
+        compose.onNodeWithText(text(R.string.normal_account_erase_confirm)).performClick()
+        compose.runOnIdle { assertEquals(learner.id, events.erased) }
+    }
+    @Test fun erasedProfileShowsTruthfulReceiptWithoutSyncEnable() {
+        val learner = Learner("20000000-0000-0000-0000-000000000001", "local-a", "ADULT", "adults", "id")
+        val state = NormalAccountUiState(true, account = NormalAccountState("owner@example.invalid"), sync = NormalSyncState(owner = "owner-a", authenticated = true, selected = learner, serverCopyErased = true))
+        compose.setContent { NormalAccountScreen(state, Events()) {} }
+        compose.onNodeWithText(text(R.string.normal_account_erase_done)).assertExists()
+        compose.onAllNodesWithText(text(R.string.normal_account_enable_sync)).assertCountEquals(0)
+        compose.onAllNodesWithText(text(R.string.normal_account_erase_server)).assertCountEquals(0)
     }
 
 }

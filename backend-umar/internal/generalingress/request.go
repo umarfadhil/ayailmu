@@ -14,7 +14,7 @@ import (
 )
 
 var uuid = regexp.MustCompile(`^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$`)
-var learnerRoute = regexp.MustCompile(`^/v1/learners/([0-9a-f-]{36})/(events|consent)$`)
+var learnerRoute = regexp.MustCompile(`^/v1/learners/([0-9a-f-]{36})/(events|consent|deletion)$`)
 var otpCode = regexp.MustCompile(`^[0-9]{6}$`)
 
 type parsed struct {
@@ -89,7 +89,7 @@ func parse(r Request, host string, p Policy) (parsed, error) {
 		out.access = raw[7:]
 	}
 	u, err := url.ParseRequestURI(r.Target)
-	if err != nil || u.Host != "" || u.Scheme != "" {
+	if err != nil || u.Host != "" || u.Scheme != "" || u.ForceQuery {
 		return out, bad
 	}
 	out.path = u.Path
@@ -202,6 +202,25 @@ func parse(r Request, host string, p Policy) (parsed, error) {
 		out.auth.Password = in.Password
 		return out, nil
 	}
+	if out.path == accountDeletionStatusPath && r.Method == "POST" {
+		if _, err := statusInput(r.Body); err != nil {
+			return out, bad
+		}
+		return out, nil
+	}
+	if out.path == accountDeletionPath && r.Method == "POST" {
+		var in struct {
+			AccountID     string `json:"account_id"`
+			RequestID     string `json:"request_id"`
+			RecoveryToken string `json:"recovery_token"`
+			Confirmed     bool   `json:"confirmed"`
+		}
+		zero := "00000000-0000-0000-0000-000000000000"
+		if len(r.Body) > 1024 || native.Decode(r.Body, &in) != nil || !uuid.MatchString(in.AccountID) || in.AccountID == zero || !uuid.MatchString(in.RequestID) || in.RequestID == zero || !store.ValidRecoveryProof(in.RecoveryToken) || !in.Confirmed {
+			return out, bad
+		}
+		return out, nil
+	}
 	if (out.path == "/v1/account" || out.path == "/v1/learners") && (r.Method == "GET" || r.Method == "POST") || out.path == "/v1/packs" && r.Method == "GET" {
 		if r.Method == "POST" {
 			if out.path == "/v1/account" {
@@ -239,7 +258,17 @@ func parse(r Request, host string, p Policy) (parsed, error) {
 				}
 				return out, nil
 			}
-		} else if r.Method == "POST" {
+		} else if m[2] == "deletion" && r.Method == "POST" {
+			var in struct {
+				RequestID string `json:"request_id"`
+				Confirmed bool   `json:"confirmed"`
+				Synthetic bool   `json:"synthetic"`
+			}
+			if native.Decode(r.Body, &in) != nil || !uuid.MatchString(in.RequestID) || !in.Confirmed || in.Synthetic {
+				return out, bad
+			}
+			return out, nil
+		} else if m[2] == "consent" && r.Method == "POST" {
 			var in struct {
 				Version   string `json:"version"`
 				Granted   *bool  `json:"granted"`

@@ -131,7 +131,7 @@
     <string name="dev_create_profile_en">Buat profil uji berbahasa Inggris</string>
     <string name="dev_delete_all">Hapus semua data</string>
     <string name="dev_delete_confirm_title">Hapus semua data?</string>
-    <string name="dev_delete_confirm_body">Semua profil, jawaban, dan sesi yang tersimpan di HP ini akan dihapus. Tindakan ini tidak bisa dibatalkan.</string>
+    <string name="dev_delete_confirm_body">Semua profil, jawaban, sesi tersimpan, dan bukti pemulihan penghapusan akun di HP ini akan dihapus. Ini tidak menghapus data server atau membatalkan penghapusan server yang sudah diminta. Anda dapat kehilangan akses untuk memeriksa penghapusan yang belum selesai di sini. Tindakan ini tidak bisa dibatalkan.</string>
     <string name="dev_delete_confirm_yes">Hapus</string>
     <string name="dev_cancel">Batal</string>
     <string name="dev_free_tier_off">Simulasikan versi gratis: mati (semua unit terbuka)</string>
@@ -301,7 +301,7 @@
     <string name="settings_delete_child_title">Hapus profil %1$s?</string>
     <string name="settings_delete_child_body">Profil anak ini dan semua jawabannya akan dihapus dari HP ini. Profil lain tidak berubah. Tindakan ini tidak bisa dibatalkan.</string>
     <string name="settings_privacy_policy">Kebijakan privasi</string>
-    <string name="settings_font_licence">Huruf Arab: Noto Naskh Arabic, lisensi SIL Open Font License 1.1. Data urutan goresan kana dan hanzi: KanjiVG © Ulrich Apel, lisensi CC BY-SA 3.0.</string>
+    <string name="settings_font_licence">Huruf Arab: Noto Naskh Arabic, lisensi SIL Open Font License 1.1. Data urutan goresan kana dan hanzi: KanjiVG © Ulrich Apel, lisensi CC BY-SA 3.0. Jaringan: OkHttp dan Okio, lisensi Apache 2.0; pemberitahuan lisensi disertakan dalam aplikasi.</string>
     <string name="settings_about">Tentang</string>
     <string name="settings_learner_id">ID pelajar (tekan lama untuk menyalin)</string>
     <string name="settings_contact">Pertanyaan atau permintaan hapus data: %1$s</string>
@@ -632,4 +632,26 @@
     <string name="normal_account_mail_unknown">Kami belum bisa memastikan apakah email terkirim. Periksa kotak masuk sebelum mencoba lagi.</string>
     <string name="normal_account_mail_new_required">Formulir ini tidak lagi cocok dengan permintaan tersimpan. Periksa kotak masuk atau mulai permintaan email baru.</string>
     <string name="normal_account_new_mail_request">Mulai permintaan email baru</string>
+    <string name="normal_account_erase_server">Hapus salinan server</string>
+    <string name="normal_account_erase_retry">Coba lagi penghapusan server</string>
+    <string name="normal_account_erase_title">Hapus salinan server %1$s?</string>
+    <string name="normal_account_erase_body">Profil ini, jawaban tersinkron, dan persetujuannya akan dihapus permanen dari server. Riwayat di HP ini dan akun masuk Anda tetap ada. Bukti penghapusan minimal disimpan untuk mencegah data lama terkirim ulang. Profil ini tidak dapat disinkronkan lagi.</string>
+    <string name="normal_account_erase_confirm">Hapus permanen salinan server</string>
+    <string name="normal_account_erase_pending">Penghapusan server belum terkonfirmasi. Sinkronisasi profil ini dihentikan. Masuk kembali jika diminta, lalu coba lagi dengan permintaan yang sama.</string>
+    <string name="normal_account_erase_done">Salinan server telah dihapus. Riwayat di HP ini dan akun masuk Anda tetap ada.</string>
+    <string name="normal_account_erase_dependents">Profil ini masih menjadi wali profil anak. Hapus salinan server profil anak terlebih dahulu. Tidak ada data yang dihapus oleh permintaan ini.</string>
+    <string name="normal_account_delete_title">Hapus akun dan data server</string>
+    <string name="normal_account_delete_body">Hapus akun masuk %1$s beserta semua profil belajar, jawaban, dan persetujuan sinkronisasinya di server, termasuk profil anak yang bergantung padanya? Tindakan ini tidak dapat dibatalkan. Data belajar di perangkat ini tetap tersimpan. Catatan minimum pencegah pengiriman ulang dan penghapusan tetap disimpan, dan cadangan tidak langsung dihapus. Jangan hapus aplikasi sampai selesai agar hasilnya dapat diperiksa dengan aman.</string>
+    <string name="normal_account_delete_confirm">Hapus akun secara permanen</string>
+    <string name="normal_account_delete_uploads_stopped">Unggahan untuk akun ini dihentikan. Data belajar lokal tetap ada di perangkat ini.</string>
+    <string name="normal_account_delete_unknown">Penghapusan belum dikonfirmasi. Unggahan dihentikan dan permintaan yang sama disimpan dengan aman. Periksa statusnya atau coba lagi setelah masuk ke akun yang sama.</string>
+    <string name="normal_account_delete_identity_pending">Data belajar di server telah dihapus. Penghapusan akun masuk masih tertunda. Status dapat diperiksa di sini tanpa masuk. Data belajar lokal tetap tersimpan.</string>
+    <string name="normal_account_delete_completed">Penghapusan akun dikonfirmasi: data belajar di server dan identitas masuk telah dihapus. Data belajar lokal tetap ada di perangkat ini. Catatan minimum penghapusan dan pencegah pengiriman ulang tetap disimpan; ini bukan konfirmasi penghapusan langsung dari cadangan.</string>
+    <string name="normal_account_delete_check">Periksa status penghapusan</string>
+    <string name="normal_account_delete_retry">Ulangi permintaan penghapusan yang sama</string>
+    <string name="normal_account_delete_storage_failed">Bukti penghapusan tersimpan tidak dapat dibaca dengan aman. Tindakan akun dijeda agar bukti tidak hilang atau terganti. Belajar lokal tetap tersedia. Jangan hapus data aplikasi selama masalah ini belum selesai.</string>
+    <string name="normal_account_delete_fresh_auth">Masuk kembali ke akun yang sama, lalu ulangi permintaan penghapusan tersimpan. Status tetap dapat diperiksa tanpa masuk.</string>
+    <string name="normal_account_delete_sign_in">Untuk mengirim ulang permintaan ini, masuk ke akun yang meminta penghapusan. Pemeriksaan status tidak memerlukan masuk.</string>
+    <string name="normal_account_delete_check_failed">Penghapusan belum dapat dikonfirmasi. Permintaan tersimpan tetap dipertahankan; tidak ada permintaan baru yang dibuat. Periksa lagi saat terhubung.</string>
+    <string name="normal_account_delete_storage_retry">Coba baca penyimpanan aman lagi</string>
 </resources>

@@ -58,3 +58,15 @@ integration/.local/
 
 # Claude handoff files (patches, bundles) — never committed
 Claude outputs/
+
+# Native iOS local products and build-supplied QA trust
+ios/**/.build/
+ios/**/.swiftpm/
+ios/**/xcuserdata/
+ios/**/DerivedData/
+ios/**/PrivateOwnerCA.*
+ios/**/build/
+ios/**/*.framework/
+ios/**/.gradle/
+ios/**/.kotlin/
+ios/**/*.xcframework/

@@ -67,11 +67,14 @@ class NormalSyncRepositoryTest {
     private val config = testConfig
     private val declaration = NormalOwnerDeclaration("adult-owner-v1", true)
     private class FakeBackend : Backend {
+        val accountIds = mutableMapOf<String, String>()
         lateinit var catalogValue: Catalog
         val profiles = mutableMapOf<String, MutableList<Learner>>()
         val uploaded = mutableListOf<String>()
         val remote = mutableMapOf<String, LinkedHashMap<String, String>>()
         var offline = false
+        var loseErasureReply = false
+        val erasureRequests = mutableListOf<String>()
         /** Test-only: the registry becomes unreachable once any learner has been created. */
         var catalogOfflineAfterCreate = false
         /** Test-only: the create reply is delivered, then all connectivity is lost. */
@@ -91,10 +94,10 @@ class NormalSyncRepositoryTest {
                 currentAccountEntered.complete(Unit)
                 gate.await()
             }
-            return "owner-$token"
+            return accountIds[token] ?: "owner-$token"
         }
         override suspend fun activateOwner(token: String, declarationVersion: String, adultConfirmed: Boolean): String {
-            check(adultConfirmed && declarationVersion == "adult-owner-v1"); network(); onActivated?.invoke(token); return "owner-$token"
+            check(adultConfirmed && declarationVersion == "adult-owner-v1"); network(); onActivated?.invoke(token); return accountIds[token] ?: "owner-$token"
         }
         /** Test-only: only the learner-list endpoint is unreachable; login, catalog and create still work. */
         var learnersFail = false
@@ -140,6 +143,12 @@ class NormalSyncRepositoryTest {
             catalogEntered.complete(Unit); catalogGate?.await()
             if (catalogOfflineAfterCreate && creates > 0) throw IOException("synthetic registry offline")
             return catalogValue
+        }
+        override suspend fun deleteLearner(token: String, learnerId: String, requestId: String, confirmed: Boolean): LearnerDeletionReceipt {
+            network(); check(confirmed); erasureRequests += requestId
+            profiles[token]?.removeAll { it.id == learnerId }; remote.remove(learnerId)
+            if (loseErasureReply) throw IOException("synthetic erasure response lost")
+            return LearnerDeletionReceipt("40000000-0000-0000-0000-000000000001", "learner", learnerId, requestId, "2026-11-11T12:00:00Z")
         }
         override suspend fun consent(token: String, learnerId: String, granted: Boolean) = network()
         override suspend fun append(token: String, learnerId: String, payloads: List<String>): List<Receipt> {
@@ -1113,11 +1122,10 @@ class NormalSyncRepositoryTest {
         } finally { a.stop(); b.stop(); dbA.close(); dbB.close(); dirA.deleteRecursively(); dirB.deleteRecursively() }
     }
 
-    private class ViewModelGateway : NormalAuthGateway {
+    private class ViewModelGateway(private val user: AuthUser = AuthUser("owner-fixture", "owner@gmail.com", "2026-10-26T00:00:00Z")) : NormalAuthGateway {
         var calls = 0
         var signInGate: kotlinx.coroutines.CompletableDeferred<Unit>? = null
         val signInEntered = kotlinx.coroutines.CompletableDeferred<Unit>()
-        private val user = AuthUser("owner-fixture", "owner@gmail.com", "2026-10-26T00:00:00Z")
         override suspend fun signUp(email: String, password: String, operationId: String) { calls++ }
         override suspend fun signIn(email: String, password: String): AuthSession {
             calls++; signInEntered.complete(Unit); signInGate?.await()
@@ -1138,7 +1146,7 @@ class NormalSyncRepositoryTest {
     }
     private fun viewModel(h: Harness, gateway: ViewModelGateway = ViewModelGateway(), vault: NormalAuthVault = MemoryVault()): NormalAccountViewModel {
         val account = NormalAccount(gateway, vault, h.repository, FixedClock(Instant.parse("2026-10-26T00:00:00Z")), config, testMail(FixedClock(Instant.parse("2026-10-26T00:00:00Z")), config.publicOrigin))
-        return NormalAccountViewModel(account, h.repository, config)
+        return NormalAccountViewModel(account, h.repository, config, fixtureErasure(account, h.repository, config))
     }
 
     @Test fun viewModelActionsQueuedBeforeBackDoNoNetworkOrLatePublication() = runTest {
@@ -1185,7 +1193,7 @@ class NormalSyncRepositoryTest {
             gateway.signInGate = kotlinx.coroutines.CompletableDeferred()
             val late = async { account.signIn("owner@gmail.com", "synthetic-password", true) }
             gateway.signInEntered.await()
-            NormalAccountLocalCleaner(context, h.repository, account, h.visibility).deleteDevice()
+            NormalAccountLocalCleaner(context, h.repository, account, h.visibility, fixtureErasure(account, h.repository, config)).deleteDevice { }
             gateway.signInGate!!.complete(Unit)
             assertFalse(late.await())
             assertFalse(File(dir, "normal-owner-auth").exists())
@@ -1198,6 +1206,47 @@ class NormalSyncRepositoryTest {
             fresh.stop()
         } finally { h.stop(); db.close(); dir.deleteRecursively() }
     }
+
+    @Test fun wholeDeviceResetKeepsAccountClosedUntilRoomAndFileCleanupFinishes() = runTest { fixture("whole-device-reset") { f ->
+        val base = ApplicationProvider.getApplicationContext<Context>()
+        val context = object : ContextWrapper(base) { override fun getNoBackupFilesDir() = f.dir.apply { mkdirs() } }
+        val clock = FixedClock(Instant.parse("2026-11-11T12:00:00Z"))
+        val account = NormalAccount(ViewModelGateway(), MemoryVault(), f.h.repository, clock, config, testMail(clock, config.publicOrigin))
+        val erasure = fixtureErasure(account, f.h.repository, config)
+        assertTrue(erasure.restore())
+        val entered = kotlinx.coroutines.CompletableDeferred<Unit>()
+        val release = java.util.concurrent.CountDownLatch(1)
+        val resetter = id.petalytix.ayailmu.core.data.repo.DataResetter(f.db, f.active) {
+            entered.complete(Unit)
+            check(release.await(10, java.util.concurrent.TimeUnit.SECONDS))
+        }
+        val cleanup = async { NormalAccountLocalCleaner(context, f.h.repository, account, f.h.visibility, erasure).deleteDevice { resetter.deleteAll() } }
+        try {
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) { withTimeout(5000) { entered.await() } }
+            // This is the production boundary: normal namespaces are gone, but the real DataResetter is still busy.
+            assertFalse(File(f.dir, "normal-owner-auth").exists())
+            assertFalse(erasure.restore())
+            assertTrue(erasure.state.value.blocked)
+        } finally { release.countDown(); cleanup.await() }
+        assertTrue(erasure.restore())
+        assertFalse(erasure.state.value.blocked)
+    } }
+
+    @Test fun remainingDeviceResetFailureLeavesAccountActionsClosed() = runTest { fixture("failed-device-reset") { f ->
+        val base = ApplicationProvider.getApplicationContext<Context>()
+        val context = object : ContextWrapper(base) { override fun getNoBackupFilesDir() = f.dir.apply { mkdirs() } }
+        val clock = FixedClock(Instant.parse("2026-11-11T12:00:00Z"))
+        val account = NormalAccount(ViewModelGateway(), MemoryVault(), f.h.repository, clock, config, testMail(clock, config.publicOrigin))
+        val erasure = fixtureErasure(account, f.h.repository, config)
+        assertTrue(erasure.restore())
+        val resetter = id.petalytix.ayailmu.core.data.repo.DataResetter(f.db, f.active) { error("synthetic file cleanup failure") }
+        try {
+            NormalAccountLocalCleaner(context, f.h.repository, account, f.h.visibility, erasure).deleteDevice { resetter.deleteAll() }
+            fail("Device reset should report failure")
+        } catch (_: IllegalStateException) { }
+        assertFalse(erasure.restore())
+        assertTrue(erasure.state.value.blocked)
+    } }
 
     @Test fun cleanupFailureIsReportedAndDoesNotClaimAllFilesRemoved() = runTest {
         val dir = File.createTempFile("normal-clear-failure", "").apply { delete() }
@@ -1214,9 +1263,110 @@ class NormalSyncRepositoryTest {
             val old = File(dir, "normal-owner-sync/old-environment/journal.json")
             FileJournal(old).update { JournalSnapshot(activeOwner = "old-owner") }
             assertThrows(IllegalStateException::class.java) {
-                kotlinx.coroutines.runBlocking { NormalAccountLocalCleaner(context, h.repository, account, h.visibility).deleteDevice() }
+                kotlinx.coroutines.runBlocking { NormalAccountLocalCleaner(context, h.repository, account, h.visibility, fixtureErasure(account, h.repository, config)).deleteDevice { } }
             }
             assertTrue(old.exists())
         } finally { h.stop(); db.close(); dir.deleteRecursively() }
     }
+    @Test fun accountCompletionClearsOnlyMatchingSubjectAndRetainsOfflineOwner() = runTest { fixture("account-completion") { f ->
+        val ownerId = "10000000-0000-4000-8000-000000000001"
+        val subject = "20000000-0000-4000-8000-000000000001"
+        f.api.accountIds["fixture-access"] = ownerId
+        val gateway = ViewModelGateway(AuthUser(subject, "owner@gmail.com", "2026-11-11T12:00:00Z"))
+        val vault = MemoryVault()
+        val account = NormalAccount(gateway, vault, f.h.repository, FixedClock(Instant.parse("2026-11-11T12:00:00Z")), config, testMail(FixedClock(Instant.parse("2026-11-11T12:00:00Z")), config.publicOrigin))
+        assertTrue(account.signIn("owner@gmail.com", "fixture-password-123", true))
+        val adapter = NativeNormalErasureOwner(account, f.h.repository)
+        val record = SavedAccountErasure(config.publicOrigin, ownerId, subject, "30000000-0000-4000-8000-000000000001", "a".repeat(64))
+        adapter.freeze(record)
+        // The same identity may have reauthenticated since the confirmed request was recorded.
+        assertTrue(account.signIn("owner@gmail.com", "fixture-password-123", true))
+        adapter.completed(record)
+        assertNull(vault.read()); assertNull(account.state.value.email)
+        assertEquals(ownerId, f.h.repository.state.value.owner)
+        assertFalse(f.h.repository.state.value.authenticated)
+        assertTrue(f.h.repository.state.value.accountErasure)
+        // Another owner's newer session must not be touched by an old completion.
+        f.api.accountIds["fixture-access"] = "10000000-0000-4000-8000-000000000002"
+        assertTrue(account.signIn("owner@gmail.com", "fixture-password-123", true))
+        adapter.completed(record)
+        assertNotNull(vault.read()); assertEquals("owner@gmail.com", account.state.value.email)
+        assertTrue(f.h.repository.state.value.authenticated)
+    } }
+    @Test fun accountCompletionAndResumeUseConsistentEngineThenCredentialLockOrder() = runTest { fixture("account-lock-order") { f ->
+        val ownerId = "10000000-0000-4000-8000-000000000001"
+        val subject = "20000000-0000-4000-8000-000000000001"
+        f.api.accountIds["fixture-access"] = ownerId
+        val engineHeld = java.util.concurrent.CountDownLatch(1)
+        val releaseEngine = java.util.concurrent.CountDownLatch(1)
+        val completionStarted = java.util.concurrent.CountDownLatch(1)
+        val engineReleased = java.util.concurrent.atomic.AtomicBoolean(false)
+        val inverseRead = java.util.concurrent.atomic.AtomicBoolean(false)
+        val memory = MemoryVault()
+        val vault = object : NormalAuthVault {
+            override fun read(): SavedNormalAuth? {
+                // This turns the former inversion into a deterministic failure rather than hanging the JVM.
+                if (Thread.currentThread().name == "erasure-completion-fixture" && !engineReleased.get()) {
+                    inverseRead.set(true); error("Credential lock was acquired before the held engine lock")
+                }
+                return memory.read()
+            }
+            override fun write(value: SavedNormalAuth?) = memory.write(value)
+        }
+        val account = NormalAccount(ViewModelGateway(AuthUser(subject, "owner@gmail.com", "confirmed")), vault, f.h.repository, FixedClock(Instant.parse("2026-11-11T12:00:00Z")), config, testMail(FixedClock(Instant.parse("2026-11-11T12:00:00Z")), config.publicOrigin))
+        assertTrue(account.signIn("owner@gmail.com", "fixture-password-123", true))
+        val adapter = NativeNormalErasureOwner(account, f.h.repository)
+        val record = SavedAccountErasure(config.publicOrigin, ownerId, subject, "30000000-0000-4000-8000-000000000001", "a".repeat(64))
+        adapter.freeze(record)
+        val credential = account.erasureCredential()!!
+        val completionThread = java.util.concurrent.atomic.AtomicReference<Thread>()
+        val executor = java.util.concurrent.Executors.newSingleThreadExecutor { task -> Thread(task, "erasure-completion-fixture").apply { isDaemon = true; completionThread.set(this) } }
+        val resume = async(kotlinx.coroutines.Dispatchers.IO) {
+            runCatching { f.h.repository.resume("fixture-access", accepted = {
+                engineHeld.countDown()
+                check(releaseEngine.await(5, java.util.concurrent.TimeUnit.SECONDS))
+                credential.accepted()
+            }) }
+        }
+        try {
+            assertTrue(engineHeld.await(5, java.util.concurrent.TimeUnit.SECONDS))
+            val completion = executor.submit {
+                completionStarted.countDown()
+                kotlinx.coroutines.runBlocking { adapter.completed(record) }
+            }
+            assertTrue(completionStarted.await(5, java.util.concurrent.TimeUnit.SECONDS))
+            val deadline = System.nanoTime() + java.util.concurrent.TimeUnit.SECONDS.toNanos(5)
+            while (!completion.isDone && completionThread.get().state != Thread.State.BLOCKED && System.nanoTime() < deadline) Thread.sleep(1)
+            assertFalse(inverseRead.get())
+            assertFalse(completion.isDone)
+            assertEquals(Thread.State.BLOCKED, completionThread.get().state)
+            engineReleased.set(true); releaseEngine.countDown()
+            completion.get(5, java.util.concurrent.TimeUnit.SECONDS)
+            resume.await()
+            assertNull(memory.read()); assertNull(account.state.value.email)
+            assertEquals(ownerId, f.h.repository.state.value.owner)
+        } finally { engineReleased.set(true); releaseEngine.countDown(); executor.shutdownNow() }
+    } }
+    @Test fun serverErasureKeepsRoomProfileAndRetriesDurablyAfterLostResponse() = runTest { fixture("normal-erasure") { f ->
+        val learner = Learner("20000000-0000-0000-0000-000000000001", "lrn_erasure", "ADULT", "adults", "id")
+        f.api.profiles["A"] = mutableListOf(learner)
+        f.h.repository.login("A", declaration); f.h.repository.select(learner, "Owner")
+        f.h.repository.enable()
+        val before = f.db.profiles().get(learner.clientLearnerId)
+        f.api.loseErasureReply = true
+        assertTrue(runCatching { f.h.repository.eraseServerCopy(learner.id) }.exceptionOrNull() is IOException)
+        assertTrue(f.h.repository.state.value.erasurePending)
+        assertFalse(f.h.repository.state.value.enabled)
+        assertFalse(f.h.repository.state.value.serverCopyErased)
+        f.h.stop(); val restarted = f.open()
+        restarted.repository.resume("A")
+        f.api.loseErasureReply = false
+        restarted.repository.eraseServerCopy(learner.id)
+        assertEquals(2, f.api.erasureRequests.size); assertEquals(f.api.erasureRequests[0], f.api.erasureRequests[1])
+        assertTrue(restarted.repository.state.value.serverCopyErased)
+        assertFalse(restarted.repository.state.value.erasurePending)
+        assertEquals(before, f.db.profiles().get(learner.clientLearnerId))
+        assertEquals("owner-A", restarted.repository.state.value.owner)
+    } }
+
 }

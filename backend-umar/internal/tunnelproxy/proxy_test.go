@@ -15,10 +15,13 @@ func TestAllowedRequestsReachOnlyTheirFixedUpstream(t *testing.T) {
 	for _, tc := range []struct{ method, path, body, target string }{
 		{"GET", "/healthz", "", "api"},
 		{"GET", "/v1/account", "", "api"},
+		{"POST", "/v1/account/deletion", `{"confirmed":true}`, "api"},
+		{"POST", "/v1/account/deletion/status", `{"request_id":"fixture"}`, "api"},
 		{"POST", "/v1/account", `{"synthetic":true}`, "api"},
 		{"GET", "/v1/learners", "", "api"},
 		{"POST", "/v1/learners", `{"synthetic":true}`, "api"},
 		{"GET", "/v1/packs", "", "api"},
+		{"POST", "/v1/learners/" + learner + "/deletion", `{"confirmed":true}`, "api"},
 		{"POST", "/v1/learners/" + learner + "/consent", `{"granted":false}`, "api"},
 		{"POST", "/v1/learners/" + learner + "/events", `{"events":["exact bytes"]}`, "api"},
 		{"GET", "/v1/learners/" + learner + "/events?after=2&limit=3", "", "api"},
@@ -83,6 +86,8 @@ func TestUnknownAdminSignupAndAmbiguousRoutesNeverReachUpstreams(t *testing.T) {
 		{"GET", "//admin"}, {"GET", "/%61dmin"}, {"GET", "/v1/learners/../admin"},
 		{"DELETE", "/v1/account"}, {"GET", "/v1/learners/" + learner + "/consent"},
 		{"GET", "/v1/learners/" + learner + "/events/extra"},
+		{"GET", "/v1/learners/" + learner + "/deletion"},
+		{"POST", "/v1/learners/" + learner + "/deletion?after=0"},
 		{"POST", "/token?grant_type=pkce"}, {"POST", "/token"},
 		{"POST", "/token?grant_type=password&grant_type=refresh_token"},
 		{"POST", "/token?grant_type=password&redirect_to=https://foreign.invalid"},
@@ -145,5 +150,16 @@ func TestUpstreamFailureDoesNotExposeDetails(t *testing.T) {
 	h.ServeHTTP(w, httptest.NewRequest("GET", "/v1/account", nil))
 	if w.Code != 502 || strings.Contains(w.Body.String(), "127.0.0.1") || strings.Contains(w.Body.String(), "dial") {
 		t.Fatalf("unredacted failure: %d %s", w.Code, w.Body.String())
+	}
+}
+
+func TestAccountErasureProxyRefusesQueryAndWrongMethods(t *testing.T) {
+	for _, tc := range []struct{ method, path string }{
+		{"GET", "/v1/account/deletion"}, {"GET", "/v1/account/deletion/status"}, {"POST", "/v1/account/deletion?"}, {"POST", "/v1/account/deletion/status?token=fixture"},
+	} {
+		r := httptest.NewRequest(tc.method, tc.path, nil)
+		if _, ok := allowed(r); ok {
+			t.Fatal("decorated erasure route allowed", tc)
+		}
 	}
 }

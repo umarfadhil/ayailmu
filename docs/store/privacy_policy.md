@@ -1,191 +1,99 @@
-DRAFT 2026-10-17 — written by Claude; needs Umar's review and, for the privacy policy, a legal check against UU No. 27/2022 (UU PDP) before publication.
+# AyaIlmu privacy policy working draft
 
-> Notes for Umar (delete this block before publishing): text for a page on petalytix.id (suggested URL [UMAR: e.g. https://petalytix.id/ayailmu/privasi]). Both languages carry the same content. Every `[UMAR: …]` needs your input. Sources: CODE_RULES §4–§5, `Entities.kt`, `Export.kt`, `SettingsViewModel.kt`, `strings.xml` (consent_*), `data_extraction_rules.xml`. One sentence in §3 describes current behaviour that you may want to change (the export includes child profiles).
+Updated 2026-11-11. **Not approved for publication.** This draft replaces the obsolete offline-only claim that AyaIlmu has no accounts, no server and no uploads. It describes the current source and the private deployment audited on this date. Shipping behavior must be checked again against the signed release.
 
----
+Publication blockers: confirm the legal controller and address, support contact ownership, hosting and email-service recipients/countries, lawful basis and child/guardian requirements, access roles, retention periods, backup deletion/recovery process, incident contact, and a tested full account-deletion process. Do not remove these blockers or invent deadlines. Existing trial consent promises a six-month export retention limit; the owner must confirm and implement that process and align the final text before publication.
 
-# Kebijakan Privasi AyaIlmu
+## Bahasa Indonesia
 
-Berlaku sejak: [UMAR: tanggal terbit] · Versi 1
+### Ringkasan
 
-**Ringkasnya:** AyaIlmu tidak punya server sendiri. Semua yang kamu lakukan di aplikasi tersimpan di HP kamu. Kami tidak menerima apa pun secara otomatis, hanya file yang kamu sendiri pilih untuk dikirim ke kami. Tanpa iklan, tanpa akun, tanpa pelacak.
+AyaIlmu menyimpan profil dan kegiatan belajar di perangkat. Jika fitur akun tersedia dan Anda memilih menggunakannya, layanan akun menerima alamat email serta informasi yang diperlukan untuk pendaftaran, masuk, konfirmasi email, dan pemulihan kata sandi. Data belajar dikirim ke server ketika sinkronisasi untuk profil tersebut diaktifkan dengan persetujuan. Menghapus data di perangkat atau keluar dari akun tidak dengan sendirinya menghapus data server.
 
-## 1. Siapa kami
+### Pengelola dan kontak
 
-AyaIlmu dibuat oleh PT Petalytix Teknologi Indonesia ("Petalytix", "kami"), [UMAR: alamat terdaftar]. Untuk pertanyaan privasi dan permintaan hapus data, hubungi **support@petalytix.id**.
+Pengelola yang tercantum dalam dokumen proyek adalah PT Petalytix Teknologi Indonesia. Alamat terdaftar dan kontak privasi harus dikonfirmasi sebelum kebijakan ini diterbitkan. Alamat dukungan yang tercantum dalam aplikasi adalah support@petalytix.id; kepemilikan dan proses penanganan permintaan perlu diverifikasi.
 
-## 2. Apa yang disimpan aplikasi, dan di mana
+### Data di perangkat
 
-Semua data di bawah ini tersimpan di penyimpanan pribadi aplikasi **di HP kamu saja**. Kami tidak dapat melihatnya.
+Bergantung pada fitur dan platform, aplikasi menyimpan label dan ID profil, jenis profil, tahun lahir, bahasa, pengaturan belajar, jawaban dan penilaian, waktu belajar, kemajuan, laporan soal, persetujuan, serta jawaban survei uji coba. Label profil dan tahun lahir bukan bagian dari kontrak unggahan jawaban saat ini. Aplikasi juga dapat menyimpan pengaturan pengingat dan hak akses paket yang dibeli.
 
-- **Profil:** label profil (teks bebas, boleh nama panggilan), jenis profil (dewasa atau anak), tahun lahir, bahasa aplikasi, lama sesi pilihan, ukuran huruf Arab, dan **ID pelajar acak** yang dibuat di HP (bukan nomor HP, email, atau ID perangkat). Tahun lahir hanya dipakai untuk memilih isi dan pengaturan anak atau dewasa.
-- **Belajar:** setiap jawaban (apa yang diketuk atau diketik), waktu dan lama menjawab, nilai otomatis, bantuan yang dipakai, kemajuan, dan stiker.
-- **Laporan soal («Laporkan soal»):** soal yang dilaporkan, alasannya, dan untuk profil dewasa catatan tambahan yang kamu tulis sendiri. Profil anak hanya bisa memilih alasan, tanpa menulis teks.
-- **Uji coba Bahasa Arab (khusus 18+):** catatan persetujuan (versi teks dan waktunya), jawaban pertanyaan latar belakang (cara dulu belajar huruf Arab, seberapa sering membaca teks Arab, pernah belajar nahwu/sharaf atau belum, target menit per hari), dan jawaban dua survei singkat (sekitar hari ke-7 dan di akhir uji coba: kejelasan penjelasan 1–5, bagian tersulit, mau lanjut atau tidak, menit belajar per hari, hal yang membingungkan).
-- **Kode penguji:** penguji uji tertutup dapat memasukkan kode untuk membuka semua unit. Kode dicocokkan di HP dengan daftar sidik (hash) yang ada di dalam aplikasi. Tidak ada akun dan tidak ada yang dikirim.
-- **Pengaturan:** profil yang aktif, pengingat harian (nyala atau mati, dan jamnya), dan daftar produk yang sudah dibeli (lihat §5).
+Sesi akun dan informasi untuk melanjutkan proses masuk atau pemulihan dapat disimpan melalui penyimpanan akun perangkat. Kata sandi dikirim ke layanan autentikasi saat diperlukan; kata sandi tidak disimpan sebagai bagian dari data belajar. Informasi sesi merupakan data rahasia, bukan isi ekspor belajar. Implementasi penghapusan akun yang baru menyimpan bukti pemulihan rahasia secara terpisah di penyimpanan aman perangkat, bukan dalam ekspor belajar. Bukti ini memungkinkan pemeriksaan status tanpa masuk setelah akun dihapus. Keluar biasa tidak menghapus bukti; penghapusan seluruh data aplikasi dapat menghilangkan akses pemeriksaan tersebut.
 
-Kami tidak meminta dan tidak menyimpan nama asli (kecuali kamu sendiri mengetiknya sebagai label), email, nomor telepon, kontak, foto, lokasi, atau ID perangkat dan ID iklan.
+### Data yang diterima layanan
 
-## 3. Apa yang kami terima
+- **Akun:** alamat email, kredensial yang dikirim untuk autentikasi, pengenal akun, status konfirmasi, dan informasi sesi. Layanan email memproses alamat penerima dan pesan konfirmasi/pemulihan. Layanan autentikasi menangani kata sandi; basis data belajar menyimpan pengenal penyedia/akun, bukan kata sandi atau email sebagai kolom profil belajar.
+- **Profil tersinkron:** ID akun dan pelajar, ID profil lokal, jenis/audiens, bahasa, hubungan pembuat profil anak jika digunakan, serta catatan deklarasi dewasa dan persetujuan sinkronisasi.
+- **Jawaban tersinkron:** ID jawaban/pelajar/soal/sesi, isi jawaban termasuk teks yang diketik, waktu dan tanggal, bahasa, materi dan versi aturan/aplikasi, hasil penilaian, serta status peninjauan konten. Server menyimpan salinan jawaban dan nomor urut untuk sinkronisasi dan pemulihan kemajuan. Sinkronisasi baru tidak otomatis mengunggah riwayat sebelum persetujuan.
+- **Operasional:** permintaan jaringan menyertakan alamat IP dan metadata teknis. Autentikasi, pembatasan permintaan, dan layanan email dapat memprosesnya. Inventaris log, akses petugas, dan masa simpannya harus diselesaikan sebelum publikasi.
+- **Ekspor pilihan Anda:** ekspor belajar Android membuat JSON/CSV dan membuka menu berbagi. Ekspor saat ini dapat memuat semua profil di perangkat, termasuk profil anak, tetapi tidak memuat label profil atau tahun lahir. Periksa isinya sebelum memilih layanan dan penerima. Kebijakan layanan yang Anda pilih berlaku selama pengiriman.
 
-**Secara otomatis: tidak ada.** Aplikasi tidak mengirim data belajar ke kami atau ke pihak lain.
+Data akun dan sinkronisasi digunakan untuk menyediakan akun, mengamankan akses, menyimpan dan memulihkan kemajuan, serta memenuhi pilihan persetujuan Anda. Ekspor yang dikirim kepada tim dapat digunakan untuk meninjau dan memperbaiki materi sesuai tujuan yang dijelaskan saat permintaan ekspor. Tidak ada SDK iklan atau analitik pihak ketiga yang ditemukan dalam audit sumber; kebijakan tidak boleh mengartikan ini sebagai tidak ada pemrosesan oleh penyedia autentikasi, email, hosting, atau platform.
 
-Kami hanya menerima file yang **kamu kirim sendiri**. Di Pengaturan, profil dewasa dapat memilih «Ekspor data belajar». Aplikasi membuat dua file (JSON dan CSV), lalu membuka menu bagikan Android. Kamu yang memilih aplikasinya (misalnya email atau WhatsApp) dan penerimanya. Isi file:
+### Pilihan, penghapusan, dan penyimpanan
 
-- ID pelajar acak, jenis profil, bahasa, dan tanggal profil dibuat, **tanpa** label profil dan **tanpa** tahun lahir;
-- semua jawaban dan nilai seperti di §2, termasuk teks yang diketik;
-- laporan soal, jawaban latar belakang dan survei uji coba (jika ada), versi aplikasi, dan waktu ekspor.
+- Keluar dari akun mengakhiri akses sesi; ini bukan penghapusan akun.
+- Mematikan sinkronisasi menghentikan pengiriman berikutnya setelah penarikan persetujuan diterima. Jika perangkat offline, permintaan penarikan menunggu pengiriman. Data yang sudah ada di server tetap ada.
+- Menghapus profil atau seluruh data melalui kontrol lokal menghapus data perangkat yang dipilih. Ini tidak menghapus akun penyedia autentikasi, data server, ekspor yang telah dibagikan, atau cadangan platform.
+- Penghapusan salinan pelajar di server sedang diimplementasikan dan belum tersedia dalam deployment yang diaudit. Kode baru menghapus profil server, jawaban, dan persetujuannya, tetapi menyimpan bukti penghapusan minimal dan penanda ID untuk mencegah pengiriman ulang menghidupkan data lama. Ini tidak menghapus akun autentikasi. Jangan menjanjikan fitur ini sebelum deployment dan alur aplikasi diuji.
+- Kode penghapusan akun lengkap kini menghapus semua profil belajar server milik akun beserta jawaban/persetujuan, lalu memproses penghapusan identitas masuk secara terpisah. Bukti minimal dan penanda pencegah pemulihan data lama tetap disimpan. Kontrol aplikasi sedang diverifikasi, belum diterapkan pada deployment yang diaudit. Permintaan melalui web, penghapusan cadangan, dan jangka waktu penyelesaian masih harus ditetapkan serta diuji sebelum peluncuran publik. Hubungi dukungan untuk pertanyaan; jangan mengirim kata sandi atau kode masuk.
 
-File ekspor berisi data **semua profil di HP tersebut**, termasuk profil anak. [UMAR: putuskan apakah ekspor dibatasi ke profil dewasa yang ikut uji coba; jika aplikasi diubah, ubah kalimat ini.]
+Data lokal tersimpan sampai dihapus atau diubah oleh pengguna/aplikasi. Jadwal penghapusan data server, bukti penghapusan, log, ekspor dukungan, dan cadangan belum dibuktikan sebagai proses operasional. Kebijakan publik harus menyebutkan periode atau kriteria yang telah disetujui dan dapat dijalankan, bukan angka perkiraan.
 
-Selama dikirim, file tunduk pada kebijakan layanan yang kamu pilih (penyedia email, WhatsApp, dan sebagainya).
+### Anak, pembayaran, cadangan, dan pengingat
 
-**Untuk apa:** hanya untuk memeriksa apakah pelajaran dan soal bekerja, lalu memperbaikinya, termasuk memeriksa jawaban ketik secara manual. Tidak untuk iklan, tidak dijual, dan tidak dibagikan ke pihak lain.
+Profil anak pada Android dikelola melalui profil dewasa. Fitur sinkronisasi normal yang diaudit masih terbatas pada pelajar dewasa; jangan mengiklankan sinkronisasi keluarga lengkap sebelum alur wali/anak, persetujuan, ekspor dan penghapusannya diterima. Uji coba Bahasa Arab ditujukan untuk dewasa. Penilaian hukum dan kebijakan toko untuk anak belum menjadi sertifikasi kepatuhan.
 
-**Siapa yang melihat:** tim kursus AyaIlmu di Petalytix [UMAR: sebutkan peran, misalnya pendiri dan peninjau konten]. [UMAR: tempat file disimpan setelah diterima, misalnya kotak surat support@petalytix.id dan sebuah spreadsheet di …; jika ada yang disimpan di luar Indonesia, cek aturan transfer data UU PDP.]
+Jika pembelian diaktifkan pada rilis, Google Play memproses pembayaran dan aplikasi memeriksa hak akses produk. Data kartu tidak masuk ke basis data belajar. Konfigurasi pembayaran rilis harus diuji sebelum bagian ini dipublikasikan sebagai fitur aktif.
 
-**Berapa lama:** file dari uji coba dihapus **paling lambat 6 bulan setelah uji coba berakhir**. Email lain dan file di luar uji coba: [UMAR: misalnya dihapus 6 bulan setelah urusannya selesai].
+Android dapat mencadangkan data lokal sesuai pengaturan perangkat dan aturan cadangan aplikasi. Cadangan platform dikelola melalui akun platform, terpisah dari sinkronisasi AyaIlmu. Pengingat Android dijadwalkan di perangkat setelah dipilih pengguna. Informasi diagnostik platform dapat tersedia melalui layanan platform; cakupan final perlu diverifikasi terhadap rilis.
 
-## 4. Anak-anak
+## English
 
-AyaIlmu untuk anak dan dewasa, dan mengikuti Kebijakan Keluarga (Families) Google Play.
+### Summary
 
-- Saat profil dibuat, aplikasi menanyakan tahun lahir dengan pilihan netral. Anak di bawah 13 tahun diminta memanggil orang tua atau wali. Profil anak hanya bisa dibuat dari profil dewasa.
-- Tidak ada iklan, tidak ada SDK pihak ketiga yang mengumpulkan data, dan tidak ada fitur sosial atau obrolan.
-- Pembelian dari profil anak dilindungi pemeriksaan orang dewasa (soal hitungan dan tombol tahan).
-- Uji coba Bahasa Arab hanya untuk usia 18+. Anak tidak ikut.
-- Hanya profil dewasa yang dapat mengekspor data, menghapus data, atau menyalakan pengingat.
+AyaIlmu stores profiles and learning activity on the device. If account features are available and you choose to use them, the account service receives your email address and information needed for registration, sign-in, email confirmation and password recovery. Learning data is sent to the server when sync is explicitly enabled for that profile. Deleting device data or signing out does not by itself delete server data.
 
-Orang tua atau wali dapat meminta penghapusan data anak seperti di §9.
+### Controller and contact
 
-## 5. Pembayaran
+Project documents identify PT Petalytix Teknologi Indonesia as the operator. Its registered address and privacy contact must be confirmed before publication. The app lists support@petalytix.id; ownership and the request-handling process still require verification.
 
-Paket sekali bayar diproses oleh **Google Play** dan tunduk pada Kebijakan Privasi Google. Kami tidak pernah melihat data kartu atau rekening. Aplikasi hanya bertanya kepada Google Play produk apa yang dimiliki akun Google di HP itu, lalu menyimpan daftar ID produk tersebut di HP supaya paket tetap terbuka saat offline. Google memberi kami laporan penjualan dan data pesanan [UMAR: cek di Play Console apa saja yang terlihat, misalnya nomor pesanan, produk, harga, tanggal, negara], yang kami pakai untuk pembukuan dan pengembalian dana.
+### Device data
 
-## 6. Cadangan Android
+Depending on the feature and platform, the app stores profile labels and IDs, profile kind, birth year, language, learning settings, answers and scores, learning times, progress, question reports, consent and trial-survey answers. Profile labels and birth years are not part of the current answer-upload contract. Reminder settings and purchased-product entitlements may also be stored.
 
-Android dapat mencadangkan data aplikasi (database dan pengaturan) ke **akun Google kamu sendiri**, supaya kemajuan tidak hilang saat ganti HP. Cadangan ini dikelola Google di akunmu, dan kami tidak dapat mengaksesnya. Kamu dapat mematikan atau menghapus cadangan di pengaturan Android atau akun Google.
+Account sessions and information needed to continue sign-in or recovery may use the device's account storage. Passwords are sent to the authentication service when needed; they are not stored with learning records. Session information is confidential and is not part of a learning export. The new account-deletion implementation keeps a secret recovery proof separately in secure device storage, outside learning exports. This permits status checks without sign-in after account deletion. Ordinary sign-out preserves it; deleting all app data can remove that recovery access.
 
-## 7. Data crash
+### Service data
 
-AyaIlmu tidak memakai SDK laporan crash atau analitik. Jika kamu mengizinkan HP membagikan data penggunaan dan diagnostik ke Google, Google dapat menunjukkan kepada kami laporan crash dan kinerja aplikasi melalui Android Vitals di Play Console. Pengumpulan ini dilakukan dan diatur oleh Google.
+- **Accounts:** email address, credentials submitted for authentication, account identifiers, confirmation status and session information. The email service processes recipients and confirmation/recovery messages. The authentication service handles passwords; the learning database stores provider/account identifiers rather than password or email columns in learning profiles.
+- **Synced profiles:** account and learner IDs, local profile ID, kind/audience, language, a child-profile creator relationship where used, and adult-declaration and sync-consent records.
+- **Synced answers:** answer/learner/item/session IDs, answer content including typed text, time and date, language, content and rule/app versions, scoring results and content-review status. The server stores answer copies and sequence numbers to sync and restore progress. Starting sync does not automatically upload pre-consent history.
+- **Operations:** network requests include IP addresses and technical metadata. Authentication, rate limiting and email services may process these. The log inventory, staff access and retention schedule must be completed before publication.
+- **Exports you choose:** Android learning export creates JSON/CSV and opens the share sheet. The current export may contain all profiles on the device, including child profiles, but excludes profile labels and birth years. Review it before choosing a service and recipient. That service's policies apply during delivery.
 
-## 8. Notifikasi
+Account and sync data provide accounts, secure access, save and restore progress, and honor consent choices. Exports sent to the team may support content review and improvement for the purpose explained when requesting the export. No advertising or third-party analytics SDK was found in the source audit; this does not mean authentication, email, hosting or platform providers process no data.
 
-Pengingat harian bersifat pilihan dan **mati secara bawaan**. Hanya profil dewasa yang dapat menyalakannya, dan izin notifikasi baru diminta saat itu. Pengingat dijadwalkan di HP, tidak melalui server.
+### Choices, deletion and retention
 
-## 9. Hak kamu dan cara menghapus data
+- Signing out ends session access; it does not delete the account.
+- Turning sync off stops subsequent transmission once withdrawal is received. Offline withdrawal waits to be sent. Existing server data remains.
+- Local profile/all-data controls remove selected device data. They do not delete authentication-provider accounts, server data, shared exports or platform backups.
+- Server learner-copy erasure is being implemented and is not available in the audited deployment. The new code erases the server learner, answers and consent records, while retaining a minimal receipt and identifier marker to prevent old retries from restoring erased data. It does not delete the authentication account. Do not promise this feature until deployment and the app flow are tested.
+- Full-account deletion source now removes all owned server learner profiles, answers and consent, then separately processes removal of the sign-in identity. Minimal receipts and anti-replay tombstones remain. Native controls are being verified and have not been deployed to the audited service. A web request route, backup deletion and completion deadlines must be established and tested before public launch. Contact support with questions; do not send passwords or sign-in codes.
 
-- **Di HP:** dari profil dewasa, buka Pengaturan untuk menghapus profil itu atau memilih «Hapus semua data». Menghapus aplikasi juga menghapus datanya dari HP. Cadangan di akun Google dihapus terpisah (§6).
-- **Menarik persetujuan uji coba:** Pengaturan → Persetujuan uji coba → Tarik persetujuan.
-- **File yang sudah dikirim ke kami:** email support@petalytix.id dan sebutkan **ID pelajar** (ada di Pengaturan, tekan lama untuk menyalin). Kami menghapusnya dalam [UMAR: misalnya 30 hari] dan mengabarimu lewat email.
-- Kamu juga dapat meminta salinan atau penjelasan tentang data yang sudah kami terima.
+Local data remains until removed or changed by the user/app. Operational deletion schedules for server data, deletion receipts, logs, support exports and backups have not been verified. The published policy must state approved, implementable periods or criteria, rather than estimated numbers.
 
-Karena kami tidak tahu siapa kamu, kami hanya dapat menemukan file melalui ID pelajar.
+### Children, payments, backups and reminders
 
-## 10. Keamanan
+Android child profiles are managed through an adult profile. Audited normal sync currently supports adult learners only; full family sync must not be advertised until guardian/child flows, consent, export and deletion are accepted. The Arabic trial is for adults. Legal and store-policy reviews for children are not a compliance certification.
 
-Data di HP tersimpan di penyimpanan pribadi aplikasi, yang tidak dapat dibaca aplikasi lain. Aplikasi tidak mengenkripsinya secara tambahan, jadi lindungi HP dengan kunci layar. File yang kami terima hanya dapat dibuka tim [UMAR: misalnya akun dengan verifikasi dua langkah].
+If purchases are enabled in the release, Google Play processes payment and the app checks product entitlements. Card data does not enter the learning database. Release billing must be tested before presenting this as an active feature.
 
-## 11. Perubahan kebijakan
+Android may back up local data according to device settings and app backup rules. Platform backups use the platform account and are separate from AyaIlmu sync. Android reminders are scheduled on-device after the user chooses them. Platform diagnostic information may be available through platform services; final coverage must be checked against the release.
 
-Jika kebijakan ini berubah, kami memperbarui tanggal dan versi di atas. Jika perubahan memengaruhi uji coba, aplikasi akan meminta persetujuanmu lagi.
+## Evidence and publication check
 
-## 12. Hukum
+Reviewed source: `android/core/sync` (Contracts, HttpBackend, SyncEngine, Journal), `android/app/src/nonLab/.../feature/account`, `android/core/data/.../export/Export.kt`, `SettingsViewModel.kt`, consent resources and backup rules; `backend-umar/internal/api`, `internal/auth`, `internal/store/migrations`. Deployment evidence: 2026-11-11 launch audit, normal GoTrue accounts with confirmation required and optional learner sync, private localhost origin. Source additions are not deployment evidence.
 
-Kami berupaya mengikuti Undang-Undang No. 27 Tahun 2022 tentang Pelindungan Data Pribadi (UU PDP). [UMAR: tinjauan hukum sebelum terbit.]
-
----
-
-# AyaIlmu Privacy Policy
-
-Effective: [UMAR: publication date] · Version 1
-
-**In short:** AyaIlmu has no server of its own. Everything you do in the app stays on your phone. We receive nothing automatically, only files you choose to send us yourself. No ads, no accounts, no trackers.
-
-## 1. Who we are
-
-AyaIlmu is made by PT Petalytix Teknologi Indonesia ("Petalytix", "we"), [UMAR: registered address]. For privacy questions and deletion requests, contact **support@petalytix.id**.
-
-## 2. What the app stores, and where
-
-All of the data below is kept in the app's private storage **on your phone only**. We cannot see it.
-
-- **Profiles:** a profile label (free text; a nickname is fine), profile kind (adult or child), birth year, app language, preferred session length, Arabic text size, and a **random learner ID** created on the phone (not a phone number, email or device ID). The birth year is used only to choose child or adult content and settings.
-- **Learning:** every answer (what was tapped or typed), when and how long it took, the automatic score, help used, progress and stickers.
-- **Question reports («Laporkan soal»):** the reported question, the reason and, on adult profiles, an optional note you write yourself. Child profiles can only pick a reason; they cannot type text.
-- **Arabic trial (18+ only):** the consent record (text version and time), answers to background questions (how you first learned to read Arabic letters, how often you read Arabic text, whether you have studied Arabic grammar, your daily-minutes goal) and answers to two short surveys (around day 7 and at the end of the trial: clarity 1–5, hardest part, whether you would continue, minutes spent per day, anything confusing).
-- **Tester code:** closed-test testers can enter a code that unlocks all units. The code is checked on the phone against fingerprints (hashes) built into the app. There is no account and nothing is sent.
-- **Settings:** the active profile, the daily reminder (on or off, and its time) and the list of products you own (see §5).
-
-We do not ask for or store real names (unless you type one as a label), email, phone number, contacts, photos, location, or device or advertising IDs.
-
-## 3. What we receive
-
-**Automatically: nothing.** The app does not send learning data to us or to anyone else.
-
-We receive only files **you send yourself**. In Settings, an adult profile can choose «Ekspor data belajar» (Export learning data). The app creates two files (JSON and CSV) and opens the Android share sheet. You choose the app (for example email or WhatsApp) and the recipient. The files contain:
-
-- the random learner ID, profile kind, language and the date the profile was created, **without** the profile label and **without** the birth year;
-- all answers and scores described in §2, including typed text;
-- question reports, Arabic-trial background and survey answers (if any), the app version and the export time.
-
-An export contains data for **all profiles on that phone**, including child profiles. [UMAR: decide whether to limit the export to adult trial profiles; if the app changes, change this sentence.]
-
-While a file is being sent, the policies of the service you chose apply (your email provider, WhatsApp and so on).
-
-**Why we use it:** only to check whether the lessons and questions work and to improve them, including checking typed answers by hand. Never for ads; never sold or shared with third parties.
-
-**Who sees it:** the AyaIlmu course team at Petalytix [UMAR: name the roles, e.g. founder and content reviewers]. [UMAR: where files are kept after receipt, e.g. the support@petalytix.id mailbox and a spreadsheet in …; if anything is stored outside Indonesia, check the UU PDP cross-border rules.]
-
-**How long:** files from the trial are deleted **no later than 6 months after the trial ends**. Other emails and files outside the trial: [UMAR: e.g. deleted 6 months after the matter is closed].
-
-## 4. Children
-
-AyaIlmu is for children and adults and follows the Google Play Families policy.
-
-- When a profile is created, the app asks for a birth year with a neutral picker. Children under 13 are asked to fetch a parent or guardian. Child profiles can only be created from an adult profile.
-- No ads, no third-party SDKs that collect data, and no social or chat features.
-- Purchases from a child profile are behind an adult check (an arithmetic question and a hold-to-confirm button).
-- The Arabic trial is for ages 18+ only. Children do not take part.
-- Only adult profiles can export data, delete data or turn on the reminder.
-
-Parents or guardians can ask for a child's data to be deleted as described in §9.
-
-## 5. Payments
-
-One-time packs are processed by **Google Play** under Google's Privacy Policy. We never see card or bank details. The app only asks Google Play which products the Google account on that phone owns, and keeps that list of product IDs on the phone so packs stay unlocked offline. Google gives us sales reports and order records [UMAR: check what Play Console shows you, e.g. order number, product, price, date, country], which we use for bookkeeping and refunds.
-
-## 6. Android backup
-
-Android can back up the app's data (database and settings) to **your own Google account**, so progress survives a phone change. Google manages this backup in your account; we cannot access it. You can turn backup off or delete it in your Android or Google account settings.
-
-## 7. Crash data
-
-AyaIlmu uses no crash-reporting or analytics SDK. If you allow your phone to share usage and diagnostics data with Google, Google may show us crash and performance reports for the app through Android Vitals in Play Console. Google collects and governs that data.
-
-## 8. Notifications
-
-The daily reminder is optional and **off by default**. Only an adult profile can turn it on, and the notification permission is requested only then. The reminder is scheduled on the phone, not through a server.
-
-## 9. Your rights and how to delete data
-
-- **On the phone:** from an adult profile, open Settings to delete that profile or choose «Hapus semua data» (Delete all data). Uninstalling the app also removes its data from the phone. A backup in your Google account is deleted separately (§6).
-- **Withdraw trial consent:** Settings → Persetujuan uji coba → Tarik persetujuan.
-- **Files you already sent us:** email support@petalytix.id and quote your **learner ID** (in Settings; long-press to copy). We delete them within [UMAR: e.g. 30 days] and confirm by email.
-- You can also ask for a copy or an explanation of the data we have received.
-
-Because we do not know who you are, we can find your files only through the learner ID.
-
-## 10. Security
-
-Data on the phone is kept in the app's private storage, which other apps cannot read. The app does not add its own encryption, so protect your phone with a screen lock. Files we receive can be opened only by the team [UMAR: e.g. accounts with two-step verification].
-
-## 11. Changes to this policy
-
-If this policy changes, we update the date and version above. If a change affects the trial, the app asks for your consent again.
-
-## 12. Law
-
-We aim to follow Indonesian Law No. 27 of 2022 on Personal Data Protection (UU PDP). [UMAR: legal review before publication.]
+Before publication, reconcile both languages, in-app consent, account/deletion UI, store Data safety/App Privacy forms, backup operations and the actual signed distribution configuration. Preserve the full intended product scope; unresolved features remain launch work, not silently removed promises.

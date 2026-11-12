@@ -32,6 +32,11 @@ plugins {
     alias(libs.plugins.roborazzi)
 }
 
+// Explicit public-candidate inputs are validated once by the offline gate. Default CI candidates stay unapproved.
+apply(from = rootProject.file("gradle/public-release.gradle.kts"))
+@Suppress("UNCHECKED_CAST")
+val publicReleaseValues = extra["ayailmuPublicReleaseValues"] as Map<String, String>
+
 // Public URLs are configuration, never credentials. Reject malformed input before generating Java.
 val syncLabPublicOrigin = providers.gradleProperty("umar.syncLab.publicOrigin").orElse("").get()
 if (syncLabPublicOrigin.isNotEmpty()) {
@@ -166,7 +171,7 @@ abstract class PrepareReviewedProdAssets : DefaultTask() {
     fun prepare() {
         fileSystem.sync {
             from(sharedAssets) {
-                include("art/index.json", "audio/index.json", "strokes/index.json", "config/app_config.json", "licenses/KanjiVG.txt", "licenses/OFL-NotoNaskhArabic.txt")
+                include("art/index.json", "audio/index.json", "strokes/index.json", "config/app_config.json", "licenses/KanjiVG.txt", "licenses/OFL-NotoNaskhArabic.txt", "licenses/OkHttp-Okio-Apache-2.0.txt")
             }
             from(reviewedAssets) {
                 include("config/catalog.json", "config/rules.mat-a-local.json", "packs/matematika/mat-a-local/v1.json", "provenance.json")
@@ -231,12 +236,22 @@ android {
         }
         create("prod") {
             dimension = "mode"
+            if (publicReleaseValues.isNotEmpty()) {
+                applicationId = publicReleaseValues.getValue("application_id")
+                versionName = publicReleaseValues.getValue("version_name")
+                versionCode = publicReleaseValues.getValue("version_code").toInt()
+            }
             buildConfigField("boolean", "DEVELOPER_DEMO", "false")
-            buildConfigField("boolean", "NORMAL_AUTH_APPROVED", "$normalAuthApproved")
-            buildConfigField("String", "NORMAL_AUTH_PUBLIC_ORIGIN", "\"$normalAuthOrigin\"")
-            buildConfigField("String", "NORMAL_SYNC_POLICY_VERSION", "\"$normalSyncPolicy\"")
-            buildConfigField("String", "NORMAL_OWNER_DECLARATION_VERSION", "\"$normalOwnerDeclaration\"")
-            buildConfigField("String", "NORMAL_REGISTRY_SOURCE_COMMIT", "\"$normalRegistrySource\"")
+            if (publicReleaseValues.isNotEmpty()) {
+                buildConfigField("boolean", "BILLING_ENABLED", "true")
+                buildConfigField("String", "PLAY_LICENSE_KEY", "\"${publicReleaseValues.getValue("play_license_public_key")}\"")
+                buildConfigField("String", "NORMAL_AUTH_REQUIRED_ORIGIN", "\"${publicReleaseValues.getValue("public_origin")}\"")
+            }
+            buildConfigField("boolean", "NORMAL_AUTH_APPROVED", "${publicReleaseValues.isNotEmpty() || normalAuthApproved}")
+            buildConfigField("String", "NORMAL_AUTH_PUBLIC_ORIGIN", "\"${publicReleaseValues["public_origin"] ?: normalAuthOrigin}\"")
+            buildConfigField("String", "NORMAL_SYNC_POLICY_VERSION", "\"${publicReleaseValues["sync_policy_version"] ?: normalSyncPolicy}\"")
+            buildConfigField("String", "NORMAL_OWNER_DECLARATION_VERSION", "\"${publicReleaseValues["owner_declaration_version"] ?: normalOwnerDeclaration}\"")
+            buildConfigField("String", "NORMAL_REGISTRY_SOURCE_COMMIT", "\"${publicReleaseValues["registry_source_commit"] ?: normalRegistrySource}\"")
         }
         create("ownerRemote") {
             dimension = "mode"

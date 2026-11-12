@@ -11,6 +11,7 @@ import kotlinx.serialization.json.Json
 
 @Serializable
 data class Captured(val payload: String, val acknowledgedSequence: Long? = null)
+@OptIn(ExperimentalSerializationApi::class)
 @Serializable
 data class Binding(
     val learner: Learner,
@@ -24,6 +25,9 @@ data class Binding(
     val local: Map<String, Captured> = emptyMap(),
     val remote: List<RemoteRecord> = emptyList(),
     val cursor: Long = 0,
+    /** Durable before transmission. Never reset after an uncertain reply. */
+    @EncodeDefault(EncodeDefault.Mode.NEVER) val deletionRequestId: String? = null,
+    @EncodeDefault(EncodeDefault.Mode.NEVER) val deletionReceipt: LearnerDeletionReceipt? = null,
 )
 /**
  * An owner's profile-create request that may already have reached the server. It is recorded durably before the
@@ -39,12 +43,29 @@ data class JournalSnapshot(
     val activeOwner: String? = null,
     val activeLearner: String? = null,
     val owners: Map<String, Map<String, Binding>> = emptyMap(),
+    /** Non-secret permanent upload fence; recovery credentials belong only in the secure vault. */
+    @EncodeDefault(EncodeDefault.Mode.NEVER) val accountErasures: Map<String, String> = emptyMap(),
     /** At most one unresolved create per owner. Omitted from the file while empty, so old snapshots stay byte-compatible. */
     @EncodeDefault(EncodeDefault.Mode.NEVER) val pendingCreates: Map<String, PendingCreate> = emptyMap(),
 ) {
     /** Unknown or malformed pending data is never repaired or discarded; reading fails closed instead. */
     internal fun requireValid() {
         require(schemaVersion == 1) { "Unknown journal schema" }
+        for ((owner, request) in accountErasures) {
+            require(accountErasureUUID(owner) && accountErasureUUID(request))
+            require(owners[owner].orEmpty().values.none { it.enabled || it.withdrawalPending })
+        }
+        for ((owner, bindings) in owners) {
+            for ((id, binding) in bindings) {
+                val request = binding.deletionRequestId
+                if (request == null) require(binding.deletionReceipt == null) { "Unbound erasure receipt" }
+                else {
+                    require(OWNER_ID.matches(owner) && id == binding.learner.id && CANONICAL_UUID.matches(id) && CANONICAL_UUID.matches(request))
+                    require(!binding.enabled && !binding.withdrawalPending) { "Erased learner cannot sync" }
+                    binding.deletionReceipt?.requireValid(id, request)
+                }
+            }
+        }
         for ((owner, pending) in pendingCreates) {
             require(OWNER_ID.matches(owner)) { "Malformed pending create owner" }
             require(
@@ -72,7 +93,7 @@ class FileJournal(private val file: File) : JournalStore {
         return json.decodeFromString<JournalSnapshot>(file.readText()).also { it.requireValid() }
     }
     @Synchronized override fun update(transform: (JournalSnapshot) -> JournalSnapshot): JournalSnapshot {
-        val next = transform(read())
+        val next = transform(read()).also { it.requireValid() }
         val parent = requireNotNull(file.absoluteFile.parentFile)
         check(parent.exists() || parent.mkdirs()) { "Cannot create journal directory" }
         val temp = File(parent, file.name + ".pending")

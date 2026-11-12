@@ -43,15 +43,29 @@ Budget: ≤ 25 KB. This is the only place that says *where* things are. Update i
 | `docs/content/MODULES_LEVELS_STORIES.md` | Follow-up 12 contract: modules/languages/levels, track ids, `story` type + motion limits, Nilai guide, Sejarah figures and depiction rules, new art keys. Syllabi: `docs/syllabus/bahasa/*_levels.md`. | DRAFT 2026-10-18 |
 | `art/tools/art_*.py` | Drawing modules loaded by `draw.py` (covers, values, school, history, vocab2); briefs `art/briefs/follow-up-12-*.md`. | IN SOURCE 2026-10-18 |
 | `README.md` | Repo README: what AyaIlmu is, layout, "start at ai-memory/README.md". | existing, rewritten 2026-10-16 |
-| `.gitignore` | Node/Expo output, secrets, archives, Expo native folders, **Android/Gradle section added 2026-10-16**; `Claude outputs/` ignored 2026-10-22. | existing |
+| `.gitignore` | Generated outputs, local secrets, Android/Gradle/iOS products, QA trust and handoff files. | existing |
 | `.gitattributes` | `* text=auto eol=lf`, CRLF for `.bat/.cmd/.ps1`, binary list (png/webp/ttf/riv/ogg/jar/keystore). Run `git add --renormalize .` once. | IN SOURCE 2026-10-16 |
 | `.github/workflows/android.yml`, `.github/pull_request_template.md` | CI gate (CR-REL-2 on push/PR touching `android/`) and PR template with stamp + checklists. Moved into the repo from `Claude outputs/` on 2026-10-17 (the empty `Claude outputs/` folder can be deleted). | IN SOURCE (not yet run in CI) |
+
+## Public release inputs (COMPILED, 2026-11-12)
+
+- `android/gradle/public-release.gradle.kts`, `config/public-release-inputs.example.properties`, `tools/test_public_release_configuration.py`: offline prod input gate; contract: `docs/integration/PUBLIC_RELEASE_INPUTS.md`.
+
+## Server erasure additions (IN SOURCE; isolated checks, not deployed, 2026-11-11)
+
+- `backend-umar/internal/store/{deletion,account_deletion}{,_test}.go`, `migrations/0004_learner_erasure.sql`, `0005_account_erasure.sql`: learner/account erasure, immutable receipts, tombstones, leased jobs. Grants/startup checks: `deploy/runtime-grants.sql`, `internal/store/runtime.go`.
+- `backend-umar/internal/api/{deletion,account_deletion}{,_test}.go`, `internal/generalingress/{account_deletion.go,deletion_test.go}`: fresh-owner begin, proof-only status and gateway boundaries; fixed tunnel proxy routes.
+- `backend-umar/internal/{identityerase/gotrue,accounterase/coordinator}{,_test}.go`: bounded GoTrue adapter and durable retry worker. `cmd/server/account_erasure{,_test}.go` validates explicit existing authority; main wires the optional worker.
+- `android/core/sync/src/test/kotlin/id/petalytix/ayailmu/core/sync/LearnerErasureTest.kt`: durable request/receipt, owner and local-history boundaries; implementation in SyncEngine/Journal/HttpBackend, UI in nonLab account classes.
+- Native account erasure: Android `core/sync/{AccountErasure,HttpAccountErasure}.kt`, Journal/SyncEngine fences; `feature/account/NormalAccountErasure.kt`, Keystore vault/adapter/UI and focused tests. Pinned OkHttp 4.12.1 security backport; exact `content/.../licenses/OkHttp-Okio-Apache-2.0.txt` notice. COMPILED; isolated tests, not device/provider accepted.
+- `docs/superpowers/{specs,plans}/2026-11-11-server-erasure*.md`, `docs/integration/ACCOUNT_ERASURE_READINESS.md`: contracts, checks and remaining device/provider/rollout work. `docs/store/{privacy_policy,data_safety}.md`: corrected unpublished drafts.
+- `ios/`: native Xcode app, `AyaIlmuCore` Swift account/learning/erasure stores and tests, `SharedLearningCore` Kotlin bridge, build guards and source tests. Learner/account recovery is integrated; project/trust settings retained. See `ios/README.md` and `docs/integration/UNIFIED_SOURCE_READINESS.md`.
 
 ## `android/` — Kotlin + Compose project (IN SOURCE 2026-10-16; see "Build identity")
 
 | Path | What | Stamp |
 |---|---|---|
-| `android/settings.gradle.kts`, `build.gradle.kts`, `gradle.properties`, `gradle/libs.versions.toml`, `gradlew*`, `gradle/wrapper/*` | Root build, repositories (google/mavenCentral), foojay JDK-17 toolchain resolver in settings (CR-REL-8), ktlint on all modules, version catalog, wrapper 8.14.3 (jar generated offline). Root build redirects all `build/` dirs to `%LOCALAPPDATA%\ayailmu-build\<module>` when under OneDrive (CR-REL-7). | COMPILED (P0) |
+| `android/settings.gradle.kts`, `build.gradle.kts`, `gradle.properties`, `gradle/libs.versions.toml`, `gradlew*`, `gradle/wrapper/*` | Root build/repositories, JDK-17 resolver (CR-REL-8), ktlint, versions and Gradle 8.14.3 wrapper. Root build redirects all `build/` dirs to `%LOCALAPPDATA%\ayailmu-build\<module>` when under OneDrive (CR-REL-7). | COMPILED (P0) |
 | `%LOCALAPPDATA%\ayailmu-build\` (outside the repo) | All Gradle build outputs on Umar's Windows machine: APKs at `app\outputs\apk\demo\debug\`, test reports at `<module>\reports\tests\`. | from 2026-10-17 |
 | `android/app/` | Application module: Hilt `AyaIlmuApp`, `MainActivity` (edge-to-edge, `AyaTheme` + `PaperBackground` + `AyaNavHost`), type-safe `AyaRoute.Home`, `feature/home/{HomeViewModel,HomeScreen}` placeholder with demo banner, strings `values/` (id) + `values-en/`, `themes.xml` (paper window), `colors.xml`, `xml/{locales_config,data_extraction_rules,backup_rules}.xml`, placeholder adaptive icon, `proguard-rules.pro` (serialization keeps), lint: MissingTranslation/ExtraTranslation/HardcodedText are errors, unit test `HomeViewModelTest`. | DEVICE-TESTED (P0, 2026-10-17); P3a rewrite IN SOURCE (row below) |
 | `android/core/model/` | Pure Kotlin: `Lang`, `LocalizedText {id,en}`, `Audience`, `Level`, `Subject`, `TrackMode`, `Pool` (+FOCUS, GEM; `isPractice`/`isCountedPractice`), `ItemType` (19 catalog types → v1 renderer or null, `evidenceCapable`), `ItemId`; **P1:** `Scoring.kt` (`PartScore`, `Outcome` incl. `not_assessed`, `ErrorTag`, `Referent`, `ReviewStatus`, `AudioStatus`, flat serialisable `Response` with factory helpers), `AnswerEvent` (spec §10 fields, snake_case JSON). | IN SOURCE (P1) |

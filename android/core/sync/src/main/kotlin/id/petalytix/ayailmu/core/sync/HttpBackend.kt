@@ -73,6 +73,14 @@ class HttpBackend(baseUrl: String, private val synthetic: Boolean = true, privat
             put("client_learner_id", clientId); put("kind", kind); put("lang", lang); put("synthetic", synthetic)
         })
     }
+    override suspend fun deleteLearner(token: String, learnerId: String, requestId: String, confirmed: Boolean): LearnerDeletionReceipt {
+        require(confirmed && CANONICAL_UUID.matches(learnerId) && CANONICAL_UUID.matches(requestId))
+        val raw = request<JsonObject>("POST", learnerPath(learnerId) + "/deletion", token, buildJsonObject {
+            put("request_id", requestId); put("confirmed", true); put("synthetic", synthetic)
+        })
+        require(raw.keys == setOf("deletion_id", "scope", "learner_id", "request_id", "completed_at")) { "Ambiguous erasure receipt" }
+        return Json.decodeFromJsonElement<LearnerDeletionReceipt>(raw).also { it.requireValid(learnerId, requestId) }
+    }
     override suspend fun catalog(token: String): Catalog = request("GET", "/v1/packs", token)
     override suspend fun consent(token: String, learnerId: String, granted: Boolean) { request<JsonObject>("POST", learnerPath(learnerId) + "/consent", token, buildJsonObject { put("version", consentVersion); put("granted", granted); put("synthetic", synthetic) }) }
     override suspend fun append(token: String, learnerId: String, payloads: List<String>): List<Receipt> = request("POST", learnerPath(learnerId) + "/events", token, buildJsonObject { put("schema_version", 1); put("synthetic", synthetic); put("events", JsonArray(payloads.map(::JsonPrimitive))) })

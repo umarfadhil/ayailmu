@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"errors"
 	"fmt"
+	"github.com/umarfadhil/ayailmu/backend-umar/internal/store"
 	"net/url"
 	"strings"
 	"sync"
@@ -180,6 +181,9 @@ func (e *Engine) dispatch(ctx context.Context, r Request, p parsed) Response {
 	if p.path == "/healthz" {
 		return result(200, "ok")
 	}
+	if p.path == accountDeletionStatusPath {
+		return e.accountStatus(ctx, r)
+	}
 	if p.path == "/signup" || p.path == "/resend" || p.path == "/recover" {
 		return e.mail(ctx, r, p)
 	}
@@ -301,7 +305,8 @@ func (e *Engine) dispatch(ctx context.Context, r Request, p parsed) Response {
 		}
 		return result(204, "signed_out")
 	}
-	if p.learner != "" {
+	// Erasure retries are authorized by the backend receipt, even after the learner is gone.
+	if p.learner != "" && !strings.HasSuffix(p.path, "/deletion") {
 		owned, err := e.backend.Owns(ctx, c, p.learner, p.access)
 		if err != nil {
 			return result(503, "unavailable")
@@ -320,6 +325,19 @@ func (e *Engine) dispatch(ctx context.Context, r Request, p parsed) Response {
 			return result(failure.status, failure.code)
 		}
 		return result(503, "unavailable")
+	}
+	if p.path == accountDeletionPath {
+		receipt, ok := data.(store.AccountDeletionStatus)
+		if !ok {
+			return result(503, "unavailable")
+		}
+		code := 200
+		if receipt.Status == "identity_deletion_pending" {
+			code = 202
+		} else if receipt.Status != "completed" {
+			return result(503, "unavailable")
+		}
+		return Response{Status: code, Code: "ok", Data: receipt}
 	}
 	return Response{Status: 200, Code: "ok", Data: data}
 }

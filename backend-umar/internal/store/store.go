@@ -17,6 +17,8 @@ import (
 
 var (
 	ErrNotFound       = errors.New("not_found")
+	ErrDeleted        = errors.New("server_copy_deleted")
+	ErrDependents     = errors.New("dependent_learners")
 	ErrInvalid        = errors.New("invalid_request")
 	ErrConflict       = errors.New("idempotency_conflict")
 	ErrConsent        = errors.New("sync_consent_required")
@@ -134,9 +136,12 @@ func (s *Store) ActivateWithDeclaration(ctx context.Context, issuer, subject, de
 		return "", err
 	}
 	var id, existingVersion string
-	var existingSynthetic bool
-	if err = tx.QueryRow(ctx, `SELECT id::text,declaration_version,synthetic FROM accounts WHERE issuer=$1 AND subject=$2`, issuer, subject).Scan(&id, &existingVersion, &existingSynthetic); err != nil {
+	var existingSynthetic, deleted bool
+	if err = tx.QueryRow(ctx, `SELECT id::text,declaration_version,synthetic,erasure_requested_at IS NOT NULL FROM accounts WHERE issuer=$1 AND subject=$2`, issuer, subject).Scan(&id, &existingVersion, &existingSynthetic, &deleted); err != nil {
 		return "", err
+	}
+	if deleted {
+		return "", ErrAccountDeleted
 	}
 	if existingSynthetic != synthetic || existingVersion != declarationVersion {
 		return "", ErrConflict
@@ -148,11 +153,21 @@ type AccountIdentity struct {
 	ID                 string
 	Synthetic          bool
 	DeclarationVersion string
+	DeletionRequested  bool
 }
 
 func (s *Store) AccountInfo(ctx context.Context, issuer, subject string) (AccountIdentity, error) {
+	value, err := s.AccountForErasure(ctx, issuer, subject)
+	if err == nil && value.DeletionRequested {
+		return AccountIdentity{}, ErrAccountDeleted
+	}
+	return value, err
+}
+
+// AccountForErasure preserves only the identity lookup needed for exact deletion retries.
+func (s *Store) AccountForErasure(ctx context.Context, issuer, subject string) (AccountIdentity, error) {
 	var value AccountIdentity
-	err := s.pool.QueryRow(ctx, `SELECT id::text,synthetic,declaration_version FROM accounts WHERE issuer=$1 AND subject=$2`, issuer, subject).Scan(&value.ID, &value.Synthetic, &value.DeclarationVersion)
+	err := s.pool.QueryRow(ctx, `SELECT id::text,synthetic,declaration_version,erasure_requested_at IS NOT NULL FROM accounts WHERE issuer=$1 AND subject=$2`, issuer, subject).Scan(&value.ID, &value.Synthetic, &value.DeclarationVersion, &value.DeletionRequested)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return AccountIdentity{}, ErrAccount
 	}

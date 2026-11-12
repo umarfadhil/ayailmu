@@ -1,0 +1,896 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "content_version": "mat-a-local-pemula-0.3",
+    "subject": "matematika",
+    "track": "mat-a-local",
+    "mode": "casual",
+    "audiences": [
+      "adults"
+    ],
+    "instruction_langs": [
+      "id",
+      "en"
+    ],
+    "title": {
+      "id": "Matematika — Pemula (Dewasa)",
+      "en": "Mathematics — Beginner (Adults)"
+    }
+  },
+  "synthetic": false,
+  "note": "Only this adult unit-01 derivative received independent Codex AI subject/Indonesian/English technical review on 2026-10-30; see provenance.json and LOCAL-CONTENT-REVIEW.json. No human-specialist, learning-effectiveness, physical-device or production approval is claimed. Original packs and the live registry are unchanged.",
+  "prompts": {
+    "P-NUM": {
+      "id": "Hitung, lalu masukkan angkanya.",
+      "en": "Work it out, then enter the number."
+    },
+    "P-CHOOSE": {
+      "id": "Pilih jawaban yang tepat.",
+      "en": "Choose the right answer."
+    },
+    "P-TF": {
+      "id": "Benar atau salah?",
+      "en": "True or false?"
+    },
+    "P-ESTIMATE": {
+      "id": "Geser ke perkiraan Anda.",
+      "en": "Slide to your estimate."
+    },
+    "P-MATCH": {
+      "id": "Pasangkan kartu yang cocok.",
+      "en": "Match the cards that belong together."
+    },
+    "P-FILL": {
+      "id": "Isi bagian yang kosong.",
+      "en": "Fill in the blank."
+    },
+    "P-TILES": {
+      "id": "Susun kepingnya menjadi jawaban.",
+      "en": "Build the answer from the tiles."
+    },
+    "P-GEM": {
+      "id": "Tahukah Anda?",
+      "en": "Did you know?"
+    }
+  },
+  "feedback": {
+    "FB-OK-MODEL": {
+      "id": "Tepat. {model}",
+      "en": "Right. {model}"
+    },
+    "FB-NO-MODEL": {
+      "id": "Belum tepat. Begini caranya: {model}",
+      "en": "Not quite. Here's how: {model}"
+    },
+    "FB-DONTKNOW": {
+      "id": "Tidak apa-apa, begini caranya: {model}",
+      "en": "No problem, here's how: {model}"
+    },
+    "FB-GEM": {
+      "id": "Satu fakta matematika untuk disimak.",
+      "en": "One mathematical fact to consider."
+    },
+    "FB-NO-ROUND": {
+      "id": "Belum tepat. Coba bulatkan dulu, lalu sesuaikan selisihnya. {model}",
+      "en": "Not quite. Try rounding first, then adjust for the difference. {model}"
+    },
+    "FB-NO-MONEY": {
+      "id": "Belum tepat. Tulis angkanya satu per satu, lalu hitung lagi. {model}",
+      "en": "Not quite. Write the amounts down one by one, then work it out again. {model}"
+    },
+    "FB-NO-ESTIMATE": {
+      "id": "Masih agak jauh. Perkiraan cukup dekat saja, tidak harus persis. {model}",
+      "en": "A bit far off. An estimate only needs to be close, not exact. {model}"
+    }
+  },
+  "units": [
+    {
+      "unit": "01",
+      "title": {
+        "id": "Hitung cepat sehari-hari",
+        "en": "Everyday mental math"
+      },
+      "sticker": "sticker_teapot"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "MAT-A-P-01-S1",
+      "unit": "01",
+      "audience": "adults",
+      "title": {
+        "id": "Hitung cepat sehari-hari",
+        "en": "Everyday mental math"
+      },
+      "body": [
+        {
+          "id": "Hitung di kepala itu soal trik, bukan bakat. Trik pertama: bulatkan dulu, lalu sesuaikan. Untuk Rp19.900 × 3, hitung Rp20.000 × 3 = Rp60.000, lalu kurangi 3 × Rp100 = Rp300. Hasilnya Rp59.700.",
+          "en": "Mental maths is about tricks, not talent. Trick one: round first, then adjust. For Rp19,900 × 3, work out Rp20,000 × 3 = Rp60,000, then take off 3 × Rp100 = Rp300. The answer is Rp59,700."
+        },
+        {
+          "id": "Mengalikan dengan 5? Kalikan 10, lalu bagi 2: 48 × 5 = 480 : 2 = 240. Mengalikan dengan 25? Kalikan 100, lalu bagi 4: 36 × 25 = 3.600 : 4 = 900.",
+          "en": "Multiplying by 5? Times 10, then halve: 48 × 5 = 480 ÷ 2 = 240. Multiplying by 25? Times 100, then divide by 4: 36 × 25 = 3,600 ÷ 4 = 900."
+        },
+        {
+          "id": "Bilangan dua angka dikali 11? Jumlahkan kedua angkanya dan taruh di tengah: 11 × 43 = 4 (4 + 3) 3 = 473. Kalau jumlahnya 10 atau lebih, simpan 1 ke depan: 11 × 68 = 748.",
+          "en": "A two-digit number times 11? Add its digits and put the sum in the middle: 11 × 43 = 4 (4 + 3) 3 = 473. If the sum is 10 or more, carry 1 to the front: 11 × 68 = 748."
+        },
+        {
+          "id": "Patungan makan? Bagi total dengan jumlah orang untuk mendapatkan bagian yang sama persis. Jika diminta memperkirakan uang yang perlu dikumpulkan, Anda dapat membulatkan tiap bagian ke atas ke ribuan terdekat supaya tidak kurang.",
+          "en": "Splitting a bill? Divide the total by the number of people to find each exact share. If asked to estimate how much to collect, you can round each share up to the nearest thousand so the collection is not short."
+        }
+      ],
+      "review_status": "approved"
+    }
+  ],
+  "readings": {},
+  "items": [
+    {
+      "item_id": "MAT-A-P-01-001",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "number_input",
+      "skills": [
+        "MENTAL-ROUND"
+      ],
+      "pool": "PRACT",
+      "order": 1,
+      "prompt_id": "P-NUM",
+      "image": "pic_coffee_cup",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tiga bungkus kopi bubuk, masing-masing Rp4.900. Berapa totalnya?",
+            "en": "Three packs of ground coffee at Rp4,900 each. What's the total?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 14700,
+        "tolerance": 0,
+        "unit": {
+          "id": "rupiah",
+          "en": "rupiah"
+        }
+      },
+      "model_answer": {
+        "id": "Rp5.000 × 3 = Rp15.000, lalu kurangi 3 × Rp100 = Rp300. Totalnya Rp14.700.",
+        "en": "Rp5,000 × 3 = Rp15,000, then take off 3 × Rp100 = Rp300. The total is Rp14,700."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-ROUND",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "approved",
+      "content_version": "mat-a-local-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-A-P-01-002",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "estimate_slider",
+      "skills": [
+        "MENTAL-ROUND"
+      ],
+      "pool": "PRACT",
+      "order": 2,
+      "prompt_id": "P-ESTIMATE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Struk belanja Anda: Rp18.900, Rp31.500, Rp9.800, dan Rp24.700. Kira-kira berapa totalnya?",
+            "en": "Your receipt: Rp18,900, Rp31,500, Rp9,800 and Rp24,700. Roughly what's the total?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 84900,
+        "tolerance": 5000,
+        "unit": {
+          "id": "rupiah",
+          "en": "rupiah"
+        }
+      },
+      "slider": {
+        "min": 0,
+        "max": 150000,
+        "step": 1000
+      },
+      "model_answer": {
+        "id": "Bulatkan ke ribuan: 19 + 32 + 10 + 25 = 86 ribu. Total persisnya Rp84.900.",
+        "en": "Round to thousands: 19 + 32 + 10 + 25 = 86 thousand. The exact total is Rp84,900."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-ESTIMATE",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "approved",
+      "content_version": "mat-a-local-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-A-P-01-003",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "choose",
+      "skills": [
+        "MENTAL-MULT"
+      ],
+      "pool": "PRACT",
+      "order": 3,
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Berapa 48 × 25?",
+            "en": "What is 48 × 25?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "960",
+            "en": "960"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "1.200",
+            "en": "1,200"
+          },
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "1.250",
+            "en": "1,250"
+          }
+        },
+        {
+          "id": "d",
+          "text": {
+            "id": "1.000",
+            "en": "1,000"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "48 × 100 = 4.800, lalu : 4 = 1.200.",
+        "en": "48 × 100 = 4,800, then ÷ 4 = 1,200."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "approved",
+      "content_version": "mat-a-local-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-A-P-01-004",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "true_false",
+      "skills": [
+        "MENTAL-MULT"
+      ],
+      "pool": "PRACT",
+      "order": 4,
+      "prompt_id": "P-TF",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "68 × 5 = 340",
+            "en": "68 × 5 = 340"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "t",
+          "text": {
+            "id": "Benar",
+            "en": "True"
+          },
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": {
+            "id": "Salah",
+            "en": "False"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Benar. 68 × 10 = 680, lalu : 2 = 340.",
+        "en": "True. 68 × 10 = 680, then ÷ 2 = 340."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "approved",
+      "content_version": "mat-a-local-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-A-P-01-005",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "number_input",
+      "skills": [
+        "MENTAL-MULT"
+      ],
+      "pool": "PRACT",
+      "order": 5,
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Berapa 11 × 52?",
+            "en": "What is 11 × 52?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 572,
+        "tolerance": 0
+      },
+      "model_answer": {
+        "id": "5 (5 + 2) 2: hasilnya 572.",
+        "en": "5 (5 + 2) 2: the answer is 572."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "approved",
+      "content_version": "mat-a-local-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-A-P-01-006",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "match_pairs",
+      "skills": [
+        "MENTAL-MULT"
+      ],
+      "pool": "PRACT",
+      "order": 6,
+      "prompt_id": "P-MATCH",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Pasangkan setiap soal dengan hasilnya.",
+            "en": "Match each multiplication with its result."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "m1",
+          "text": {
+            "id": "24 × 5",
+            "en": "24 × 5"
+          }
+        },
+        {
+          "id": "m2",
+          "text": {
+            "id": "16 × 25",
+            "en": "16 × 25"
+          }
+        },
+        {
+          "id": "m3",
+          "text": {
+            "id": "11 × 35",
+            "en": "11 × 35"
+          }
+        },
+        {
+          "id": "m4",
+          "text": {
+            "id": "99 × 4",
+            "en": "99 × 4"
+          }
+        },
+        {
+          "id": "r396",
+          "text": {
+            "id": "396",
+            "en": "396"
+          }
+        },
+        {
+          "id": "r120",
+          "text": {
+            "id": "120",
+            "en": "120"
+          }
+        },
+        {
+          "id": "r385",
+          "text": {
+            "id": "385",
+            "en": "385"
+          }
+        },
+        {
+          "id": "r400",
+          "text": {
+            "id": "400",
+            "en": "400"
+          }
+        }
+      ],
+      "solution_pairs": {
+        "m1": "r120",
+        "m2": "r400",
+        "m3": "r385",
+        "m4": "r396"
+      },
+      "model_answer": {
+        "id": "24 × 5 = 240 : 2 = 120; 16 × 25 = 1.600 : 4 = 400; 11 × 35 = 3 (3 + 5) 5 = 385; 99 × 4 = 400 − 4 = 396.",
+        "en": "24 × 5 = 240 ÷ 2 = 120; 16 × 25 = 1,600 ÷ 4 = 400; 11 × 35 = 3 (3 + 5) 5 = 385; 99 × 4 = 400 − 4 = 396."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "approved",
+      "content_version": "mat-a-local-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-A-P-01-007",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 1,
+      "type": "info_card",
+      "skills": [],
+      "pool": "GEM",
+      "prompt_id": "P-GEM",
+      "model_answer": {
+        "id": "Trik kuadrat bilangan positif dua angka yang berakhiran 5: kalikan angka puluhannya dengan bilangan sesudahnya, lalu tempelkan 25. 35 × 35: 3 × 4 = 12, jadi 1.225. 65 × 65: 6 × 7 = 42, jadi 4.225. Bukan sulap: (10a + 5)² = 100 × a × (a + 1) + 25.",
+        "en": "Squaring a positive two-digit number ending in 5: multiply its tens digit by the next integer, then append 25. 35 × 35: 3 × 4 = 12, so 1,225. 65 × 65: 6 × 7 = 42, so 4,225. No magic: (10a + 5)² = 100 × a × (a + 1) + 25."
+      },
+      "gem": true,
+      "source": "Self-contained algebraic derivation for a = 1..9: (10a+5)^2 = 100a^2 + 100a + 25 = 100a(a+1) + 25. The two-digit examples and all nine cases were independently checked in the local content review; no external book citation is relied on.",
+      "feedback_ids": {
+        "correct": "FB-GEM"
+      },
+      "review_status": "approved",
+      "content_version": "mat-a-local-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-A-P-01-008",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "number_input",
+      "skills": [
+        "BILL-SPLIT"
+      ],
+      "pool": "PRACT",
+      "order": 7,
+      "prompt_id": "P-NUM",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Makan berempat di warung tenda, totalnya Rp186.000. Kalau dibagi rata, berapa per orang?",
+            "en": "Four of you eat at a street-food tent and the bill is Rp186,000. Split evenly, how much is that each?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 46500,
+        "tolerance": 0,
+        "unit": {
+          "id": "rupiah",
+          "en": "rupiah"
+        }
+      },
+      "model_answer": {
+        "id": "Rp186.000 : 4 = Rp46.500 (Rp200.000 : 4 = Rp50.000, dikurangi Rp14.000 : 4 = Rp3.500).",
+        "en": "Rp186,000 ÷ 4 = Rp46,500 (Rp200,000 ÷ 4 = Rp50,000, minus Rp14,000 ÷ 4 = Rp3,500)."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MONEY",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "approved",
+      "content_version": "mat-a-local-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-A-P-01-009",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "BILL-SPLIT"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Tagihan Rp250.000 dibagi rata oleh 6 orang, lalu dibulatkan ke atas ke ribuan terdekat. Berapa yang dibayar tiap orang?",
+            "en": "A Rp250,000 bill is split evenly among 6 people and rounded up to the nearest thousand. How much does each person pay?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "Rp41.000",
+            "en": "Rp41,000"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "Rp45.000",
+            "en": "Rp45,000"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "Rp42.000",
+            "en": "Rp42,000"
+          },
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": {
+            "id": "Rp40.000",
+            "en": "Rp40,000"
+          }
+        }
+      ],
+      "model_answer": {
+        "id": "Rp250.000 : 6 ≈ Rp41.667, dibulatkan ke atas menjadi Rp42.000. Terkumpul Rp252.000, sehingga ada sisa Rp2.000 setelah tagihan dibayar.",
+        "en": "Rp250,000 ÷ 6 ≈ Rp41,667, rounded up to Rp42,000. That collects Rp252,000, leaving Rp2,000 after the bill is paid."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MONEY",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "approved",
+      "content_version": "mat-a-local-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-A-P-01-010",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "estimate_slider",
+      "skills": [
+        "MENTAL-ROUND"
+      ],
+      "pool": "PRACT",
+      "order": 9,
+      "prompt_id": "P-ESTIMATE",
+      "image": "pic_motorbike",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Misalkan bensin Rp10.000 per liter dan motor Anda menempuh 40 km per liter. Kira-kira berapa biaya bensin untuk perjalanan 300 km?",
+            "en": "Say fuel is Rp10,000 a litre and your motorbike does 40 km per litre. Roughly what will fuel cost for a 300 km trip?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 75000,
+        "tolerance": 10000,
+        "unit": {
+          "id": "rupiah",
+          "en": "rupiah"
+        }
+      },
+      "slider": {
+        "min": 0,
+        "max": 200000,
+        "step": 5000
+      },
+      "model_answer": {
+        "id": "300 : 40 = 7,5 liter; 7,5 × Rp10.000 = Rp75.000.",
+        "en": "300 ÷ 40 = 7.5 litres; 7.5 × Rp10,000 = Rp75,000."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-ESTIMATE",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "approved",
+      "content_version": "mat-a-local-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-A-P-01-011",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "tiles",
+      "skills": [
+        "MENTAL-ROUND"
+      ],
+      "pool": "PRACT",
+      "order": 10,
+      "prompt_id": "P-TILES",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Susun cara cepat menghitung 4 × Rp9.950.",
+            "en": "Build the quick way to work out 4 × Rp9,950."
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "d2",
+          "text": {
+            "id": "= Rp40.200",
+            "en": "= Rp40,200"
+          }
+        },
+        {
+          "id": "t2",
+          "text": {
+            "id": "− 4 × Rp50",
+            "en": "− 4 × Rp50"
+          }
+        },
+        {
+          "id": "t1",
+          "text": {
+            "id": "4 × Rp10.000",
+            "en": "4 × Rp10,000"
+          }
+        },
+        {
+          "id": "d1",
+          "text": {
+            "id": "+ 4 × Rp50",
+            "en": "+ 4 × Rp50"
+          }
+        },
+        {
+          "id": "t3",
+          "text": {
+            "id": "= Rp39.800",
+            "en": "= Rp39,800"
+          }
+        }
+      ],
+      "solution": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "model_answer": {
+        "id": "4 × Rp10.000 − 4 × Rp50 = Rp40.000 − Rp200 = Rp39.800.",
+        "en": "4 × Rp10,000 − 4 × Rp50 = Rp40,000 − Rp200 = Rp39,800."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-ROUND",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "approved",
+      "content_version": "mat-a-local-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-A-P-01-012",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "fill_blank",
+      "skills": [
+        "MENTAL-MULT"
+      ],
+      "pool": "PRACT",
+      "order": 11,
+      "prompt_id": "P-FILL",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "44 × 25 = 4.400 : __ = 1.100",
+            "en": "44 × 25 = 4,400 ÷ __ = 1,100"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "f2",
+          "text": {
+            "id": "2",
+            "en": "2"
+          }
+        },
+        {
+          "id": "f25",
+          "text": {
+            "id": "25",
+            "en": "25"
+          }
+        },
+        {
+          "id": "f4",
+          "text": {
+            "id": "4",
+            "en": "4"
+          }
+        },
+        {
+          "id": "f5",
+          "text": {
+            "id": "5",
+            "en": "5"
+          }
+        }
+      ],
+      "solution": [
+        "f4"
+      ],
+      "model_answer": {
+        "id": "Kali 25 sama dengan kali 100 lalu bagi 4: 4.400 : 4 = 1.100.",
+        "en": "Times 25 is the same as times 100, then divide by 4: 4,400 ÷ 4 = 1,100."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "approved",
+      "content_version": "mat-a-local-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-A-P-01-013",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "number_input",
+      "skills": [
+        "MENTAL-ROUND"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-NUM",
+      "image": "pic_book",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Lima buku tulis, masing-masing Rp2.950. Berapa totalnya?",
+            "en": "Five exercise books at Rp2,950 each. What's the total?"
+          }
+        }
+      ],
+      "numeric": {
+        "value": 14750,
+        "tolerance": 0,
+        "unit": {
+          "id": "rupiah",
+          "en": "rupiah"
+        }
+      },
+      "model_answer": {
+        "id": "5 × Rp3.000 = Rp15.000, lalu kurangi 5 × Rp50 = Rp250. Totalnya Rp14.750.",
+        "en": "5 × Rp3,000 = Rp15,000, then take off 5 × Rp50 = Rp250. The total is Rp14,750."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-ROUND",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "approved",
+      "content_version": "mat-a-local-pemula-0.3"
+    },
+    {
+      "item_id": "MAT-A-P-01-014",
+      "unit": "01",
+      "audience": "adults",
+      "level": "pemula",
+      "step": 2,
+      "type": "choose",
+      "skills": [
+        "MENTAL-MULT"
+      ],
+      "pool": "REMED",
+      "prompt_id": "P-CHOOSE",
+      "help_lines": [
+        {
+          "word": "",
+          "meaning": {
+            "id": "Berapa 24 × 25?",
+            "en": "What is 24 × 25?"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "id": "480",
+            "en": "480"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "id": "625",
+            "en": "625"
+          }
+        },
+        {
+          "id": "d",
+          "text": {
+            "id": "500",
+            "en": "500"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "id": "600",
+            "en": "600"
+          },
+          "correct": true
+        }
+      ],
+      "model_answer": {
+        "id": "24 × 100 = 2.400, lalu : 4 = 600.",
+        "en": "24 × 100 = 2,400, then ÷ 4 = 600."
+      },
+      "feedback_ids": {
+        "correct": "FB-OK-MODEL",
+        "wrong": "FB-NO-MODEL",
+        "dont_know": "FB-DONTKNOW"
+      },
+      "review_status": "approved",
+      "content_version": "mat-a-local-pemula-0.3"
+    }
+  ]
+}

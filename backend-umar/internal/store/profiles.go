@@ -48,10 +48,20 @@ func (s *Store) CreateProfile(ctx context.Context, owner string, in ProfileInput
 	if _, err = tx.Exec(ctx, `SELECT pg_advisory_xact_lock(hashtextextended($1,0))`, owner); err != nil {
 		return Profile{}, err
 	}
+	var deleted bool
+	if err = tx.QueryRow(ctx, `SELECT EXISTS(SELECT 1 FROM public.server_deletions WHERE owner_id=$1 AND scope='learner' AND client_learner_key=$2)`, owner, hash([]byte(in.ClientLearnerID))).Scan(&deleted); err != nil {
+		return Profile{}, err
+	}
+	if deleted {
+		return Profile{}, ErrDeleted
+	}
 	var account string
-	var accountSynthetic bool
-	if err = tx.QueryRow(ctx, `SELECT id::text,synthetic FROM accounts WHERE id=$1`, owner).Scan(&account, &accountSynthetic); err != nil {
+	var accountSynthetic, accountDeleted bool
+	if err = tx.QueryRow(ctx, `SELECT id::text,synthetic,erasure_requested_at IS NOT NULL FROM accounts WHERE id=$1`, owner).Scan(&account, &accountSynthetic, &accountDeleted); err != nil {
 		return Profile{}, ErrAccount
+	}
+	if accountDeleted {
+		return Profile{}, ErrAccountDeleted
 	}
 	if accountSynthetic != in.Synthetic {
 		return Profile{}, ErrConflict

@@ -30,7 +30,8 @@ class SyncEngine(private val api: Backend, private val journal: JournalStore, pr
     fun binding(): Binding? = journal.read().let { s -> s.owners[s.activeOwner]?.get(s.activeLearner) }
     fun ownerForNativeProfile(profileId: String): String? = journal.read().owners.entries.firstOrNull { (_, b) -> b.values.any { it.learner.clientLearnerId == profileId } }?.key
     fun knownLearners(): List<Learner> = journal.read().let { it.owners[it.activeOwner].orEmpty().values.map(Binding::learner) }
-    fun pendingCount(): Int = binding()?.local?.values?.count { it.acknowledgedSequence == null } ?: 0
+    fun retainedErasureLearners(): List<Learner> = journal.read().let { s -> s.owners[s.activeOwner].orEmpty().values.filter { it.deletionRequestId != null }.map(Binding::learner) }
+    fun pendingCount(): Int = binding()?.takeIf { it.deletionRequestId == null }?.local?.values?.count { it.acknowledgedSequence == null } ?: 0
     fun history(): List<RemoteRecord> = binding()?.takeIf { it.enabled }?.remote.orEmpty()
 
     suspend fun login(token: String, declaration: NormalOwnerDeclaration? = null, accepted: () -> Boolean = { true }, onCommitted: ((Long) -> Unit)? = null): String {
@@ -112,7 +113,42 @@ class SyncEngine(private val api: Backend, private val journal: JournalStore, pr
         journal.update { it.copy(activeOwner = null, activeLearner = null) }
         Unit
     }
-    private fun context(): Session = synchronized(lock) { session ?: throw ApiFailure(401, "unauthorized") }
+    fun accountErasure(owner: String? = owner()): String? = journal.read().accountErasures[owner]
+    /** Called only after the matching recovery proof has been saved securely. No network or local history loss. */
+    fun freezeAccountErasure(owner: String, request: String) = synchronized(lock) {
+        check(mode == SyncMode.NORMAL)
+        require(accountErasureUUID(owner) && accountErasureUUID(request))
+        journal.update { state ->
+            check(state.accountErasures[owner] in setOf(null, request)) { "Account erasure already recorded" }
+            val bindings = state.owners[owner]?.mapValues { (_, b) ->
+                b.copy(enabled = false, withdrawalPending = false, consentRevision = b.consentRevision + 1)
+            }
+            state.copy(accountErasures = state.accountErasures + (owner to request),
+                owners = if (bindings == null) state.owners else state.owners + (owner to bindings))
+        }
+        Unit
+    }
+    /** Drains existing uploads/consents first; unlike normal context this only permits this exact erasure. */
+    suspend fun <T> withAccountErasureSession(owner: String, request: String, accepted: () -> Boolean = { true }, operation: suspend (String) -> T): T {
+        val c = synchronized(lock) {
+            check(mode == SyncMode.NORMAL && accepted() && accountErasure(owner) == request)
+            requireNotNull(session).also { check(it.owner == owner) }
+        }
+        return syncLock.withLock { consentLock.withLock {
+            synchronized(lock) { requireCurrent(c); check(accepted() && accountErasure(owner) == request) }
+            operation(c.token)
+        } }
+    }
+    /** Retain offline owner privacy bindings. Never expire another account's newer session. */
+    fun expireAccountErasureSession(owner: String, request: String, commit: () -> Boolean = { true }): Boolean = synchronized(lock) {
+        if (journal.read().activeOwner != owner || accountErasure(owner) != request || !commit()) false
+        else { session = null; generation++; true }
+    }
+    private fun context(): Session = synchronized(lock) {
+        val current = session ?: throw ApiFailure(401, "unauthorized")
+        check(accountErasure(current.owner) == null) { "Account erasure is pending or completed" }
+        current
+    }
     private fun current(s: Session): Boolean = session == s
     private fun requireCurrent(s: Session) = check(current(s)) { "Sign-in session changed" }
     suspend fun availableLearners(): List<Learner> {
@@ -150,7 +186,7 @@ class SyncEngine(private val api: Backend, private val journal: JournalStore, pr
         check(mode == SyncMode.NORMAL)
         require(lang in setOf("id", "en"))
         return synchronized(lock) {
-            val c = session ?: throw ApiFailure(401, "unauthorized")
+            val c = context()
             check(accepted()) { "Sign-in session changed" }
             val recorded = journal.read().pendingCreates[c.owner]
             if (recorded != null) {
@@ -245,7 +281,43 @@ class SyncEngine(private val api: Backend, private val journal: JournalStore, pr
     }
     private fun requireConsentCurrent(c: Session, b: Binding) = synchronized(lock) {
         requireCurrent(c)
+        check(accountErasure(c.owner) == null) { "Account erasure is pending or completed" }
         check(binding()?.consentRevision == b.consentRevision) { "Consent changed" }
+        check(binding()?.deletionRequestId == null) { "This server copy is erased or awaiting erasure" }
+    }
+    /**
+     * Explicit server-copy erasure only. Freeze its request and stop upload before any network call.
+     * The receipt is owner-scoped even if sign-out occurs while the response is in flight.
+     * Local learning is retained. This never claims to delete the authentication account.
+     */
+    suspend fun eraseServerCopy(learnerId: String, confirmed: Boolean, accepted: () -> Boolean = { true }): LearnerDeletionReceipt {
+        check(mode == SyncMode.NORMAL)
+        require(confirmed && CANONICAL_UUID.matches(learnerId)) { "Explicit erasure confirmation required" }
+        val (c, requestId) = synchronized(lock) {
+            check(accepted()) { "Erasure cancelled before reservation" }
+            val c = context()
+            val b = requireNotNull(journal.read().owners[c.owner]?.get(learnerId)) { "Unknown learner for this owner" }
+            b.deletionReceipt?.let { return it }
+            val requestId = b.deletionRequestId ?: UUID.randomUUID().toString()
+            update(c.owner, learnerId) { it.copy(enabled = false, withdrawalPending = false,
+                consentRevision = it.consentRevision + 1, deletionRequestId = requestId) }
+            c to requestId
+        }
+        return syncLock.withLock {
+            consentLock.withLock {
+                synchronized(lock) { requireCurrent(c); check(accepted()) { "Erasure cancelled before transmission" } }
+                val receipt = api.deleteLearner(c.token, learnerId, requestId, true)
+                receipt.requireValid(learnerId, requestId)
+                synchronized(lock) {
+                    // Never recreate locally removed history or touch a newer/different owner's binding.
+                    val current = journal.read().owners[c.owner]?.get(learnerId)
+                    if (current?.deletionRequestId == requestId) {
+                        update(c.owner, learnerId) { it.copy(enabled = false, withdrawalPending = false, deletionReceipt = receipt) }
+                    }
+                }
+                receipt
+            }
+        }
     }
     suspend fun enable(existingAnswerIds: List<String>, accepted: () -> Boolean = { true }) {
         // Capture the user's intended revision before waiting for any earlier network operation.
@@ -277,6 +349,7 @@ class SyncEngine(private val api: Backend, private val journal: JournalStore, pr
             check(accepted())
             val state = journal.read(); val owner = state.activeOwner ?: return SyncResult.CONSENT_OFF
             val id = state.activeLearner ?: return SyncResult.CONSENT_OFF
+            if (state.accountErasures[owner] != null || state.owners[owner]?.get(id)?.deletionRequestId != null) return SyncResult.CONSENT_OFF
             update(owner, id) { it.copy(enabled = false, withdrawalPending = true, consentRevision = it.consentRevision + 1) }
         }
         return flushWithdrawals()
@@ -286,10 +359,11 @@ class SyncEngine(private val api: Backend, private val journal: JournalStore, pr
         flushWithdrawalsLocked(c)
     }
     private suspend fun flushWithdrawalsLocked(c: Session): SyncResult {
+        if (accountErasure(c.owner) != null) return SyncResult.CONSENT_OFF
         return try {
-            val bindings = journal.read().owners[c.owner].orEmpty().values.filter { it.withdrawalPending }
+            val bindings = journal.read().owners[c.owner].orEmpty().values.filter { it.withdrawalPending && it.deletionRequestId == null }
             for (b in bindings) {
-                synchronized(lock) { requireCurrent(c) }
+                synchronized(lock) { requireCurrent(c); check(accountErasure(c.owner) == null) }
                 api.consent(c.token, b.learner.id, false)
                 if (!updateCurrent(c, b.learner.id) {
                     if (it.consentRevision == b.consentRevision) it.copy(enabled = false, withdrawalPending = false) else it
@@ -388,13 +462,13 @@ class SyncEngine(private val api: Backend, private val journal: JournalStore, pr
         }
         require(page.nextCursor == sequence)
     }
-    private fun canSync(c: Session, id: String, accepted: () -> Boolean): Boolean = synchronized(lock) { accepted() && current(c) && journal.read().owners[c.owner]?.get(id)?.let { it.enabled && !it.withdrawalPending } == true }
+    private fun canSync(c: Session, id: String, accepted: () -> Boolean): Boolean = synchronized(lock) { accepted() && current(c) && accountErasure(c.owner) == null && journal.read().owners[c.owner]?.get(id)?.let { it.enabled && !it.withdrawalPending } == true }
     private fun stopped(c: Session): SyncResult = synchronized(lock) { if (current(c)) SyncResult.CONSENT_OFF else SyncResult.SESSION_CHANGED }
     private fun failure(c: Session, e: Exception): SyncResult {
         if (e is CancellationException) throw e
         synchronized(lock) {
             if (!current(c)) return SyncResult.SESSION_CHANGED
-            if (e is ApiFailure && e.code == "fresh_authentication_required") {
+            if (e is ApiFailure && e.code in setOf("fresh_authentication_required", "fresh_auth_required")) {
                 session = null; generation++; return SyncResult.FRESH_AUTH_REQUIRED
             }
             if (e is ApiFailure && e.status == 401) {

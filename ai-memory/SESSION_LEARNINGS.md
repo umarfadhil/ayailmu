@@ -6,6 +6,54 @@ Budget: ≤ 60 KB active. Newest first. One entry per session (or per follow-up 
 
 Compaction (run when `check_budget.py` reports over budget, or quarterly): entries older than 90 days or fully superseded move verbatim to `archive/SESSION_LEARNINGS_<YYYY-Qn>.md`; anything still true becomes a numbered rule in CODE_RULES or a row in FILE_MAP first, then the entry is removed here. A learning never lives in two files.
 
+## 2026-11-12 (follow-up 1) — Unify release source (COMPILED; native rebuild blocked)
+
+- **Change:** Separate integration branch/worktree merges committed Android/backend `3225f52` and iOS `45b6206`, then overlays both preserved local source checkpoints. Original HEAD/branch, staging, status and source bytes are preserved. Both native erasure flows and explicit Android public inputs are present.
+- **Reconciled:** The iOS branch's existing adult-math draft v0.3 wording/version update is retained, with identical item IDs and unchanged draft review state. Reviewed production bytes are unchanged. Session/file-map notes are combined rather than overwritten; iOS project/trust settings retained.
+- **Verified by:** Combined Android 677 pass/11 optional skips, 12 public-input groups, both builds/lint and 6 assets checks; backend PG/race 157 pass/2 helper skips plus vet/build/tunnel checks; Swift96/Python25 and fresh direct JVM golden pass. Simulator app compiles with a verified existing native framework; official Gradle/fresh Kotlin-Native rebuild is blocked by missing cached tooling. Evidence: Mac 2026-11-12/ayailmu-unified-source; contract/limits: docs/integration/UNIFIED_SOURCE_READINESS.md.
+- **Open:** No public configuration, live account/provider acceptance, device/storage or store/retention gate is implied. No push, deployment, installation or live-data/credential change.
+
+## 2026-11-12 — integrate reviewed iOS account erasure (COMPILED; not device-tested or released)
+
+- **Change:** Applied the reviewed learner-erasure prerequisite and full-account erasure patch to clean iOS base `45b6206`. Added secure status recovery, persistent owner-wide sync stop and one token-free current-local-owner record for offline restart; logout/account switch removes that capability. Historical proofs never grant history access.
+- **Why:** Bring reviewed snapshot work into the version-controlled iOS source without importing simulator-only configuration or diagnostics.
+- **Verified by:** 96 portable Swift tests, 25 Python source/configuration checks, unsigned ARM64 simulator compile and `git diff --check`. Existing shared Kotlin framework reused; actual Keychain/device runtime and live Auth were not exercised.
+- **Preserved:** Project settings, README, trust code, Info.plist, reviewed content and absence of KeychainStatus.txt diagnostics. No installation, launch, credential operation, deployment, commit or push.
+- **Evidence/Open:** Nov 12 `ayailmu-ios-source-integration` audit contains originals, source/artifact hashes and logs. Device acceptance, approved public configuration, backend activation and release/privacy gates remain open.
+
+
+## 2026-11-12 — Explicit public release inputs (COMPILED; not published)
+
+- **Change:** Added strict offline public configuration file, required-input candidate tasks and prod-only identity/version/Auth/billing wiring. Refuses unknown/duplicate/credential fields, local/temporary origins, private-policy markers, invalid public RSA and conflicting build settings. No real release identity/domain/key selected; plan always says launch_ready=false.
+- **Verified by:** 12 actual-Gradle input/config test groups pass; full Android gate passes (688 reported, 677 pass/11 optional skips, both builds/lint, pack validation, 6 exact asset checks). Lint has 0 errors/639 warnings/3 hints; ktlint remains report-only. Independent source review found no blocker. See docs/integration/PUBLIC_RELEASE_INPUTS.md and Mac 2026-11-12/ayailmu-release-integration evidence. Existing ordinary CI candidates remain unapproved and may be offline-only.
+- **Open:** Full content/features, actual endpoints/provider/device/commerce/store acceptance, public policy/web deletion, retention/backups and deliberate identity/data migration. No service, credential, signing, deployment or account action occurred.
+
+## 2026-11-11 (follow-up 3) — Native full-account erasure (IN SOURCE; not deployed)
+
+- **Change:** Android/iOS account-wide confirmation, encrypted origin-bound recovery proof, durable upload fences, anonymous status, strict pending/completed receipts and owner-safe local history. Android uses compatible security-patched OkHttp 4.12.1, no cookies/redirects/body replay, exact license asset. iOS preserves only the current verified offline owner across restart; logout removes access, and old proofs cannot reopen history.
+- **Verified by:** Revised full Android suites: 688 reported, 677 pass/11 optional skips. Both unsigned builds, 6 exact asset checks and both lint gates pass (0 errors/639 warnings/3 hints); serial rerun resolved a parallel generated-Hilt lint race. iOS 96 Swift/25 source tests and unsigned ARM64 compilation pass; independent rerun 96, 12-file hashes/patch verified. Independent review drove engine/account lock, directory durability, truthful fences and whole-device-reset fixes; both actual DataResetter regressions fail before/pass after the corrected boundary. No blocking review finding remains.
+- **Open:** Actual-device Keystore/Keychain/interruption and public-provider acceptance, deliberate iOS source integration, approved configuration/rollout, web deletion process, retention/backups and all earlier full-feature gates. No live data, credentials, deployment or installed app changed. Evidence: docs/integration/ACCOUNT_ERASURE_READINESS.md and Mac audit NATIVE-ACCOUNT-ERASURE-READINESS.md.
+
+## 2026-11-11 (follow-up 2) — Durable full-account erasure backend (IN SOURCE; not deployed)
+
+- **Change:** Additive 0005 all-owned learner erasure, retained account tombstone, hashed recovery proof, issuer-scoped provider jobs with leases/backoff; fresh-owner begin and non-mutating proof-only status survive lost replies/Auth removal. Explicit runtime configuration reads only an existing restrictive credential file; no live access or service changes.
+- **Verified by:** Full disposable PostgreSQL/race suite 157 top-level passes/2 helper skips; Go vet; focused provider formatting/TLS checks. Covers foreign owners, stale reactivation, concurrent uploads/creates/claims, late workers, rollback, restricted privileges, HTTP/gateway status and worker shutdown. Independent core/API/gateway/runtime review found no blocker; bounded transient-database retry and empty-query consistency fixes were added from review.
+- **Open:** Native full-account UI/secure proof lifecycle, actual provider trust/acceptance, authorized migration/grants/activation, public web deletion process and retention/backup replay. Learner-only native UI remains distinct. Detailed contract and rollout prerequisites: docs/integration/ACCOUNT_ERASURE_READINESS.md.
+
+## 2026-11-11 (follow-up 1) — Learner erasure and truthful privacy (IN SOURCE; not deployed)
+
+- **Change:** Backend 0004 narrow learner erasure/immutable receipt/tombstone, fresh-auth API/ingress and runtime grants; Android and iOS durable pending/receipt controls preserve offline history and prevent resync. GoTrue identity adapter is tested but deliberately unwired; full account orchestration is unfinished.
+- **Why:** Consent pause/local deletion did not remove server history, and old privacy drafts falsely said no account/server/upload. Replaced them with factual bilingual working drafts and explicit publication blockers.
+- **Verified by:** Disposable PostgreSQL race suite 141 top-level passes/2 helper skips, Go vet; Android core/demo 652 passes/11 optional skips, prod assembly, lint 0 errors/637 warnings/3 hints and six exact Release asset checks. Swift 68 and Python 20 tests, unsigned ARM64 simulator compile. Independent backend/native learner-erasure review found no blocking issue; ktlint remains report-only.
+- **Open:** Full account durable jobs/provider completion, actual rollout/migration/grants, real-user native E2E and all prior public configuration/content/commerce/platform gaps. iOS edits live in a separate snapshot and need source consolidation. No real data, credentials, services, store submissions or deployment changed.
+
+## 2026-11-11 — Release asset verifier (IN SOURCE; checked on unsigned Release APK)
+
+- **Change:** Asset verification accepts only AGP's exact baseline.prof/profm optimization paths, checks their format magic, and still hash-checks every curriculum/shared asset.
+- **Why:** The real minified prodRelease package passed assembly but the debug-only inventory assumption rejected its normal generated baseline profiles.
+- **Verified by:** Six real Release asset checks; mutation copies reject extra dexopt content, changed/missing curriculum and corrupt profiles. Android prod/core results: 557 pass, one optional live-backend skip; Release assembly and fresh engine/content reruns pass. Backend disposable-Postgres race suite and Swift/Python source checks pass. Repository gate exits 0; demo 406 pass/10 optional skips, ktlint remains report-only with style findings.
+- **Open:** Public origins/configuration, complete curriculum/platform scope, production privacy/erasure, billing/signing and successful live-account/device E2E remain unverified or blocked. No release, live config or user data changed.
+
 ## 2026-10-26 — normal owner auth + native sync release integration (COMPILED; real release blocked)
 
 - **Change:** Non-lab owner registration/confirmation/login/recovery/reset, encrypted origin-bound sessions, explicit adult declaration, owner learner selection, native outbox/pull/Room restore, owner-scoped profile/export visibility, backend normal API/store and additive SQL 0002–0003. Default OFF; no Google CTA or old-history backfill.

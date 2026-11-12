@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/umarfadhil/ayailmu/backend-umar/internal/accounterase"
 	"github.com/umarfadhil/ayailmu/backend-umar/internal/auth"
 	"github.com/umarfadhil/ayailmu/backend-umar/internal/catalog"
 	"github.com/umarfadhil/ayailmu/backend-umar/internal/native"
@@ -61,11 +62,12 @@ func ParseReleasePolicy(enabled, declarationVersion, consentVersion string) (Rel
 }
 
 type server struct {
-	s      *store.Store
-	v      *auth.Verifier
-	r      *catalog.Registry
-	normal ReleasePolicy
-	mode   DeploymentDataMode
+	s       *store.Store
+	v       *auth.Verifier
+	r       *catalog.Registry
+	normal  ReleasePolicy
+	mode    DeploymentDataMode
+	erasure *accounterase.Coordinator
 }
 type action func(http.ResponseWriter, *http.Request, auth.Principal)
 
@@ -73,6 +75,9 @@ func New(s *store.Store, v *auth.Verifier, r *catalog.Registry) http.Handler {
 	return NewWithRelease(s, v, r, ReleasePolicy{}, DeploymentSyntheticLab)
 }
 func NewWithRelease(s *store.Store, v *auth.Verifier, r *catalog.Registry, normal ReleasePolicy, modes ...DeploymentDataMode) http.Handler {
+	return newWithRelease(s, v, r, normal, nil, modes...)
+}
+func newWithRelease(s *store.Store, v *auth.Verifier, r *catalog.Registry, normal ReleasePolicy, c *accounterase.Coordinator, modes ...DeploymentDataMode) http.Handler {
 	mode := DeploymentNormalOnly
 	if len(modes) == 1 {
 		mode = modes[0]
@@ -80,7 +85,7 @@ func NewWithRelease(s *store.Store, v *auth.Verifier, r *catalog.Registry, norma
 	if normal.Enabled && mode != DeploymentNormalOnly {
 		panic("normal readiness requires NORMAL_ONLY deployment mode")
 	}
-	a := &server{s: s, v: v, r: r, normal: normal, mode: mode}
+	a := &server{s: s, v: v, r: r, normal: normal, mode: mode, erasure: c}
 	m := http.NewServeMux()
 	m.HandleFunc("GET /healthz", func(w http.ResponseWriter, r *http.Request) { write(w, 200, map[string]string{"status": "ok"}) })
 	m.HandleFunc("GET /readyz", func(w http.ResponseWriter, r *http.Request) {
@@ -93,6 +98,8 @@ func NewWithRelease(s *store.Store, v *auth.Verifier, r *catalog.Registry, norma
 		write(w, 200, map[string]string{"status": "ready"})
 	})
 	m.HandleFunc("POST /v1/account", a.secure(a.account))
+	m.HandleFunc("POST /v1/account/deletion", a.secure(a.deleteAccount))
+	m.HandleFunc("POST /v1/account/deletion/status", a.accountDeletionStatus)
 	m.HandleFunc("GET /v1/account", a.secure(func(w http.ResponseWriter, r *http.Request, p auth.Principal) {
 		if identity, ok := a.ownerInfo(w, r, p); ok && a.modeAllowed(w, identity.Synthetic) {
 			write(w, 200, map[string]string{"account_id": identity.ID})
@@ -101,6 +108,7 @@ func NewWithRelease(s *store.Store, v *auth.Verifier, r *catalog.Registry, norma
 	m.HandleFunc("POST /v1/learners", a.secure(a.createProfile))
 	m.HandleFunc("GET /v1/learners", a.secure(a.profiles))
 	m.HandleFunc("POST /v1/learners/{id}/consent", a.secure(a.consent))
+	m.HandleFunc("POST /v1/learners/{id}/deletion", a.secure(a.deleteLearner))
 	m.HandleFunc("POST /v1/learners/{id}/events", a.secure(a.append))
 	m.HandleFunc("GET /v1/learners/{id}/events", a.secure(a.pull))
 	m.HandleFunc("GET /v1/packs", a.secure(func(w http.ResponseWriter, r *http.Request, p auth.Principal) { write(w, 200, a.catalogResponse()) }))
@@ -120,6 +128,12 @@ func NewWithRelease(s *store.Store, v *auth.Verifier, r *catalog.Registry, norma
 		m.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
+
+// NewWithAccountErasure injects an explicitly configured source-only coordinator.
+func NewWithAccountErasure(s *store.Store, v *auth.Verifier, r *catalog.Registry, normal ReleasePolicy, c *accounterase.Coordinator, modes ...DeploymentDataMode) http.Handler {
+	return newWithRelease(s, v, r, normal, c, modes...)
+}
+
 func (a *server) catalogResponse() *catalog.Registry {
 	if a.mode == DeploymentNormalOnly && !a.normal.Enabled {
 		return &catalog.Registry{SourceCommit: a.r.SourceCommit, Packs: []catalog.Pack{}}
@@ -172,6 +186,12 @@ func failure(w http.ResponseWriter, status int, code string) {
 }
 func problem(w http.ResponseWriter, e error) {
 	switch {
+	case errors.Is(e, store.ErrAccountDeleted):
+		failure(w, 410, "account_deleted")
+	case errors.Is(e, store.ErrDeleted):
+		failure(w, 410, "server_copy_deleted")
+	case errors.Is(e, store.ErrDependents):
+		failure(w, 409, "dependent_learners")
 	case errors.Is(e, store.ErrNotFound):
 		failure(w, 404, "not_found")
 	case errors.Is(e, store.ErrInvalid):

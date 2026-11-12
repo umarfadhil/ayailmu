@@ -48,6 +48,8 @@ interface Backend {
     suspend fun activateOwner(token: String, declarationVersion: String, adultConfirmed: Boolean): String =
         throw UnsupportedOperationException("Normal owner activation is not configured")
     suspend fun catalog(token: String): Catalog
+    suspend fun deleteLearner(token: String, learnerId: String, requestId: String, confirmed: Boolean): LearnerDeletionReceipt =
+        throw UnsupportedOperationException("Server learner erasure is not configured")
     suspend fun consent(token: String, learnerId: String, granted: Boolean)
     suspend fun append(token: String, learnerId: String, payloads: List<String>): List<Receipt>
     suspend fun pull(token: String, learnerId: String, after: Long): Page
@@ -59,3 +61,21 @@ class ApiFailure(val status: Int, val code: String) : RuntimeException("Backend 
 class PendingCreateConflict(val pending: PendingCreate) : IllegalStateException("A profile creation is already awaiting retry")
 data class NormalOwnerDeclaration(val version: String, val adultConfirmed: Boolean)
 enum class SyncResult { SYNCED, OFFLINE, CONSENT_OFF, CONSENT_UPDATE_REQUIRED, FRESH_AUTH_REQUIRED, LOGIN_REQUIRED, BLOCKED, SESSION_CHANGED }
+
+/** An exact server receipt for one confirmed learner-copy erasure, never an account deletion. */
+@Serializable
+data class LearnerDeletionReceipt(
+    @SerialName("deletion_id") val deletionId: String,
+    val scope: String,
+    @SerialName("learner_id") val learnerId: String,
+    @SerialName("request_id") val requestId: String,
+    @SerialName("completed_at") val completedAt: String,
+) {
+    fun requireValid(expectedLearner: String, expectedRequest: String) {
+        require(CANONICAL_UUID.matches(deletionId) && scope == "learner")
+        require(CANONICAL_UUID.matches(learnerId) && learnerId == expectedLearner)
+        require(CANONICAL_UUID.matches(requestId) && requestId == expectedRequest)
+        require(completedAt.length <= 40 && runCatching { java.time.Instant.parse(completedAt) }.isSuccess)
+    }
+}
+internal val CANONICAL_UUID = Regex("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")

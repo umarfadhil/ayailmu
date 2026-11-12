@@ -162,6 +162,29 @@ internal class NormalAccount @Inject constructor(
         stored?.session?.accessToken?.let { runCatching { auth.signOut(it) } }
         return true
     }
+    internal class ErasureCredential(val subject: String, val token: String, val accepted: () -> Boolean) {
+        override fun toString() = "ErasureCredential(redacted)"
+    }
+    internal fun erasureCredential(): ErasureCredential? = synchronized(lock) {
+        if (mutable.value.busy || mutable.value.email == null) return null
+        val saved = vault.read() ?: return null
+        if (saved.session.user.email != mutable.value.email) return null
+        val mark = generation
+        ErasureCredential(saved.session.user.id, saved.session.accessToken) {
+            synchronized(lock) {
+                generation == mark && vault.read()?.session?.let { it.user.id == saved.session.user.id && it.accessToken == saved.session.accessToken } == true
+            }
+        }
+    }
+    /** Clear only the erased subject, and only if the repository still belongs to its captured owner. */
+    internal fun finishAccountErasure(subject: String): Boolean = synchronized(lock) {
+        if (vault.read()?.session?.user?.id != subject) return false
+        ++generation
+        vault.write(null)
+        mail.clear()
+        mutable.value = NormalAccountState()
+        true
+    }
     fun clearLocalAuthState() {
         val (_, accepted) = begin()
         mail.clear()

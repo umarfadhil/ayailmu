@@ -119,6 +119,12 @@ func (s *Store) verifyRuntimeRole(ctx context.Context) error {
 		AND has_column_privilege('public.learners','next_sequence','UPDATE')
 		AND has_table_privilege('public.sync_consents','SELECT') AND has_table_privilege('public.sync_consents','INSERT')
 		AND has_table_privilege('public.answer_events','SELECT') AND has_table_privilege('public.answer_events','INSERT')
+		AND has_table_privilege('public.server_deletions','SELECT')
+		AND has_function_privilege('public.erase_learner(uuid,uuid,uuid)','EXECUTE')
+ AND has_function_privilege('public.begin_account_erasure(uuid,text,text,uuid,text)','EXECUTE')
+ AND has_function_privilege('public.account_erasure_status(uuid,text)','EXECUTE')
+ AND has_function_privilege('public.claim_account_erasure(text)','EXECUTE')
+ AND has_function_privilege('public.finish_account_erasure(uuid,uuid,boolean)','EXECUTE')
 		AND has_sequence_privilege('public.sync_consents_id_seq','USAGE')`).Scan(&ready)
 	if err != nil {
 		return err

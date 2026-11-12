@@ -28,9 +28,14 @@ internal interface NormalAccountEvents {
     fun createLearner(label: String, lang: String)
     fun selectLearner(learner: Learner)
     fun enableSync()
+    fun eraseServerCopy(learnerId: String)
     fun disableSync()
     fun syncNow()
     fun startNewMailRequest() {}
+    fun eraseAccount(owner: String) {}
+    fun checkAccountErasure(request: String) {}
+    fun retryAccountErasure(request: String) {}
+    fun retryErasureStorage() {}
 }
 
 internal enum class NormalAccountMode { HUB, SIGN_IN, SIGN_UP, CONFIRM, RECOVER, RESET }
@@ -41,28 +46,30 @@ internal data class NormalAccountUiState(
     val sync: NormalSyncState = NormalSyncState(),
     val confirmationEmail: String = "",
     val emailActionsAllowed: Boolean = true,
-) { val busy: Boolean get() = account.busy || sync.busy }
+    val erasure: NormalAccountErasureState = NormalAccountErasureState(restored = true),
+) { val busy: Boolean get() = account.busy || sync.busy || erasure.busy || !erasure.restored || erasure.blocked }
 
 @HiltViewModel
 internal class NormalAccountViewModel @Inject constructor(
     private val account: NormalAccount,
     private val sync: NormalSyncRepository,
     private val config: NormalAccountConfig,
+    private val erasure: NormalAccountErasure,
 ) : ViewModel(), NormalAccountEvents {
     private val mode = MutableStateFlow(NormalAccountMode.HUB)
     private val confirmationEmail = MutableStateFlow("")
     private var generation = 0L
-    val state = combine(account.state, sync.state, mode) { a, s, m ->
-        NormalAccountUiState(config.enabled, m, a, s, confirmationEmail.value, emailActionsAllowed = !config.ownerSignInOnly)
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, NormalAccountUiState(config.enabled, emailActionsAllowed = !config.ownerSignInOnly))
-    init { if (config.enabled) viewModelScope.launch { account.restore() } }
+    val state = combine(account.state, sync.state, mode, erasure.state) { a, s, m, e ->
+        NormalAccountUiState(config.enabled, m, a, s, confirmationEmail.value, emailActionsAllowed = !config.ownerSignInOnly, erasure = e)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, NormalAccountUiState(config.enabled, emailActionsAllowed = !config.ownerSignInOnly, erasure = NormalAccountErasureState()))
+    init { if (config.enabled) viewModelScope.launch { if (erasure.restore()) account.restore() } }
     private fun next(): Long = synchronized(this) { ++generation }
     private fun current(mark: Long) = synchronized(this) { generation == mark }
     override fun show(target: NormalAccountMode, email: String) { if (config.ownerSignInOnly && target !in setOf(NormalAccountMode.HUB, NormalAccountMode.SIGN_IN)) return; next(); confirmationEmail.value = email; mode.value = target }
     override fun back() { next(); account.cancel(); sync.cancelActions(); mode.value = NormalAccountMode.HUB }
     private fun action(mark: Long, block: suspend () -> Unit) {
         viewModelScope.launch {
-            if (!config.enabled || !current(mark)) return@launch
+            if (!config.enabled || !current(mark) || !erasure.state.value.restored || erasure.state.value.blocked || erasure.state.value.busy) return@launch
             try { block() } catch (e: CancellationException) { throw e } catch (e: Exception) { if (current(mark)) sync.failed(e) }
         }
     }
@@ -93,6 +100,7 @@ internal class NormalAccountViewModel @Inject constructor(
     override fun createLearner(label: String, lang: String) { val mark = next(); action(mark) { sync.createAdult(label, lang) } }
     override fun selectLearner(learner: Learner) { val mark = next(); action(mark) { sync.select(learner) } }
     override fun enableSync() { val mark = next(); action(mark) { sync.enable() } }
+    override fun eraseServerCopy(learnerId: String) { val mark = next(); action(mark) { sync.eraseServerCopy(learnerId) } }
     override fun disableSync() { val mark = next(); action(mark) { sync.disable() } }
     override fun restoreSession() { val mark = next(); action(mark) { account.restore() } }
     override fun syncNow() {
@@ -104,6 +112,10 @@ internal class NormalAccountViewModel @Inject constructor(
             if (current(mark) && result == SyncResult.LOGIN_REQUIRED) sync.failed(id.petalytix.ayailmu.core.sync.ApiFailure(401, "unauthorized"))
         }
     }
+    override fun retryErasureStorage() { viewModelScope.launch { if (erasure.restore()) account.restore() } }
+    override fun eraseAccount(owner: String) { viewModelScope.launch { erasure.confirm(owner) } }
+    override fun checkAccountErasure(request: String) { viewModelScope.launch { erasure.check(request) } }
+    override fun retryAccountErasure(request: String) { viewModelScope.launch { erasure.retry(request) } }
     override fun onCleared() {
         account.cancel()
         sync.cancelActions()

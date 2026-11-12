@@ -32,3 +32,34 @@ class HttpBackendTest {
         try {assertFailsWith<ApiFailure>{HttpBackend("http://127.0.0.1:${server.address.port}").account("synthetic-token")};assertFalse(redirected)} finally {server.stop(0)}
     }
 }
+
+class HttpLearnerErasureTest {
+    @Test fun exactConfirmedRequestAndReceiptRejectAmbiguousSuccess() = runTest {
+        val learner = "20000000-0000-0000-0000-000000000001"
+        val request = "30000000-0000-0000-0000-000000000001"
+        var calls = 0
+        var extra = false
+        val server = HttpServer.create(InetSocketAddress("127.0.0.1", 0), 0)
+        server.createContext("/v1/learners/$learner/deletion") { e ->
+            calls++
+            assertEquals("POST", e.requestMethod)
+            assertEquals("Bearer synthetic-token", e.requestHeaders.getFirst("Authorization"))
+            assertEquals(buildJsonObject { put("request_id", request); put("confirmed", true); put("synthetic", true) }, Json.parseToJsonElement(e.requestBody.readBytes().decodeToString()))
+            val body = buildJsonObject {
+                put("deletion_id", "40000000-0000-0000-0000-000000000001"); put("scope", "learner")
+                put("learner_id", learner); put("request_id", request); put("completed_at", "2026-11-11T12:00:00Z")
+                if (extra) put("account_deleted", true)
+            }.toString().encodeToByteArray()
+            e.sendResponseHeaders(200, body.size.toLong()); e.responseBody.use { it.write(body) }
+        }
+        server.start()
+        try {
+            val api = HttpBackend("http://127.0.0.1:${server.address.port}")
+            assertFailsWith<IllegalArgumentException> { api.deleteLearner("synthetic-token", learner, request, false) }
+            assertEquals(0, calls)
+            assertEquals(request, api.deleteLearner("synthetic-token", learner, request, true).requestId)
+            extra = true
+            assertFailsWith<IllegalArgumentException> { api.deleteLearner("synthetic-token", learner, request, true) }
+        } finally { server.stop(0) }
+    }
+}

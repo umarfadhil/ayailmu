@@ -179,7 +179,7 @@ fun ConsentScreen(
                 R.string.consent_where_title to stringResource(if (BuildConfig.NORMAL_AUTH_APPROVED) R.string.consent_where_body_cloud else R.string.consent_where_body),
                 R.string.consent_why_title to stringResource(R.string.consent_why_body),
                 R.string.consent_keep_title to stringResource(R.string.consent_keep_body),
-                R.string.consent_stop_title to stringResource(R.string.consent_stop_body, email),
+                R.string.consent_stop_title to stringResource(if (BuildConfig.NORMAL_AUTH_APPROVED) R.string.consent_stop_body_cloud else R.string.consent_stop_body, email),
             ).forEach { (title, body) ->
                 PaperCard {
                     Text(stringResource(title), style = MaterialTheme.typography.titleLarge, color = colors.ink, modifier = Modifier.headingSemantics())
