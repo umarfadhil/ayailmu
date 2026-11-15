@@ -132,8 +132,12 @@ private fun ColumnScope.ModuleBody(
         SectionTitle(stringResource(R.string.module_languages_title))
         LanguageRow(view.languages) { onEvent(ModuleEvent.PickLanguage(it)) }
     }
-    SectionTitle(stringResource(R.string.module_levels_title))
-    view.ladder.forEach { rung -> LevelCard(rung, state.data.audience) { onEvent(ModuleEvent.PickLevel(rung.level)) } }
+    // Only levels that exist are listed, and a choice is offered only when there is one to make.
+    val levels = view.ladder.filterNot { it.comingSoon }
+    if (levels.size > 1) {
+        SectionTitle(stringResource(R.string.module_levels_title))
+        levels.forEach { rung -> LevelCard(rung, state.data.audience) { onEvent(ModuleEvent.PickLevel(rung.level)) } }
+    }
     TrackCard(card, nav)
 }
 
@@ -233,7 +237,7 @@ private fun TrackCard(
     val line = MaterialTheme.typography.bodyMedium
     PaperCard {
         Text(card.trackTitle, style = MaterialTheme.typography.titleMedium, color = colors.ink, modifier = Modifier.headingSemantics())
-        Text(stringResource(R.string.module_today, card.todayAnswered), style = line, color = colors.ink)
+        if (card.todayAnswered > 0) Text(stringResource(R.string.module_today, card.todayAnswered), style = line, color = colors.ink)
         Text(stringResource(R.string.module_units_done, card.unitsDone, card.unitsTotal), style = line, color = colors.inkSoft)
         card.suggestion?.let {
             Text(stringResource(R.string.module_suggest_line, stringResource(levelName(it))), style = line, color = colors.ink)

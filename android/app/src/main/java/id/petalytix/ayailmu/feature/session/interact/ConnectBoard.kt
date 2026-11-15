@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -280,7 +281,10 @@ private fun ConnectCard(
                     stateText?.let { stateDescription = it }
                 },
     ) {
-        OptionFace(o, ts, pictureHeight = CARD_PICTURE, fallbackLabel = optionLabel(o, number))
+        // The dot sits on the edge that faces the other column; keep the card's words clear of it.
+        Box(Modifier.padding(start = if (left) 0.dp else DOT_CLEARANCE, end = if (left) DOT_CLEARANCE else 0.dp)) {
+            OptionFace(o, ts, pictureHeight = CARD_PICTURE, fallbackLabel = optionLabel(o, number))
+        }
     }
 }
 
@@ -340,5 +344,6 @@ internal fun DrawScope.drawPencil(
 
 private const val GRAIN_ALPHA = 0.35f
 private val DOT = 6.dp
+private val DOT_CLEARANCE = 10.dp
 private val LINE_TAP = 20.dp
 private val CARD_PICTURE = 64.dp

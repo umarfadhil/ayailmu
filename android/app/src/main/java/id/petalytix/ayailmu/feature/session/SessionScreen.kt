@@ -503,7 +503,8 @@ private fun SummaryView(
             if (summary.pending > 0) SummaryLine(stringResource(R.string.summary_pending, summary.pending), colors.ink)
             if (summary.dontKnow > 0) SummaryLine(stringResource(R.string.summary_dont_know, summary.dontKnow), colors.ink)
             if (summary.gems > 0) SummaryLine(stringResource(R.string.summary_gems, summary.gems), colors.ink, glyph = "gem")
-            SummaryLine(stringResource(R.string.summary_minutes, summary.minutes), colors.inkSoft)
+            // Under a minute rounds to 0; "about 0 minutes" tells the learner nothing.
+            if (summary.minutes > 0) SummaryLine(stringResource(R.string.summary_minutes, summary.minutes), colors.inkSoft)
             SummaryLine(stringResource(R.string.summary_next_review, nextReview), colors.inkSoft)
         }
         Text(stringResource(R.string.summary_note), style = MaterialTheme.typography.bodyMedium, color = colors.inkSoft)

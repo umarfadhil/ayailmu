@@ -164,7 +164,8 @@ internal fun SequenceDragBody(
         ) {
             if (tile != null) {
                 key(tile.id) { Tile(tile) }
-            } else {
+            } else if (q.slots > 1) {
+                // A lone place needs no number: in "4.400 : [1] = 1.100" the 1 reads as part of the sum.
                 Text((i + 1).toString(), style = MaterialTheme.typography.labelLarge, color = colors.inkSoft)
             }
         }

@@ -1,0 +1,146 @@
+/* Indonesian. The English text in the source is the key; anything missing here falls back to English. */
+"A little learning, every day" = "Belajar sedikit, setiap hari";
+
+/* Sign-in and account forms */
+"Sign in" = "Masuk";
+"Create account" = "Buat akun";
+"Confirm email" = "Konfirmasi email";
+"Forgot password" = "Lupa kata sandi";
+"Set a new password" = "Buat kata sandi baru";
+"Email" = "Email";
+"Password" = "Kata sandi";
+"New password" = "Kata sandi baru";
+"Confirm password" = "Ulangi kata sandi";
+"6-digit code" = "Kode 6 digit";
+"At least 12 characters." = "Minimal 12 karakter.";
+"I declare that I am an adult or guardian account owner." = "Saya menyatakan bahwa saya adalah pemilik akun dewasa atau wali.";
+"Done" = "Selesai";
+"Confirm" = "Konfirmasi";
+"Send code" = "Kirim kode";
+"Save new password" = "Simpan kata sandi baru";
+"Resend code" = "Kirim ulang kode";
+"Back to sign in" = "Kembali ke halaman masuk";
+"Forgot password?" = "Lupa kata sandi?";
+"I have a confirmation code" = "Saya punya kode konfirmasi";
+"I have a recovery code" = "Saya punya kode pemulihan";
+"Accounts are for adults and guardians only. After you sign up, we’ll email you a confirmation code." = "Akun hanya untuk orang dewasa atau wali. Setelah mendaftar, kami kirim kode konfirmasi ke emailmu.";
+"Enter the 6-digit code we emailed you. Can’t find it? Check your spam folder." = "Masukkan kode 6 digit yang kami kirim ke emailmu. Tidak ketemu? Cek folder spam.";
+"Enter your account email. If there’s an account for it, we’ll send a code there." = "Tulis email akunmu. Kalau akunnya ada, kami kirim kode ke sana.";
+"Enter the code from your email and a new password." = "Masukkan kode dari emailmu dan kata sandi baru.";
+"Enter a valid email address." = "Tulis alamat email yang lengkap.";
+"Use a password of 12–256 characters without line breaks." = "Kata sandi perlu 12–256 karakter, tanpa baris baru.";
+"Passwords must match." = "Kedua kata sandi harus sama.";
+"Enter the 6-digit code." = "Masukkan kode 6 digit.";
+"Confirm the adult or guardian declaration." = "Centang pernyataan dewasa atau wali.";
+"Signing in…" = "Sedang masuk…";
+"Creating account…" = "Membuat akun…";
+"Confirming email…" = "Mengonfirmasi email…";
+"Sending recovery code…" = "Mengirim kode…";
+"Saving new password…" = "Menyimpan kata sandi baru…";
+"Sending a new code…" = "Mengirim kode baru…";
+"Contacting the account service…" = "Menghubungi layanan akun…";
+"Restoring session…" = "Menyambungkan…";
+"Signing out…" = "Sedang keluar…";
+"Almost there. Check your email for the confirmation code." = "Hampir selesai. Cek emailmu untuk kode konfirmasi.";
+"Email confirmed. You’re signed in." = "Email terkonfirmasi. Kamu sudah masuk.";
+"If there’s an account for that email, a code is on its way." = "Kalau akunnya ada, kode akan sampai di emailmu.";
+"Password updated. Sign in with your new password." = "Kata sandi diperbarui. Masuk dengan kata sandi baru.";
+"If a new code can be sent, it will arrive in your email." = "Kalau bisa dikirim ulang, kode baru akan sampai di emailmu.";
+"Learning" = "Belajar";
+"No lessons are available yet." = "Belum ada pelajaran.";
+"Short maths practice for adults, in Indonesian or English. Sign in to start." = "Latihan matematika singkat untuk dewasa, dalam bahasa Indonesia atau Inggris. Masuk untuk mulai.";
+
+/* Messages from the account service layer */
+"Account operation cancelled." = "Dibatalkan.";
+"Signed out." = "Kamu sudah keluar.";
+"Signed out on this device. The server could not confirm session revocation." = "Kamu sudah keluar di perangkat ini, tetapi server belum memastikannya.";
+"Local sign-out could not be saved. Please retry." = "Belum berhasil keluar. Coba lagi.";
+"Sign in again with your password." = "Masuk lagi dengan kata sandimu.";
+"Offline. Showing saved progress on this device." = "Kamu sedang offline. Ini kemajuan yang tersimpan di perangkat ini.";
+"The account service took too long to respond. Please try again." = "Layanan akun terlalu lama merespons. Coba lagi.";
+"A secure connection to the account service could not be established. Please try again." = "Sambungan aman ke layanan akun belum berhasil. Coba lagi.";
+"Cannot connect to the account service. Check your connection and try again." = "Tidak bisa terhubung. Periksa koneksimu, lalu coba lagi.";
+"Too many attempts. Please wait before trying again." = "Terlalu banyak percobaan. Tunggu sebentar, lalu coba lagi.";
+"Confirm your email before signing in." = "Konfirmasi emailmu dulu sebelum masuk.";
+"The credentials or code were not accepted. Please check them and try again." = "Email, kata sandi, atau kodenya tidak cocok. Coba periksa lagi.";
+"The account service could not complete this request. Please try again." = "Belum berhasil. Coba lagi sebentar lagi.";
+"The account service response could not be accepted. Please try again." = "Belum berhasil. Coba lagi sebentar lagi.";
+"Your account could not be verified. Sign in again." = "Akunmu belum bisa dipastikan. Masuk lagi.";
+"Secure storage failed. Please try again." = "Penyimpanan aman bermasalah. Coba lagi.";
+"Enter a valid email, a password of 12–256 characters, and a six-digit code where requested. Confirm the adult or guardian declaration to continue." = "Periksa email, kata sandi (12–256 karakter), dan kode 6 digit jika diminta, lalu centang pernyataan dewasa atau wali.";
+
+/* Signed-in account area */
+"Account" = "Akun";
+"Signed in as %@" = "Masuk sebagai %@";
+"Saved account: %@" = "Akun tersimpan: %@";
+"Reconnect" = "Sambungkan lagi";
+"Sign in again with password" = "Masuk lagi dengan kata sandi";
+"Sign out" = "Keluar";
+"Cancel" = "Batal";
+"Delete entire account" = "Hapus akun";
+"Permanently delete this entire account?" = "Hapus akun ini secara permanen?";
+"Delete my account" = "Hapus akun saya";
+"Removes your account and its data from our servers. Learning on this device stays." = "Menghapus akun dan datanya dari server kami. Pelajaran di perangkat ini tetap ada.";
+"This deletes your account and everything stored for it on our servers: all profiles, including child profiles, synced answers and consent records. It can’t be undone, and closing this screen won’t cancel it. Removing the sign-in itself can take a little longer.\n\nLessons already on this device stay here but will no longer sync; signing out or switching accounts closes access to them. We keep a minimal record of the deletion, and backups are cleared on their own schedule. You may be asked to sign in again to confirm." = "Akunmu dan semua yang tersimpan untuknya di server kami akan dihapus: semua profil, termasuk profil anak, jawaban yang tersinkron, dan catatan persetujuan. Ini tidak bisa dibatalkan, dan menutup layar ini tidak menghentikannya. Penghapusan akun masuknya sendiri bisa sedikit lebih lama.\n\nPelajaran yang sudah ada di perangkat ini tetap ada tetapi tidak lagi disinkronkan; keluar atau berganti akun menutup akses ke sana. Kami menyimpan catatan kecil tentang penghapusan ini, dan cadangan server terhapus sesuai jadwalnya. Kamu mungkin diminta masuk lagi untuk memastikan.";
+
+/* Deletion follow-up */
+"Account deletion" = "Penghapusan akun";
+"Try again" = "Coba lagi";
+"Check deletion status" = "Cek status penghapusan";
+"Checking account deletion…" = "Mengecek penghapusan akun…";
+"Done: your data and sign-in account are deleted." = "Selesai: data dan akun masukmu sudah dihapus.";
+"Your data is deleted. The sign-in account is still being removed." = "Datamu sudah dihapus. Akun masuknya masih dalam proses.";
+"Deletion isn’t confirmed yet. Your request is saved." = "Penghapusan belum terkonfirmasi. Permintaanmu tersimpan.";
+"You can check the status without signing in. Keep this app installed on this device until deletion finishes; the record that proves your request is stored only here." = "Kamu bisa mengecek status tanpa masuk. Biarkan aplikasi ini terpasang di perangkat ini sampai penghapusan selesai; bukti permintaanmu hanya tersimpan di sini.";
+
+/* Lessons, progress, profiles, sync */
+"You’re offline. Lessons still work." = "Kamu sedang offline. Pelajaran tetap bisa dibuka.";
+"Lessons" = "Pelajaran";
+"Progress" = "Kemajuan";
+"Answers so far" = "Jawaban sejauh ini";
+"Answers from your account" = "Jawaban dari akunmu";
+"Skills learned" = "Keterampilan dikuasai";
+"Still practising" = "Masih dilatih";
+"Worth another look" = "Perlu dilihat lagi";
+"Profiles" = "Profil";
+"Create a profile to start learning." = "Buat profil untuk mulai belajar.";
+"New profile" = "Profil baru";
+"Lesson language" = "Bahasa pelajaran";
+"Create profile" = "Buat profil";
+"Refresh" = "Muat ulang";
+"Sync" = "Sinkronisasi";
+"Sync is on for this profile." = "Sinkronisasi menyala untuk profil ini.";
+"Sync is off." = "Sinkronisasi mati.";
+"Answers waiting to sync" = "Jawaban menunggu dikirim";
+"Sync is off on this device. We’ll finish turning it off on your account when you’re back online." = "Sinkronisasi mati di perangkat ini. Kami selesaikan di akunmu saat kamu online lagi.";
+"Only answers from after you turn sync on are uploaded. Other profiles on this device aren’t linked." = "Hanya jawaban setelah sinkronisasi menyala yang dikirim. Profil lain di perangkat ini tidak ikut terhubung.";
+"This profile’s server data has been deleted. Learning on this device and your account stay." = "Data profil ini di server sudah dihapus. Pelajaran di perangkat ini dan akunmu tetap ada.";
+"The deletion isn’t confirmed yet. Sync has stopped. Sign in again if asked, then retry." = "Penghapusan belum terkonfirmasi. Sinkronisasi sudah berhenti. Masuk lagi jika diminta, lalu coba lagi.";
+"Sync now" = "Sinkronkan sekarang";
+"Turn off sync" = "Matikan sinkronisasi";
+"Turn on sync" = "Nyalakan sinkronisasi";
+"Retry deletion" = "Coba hapus lagi";
+"Delete server copy" = "Hapus data profil di server";
+"Delete this profile’s data from the server?" = "Hapus data profil ini di server?";
+"Delete permanently" = "Hapus permanen";
+"This profile, its synced answers and its sync consent are permanently removed from the server. Learning on this device and your account stay. We keep a small record that the deletion happened, so old data can’t be uploaded again. After this, the profile can’t sync again." = "Profil ini, jawaban yang sudah tersinkron, dan persetujuan sinkronisasinya dihapus permanen dari server. Pelajaran di perangkat ini dan akunmu tetap ada. Kami menyimpan catatan kecil bahwa penghapusan terjadi, supaya data lama tidak bisa terkirim lagi. Setelah ini profil tidak bisa disinkronkan lagi.";
+"Your saved progress could not be opened. Please try again." = "Kemajuanmu belum bisa dibuka. Coba lagi.";
+"Learning progress could not be verified. Please try again." = "Kemajuan belajar belum bisa dipastikan. Coba lagi.";
+"Cannot connect. Saved progress remains on this device. Please try again." = "Tidak bisa terhubung. Kemajuanmu aman di perangkat ini; coba lagi.";
+"This profile could not be opened." = "Profil ini belum bisa dibuka.";
+"The action did not complete." = "Belum berhasil. Coba lagi.";
+
+/* Inside a lesson */
+"Continue" = "Lanjut";
+"Check" = "Periksa";
+"Your answer" = "Jawabanmu";
+"Choose a match" = "Pilih pasangan";
+"I don’t know yet" = "Saya belum tahu";
+"That’s today’s session done" = "Sesi hari ini selesai";
+"Your answers are saved." = "Jawabanmu sudah tersimpan.";
+"Back to lessons" = "Kembali ke pelajaran";
+"Enter a number to continue." = "Tulis angka dulu.";
+"This lesson can’t be opened right now. Your progress is safe." = "Pelajaran ini belum bisa dibuka. Kemajuanmu aman.";
+"Your answer wasn’t saved. Please try again." = "Jawabanmu belum tersimpan. Coba lagi.";
+"Your progress wasn’t saved. Please try again." = "Kemajuanmu belum tersimpan. Coba lagi.";
+"The account service configuration is invalid." = "Layanan akun belum tersedia di versi ini.";

@@ -29,7 +29,7 @@ class AccountFeedbackLayoutRegression(unittest.TestCase):
         self.assertIn('.onChange(of: operationInProgress)',view)
         self.assertIn('.onChange(of: model.message)',view)
         self.assertIn('if (active && submitting) || (!active && !model.message.isEmpty)',view)
-        self.assertIn('Text(model.message).font(.callout).fixedSize(horizontal:false,vertical:true)',view)
+        self.assertIn('Text(L(model.message)).font(.callout).fixedSize(horizontal:false,vertical:true)',view)
         self.assertIn('scroll.scrollTo("account.feedback",anchor:.center)',view)
         self.assertIn('.disabled(operationInProgress || !valid)',view)
     def test_startup_restore_does_not_scroll_but_submission_and_final_feedback_do(self):

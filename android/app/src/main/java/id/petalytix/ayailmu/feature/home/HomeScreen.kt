@@ -291,7 +291,8 @@ private fun ModuleCardView(
                 ModuleBadges(card)
             }
         }
-        Text(stringResource(R.string.module_today, card.todayAnswered), style = line, color = colors.ink)
+        // A count of zero is not news on a first visit; the line appears once there is something to count.
+        if (card.todayAnswered > 0) Text(stringResource(R.string.module_today, card.todayAnswered), style = line, color = colors.ink)
         Text(stringResource(R.string.module_units_done, card.unitsDone, card.unitsTotal), style = line, color = colors.inkSoft)
         card.suggestion?.let {
             Text(stringResource(R.string.module_suggest_line, stringResource(levelName(it))), style = line, color = colors.ink)

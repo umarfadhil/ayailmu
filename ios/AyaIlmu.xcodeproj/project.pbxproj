@@ -13,6 +13,7 @@
 		B00000000000000000000002 /* KeychainVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000002 /* KeychainVault.swift */; };
 		B00000000000000000000003 /* PrivateQATrust.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000003 /* PrivateQATrust.swift */; };
 		B00000000000000000000004 /* SharedLearningAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000004 /* SharedLearningAdapter.swift */; };
+		L12000000000000000000000 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = L10000000000000000000000 /* Localizable.strings */; };
 		C12000000000000000000000 /* ApprovedLearning.json in Resources */ = {isa = PBXBuildFile; fileRef = C11000000000000000000000 /* ApprovedLearning.json */; };
 		C12000000000000000000001 /* ReviewedMathPack.json in Resources */ = {isa = PBXBuildFile; fileRef = C11000000000000000000001 /* ReviewedMathPack.json */; };
 		C12000000000000000000002 /* ReviewedMathRules.json in Resources */ = {isa = PBXBuildFile; fileRef = C11000000000000000000002 /* ReviewedMathRules.json */; };
@@ -39,6 +40,7 @@
 /* Begin PBXFileReference section */
 		A00000000000000000000001 /* AyaIlmu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = AyaIlmu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		P11000000000000000000000 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		L11000000000000000000000 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C11000000000000000000000 /* ApprovedLearning.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ApprovedLearning.json; sourceTree = "<group>"; };
 		C11000000000000000000001 /* ReviewedMathPack.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ReviewedMathPack.json; sourceTree = "<group>"; };
 		C11000000000000000000002 /* ReviewedMathRules.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ReviewedMathRules.json; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				F00000000000000000000001 /* AccountView.swift */,
 				F00000000000000000000002 /* KeychainVault.swift */,
 				F00000000000000000000003 /* PrivateQATrust.swift */,
+				L10000000000000000000000 /* Localizable.strings */,
 				P11000000000000000000000 /* PrivacyInfo.xcprivacy */,
 			);
 			path = AyaIlmu;
@@ -183,6 +186,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				id,
 				Base,
 			);
 			mainGroup = A00000000000000000000002;
@@ -199,12 +203,24 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXVariantGroup section */
+		L10000000000000000000000 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				L11000000000000000000000 /* id */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin PBXResourcesBuildPhase section */
 		A00000000000000000000007 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				C12000000000000000000000 /* ApprovedLearning.json in Resources */,
+				L12000000000000000000000 /* Localizable.strings in Resources */,
 				P12000000000000000000000 /* PrivacyInfo.xcprivacy in Resources */,
 				C12000000000000000000001 /* ReviewedMathPack.json in Resources */,
 				C12000000000000000000002 /* ReviewedMathRules.json in Resources */,

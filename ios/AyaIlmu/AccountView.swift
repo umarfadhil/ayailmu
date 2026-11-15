@@ -2,6 +2,9 @@ import SwiftUI
 import AyaIlmuCore
 private typealias AccountMode = AccountFormMode
 private enum AccountField: Hashable { case email, password, confirmation, code }
+/// Text that reaches the screen as a plain String (messages from AyaIlmuCore, computed titles) is looked up here;
+/// literals inside SwiftUI views are localized by SwiftUI itself. English is the key, id.lproj holds Indonesian.
+private func L(_ key:String) -> String { NSLocalizedString(key,comment:"") }
 struct AccountView: View {
     @StateObject private var model = AccountModel()
     @State private var mode = AccountMode.login
@@ -23,54 +26,58 @@ struct AccountView: View {
                     }.padding(.top,24)
                     deletionRecovery
                     if let owner = model.email {
-                        Label("Account",systemImage:"person.crop.circle.fill").font(.title2.bold())
-                        Text(model.offline ? "Saved account: \(owner)":"Signed in as \(owner)").textSelection(.enabled)
                         accountFeedback.id("account.feedback")
                         if let capability = model.ownerSession { LearningView(session:capability).id(ObjectIdentifier(capability)) }
-                        contentAvailability
-                        Button("Restore session") { Task { await model.restore() } }.disabled(model.busy)
-                        Button("Sign in again with password") { clearSecrets(); model.reauthenticate() }.disabled(model.busy)
-                        Button("Delete entire account",role:.destructive) {
-                            deletingOwner = model.ownerSession; confirmAccountDeletion = deletingOwner != nil
-                        }.disabled(operationInProgress || model.offline || model.ownerSession == nil)
-                        .confirmationDialog("Permanently delete this entire account?",isPresented:$confirmAccountDeletion,titleVisibility:.visible) {
-                            if let expected = deletingOwner {
-                                Button("Delete account and all server profiles",role:.destructive) {
-                                    Task { await model.deleteAccount(expected:expected,confirmed:true); deletingOwner = nil }
+                        VStack(alignment:.leading,spacing:14) {
+                            Label("Account",systemImage:"person.crop.circle.fill").font(.title2.bold())
+                            Text(model.offline ? "Saved account: \(owner)":"Signed in as \(owner)").foregroundStyle(.secondary).textSelection(.enabled)
+                            if model.ownerSession == nil || model.offline { Button("Reconnect") { Task { await model.restore() } }.disabled(model.busy) }
+                            Button("Sign in again with password") { clearSecrets(); model.reauthenticate() }.disabled(model.busy)
+                            Button("Sign out") { clearSecrets(); Task { await model.logout() } }.disabled(model.deletionBusy).buttonStyle(.bordered).tint(teal)
+                        }.padding(20).frame(maxWidth:.infinity,alignment:.leading).background(Color(.secondarySystemBackground),in:RoundedRectangle(cornerRadius:20))
+                        VStack(alignment:.leading,spacing:8) {
+                            Button("Delete entire account",role:.destructive) {
+                                deletingOwner = model.ownerSession; confirmAccountDeletion = deletingOwner != nil
+                            }.disabled(operationInProgress || model.offline || model.ownerSession == nil)
+                            .confirmationDialog("Permanently delete this entire account?",isPresented:$confirmAccountDeletion,titleVisibility:.visible) {
+                                if let expected = deletingOwner {
+                                    Button("Delete my account",role:.destructive) {
+                                        Task { await model.deleteAccount(expected:expected,confirmed:true); deletingOwner = nil }
+                                    }
                                 }
+                                Button("Cancel",role:.cancel) { deletingOwner = nil }
+                            } message: {
+                                Text("This deletes your account and everything stored for it on our servers: all profiles, including child profiles, synced answers and consent records. It can’t be undone, and closing this screen won’t cancel it. Removing the sign-in itself can take a little longer.\n\nLessons already on this device stay here but will no longer sync; signing out or switching accounts closes access to them. We keep a minimal record of the deletion, and backups are cleared on their own schedule. You may be asked to sign in again to confirm.")
                             }
-                            Button("Cancel",role:.cancel) { deletingOwner = nil }
-                        } message: {
-                            Text("All owned server profiles, including child profiles, synced answers and consent records will be erased. Sign-in account deletion may remain pending. History on this device is retained with its original owner and will not sync again. Offline history remains available after restarting this app. Signing out or signing in to another account closes that access. Minimal deletion receipts and identity metadata may be retained; backup retention is separate. You may need to sign in again with your password. After submission, closing this screen does not cancel deletion.")
-                        }
-                        Button("Sign out") { clearSecrets(); Task { await model.logout() } }.disabled(model.deletionBusy).buttonStyle(.borderedProminent).tint(teal)
+                            Text("Removes your account and its data from our servers. Learning on this device stays.").font(.footnote).foregroundStyle(.secondary).fixedSize(horizontal:false,vertical:true)
+                        }.padding(.top,8)
                     } else {
-                        VStack(alignment:.leading,spacing:8) { Text(mode.rawValue).font(.title.bold()); Text(introduction).foregroundStyle(.secondary).fixedSize(horizontal:false,vertical:true) }
+                        VStack(alignment:.leading,spacing:8) { Text(L(mode.rawValue)).font(.title.bold()); if !introduction.isEmpty { Text(introduction).foregroundStyle(.secondary).fixedSize(horizontal:false,vertical:true) } }
                         VStack(alignment:.leading,spacing:16) {
                             TextField("Email",text:$email).textContentType(.emailAddress).keyboardType(.emailAddress).textInputAutocapitalization(.never).autocorrectionDisabled().focused($focused, equals:.email).submitLabel(mode == .recover ? .done:.next).onSubmit { focused = mode == .confirm ? .code : mode == .recover ? nil : .password }.accessibilityIdentifier("account.email")
                             if mode == .login || mode == .signup || mode == .reset {
                                 SecureField(mode == .reset ? "New password" : "Password",text:$password).textContentType(mode == .login ? .password:.newPassword).focused($focused, equals:.password).submitLabel(mode == .login ? .done:.next).onSubmit { focused = mode == .login ? nil : .confirmation }.accessibilityIdentifier("account.password")
-                                Text("Use 12–256 characters.").font(.caption).foregroundStyle(.secondary)
+                                if mode != .login { Text("At least 12 characters.").font(.caption).foregroundStyle(.secondary) }
                             }
                             if mode == .signup || mode == .reset { SecureField("Confirm password",text:$confirmPassword).textContentType(.newPassword).focused($focused, equals:.confirmation).submitLabel(mode == .reset ? .next:.done).onSubmit { focused = mode == .reset ? .code : nil }.accessibilityIdentifier("account.confirmPassword") }
                             if mode == .confirm || mode == .reset { TextField("6-digit code",text:$code).keyboardType(.numberPad).textContentType(.oneTimeCode).focused($focused, equals:.code).accessibilityIdentifier("account.code") }
                         }.textFieldStyle(.roundedBorder).disabled(model.busy || submitting)
-                        if mode == .login || mode == .signup || mode == .confirm { Toggle("I declare that I am an adult or guardian account owner. This is not age verification.",isOn:$adult).font(.subheadline).tint(teal).disabled(model.busy || submitting) }
-                        if !validationMessages.isEmpty { VStack(alignment:.leading,spacing:4) { ForEach(validationMessages,id:\.self) { Text("• " + $0) } }.font(.caption).foregroundStyle(.secondary).accessibilityIdentifier("account.requirements") }
+                        if mode == .login || mode == .signup || mode == .confirm { Toggle("I declare that I am an adult or guardian account owner.",isOn:$adult).font(.subheadline).tint(teal).disabled(model.busy || submitting) }
+                        if !shownValidationMessages.isEmpty { VStack(alignment:.leading,spacing:4) { ForEach(shownValidationMessages,id:\.self) { Text(L($0)) } }.font(.footnote).foregroundStyle(.secondary).accessibilityIdentifier("account.requirements") }
                         VStack(alignment:.leading,spacing:12) {
                             Button { focused = nil; submit() } label: { HStack { Spacer(); if operationInProgress { ProgressView().tint(.white) }; Text(operationInProgress ? progressTitle : actionTitle).fontWeight(.semibold); Spacer() }.padding(.vertical,7) }.buttonStyle(.borderedProminent).tint(teal).disabled(operationInProgress || !valid).disabled(!model.deletionStorageReady).accessibilityIdentifier("account.submit")
                             accountFeedback
                         }.id("account.feedback")
                         #if !OWNER_SIGN_IN_ONLY
-                        if mode == .confirm { Button("Resend code") { Task { _ = await model.run(progress:"Sending a new code…") { try await $0.resend(email:email); return "If a resend is available, a new code will arrive in the inbox." } } }.disabled(model.busy || submitting || !AccountAPI.emailValid(email)) }
+                        if mode == .confirm { Button("Resend code") { Task { _ = await model.run(progress:"Sending a new code…") { try await $0.resend(email:email); return "If a new code can be sent, it will arrive in your email." } } }.disabled(model.busy || submitting || !AccountAPI.emailValid(email)) }
                         VStack(alignment:.leading,spacing:14) {
-                            ForEach(AccountMode.allCases.filter { $0 != mode },id:\.self) { destination in Button(destination.rawValue) { model.cancel(); mode = destination; focused = nil; clearSecrets(); adult = false; model.message = "" }.disabled(model.busy || submitting) }
+                            ForEach(AccountMode.allCases.filter { otherModes.contains($0) },id:\.self) { destination in Button(linkTitle(destination)) { model.cancel(); mode = destination; focused = nil; clearSecrets(); adult = false; model.message = "" }.disabled(model.busy || submitting) }
                         }.tint(teal)
                         #endif
                         contentAvailability
                     }
                 }.padding(24).frame(maxWidth:560).frame(maxWidth:.infinity)
-            }.scrollDismissesKeyboard(.interactively).background(Color(.systemBackground)).navigationTitle("Account").navigationBarTitleDisplayMode(.inline)
+            }.scrollDismissesKeyboard(.interactively).background(Color(.systemBackground)).navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItemGroup(placement:.keyboard) { Spacer(); Button("Done") { focused = nil } } }
             .onChange(of: operationInProgress) { _, active in
                 if (active && submitting) || (!active && !model.message.isEmpty) { withAnimation { scroll.scrollTo("account.feedback",anchor:.center) } }
@@ -86,31 +93,42 @@ struct AccountView: View {
             VStack(alignment:.leading,spacing:12) {
                 Label("Account deletion",systemImage:"lock.shield").font(.headline)
                 if !model.deletionStorageReady {
-                    Button("Retry secure storage") { Task { await model.restore() } }.disabled(operationInProgress)
+                    Button("Try again") { Task { await model.restore() } }.disabled(operationInProgress)
                 }
                 ForEach(model.deletions) { record in
                     Text("Request " + String(record.id.suffix(8))).font(.caption)
-                    Text(record.receipt.map { $0.completed ? "Completed: app data and sign-in account deleted." : "App data erased; sign-in account deletion pending." } ?? "Saved request: deletion not yet confirmed.")
+                    Text(L(record.receipt.map { $0.completed ? "Done: your data and sign-in account are deleted." : "Your data is deleted. The sign-in account is still being removed." } ?? "Deletion isn’t confirmed yet. Your request is saved."))
                     Button("Check deletion status") { Task { await model.checkDeletionStatus(requestID:record.id) } }.disabled(operationInProgress)
 
                 }
-                Text("Status checks work without signing in. Keep this app and device: the recovery proof is stored securely here and is not backed up or synced.").font(.footnote)
-                if !model.deletionMessage.isEmpty { Text(model.deletionMessage).font(.callout).accessibilityIdentifier("account.deletionStatus") }
+                Text("You can check the status without signing in. Keep this app installed on this device until deletion finishes; the record that proves your request is stored only here.").font(.footnote).foregroundStyle(.secondary).fixedSize(horizontal:false,vertical:true)
+                if !model.deletionMessage.isEmpty { Text(L(model.deletionMessage)).font(.callout).accessibilityIdentifier("account.deletionStatus") }
             }.padding(16).background(Color(.secondarySystemBackground),in:RoundedRectangle(cornerRadius:16))
         }
     }
     private var operationInProgress: Bool { model.busy || submitting || model.deletionBusy }
-    private var progressTitle: String { model.deletionBusy ? "Checking account deletion…" : model.busy ? model.progress : mode.progressTitle }
+    private var progressTitle: String { L(model.deletionBusy ? "Checking account deletion…" : model.busy ? model.progress : mode.progressTitle) }
     @ViewBuilder private var accountFeedback: some View {
         if operationInProgress {
             Text(progressTitle).font(.callout).foregroundStyle(.secondary).accessibilityIdentifier("account.progress")
         } else if !model.message.isEmpty {
-            Text(model.message).font(.callout).fixedSize(horizontal:false,vertical:true).padding(16).frame(maxWidth:.infinity,alignment:.leading).background(Color(.secondarySystemBackground),in:RoundedRectangle(cornerRadius:16)).accessibilityIdentifier("account.message")
+            Text(L(model.message)).font(.callout).fixedSize(horizontal:false,vertical:true).padding(16).frame(maxWidth:.infinity,alignment:.leading).background(Color(.secondarySystemBackground),in:RoundedRectangle(cornerRadius:16)).accessibilityIdentifier("account.message")
         }
     }
-    private var contentAvailability: some View { VStack(alignment:.leading,spacing:8) { Label("Learning",systemImage:"book.closed").font(.headline); Text(ApprovedLessonLibrary.bundled.lessons.isEmpty ? "No lessons are available yet.":"Lessons are available after you sign in and choose a profile.").foregroundStyle(.secondary) }.padding(20).frame(maxWidth:.infinity,alignment:.leading).background(teal.opacity(0.07),in:RoundedRectangle(cornerRadius:20)) }
-    private var introduction: String { switch mode { case .signup: return "For adults or guardians. Child self-registration is unavailable. After registering, open your email inbox for the confirmation code."; case .confirm: return "Enter the 6-digit code sent to your email inbox. Check spam too."; case .recover: return "If the account can be recovered, a code will be sent to that email inbox."; case .reset: return "Enter the recovery code from your inbox and a new password."; case .login: return "Sign in to your account." } }
-    private var actionTitle: String { switch mode { case .confirm:return "Confirm"; case .recover:return "Send recovery code"; case .reset:return "Save new password"; default:return mode.rawValue } }
+    private var contentAvailability: some View { VStack(alignment:.leading,spacing:8) { Label("Learning",systemImage:"book.closed").font(.headline); Text(ApprovedLessonLibrary.bundled.lessons.isEmpty ? "No lessons are available yet.":"Short maths practice for adults, in Indonesian or English. Sign in to start.").foregroundStyle(.secondary) }.padding(20).frame(maxWidth:.infinity,alignment:.leading).background(teal.opacity(0.07),in:RoundedRectangle(cornerRadius:20)) }
+    private var introduction: String { switch mode { case .signup: return L("Accounts are for adults and guardians only. After you sign up, we’ll email you a confirmation code."); case .confirm: return L("Enter the 6-digit code we emailed you. Can’t find it? Check your spam folder."); case .recover: return L("Enter your account email. If there’s an account for it, we’ll send a code there."); case .reset: return L("Enter the code from your email and a new password."); case .login: return "" } }
+    private var actionTitle: String { switch mode { case .confirm:return L("Confirm"); case .recover:return L("Send code"); case .reset:return L("Save new password"); default:return L(mode.rawValue) } }
+    /// Only the next steps that make sense from here, instead of every other form.
+    private var otherModes: [AccountMode] { switch mode { case .login: return [.signup,.recover,.confirm]; case .signup: return [.login,.confirm]; case .confirm: return [.login]; case .recover: return [.login,.reset]; case .reset: return [.login] } }
+    private func linkTitle(_ destination:AccountMode) -> String { switch destination { case .login: return L("Back to sign in"); case .signup: return L("Create account"); case .recover: return L("Forgot password?"); case .confirm: return L("I have a confirmation code"); case .reset: return L("I have a recovery code") } }
+    /// Requirements appear once every field of this form has something in it; an untouched form is not told it is wrong.
+    private var shownValidationMessages: [String] {
+        var touched = !email.isEmpty
+        if mode == .login || mode == .signup || mode == .reset { touched = touched && !password.isEmpty }
+        if mode == .signup || mode == .reset { touched = touched && !confirmPassword.isEmpty }
+        if mode == .confirm || mode == .reset { touched = touched && !code.isEmpty }
+        return touched ? validationMessages : []
+    }
     private var validationMessages: [String] { AccountFormValidation.messages(mode:mode,email:email,password:password,confirmation:confirmPassword,code:code,adult:adult) }
     private var valid: Bool { validationMessages.isEmpty }
     private func clearSecrets() { password = ""; confirmPassword = ""; code = "" }
@@ -128,10 +146,10 @@ struct AccountView: View {
         let success = await model.run(progress:target.progressTitle) { store in
             switch target {
             case .login: try await store.signIn(email:submittedEmail,password:submittedPassword,adult:submittedAdult); return ""
-            case .signup: try await store.signUp(email:submittedEmail,password:submittedPassword,adult:submittedAdult); return "Registration submitted. Open your email inbox for the confirmation code; you are not signed in yet."
-            case .confirm: try await store.confirm(email:submittedEmail,code:submittedCode,adult:submittedAdult); return "Email confirmed and account signed in."
-            case .recover: try await store.recover(email:submittedEmail); return "If the account can be recovered, a recovery code will arrive in the inbox."
-            case .reset: try await store.reset(email:submittedEmail,code:submittedCode,password:submittedPassword); return "Password updated. Sign in again with the new password."
+            case .signup: try await store.signUp(email:submittedEmail,password:submittedPassword,adult:submittedAdult); return "Almost there. Check your email for the confirmation code."
+            case .confirm: try await store.confirm(email:submittedEmail,code:submittedCode,adult:submittedAdult); return "Email confirmed. You’re signed in."
+            case .recover: try await store.recover(email:submittedEmail); return "If there’s an account for that email, a code is on its way."
+            case .reset: try await store.reset(email:submittedEmail,code:submittedCode,password:submittedPassword); return "Password updated. Sign in with your new password."
             }
         }
         // Keep the in-memory form on failure so a visible error can be corrected/retried.
@@ -149,6 +167,7 @@ private struct LearningView: View {
     @State private var confirmErasure = false
     @State private var erasingScope:OwnerScope?
     let session:OwnerSession
+    private let teal = Color(red:0.08,green:0.39,blue:0.36)
     private var selectedLessons:[ApprovedLesson] { model.library.lessons.filter { model.profiles.first(where:{$0.id == model.selected})?.lang == $0.language } }
     init(session:OwnerSession) { self.session = session; let model:LearningPresentationModel
         do {
@@ -158,66 +177,81 @@ private struct LearningView: View {
         _model = StateObject(wrappedValue:model) }
     var body: some View {
         VStack(alignment:.leading,spacing:18) {
-            if !session.networkVerified { Label("Offline · saved account",systemImage:"wifi.slash").foregroundStyle(.secondary) }
+            if !session.networkVerified { Label("You’re offline. Lessons still work.",systemImage:"wifi.slash").foregroundStyle(.secondary) }
+            if model.core.isAvailable, let learning = model.learning, !selectedLessons.isEmpty {
+                Text("Lessons").font(.title2.bold())
+                ForEach(selectedLessons) { course in
+                    NavigationLink { LessonView(lesson:course,learning:learning,core:model.core,onProgressChanged:{ model.refresh() }) } label: {
+                        HStack(spacing:12) { Image(systemName:"book.fill"); Text(course.title).fontWeight(.semibold).multilineTextAlignment(.leading); Spacer(); Image(systemName:"chevron.right").font(.footnote) }
+                            .padding(16).frame(maxWidth:.infinity).foregroundStyle(.white).background(teal,in:RoundedRectangle(cornerRadius:16))
+                    }
+                }
+            }
+            if let summary = model.summary {
+                Text("Progress").font(.title2.bold())
+                VStack(spacing:10) {
+                    LabeledContent("Answers so far",value:String(summary.localAnswers))
+                    if summary.remoteAnswers > 0 { LabeledContent("Answers from your account",value:String(summary.remoteAnswers)) }
+                    if let progress = model.projection {
+                        LabeledContent("Skills learned",value:String(progress.learned))
+                        LabeledContent("Still practising",value:String(progress.practicing))
+                        LabeledContent("Worth another look",value:String(progress.blocked))
+                    }
+                }.padding(16).background(Color(.secondarySystemBackground),in:RoundedRectangle(cornerRadius:16))
+            }
             Text("Profiles").font(.title2.bold())
-            if model.profiles.isEmpty { Text("No saved profiles.").foregroundStyle(.secondary) }
+            if model.profiles.isEmpty { Text("Create a profile to start learning.").foregroundStyle(.secondary) }
             ForEach(model.profiles,id:\.id) { profile in
                 Button { model.select(profile.id) } label: {
-                    HStack { Image(systemName:model.selected == profile.id ? "checkmark.circle.fill":"person.crop.circle"); Text("Adult profile · \(profile.lang == "id" ? "Bahasa Indonesia":"English")"); Spacer() }
+                    HStack { Image(systemName:model.selected == profile.id ? "checkmark.circle.fill":"circle"); Text(profile.lang == "id" ? "Bahasa Indonesia":"English"); Spacer() }
                 }.disabled(model.busy)
             }
-            Picker("Profile language",selection:$language) { Text("Bahasa Indonesia").tag("id"); Text("English").tag("en") }.pickerStyle(.segmented)
-            Button("Create adult profile") { Task { await model.run { try await $0.createAdult(language:language) } } }.disabled(model.busy || !session.networkVerified)
-            Button("Refresh profiles") { Task { await model.run { try await $0.loadProfiles() } } }.disabled(model.busy || !session.networkVerified)
-            if let summary = model.summary {
-                Divider(); Text("Progress").font(.title2.bold())
-                LabeledContent("Answers saved on this device",value:String(summary.localAnswers))
-                LabeledContent("Answers waiting to sync",value:String(summary.pending))
-                LabeledContent("Answers restored from account",value:String(summary.remoteAnswers))
-                if let progress = model.projection {
-                    LabeledContent("Skills learned",value:String(progress.learned))
-                    LabeledContent("Skills in practice",value:String(progress.practicing))
-                    LabeledContent("Skills needing follow-up",value:String(progress.blocked))
+            VStack(alignment:.leading,spacing:12) {
+                Text("New profile").font(.headline)
+                Picker("Lesson language",selection:$language) { Text("Bahasa Indonesia").tag("id"); Text("English").tag("en") }.pickerStyle(.segmented)
+                HStack {
+                    Button("Create profile") { Task { await model.run { try await $0.createAdult(language:language) } } }.buttonStyle(.bordered).disabled(model.busy || !session.networkVerified)
+                    Spacer()
+                    Button("Refresh") { Task { await model.run { try await $0.loadProfiles() } } }.disabled(model.busy || !session.networkVerified)
                 }
-                Text(summary.enabled ? "Sync is enabled for this profile only.":"Sync is off.").font(.subheadline)
-                if summary.withdrawalPending { Text("Sync is off on this device. Account withdrawal will be retried when connected.").font(.subheadline) }
-                Text("Device history from before activation is not uploaded. Other local profiles are not linked automatically.").font(.footnote).foregroundStyle(.secondary)
+            }.padding(16).background(Color(.secondarySystemBackground),in:RoundedRectangle(cornerRadius:16))
+            if let summary = model.summary {
+                Text("Sync").font(.title2.bold())
+                Text(summary.enabled ? "Sync is on for this profile.":"Sync is off.").font(.subheadline)
+                if summary.enabled || summary.pending > 0 { LabeledContent("Answers waiting to sync",value:String(summary.pending)).font(.subheadline) }
+                if summary.withdrawalPending { Text("Sync is off on this device. We’ll finish turning it off on your account when you’re back online.").font(.subheadline) }
+                Text("Only answers from after you turn sync on are uploaded. Other profiles on this device aren’t linked.").font(.footnote).foregroundStyle(.secondary).fixedSize(horizontal:false,vertical:true)
                 if summary.serverCopyErased {
-                    Text("The server copy was deleted. Learning history on this device and your sign-in account remain.").font(.subheadline)
+                    Text("This profile’s server data has been deleted. Learning on this device and your account stay.").font(.subheadline)
                 } else {
                     if summary.erasurePending {
-                        Text("Server deletion is not yet confirmed. Sync is stopped. Sign in again if asked, then retry the same deletion request.").font(.subheadline)
+                        Text("The deletion isn’t confirmed yet. Sync has stopped. Sign in again if asked, then retry.").font(.subheadline)
                     } else {
                         if summary.enabled || summary.withdrawalPending {
-                            Button("Disable sync") { Task { await model.disable() } }
+                            Button("Sync now") { Task { await model.run { try await $0.sync() } } }.buttonStyle(.bordered).disabled(model.busy || !session.networkVerified)
+                            Button("Turn off sync") { Task { await model.disable() } }
                         } else {
-                            Button("Enable sync from now on") { Task { await model.run { try await $0.enableSync(proofs:selectedLessons.map(\.proof)) } } }
-                                .disabled(model.busy || !session.networkVerified || selectedLessons.isEmpty)
+                            Button("Turn on sync") { Task { await model.run { try await $0.enableSync(proofs:selectedLessons.map(\.proof)) } } }
+                                .buttonStyle(.bordered).disabled(model.busy || !session.networkVerified || selectedLessons.isEmpty)
                         }
-                        Button("Sync now") { Task { await model.run { try await $0.sync() } } }.disabled(model.busy || !session.networkVerified || !summary.enabled && !summary.withdrawalPending)
                     }
-                    Button(summary.erasurePending ? "Retry server deletion":"Delete server copy",role:.destructive) {
+                    Button(summary.erasurePending ? "Retry deletion":"Delete server copy",role:.destructive) {
                         erasingScope = model.learning?.scope; confirmErasure = erasingScope != nil
-                    }.disabled(model.busy || !session.networkVerified)
-                    .confirmationDialog("Delete the server copy of this profile?",isPresented:$confirmErasure,titleVisibility:.visible) {
+                    }.font(.subheadline).disabled(model.busy || !session.networkVerified)
+                    .confirmationDialog("Delete this profile’s data from the server?",isPresented:$confirmErasure,titleVisibility:.visible) {
                         if let expected = erasingScope {
-                            Button("Permanently delete server copy",role:.destructive) {
+                            Button("Delete permanently",role:.destructive) {
                                 Task { await model.run { _ = try await $0.eraseServerCopy(expected:expected,confirmed:true) } }
                             }
                         }
                         Button("Cancel",role:.cancel) { erasingScope = nil }
                     } message: {
-                        Text("This profile, its synced answers and consent records will be permanently removed from the server. History on this device and your sign-in account remain. A minimal deletion receipt is retained to prevent old retries restoring data. This profile cannot sync again.")
+                        Text("This profile, its synced answers and its sync consent are permanently removed from the server. Learning on this device and your account stay. We keep a small record that the deletion happened, so old data can’t be uploaded again. After this, the profile can’t sync again.")
                     }
                 }
             }
-            if model.core.isAvailable, let learning = model.learning {
-                ForEach(selectedLessons) { course in
-                    NavigationLink(course.title) { LessonView(lesson:course,learning:learning,core:model.core,onProgressChanged:{ model.refresh() }) }
-                }
-            }
             if model.busy { ProgressView() }
-            if !model.message.isEmpty { Text(model.message).font(.callout).foregroundStyle(.secondary).accessibilityIdentifier("learning.message") }
+            if !model.message.isEmpty { Text(L(model.message)).font(.callout).foregroundStyle(.secondary).fixedSize(horizontal:false,vertical:true).accessibilityIdentifier("learning.message") }
         }.task { if session.networkVerified { await model.run { try await $0.loadProfiles() } } }
     }
 }
@@ -227,37 +261,49 @@ private struct LessonView: View {
     let onProgressChanged:() -> Void
     @State private var session:LessonSession?; @State private var number = ""; @State private var message = ""; @State private var revision = 0
     @State private var sliderValue:Double?; @State private var sequence:[String] = []; @State private var pairings:[String:String] = [:]
+    @Environment(\.dismiss) private var dismiss
+    private let teal = Color(red:0.08,green:0.39,blue:0.36)
     var body: some View {
         ScrollView {
             VStack(alignment:.leading,spacing:20) {
                 if let screen = session?.currentScreen { Text(screen.title).font(.title2.bold()); ForEach(screen.body,id:\.self) { Text($0) } }
                 if let item = session?.current { question(item).id(item.id) }
-                ForEach(session?.lastFeedback ?? [],id:\.self) { Text($0) }
-                if session?.canAdvance == true { Button("Continue") { advance() }.buttonStyle(.borderedProminent) }
-                else if session != nil && session?.current == nil { Label("Session saved",systemImage:"checkmark.circle") }
-                if !message.isEmpty { Text(message).foregroundStyle(.secondary) }
-            }.padding(24).id(revision)
+                if let feedback = session?.lastFeedback, !feedback.isEmpty {
+                    VStack(alignment:.leading,spacing:8) { ForEach(feedback,id:\.self) { Text($0).fixedSize(horizontal:false,vertical:true) } }
+                        .padding(16).frame(maxWidth:.infinity,alignment:.leading).background(teal.opacity(0.08),in:RoundedRectangle(cornerRadius:16))
+                }
+                if session?.canAdvance == true { Button { advance() } label: { Text("Continue").fontWeight(.semibold).frame(maxWidth:.infinity).padding(.vertical,7) }.buttonStyle(.borderedProminent).tint(teal) }
+                else if session != nil && session?.current == nil {
+                    VStack(spacing:12) {
+                        Image(systemName:"checkmark.circle.fill").font(.system(size:56)).foregroundStyle(teal)
+                        Text("That’s today’s session done").font(.title2.bold()).multilineTextAlignment(.center)
+                        Text("Your answers are saved.").foregroundStyle(.secondary)
+                        Button { dismiss() } label: { Text("Back to lessons").fontWeight(.semibold).frame(maxWidth:.infinity).padding(.vertical,7) }.buttonStyle(.borderedProminent).tint(teal)
+                    }.frame(maxWidth:.infinity).padding(.top,24)
+                }
+                if !message.isEmpty { Text(L(message)).foregroundStyle(.secondary).fixedSize(horizontal:false,vertical:true) }
+            }.padding(24).frame(maxWidth:560).frame(maxWidth:.infinity).id(revision)
         }.navigationTitle(lesson.title).onDisappear(perform:onProgressChanged).task {
             do { session = try LessonSession(lesson:lesson,learning:learning,core:core) }
-            catch { message = "This lesson is not available. Your saved progress has not changed." }
+            catch { message = "This lesson can’t be opened right now. Your progress is safe." }
         }
     }
     @ViewBuilder private func question(_ item:LessonItem) -> some View {
-        Text(item.prompt).font(.title2.bold())
-        ForEach(item.help,id:\.self) { Text($0).foregroundStyle(.secondary) }
+        Text(item.prompt).font(.title2.bold()).fixedSize(horizontal:false,vertical:true)
+        ForEach(item.help,id:\.self) { Text($0).foregroundStyle(.secondary).fixedSize(horizontal:false,vertical:true) }
         if ["choose","true_false"].contains(item.type) {
-            ForEach(item.options,id:\.id) { option in Button(option.title) { submit(["kind":"choice","option_id":option.id]) }.buttonStyle(.bordered) }
+            ForEach(item.options,id:\.id) { option in Button { submit(["kind":"choice","option_id":option.id]) } label: { Text(option.title).frame(maxWidth:.infinity,alignment:.leading).padding(.vertical,6) }.buttonStyle(.bordered).tint(teal) }
         } else if item.type == "number_input" {
-            TextField("Answer",text:$number).keyboardType(.decimalPad).textFieldStyle(.roundedBorder)
-            Button("Submit answer") { guard let value = LocalizedNumberInput.parse(number,language:lesson.language) else { message = "Enter a number to continue."; return }; submit(["kind":"number","value":value]) }.disabled(LocalizedNumberInput.parse(number,language:lesson.language) == nil)
+            TextField("Your answer",text:$number).keyboardType(.decimalPad).textFieldStyle(.roundedBorder)
+            Button("Check") { guard let value = LocalizedNumberInput.parse(number,language:lesson.language) else { message = "Enter a number to continue."; return }; submit(["kind":"number","value":value]) }.buttonStyle(.borderedProminent).tint(teal).disabled(LocalizedNumberInput.parse(number,language:lesson.language) == nil)
         } else if item.type == "estimate_slider",let range = item.slider {
             Slider(value:Binding(get:{sliderValue ?? range.min},set:{sliderValue = $0}),in:range.min...range.max,step:range.step)
             Text((sliderValue ?? range.min).formatted(.number.locale(Locale(identifier:lesson.language == "id" ? "id_ID":"en_US"))))
-            Button("Submit estimate") { guard let value = sliderValue else { return }; submit(["kind":"number","value":value]) }.disabled(sliderValue == nil)
+            Button("Check") { guard let value = sliderValue else { return }; submit(["kind":"number","value":value]) }.buttonStyle(.borderedProminent).tint(teal).disabled(sliderValue == nil)
         } else if ["tiles","fill_blank","order"].contains(item.type) {
             ForEach(item.options,id:\.id) { option in Button(option.title) { if let index = sequence.firstIndex(of:option.id) { sequence.remove(at:index) } else { sequence.append(option.id) } }.buttonStyle(.bordered).tint(sequence.contains(option.id) ? .secondary:.accentColor) }
             Text(sequence.compactMap{id in item.options.first{$0.id == id}?.title}.joined(separator:" → "))
-            Button("Submit answer") { submit(["kind":"sequence","sequence":sequence]) }.disabled(sequence.isEmpty)
+            Button("Check") { submit(["kind":"sequence","sequence":sequence]) }.buttonStyle(.borderedProminent).tint(teal).disabled(sequence.isEmpty)
         } else if item.type == "match_pairs" {
             ForEach(item.leftIDs,id:\.self) { left in
                 Picker(item.options.first{$0.id == left}?.title ?? left,selection:Binding(get:{pairings[left] ?? ""},set:{pairings[left] = $0})) {
@@ -265,17 +311,17 @@ private struct LessonView: View {
                     ForEach(item.rightIDs,id:\.self) { right in Text(item.options.first{$0.id == right}?.title ?? right).tag(right).disabled(pairings.contains{$0.key != left && $0.value == right}) }
                 }
             }
-            Button("Submit matches") { submit(["kind":"pairs","pairs":item.leftIDs.compactMap{left in pairings[left].map{["left":left,"right":$0]}}]) }.disabled(item.leftIDs.contains{pairings[$0] == nil || pairings[$0] == ""} || Set(pairings.values).count != item.leftIDs.count)
+            Button("Check") { submit(["kind":"pairs","pairs":item.leftIDs.compactMap{left in pairings[left].map{["left":left,"right":$0]}}]) }.disabled(item.leftIDs.contains{pairings[$0] == nil || pairings[$0] == ""} || Set(pairings.values).count != item.leftIDs.count)
         } else if ["info_card","mini_reading"].contains(item.type) {
-            if let body = item.modelAnswer { Text(body) }
-            Button("Continue") { submit(["kind":"choice","option_id":"seen"]) }
+            if let body = item.modelAnswer { Text(body).fixedSize(horizontal:false,vertical:true) }
+            Button { submit(["kind":"choice","option_id":"seen"]) } label: { Text("Continue").fontWeight(.semibold).frame(maxWidth:.infinity).padding(.vertical,7) }.buttonStyle(.borderedProminent).tint(teal)
         }
         if !["info_card","mini_reading"].contains(item.type) { Button("I don’t know yet") { submit(["kind":"dont_know"]) } }
     }
     private func resetDraft() { number = ""; sliderValue = nil; sequence = []; pairings = [:]; message = ""; revision += 1 }
     private func submit(_ response:[String:Any]) {
         do { let raw = String(data:try JSONSerialization.data(withJSONObject:response,options:.sortedKeys),encoding:.utf8)!; try session?.submit(responseJSON:raw); resetDraft() }
-        catch { message = "Your answer could not be saved. Please retry before continuing." }
+        catch { message = "Your answer wasn’t saved. Please try again." }
     }
-    private func advance() { do { try session?.advance(); resetDraft() } catch { message = "Your progress could not be saved. Please retry before continuing." } }
+    private func advance() { do { try session?.advance(); resetDraft() } catch { message = "Your progress wasn’t saved. Please try again." } }
 }
