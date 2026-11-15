@@ -7,4 +7,4 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 : "${GRADLE_USER_HOME:?Set a task-local Gradle cache}"
 : "${KONAN_DATA_DIR:?Set a task-local native dependency cache}"
 "$AYAILMU_GRADLE_BIN" -p "$ROOT/SharedLearningCore" --no-daemon --max-workers=2 -Dorg.gradle.jvmargs=-Xmx1024m "-Pkotlin.native.home=$AYAILMU_KOTLIN_NATIVE_HOME" jvmTest
-"$AYAILMU_GRADLE_BIN" -p "$ROOT/SharedLearningCore" --no-daemon --max-workers=2 -Dorg.gradle.jvmargs=-Xmx1024m "-Pkotlin.native.home=$AYAILMU_KOTLIN_NATIVE_HOME" linkDebugFrameworkIosSimulatorArm64 linkDebugFrameworkIosArm64
+"$AYAILMU_GRADLE_BIN" -p "$ROOT/SharedLearningCore" --no-daemon --max-workers=2 -Dorg.gradle.jvmargs=-Xmx1024m "-Pkotlin.native.home=$AYAILMU_KOTLIN_NATIVE_HOME" linkDebugFrameworkIosSimulatorArm64 linkDebugFrameworkIosArm64 linkReleaseFrameworkIosSimulatorArm64 linkReleaseFrameworkIosArm64
