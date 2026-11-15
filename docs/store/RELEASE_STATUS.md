@@ -1,7 +1,7 @@
 # AyaIlmu store release status (2026-11-15)
 
 Local preparation only. Nothing was uploaded, signed for distribution, registered or deployed.
-Source: branch `ux/ayailmu-copy-and-design` on top of `c103717`, uncommitted.
+Source: branch `ux/ayailmu-copy-and-design` on top of `c103717`.
 
 ## What builds today
 
@@ -10,8 +10,10 @@ Source: branch `ux/ayailmu-copy-and-design` on top of `c103717`, uncommitted.
 | Android `:app:bundleProdRelease` | **Built**, 9.5 MB `app/build/outputs/bundle/prodRelease/app-prod-release.aab` | Unsigned. Default prod: `id.petalytix.ayailmu`, 0.1.0 (1), target SDK 36, local-only (no account, no sync, no billing). |
 | Android `:app:assembleProdRelease` | **Built**, 6.0 MB `app-prod-release-unsigned.apk` | Minified, lint-vital passed. Never run on a device or emulator (none on this Mac). |
 | Android `:app:bundlePublicReleaseCandidate` (account-enabled) | **Not built** | Needs the 11 values in `android/config/public-release-inputs.example.properties`; none exist yet. |
-| iOS unsigned Release archive, device arm64 | **Archive succeeded**, 5.0 MB app | Linked against the release device learning core built from this source. Still uses throwaway command-line values for the five `AYAILMU_*` inputs, so it is a compile-and-link proof, not a shippable binary. |
-| iOS signed archive / IPA | **Not possible yet** | No team, no distribution identity, no app icon, no real `AYAILMU_*` values. |
+| iOS unsigned Release archive, device arm64, account-free | **Archive succeeded**, 5.1 MB app | No input values passed: the iOS counterpart of the local-only Android build. Lessons open on a device profile; no sign-in is shown and nothing is sent. |
+| iOS Release, simulator, account-free | **Built and launched** | Opens on "Choose a lesson language to start" with no sign-in. Tapping through was not possible here (simulator input needs `xcode-select`); the same path is covered by the native test below. |
+| iOS native app-hosted tests (simulator) | **50 run, 0 failed** | Includes a new end-to-end test: device profile, the real Indonesian maths unit, real Kotlin core, answers saved and kept across a restart. |
+| iOS signed archive / IPA | **Not possible yet** | No team, no distribution identity, no app icon. A backend is no longer needed for a first build. |
 
 ## Android upload key and signed outputs (2026-11-15)
 
@@ -28,6 +30,21 @@ recoverable from anywhere else.
 - Both are the local-only prod build (no account, sync or billing switched on). The manifest still
   declares INTERNET and BILLING permissions because the prod flavour carries the account and billing code.
 - Not installed or run on any device.
+
+## iOS now works without an account, like Android (2026-11-15)
+
+- The core has a device-only owner (`OwnerSession(deviceRegistrySourceCommit:)`). Profiles made with it are
+  stored on the device under their own namespace, never sent anywhere, and cannot sync.
+- The app opens on lessons. "Account & sync" is an optional, collapsed section, shown only in builds that
+  have an approved origin. Without one (the default Release), the app has no sign-in at all.
+- When signed in, the account's profiles are shown; device profiles stay on the device and come back after
+  sign-out. Device progress is not moved into an account; that would be a separate feature.
+- `validate-build-config.sh` now accepts a Release with no origin, declaration or sync policy, but rejects
+  any partial account configuration. The registry source commit is still required and now defaults to the
+  bundled content's commit (`b6e0d61…`). An account build must use the same commit, or the bundled lessons
+  will not load.
+- Still adult-only on iOS: there are no child profiles or guardian flow, unlike Android. The shipped content
+  is adult-only on both.
 
 ## Fixed in this pass (iOS)
 
@@ -65,8 +82,8 @@ recoverable from anywhere else.
 1. Accept the App Store Connect invitation; the role must allow uploads and certificate access
    (App Manager or Admin, or Developer with "Access to Certificates, Identifiers & Profiles").
 2. Decide the bundle ID, register it, create the app record. Fill `DEVELOPMENT_TEAM`.
-3. Backend deployed. Unlike Android, the iOS app does nothing without sign-in, so a TestFlight build
-   before the origin exists is an app nobody can use. Then the five `AYAILMU_*` values.
+3. No longer a blocker for a first build: the account-free Release needs no backend. The five
+   `AYAILMU_*` values are only for a later account-enabled build.
 4. Done locally: Kotlin/Native 2.2.20 (Maven Central, SHA-1 `e5d2f65c8bbce4dadef4b8da53a6cc62c9c8dd4e` verified)
    and its LLVM/libffi dependencies are in `ayailmu-unified-source/ios-toolchain/` (1.4 GB+, outside the
    checkout). Rebuild the core with `scripts/build-shared-core.sh` after any change to the Android
@@ -86,8 +103,9 @@ recoverable from anywhere else.
 - **Account deletion**: in-app deletion exists in source on both platforms but has not been accepted
   end to end against a deployed backend; the hosting plan still lists the erasure route as your decision.
 - **Data safety / privacy labels**: `data_safety.md` says "not submission-ready". For the local-only
-  Android build the honest answer is close to "no data collected"; for the account-enabled builds it is
-  email, user IDs, app activity and typed answers.
+  builds on both platforms the honest answer is close to "no data collected"; for the account-enabled
+  builds it is email, user IDs, app activity and typed answers. `PrivacyInfo.xcprivacy` currently lists the
+  account-enabled data types; for an account-free iOS release its collected-data list should be emptied.
 - **Age rating / audience**: the shipped content is one adult maths unit, but the Android app still has
   child profiles and a guardian flow. Declaring children in the target audience brings the Families
   policy and (on Apple) Kids-category rules. Simplest consistent choice for a first release: adults

@@ -54,6 +54,18 @@ class ReleaseConfigurationTests(unittest.TestCase):
     def test_malformed_registry_source_is_rejected(self):
         self.assertNotEqual(0, self.run_guard(AYAILMU_REGISTRY_SOURCE_COMMIT="not-a-source-hash"))
 
+    def test_account_free_release_is_allowed(self):
+        self.assertEqual(0, self.run_guard(AYAILMU_ORIGIN="", AYAILMU_RELEASE_APPROVED_ORIGIN="", AYAILMU_DECLARATION_VERSION="", AYAILMU_SYNC_POLICY_VERSION=""))
+
+    def test_account_free_release_still_needs_registry_source(self):
+        self.assertNotEqual(0, self.run_guard(AYAILMU_ORIGIN="", AYAILMU_RELEASE_APPROVED_ORIGIN="", AYAILMU_DECLARATION_VERSION="", AYAILMU_SYNC_POLICY_VERSION="", AYAILMU_REGISTRY_SOURCE_COMMIT=""))
+
+    def test_account_values_without_origin_are_rejected(self):
+        self.assertNotEqual(0, self.run_guard(AYAILMU_ORIGIN="", AYAILMU_RELEASE_APPROVED_ORIGIN=""))
+
+    def test_approval_without_origin_is_rejected(self):
+        self.assertNotEqual(0, self.run_guard(AYAILMU_ORIGIN=""))
+
     def test_private_ca_is_rejected(self):
         self.assertNotEqual(0, self.run_guard(AYAILMU_QA_CA_DER="fixture-public-ca.der"))
 

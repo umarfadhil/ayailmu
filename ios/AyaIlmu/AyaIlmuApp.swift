@@ -5,9 +5,14 @@ import AyaIlmuCore
 }
 @MainActor final class AccountModel: AccountPresentationModel {
     private let transport: AppTransport
+    /// Learning that needs no account, as on Android. Nil only if the bundled content source is missing.
+    let deviceSession: OwnerSession?
+    /// False in builds without a backend origin: the app is then account-free, with no sign-in shown.
+    let accountAvailable: Bool
     init() {
         let transport = AppTransport()
         self.transport = transport
+        deviceSession = try? OwnerSession(deviceRegistrySourceCommit:Bundle.main.object(forInfoDictionaryKey:"AyaIlmuRegistrySourceCommit") as? String ?? "")
         do {
             let origin = Bundle.main.object(forInfoDictionaryKey:"AyaIlmuOrigin") as? String ?? ""
             let version = Bundle.main.object(forInfoDictionaryKey:"AyaIlmuDeclarationVersion") as? String ?? ""
@@ -25,10 +30,16 @@ import AyaIlmuCore
             let store = AccountStore(api:api,vault:KeychainVault(origin:origin),localOwnerVault:KeychainCurrentLocalOwnerVault(origin:origin))
             let root = try FileManager.default.url(for:.applicationSupportDirectory,in:.userDomainMask,appropriateFor:nil,create:true).appendingPathComponent("AyaIlmu",isDirectory:true)
             let deletion = AccountDeletionStore(api:api,vault:KeychainAccountDeletionVault(origin:origin),journal:try SQLiteJournal(url:root.appendingPathComponent("learning.sqlite")))
+            accountAvailable = true
             super.init(store:store,deletionStore:deletion)
-        } catch { super.init(store:nil) }
+        } catch {
+            accountAvailable = false
+            super.init(store:nil)
+            message = ""
+        }
     }
     override func restore() async {
+        guard accountAvailable else { return }
         await super.restore()
         #if DEBUG && PRIVATE_OWNER_QA
         if ProcessInfo.processInfo.arguments.contains("--no-mail-tls-probe") {

@@ -202,7 +202,7 @@ func fixtureProof() -> PackProof { PackProof(track:"math",contentVersion:"v1",ru
         // Simulate process restart with the original Keychain snapshot, never a fresh login fixture.
         let session = try JSONDecoder().decode(AuthSession.self,from:Data(sessionJSON.utf8))
         saved.value = SavedSession(session:session,accountID:originalCapability.ownerID,origin:originalCapability.origin)
-        let restarted = AccountStore(api:originalCapability.api,vault:saved)
+        let restarted = AccountStore(api:try XCTUnwrap(originalCapability.api),vault:saved)
         t.handler = { _ in throw URLError(.notConnectedToInternet) }
         do { try await restarted.restore(); XCTFail() } catch {}
         try restarted.restoreLocalSession()
@@ -411,6 +411,31 @@ extension LearningTests {
             XCTAssertTrue(state.completed,"The actual \(language) planner must finish its session.")
             XCTAssertGreaterThan(scoredAnswers,0)
         }
+    }
+
+    /// The account-free path the app now opens on: device profile, real reviewed lesson, real Kotlin core,
+    /// answers committed through LessonSession exactly as the lesson screen does, and kept across a restart.
+    func testActualNativeLessonRunsOnDeviceProfileWithoutAccount() async throws {
+        let responses:[String:[String:Any]] = ["001":["kind":"number","value":14700],"002":["kind":"number","value":84900],"003":["kind":"choice","option_id":"b"],"004":["kind":"choice","option_id":"t"],"005":["kind":"number","value":572],"006":["kind":"pairs","pairs":[["left":"m1","right":"r120"],["left":"m2","right":"r400"],["left":"m3","right":"r385"],["left":"m4","right":"r396"]]],"007":["kind":"choice","option_id":"seen"],"008":["kind":"number","value":46500],"009":["kind":"choice","option_id":"c"],"010":["kind":"number","value":75000],"011":["kind":"sequence","sequence":["t1","t2","t3"]],"012":["kind":"sequence","sequence":["f4"]],"013":["kind":"number","value":14750],"014":["kind":"choice","option_id":"c"]]
+        let source = try XCTUnwrap(Bundle.main.object(forInfoDictionaryKey:"AyaIlmuRegistrySourceCommit") as? String)
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString).appendingPathComponent("learning.sqlite")
+        let store = LearningStore(session:try OwnerSession(deviceRegistrySourceCommit:source),journal:try SQLiteJournal(url:url))
+        try await store.createAdult(language:"id")
+        let lesson = try XCTUnwrap(ApprovedLessonLibrary.bundled.lessons.first{$0.language == "id"})
+        let session = try LessonSession(lesson:lesson,learning:store,core:AppSharedCore.make())
+        var answered = 0
+        for _ in 0..<64 {
+            if session.canAdvance { try session.advance(); continue }
+            guard let item = session.current else { break }
+            let raw = String(data:try JSONSerialization.data(withJSONObject:try XCTUnwrap(responses[String(item.id.suffix(3))]),options:.sortedKeys),encoding:.utf8)!
+            try session.submit(responseJSON:raw); answered += 1
+        }
+        XCTAssertNil(session.current); XCTAssertFalse(session.canAdvance)
+        XCTAssertEqual(try store.summary().localAnswers,answered); XCTAssertGreaterThan(answered,0)
+        XCTAssertGreaterThan(try store.projection(lesson:lesson,core:AppSharedCore.make()).learned + store.projection(lesson:lesson,core:AppSharedCore.make()).practicing,0)
+        let reopened = LearningStore(session:try OwnerSession(deviceRegistrySourceCommit:source),journal:try SQLiteJournal(url:url))
+        try reopened.restoreOfflineProfiles()
+        XCTAssertEqual(try reopened.summary().localAnswers,answered)
     }
 
     /// Pure Kotlin/Native session check: no account transport, mailbox, journal, or backend writes.

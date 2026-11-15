@@ -1,7 +1,7 @@
 // AyaIlmu iOS Release inputs. Copy this file OUTSIDE the checkout, fill every value,
 // and pass it with:  xcodebuild archive ... -xcconfig /absolute/path/to/release-inputs.xcconfig
-// Nothing here is chosen yet. scripts/validate-build-config.sh fails a Release build
-// while any AYAILMU_* value is blank, not HTTPS, or a localhost origin.
+// Nothing here is chosen yet. scripts/validate-build-config.sh fails a Release build with a partial
+// account configuration, a non-HTTPS origin or a localhost origin.
 
 // Apple identity (from the Apple Developer team that will own the app).
 DEVELOPMENT_TEAM =
@@ -12,6 +12,8 @@ PRODUCT_BUNDLE_IDENTIFIER =
 MARKETING_VERSION = 0.1.0
 CURRENT_PROJECT_VERSION = 1
 
+// Everything below is only for an account-enabled build. Leave all of it out for the account-free
+// release (lessons on the device, no sign-in), which needs no backend.
 // One HTTPS origin for API and Auth, no path and no port. Both lines must be identical.
 // Write "//" as "/$()/" because "//" starts a comment in xcconfig files:
 //   AYAILMU_ORIGIN = https:/$()/host.name
@@ -21,5 +23,5 @@ AYAILMU_RELEASE_APPROVED_ORIGIN =
 // Must equal the server's UMAR_NORMAL_* values (see the hosting plan, client-config-changes.md).
 AYAILMU_DECLARATION_VERSION =
 AYAILMU_SYNC_POLICY_VERSION =
-// 40 lowercase hex characters: the commit the server's reviewed registry was built from.
-AYAILMU_REGISTRY_SOURCE_COMMIT =
+// Defaults to the bundled content's commit. Override only if the server registry and bundled content change together.
+// AYAILMU_REGISTRY_SOURCE_COMMIT =

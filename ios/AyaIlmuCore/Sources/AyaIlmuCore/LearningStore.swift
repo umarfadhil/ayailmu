@@ -13,7 +13,7 @@ import Foundation
     public var scope:OwnerScope? { (try? session.check()) != nil ? selectedScope:nil }
     public init(session:OwnerSession,journal:SQLiteJournal) {
         self.session = session; self.journal = journal
-        policy = session.api.config.syncPolicyVersion ?? ""; source = session.api.config.registrySourceCommit ?? ""
+        policy = session.syncPolicyVersion; source = session.registrySourceCommit
     }
     private func networkCheck() throws {
         guard try !journal.accountFrozen(origin:session.origin,owner:session.ownerID) else { throw LearningError.consentOff }
@@ -23,7 +23,7 @@ import Foundation
         let data = try await session.request(method,path,body:body)
         try networkCheck(); return data
     }
-    private func check(_ mark:Int? = nil) throws { try session.check(); if let mark,mark != generation { throw LearningError.staleSession }; guard !policy.isEmpty,!source.isEmpty else { throw AccountError.configuration } }
+    private func check(_ mark:Int? = nil) throws { try session.check(); if let mark,mark != generation { throw LearningError.staleSession }; guard session.isDeviceOnly || !policy.isEmpty,!source.isEmpty else { throw AccountError.configuration } }
     public func detach() { generation += 1; selectedScope = nil; knownProfiles = []; consentTask?.cancel() }
     public func restoreOfflineProfiles() throws {
         try check(); let saved = try journal.account(origin:session.origin,owner:session.ownerID)
@@ -31,6 +31,7 @@ import Foundation
         if let selected = saved.selected, profiles.contains(where:{$0.id == selected}) { try select(selected) }
     }
     public func loadProfiles() async throws {
+        if session.isDeviceOnly { try restoreOfflineProfiles(); return }
         try check(); let mark = generation
         try await flushOwnerWithdrawals(mark:mark)
         let data = try await request("GET","/v1/learners"); try check(mark)
@@ -49,6 +50,7 @@ import Foundation
     }
     public func createAdult(language:String) async throws {
         try check(); guard ["id","en"].contains(language), !busy else { throw LearningError.busy }
+        if session.isDeviceOnly { try createDeviceAdult(language:language); return }
         busy = true; defer { busy = false }; let mark = generation
         var state = try journal.account(origin:session.origin,owner:session.ownerID)
         if state.pendingProfile == nil { try journal.updateAccount(origin:session.origin,owner:session.ownerID) { $0.pendingProfile = PendingProfile(clientID:UUID().uuidString.lowercased(),language:language) }; state = try journal.account(origin:session.origin,owner:session.ownerID) }
@@ -59,6 +61,17 @@ import Foundation
         try journal.updateAccount(origin:session.origin,owner:session.ownerID) { current in
             guard current.pendingProfile?.clientID == pending.clientID, !current.profiles.contains(where:{$0.id == learner.id && $0 != learner}) else { throw LearningError.invalidData }
             current.profiles.removeAll{$0.id == learner.id}; current.profiles.append(learner); current.pendingProfile = nil
+        }
+        knownProfiles = try journal.account(origin:session.origin,owner:session.ownerID).profiles; try select(learner.id)
+    }
+    /// Creates an adult self profile that exists only on this device; nothing is sent.
+    private func createDeviceAdult(language:String) throws {
+        let id = UUID().uuidString.lowercased()
+        let learner = OwnerLearner(id:id,client_learner_id:id,kind:"ADULT",audience:"adults",lang:language,created_by:nil)
+        try learner.validate()
+        try journal.updateAccount(origin:session.origin,owner:session.ownerID) { current in
+            guard current.profiles.count < 1000 else { throw LearningError.invalidData }
+            current.profiles.append(learner)
         }
         knownProfiles = try journal.account(origin:session.origin,owner:session.ownerID).profiles; try select(learner.id)
     }

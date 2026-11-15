@@ -13,6 +13,7 @@ struct AccountView: View {
     @State private var submitting = false
     @State private var confirmAccountDeletion = false
     @State private var deletingOwner:OwnerSession?
+    @State private var showAccount = false
     @FocusState private var focused: AccountField?
     private let teal = Color(red:0.08,green:0.39,blue:0.36)
     var body: some View {
@@ -27,7 +28,10 @@ struct AccountView: View {
                     deletionRecovery
                     if let owner = model.email {
                         accountFeedback.id("account.feedback")
-                        if let capability = model.ownerSession { LearningView(session:capability).id(ObjectIdentifier(capability)) }
+                        if let capability = model.ownerSession {
+                            Text("These are your account’s profiles. Profiles made without an account stay on this device and come back when you sign out.").font(.footnote).foregroundStyle(.secondary).fixedSize(horizontal:false,vertical:true)
+                            LearningView(session:capability).id(ObjectIdentifier(capability))
+                        }
                         VStack(alignment:.leading,spacing:14) {
                             Label("Account",systemImage:"person.crop.circle.fill").font(.title2.bold())
                             Text(model.offline ? "Saved account: \(owner)":"Signed in as \(owner)").foregroundStyle(.secondary).textSelection(.enabled)
@@ -52,6 +56,10 @@ struct AccountView: View {
                             Text("Removes your account and its data from our servers. Learning on this device stays.").font(.footnote).foregroundStyle(.secondary).fixedSize(horizontal:false,vertical:true)
                         }.padding(.top,8)
                     } else {
+                        if let device = model.deviceSession { LearningView(session:device).id("device") } else { contentAvailability }
+                        if model.accountAvailable {
+                        DisclosureGroup(isExpanded:$showAccount) {
+                        VStack(alignment:.leading,spacing:24) {
                         VStack(alignment:.leading,spacing:8) { Text(L(mode.rawValue)).font(.title.bold()); if !introduction.isEmpty { Text(introduction).foregroundStyle(.secondary).fixedSize(horizontal:false,vertical:true) } }
                         VStack(alignment:.leading,spacing:16) {
                             TextField("Email",text:$email).textContentType(.emailAddress).keyboardType(.emailAddress).textInputAutocapitalization(.never).autocorrectionDisabled().focused($focused, equals:.email).submitLabel(mode == .recover ? .done:.next).onSubmit { focused = mode == .confirm ? .code : mode == .recover ? nil : .password }.accessibilityIdentifier("account.email")
@@ -74,7 +82,14 @@ struct AccountView: View {
                             ForEach(AccountMode.allCases.filter { otherModes.contains($0) },id:\.self) { destination in Button(linkTitle(destination)) { model.cancel(); mode = destination; focused = nil; clearSecrets(); adult = false; model.message = "" }.disabled(model.busy || submitting) }
                         }.tint(teal)
                         #endif
-                        contentAvailability
+                        }.padding(.top,12)
+                        } label: {
+                            VStack(alignment:.leading,spacing:4) {
+                                Label("Account & sync",systemImage:"person.crop.circle").font(.title2.bold())
+                                Text("Optional. Lessons work without an account. Sign in to keep your progress on our servers and use it on other devices.").font(.footnote).foregroundStyle(.secondary).fixedSize(horizontal:false,vertical:true)
+                            }
+                        }.tint(teal)
+                        }
                     }
                 }.padding(24).frame(maxWidth:560).frame(maxWidth:.infinity)
             }.scrollDismissesKeyboard(.interactively).background(Color(.systemBackground)).navigationBarTitleDisplayMode(.inline)
@@ -115,7 +130,7 @@ struct AccountView: View {
             Text(L(model.message)).font(.callout).fixedSize(horizontal:false,vertical:true).padding(16).frame(maxWidth:.infinity,alignment:.leading).background(Color(.secondarySystemBackground),in:RoundedRectangle(cornerRadius:16)).accessibilityIdentifier("account.message")
         }
     }
-    private var contentAvailability: some View { VStack(alignment:.leading,spacing:8) { Label("Learning",systemImage:"book.closed").font(.headline); Text(ApprovedLessonLibrary.bundled.lessons.isEmpty ? "No lessons are available yet.":"Short maths practice for adults, in Indonesian or English. Sign in to start.").foregroundStyle(.secondary) }.padding(20).frame(maxWidth:.infinity,alignment:.leading).background(teal.opacity(0.07),in:RoundedRectangle(cornerRadius:20)) }
+    private var contentAvailability: some View { VStack(alignment:.leading,spacing:8) { Label("Learning",systemImage:"book.closed").font(.headline); Text("No lessons are available yet.").foregroundStyle(.secondary) }.padding(20).frame(maxWidth:.infinity,alignment:.leading).background(teal.opacity(0.07),in:RoundedRectangle(cornerRadius:20)) }
     private var introduction: String { switch mode { case .signup: return L("Accounts are for adults and guardians only. After you sign up, we’ll email you a confirmation code."); case .confirm: return L("Enter the 6-digit code we emailed you. Can’t find it? Check your spam folder."); case .recover: return L("Enter your account email. If there’s an account for it, we’ll send a code there."); case .reset: return L("Enter the code from your email and a new password."); case .login: return "" } }
     private var actionTitle: String { switch mode { case .confirm:return L("Confirm"); case .recover:return L("Send code"); case .reset:return L("Save new password"); default:return L(mode.rawValue) } }
     /// Only the next steps that make sense from here, instead of every other form.
@@ -177,7 +192,7 @@ private struct LearningView: View {
         _model = StateObject(wrappedValue:model) }
     var body: some View {
         VStack(alignment:.leading,spacing:18) {
-            if !session.networkVerified { Label("You’re offline. Lessons still work.",systemImage:"wifi.slash").foregroundStyle(.secondary) }
+            if !session.networkVerified && !session.isDeviceOnly { Label("You’re offline. Lessons still work.",systemImage:"wifi.slash").foregroundStyle(.secondary) }
             if model.core.isAvailable, let learning = model.learning, !selectedLessons.isEmpty {
                 Text("Lessons").font(.title2.bold())
                 ForEach(selectedLessons) { course in
@@ -200,7 +215,7 @@ private struct LearningView: View {
                 }.padding(16).background(Color(.secondarySystemBackground),in:RoundedRectangle(cornerRadius:16))
             }
             Text("Profiles").font(.title2.bold())
-            if model.profiles.isEmpty { Text("Create a profile to start learning.").foregroundStyle(.secondary) }
+            if model.profiles.isEmpty { Text(session.isDeviceOnly ? "Short maths practice for adults. Choose a lesson language to start; your progress stays on this device.":"Create a profile to start learning.").foregroundStyle(.secondary).fixedSize(horizontal:false,vertical:true) }
             ForEach(model.profiles,id:\.id) { profile in
                 Button { model.select(profile.id) } label: {
                     HStack { Image(systemName:model.selected == profile.id ? "checkmark.circle.fill":"circle"); Text(profile.lang == "id" ? "Bahasa Indonesia":"English"); Spacer() }
@@ -210,12 +225,12 @@ private struct LearningView: View {
                 Text("New profile").font(.headline)
                 Picker("Lesson language",selection:$language) { Text("Bahasa Indonesia").tag("id"); Text("English").tag("en") }.pickerStyle(.segmented)
                 HStack {
-                    Button("Create profile") { Task { await model.run { try await $0.createAdult(language:language) } } }.buttonStyle(.bordered).disabled(model.busy || !session.networkVerified)
+                    Button(model.profiles.isEmpty && session.isDeviceOnly ? "Start" : "Create profile") { Task { await model.run { try await $0.createAdult(language:language) } } }.buttonStyle(.borderedProminent).tint(teal).disabled(model.busy || !(session.networkVerified || session.isDeviceOnly))
                     Spacer()
-                    Button("Refresh") { Task { await model.run { try await $0.loadProfiles() } } }.disabled(model.busy || !session.networkVerified)
+                    if !session.isDeviceOnly { Button("Refresh") { Task { await model.run { try await $0.loadProfiles() } } }.disabled(model.busy || !session.networkVerified) }
                 }
             }.padding(16).background(Color(.secondarySystemBackground),in:RoundedRectangle(cornerRadius:16))
-            if let summary = model.summary {
+            if let summary = model.summary, !session.isDeviceOnly {
                 Text("Sync").font(.title2.bold())
                 Text(summary.enabled ? "Sync is on for this profile.":"Sync is off.").font(.subheadline)
                 if summary.enabled || summary.pending > 0 { LabeledContent("Answers waiting to sync",value:String(summary.pending)).font(.subheadline) }

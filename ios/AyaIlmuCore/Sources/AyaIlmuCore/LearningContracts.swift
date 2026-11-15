@@ -33,18 +33,32 @@ public struct OwnerScope: Codable, Hashable, Sendable {
 }
 @MainActor public final class OwnerSession: CustomStringConvertible {
     public let origin:String; public let ownerID:String; public let subjectID:String
-    let api:AccountAPI; let token:String; public private(set) var networkVerified:Bool; let isCurrent:() -> Bool
-    init(api:AccountAPI,saved:SavedSession,networkVerified:Bool,isCurrent:@escaping () -> Bool) { self.api = api; self.networkVerified = networkVerified; token = saved.session.accessToken; origin = saved.origin; ownerID = saved.accountID; subjectID = saved.session.user.id; self.isCurrent = isCurrent }
+    let api:AccountAPI?; let token:String; public private(set) var networkVerified:Bool; let isCurrent:() -> Bool
+    let syncPolicyVersion:String; let registrySourceCommit:String
+    /// Storage namespace for learning that belongs to this device rather than to an account.
+    public static let deviceOrigin = "device:local"
+    public static let deviceOwnerID = "device"
+    /// True for the account-free owner: lessons and profiles live only on this device and nothing is sent anywhere.
+    public var isDeviceOnly:Bool { api == nil }
+    init(api:AccountAPI,saved:SavedSession,networkVerified:Bool,isCurrent:@escaping () -> Bool) { self.api = api; self.networkVerified = networkVerified; token = saved.session.accessToken; origin = saved.origin; ownerID = saved.accountID; subjectID = saved.session.user.id; self.isCurrent = isCurrent; syncPolicyVersion = api.config.syncPolicyVersion ?? ""; registrySourceCommit = api.config.registrySourceCommit ?? "" }
     /// The active verified local owner may retain a local-only capability after erasure.
     /// It has no Auth subject/token, cannot issue requests, and is invalidated by logout.
     init(api:AccountAPI,retainedOwnerID:String,isCurrent:@escaping () -> Bool) {
         self.api = api; origin = api.config.origin; ownerID = retainedOwnerID; subjectID = ""
         token = ""; networkVerified = false; self.isCurrent = isCurrent
+        syncPolicyVersion = api.config.syncPolicyVersion ?? ""; registrySourceCommit = api.config.registrySourceCommit ?? ""
+    }
+    /// Account-free learning on this device, as on Android without an account. It cannot issue requests.
+    /// `registrySourceCommit` is the source commit of the reviewed content bundled in the app.
+    public init(deviceRegistrySourceCommit source:String) throws {
+        guard source.range(of:"^[a-f0-9]{40}$",options:.regularExpression) != nil else { throw AccountError.configuration }
+        api = nil; origin = Self.deviceOrigin; ownerID = Self.deviceOwnerID; subjectID = ""; token = ""; networkVerified = false
+        isCurrent = { true }; syncPolicyVersion = ""; registrySourceCommit = source
     }
     public nonisolated var description:String { "OwnerSession(redacted)" }
     public func check() throws { guard isCurrent(), !Task.isCancelled else { throw LearningError.staleSession } }
     func request(_ method:String,_ path:String,body:[String:Any]? = nil,validateResponse:((Int,Data) throws -> Void)? = nil) async throws -> Data {
-        try check(); guard networkVerified else { throw LearningError.signInRequired }
+        try check(); guard networkVerified, let api else { throw LearningError.signInRequired }
         do { let data = try await api.request(method,path,body:body,token:token,errorField:"error",maxBodyBytes:1048576,maxResponseBytes:4194304,validateResponse:validateResponse); try check(); return data }
         catch let AccountError.http(status,code) { try check(); if status == 401 || status == 403 && ["bad_jwt","fresh_authentication_required","fresh_auth_required"].contains(code) { networkVerified = false }; throw LearningError.backend(status,code) }
     }
