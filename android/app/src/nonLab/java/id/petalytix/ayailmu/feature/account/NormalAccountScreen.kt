@@ -72,7 +72,7 @@ internal fun NormalAccountScreen(state: NormalAccountUiState, events: NormalAcco
             return@PaperBackground
         }
         val signedIn = state.account.email != null
-        val hub = !signedIn && (state.mode == NormalAccountMode.HUB || !state.emailActionsAllowed && state.mode != NormalAccountMode.SIGN_IN)
+        val hub = !signedIn && state.mode == NormalAccountMode.HUB
         Column(
             Modifier.fillMaxSize().safeDrawingPadding().verticalScroll(rememberScrollState()).padding(AyaSpacing.lg),
             verticalArrangement = Arrangement.spacedBy(AyaSpacing.md),
@@ -80,7 +80,7 @@ internal fun NormalAccountScreen(state: NormalAccountUiState, events: NormalAcco
             // The page title names the place only where the mode has no heading of its own.
             if (signedIn || hub) Text(stringResource(R.string.normal_account_title), style = MaterialTheme.typography.headlineMedium, color = colors.ink, modifier = Modifier.headingSemantics())
             Message(state.account.message)
-            if (state.emailActionsAllowed && state.account.mail != null && !state.busy) {
+            if (state.account.mail != null && !state.busy) {
                 val pending = state.account.mail
                 AyaSecondaryButton(stringResource(R.string.normal_account_enter_code), {
                     events.show(if (pending.action == NormalMailAction.RECOVER) NormalAccountMode.RESET else NormalAccountMode.CONFIRM, pending.recipient)
@@ -95,7 +95,7 @@ internal fun NormalAccountScreen(state: NormalAccountUiState, events: NormalAcco
                 hub -> {
                     Text(stringResource(R.string.normal_account_local_boundary), style = MaterialTheme.typography.bodyLarge, color = colors.inkSoft)
                     AyaButton(stringResource(R.string.normal_account_sign_in), { events.show(NormalAccountMode.SIGN_IN) }, modifier = Modifier.fillMaxWidth(), enabled = !state.busy)
-                    if (state.emailActionsAllowed) AyaSecondaryButton(stringResource(R.string.normal_account_register), { events.show(NormalAccountMode.SIGN_UP) }, modifier = Modifier.fillMaxWidth(), enabled = !state.busy)
+                    AyaSecondaryButton(stringResource(R.string.normal_account_register), { events.show(NormalAccountMode.SIGN_UP) }, modifier = Modifier.fillMaxWidth(), enabled = !state.busy)
                 }
                 state.mode == NormalAccountMode.SIGN_IN -> SignIn(state, events)
                 state.mode == NormalAccountMode.SIGN_UP -> SignUp(state, events)
@@ -200,8 +200,8 @@ private fun SignIn(state: NormalAccountUiState, vm: NormalAccountEvents) {
     EmailPassword(email, { email = it }, password, { password = it }, state.busy, newPassword = false)
     AdultDeclaration(adult, { adult = it }, state.busy)
     AyaButton(stringResource(R.string.normal_account_sign_in), { vm.signIn(email, password, adult) }, modifier = Modifier.fillMaxWidth(), enabled = !state.busy && adult && NormalInput.email(email) && NormalInput.password(password))
-    if (state.emailActionsAllowed) Link(stringResource(R.string.normal_account_forgot), { vm.show(NormalAccountMode.RECOVER, email.trim()) }, enabled = !state.busy)
-    if (state.emailActionsAllowed) Link(stringResource(R.string.normal_account_enter_code), { vm.show(NormalAccountMode.CONFIRM, email.trim()) }, enabled = !state.busy && NormalInput.email(email))
+    Link(stringResource(R.string.normal_account_forgot), { vm.show(NormalAccountMode.RECOVER, email.trim()) }, enabled = !state.busy)
+    Link(stringResource(R.string.normal_account_enter_code), { vm.show(NormalAccountMode.CONFIRM, email.trim()) }, enabled = !state.busy && NormalInput.email(email))
     Link(stringResource(R.string.action_back), vm::back, enabled = !state.busy)
 }
 @Composable

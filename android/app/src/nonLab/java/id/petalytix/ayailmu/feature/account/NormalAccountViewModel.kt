@@ -45,7 +45,6 @@ internal data class NormalAccountUiState(
     val account: NormalAccountState = NormalAccountState(),
     val sync: NormalSyncState = NormalSyncState(),
     val confirmationEmail: String = "",
-    val emailActionsAllowed: Boolean = true,
     val erasure: NormalAccountErasureState = NormalAccountErasureState(restored = true),
 ) { val busy: Boolean get() = account.busy || sync.busy || erasure.busy || !erasure.restored || erasure.blocked }
 
@@ -60,12 +59,12 @@ internal class NormalAccountViewModel @Inject constructor(
     private val confirmationEmail = MutableStateFlow("")
     private var generation = 0L
     val state = combine(account.state, sync.state, mode, erasure.state) { a, s, m, e ->
-        NormalAccountUiState(config.enabled, m, a, s, confirmationEmail.value, emailActionsAllowed = !config.ownerSignInOnly, erasure = e)
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, NormalAccountUiState(config.enabled, emailActionsAllowed = !config.ownerSignInOnly, erasure = NormalAccountErasureState()))
+        NormalAccountUiState(config.enabled, m, a, s, confirmationEmail.value, erasure = e)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, NormalAccountUiState(config.enabled, erasure = NormalAccountErasureState()))
     init { if (config.enabled) viewModelScope.launch { if (erasure.restore()) account.restore() } }
     private fun next(): Long = synchronized(this) { ++generation }
     private fun current(mark: Long) = synchronized(this) { generation == mark }
-    override fun show(target: NormalAccountMode, email: String) { if (config.ownerSignInOnly && target !in setOf(NormalAccountMode.HUB, NormalAccountMode.SIGN_IN)) return; next(); confirmationEmail.value = email; mode.value = target }
+    override fun show(target: NormalAccountMode, email: String) { next(); confirmationEmail.value = email; mode.value = target }
     override fun back() { next(); account.cancel(); sync.cancelActions(); mode.value = NormalAccountMode.HUB }
     private fun action(mark: Long, block: suspend () -> Unit) {
         viewModelScope.launch {

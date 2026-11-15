@@ -82,8 +82,6 @@ val releaseValues: Map<String, String> = if (inputPath == null) emptyMap() else 
         "umar.normalAuth.registrySourceCommit" to values.getValue("registry_source_commit"),
         "ayailmu.playLicenseKey" to values.getValue("play_license_public_key"))
     for ((key, expected) in legacy) if (providers.gradleProperty(key).orNull?.let { it != expected } == true) rejectRelease("conflicting build property")
-    for (key in listOf("umar.normalQa.buildEnabled", "umar.ownerRemote.buildEnabled"))
-        if (providers.gradleProperty(key).orNull?.let { it != "false" } == true) rejectRelease("private build opt-in")
     values.toMap()
 }
 extra["ayailmuPublicReleaseValues"] = releaseValues

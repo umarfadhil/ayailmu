@@ -21,8 +21,6 @@ import org.robolectric.annotation.Config
 class ReviewedProdContentTest {
     @Test fun ordinaryApprovedOnlyLoaderHasTheReviewedPlayableTrack() = runBlocking {
         assertFalse(BuildConfig.DEVELOPER_DEMO)
-        assertFalse(BuildConfig.SYNC_LAB_ENABLED)
-        assertFalse(BuildConfig.NORMAL_OWNER_SIGN_IN_ONLY)
         val assets = AndroidAssetSource(ApplicationProvider.getApplicationContext<Context>())
         val catalog = ContentJson.json.decodeFromString(ContentCatalog.serializer(), assets.read(ContentRepository.CATALOG))
         assertEquals(listOf("mat-a-local"), catalog.tracks.map { it.track })

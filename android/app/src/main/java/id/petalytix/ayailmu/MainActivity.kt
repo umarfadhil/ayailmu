@@ -29,7 +29,6 @@ import id.petalytix.ayailmu.core.design.sound.VoicePlayer
 import id.petalytix.ayailmu.core.design.theme.AyaTheme
 import id.petalytix.ayailmu.feature.session.interact.LocalStrokes
 import id.petalytix.ayailmu.navigation.AyaNavHost
-import id.petalytix.ayailmu.feature.synclab.SyncLabApp
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
@@ -94,8 +93,7 @@ class MainActivity : AppCompatActivity() {
         // minimarket, a purchase on another device). Offline keeps the cached entitlements (CR-BIL-3).
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                // The synthetic lab never queries a device's real Play purchases.
-                if (!BuildConfig.SYNC_LAB_ENABLED) runCatching { entitlements.refresh() }
+                runCatching { entitlements.refresh() }
             }
         }
 
@@ -124,7 +122,7 @@ class MainActivity : AppCompatActivity() {
             ) {
                 AyaTheme {
                     PaperBackground {
-                        if (BuildConfig.SYNC_LAB_ENABLED) SyncLabApp() else AyaNavHost()
+                        AyaNavHost()
                     }
                 }
             }

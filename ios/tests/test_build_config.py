@@ -66,8 +66,6 @@ class ReleaseConfigurationTests(unittest.TestCase):
     def test_approval_without_origin_is_rejected(self):
         self.assertNotEqual(0, self.run_guard(AYAILMU_ORIGIN=""))
 
-    def test_private_ca_is_rejected(self):
-        self.assertNotEqual(0, self.run_guard(AYAILMU_QA_CA_DER="fixture-public-ca.der"))
 
 
 if __name__ == "__main__":

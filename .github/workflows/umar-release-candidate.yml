@@ -2,10 +2,10 @@ name: umar-release-candidate
 # CI artifact preparation only (unsigned, unapproved). Not CD: no signing, store upload, deploy, environments or secrets.
 on:
   pull_request:
-    paths: ['backend-umar/**', 'android/**', 'integration/tunnel/**', 'integration/verify-endpoint-isolation.py', '.github/workflows/umar-release-candidate.yml']
+    paths: ['backend-umar/**', 'android/**', 'integration/tunnel/**', '.github/workflows/umar-release-candidate.yml']
   push:
     branches: [main, feature/umar-native-integration-20261019]
-    paths: ['backend-umar/**', 'android/**', 'integration/tunnel/**', 'integration/verify-endpoint-isolation.py', '.github/workflows/umar-release-candidate.yml']
+    paths: ['backend-umar/**', 'android/**', 'integration/tunnel/**', '.github/workflows/umar-release-candidate.yml']
   workflow_dispatch:
 
 permissions:
@@ -70,13 +70,12 @@ jobs:
       - name: Tunnel helper unit tests and endpoint isolation check (no endpoint opened)
         run: |
           (cd backend-umar && python3 -m unittest discover -s ../integration/tunnel -p 'test_*.py')
-          (cd android && python3 ../integration/verify-endpoint-isolation.py)
       - name: Android pure modules and pack validation
         working-directory: android
         run: sh gradlew :core:model:test :core:engine:test :core:content:test :core:content:validatePacks --stacktrace
-      - name: Android data, demo and synthetic sync-lab unit tests
+      - name: Android data, demo and sync unit tests
         working-directory: android
-        run: sh gradlew :core:data:testDebugUnitTest :app:testDemoDebugUnitTest :core:sync:test :app:testSyncLabDebugUnitTest --stacktrace
+        run: sh gradlew :core:data:testDebugUnitTest :app:testDemoDebugUnitTest :core:sync:test --stacktrace
       - name: Android prod release lint and unsigned bundle
         working-directory: android
         run: sh gradlew :app:lintProdRelease :app:bundleProdRelease --stacktrace

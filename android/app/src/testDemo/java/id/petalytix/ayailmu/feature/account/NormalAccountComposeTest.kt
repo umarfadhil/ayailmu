@@ -180,25 +180,6 @@ class NormalAccountComposeTest {
         assertEquals(true, localized("id", R.string.normal_account_create_pending).startsWith("Pembuatan profil sebelumnya"))
     }
 
-    @Test fun ownerRemoteHubDoesNotOfferRegistration() {
-        compose.setContent { NormalAccountScreen(NormalAccountUiState(true, emailActionsAllowed = false), Events()) {} }
-        compose.onNodeWithText(text(R.string.normal_account_sign_in)).assertExists()
-        compose.onAllNodesWithText(text(R.string.normal_account_register)).assertCountEquals(0)
-    }
-
-    @Test fun ownerRemoteSignInDoesNotOfferRecoveryOrConfirmation() {
-        compose.setContent { NormalAccountScreen(NormalAccountUiState(true, NormalAccountMode.SIGN_IN, emailActionsAllowed = false), Events()) {} }
-        compose.onAllNodesWithText(text(R.string.normal_account_forgot)).assertCountEquals(0)
-        compose.onAllNodesWithText(text(R.string.normal_account_enter_code)).assertCountEquals(0)
-    }
-
-    @Test fun ownerRemoteCannotRenderAStaleRegistrationMode() {
-        compose.setContent { NormalAccountScreen(NormalAccountUiState(true, NormalAccountMode.SIGN_UP, emailActionsAllowed = false), Events()) {} }
-        compose.onNodeWithText(text(R.string.normal_account_sign_in)).assertExists()
-        compose.onAllNodesWithText(text(R.string.normal_account_register)).assertCountEquals(0)
-        compose.onAllNodesWithText(text(R.string.normal_account_email)).assertCountEquals(0)
-    }
-
     @Test fun defaultBuildHasNoSettingsAccountEntry() {
         compose.setContent { NormalAccountSettingsEntry {} }
         compose.onAllNodesWithText(text(R.string.normal_account_open)).assertCountEquals(0)

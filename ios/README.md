@@ -17,16 +17,13 @@ DEVELOPER_DIR=/Applications/Xcode-27.1.app/Contents/Developer \
 CLANG_MODULE_CACHE_PATH=/tmp/ayailmu-clang-cache \
 SWIFTPM_MODULECACHE_OVERRIDE=/tmp/ayailmu-swift-cache \
 swift test --package-path ios/AyaIlmuCore --jobs 2 -Xswiftc -j2
-AYAILMU_QA_CA_PEM=/path/to/authorized/public/root.crt \
-AYAILMU_EVIDENCE_DIR=/tmp/ayailmu-normal-artifact \
-ios/scripts/build-private-qa.sh
 ```
 
 SwiftPM sandboxing stays enabled. Use the reviewed execution path if the outer workspace sandbox denies macOS `sandbox-exec`; do not disable SwiftPM sandboxing. The native XCTest target requires the actual shared framework and app host; it cannot silently skip the golden comparison. Native tests use only fixtures in test targets. Use `/tmp` derived data for native testing here: Documents-based XCTest artifacts stalled during dependent-bundle loading. The native test target's framework search/link settings must point to the built shared framework, with `REQUIRE_SHARED_CORE` set. Run with an explicit dedicated simulator destination and parallel simulator testing disabled.
 
-Dedicated simulator: `8568898D-1CF8-4B81-8CF9-3CC764D517CD`. Never use generic `booted` commands; another app's simulator is protected. Debug bundle identifier: `id.petalytix.ayailmu.ios.privateqa`. Build/test jobs are limited to2. The normal artifact must be rebuilt in separate clean derived data after hosted tests; it must contain no test plugins, fixtures, or test manifest.
+Dedicated simulator: `8568898D-1CF8-4B81-8CF9-3CC764D517CD`. Never use generic `booted` commands; another app's simulator is protected. Debug bundle identifier: `id.petalytix.ayailmu.ios.dev`. Build/test jobs are limited to2. The normal artifact must be rebuilt in separate clean derived data after hosted tests; it must contain no test plugins, fixtures, or test manifest.
 
-The private QA script validates the public CA's exact DER fingerprint before supplying it to the Debug app. Only `DEBUG && PRIVATE_OWNER_QA` can trust it, only for TLS localhost:58443 with hostname validation. No ATS exception or OS trust change is used. Release rejects private QA flags/CA and fails without explicit approved origin, declaration, sync policy and registry-source configuration. No public origin is invented. `--no-mail-tls-probe` is Debug-only process instrumentation: health200, unauthenticated user401, cleartext/wrong-host rejection, plus an actual shared-factory availability receipt. It submits no account/mail requests.
+The app uses the system trust store over HTTPS only (no ATS exception, no custom certificate trust). Release builds reject localhost origins and partial account configuration; without an origin they are account-free. The account build takes its origin, declaration, sync policy and registry source from `-xcconfig` (see `config/release-inputs.example.xcconfig`).
 
 Sessions use app/origin-namespaced Keychain storage. The network capability requires verified provider identity and backend owner. An explicit offline restore can read a previously verified saved identity and local history, but grants no network capability. Successful logout deletes that durable source and fences old capabilities. Backend expiry invalidates the network capability; Restore session or password reauthentication obtains a newly verified one. Local logout and provider revocation outcomes are reported separately.
 
@@ -40,7 +37,7 @@ Current local evidence is outside source under `.runtime/umar-ios-learning-m2` i
 
 The ordinary account form now checks confirmation fields, gives immediate submission feedback beside the button, and brings final errors into view without scrolling the blank form during startup restore. Failed attempts retain only in-memory inputs for correction; success, mode changes and sign-out clear them. The tested presentation model fences cancelled replies and overlapping restore/submission actions.
 
-The repository keeps its existing private-QA Debug bundle identity and requires explicit supplied CA/compilation flags. Local simulator certificates, generated frameworks, app bundles and device-specific diagnostics are not committed. The Debug source revision matches the bundled reviewed mathematics catalog. Release still requires separately approved origin and policy settings.
+Local simulator certificates, generated frameworks, app bundles and device-specific diagnostics are not committed. The Debug source revision matches the bundled reviewed mathematics catalog. Release still requires separately approved origin and policy settings.
 
 Portable tests cover account validation/presentation, privacy boundaries, resources and learning state. Actual signup/email/sign-in/sync and physical-device acceptance are separate pending checks; neither a successful build nor fixture tests establish those outcomes.
 

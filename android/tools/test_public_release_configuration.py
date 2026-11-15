@@ -79,11 +79,12 @@ class PublicReleaseConfigurationTest(unittest.TestCase):
         output = (ANDROID / "app/build/generated/source/buildConfig/prod/release/id/petalytix/ayailmu/BuildConfig.java").read_text()
         for expected in ('APPLICATION_ID = "id.petalytix.releasefixture"', 'VERSION_NAME = "1.2.3"', 'VERSION_CODE = 123',
                          'NORMAL_AUTH_APPROVED = true', 'BILLING_ENABLED = true', 'DEVELOPER_DEMO = false',
-                         'SYNC_LAB_ENABLED = false', 'NORMAL_OWNER_SIGN_IN_ONLY = false',
                          'NORMAL_AUTH_PUBLIC_ORIGIN = "https://api.learn-unit.net"',
                          'NORMAL_AUTH_REQUIRED_ORIGIN = "https://api.learn-unit.net"',
                          f'PLAY_LICENSE_KEY = "{PUBLIC_KEY}"'):
             self.assertIn(expected, output)
+        for removed in ('SYNC_LAB_ENABLED', 'NORMAL_OWNER_SIGN_IN_ONLY'):
+            self.assertNotIn(removed, output)
 
     def test_public_inputs_do_not_retarget_demo(self):
         result = self.run_gradle(encoded(VALID), ":app:generateDemoDebugBuildConfig")
@@ -126,9 +127,9 @@ class PublicReleaseConfigurationTest(unittest.TestCase):
 
     def test_conflicting_ambient_values_fail_instead_of_overriding(self):
         for key, value in (("umar.normalAuth.approved", "false"), ("umar.normalAuth.publicOrigin", "https://other.learn-unit.net"),
-                           ("ayailmu.playLicenseKey", ""), ("umar.ownerRemote.buildEnabled", "true"), ("umar.normalQa.buildEnabled", "true")):
+                           ("ayailmu.playLicenseKey", "")):
             with self.subTest(key=key):
-                self.assertIn("private build opt-in" if "buildEnabled" in key else "conflicting build property", self.rejected(VALID, extra=(f"-P{key}={value}",)))
+                self.assertIn("conflicting build property", self.rejected(VALID, extra=(f"-P{key}={value}",)))
 
     def test_bad_key_and_line_injection_fail_without_echo(self):
         for value in ("not-a-public-key!", 'bad";INJECTED="yes', "-----BEGIN_PRIVATE_KEY-----"):

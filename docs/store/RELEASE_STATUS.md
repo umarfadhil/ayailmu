@@ -48,6 +48,20 @@ recoverable from anywhere else.
 - Still adult-only on iOS: there are no child profiles or guardian flow, unlike Android. The shipped content
   is adult-only on both.
 
+## QA leftovers removed (2026-11-15)
+
+- Android: the `syncLab` (synthetic accounts), `normalQa` (localhost QA) and `ownerRemote` (temporary tunnel)
+  flavours are gone, with their sources, tests, Gradle options and CI steps. Only `demo` and `prod` remain.
+- iOS: the Debug-only private-QA certificate trust and its build script are gone; the transport is now
+  `AppTransport.swift` and uses the system trust store. The Debug bundle ID is `id.petalytix.ayailmu.ios.dev`.
+- Mail templates are production text (5f0167d).
+- Kept on purpose: the `synthetic` field in packs, answers and the server schema. It is an integrity flag that
+  keeps AI-drafted content out of the store build and drives the "made-up practice sentence, not a verse of the
+  Qur'an" note; the server registry and database rely on it.
+- Not yet removed (server side, needs the hosting session): the backend's `SYNTHETIC_LAB` data mode (still the
+  default when `UMAR_DATA_MODE` is unset), `cmd/lab-router`, `cmd/dev-auth-keys`, `integration/tunnel` and the
+  local Keycloak/GoTrue QA realms.
+
 ## App icon and lesson screens (2026-11-15)
 
 - One drawing for both platforms: Aya waving in front of an ochre sun, on paper. Android uses it as the adaptive
@@ -89,10 +103,18 @@ recoverable from anywhere else.
 
 ### Play, account-enabled build
 5. Backend: deployed. Known inputs: origin `https://ayailmu.amarmarf.workers.dev`, `adult-owner-v1`,
-   `owner-sync-v1`, registry commit `b6e0d6123cb359436f83ce3ae0685198ee13a815`. Still missing: the Play
-   licensing public key (from the app entry in Umar's console), privacy policy URL, support URL, account
-   deletion URL.
-6. A reachable web account-deletion page. Play requires it for any app that lets people create accounts.
+   `owner-sync-v1`, registry commit `b6e0d6123cb359436f83ce3ae0685198ee13a815`,
+   `privacy_policy_url=https://ayailmu.amarmarf.workers.dev/privacy`,
+   `support_url=https://ayailmu.amarmarf.workers.dev/support`,
+   `account_deletion_url=https://ayailmu.amarmarf.workers.dev/delete-account` (same URLs for App Store
+   Connect). The in-app privacy link (`strings.xml` `privacy_policy_url`) now points at the same page; the
+   old `petalytix.id/ayailmu/privasi` returned 404. Still missing: the Play licensing public key (from the
+   app entry in Umar's console).
+6. The pages themselves are `docs/store/public/{privacy,support,delete-account}.html` + `style.css`; on
+   2026-11-15 all three URLs still returned 404, so they must be deployed before any store form uses them.
+   Server-side account erasure is on (2026-11-16). `UMAR_NORMAL_RELEASE_READY` is still false on the live
+   server, so account activation (`POST /v1/account`) returns 400, `/v1/packs` is empty and deletion has
+   no account to find (404) until it is flipped.
 
 ### TestFlight
 1. Accept the App Store Connect invitation; the role must allow uploads and certificate access

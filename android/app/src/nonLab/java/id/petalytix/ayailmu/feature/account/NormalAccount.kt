@@ -90,12 +90,11 @@ internal class NormalAccount @Inject constructor(
         }
     }
     suspend fun signUp(email: String, password: String, adultDeclaration: Boolean = false): Boolean {
-        if (!config.enabled || config.ownerSignInOnly) return false
+        if (!config.enabled) return false
         if (!adultDeclaration || !valid(email, password)) return false
         return mailOperation(NormalMailAction.SIGN_UP, email, password, NormalMessage.SIGNUP_SENT) { auth.signUp(it.recipient, password, it.id) }
     }
     suspend fun confirm(email: String, code: String, adultDeclaration: Boolean = false): Boolean {
-        if (config.ownerSignInOnly) return false
         if (!adultDeclaration || !NormalInput.email(email) || !NormalInput.code(code)) return false
         val (_, accepted) = begin(); publish(accepted, busy = true)
         return credential(accepted, declaration(), AuthOperation.CONFIRM, NormalMessage.CONFIRMED) { verified(auth.verifyOtp(email.trim(), code, "signup"), email.trim()) }
@@ -106,17 +105,16 @@ internal class NormalAccount @Inject constructor(
         return credential(accepted, declaration(), AuthOperation.SIGN_IN, null) { verified(auth.signIn(email.trim(), password), email.trim()) }
     }
     suspend fun resend(email: String): Boolean {
-        if (!config.enabled || config.ownerSignInOnly) return false
+        if (!config.enabled) return false
         if (!NormalInput.email(email)) return false
         return mailOperation(NormalMailAction.RESEND, email, "", NormalMessage.RESENT) { auth.resend(it.recipient, it.id) }
     }
     suspend fun recover(email: String): Boolean {
-        if (!config.enabled || config.ownerSignInOnly) return false
+        if (!config.enabled) return false
         if (!NormalInput.email(email)) return false
         return mailOperation(NormalMailAction.RECOVER, email, "", NormalMessage.RECOVERY_SENT) { auth.recover(it.recipient, it.id) }
     }
     suspend fun reset(email: String, code: String, newPassword: String): Boolean {
-        if (config.ownerSignInOnly) return false
         if (!valid(email, newPassword) || !NormalInput.code(code)) return false
         val (_, accepted) = begin(); publish(accepted, busy = true)
         return run(accepted, AuthOperation.RESET) {

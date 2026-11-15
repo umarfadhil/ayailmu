@@ -28,7 +28,7 @@ class AccountDeletionSecurity(unittest.TestCase):
         for name in ['SQLiteJournal.swift', 'LearningStore.swift', 'LearningContracts.swift']:
             self.assertNotIn('recoveryToken', (root / 'AyaIlmuCore/Sources/AyaIlmuCore' / name).read_text())
     def test_network_transport_keeps_redirect_and_cookie_protection(self):
-        for name in ['AyaIlmu/PrivateQATrust.swift', 'AyaIlmuCore/Sources/AyaIlmuCore/HTTPClient.swift']:
+        for name in ['AyaIlmu/AppTransport.swift', 'AyaIlmuCore/Sources/AyaIlmuCore/HTTPClient.swift']:
             code = (root / name).read_text()
             self.assertIn('httpCookieStorage = nil', code)
             self.assertIn('httpShouldSetCookies = false', code)
