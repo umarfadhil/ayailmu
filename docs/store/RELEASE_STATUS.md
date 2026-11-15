@@ -12,8 +12,8 @@ Source: branch `ux/ayailmu-copy-and-design` on top of `c103717`.
 | Android `:app:bundlePublicReleaseCandidate` (account-enabled) | **Not built** | Needs the 11 values in `android/config/public-release-inputs.example.properties`; none exist yet. |
 | iOS unsigned Release archive, device arm64, account-free | **Archive succeeded**, 5.1 MB app | No input values passed: the iOS counterpart of the local-only Android build. Lessons open on a device profile; no sign-in is shown and nothing is sent. |
 | iOS Release, simulator, account-free | **Built and launched** | Opens on "Choose a lesson language to start" with no sign-in. Tapping through was not possible here (simulator input needs `xcode-select`); the same path is covered by the native test below. |
-| iOS native app-hosted tests (simulator) | **50 run, 0 failed** | Includes a new end-to-end test: device profile, the real Indonesian maths unit, real Kotlin core, answers saved and kept across a restart. |
-| iOS signed archive / IPA | **Not possible yet** | No team, no distribution identity, no app icon. A backend is no longer needed for a first build. |
+| iOS native app-hosted tests (simulator) | **51 run, 0 failed** | Includes an end-to-end test (device profile, the real Indonesian maths unit, real Kotlin core, answers kept across a restart) and a test that renders the real lesson screen at every step kind (`TEST_RUNNER_AYAILMU_SNAPSHOT_DIR=<dir>` writes the PNGs). |
+| iOS signed archive / IPA | **Not possible yet** | No team and no distribution identity. The app icon now exists; a backend is not needed for a first build. |
 
 ## Android upload key and signed outputs (2026-11-15)
 
@@ -30,6 +30,7 @@ recoverable from anywhere else.
 - Both are the local-only prod build (no account, sync or billing switched on). The manifest still
   declares INTERNET and BILLING permissions because the prod flavour carries the account and billing code.
 - Not installed or run on any device.
+- Re-signed on 2026-11-15 after the app icon change, with the same key (certificate SHA-256 unchanged).
 
 ## iOS now works without an account, like Android (2026-11-15)
 
@@ -45,6 +46,17 @@ recoverable from anywhere else.
   will not load.
 - Still adult-only on iOS: there are no child profiles or guardian flow, unlike Android. The shipped content
   is adult-only on both.
+
+## App icon and lesson screens (2026-11-15)
+
+- One drawing for both platforms: Aya waving in front of an ochre sun, on paper. Android uses it as the adaptive
+  icon foreground (no inset; Aya sits in the 66 dp safe zone) with the existing one-colour themed layer; iOS uses a
+  1024 px PNG of it. Seen on the simulator home screen. Like all of Claude's draft art, it needs the owner's
+  approval before it ships (ART_DIRECTION section 7).
+- iOS lesson screen: progress bar (as Android), intro and reading cards, full-width answer buttons, a clearer
+  answer area for tiles with a Clear button, match pairs as a list of rows, one prominent Check button,
+  "I don't know yet" as a quiet link. Rendered and checked at every step kind of the real Indonesian unit.
+- The Android session screen already had these (progress bar, drag boards); not changed.
 
 ## Fixed in this pass (iOS)
 
@@ -88,8 +100,9 @@ recoverable from anywhere else.
    and its LLVM/libffi dependencies are in `ayailmu-unified-source/ios-toolchain/` (1.4 GB+, outside the
    checkout). Rebuild the core with `scripts/build-shared-core.sh` after any change to the Android
    model/content/engine sources it is derived from.
-5. An app icon. There is no asset catalog. `art/preview/app_icon_draft.svg` is marked as a placeholder
-   until a person approves it; upload fails without a 1024 px icon.
+5. App icon: done, awaiting the owner's approval. `AyaIlmu/Assets.xcassets/AppIcon.appiconset` holds a 1024 px
+   opaque icon (Aya waving in front of an ochre sun), written by `art/tools/ios_icon.py` from the same drawing as
+   the Android adaptive icon (`art_app_icon`, key `app_icon` in `art/tools/draw.py`).
 6. Export compliance answer (the app uses only HTTPS and Apple's CryptoKit hashing); either answer in
    App Store Connect per build or add `ITSAppUsesNonExemptEncryption` to Info.plist.
 7. Archive with automatic signing in Xcode 27.1 and upload. First real run on a physical iPhone is also
@@ -104,8 +117,10 @@ recoverable from anywhere else.
   end to end against a deployed backend; the hosting plan still lists the erasure route as your decision.
 - **Data safety / privacy labels**: `data_safety.md` says "not submission-ready". For the local-only
   builds on both platforms the honest answer is close to "no data collected"; for the account-enabled
-  builds it is email, user IDs, app activity and typed answers. `PrivacyInfo.xcprivacy` currently lists the
-  account-enabled data types; for an account-free iOS release its collected-data list should be emptied.
+  builds it is email, user IDs, app activity and typed answers. `PrivacyInfo.xcprivacy` lists the account-enabled
+  data types and is shared by both builds, so it stays as it is: listing types an account-free build does not
+  collect is harmless, while an emptied list would be wrong for the account build. What users see is the App Store
+  Connect privacy label, which should say "Data Not Collected" for the account-free release.
 - **Age rating / audience**: the shipped content is one adult maths unit, but the Android app still has
   child profiles and a guardian flow. Declaring children in the target audience brings the Families
   policy and (on Apple) Kids-category rules. Simplest consistent choice for a first release: adults

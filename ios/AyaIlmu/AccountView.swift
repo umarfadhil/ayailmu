@@ -271,7 +271,7 @@ private struct LearningView: View {
     }
 }
 
-private struct LessonView: View {
+struct LessonView: View {
     let lesson:ApprovedLesson; let learning:LearningStore; let core:SharedLessonCore
     let onProgressChanged:() -> Void
     @State private var session:LessonSession?; @State private var number = ""; @State private var message = ""; @State private var revision = 0
@@ -281,13 +281,22 @@ private struct LessonView: View {
     var body: some View {
         ScrollView {
             VStack(alignment:.leading,spacing:20) {
-                if let screen = session?.currentScreen { Text(screen.title).font(.title2.bold()); ForEach(screen.body,id:\.self) { Text($0) } }
+                if let session, !session.isDone, session.total > 0 {
+                    ProgressView(value:Double(min(session.position,session.total)),total:Double(session.total)).tint(teal)
+                        .accessibilityLabel(Text("Step \(min(session.position + 1,session.total)) of \(session.total)"))
+                }
+                if let screen = session?.currentScreen {
+                    VStack(alignment:.leading,spacing:10) {
+                        Text(screen.title).font(.title2.bold()).fixedSize(horizontal:false,vertical:true)
+                        ForEach(screen.body,id:\.self) { Text($0).fixedSize(horizontal:false,vertical:true) }
+                    }.padding(18).frame(maxWidth:.infinity,alignment:.leading).background(Color(.secondarySystemBackground),in:RoundedRectangle(cornerRadius:16))
+                }
                 if let item = session?.current { question(item).id(item.id) }
                 if let feedback = session?.lastFeedback, !feedback.isEmpty {
                     VStack(alignment:.leading,spacing:8) { ForEach(feedback,id:\.self) { Text($0).fixedSize(horizontal:false,vertical:true) } }
                         .padding(16).frame(maxWidth:.infinity,alignment:.leading).background(teal.opacity(0.08),in:RoundedRectangle(cornerRadius:16))
                 }
-                if session?.canAdvance == true { Button { advance() } label: { Text("Continue").fontWeight(.semibold).frame(maxWidth:.infinity).padding(.vertical,7) }.buttonStyle(.borderedProminent).tint(teal) }
+                if session?.canAdvance == true { Button { advance() } label: { Text("Continue").fontWeight(.semibold).frame(maxWidth:.infinity).padding(.vertical,7) }.buttonStyle(.borderedProminent).tint(teal).accessibilityIdentifier("lesson.continue") }
                 else if session != nil && session?.current == nil {
                     VStack(spacing:12) {
                         Image(systemName:"checkmark.circle.fill").font(.system(size:56)).foregroundStyle(teal)
@@ -304,34 +313,71 @@ private struct LessonView: View {
         }
     }
     @ViewBuilder private func question(_ item:LessonItem) -> some View {
-        Text(item.prompt).font(.title2.bold()).fixedSize(horizontal:false,vertical:true)
-        ForEach(item.help,id:\.self) { Text($0).foregroundStyle(.secondary).fixedSize(horizontal:false,vertical:true) }
+        VStack(alignment:.leading,spacing:8) {
+            Text(item.prompt).font(.title2.bold()).fixedSize(horizontal:false,vertical:true)
+            ForEach(item.help,id:\.self) { Text($0).foregroundStyle(.secondary).fixedSize(horizontal:false,vertical:true) }
+        }
         if ["choose","true_false"].contains(item.type) {
-            ForEach(item.options,id:\.id) { option in Button { submit(["kind":"choice","option_id":option.id]) } label: { Text(option.title).frame(maxWidth:.infinity,alignment:.leading).padding(.vertical,6) }.buttonStyle(.bordered).tint(teal) }
-        } else if item.type == "number_input" {
-            TextField("Your answer",text:$number).keyboardType(.decimalPad).textFieldStyle(.roundedBorder)
-            Button("Check") { guard let value = LocalizedNumberInput.parse(number,language:lesson.language) else { message = "Enter a number to continue."; return }; submit(["kind":"number","value":value]) }.buttonStyle(.borderedProminent).tint(teal).disabled(LocalizedNumberInput.parse(number,language:lesson.language) == nil)
-        } else if item.type == "estimate_slider",let range = item.slider {
-            Slider(value:Binding(get:{sliderValue ?? range.min},set:{sliderValue = $0}),in:range.min...range.max,step:range.step)
-            Text((sliderValue ?? range.min).formatted(.number.locale(Locale(identifier:lesson.language == "id" ? "id_ID":"en_US"))))
-            Button("Check") { guard let value = sliderValue else { return }; submit(["kind":"number","value":value]) }.buttonStyle(.borderedProminent).tint(teal).disabled(sliderValue == nil)
-        } else if ["tiles","fill_blank","order"].contains(item.type) {
-            ForEach(item.options,id:\.id) { option in Button(option.title) { if let index = sequence.firstIndex(of:option.id) { sequence.remove(at:index) } else { sequence.append(option.id) } }.buttonStyle(.bordered).tint(sequence.contains(option.id) ? .secondary:.accentColor) }
-            Text(sequence.compactMap{id in item.options.first{$0.id == id}?.title}.joined(separator:" → "))
-            Button("Check") { submit(["kind":"sequence","sequence":sequence]) }.buttonStyle(.borderedProminent).tint(teal).disabled(sequence.isEmpty)
-        } else if item.type == "match_pairs" {
-            ForEach(item.leftIDs,id:\.self) { left in
-                Picker(item.options.first{$0.id == left}?.title ?? left,selection:Binding(get:{pairings[left] ?? ""},set:{pairings[left] = $0})) {
-                    Text("Choose a match").tag("")
-                    ForEach(item.rightIDs,id:\.self) { right in Text(item.options.first{$0.id == right}?.title ?? right).tag(right).disabled(pairings.contains{$0.key != left && $0.value == right}) }
+            VStack(spacing:10) {
+                ForEach(item.options,id:\.id) { option in
+                    Button { submit(["kind":"choice","option_id":option.id]) } label: {
+                        Text(option.title).multilineTextAlignment(.leading).frame(maxWidth:.infinity,alignment:.leading).padding(.vertical,10).padding(.horizontal,4)
+                    }.buttonStyle(.bordered).tint(teal)
                 }
             }
-            Button("Check") { submit(["kind":"pairs","pairs":item.leftIDs.compactMap{left in pairings[left].map{["left":left,"right":$0]}}]) }.disabled(item.leftIDs.contains{pairings[$0] == nil || pairings[$0] == ""} || Set(pairings.values).count != item.leftIDs.count)
+        } else if item.type == "number_input" {
+            TextField("Your answer",text:$number).keyboardType(.decimalPad).font(.title3).padding(12).background(Color(.secondarySystemBackground),in:RoundedRectangle(cornerRadius:12))
+            checkButton(disabled:LocalizedNumberInput.parse(number,language:lesson.language) == nil) {
+                guard let value = LocalizedNumberInput.parse(number,language:lesson.language) else { message = "Enter a number to continue."; return }; submit(["kind":"number","value":value])
+            }
+        } else if item.type == "estimate_slider",let range = item.slider {
+            VStack(spacing:8) {
+                Text((sliderValue ?? range.min).formatted(.number.locale(Locale(identifier:lesson.language == "id" ? "id_ID":"en_US")))).font(.title.bold()).monospacedDigit().frame(maxWidth:.infinity)
+                Slider(value:Binding(get:{sliderValue ?? range.min},set:{sliderValue = $0}),in:range.min...range.max,step:range.step).tint(teal)
+            }.padding(16).background(Color(.secondarySystemBackground),in:RoundedRectangle(cornerRadius:16))
+            checkButton(disabled:sliderValue == nil) { guard let value = sliderValue else { return }; submit(["kind":"number","value":value]) }
+        } else if ["tiles","fill_blank","order"].contains(item.type) {
+            VStack(alignment:.leading,spacing:8) {
+                HStack { Text("Your answer").font(.subheadline.weight(.semibold)).foregroundStyle(.secondary); Spacer(); if !sequence.isEmpty { Button("Clear") { sequence = [] }.font(.subheadline) } }
+                Text(sequence.isEmpty ? " " : sequence.compactMap{id in item.options.first{$0.id == id}?.title}.joined(separator:"  ")).font(.title3.weight(.semibold)).frame(maxWidth:.infinity,minHeight:28,alignment:.leading)
+            }.padding(14).background(teal.opacity(0.08),in:RoundedRectangle(cornerRadius:14))
+            LazyVGrid(columns:[GridItem(.adaptive(minimum:96),spacing:10)],spacing:10) {
+                ForEach(item.options,id:\.id) { option in
+                    let picked = sequence.contains(option.id)
+                    Button { if let index = sequence.firstIndex(of:option.id) { sequence.remove(at:index) } else { sequence.append(option.id) } } label: {
+                        Text(option.title).frame(maxWidth:.infinity).padding(.vertical,8)
+                    }.buttonStyle(.bordered).tint(picked ? .secondary:teal).opacity(picked ? 0.55:1).accessibilityAddTraits(picked ? .isSelected:[])
+                }
+            }
+            checkButton(disabled:sequence.isEmpty) { submit(["kind":"sequence","sequence":sequence]) }
+        } else if item.type == "match_pairs" {
+            VStack(spacing:0) {
+                ForEach(Array(item.leftIDs.enumerated()),id:\.element) { index,left in
+                    if index > 0 { Divider() }
+                    let title = item.options.first{$0.id == left}?.title ?? left
+                    let picker = Picker(title,selection:Binding(get:{pairings[left] ?? ""},set:{pairings[left] = $0})) {
+                        Text("Choose a match").tag("")
+                        ForEach(item.rightIDs,id:\.self) { right in Text(item.options.first{$0.id == right}?.title ?? right).tag(right).disabled(pairings.contains{$0.key != left && $0.value == right}) }
+                    }.labelsHidden().pickerStyle(.menu).tint(teal).fixedSize()
+                    ViewThatFits(in:.horizontal) {
+                        HStack(spacing:12) { Text(title).font(.body.weight(.medium)).fixedSize(); Spacer(minLength:8); picker }
+                        VStack(alignment:.leading,spacing:2) { Text(title).font(.body.weight(.medium)).fixedSize(horizontal:false,vertical:true); picker }.frame(maxWidth:.infinity,alignment:.leading)
+                    }.padding(.vertical,10).padding(.horizontal,14)
+                }
+            }.background(Color(.secondarySystemBackground),in:RoundedRectangle(cornerRadius:16))
+            checkButton(disabled:item.leftIDs.contains{pairings[$0] == nil || pairings[$0] == ""} || Set(pairings.values).count != item.leftIDs.count) {
+                submit(["kind":"pairs","pairs":item.leftIDs.compactMap{left in pairings[left].map{["left":left,"right":$0]}}])
+            }
         } else if ["info_card","mini_reading"].contains(item.type) {
-            if let body = item.modelAnswer { Text(body).fixedSize(horizontal:false,vertical:true) }
+            if let body = item.modelAnswer { Text(body).fixedSize(horizontal:false,vertical:true).padding(18).frame(maxWidth:.infinity,alignment:.leading).background(Color(.secondarySystemBackground),in:RoundedRectangle(cornerRadius:16)) }
             Button { submit(["kind":"choice","option_id":"seen"]) } label: { Text("Continue").fontWeight(.semibold).frame(maxWidth:.infinity).padding(.vertical,7) }.buttonStyle(.borderedProminent).tint(teal)
         }
-        if !["info_card","mini_reading"].contains(item.type) { Button("I don’t know yet") { submit(["kind":"dont_know"]) } }
+        if !["info_card","mini_reading"].contains(item.type) {
+            Button("I don’t know yet") { submit(["kind":"dont_know"]) }.font(.subheadline).foregroundStyle(teal).frame(maxWidth:.infinity).accessibilityIdentifier("lesson.dontKnow")
+        }
+    }
+    private func checkButton(disabled:Bool,action:@escaping () -> Void) -> some View {
+        Button(action:action) { Text("Check").fontWeight(.semibold).frame(maxWidth:.infinity).padding(.vertical,7) }.buttonStyle(.borderedProminent).tint(teal).disabled(disabled).accessibilityIdentifier("lesson.check")
     }
     private func resetDraft() { number = ""; sliderValue = nil; sequence = []; pairings = [:]; message = ""; revision += 1 }
     private func submit(_ response:[String:Any]) {

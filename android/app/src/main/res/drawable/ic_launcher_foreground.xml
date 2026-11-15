@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- P4 DRAFT launcher foreground: Claude's vector draft of Aya (art_app_icon_draft, :core:design), inset so the
-     figure sits inside the adaptive icon's 66 dp safe zone. Replaced when the illustrator delivers the icon
-     (ART_DIRECTION section 4 and 7); the colours follow @color/art_* so it stays readable at night. -->
-<inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:drawable="@drawable/art_app_icon_draft"
-    android:inset="16%" />
+<!-- P7 launcher foreground: Aya waving in front of an ochre sun (art_app_icon, :core:design, drawn by
+     art/tools/draw.py). Its 240-unit viewport is the whole 108 dp adaptive canvas, so there is no inset; Aya sits
+     inside the 66 dp safe zone. Colours follow @color/art_* so it stays readable at night. The iOS icon is the same
+     drawing (art/tools/ios_icon.py). Awaiting the owner's approval (ART_DIRECTION section 7). -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/art_app_icon" />
+</layer-list>

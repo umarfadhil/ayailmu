@@ -12,6 +12,7 @@ import id.petalytix.ayailmu.core.design.R
 object ArtRegistry {
     private val drawables: Map<String, Int> =
         mapOf(
+            "app_icon" to R.drawable.art_app_icon,
             "app_icon_draft" to R.drawable.art_app_icon_draft,
             "app_icon_mono" to R.drawable.art_app_icon_mono,
             "aya_happy" to R.drawable.art_aya_happy,

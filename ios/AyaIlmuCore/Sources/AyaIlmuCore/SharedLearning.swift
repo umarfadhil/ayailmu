@@ -119,6 +119,9 @@ public struct ApprovedLessonLibrary: Sendable {
 @MainActor public final class LessonSession {
     public let lesson:ApprovedLesson
     public var position:Int { saved.snapshot.step }
+    /// Steps planned for this session (the core's queue, which can grow when a focus question is added), as Android shows it.
+    public var total:Int { (((try? JSONSerialization.jsonObject(with:Data(saved.snapshot.stateJSON.utf8))) as? [String:Any])?["queue"] as? [Any])?.count ?? 0 }
+    public var isDone:Bool { saved.snapshot.phase == "done" }
     public var current:LessonItem? { saved.snapshot.phase == "step" ? lesson.items.first{$0.id == saved.snapshot.currentItemID}:nil }
     public var lastFeedback:[String] { saved.snapshot.feedbackMessages + saved.snapshot.feedbackIDs.compactMap{lesson.feedback[$0]} }
     public var canAdvance:Bool { ["screen","feedback"].contains(saved.snapshot.phase) }

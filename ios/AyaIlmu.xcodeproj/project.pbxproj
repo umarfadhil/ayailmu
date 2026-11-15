@@ -19,6 +19,7 @@
 		C12000000000000000000002 /* ReviewedMathRules.json in Resources */ = {isa = PBXBuildFile; fileRef = C11000000000000000000002 /* ReviewedMathRules.json */; };
 		C12000000000000000000003 /* ReviewedCatalog.json in Resources */ = {isa = PBXBuildFile; fileRef = C11000000000000000000003 /* ReviewedCatalog.json */; };
 		P12000000000000000000000 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = P11000000000000000000000 /* PrivacyInfo.xcprivacy */; };
+		P14000000000000000000000 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = P13000000000000000000000 /* Assets.xcassets */; };
 		Q00000000000000000000000 /* SharedLearningCore/src/jvmTest/resources/bridge-pack.json in Resources */ = {isa = PBXBuildFile; fileRef = R00000000000000000000000 /* SharedLearningCore/src/jvmTest/resources/bridge-pack.json */; };
 		Q00000000000000000000001 /* SharedLearningCore/src/jvmTest/resources/bridge-rules.json in Resources */ = {isa = PBXBuildFile; fileRef = R00000000000000000000001 /* SharedLearningCore/src/jvmTest/resources/bridge-rules.json */; };
 		Q00000000000000000000002 /* SharedLearningCore/build/parity/jvm-golden.json in Resources */ = {isa = PBXBuildFile; fileRef = R00000000000000000000002 /* SharedLearningCore/build/parity/jvm-golden.json */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		A00000000000000000000001 /* AyaIlmu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = AyaIlmu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		P11000000000000000000000 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		P13000000000000000000000 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		L11000000000000000000000 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C11000000000000000000000 /* ApprovedLearning.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ApprovedLearning.json; sourceTree = "<group>"; };
 		C11000000000000000000001 /* ReviewedMathPack.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ReviewedMathPack.json; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				F00000000000000000000003 /* PrivateQATrust.swift */,
 				L10000000000000000000000 /* Localizable.strings */,
 				P11000000000000000000000 /* PrivacyInfo.xcprivacy */,
+				P13000000000000000000000 /* Assets.xcassets */,
 			);
 			path = AyaIlmu;
 			sourceTree = "<group>";
@@ -222,6 +225,7 @@
 				C12000000000000000000000 /* ApprovedLearning.json in Resources */,
 				L12000000000000000000000 /* Localizable.strings in Resources */,
 				P12000000000000000000000 /* PrivacyInfo.xcprivacy in Resources */,
+				P14000000000000000000000 /* Assets.xcassets in Resources */,
 				C12000000000000000000001 /* ReviewedMathPack.json in Resources */,
 				C12000000000000000000002 /* ReviewedMathRules.json in Resources */,
 				C12000000000000000000003 /* ReviewedCatalog.json in Resources */,
@@ -333,6 +337,7 @@
 				);
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = AyaIlmu/Info.plist;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 0.1.0;
 				ONLY_ACTIVE_ARCH = YES;
@@ -372,6 +377,7 @@
 				);
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = AyaIlmu/Info.plist;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 0.1.0;
 				OTHER_LDFLAGS = (

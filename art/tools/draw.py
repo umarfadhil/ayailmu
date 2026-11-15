@@ -2749,6 +2749,24 @@ def app_icon_mono(a):
         a.outline(lp, MW * 1.3, second=0)
 
 
+APP_ICON_SCALE = 0.84
+
+
+@art_key("app_icon", 240, 240, 1.6)
+def app_icon(a):
+    """Launcher icon foreground (P7): Aya waving in front of an ochre sun. The 240-unit viewport is the whole adaptive
+    canvas (108 dp), so no inset: Aya fits the 66 dp safe circle (radius 73 around the centre). Lines run 1.6x the
+    usual weight so they survive 29-48 pt. Paper is the background layer (Android) or the flattened PNG (iOS,
+    art/tools/ios_icon.py); the body sits on a paper underlay so the sun does not muddy the sage. Three colours on
+    paper: sage, ink and one ochre accent."""
+    s = APP_ICON_SCALE
+    c = (120 + a.j(1), 120 + 27 * s)
+    sun = [a.jit(p, 1.6) for p in ellipse((129, 104), 61, 59, a.j(4), n=16)]
+    a.fill_smooth(sun, "ochre", 0.92)
+    a.fill_smooth(Tf(c, s).pts(aya_body_local()), "paper", 1.0, off=(0, 0))
+    draw_aya(a, c, s, "wave", groundline=False, blush=False)
+
+
 # --------------------------------------------------------------------------------------------- scenes with regions
 
 

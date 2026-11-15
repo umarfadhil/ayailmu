@@ -355,6 +355,8 @@ extension LearningTests {
 import AyaIlmuSharedLearning
 #if canImport(AyaIlmu)
 @testable import AyaIlmu
+import SwiftUI
+import UIKit
 #endif
 extension LearningTests {
     #if canImport(AyaIlmu)
@@ -436,6 +438,50 @@ extension LearningTests {
         let reopened = LearningStore(session:try OwnerSession(deviceRegistrySourceCommit:source),journal:try SQLiteJournal(url:url))
         try reopened.restoreOfflineProfiles()
         XCTAssertEqual(try reopened.summary().localAnswers,answered)
+    }
+
+    /// Renders the real lesson screen (LessonView, real core, device profile) at each kind of step and checks it draws.
+    /// With TEST_RUNNER_AYAILMU_SNAPSHOT_DIR set, it also writes the PNGs there for a person to review.
+    @MainActor func testLessonScreenRendersEveryStepKind() async throws {
+        let correct:[String:[String:Any]] = ["001":["kind":"number","value":14700],"002":["kind":"number","value":84900],"003":["kind":"choice","option_id":"b"],"004":["kind":"choice","option_id":"t"],"005":["kind":"number","value":572],"006":["kind":"pairs","pairs":[["left":"m1","right":"r120"],["left":"m2","right":"r400"],["left":"m3","right":"r385"],["left":"m4","right":"r396"]]],"007":["kind":"choice","option_id":"seen"],"008":["kind":"number","value":46500],"009":["kind":"choice","option_id":"c"],"010":["kind":"number","value":75000],"011":["kind":"sequence","sequence":["t1","t2","t3"]],"012":["kind":"sequence","sequence":["f4"]],"013":["kind":"number","value":14750],"014":["kind":"choice","option_id":"c"]]
+        let out = ProcessInfo.processInfo.environment["AYAILMU_SNAPSHOT_DIR"].map { URL(fileURLWithPath:$0,isDirectory:true) }
+        if let out { try FileManager.default.createDirectory(at:out,withIntermediateDirectories:true) }
+        let source = try XCTUnwrap(Bundle.main.object(forInfoDictionaryKey:"AyaIlmuRegistrySourceCommit") as? String)
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString).appendingPathComponent("learning.sqlite")
+        let store = LearningStore(session:try OwnerSession(deviceRegistrySourceCommit:source),journal:try SQLiteJournal(url:url))
+        try await store.createAdult(language:"id")
+        let lesson = try XCTUnwrap(ApprovedLessonLibrary.bundled.lessons.first{$0.language == "id"})
+        let core = AppSharedCore.make()
+        func snap(_ name:String) async throws {
+            let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap{$0 as? UIWindowScene}.first)
+            let window = UIWindow(windowScene:scene); window.frame = CGRect(x:0,y:0,width:393,height:852)
+            window.rootViewController = UIHostingController(rootView:NavigationStack { LessonView(lesson:lesson,learning:store,core:core,onProgressChanged:{}) })
+            window.makeKeyAndVisible(); window.frame = CGRect(x:0,y:0,width:393,height:852); window.rootViewController?.view.frame = window.bounds
+            for _ in 0..<12 { try await Task.sleep(nanoseconds:50_000_000); window.layoutIfNeeded() }
+            let image = UIGraphicsImageRenderer(bounds:window.bounds).image { _ in _ = window.drawHierarchy(in:window.bounds,afterScreenUpdates:true) }
+            let png = try XCTUnwrap(image.pngData())
+            let cg = try XCTUnwrap(image.cgImage); let bytes = try XCTUnwrap(cg.dataProvider?.data as Data?)
+            XCTAssertGreaterThan(Set(stride(from:0,to:bytes.count,by:997).map{bytes[$0]}).count,4,"\(name) rendered blank")
+            if let out { try png.write(to:out.appendingPathComponent("\(name).png")) }
+            window.isHidden = true
+        }
+        let session = try LessonSession(lesson:lesson,learning:store,core:core)
+        var seen = Set<String>(); var wrongGiven = false; var shots = 0
+        for _ in 0..<64 {
+            if session.canAdvance {
+                let kind = session.currentScreen != nil ? "screen":"feedback"
+                if seen.insert(kind).inserted { shots += 1; try await snap(String(format:"%02d-%@",shots,kind)) }
+                try session.advance(); continue
+            }
+            guard let item = session.current else { break }
+            if seen.insert(item.type).inserted { shots += 1; try await snap(String(format:"%02d-%@",shots,item.type)) }
+            var response = try XCTUnwrap(correct[String(item.id.suffix(3))])
+            if !wrongGiven && item.type == "number_input" { response = ["kind":"number","value":1]; wrongGiven = true }
+            try session.submit(responseJSON:String(data:try JSONSerialization.data(withJSONObject:response,options:.sortedKeys),encoding:.utf8)!)
+        }
+        XCTAssertNil(session.current)
+        shots += 1; try await snap(String(format:"%02d-done",shots))
+        XCTAssertTrue(seen.isSuperset(of:["screen","feedback","number_input","choose","match_pairs","tiles"]),"\(seen)")
     }
 
     /// Pure Kotlin/Native session check: no account transport, mailbox, journal, or backend writes.
