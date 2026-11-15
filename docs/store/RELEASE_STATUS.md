@@ -13,6 +13,7 @@ Source: branch `ux/ayailmu-copy-and-design` on top of `c103717`.
 | iOS unsigned Release archive, device arm64, account-free | **Archive succeeded**, 5.1 MB app | No input values passed: the iOS counterpart of the local-only Android build. Lessons open on a device profile; no sign-in is shown and nothing is sent. |
 | iOS Release, simulator, account-free | **Built and launched** | Opens on "Choose a lesson language to start" with no sign-in. Tapping through was not possible here (simulator input needs `xcode-select`); the same path is covered by the native test below. |
 | iOS native app-hosted tests (simulator) | **51 run, 0 failed** | Includes an end-to-end test (device profile, the real Indonesian maths unit, real Kotlin core, answers kept across a restart) and a test that renders the real lesson screen at every step kind (`TEST_RUNNER_AYAILMU_SNAPSHOT_DIR=<dir>` writes the PNGs). |
+| iOS Release, simulator, account-enabled | **Built and launched** | Live origin `https://ayailmu.amarmarf.workers.dev`, declaration `adult-owner-v1`, sync policy `owner-sync-v1`, bundled registry commit. Opens on lessons with the optional "Account & sync" section. Sign-in not tapped through here (no simulator input). Inputs file: `~/Desktop/AyaIlmu-release/ios-account-release.xcconfig` (public values only; team and bundle ID left unset). The server still has `UMAR_NORMAL_RELEASE_READY=false`. |
 | iOS signed archive / IPA | **Not possible yet** | No team and no distribution identity. The app icon now exists; a backend is not needed for a first build. |
 
 ## Android upload key and signed outputs (2026-11-15)
@@ -75,7 +76,9 @@ recoverable from anywhere else.
 ## Blockers, in the order they must be cleared
 
 ### Play internal testing (local-only build: nearest target)
-1. Play Console developer account and an app entry. The package name is permanent from the first upload.
+1. Publishing goes through Umar's existing Google Play developer account (no new account). Needed: an app entry
+   there and either an invite with release rights or Umar doing the upload. The package name is permanent from
+   the first upload.
 2. An upload key (a keystore only you create and keep) and acceptance of Play App Signing.
    The release build type has no signing config; sign the built AAB with
    `jarsigner -keystore <your.jks> app-prod-release.aab <alias>`, or decide to add a property-driven
@@ -85,9 +88,10 @@ recoverable from anywhere else.
    content rating, target audience. Internal testing itself accepts an upload before these are complete.
 
 ### Play, account-enabled build
-5. Backend deployed (hosting plan), then the inputs file: origin, production declaration and sync-policy
-   IDs, registry source commit, Play licensing public key, privacy policy URL, support URL, account
-   deletion URL. A `workers.dev` origin passes the gate's host rules.
+5. Backend: deployed. Known inputs: origin `https://ayailmu.amarmarf.workers.dev`, `adult-owner-v1`,
+   `owner-sync-v1`, registry commit `b6e0d6123cb359436f83ce3ae0685198ee13a815`. Still missing: the Play
+   licensing public key (from the app entry in Umar's console), privacy policy URL, support URL, account
+   deletion URL.
 6. A reachable web account-deletion page. Play requires it for any app that lets people create accounts.
 
 ### TestFlight
