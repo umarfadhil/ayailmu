@@ -87,6 +87,12 @@ recoverable from anywhere else.
 5. `ios/config/release-inputs.example.xcconfig`: the short list of iOS values, passed with `-xcconfig`.
    Checked that an xcconfig passed this way overrides the project values.
 
+## Decided
+
+- Store developer / seller name, for both Google Play and the App Store: **PT Petalytix Teknologi
+  Indonesia** (owner, 2026-11-16). Every store listing draft uses it. The public pages already name it as the
+  operator. No store entry has been created.
+
 ## Blockers, in the order they must be cleared
 
 ### Play internal testing (local-only build: nearest target)
