@@ -4,9 +4,9 @@ name: android-gate
 on:
   push:
     branches: [main]
-    paths: ["android/**", "integration/tunnel/**", ".github/workflows/android.yml"]
+    paths: ["android/**", ".github/workflows/android.yml"]
   pull_request:
-    paths: ["android/**", "integration/tunnel/**", ".github/workflows/android.yml"]
+    paths: ["android/**", ".github/workflows/android.yml"]
 
 concurrency:
   group: android-${{ github.ref }}

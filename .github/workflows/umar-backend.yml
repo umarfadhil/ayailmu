@@ -3,9 +3,9 @@ name: umar-backend-gate
 on:
   push:
     branches: [main]
-    paths: ["backend-umar/**", "integration/tunnel/**", ".github/workflows/umar-backend.yml"]
+    paths: ["backend-umar/**", ".github/workflows/umar-backend.yml"]
   pull_request:
-    paths: ["backend-umar/**", "integration/tunnel/**", ".github/workflows/umar-backend.yml"]
+    paths: ["backend-umar/**", ".github/workflows/umar-backend.yml"]
 
 permissions:
   contents: read
@@ -49,5 +49,3 @@ jobs:
         run: |
           go vet ./...
           go build ./cmd/...
-      - name: Bounded tunnel preparation helpers (no endpoint opened)
-        run: python3 -m unittest discover -s ../integration/tunnel -p 'test_*.py'

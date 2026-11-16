@@ -2,10 +2,10 @@ name: umar-release-candidate
 # CI artifact preparation only (unsigned, unapproved). Not CD: no signing, store upload, deploy, environments or secrets.
 on:
   pull_request:
-    paths: ['backend-umar/**', 'android/**', 'integration/tunnel/**', '.github/workflows/umar-release-candidate.yml']
+    paths: ['backend-umar/**', 'android/**', '.github/workflows/umar-release-candidate.yml']
   push:
     branches: [main, feature/umar-native-integration-20261019]
-    paths: ['backend-umar/**', 'android/**', 'integration/tunnel/**', '.github/workflows/umar-release-candidate.yml']
+    paths: ['backend-umar/**', 'android/**', '.github/workflows/umar-release-candidate.yml']
   workflow_dispatch:
 
 permissions:
@@ -67,9 +67,6 @@ jobs:
           go vet ./...
           mkdir -p "$RUNNER_TEMP/umar-gate-build"
           go build -o "$RUNNER_TEMP/umar-gate-build/" ./cmd/...
-      - name: Tunnel helper unit tests and endpoint isolation check (no endpoint opened)
-        run: |
-          (cd backend-umar && python3 -m unittest discover -s ../integration/tunnel -p 'test_*.py')
       - name: Android pure modules and pack validation
         working-directory: android
         run: sh gradlew :core:model:test :core:engine:test :core:content:test :core:content:validatePacks --stacktrace

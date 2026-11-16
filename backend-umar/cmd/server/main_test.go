@@ -119,8 +119,13 @@ func TestStartupDefaultCompatibilityNeverOverridesNormalSelection(t *testing.T) 
 	}
 	t.Setenv("UMAR_NORMAL_RELEASE_READY", "true")
 	t.Setenv("UMAR_DATA_MODE", "SYNTHETIC_LAB")
-	if err := run(); err == nil || err.Error() != "normal readiness requires UMAR_DATA_MODE=NORMAL_ONLY" {
-		t.Fatalf("reviewed registry enabled synthetic startup: %v", err)
+	if err := run(); err == nil || err.Error() != "UMAR_DATA_MODE must be NORMAL_ONLY" {
+		t.Fatalf("server started in synthetic mode: %v", err)
+	}
+	t.Setenv("UMAR_DATA_MODE", "NORMAL_ONLY")
+	t.Setenv("UMAR_AUTH_PROVIDER", "keycloak")
+	if err := run(); err == nil || err.Error() != "UMAR_AUTH_PROVIDER must be gotrue" {
+		t.Fatalf("server started with a non-GoTrue provider: %v", err)
 	}
 }
 

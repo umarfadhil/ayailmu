@@ -1,9 +1,6 @@
 # Restricted runtime preparation
 
-This is a synthetic-only backend. These files neither deploy it nor configure real accounts,
-credentials or roles. Real-user consent, content, export/deletion/retention and operational
-decisions remain unresolved. The [current checkpoint](../../docs/integration/2026-10-22-endpoint-and-runtime-isolation.md)
-describes the boundary and verification.
+How to run migrations and the API under separate database identities.
 
 Local launch still defaults to automatic migrations. An approved deployment can separate a
 short-lived migration identity from an existing restricted runtime identity:
@@ -21,7 +18,7 @@ short-lived migration identity from an existing restricted runtime identity:
    other writes are INSERT. It intentionally does not revoke unrelated inherited grants or
    alter PUBLIC/database ownership on an existing server.
 4. Start the API with that runtime connection and `UMAR_MIGRATE_ON_START=false`.
-   `synthetic-runtime.env.example` contains public placeholders only. Startup reads schema and
+   Startup reads schema and
    catalog in a repeatable-read, read-only transaction, rejects missing/changed/newer migration
    manifests and mismatched catalog metadata, then checks effective runtime privileges.
    Missing privileges, schema/database CREATE, owning-role access, admin role attributes,
@@ -34,7 +31,7 @@ short-lived migration identity from an existing restricted runtime identity:
 remote target must use `sslmode=verify-full`; the default, `disable`, `prefer`, `allow`, `require`
 and `verify-ca` are rejected because they permit plaintext or omit hostname verification. A remote
 fallback cannot downgrade an otherwise verified main target. Only literal loopback IP addresses
-and local Unix socket destinations retain the non-TLS synthetic-test defaults. DNS names are not
+and local Unix socket destinations retain the non-TLS test defaults. DNS names are not
 classified as loopback.
 
 For a remote deployment, configure a trusted root as well as `sslmode=verify-full`: use

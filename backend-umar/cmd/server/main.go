@@ -41,15 +41,17 @@ func run() error {
 	if err != nil || ip == nil || !ip.IsLoopback() {
 		return errors.New("prototype must bind a loopback address")
 	}
+	// Production runs only GoTrue in NORMAL_ONLY mode. The old Keycloak and SYNTHETIC_LAB setups
+	// were local QA harnesses and are refused here.
 	provider := env("UMAR_AUTH_PROVIDER", "gotrue")
+	if provider != "gotrue" {
+		return errors.New("UMAR_AUTH_PROVIDER must be gotrue")
+	}
 	migrate, err := labconfig.MigrateOnStart(os.Getenv("UMAR_MIGRATE_ON_START"))
 	if err != nil {
 		return err
 	}
 	issuer, jwks, audience := "http://127.0.0.1:8287", "http://127.0.0.1:8287/.well-known/jwks.json", "authenticated"
-	if provider == "keycloak" {
-		issuer, jwks, audience = "http://127.0.0.1:8285/realms/umar", "http://127.0.0.1:8285/realms/umar/protocol/openid-connect/certs", "umar-api"
-	}
 	issuer, err = labconfig.Issuer(provider, os.Getenv("UMAR_PUBLIC_ORIGIN"), os.Getenv("UMAR_OIDC_ISSUER"), issuer)
 	if err != nil {
 		return err
@@ -58,22 +60,19 @@ func run() error {
 	if err != nil {
 		return err
 	}
-	dataMode, err := api.ParseDeploymentDataMode(env("UMAR_DATA_MODE", "SYNTHETIC_LAB"))
-	if err != nil {
-		return err
+	dataMode := api.DeploymentDataMode(env("UMAR_DATA_MODE", string(api.DeploymentNormalOnly)))
+	if dataMode != api.DeploymentNormalOnly {
+		return errors.New("UMAR_DATA_MODE must be NORMAL_ONLY")
 	}
 	release, err := api.ParseReleasePolicy(os.Getenv("UMAR_NORMAL_RELEASE_READY"), os.Getenv("UMAR_NORMAL_DECLARATION_VERSION"), os.Getenv("UMAR_NORMAL_SYNC_POLICY_VERSION"))
 	if err != nil {
 		return err
 	}
-	if release.Enabled && dataMode != api.DeploymentNormalOnly {
-		return errors.New("normal readiness requires UMAR_DATA_MODE=NORMAL_ONLY")
-	}
 	erasureProvider, err := accountErasureProvider(os.Getenv, dataMode, provider, issuer)
 	if err != nil {
 		return err
 	}
-	r, err := startupRegistry(release.Enabled && dataMode == api.DeploymentNormalOnly)
+	r, err := startupRegistry(release.Enabled)
 	if err != nil {
 		return errors.New("catalog initialization failed")
 	}
