@@ -110,8 +110,9 @@ recoverable from anywhere else.
    Connect). The in-app privacy link (`strings.xml` `privacy_policy_url`) now points at the same page; the
    old `petalytix.id/ayailmu/privasi` returned 404. Still missing: the Play licensing public key (from the
    app entry in Umar's console).
-6. The pages themselves are `docs/store/public/{privacy,support,delete-account}.html` + `style.css`; on
-   2026-11-15 all three URLs still returned 404, so they must be deployed before any store form uses them.
+6. The pages themselves are `docs/store/public/{privacy,support,delete-account}.html` + `style.css`; live
+   since 2026-11-16 (all three URLs return 200). The hosting repo serves a copy
+   (`aya-hosting/cloudflare/ayailmu/public`), so a page change here needs a re-copy and redeploy there.
    Server-side account erasure is on (2026-11-16). `UMAR_NORMAL_RELEASE_READY` is still false on the live
    server, so account activation (`POST /v1/account`) returns 400, `/v1/packs` is empty and deletion has
    no account to find (404) until it is flipped.
